@@ -8,26 +8,76 @@
         "errors": {
           "BadRequestError": {
             "docs": "User request not valid.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "message",
+                  "statusCode": 1,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ErrorDto",
           },
           "ConflictError": {
             "docs": "Team name is already in use.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "message",
+                  "statusCode": 1,
+                },
+              },
+            ],
             "status-code": 409,
             "type": "ErrorDto",
           },
           "ContentTooLargeError": {
             "docs": "Asset exceeds the maximum upload size.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "message",
+                  "statusCode": 1,
+                },
+              },
+            ],
             "status-code": 413,
             "type": "ErrorDto",
           },
           "ForbiddenError": {
             "docs": "User is the current user.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "message",
+                  "statusCode": 1,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "ErrorDto",
           },
           "InternalServerError": {
             "docs": "Operation failed.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "message",
+                  "statusCode": 1,
+                },
+              },
+            ],
             "status-code": 500,
             "type": "ErrorDto",
           },
@@ -38,6 +88,16 @@
           },
           "NotImplementedError": {
             "docs": "Not configured.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "message",
+                  "statusCode": 1,
+                },
+              },
+            ],
             "status-code": 501,
             "type": "ErrorDto",
           },
@@ -4575,10 +4635,18 @@
     status-code: 500
     type: ErrorDto
     docs: Operation failed.
+    examples:
+      - value:
+          message: message
+          statusCode: 1
   BadRequestError:
     status-code: 400
     type: ErrorDto
     docs: User request not valid.
+    examples:
+      - value:
+          message: message
+          statusCode: 1
   NotFoundError:
     status-code: 404
     type: unknown
@@ -4587,18 +4655,34 @@
     status-code: 403
     type: ErrorDto
     docs: User is the current user.
+    examples:
+      - value:
+          message: message
+          statusCode: 1
   ConflictError:
     status-code: 409
     type: ErrorDto
     docs: Team name is already in use.
+    examples:
+      - value:
+          message: message
+          statusCode: 1
   NotImplementedError:
     status-code: 501
     type: ErrorDto
     docs: Not configured.
+    examples:
+      - value:
+          message: message
+          statusCode: 1
   ContentTooLargeError:
     status-code: 413
     type: ErrorDto
     docs: Asset exceeds the maximum upload size.
+    examples:
+      - value:
+          message: message
+          statusCode: 1
 types:
   ErrorDto:
     properties:

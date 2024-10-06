@@ -8,16 +8,49 @@
         "errors": {
           "BadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ApiErrorResponse",
           },
           "NotFoundError": {
             "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
             "status-code": 404,
             "type": "ApiErrorResponse",
           },
           "UnprocessableEntityError": {
             "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
             "status-code": 422,
             "type": "ApiErrorResponse",
           },
@@ -2368,14 +2401,29 @@
     status-code: 400
     type: ApiErrorResponse
     docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
   UnprocessableEntityError:
     status-code: 422
     type: ApiErrorResponse
     docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
   NotFoundError:
     status-code: 404
     type: ApiErrorResponse
     docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
 types:
   OrderByDirection:
     enum:

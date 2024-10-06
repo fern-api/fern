@@ -8,291 +8,929 @@
         "errors": {
           "BookingAmendmentCreateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/booking_amendments",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "BookingAmendmentCreateRequestBadRequestErrorBody",
           },
           "BookingCreateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/bookings",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "BookingCreateRequestBadRequestErrorBody",
           },
           "BookingLineItemCreateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/booking_line_items",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "BookingLineItemCreateRequestBadRequestErrorBody",
           },
           "BookingLineItemIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/booking_line_items",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "BookingLineItemIndexRequestBadRequestErrorBody",
           },
           "BookingLineItemShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/booking_line_items/123456",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "BookingLineItemShowRequestBadRequestErrorBody",
           },
           "BookingShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/bookings/123456",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "BookingShowRequestBadRequestErrorBody",
           },
           "BookingsIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/bookings",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "BookingsIndexRequestBadRequestErrorBody",
           },
           "CarbonCalculationCreateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/carbon_calculation",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "CarbonCalculationCreateRequestBadRequestErrorBody",
           },
           "CommercialInvoicesCreateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/commercial_invoices",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "CommercialInvoicesCreateRequestBadRequestErrorBody",
           },
           "CommercialInvoicesShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/commercial_invoices/abcxyz-23456-def",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "CommercialInvoicesShowRequestBadRequestErrorBody",
           },
           "CommercialInvoicesUpdateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/commercial_invoices",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "CommercialInvoicesUpdateRequestBadRequestErrorBody",
           },
           "CompanyEntityIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/company_entities",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "CompanyEntityIndexRequestBadRequestErrorBody",
           },
           "ContainerListRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/ocean/shipment_containers",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ContainerListRequestBadRequestErrorBody",
           },
           "ContainerShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/ocean/shipment_containers/1234",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ContainerShowRequestBadRequestErrorBody",
           },
           "CustomsEntriesShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/customs_entries/abcdefg-1234567-hijk",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "CustomsEntriesShowRequestBadRequestErrorBody",
           },
           "CustomsEntryIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/custom_entries",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "CustomsEntryIndexRequestBadRequestErrorBody",
           },
           "DocumentsCreateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/documents",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "DocumentsCreateRequestBadRequestErrorBody",
           },
           "DocumentsDownloadRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/documents/ABC123/download",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "DocumentsDownloadRequestBadRequestErrorBody",
           },
           "DocumentsIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/documents",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "DocumentsIndexRequestBadRequestErrorBody",
           },
           "DocumentsShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/documents/ABC123",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "DocumentsShowRequestBadRequestErrorBody",
           },
           "EventsIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/events",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "EventsIndexRequestBadRequestErrorBody",
           },
           "EventsShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/events/123456",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "EventsShowRequestBadRequestErrorBody",
           },
           "InvoiceIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/invoices",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "InvoiceIndexRequestBadRequestErrorBody",
           },
           "InvoicesShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/invoices/abcdef123",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "InvoicesShowRequestBadRequestErrorBody",
           },
           "LocationIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/locations",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "LocationIndexRequestBadRequestErrorBody",
           },
           "LocationUpdateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/locations/abdef123",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "LocationUpdateRequestBadRequestErrorBody",
           },
           "NetworkCompanyCreateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/companies",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkCompanyCreateRequestBadRequestErrorBody",
           },
           "NetworkCompanyEntityCreateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/company_entities",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkCompanyEntityCreateRequestBadRequestErrorBody",
           },
           "NetworkCompanyEntityShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/company_entities/9281",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkCompanyEntityShowRequestBadRequestErrorBody",
           },
           "NetworkCompanyEntityUpdateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/company_entities/9281",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkCompanyEntityUpdateRequestBadRequestErrorBody",
           },
           "NetworkCompanyIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/companies",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkCompanyIndexRequestBadRequestErrorBody",
           },
           "NetworkCompanyMeRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/me/companies",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkCompanyMeRequestBadRequestErrorBody",
           },
           "NetworkCompanyUpdateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/companies/ABC123",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkCompanyUpdateRequestBadRequestErrorBody",
           },
           "NetworkContactCreateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/contacts",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkContactCreateRequestBadRequestErrorBody",
           },
           "NetworkContactIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/contacts",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkContactIndexRequestBadRequestErrorBody",
           },
           "NetworkContactShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/contacts/ABC123",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkContactShowRequestBadRequestErrorBody",
           },
           "NetworkContactUpdateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/contacts/ABC123",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkContactUpdateRequestBadRequestErrorBody",
           },
           "NetworkLocationCreateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/locations",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkLocationCreateRequestBadRequestErrorBody",
           },
           "NetworkLocationShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/network/locations/abdef123",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "NetworkLocationShowRequestBadRequestErrorBody",
           },
           "OceanContainerLegsIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/ocean/shipment_container_legs",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "OceanContainerLegsIndexRequestBadRequestErrorBody",
           },
           "OceanContainerLegsShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/ocean/shipment_container_legs/1234",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "OceanContainerLegsShowRequestBadRequestErrorBody",
           },
           "PortsIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/ports",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "PortsIndexRequestBadRequestErrorBody",
           },
           "ProductCreateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/products",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ProductCreateRequestBadRequestErrorBody",
           },
           "ProductIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/products",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ProductIndexRequestBadRequestErrorBody",
           },
           "ProductShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/products/84291",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ProductShowRequestBadRequestErrorBody",
           },
           "ProductUpdateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/products/84291",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ProductUpdateRequestBadRequestErrorBody",
           },
           "PurchaseOrderCreateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/purchase_orders",
+                  "version": 3,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "PurchaseOrderCreateRequestBadRequestErrorBody",
           },
           "PurchaseOrderIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/purchase_orders",
+                  "version": 3,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "PurchaseOrderIndexRequestBadRequestErrorBody",
           },
           "PurchaseOrderLineItemIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/purchase_order_line_items",
+                  "version": 3,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "PurchaseOrderLineItemIndexRequestBadRequestErrorBody",
           },
           "PurchaseOrderLineItemShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/purchase_order_line_items/123456",
+                  "version": 3,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "PurchaseOrderLineItemShowRequestBadRequestErrorBody",
           },
           "PurchaseOrderShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/purchase_orders/12345",
+                  "version": 3,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "PurchaseOrderShowRequestBadRequestErrorBody",
           },
           "PurchaseOrderUpdateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/purchase_orders/12345",
+                  "version": 3,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "PurchaseOrderUpdateRequestBadRequestErrorBody",
           },
           "ShipmentIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/shipments",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ShipmentIndexRequestBadRequestErrorBody",
           },
           "ShipmentLegIndexRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/shipment_legs",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ShipmentLegIndexRequestBadRequestErrorBody",
           },
           "ShipmentLegShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/shipment_legs/948211",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ShipmentLegShowRequestBadRequestErrorBody",
           },
           "ShipmentShowRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/shipments/1234",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ShipmentShowRequestBadRequestErrorBody",
           },
           "ShipmentUpdateRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/shipments/1234",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ShipmentUpdateRequestBadRequestErrorBody",
           },
           "ShipmentsShareableRequestBadRequestError": {
             "docs": "error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/shipments_shareable",
+                  "version": 2,
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ShipmentsShareableRequestBadRequestErrorBody",
           },
@@ -9055,234 +9693,524 @@ errors:
     status-code: 400
     type: BookingAmendmentCreateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/booking_amendments
+          version: 2
   BookingLineItemIndexRequestBadRequestError:
     status-code: 400
     type: BookingLineItemIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/booking_line_items
+          version: 2
   BookingLineItemCreateRequestBadRequestError:
     status-code: 400
     type: BookingLineItemCreateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/booking_line_items
+          version: 2
   BookingLineItemShowRequestBadRequestError:
     status-code: 400
     type: BookingLineItemShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/booking_line_items/123456
+          version: 2
   BookingsIndexRequestBadRequestError:
     status-code: 400
     type: BookingsIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/bookings
+          version: 2
   BookingCreateRequestBadRequestError:
     status-code: 400
     type: BookingCreateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/bookings
+          version: 2
   BookingShowRequestBadRequestError:
     status-code: 400
     type: BookingShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/bookings/123456
+          version: 2
   CarbonCalculationCreateRequestBadRequestError:
     status-code: 400
     type: CarbonCalculationCreateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/carbon_calculation
+          version: 2
   CommercialInvoicesCreateRequestBadRequestError:
     status-code: 400
     type: CommercialInvoicesCreateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/commercial_invoices
+          version: 2
   CommercialInvoicesUpdateRequestBadRequestError:
     status-code: 400
     type: CommercialInvoicesUpdateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/commercial_invoices
+          version: 2
   CommercialInvoicesShowRequestBadRequestError:
     status-code: 400
     type: CommercialInvoicesShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/commercial_invoices/abcxyz-23456-def
+          version: 2
   CustomsEntryIndexRequestBadRequestError:
     status-code: 400
     type: CustomsEntryIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/custom_entries
+          version: 2
   CustomsEntriesShowRequestBadRequestError:
     status-code: 400
     type: CustomsEntriesShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/customs_entries/abcdefg-1234567-hijk
+          version: 2
   DocumentsIndexRequestBadRequestError:
     status-code: 400
     type: DocumentsIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/documents
+          version: 2
   DocumentsCreateRequestBadRequestError:
     status-code: 400
     type: DocumentsCreateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/documents
+          version: 2
   DocumentsShowRequestBadRequestError:
     status-code: 400
     type: DocumentsShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/documents/ABC123
+          version: 2
   DocumentsDownloadRequestBadRequestError:
     status-code: 400
     type: DocumentsDownloadRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/documents/ABC123/download
+          version: 2
   EventsIndexRequestBadRequestError:
     status-code: 400
     type: EventsIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/events
+          version: 2
   EventsShowRequestBadRequestError:
     status-code: 400
     type: EventsShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/events/123456
+          version: 2
   InvoiceIndexRequestBadRequestError:
     status-code: 400
     type: InvoiceIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/invoices
+          version: 2
   InvoicesShowRequestBadRequestError:
     status-code: 400
     type: InvoicesShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/invoices/abcdef123
+          version: 2
   NetworkCompanyIndexRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/companies
+          version: 2
   NetworkCompanyCreateRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyCreateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/companies
+          version: 2
   NetworkCompanyUpdateRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyUpdateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/companies/ABC123
+          version: 2
   CompanyEntityIndexRequestBadRequestError:
     status-code: 400
     type: CompanyEntityIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/company_entities
+          version: 2
   NetworkCompanyEntityCreateRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyEntityCreateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/company_entities
+          version: 2
   NetworkCompanyEntityShowRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyEntityShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/company_entities/9281
+          version: 2
   NetworkCompanyEntityUpdateRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyEntityUpdateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/company_entities/9281
+          version: 2
   NetworkContactIndexRequestBadRequestError:
     status-code: 400
     type: NetworkContactIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/contacts
+          version: 2
   NetworkContactCreateRequestBadRequestError:
     status-code: 400
     type: NetworkContactCreateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/contacts
+          version: 2
   NetworkContactShowRequestBadRequestError:
     status-code: 400
     type: NetworkContactShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/contacts/ABC123
+          version: 2
   NetworkContactUpdateRequestBadRequestError:
     status-code: 400
     type: NetworkContactUpdateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/contacts/ABC123
+          version: 2
   LocationIndexRequestBadRequestError:
     status-code: 400
     type: LocationIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/locations
+          version: 2
   NetworkLocationCreateRequestBadRequestError:
     status-code: 400
     type: NetworkLocationCreateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/locations
+          version: 2
   NetworkLocationShowRequestBadRequestError:
     status-code: 400
     type: NetworkLocationShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/locations/abdef123
+          version: 2
   LocationUpdateRequestBadRequestError:
     status-code: 400
     type: LocationUpdateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/locations/abdef123
+          version: 2
   NetworkCompanyMeRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyMeRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/network/me/companies
+          version: 2
   OceanContainerLegsIndexRequestBadRequestError:
     status-code: 400
     type: OceanContainerLegsIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/ocean/shipment_container_legs
+          version: 2
   OceanContainerLegsShowRequestBadRequestError:
     status-code: 400
     type: OceanContainerLegsShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/ocean/shipment_container_legs/1234
+          version: 2
   ContainerListRequestBadRequestError:
     status-code: 400
     type: ContainerListRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/ocean/shipment_containers
+          version: 2
   ContainerShowRequestBadRequestError:
     status-code: 400
     type: ContainerShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/ocean/shipment_containers/1234
+          version: 2
   PortsIndexRequestBadRequestError:
     status-code: 400
     type: PortsIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/ports
+          version: 2
   ProductIndexRequestBadRequestError:
     status-code: 400
     type: ProductIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/products
+          version: 2
   ProductCreateRequestBadRequestError:
     status-code: 400
     type: ProductCreateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/products
+          version: 2
   ProductShowRequestBadRequestError:
     status-code: 400
     type: ProductShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/products/84291
+          version: 2
   ProductUpdateRequestBadRequestError:
     status-code: 400
     type: ProductUpdateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/products/84291
+          version: 2
   PurchaseOrderLineItemIndexRequestBadRequestError:
     status-code: 400
     type: PurchaseOrderLineItemIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/purchase_order_line_items
+          version: 3
   PurchaseOrderLineItemShowRequestBadRequestError:
     status-code: 400
     type: PurchaseOrderLineItemShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/purchase_order_line_items/123456
+          version: 3
   PurchaseOrderIndexRequestBadRequestError:
     status-code: 400
     type: PurchaseOrderIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/purchase_orders
+          version: 3
   PurchaseOrderCreateRequestBadRequestError:
     status-code: 400
     type: PurchaseOrderCreateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/purchase_orders
+          version: 3
   PurchaseOrderShowRequestBadRequestError:
     status-code: 400
     type: PurchaseOrderShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/purchase_orders/12345
+          version: 3
   PurchaseOrderUpdateRequestBadRequestError:
     status-code: 400
     type: PurchaseOrderUpdateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/purchase_orders/12345
+          version: 3
   ShipmentLegIndexRequestBadRequestError:
     status-code: 400
     type: ShipmentLegIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/shipment_legs
+          version: 2
   ShipmentLegShowRequestBadRequestError:
     status-code: 400
     type: ShipmentLegShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/shipment_legs/948211
+          version: 2
   ShipmentIndexRequestBadRequestError:
     status-code: 400
     type: ShipmentIndexRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/shipments
+          version: 2
   ShipmentShowRequestBadRequestError:
     status-code: 400
     type: ShipmentShowRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/shipments/1234
+          version: 2
   ShipmentUpdateRequestBadRequestError:
     status-code: 400
     type: ShipmentUpdateRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/shipments/1234
+          version: 2
   ShipmentsShareableRequestBadRequestError:
     status-code: 400
     type: ShipmentsShareableRequestBadRequestErrorBody
     docs: error
+    examples:
+      - value:
+          _object: /api/response
+          self: https://api.flexport.com/shipments_shareable
+          version: 2
 ",
     },
     "booking.yml": {

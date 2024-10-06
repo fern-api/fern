@@ -13,6 +13,15 @@
           },
           "AccessGroupsListRequestForbiddenError": {
             "docs": "Forbidden",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "AccessGroupsListRequestForbiddenErrorBody",
           },
@@ -28,6 +37,16 @@
           },
           "AccessGroupsListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "AccessGroupsListRequestTooManyRequestsErrorBody",
           },
@@ -38,6 +57,15 @@
           },
           "ActivityLogsListRequestForbiddenError": {
             "docs": "Forbidden request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "ActivityLogsListRequestForbiddenErrorBody",
           },
@@ -53,6 +81,16 @@
           },
           "ActivityLogsListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ActivityLogsListRequestTooManyRequestsErrorBody",
           },
@@ -73,6 +111,16 @@
           },
           "AssetsCreateFolderRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "AssetsCreateFolderRequestTooManyRequestsErrorBody",
           },
@@ -98,6 +146,16 @@
           },
           "AssetsCreateRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "AssetsCreateRequestTooManyRequestsErrorBody",
           },
@@ -123,6 +181,16 @@
           },
           "AssetsDeleteRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "AssetsDeleteRequestTooManyRequestsErrorBody",
           },
@@ -148,6 +216,16 @@
           },
           "AssetsGetFolderRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "AssetsGetFolderRequestTooManyRequestsErrorBody",
           },
@@ -173,6 +251,16 @@
           },
           "AssetsGetRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "AssetsGetRequestTooManyRequestsErrorBody",
           },
@@ -198,6 +286,16 @@
           },
           "AssetsListFoldersRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "AssetsListFoldersRequestTooManyRequestsErrorBody",
           },
@@ -223,6 +321,16 @@
           },
           "AssetsListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "AssetsListRequestTooManyRequestsErrorBody",
           },
@@ -248,6 +356,16 @@
           },
           "AssetsUpdateRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "AssetsUpdateRequestTooManyRequestsErrorBody",
           },
@@ -273,6 +391,16 @@
           },
           "CollectionsCreateRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "CollectionsCreateRequestTooManyRequestsErrorBody",
           },
@@ -298,6 +426,16 @@
           },
           "CollectionsDeleteRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "CollectionsDeleteRequestTooManyRequestsErrorBody",
           },
@@ -323,6 +461,16 @@
           },
           "CollectionsGetRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "CollectionsGetRequestTooManyRequestsErrorBody",
           },
@@ -348,6 +496,16 @@
           },
           "CollectionsListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "CollectionsListRequestTooManyRequestsErrorBody",
           },
@@ -373,6 +531,16 @@
           },
           "DeleteCollectionRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "DeleteCollectionRequestTooManyRequestsErrorBody",
           },
@@ -388,11 +556,29 @@
           },
           "EcommerceGetSettingsRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "EcommerceGetSettingsRequestConflictErrorBody",
           },
           "EcommerceGetSettingsRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "EcommerceGetSettingsRequestForbiddenErrorBody",
           },
@@ -408,6 +594,16 @@
           },
           "EcommerceGetSettingsRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "EcommerceGetSettingsRequestTooManyRequestsErrorBody",
           },
@@ -433,6 +629,16 @@
           },
           "FieldsCreateRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "FieldsCreateRequestTooManyRequestsErrorBody",
           },
@@ -458,6 +664,16 @@
           },
           "FieldsUpdateRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "FieldsUpdateRequestTooManyRequestsErrorBody",
           },
@@ -488,6 +704,16 @@
           },
           "FormsGetRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "FormsGetRequestTooManyRequestsErrorBody",
           },
@@ -518,6 +744,16 @@
           },
           "FormsGetSubmissionRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "FormsGetSubmissionRequestTooManyRequestsErrorBody",
           },
@@ -553,6 +789,16 @@
           },
           "FormsListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "FormsListRequestTooManyRequestsErrorBody",
           },
@@ -583,6 +829,16 @@
           },
           "FormsListSubmissionsRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "FormsListSubmissionsRequestTooManyRequestsErrorBody",
           },
@@ -618,6 +874,16 @@
           },
           "FormsUpdateSubmissionRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "FormsUpdateSubmissionRequestTooManyRequestsErrorBody",
           },
@@ -633,11 +899,29 @@
           },
           "InventoryListRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "InventoryListRequestConflictErrorBody",
           },
           "InventoryListRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "InventoryListRequestForbiddenErrorBody",
           },
@@ -653,6 +937,16 @@
           },
           "InventoryListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "InventoryListRequestTooManyRequestsErrorBody",
           },
@@ -668,11 +962,29 @@
           },
           "InventoryUpdateRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "InventoryUpdateRequestConflictErrorBody",
           },
           "InventoryUpdateRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "InventoryUpdateRequestForbiddenErrorBody",
           },
@@ -688,6 +1000,16 @@
           },
           "InventoryUpdateRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "InventoryUpdateRequestTooManyRequestsErrorBody",
           },
@@ -713,6 +1035,16 @@
           },
           "ItemsCreateItemForMultipleLocalesRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ItemsCreateItemForMultipleLocalesRequestTooManyRequestsErrorBody",
           },
@@ -738,6 +1070,16 @@
           },
           "ItemsCreateItemLiveRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ItemsCreateItemLiveRequestTooManyRequestsErrorBody",
           },
@@ -763,6 +1105,16 @@
           },
           "ItemsCreateItemRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ItemsCreateItemRequestTooManyRequestsErrorBody",
           },
@@ -788,6 +1140,16 @@
           },
           "ItemsDeleteItemLiveRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ItemsDeleteItemLiveRequestTooManyRequestsErrorBody",
           },
@@ -813,6 +1175,16 @@
           },
           "ItemsDeleteItemRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ItemsDeleteItemRequestTooManyRequestsErrorBody",
           },
@@ -838,6 +1210,16 @@
           },
           "ItemsGetItemLiveRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ItemsGetItemLiveRequestTooManyRequestsErrorBody",
           },
@@ -863,6 +1245,16 @@
           },
           "ItemsGetItemRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ItemsGetItemRequestTooManyRequestsErrorBody",
           },
@@ -888,6 +1280,16 @@
           },
           "ItemsListItemsLiveRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ItemsListItemsLiveRequestTooManyRequestsErrorBody",
           },
@@ -913,6 +1315,16 @@
           },
           "ItemsListItemsRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ItemsListItemsRequestTooManyRequestsErrorBody",
           },
@@ -938,6 +1350,16 @@
           },
           "ItemsPublishItemRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ItemsPublishItemRequestTooManyRequestsErrorBody",
           },
@@ -963,6 +1385,16 @@
           },
           "ItemsUpdateItemLiveRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ItemsUpdateItemLiveRequestTooManyRequestsErrorBody",
           },
@@ -988,6 +1420,16 @@
           },
           "ItemsUpdateItemRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ItemsUpdateItemRequestTooManyRequestsErrorBody",
           },
@@ -1003,11 +1445,29 @@
           },
           "OrdersGetRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "OrdersGetRequestConflictErrorBody",
           },
           "OrdersGetRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "OrdersGetRequestForbiddenErrorBody",
           },
@@ -1023,6 +1483,16 @@
           },
           "OrdersGetRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "OrdersGetRequestTooManyRequestsErrorBody",
           },
@@ -1038,11 +1508,29 @@
           },
           "OrdersListRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "OrdersListRequestConflictErrorBody",
           },
           "OrdersListRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "OrdersListRequestForbiddenErrorBody",
           },
@@ -1058,6 +1546,16 @@
           },
           "OrdersListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "OrdersListRequestTooManyRequestsErrorBody",
           },
@@ -1073,11 +1571,29 @@
           },
           "OrdersRefundRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "OrdersRefundRequestConflictErrorBody",
           },
           "OrdersRefundRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "OrdersRefundRequestForbiddenErrorBody",
           },
@@ -1093,6 +1609,16 @@
           },
           "OrdersRefundRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "OrdersRefundRequestTooManyRequestsErrorBody",
           },
@@ -1108,11 +1634,29 @@
           },
           "OrdersUpdateFulfillRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "OrdersUpdateFulfillRequestConflictErrorBody",
           },
           "OrdersUpdateFulfillRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "OrdersUpdateFulfillRequestForbiddenErrorBody",
           },
@@ -1128,6 +1672,16 @@
           },
           "OrdersUpdateFulfillRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "OrdersUpdateFulfillRequestTooManyRequestsErrorBody",
           },
@@ -1143,11 +1697,29 @@
           },
           "OrdersUpdateRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "OrdersUpdateRequestConflictErrorBody",
           },
           "OrdersUpdateRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "OrdersUpdateRequestForbiddenErrorBody",
           },
@@ -1163,6 +1735,16 @@
           },
           "OrdersUpdateRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "OrdersUpdateRequestTooManyRequestsErrorBody",
           },
@@ -1178,11 +1760,29 @@
           },
           "OrdersUpdateUnfulfillRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "OrdersUpdateUnfulfillRequestConflictErrorBody",
           },
           "OrdersUpdateUnfulfillRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "OrdersUpdateUnfulfillRequestForbiddenErrorBody",
           },
@@ -1198,6 +1798,16 @@
           },
           "OrdersUpdateUnfulfillRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "OrdersUpdateUnfulfillRequestTooManyRequestsErrorBody",
           },
@@ -1228,6 +1838,16 @@
           },
           "PagesGetContentRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "PagesGetContentRequestTooManyRequestsErrorBody",
           },
@@ -1253,6 +1873,16 @@
           },
           "PagesGetMetadataRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "PagesGetMetadataRequestTooManyRequestsErrorBody",
           },
@@ -1278,6 +1908,16 @@
           },
           "PagesListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "PagesListRequestTooManyRequestsErrorBody",
           },
@@ -1293,11 +1933,29 @@
           },
           "ProductsCreateRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "ProductsCreateRequestConflictErrorBody",
           },
           "ProductsCreateRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "ProductsCreateRequestForbiddenErrorBody",
           },
@@ -1313,6 +1971,16 @@
           },
           "ProductsCreateRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ProductsCreateRequestTooManyRequestsErrorBody",
           },
@@ -1328,11 +1996,29 @@
           },
           "ProductsCreateSkuRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "ProductsCreateSkuRequestConflictErrorBody",
           },
           "ProductsCreateSkuRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "ProductsCreateSkuRequestForbiddenErrorBody",
           },
@@ -1348,6 +2034,16 @@
           },
           "ProductsCreateSkuRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ProductsCreateSkuRequestTooManyRequestsErrorBody",
           },
@@ -1363,11 +2059,29 @@
           },
           "ProductsGetRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "ProductsGetRequestConflictErrorBody",
           },
           "ProductsGetRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "ProductsGetRequestForbiddenErrorBody",
           },
@@ -1383,6 +2097,16 @@
           },
           "ProductsGetRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ProductsGetRequestTooManyRequestsErrorBody",
           },
@@ -1398,11 +2122,29 @@
           },
           "ProductsListRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "ProductsListRequestConflictErrorBody",
           },
           "ProductsListRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "ProductsListRequestForbiddenErrorBody",
           },
@@ -1418,6 +2160,16 @@
           },
           "ProductsListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ProductsListRequestTooManyRequestsErrorBody",
           },
@@ -1433,11 +2185,29 @@
           },
           "ProductsUpdateRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "ProductsUpdateRequestConflictErrorBody",
           },
           "ProductsUpdateRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "ProductsUpdateRequestForbiddenErrorBody",
           },
@@ -1453,6 +2223,16 @@
           },
           "ProductsUpdateRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ProductsUpdateRequestTooManyRequestsErrorBody",
           },
@@ -1468,11 +2248,29 @@
           },
           "ProductsUpdateSkuRequestConflictError": {
             "docs": "The site does not have ecommerce enabled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "ProductsUpdateSkuRequestConflictErrorBody",
           },
           "ProductsUpdateSkuRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "ProductsUpdateSkuRequestForbiddenErrorBody",
           },
@@ -1488,6 +2286,16 @@
           },
           "ProductsUpdateSkuRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ProductsUpdateSkuRequestTooManyRequestsErrorBody",
           },
@@ -1513,6 +2321,16 @@
           },
           "ScriptsDeleteCustomCodeRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ScriptsDeleteCustomCodeRequestTooManyRequestsErrorBody",
           },
@@ -1538,6 +2356,16 @@
           },
           "ScriptsGetCustomCodeRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ScriptsGetCustomCodeRequestTooManyRequestsErrorBody",
           },
@@ -1563,6 +2391,16 @@
           },
           "ScriptsListCustomCodeBlocksRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ScriptsListCustomCodeBlocksRequestTooManyRequestsErrorBody",
           },
@@ -1588,6 +2426,16 @@
           },
           "ScriptsListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ScriptsListRequestTooManyRequestsErrorBody",
           },
@@ -1613,6 +2461,16 @@
           },
           "ScriptsRegisterHostedRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ScriptsRegisterHostedRequestTooManyRequestsErrorBody",
           },
@@ -1638,6 +2496,16 @@
           },
           "ScriptsRegisterInlineRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ScriptsRegisterInlineRequestTooManyRequestsErrorBody",
           },
@@ -1663,6 +2531,16 @@
           },
           "ScriptsUpsertCustomCodeRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ScriptsUpsertCustomCodeRequestTooManyRequestsErrorBody",
           },
@@ -1688,6 +2566,16 @@
           },
           "SitesGetCustomDomainRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "SitesGetCustomDomainRequestTooManyRequestsErrorBody",
           },
@@ -1713,6 +2601,16 @@
           },
           "SitesGetRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "SitesGetRequestTooManyRequestsErrorBody",
           },
@@ -1728,6 +2626,16 @@
           },
           "SitesListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "SitesListRequestTooManyRequestsErrorBody",
           },
@@ -1738,6 +2646,15 @@
           },
           "SitesPublishRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "key": "value",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "unknown",
           },
@@ -1753,6 +2670,16 @@
           },
           "SitesPublishRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "SitesPublishRequestTooManyRequestsErrorBody",
           },
@@ -1763,6 +2690,15 @@
           },
           "TokenAuthorizedByRequestForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+            ],
             "status-code": 403,
             "type": "TokenAuthorizedByRequestForbiddenErrorBody",
           },
@@ -1793,6 +2729,16 @@
           },
           "UpdatePageSettingsRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "UpdatePageSettingsRequestTooManyRequestsErrorBody",
           },
@@ -1823,6 +2769,16 @@
           },
           "UpdateStaticContentRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "UpdateStaticContentRequestTooManyRequestsErrorBody",
           },
@@ -1838,6 +2794,15 @@
           },
           "UsersDeleteRequestForbiddenError": {
             "docs": "Forbidden",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "UsersDeleteRequestForbiddenErrorBody",
           },
@@ -1853,6 +2818,16 @@
           },
           "UsersDeleteRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "UsersDeleteRequestTooManyRequestsErrorBody",
           },
@@ -1868,6 +2843,15 @@
           },
           "UsersGetRequestForbiddenError": {
             "docs": "Forbidden",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "UsersGetRequestForbiddenErrorBody",
           },
@@ -1883,6 +2867,16 @@
           },
           "UsersGetRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "UsersGetRequestTooManyRequestsErrorBody",
           },
@@ -1898,11 +2892,29 @@
           },
           "UsersInviteRequestConflictError": {
             "docs": "Conflict",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "UsersInviteRequestConflictErrorBody",
           },
           "UsersInviteRequestForbiddenError": {
             "docs": "Forbidden",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "UsersInviteRequestForbiddenErrorBody",
           },
@@ -1918,6 +2930,16 @@
           },
           "UsersInviteRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "UsersInviteRequestTooManyRequestsErrorBody",
           },
@@ -1933,6 +2955,15 @@
           },
           "UsersListRequestForbiddenError": {
             "docs": "Forbidden",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "UsersListRequestForbiddenErrorBody",
           },
@@ -1948,6 +2979,16 @@
           },
           "UsersListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "UsersListRequestTooManyRequestsErrorBody",
           },
@@ -1963,6 +3004,15 @@
           },
           "UsersUpdateRequestForbiddenError": {
             "docs": "Forbidden",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "UsersUpdateRequestForbiddenErrorBody",
           },
@@ -1978,6 +3028,16 @@
           },
           "UsersUpdateRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "UsersUpdateRequestTooManyRequestsErrorBody",
           },
@@ -2003,6 +3063,16 @@
           },
           "WebhooksCreateRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "WebhooksCreateRequestTooManyRequestsErrorBody",
           },
@@ -2028,6 +3098,16 @@
           },
           "WebhooksDeleteRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "WebhooksDeleteRequestTooManyRequestsErrorBody",
           },
@@ -2053,6 +3133,16 @@
           },
           "WebhooksGetRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "WebhooksGetRequestTooManyRequestsErrorBody",
           },
@@ -2078,6 +3168,16 @@
           },
           "WebhooksListRequestTooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "WebhooksListRequestTooManyRequestsErrorBody",
           },
@@ -5136,6 +6236,9 @@ errors:
     status-code: 403
     type: TokenAuthorizedByRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   TokenIntrospectRequestUnauthorizedError:
     status-code: 401
     type: unknown
@@ -5159,6 +6262,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   SitesGetRequestBadRequestError:
     status-code: 400
     type: unknown
@@ -5180,6 +6287,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   SitesGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5205,6 +6316,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   SitesGetCustomDomainRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5213,6 +6328,9 @@ errors:
     status-code: 400
     type: unknown
     docs: Bad Request
+    examples:
+      - value:
+          key: value
   SitesPublishRequestUnauthorizedError:
     status-code: 401
     type: unknown
@@ -5234,10 +6352,17 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ActivityLogsListRequestForbiddenError:
     status-code: 403
     type: ActivityLogsListRequestForbiddenErrorBody
     docs: Forbidden request
+    examples:
+      - value:
+          message: Request not authorized
   ActivityLogsListRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -5249,6 +6374,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ActivityLogsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5274,6 +6403,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   CollectionsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5299,6 +6432,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   CollectionsCreateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5324,6 +6461,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   CollectionsGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5349,6 +6490,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   DeleteCollectionRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5374,6 +6519,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   FieldsCreateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5399,6 +6548,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   CollectionsDeleteRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5424,6 +6577,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   FieldsUpdateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5449,6 +6606,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ItemsListItemsRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5474,6 +6635,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ItemsCreateItemRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5499,6 +6664,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ItemsListItemsLiveRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5524,6 +6693,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ItemsCreateItemLiveRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5549,6 +6722,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ItemsCreateItemForMultipleLocalesRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5574,6 +6751,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ItemsGetItemRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5599,6 +6780,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ItemsDeleteItemRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5624,6 +6809,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ItemsUpdateItemRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5649,6 +6838,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ItemsGetItemLiveRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5674,6 +6867,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ItemsDeleteItemLiveRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5699,6 +6896,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ItemsUpdateItemLiveRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5724,6 +6925,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ItemsPublishItemRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5749,6 +6954,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   PagesListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5774,6 +6983,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   PagesGetMetadataRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5799,6 +7012,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   UpdatePageSettingsRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5828,6 +7045,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   PagesGetContentRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5857,6 +7078,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   UpdateStaticContentRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5882,6 +7107,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ScriptsGetCustomCodeRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5907,6 +7136,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ScriptsUpsertCustomCodeRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5932,6 +7165,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ScriptsDeleteCustomCodeRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5957,6 +7194,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ScriptsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -5982,6 +7223,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ScriptsRegisterHostedRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6007,6 +7252,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ScriptsRegisterInlineRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6032,6 +7281,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ScriptsListCustomCodeBlocksRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6057,6 +7310,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   AssetsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6082,6 +7339,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   AssetsCreateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6107,6 +7368,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   AssetsGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6132,6 +7397,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   AssetsDeleteRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6157,6 +7426,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   AssetsUpdateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6182,6 +7455,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   AssetsListFoldersRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6207,6 +7484,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   AssetsCreateFolderRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6232,6 +7513,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   AssetsGetFolderRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6257,6 +7542,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   WebhooksListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6282,6 +7571,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   WebhooksCreateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6307,6 +7600,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   WebhooksGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6332,6 +7629,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   WebhooksDeleteRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6365,6 +7666,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   FormsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6394,6 +7699,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   FormsGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6423,6 +7732,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   FormsListSubmissionsRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6452,6 +7765,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   FormsGetSubmissionRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6485,6 +7802,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   FormsUpdateSubmissionRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6503,6 +7824,9 @@ errors:
     status-code: 403
     type: UsersListRequestForbiddenErrorBody
     docs: Forbidden
+    examples:
+      - value:
+          message: Request not authorized
   UsersListRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6514,6 +7838,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   UsersListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6532,6 +7860,9 @@ errors:
     status-code: 403
     type: UsersGetRequestForbiddenErrorBody
     docs: Forbidden
+    examples:
+      - value:
+          message: Request not authorized
   UsersGetRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6543,6 +7874,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   UsersGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6561,6 +7896,9 @@ errors:
     status-code: 403
     type: UsersDeleteRequestForbiddenErrorBody
     docs: Forbidden
+    examples:
+      - value:
+          message: Request not authorized
   UsersDeleteRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6572,6 +7910,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   UsersDeleteRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6590,6 +7932,9 @@ errors:
     status-code: 403
     type: UsersUpdateRequestForbiddenErrorBody
     docs: Forbidden
+    examples:
+      - value:
+          message: Request not authorized
   UsersUpdateRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6601,6 +7946,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   UsersUpdateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6619,6 +7968,9 @@ errors:
     status-code: 403
     type: UsersInviteRequestForbiddenErrorBody
     docs: Forbidden
+    examples:
+      - value:
+          message: Request not authorized
   UsersInviteRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6627,6 +7979,9 @@ errors:
     status-code: 409
     type: UsersInviteRequestConflictErrorBody
     docs: Conflict
+    examples:
+      - value:
+          message: Request not authorized
   UsersInviteRequestTooManyRequestsError:
     status-code: 429
     type: UsersInviteRequestTooManyRequestsErrorBody
@@ -6634,6 +7989,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   UsersInviteRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6652,6 +8011,9 @@ errors:
     status-code: 403
     type: AccessGroupsListRequestForbiddenErrorBody
     docs: Forbidden
+    examples:
+      - value:
+          message: Request not authorized
   AccessGroupsListRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6663,6 +8025,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   AccessGroupsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6681,6 +8047,9 @@ errors:
     status-code: 403
     type: ProductsListRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   ProductsListRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6689,6 +8058,9 @@ errors:
     status-code: 409
     type: ProductsListRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   ProductsListRequestTooManyRequestsError:
     status-code: 429
     type: ProductsListRequestTooManyRequestsErrorBody
@@ -6696,6 +8068,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ProductsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6714,6 +8090,9 @@ errors:
     status-code: 403
     type: ProductsCreateRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   ProductsCreateRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6722,6 +8101,9 @@ errors:
     status-code: 409
     type: ProductsCreateRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   ProductsCreateRequestTooManyRequestsError:
     status-code: 429
     type: ProductsCreateRequestTooManyRequestsErrorBody
@@ -6729,6 +8111,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ProductsCreateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6747,6 +8133,9 @@ errors:
     status-code: 403
     type: ProductsGetRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   ProductsGetRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6755,6 +8144,9 @@ errors:
     status-code: 409
     type: ProductsGetRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   ProductsGetRequestTooManyRequestsError:
     status-code: 429
     type: ProductsGetRequestTooManyRequestsErrorBody
@@ -6762,6 +8154,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ProductsGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6780,6 +8176,9 @@ errors:
     status-code: 403
     type: ProductsUpdateRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   ProductsUpdateRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6788,6 +8187,9 @@ errors:
     status-code: 409
     type: ProductsUpdateRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   ProductsUpdateRequestTooManyRequestsError:
     status-code: 429
     type: ProductsUpdateRequestTooManyRequestsErrorBody
@@ -6795,6 +8197,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ProductsUpdateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6813,6 +8219,9 @@ errors:
     status-code: 403
     type: ProductsCreateSkuRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   ProductsCreateSkuRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6821,6 +8230,9 @@ errors:
     status-code: 409
     type: ProductsCreateSkuRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   ProductsCreateSkuRequestTooManyRequestsError:
     status-code: 429
     type: ProductsCreateSkuRequestTooManyRequestsErrorBody
@@ -6828,6 +8240,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ProductsCreateSkuRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6846,6 +8262,9 @@ errors:
     status-code: 403
     type: ProductsUpdateSkuRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   ProductsUpdateSkuRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6854,6 +8273,9 @@ errors:
     status-code: 409
     type: ProductsUpdateSkuRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   ProductsUpdateSkuRequestTooManyRequestsError:
     status-code: 429
     type: ProductsUpdateSkuRequestTooManyRequestsErrorBody
@@ -6861,6 +8283,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   ProductsUpdateSkuRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6879,6 +8305,9 @@ errors:
     status-code: 403
     type: OrdersListRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   OrdersListRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6887,6 +8316,9 @@ errors:
     status-code: 409
     type: OrdersListRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   OrdersListRequestTooManyRequestsError:
     status-code: 429
     type: OrdersListRequestTooManyRequestsErrorBody
@@ -6894,6 +8326,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   OrdersListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6912,6 +8348,9 @@ errors:
     status-code: 403
     type: OrdersGetRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   OrdersGetRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6920,6 +8359,9 @@ errors:
     status-code: 409
     type: OrdersGetRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   OrdersGetRequestTooManyRequestsError:
     status-code: 429
     type: OrdersGetRequestTooManyRequestsErrorBody
@@ -6927,6 +8369,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   OrdersGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6945,6 +8391,9 @@ errors:
     status-code: 403
     type: OrdersUpdateRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   OrdersUpdateRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6953,6 +8402,9 @@ errors:
     status-code: 409
     type: OrdersUpdateRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   OrdersUpdateRequestTooManyRequestsError:
     status-code: 429
     type: OrdersUpdateRequestTooManyRequestsErrorBody
@@ -6960,6 +8412,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   OrdersUpdateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6978,6 +8434,9 @@ errors:
     status-code: 403
     type: OrdersUpdateFulfillRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   OrdersUpdateFulfillRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6986,6 +8445,9 @@ errors:
     status-code: 409
     type: OrdersUpdateFulfillRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   OrdersUpdateFulfillRequestTooManyRequestsError:
     status-code: 429
     type: OrdersUpdateFulfillRequestTooManyRequestsErrorBody
@@ -6993,6 +8455,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   OrdersUpdateFulfillRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7011,6 +8477,9 @@ errors:
     status-code: 403
     type: OrdersUpdateUnfulfillRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   OrdersUpdateUnfulfillRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -7019,6 +8488,9 @@ errors:
     status-code: 409
     type: OrdersUpdateUnfulfillRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   OrdersUpdateUnfulfillRequestTooManyRequestsError:
     status-code: 429
     type: OrdersUpdateUnfulfillRequestTooManyRequestsErrorBody
@@ -7026,6 +8498,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   OrdersUpdateUnfulfillRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7044,6 +8520,9 @@ errors:
     status-code: 403
     type: OrdersRefundRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   OrdersRefundRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -7052,6 +8531,9 @@ errors:
     status-code: 409
     type: OrdersRefundRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   OrdersRefundRequestTooManyRequestsError:
     status-code: 429
     type: OrdersRefundRequestTooManyRequestsErrorBody
@@ -7059,6 +8541,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   OrdersRefundRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7077,6 +8563,9 @@ errors:
     status-code: 403
     type: InventoryListRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   InventoryListRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -7085,6 +8574,9 @@ errors:
     status-code: 409
     type: InventoryListRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   InventoryListRequestTooManyRequestsError:
     status-code: 429
     type: InventoryListRequestTooManyRequestsErrorBody
@@ -7092,6 +8584,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   InventoryListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7110,6 +8606,9 @@ errors:
     status-code: 403
     type: InventoryUpdateRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   InventoryUpdateRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -7118,6 +8617,9 @@ errors:
     status-code: 409
     type: InventoryUpdateRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   InventoryUpdateRequestTooManyRequestsError:
     status-code: 429
     type: InventoryUpdateRequestTooManyRequestsErrorBody
@@ -7125,6 +8627,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   InventoryUpdateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7143,6 +8649,9 @@ errors:
     status-code: 403
     type: EcommerceGetSettingsRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
   EcommerceGetSettingsRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -7151,6 +8660,9 @@ errors:
     status-code: 409
     type: EcommerceGetSettingsRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
+    examples:
+      - value:
+          message: Request not authorized
   EcommerceGetSettingsRequestTooManyRequestsError:
     status-code: 429
     type: EcommerceGetSettingsRequestTooManyRequestsErrorBody
@@ -7158,6 +8670,10 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   EcommerceGetSettingsRequestInternalServerError:
     status-code: 500
     type: unknown

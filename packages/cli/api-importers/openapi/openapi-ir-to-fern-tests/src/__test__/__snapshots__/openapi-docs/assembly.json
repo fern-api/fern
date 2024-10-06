@@ -8,6 +8,15 @@
         "errors": {
           "FilesUploadRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -18,11 +27,29 @@
           },
           "FilesUploadRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "FilesUploadRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -33,16 +60,43 @@
           },
           "FilesUploadRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "FilesUploadRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "LemurActionItemsRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -53,11 +107,29 @@
           },
           "LemurActionItemsRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "LemurActionItemsRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -68,16 +140,43 @@
           },
           "LemurActionItemsRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "LemurActionItemsRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "LemurPurgeRequestDataRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -88,11 +187,29 @@
           },
           "LemurPurgeRequestDataRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "LemurPurgeRequestDataRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -103,16 +220,43 @@
           },
           "LemurPurgeRequestDataRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "LemurPurgeRequestDataRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "LemurQuestionAnswerRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -123,11 +267,29 @@
           },
           "LemurQuestionAnswerRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "LemurQuestionAnswerRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -138,16 +300,43 @@
           },
           "LemurQuestionAnswerRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "LemurQuestionAnswerRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "LemurSummaryRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -158,11 +347,29 @@
           },
           "LemurSummaryRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "LemurSummaryRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -173,16 +380,43 @@
           },
           "LemurSummaryRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "LemurSummaryRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "LemurTaskRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -193,11 +427,29 @@
           },
           "LemurTaskRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "LemurTaskRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -208,16 +460,43 @@
           },
           "LemurTaskRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "LemurTaskRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "RealtimeCreateTemporaryTokenRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -228,11 +507,29 @@
           },
           "RealtimeCreateTemporaryTokenRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "RealtimeCreateTemporaryTokenRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -243,16 +540,43 @@
           },
           "RealtimeCreateTemporaryTokenRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "RealtimeCreateTemporaryTokenRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "TranscriptCreateRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -263,11 +587,29 @@
           },
           "TranscriptCreateRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "TranscriptCreateRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -278,16 +620,43 @@
           },
           "TranscriptCreateRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "TranscriptCreateRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "TranscriptDeleteRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -298,11 +667,29 @@
           },
           "TranscriptDeleteRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "TranscriptDeleteRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -313,16 +700,43 @@
           },
           "TranscriptDeleteRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "TranscriptDeleteRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "TranscriptGetParagraphsRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -333,11 +747,29 @@
           },
           "TranscriptGetParagraphsRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "TranscriptGetParagraphsRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -348,16 +780,43 @@
           },
           "TranscriptGetParagraphsRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "TranscriptGetParagraphsRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "TranscriptGetRedactedAudioRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -368,11 +827,29 @@
           },
           "TranscriptGetRedactedAudioRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "TranscriptGetRedactedAudioRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -383,16 +860,43 @@
           },
           "TranscriptGetRedactedAudioRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "TranscriptGetRedactedAudioRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "TranscriptGetRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -403,11 +907,29 @@
           },
           "TranscriptGetRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "TranscriptGetRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -418,16 +940,43 @@
           },
           "TranscriptGetRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "TranscriptGetRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "TranscriptGetSentencesRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -438,11 +987,29 @@
           },
           "TranscriptGetSentencesRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "TranscriptGetSentencesRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -453,16 +1020,43 @@
           },
           "TranscriptGetSentencesRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "TranscriptGetSentencesRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "TranscriptGetSubtitlesRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -473,11 +1067,29 @@
           },
           "TranscriptGetSubtitlesRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "TranscriptGetSubtitlesRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -488,16 +1100,43 @@
           },
           "TranscriptGetSubtitlesRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "TranscriptGetSubtitlesRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "TranscriptListRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -508,11 +1147,29 @@
           },
           "TranscriptListRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "TranscriptListRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -523,16 +1180,43 @@
           },
           "TranscriptListRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "TranscriptListRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
           "TranscriptWordSearchRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -543,11 +1227,29 @@
           },
           "TranscriptWordSearchRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "TranscriptWordSearchRequestNotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -558,11 +1260,29 @@
           },
           "TranscriptWordSearchRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "TranscriptWordSearchRequestUnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
@@ -2135,22 +2855,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   FilesUploadRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   FilesUploadRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   FilesUploadRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   FilesUploadRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   FilesUploadRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2163,22 +2898,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   TranscriptListRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   TranscriptListRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   TranscriptListRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   TranscriptListRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   TranscriptListRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2191,22 +2941,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   TranscriptCreateRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   TranscriptCreateRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   TranscriptCreateRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   TranscriptCreateRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   TranscriptCreateRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2219,22 +2984,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   TranscriptGetRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   TranscriptGetRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   TranscriptGetRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   TranscriptGetRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   TranscriptGetRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2247,22 +3027,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   TranscriptDeleteRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   TranscriptDeleteRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   TranscriptDeleteRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   TranscriptDeleteRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   TranscriptDeleteRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2275,22 +3070,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   TranscriptGetSubtitlesRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   TranscriptGetSubtitlesRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   TranscriptGetSubtitlesRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   TranscriptGetSubtitlesRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   TranscriptGetSubtitlesRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2303,22 +3113,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   TranscriptGetSentencesRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   TranscriptGetSentencesRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   TranscriptGetSentencesRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   TranscriptGetSentencesRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   TranscriptGetSentencesRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2331,22 +3156,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   TranscriptGetParagraphsRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   TranscriptGetParagraphsRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   TranscriptGetParagraphsRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   TranscriptGetParagraphsRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   TranscriptGetParagraphsRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2359,22 +3199,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   TranscriptWordSearchRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   TranscriptWordSearchRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   TranscriptWordSearchRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   TranscriptWordSearchRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   TranscriptWordSearchRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2387,22 +3242,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   TranscriptGetRedactedAudioRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   TranscriptGetRedactedAudioRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   TranscriptGetRedactedAudioRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   TranscriptGetRedactedAudioRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   TranscriptGetRedactedAudioRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2415,22 +3285,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   RealtimeCreateTemporaryTokenRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   RealtimeCreateTemporaryTokenRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   RealtimeCreateTemporaryTokenRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   RealtimeCreateTemporaryTokenRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   RealtimeCreateTemporaryTokenRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2443,22 +3328,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   LemurSummaryRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   LemurSummaryRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   LemurSummaryRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   LemurSummaryRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   LemurSummaryRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2471,22 +3371,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   LemurQuestionAnswerRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   LemurQuestionAnswerRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   LemurQuestionAnswerRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   LemurQuestionAnswerRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   LemurQuestionAnswerRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2499,22 +3414,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   LemurActionItemsRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   LemurActionItemsRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   LemurActionItemsRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   LemurActionItemsRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   LemurActionItemsRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2527,22 +3457,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   LemurTaskRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   LemurTaskRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   LemurTaskRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   LemurTaskRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   LemurTaskRequestServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -2555,22 +3500,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   LemurPurgeRequestDataRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   LemurPurgeRequestDataRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   LemurPurgeRequestDataRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   LemurPurgeRequestDataRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   LemurPurgeRequestDataRequestServiceUnavailableError:
     status-code: 503
     type: unknown

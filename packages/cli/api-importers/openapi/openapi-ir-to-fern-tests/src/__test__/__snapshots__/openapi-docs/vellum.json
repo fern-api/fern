@@ -8,91 +8,253 @@
         "errors": {
           "DocumentsUploadRequestBadRequestError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "UploadDocumentErrorResponse",
           },
           "DocumentsUploadRequestInternalServerError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "UploadDocumentErrorResponse",
           },
           "DocumentsUploadRequestNotFoundError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "UploadDocumentErrorResponse",
           },
           "GenerateRequestBadRequestError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "GenerateErrorResponse",
           },
           "GenerateRequestForbiddenError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "GenerateErrorResponse",
           },
           "GenerateRequestInternalServerError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "GenerateErrorResponse",
           },
           "GenerateRequestNotFoundError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "GenerateErrorResponse",
           },
           "GenerateStreamRequestBadRequestError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "GenerateErrorResponse",
           },
           "GenerateStreamRequestForbiddenError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "GenerateErrorResponse",
           },
           "GenerateStreamRequestInternalServerError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "GenerateErrorResponse",
           },
           "GenerateStreamRequestNotFoundError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "GenerateErrorResponse",
           },
           "RegisterPromptRequestConflictError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "RegisterPromptErrorResponse",
           },
           "SearchRequestBadRequestError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "SearchErrorResponse",
           },
           "SearchRequestInternalServerError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "SearchErrorResponse",
           },
           "SearchRequestNotFoundError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "SearchErrorResponse",
           },
           "SubmitCompletionActualsRequestBadRequestError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "SubmitCompletionActualsErrorResponse",
           },
           "SubmitCompletionActualsRequestInternalServerError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "SubmitCompletionActualsErrorResponse",
           },
           "SubmitCompletionActualsRequestNotFoundError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "SubmitCompletionActualsErrorResponse",
           },
@@ -2683,74 +2845,128 @@ errors:
     status-code: 400
     type: GenerateErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   GenerateRequestForbiddenError:
     status-code: 403
     type: GenerateErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   GenerateRequestNotFoundError:
     status-code: 404
     type: GenerateErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   GenerateRequestInternalServerError:
     status-code: 500
     type: GenerateErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   GenerateStreamRequestBadRequestError:
     status-code: 400
     type: GenerateErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   GenerateStreamRequestForbiddenError:
     status-code: 403
     type: GenerateErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   GenerateStreamRequestNotFoundError:
     status-code: 404
     type: GenerateErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   GenerateStreamRequestInternalServerError:
     status-code: 500
     type: GenerateErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   RegisterPromptRequestConflictError:
     status-code: 409
     type: RegisterPromptErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   SearchRequestBadRequestError:
     status-code: 400
     type: SearchErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   SearchRequestNotFoundError:
     status-code: 404
     type: SearchErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   SearchRequestInternalServerError:
     status-code: 500
     type: SearchErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   SubmitCompletionActualsRequestBadRequestError:
     status-code: 400
     type: SubmitCompletionActualsErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   SubmitCompletionActualsRequestNotFoundError:
     status-code: 404
     type: SubmitCompletionActualsErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   SubmitCompletionActualsRequestInternalServerError:
     status-code: 500
     type: SubmitCompletionActualsErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   DocumentsUploadRequestBadRequestError:
     status-code: 400
     type: UploadDocumentErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   DocumentsUploadRequestNotFoundError:
     status-code: 404
     type: UploadDocumentErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   DocumentsUploadRequestInternalServerError:
     status-code: 500
     type: UploadDocumentErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
 types:
   BlockTypeEnum:
     enum:

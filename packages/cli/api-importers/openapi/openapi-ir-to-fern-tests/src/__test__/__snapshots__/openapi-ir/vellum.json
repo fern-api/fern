@@ -1304,7 +1304,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -1322,7 +1337,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -1340,7 +1370,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -1358,7 +1403,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [
@@ -1547,7 +1607,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -1565,7 +1640,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -1583,7 +1673,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -1601,7 +1706,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [
@@ -2129,7 +2249,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2999,7 +3134,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -3017,7 +3167,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -3035,7 +3200,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [
@@ -3180,7 +3360,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -3198,7 +3393,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -3216,7 +3426,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [
@@ -3691,7 +3916,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -3709,7 +3949,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -3727,7 +3982,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "detail": {
+                    "value": {
+                      "value": "detail",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [

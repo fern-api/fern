@@ -8,36 +8,85 @@
         "errors": {
           "BadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "ForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "InternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "NotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "ServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "TooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "UnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
@@ -2952,30 +3001,44 @@ unique.
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   UnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   ForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   NotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   TooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   InternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   ServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
 types:
   ArtifactSummary:
     type: AtomBaseSummary

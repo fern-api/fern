@@ -637,7 +637,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/booking_amendments",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2236,7 +2265,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/booking_line_items",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2759,7 +2817,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/booking_line_items",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -3216,7 +3303,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/booking_line_items/123456",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -4410,7 +4526,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/bookings",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6198,7 +6343,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/bookings",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -8561,7 +8735,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/bookings/123456",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -10322,7 +10525,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/carbon_calculation",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -11904,7 +12136,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/commercial_invoices",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -12960,7 +13221,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/commercial_invoices",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -13955,7 +14245,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/commercial_invoices/abcxyz-23456-def",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -15045,7 +15364,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/custom_entries",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -15502,7 +15850,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/customs_entries/abcdefg-1234567-hijk",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -16231,7 +16608,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/documents",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -16735,7 +17141,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/documents",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -17171,7 +17606,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/documents/ABC123",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -17511,7 +17975,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/documents/ABC123/download",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -18010,7 +18503,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/events",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -18430,7 +18952,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/events/123456",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -19970,7 +20521,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/invoices",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -21802,7 +22382,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/invoices/abcdef123",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -23511,7 +24120,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/companies",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -24196,7 +24834,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/companies",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -25388,7 +26055,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/companies/ABC123",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -26263,7 +26959,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/company_entities",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -26818,7 +27543,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/company_entities",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -27326,7 +28080,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/company_entities/9281",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -27850,7 +28633,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/company_entities/9281",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -28572,7 +29384,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/contacts",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -29072,7 +29913,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/contacts",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -29536,7 +30406,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/contacts/ABC123",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -30006,7 +30905,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/contacts/ABC123",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -30737,7 +31665,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/locations",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -31346,7 +32303,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/locations",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -31929,7 +32915,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/locations/abdef123",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -32521,7 +33536,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/locations/abdef123",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -33088,7 +34132,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/network/me/companies",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -33922,7 +34995,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/ocean/shipment_container_legs",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -34419,7 +35521,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/ocean/shipment_container_legs/1234",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -35115,7 +36246,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/ocean/shipment_containers",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -35911,7 +37071,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/ocean/shipment_containers/1234",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -36900,7 +38089,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/ports",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -37783,7 +39001,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/products",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -38337,7 +39584,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/products",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -38891,7 +40167,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/products/84291",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -39442,7 +40747,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/products/84291",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -40322,7 +41656,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/purchase_order_line_items",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 3,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -41386,7 +42749,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/purchase_order_line_items/123456",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 3,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -43260,7 +44652,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/purchase_orders",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 3,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -45008,7 +46429,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/purchase_orders",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 3,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -46891,7 +48341,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/purchase_orders/12345",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 3,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -48059,7 +49538,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/purchase_orders/12345",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 3,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -49708,7 +51216,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/shipment_legs",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -50919,7 +52456,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/shipment_legs/948211",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -53166,7 +54732,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/shipments",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -55279,7 +56874,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/shipments/1234",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -57483,7 +59107,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/shipments/1234",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -59592,7 +61245,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "_object": {
+                    "value": {
+                      "value": "/api/response",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "self": {
+                    "value": {
+                      "value": "https://api.flexport.com/shipments_shareable",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "version": {
+                    "value": {
+                      "value": 2,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],

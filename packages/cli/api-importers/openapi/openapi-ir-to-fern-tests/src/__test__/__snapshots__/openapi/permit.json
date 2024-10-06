@@ -8,6 +8,13 @@
         "errors": {
           "UnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
@@ -2602,6 +2609,8 @@ The actions represents the ways you can interact with a protected resource.",
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
 types:
   ActionBlockEditable:
     properties:

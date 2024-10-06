@@ -8,21 +8,57 @@
         "errors": {
           "EmailsSendRequestInternalServerError": {
             "docs": "Default Response",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "EmailsSendRequestInternalServerErrorBody",
           },
           "EvalGetRequestBadRequestError": {
             "docs": "The function throw an error or had invalid syntax",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                  "type": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "EvalGetRequestBadRequestErrorBody",
           },
           "EvalPostRequestBadRequestError": {
             "docs": "Default Response",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                  "type": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "EvalPostRequestBadRequestErrorBody",
           },
           "ValsCancelRequestNotFoundError": {
             "docs": "Default Response",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 404,
             "type": "string",
           },
@@ -903,14 +939,25 @@ errors:
     status-code: 400
     type: EvalPostRequestBadRequestErrorBody
     docs: Default Response
+    examples:
+      - value:
+          type: error
+          error: error
   EvalGetRequestBadRequestError:
     status-code: 400
     type: EvalGetRequestBadRequestErrorBody
     docs: The function throw an error or had invalid syntax
+    examples:
+      - value:
+          type: error
+          error: error
   EmailsSendRequestInternalServerError:
     status-code: 500
     type: EmailsSendRequestInternalServerErrorBody
     docs: Default Response
+    examples:
+      - value:
+          error: error
   ValsDeleteRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -923,6 +970,8 @@ errors:
     status-code: 404
     type: string
     docs: Default Response
+    examples:
+      - value: string
 navigation:
   - vals
   - alias

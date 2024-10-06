@@ -8,1521 +8,3649 @@
         "errors": {
           "ArtifactsLocateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "ArtifactsLocateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "ArtifactsLocateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "ArtifactsLocateRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "ArtifactsLocateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "ArtifactsLocateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "ArtifactsLocateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "ArtifactsPrepareRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "ArtifactsPrepareRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "ArtifactsPrepareRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "ArtifactsPrepareRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "ArtifactsPrepareRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "ArtifactsPrepareRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "AuthTokensCreateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "AuthTokensCreateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "AuthTokensCreateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "AuthTokensCreateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "AuthTokensCreateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "AuthTokensCreateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "AuthTokensDeleteRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "AuthTokensDeleteRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "AuthTokensDeleteRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "AuthTokensDeleteRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "AuthTokensDeleteRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "AuthTokensDeleteRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "AuthTokensDeleteRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "AuthTokensGetRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "AuthTokensGetRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "AuthTokensGetRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "AuthTokensGetRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "AuthTokensGetRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "AuthTokensGetRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "AuthTokensGetRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "AuthTokensListRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "AuthTokensListRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "AuthTokensListRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "AuthTokensListRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "AuthTokensListRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "AuthTokensListRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "AuthTokensListRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "AuthTokensSelfDeleteRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "AuthTokensSelfDeleteRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "AuthTokensSelfDeleteRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "AuthTokensSelfDeleteRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "AuthTokensSelfDeleteRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "AuthTokensSelfDeleteRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "AuthTokensSelfDeleteRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "AuthTokensUpdateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "AuthTokensUpdateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "AuthTokensUpdateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "AuthTokensUpdateRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "AuthTokensUpdateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "AuthTokensUpdateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "AuthTokensUpdateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "DevOrgAuthConnectionsCreateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "DevOrgAuthConnectionsCreateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "DevOrgAuthConnectionsCreateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "DevOrgAuthConnectionsCreateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "DevOrgAuthConnectionsCreateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "DevOrgAuthConnectionsCreateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "DevOrgAuthConnectionsDeleteRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "DevOrgAuthConnectionsDeleteRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "DevOrgAuthConnectionsDeleteRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "DevOrgAuthConnectionsDeleteRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "DevOrgAuthConnectionsDeleteRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "DevOrgAuthConnectionsDeleteRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "DevOrgAuthConnectionsDeleteRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "DevOrgAuthConnectionsGetRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "DevOrgAuthConnectionsGetRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "DevOrgAuthConnectionsGetRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "DevOrgAuthConnectionsGetRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "DevOrgAuthConnectionsGetRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "DevOrgAuthConnectionsGetRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "DevOrgAuthConnectionsGetRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "DevOrgAuthConnectionsListRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "DevOrgAuthConnectionsListRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "DevOrgAuthConnectionsListRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "DevOrgAuthConnectionsListRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "DevOrgAuthConnectionsListRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "DevOrgAuthConnectionsListRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "DevOrgAuthConnectionsToggleRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "DevOrgAuthConnectionsToggleRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "DevOrgAuthConnectionsToggleRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "DevOrgAuthConnectionsToggleRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "DevOrgAuthConnectionsToggleRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "DevOrgAuthConnectionsToggleRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "DevOrgAuthConnectionsToggleRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "DevOrgAuthConnectionsUpdateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "DevOrgAuthConnectionsUpdateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "DevOrgAuthConnectionsUpdateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "DevOrgAuthConnectionsUpdateRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "DevOrgAuthConnectionsUpdateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "DevOrgAuthConnectionsUpdateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "DevOrgAuthConnectionsUpdateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "DevUsersListRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "DevUsersListRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "DevUsersListRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "DevUsersListRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "DevUsersListRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "DevUsersListRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "DevUsersSelfRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "DevUsersSelfRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "DevUsersSelfRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "DevUsersSelfRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "DevUsersSelfRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "DevUsersSelfRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "PartsCreateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "PartsCreateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "PartsCreateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "PartsCreateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "PartsCreateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "PartsCreateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "PartsDeleteRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "PartsDeleteRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "PartsDeleteRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "PartsDeleteRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "PartsDeleteRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "PartsDeleteRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "PartsDeleteRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "PartsGetRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "PartsGetRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "PartsGetRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "PartsGetRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "PartsGetRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "PartsGetRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "PartsGetRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "PartsListRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "PartsListRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "PartsListRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "PartsListRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "PartsListRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "PartsListRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "PartsUpdateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "PartsUpdateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "PartsUpdateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "PartsUpdateRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "PartsUpdateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "PartsUpdateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "PartsUpdateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "RevOrgsCreateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "RevOrgsCreateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "RevOrgsCreateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "RevOrgsCreateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "RevOrgsCreateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "RevOrgsCreateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "RevOrgsDeleteRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "RevOrgsDeleteRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "RevOrgsDeleteRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "RevOrgsDeleteRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "RevOrgsDeleteRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "RevOrgsDeleteRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "RevOrgsDeleteRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "RevOrgsGetRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "RevOrgsGetRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "RevOrgsGetRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "RevOrgsGetRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "RevOrgsGetRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "RevOrgsGetRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "RevOrgsGetRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "RevOrgsListRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "RevOrgsListRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "RevOrgsListRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "RevOrgsListRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "RevOrgsListRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "RevOrgsListRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "RevOrgsListRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "RevOrgsUpdateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "RevOrgsUpdateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "RevOrgsUpdateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "RevOrgsUpdateRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "RevOrgsUpdateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "RevOrgsUpdateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "RevOrgsUpdateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "TagsCreateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "TagsCreateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "TagsCreateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "TagsCreateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "TagsCreateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "TagsCreateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "TagsDeleteRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "TagsDeleteRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "TagsDeleteRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "TagsDeleteRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "TagsDeleteRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "TagsDeleteRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "TagsDeleteRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "TagsGetRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "TagsGetRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "TagsGetRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "TagsGetRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "TagsGetRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "TagsGetRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "TagsGetRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "TagsListRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "TagsListRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "TagsListRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "TagsListRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "TagsListRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "TagsListRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "TagsUpdateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "TagsUpdateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "TagsUpdateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "TagsUpdateRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "TagsUpdateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "TagsUpdateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "TagsUpdateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "TimelineEntriesCreateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "TimelineEntriesCreateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "TimelineEntriesCreateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "TimelineEntriesCreateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "TimelineEntriesCreateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "TimelineEntriesCreateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "TimelineEntriesGetRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "TimelineEntriesGetRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "TimelineEntriesGetRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "TimelineEntriesGetRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "TimelineEntriesGetRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "TimelineEntriesGetRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "TimelineEntriesGetRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "TimelineEntriesListRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "TimelineEntriesListRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "TimelineEntriesListRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "TimelineEntriesListRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "TimelineEntriesListRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "TimelineEntriesListRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "TimelineEntriesListRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "TimelineEntriesUpdateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "TimelineEntriesUpdateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "TimelineEntriesUpdateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "TimelineEntriesUpdateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "TimelineEntriesUpdateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "TimelineEntriesUpdateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "WebhooksCreateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "WebhooksCreateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "WebhooksCreateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "WebhooksCreateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "WebhooksCreateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "WebhooksCreateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "WebhooksDeleteRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "WebhooksDeleteRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "WebhooksDeleteRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "WebhooksDeleteRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "WebhooksDeleteRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "WebhooksDeleteRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "WebhooksDeleteRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "WebhooksGetRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "WebhooksGetRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "WebhooksGetRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "WebhooksGetRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "WebhooksGetRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "WebhooksGetRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "WebhooksGetRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "WebhooksListRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "WebhooksListRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "WebhooksListRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "WebhooksListRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "WebhooksListRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "WebhooksListRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "WebhooksUpdateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "WebhooksUpdateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "WebhooksUpdateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "WebhooksUpdateRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "WebhooksUpdateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "WebhooksUpdateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "WebhooksUpdateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "WorksCreateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "WorksCreateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "WorksCreateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "WorksCreateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "WorksCreateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "WorksCreateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "WorksDeleteRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "WorksDeleteRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "WorksDeleteRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "WorksDeleteRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "WorksDeleteRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "WorksDeleteRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "WorksDeleteRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "WorksExportRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "WorksExportRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "WorksExportRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "WorksExportRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "WorksExportRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "WorksExportRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "WorksGetRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "WorksGetRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "WorksGetRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "WorksGetRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "WorksGetRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "WorksGetRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "WorksGetRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "WorksListRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "WorksListRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "WorksListRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "WorksListRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "WorksListRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "WorksListRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
           "WorksUpdateRequestBadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ErrorBadRequest",
           },
           "WorksUpdateRequestForbiddenError": {
             "docs": "403 Forbidden.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ErrorForbidden",
           },
           "WorksUpdateRequestInternalServerError": {
             "docs": "500 Internal Server Error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ErrorInternalServerError",
           },
           "WorksUpdateRequestNotFoundError": {
             "docs": "404 Not Found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ErrorNotFound",
           },
           "WorksUpdateRequestServiceUnavailableError": {
             "docs": "503 Service Unavailable.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 503,
             "type": "ErrorServiceUnavailable",
           },
           "WorksUpdateRequestTooManyRequestsError": {
             "docs": "429 Too Many Requests.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ErrorTooManyRequests",
           },
           "WorksUpdateRequestUnauthorizedError": {
             "docs": "401 Unauthorized.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ErrorUnauthorized",
           },
@@ -4437,1218 +6565,1826 @@ unique.
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   ArtifactsLocateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   ArtifactsLocateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   ArtifactsLocateRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   ArtifactsLocateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   ArtifactsLocateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   ArtifactsLocateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   ArtifactsPrepareRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   ArtifactsPrepareRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   ArtifactsPrepareRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   ArtifactsPrepareRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   ArtifactsPrepareRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   ArtifactsPrepareRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   AuthTokensCreateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   AuthTokensCreateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   AuthTokensCreateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   AuthTokensCreateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   AuthTokensCreateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   AuthTokensCreateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   AuthTokensDeleteRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   AuthTokensDeleteRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   AuthTokensDeleteRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   AuthTokensDeleteRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   AuthTokensDeleteRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   AuthTokensDeleteRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   AuthTokensDeleteRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   AuthTokensGetRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   AuthTokensGetRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   AuthTokensGetRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   AuthTokensGetRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   AuthTokensGetRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   AuthTokensGetRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   AuthTokensGetRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   AuthTokensListRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   AuthTokensListRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   AuthTokensListRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   AuthTokensListRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   AuthTokensListRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   AuthTokensListRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   AuthTokensListRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   AuthTokensSelfDeleteRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   AuthTokensSelfDeleteRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   AuthTokensSelfDeleteRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   AuthTokensSelfDeleteRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   AuthTokensSelfDeleteRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   AuthTokensSelfDeleteRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   AuthTokensSelfDeleteRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   AuthTokensUpdateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   AuthTokensUpdateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   AuthTokensUpdateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   AuthTokensUpdateRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   AuthTokensUpdateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   AuthTokensUpdateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   AuthTokensUpdateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsCreateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsCreateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsCreateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsCreateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsCreateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsCreateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsDeleteRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsDeleteRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsDeleteRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsDeleteRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsDeleteRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsDeleteRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsDeleteRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsGetRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsGetRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsGetRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsGetRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsGetRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsGetRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsGetRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsListRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsListRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsListRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsListRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsListRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsListRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsToggleRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsToggleRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsToggleRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsToggleRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsToggleRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsToggleRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsToggleRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsUpdateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsUpdateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsUpdateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsUpdateRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsUpdateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsUpdateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   DevOrgAuthConnectionsUpdateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   DevUsersListRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   DevUsersListRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   DevUsersListRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   DevUsersListRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   DevUsersListRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   DevUsersListRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   DevUsersSelfRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   DevUsersSelfRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   DevUsersSelfRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   DevUsersSelfRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   DevUsersSelfRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   DevUsersSelfRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   PartsCreateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   PartsCreateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   PartsCreateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   PartsCreateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   PartsCreateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   PartsCreateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   PartsDeleteRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   PartsDeleteRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   PartsDeleteRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   PartsDeleteRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   PartsDeleteRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   PartsDeleteRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   PartsDeleteRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   PartsGetRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   PartsGetRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   PartsGetRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   PartsGetRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   PartsGetRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   PartsGetRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   PartsGetRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   PartsListRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   PartsListRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   PartsListRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   PartsListRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   PartsListRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   PartsListRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   PartsUpdateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   PartsUpdateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   PartsUpdateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   PartsUpdateRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   PartsUpdateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   PartsUpdateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   PartsUpdateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   RevOrgsCreateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   RevOrgsCreateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   RevOrgsCreateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   RevOrgsCreateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   RevOrgsCreateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   RevOrgsCreateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   RevOrgsDeleteRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   RevOrgsDeleteRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   RevOrgsDeleteRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   RevOrgsDeleteRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   RevOrgsDeleteRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   RevOrgsDeleteRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   RevOrgsDeleteRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   RevOrgsGetRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   RevOrgsGetRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   RevOrgsGetRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   RevOrgsGetRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   RevOrgsGetRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   RevOrgsGetRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   RevOrgsGetRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   RevOrgsListRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   RevOrgsListRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   RevOrgsListRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   RevOrgsListRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   RevOrgsListRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   RevOrgsListRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   RevOrgsListRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   RevOrgsUpdateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   RevOrgsUpdateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   RevOrgsUpdateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   RevOrgsUpdateRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   RevOrgsUpdateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   RevOrgsUpdateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   RevOrgsUpdateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   TagsCreateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   TagsCreateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   TagsCreateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   TagsCreateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   TagsCreateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   TagsCreateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   TagsDeleteRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   TagsDeleteRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   TagsDeleteRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   TagsDeleteRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   TagsDeleteRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   TagsDeleteRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   TagsDeleteRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   TagsGetRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   TagsGetRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   TagsGetRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   TagsGetRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   TagsGetRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   TagsGetRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   TagsGetRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   TagsListRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   TagsListRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   TagsListRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   TagsListRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   TagsListRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   TagsListRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   TagsUpdateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   TagsUpdateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   TagsUpdateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   TagsUpdateRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   TagsUpdateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   TagsUpdateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   TagsUpdateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   TimelineEntriesCreateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   TimelineEntriesCreateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   TimelineEntriesCreateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   TimelineEntriesCreateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   TimelineEntriesCreateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   TimelineEntriesCreateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   TimelineEntriesGetRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   TimelineEntriesGetRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   TimelineEntriesGetRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   TimelineEntriesGetRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   TimelineEntriesGetRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   TimelineEntriesGetRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   TimelineEntriesGetRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   TimelineEntriesListRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   TimelineEntriesListRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   TimelineEntriesListRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   TimelineEntriesListRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   TimelineEntriesListRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   TimelineEntriesListRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   TimelineEntriesListRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   TimelineEntriesUpdateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   TimelineEntriesUpdateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   TimelineEntriesUpdateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   TimelineEntriesUpdateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   TimelineEntriesUpdateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   TimelineEntriesUpdateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   WebhooksCreateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   WebhooksCreateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   WebhooksCreateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   WebhooksCreateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   WebhooksCreateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   WebhooksCreateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   WebhooksDeleteRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   WebhooksDeleteRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   WebhooksDeleteRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   WebhooksDeleteRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   WebhooksDeleteRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   WebhooksDeleteRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   WebhooksDeleteRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   WebhooksGetRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   WebhooksGetRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   WebhooksGetRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   WebhooksGetRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   WebhooksGetRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   WebhooksGetRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   WebhooksGetRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   WebhooksListRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   WebhooksListRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   WebhooksListRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   WebhooksListRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   WebhooksListRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   WebhooksListRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   WebhooksUpdateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   WebhooksUpdateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   WebhooksUpdateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   WebhooksUpdateRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   WebhooksUpdateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   WebhooksUpdateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   WebhooksUpdateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   WorksCreateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   WorksCreateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   WorksCreateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   WorksCreateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   WorksCreateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   WorksCreateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   WorksDeleteRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   WorksDeleteRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   WorksDeleteRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   WorksDeleteRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   WorksDeleteRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   WorksDeleteRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   WorksDeleteRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   WorksExportRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   WorksExportRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   WorksExportRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   WorksExportRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   WorksExportRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   WorksExportRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   WorksGetRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   WorksGetRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   WorksGetRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   WorksGetRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   WorksGetRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   WorksGetRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   WorksGetRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   WorksListRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   WorksListRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   WorksListRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   WorksListRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   WorksListRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   WorksListRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
   WorksUpdateRequestBadRequestError:
     status-code: 400
     type: ErrorBadRequest
     docs: 400 Bad Request.
+    examples:
+      - value: {}
   WorksUpdateRequestUnauthorizedError:
     status-code: 401
     type: ErrorUnauthorized
     docs: 401 Unauthorized.
+    examples:
+      - value: {}
   WorksUpdateRequestForbiddenError:
     status-code: 403
     type: ErrorForbidden
     docs: 403 Forbidden.
+    examples:
+      - value: {}
   WorksUpdateRequestNotFoundError:
     status-code: 404
     type: ErrorNotFound
     docs: 404 Not Found.
+    examples:
+      - value: {}
   WorksUpdateRequestTooManyRequestsError:
     status-code: 429
     type: ErrorTooManyRequests
     docs: 429 Too Many Requests.
+    examples:
+      - value: {}
   WorksUpdateRequestInternalServerError:
     status-code: 500
     type: ErrorInternalServerError
     docs: 500 Internal Server Error.
+    examples:
+      - value: {}
   WorksUpdateRequestServiceUnavailableError:
     status-code: 503
     type: ErrorServiceUnavailable
     docs: 503 Service Unavailable.
+    examples:
+      - value: {}
 types:
   ArtifactSummary:
     type: AtomBaseSummary

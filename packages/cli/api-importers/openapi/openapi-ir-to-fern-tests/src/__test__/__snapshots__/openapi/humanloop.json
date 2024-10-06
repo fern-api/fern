@@ -8,6 +8,13 @@
         "errors": {
           "UnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
@@ -3321,6 +3328,8 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
 types:
   AgentConfigResponse:
     properties:

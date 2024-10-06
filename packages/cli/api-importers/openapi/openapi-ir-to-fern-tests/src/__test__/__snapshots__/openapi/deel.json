@@ -8,6 +8,13 @@
         "errors": {
           "BadRequestError": {
             "docs": "Operation failed.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 400,
             "type": "ApiErrorContainer",
           },
@@ -18,31 +25,73 @@
           },
           "ForbiddenError": {
             "docs": "Operation failed.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 403,
             "type": "ApiErrorContainer",
           },
           "InternalServerError": {
             "docs": "Operation failed.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 500,
             "type": "ApiErrorContainer",
           },
           "MethodNotAllowedError": {
             "docs": "Operation failed.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 405,
             "type": "ApiErrorContainer",
           },
           "NotFoundError": {
             "docs": "Operation failed.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 404,
             "type": "ApiErrorContainer",
           },
           "TooManyRequestsError": {
             "docs": "Operation failed.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 429,
             "type": "ApiErrorContainer",
           },
           "UnauthorizedError": {
             "docs": "Operation failed.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 401,
             "type": "ApiErrorContainer",
           },
@@ -10461,18 +10510,26 @@ errors:
     status-code: 400
     type: ApiErrorContainer
     docs: Operation failed.
+    examples:
+      - value: {}
   UnauthorizedError:
     status-code: 401
     type: ApiErrorContainer
     docs: Operation failed.
+    examples:
+      - value: {}
   ForbiddenError:
     status-code: 403
     type: ApiErrorContainer
     docs: Operation failed.
+    examples:
+      - value: {}
   NotFoundError:
     status-code: 404
     type: ApiErrorContainer
     docs: Operation failed.
+    examples:
+      - value: {}
   ConflictError:
     status-code: 409
     type: unknown
@@ -10481,14 +10538,20 @@ errors:
     status-code: 500
     type: ApiErrorContainer
     docs: Operation failed.
+    examples:
+      - value: {}
   MethodNotAllowedError:
     status-code: 405
     type: ApiErrorContainer
     docs: Operation failed.
+    examples:
+      - value: {}
   TooManyRequestsError:
     status-code: 429
     type: ApiErrorContainer
     docs: Operation failed.
+    examples:
+      - value: {}
 ",
     },
     "accounting.yml": {

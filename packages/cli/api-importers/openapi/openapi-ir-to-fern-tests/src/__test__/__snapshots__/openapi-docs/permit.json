@@ -8,511 +8,1225 @@
         "errors": {
           "AssignPermissionsToResourceRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "AssignPermissionsToRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "AssignRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "AssignRoleToUserRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "AssignSetPermissionsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "BulkAssignRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "BulkCreateTenantsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "BulkCreateUsersRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "BulkDeleteTenantsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "BulkDeleteUsersRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "BulkReplaceUsersRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "BulkUnassignRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CopyEnvironmentRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateConditionSetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateEnvironmentRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateOrganizationRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateProjectRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateResourceActionGroupRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateResourceActionRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateResourceAttributeRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateResourceInstanceRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateResourceRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateResourceRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateTenantRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateUserAttributeRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateUserRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteConditionSetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteEnvironmentRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteOrganizationRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteProjectRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteResourceActionGroupRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteResourceActionRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteResourceAttributeRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteResourceInstanceRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteResourceRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteResourceRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteTenantRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteTenantUserRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteUserAttributeRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteUserRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetActiveOrganizationRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetConditionSetAncestorsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetConditionSetDescendantsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetConditionSetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetEnvironmentRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetOrganizationRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetProjectRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetResourceActionGroupRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetResourceActionRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetResourceAttributeRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetResourceInstanceRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetResourceRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetResourceRoleAncestorsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetResourceRoleDescendantsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetResourceRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetRoleAncestorsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetRoleDescendantsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetTenantRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetUserAttributeRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetUserRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListConditionSetsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListEnvironmentsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListOrganizationsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListProjectsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListResourceActionGroupsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListResourceActionsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListResourceAttributesRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListResourceInstancesRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListResourceRolesRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListResourcesRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListRoleAssignmentsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListRolesRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListSetPermissionsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListTenantUsersRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListTenantsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListUserAttributesRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ListUsersRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "RemovePermissionsFromResourceRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "RemovePermissionsFromRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ReplaceResourceRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ReplaceUserRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "StatsEnvironmentsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UnassignRoleFromUserRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UnassignRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UnassignSetPermissionsRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateConditionSetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateEnvironmentRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateOrganizationRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateProjectRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateResourceActionGroupRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateResourceActionRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateResourceAttributeRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateResourceInstanceRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateResourceRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateResourceRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateRoleRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateTenantRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateUserAttributeRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "UpdateUserRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
@@ -3107,410 +3821,614 @@ The actions represents the ways you can interact with a protected resource.",
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateOrganizationRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetOrganizationRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteOrganizationRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateOrganizationRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetActiveOrganizationRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListProjectsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateProjectRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetProjectRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteProjectRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateProjectRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   StatsEnvironmentsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListEnvironmentsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateEnvironmentRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetEnvironmentRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteEnvironmentRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateEnvironmentRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CopyEnvironmentRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListResourcesRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateResourceRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetResourceRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ReplaceResourceRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteResourceRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateResourceRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListResourceActionsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateResourceActionRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetResourceActionRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteResourceActionRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateResourceActionRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListResourceActionGroupsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateResourceActionGroupRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetResourceActionGroupRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteResourceActionGroupRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateResourceActionGroupRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListResourceRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateResourceRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetResourceRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteResourceRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateResourceRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   AssignPermissionsToResourceRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   RemovePermissionsFromResourceRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetResourceRoleAncestorsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetResourceRoleDescendantsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListResourceAttributesRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateResourceAttributeRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetResourceAttributeRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteResourceAttributeRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateResourceAttributeRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListUserAttributesRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateUserAttributeRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetUserAttributeRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteUserAttributeRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateUserAttributeRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   AssignPermissionsToRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   RemovePermissionsFromRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetRoleAncestorsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetRoleDescendantsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListConditionSetsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateConditionSetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetConditionSetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteConditionSetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateConditionSetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetConditionSetAncestorsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetConditionSetDescendantsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListUsersRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateUserRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetUserRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ReplaceUserRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteUserRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateUserRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   AssignRoleToUserRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UnassignRoleFromUserRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListTenantUsersRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListTenantsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateTenantRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetTenantRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteTenantRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateTenantRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteTenantUserRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListRoleAssignmentsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   AssignRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UnassignRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   BulkAssignRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   BulkUnassignRoleRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListSetPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   AssignSetPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UnassignSetPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ListResourceInstancesRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateResourceInstanceRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetResourceInstanceRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteResourceInstanceRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   UpdateResourceInstanceRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   BulkCreateUsersRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   BulkReplaceUsersRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   BulkDeleteUsersRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   BulkCreateTenantsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   BulkDeleteTenantsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
 types:
   ActionBlockEditable:
     properties:

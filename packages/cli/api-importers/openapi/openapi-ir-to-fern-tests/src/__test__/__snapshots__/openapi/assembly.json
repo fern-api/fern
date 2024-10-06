@@ -8,6 +8,15 @@
         "errors": {
           "BadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "Error",
           },
@@ -18,11 +27,29 @@
           },
           "InternalServerError": {
             "docs": "An error occurred while processing the request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "Error",
           },
           "NotFoundError": {
             "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "Error",
           },
@@ -33,11 +60,29 @@
           },
           "TooManyRequestsError": {
             "docs": "Too Many Requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "Error",
           },
           "UnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "Error",
           },
@@ -1610,22 +1655,37 @@ The default value is 'en_us'.
     status-code: 400
     type: Error
     docs: Bad Request
+    examples:
+      - value:
+          error: error
   UnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
+    examples:
+      - value:
+          error: error
   NotFoundError:
     status-code: 404
     type: Error
     docs: Not found
+    examples:
+      - value:
+          error: error
   TooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
+    examples:
+      - value:
+          error: error
   InternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
+    examples:
+      - value:
+          error: error
   ServiceUnavailableError:
     status-code: 503
     type: unknown

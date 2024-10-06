@@ -45,6 +45,7 @@ import { hasIncompleteExample } from "./hasIncompleteExample";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { runResolutions } from "./runResolutions";
 import { getSchemas } from "../../utils/getSchemas";
+import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory";
 
 export function generateIr({
     openApi,
@@ -187,6 +188,7 @@ export function generateIr({
         taskContext.logger.debug(`Converted schema ${key}`);
     }
 
+    const exampleTypeFactory = new ExampleTypeFactory(schemasWithDiscriminants);
     const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithDiscriminants, context.logger);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
         // if x-fern-examples is not present, generate an example
@@ -259,27 +261,49 @@ export function generateIr({
             }),
             examples,
             errors: mapValues(endpointWithExample.errors, (error): HttpError => {
+                const examples = error.fullExamples
+                    ?.map((example): ErrorExample | undefined => {
+                        const fullExample = convertToFullExample(example.value);
+
+                        if (fullExample == null) {
+                            return undefined;
+                        }
+
+                        return {
+                            name: example.name,
+                            description: example.description,
+                            example: fullExample
+                        };
+                    })
+                    .filter(isNonNullish);
+
+                if (examples?.length === 0) {
+                    const generatedExample = exampleTypeFactory.buildExample({
+                        schema: error.schema,
+                        example: undefined,
+                        exampleId: undefined,
+                        skipReadonly: false,
+                        options: {
+                            ignoreOptionals: false,
+                            isParameter: false
+                        }
+                    });
+                    if (generatedExample != null) {
+                        examples.push({
+                            name: undefined,
+                            description: undefined,
+                            example: generatedExample
+                        });
+                    }
+                }
+
                 return {
                     generatedName: error.generatedName,
                     nameOverride: error.nameOverride,
                     schema: convertSchemaWithExampleToSchema(error.schema),
                     description: error.description,
                     source: error.source,
-                    examples: error.fullExamples
-                        ?.map((example): ErrorExample | undefined => {
-                            const fullExample = convertToFullExample(example.value);
-
-                            if (fullExample == null) {
-                                return undefined;
-                            }
-
-                            return {
-                                name: example.name,
-                                description: example.description,
-                                example: fullExample
-                            };
-                        })
-                        .filter(isNonNullish)
+                    examples
                 };
             })
         };

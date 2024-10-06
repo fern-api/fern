@@ -133,7 +133,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -151,7 +158,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -169,7 +183,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -187,7 +208,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -205,7 +233,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -223,7 +258,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -241,7 +283,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -357,7 +406,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -375,7 +431,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -393,7 +456,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -411,7 +481,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -429,7 +506,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -447,7 +531,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -588,7 +679,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -606,7 +704,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -624,7 +729,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -642,7 +754,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -660,7 +779,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -678,7 +804,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -797,7 +930,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -815,7 +955,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -833,7 +980,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -851,7 +1005,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -869,7 +1030,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -887,7 +1055,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -905,7 +1080,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -993,7 +1175,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -1011,7 +1200,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -1029,7 +1225,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -1047,7 +1250,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -1065,7 +1275,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -1083,7 +1300,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -1101,7 +1325,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1468,7 +1699,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -1486,7 +1724,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -1504,7 +1749,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -1522,7 +1774,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -1540,7 +1799,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -1558,7 +1824,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -1576,7 +1849,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1786,7 +2066,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -1804,7 +2091,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -1822,7 +2116,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -1840,7 +2141,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -1858,7 +2166,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -1876,7 +2191,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -1894,7 +2216,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1984,7 +2313,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -2002,7 +2338,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -2020,7 +2363,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -2038,7 +2388,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -2056,7 +2413,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -2074,7 +2438,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -2092,7 +2463,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2423,7 +2801,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -2441,7 +2826,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -2459,7 +2851,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -2477,7 +2876,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -2495,7 +2901,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -2513,7 +2926,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2659,7 +3079,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -2677,7 +3104,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -2695,7 +3129,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -2713,7 +3154,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -2731,7 +3179,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -2749,7 +3204,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -2767,7 +3229,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2864,7 +3333,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -2882,7 +3358,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -2900,7 +3383,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -2918,7 +3408,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -2936,7 +3433,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -2954,7 +3458,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -2972,7 +3483,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -3113,7 +3631,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -3131,7 +3656,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -3149,7 +3681,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -3167,7 +3706,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -3185,7 +3731,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -3203,7 +3756,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -3339,7 +3899,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -3357,7 +3924,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -3375,7 +3949,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -3393,7 +3974,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -3411,7 +3999,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -3429,7 +4024,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -3447,7 +4049,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -3546,7 +4155,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -3564,7 +4180,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -3582,7 +4205,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -3600,7 +4230,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -3618,7 +4255,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -3636,7 +4280,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -3654,7 +4305,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -3948,7 +4606,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -3966,7 +4631,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -3984,7 +4656,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -4002,7 +4681,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -4020,7 +4706,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -4038,7 +4731,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -4281,7 +4981,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -4299,7 +5006,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -4317,7 +5031,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -4335,7 +5056,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -4353,7 +5081,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -4371,7 +5106,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -4709,7 +5451,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -4727,7 +5476,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -4745,7 +5501,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -4763,7 +5526,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -4781,7 +5551,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -4799,7 +5576,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -5198,7 +5982,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -5216,7 +6007,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -5234,7 +6032,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -5252,7 +6057,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -5270,7 +6082,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -5288,7 +6107,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -5306,7 +6132,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -5424,7 +6257,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -5442,7 +6282,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -5460,7 +6307,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -5478,7 +6332,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -5496,7 +6357,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -5514,7 +6382,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -5532,7 +6407,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6046,7 +6928,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -6064,7 +6953,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -6082,7 +6978,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -6100,7 +7003,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -6118,7 +7028,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -6136,7 +7053,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6420,7 +7344,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -6438,7 +7369,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -6456,7 +7394,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -6474,7 +7419,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -6492,7 +7444,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -6510,7 +7469,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -6528,7 +7494,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6903,7 +7876,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -6921,7 +7901,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -6939,7 +7926,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -6957,7 +7951,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -6975,7 +7976,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -6993,7 +8001,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -7289,7 +8304,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -7307,7 +8329,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -7325,7 +8354,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -7343,7 +8379,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -7361,7 +8404,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -7379,7 +8429,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -7397,7 +8454,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -7515,7 +8579,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -7533,7 +8604,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -7551,7 +8629,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -7569,7 +8654,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -7587,7 +8679,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -7605,7 +8704,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -7623,7 +8729,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -8125,7 +9238,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -8143,7 +9263,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -8161,7 +9288,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -8179,7 +9313,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -8197,7 +9338,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -8215,7 +9363,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -8233,7 +9388,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -8448,7 +9610,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -8466,7 +9635,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -8484,7 +9660,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -8502,7 +9685,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -8520,7 +9710,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -8538,7 +9735,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -8556,7 +9760,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -8852,7 +10063,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -8870,7 +10088,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -8888,7 +10113,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -8906,7 +10138,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -8924,7 +10163,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -8942,7 +10188,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -9236,7 +10489,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -9254,7 +10514,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -9272,7 +10539,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -9290,7 +10564,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -9308,7 +10589,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -9326,7 +10614,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -9344,7 +10639,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -9462,7 +10764,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -9480,7 +10789,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -9498,7 +10814,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -9516,7 +10839,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -9534,7 +10864,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -9552,7 +10889,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -9570,7 +10914,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -9908,7 +11259,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -9926,7 +11284,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -9944,7 +11309,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -9962,7 +11334,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -9980,7 +11359,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -9998,7 +11384,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -10211,7 +11604,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -10229,7 +11629,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -10247,7 +11654,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -10265,7 +11679,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -10283,7 +11704,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -10301,7 +11729,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -10319,7 +11754,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -10613,7 +12055,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -10631,7 +12080,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -10649,7 +12105,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -10667,7 +12130,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -10685,7 +12155,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -10703,7 +12180,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -11038,7 +12522,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -11056,7 +12547,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -11074,7 +12572,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -11092,7 +12597,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -11110,7 +12622,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -11128,7 +12647,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -11146,7 +12672,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -11534,7 +13067,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -11552,7 +13092,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -11570,7 +13117,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -11588,7 +13142,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -11606,7 +13167,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -11624,7 +13192,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -11642,7 +13217,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -11899,7 +13481,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -11917,7 +13506,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -11935,7 +13531,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -11953,7 +13556,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -11971,7 +13581,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -11989,7 +13606,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -12326,7 +13950,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -12344,7 +13975,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -12362,7 +14000,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -12380,7 +14025,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -12398,7 +14050,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -12416,7 +14075,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -12711,7 +14377,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -12729,7 +14402,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -12747,7 +14427,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -12765,7 +14452,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -12783,7 +14477,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -12801,7 +14502,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -12819,7 +14527,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -12937,7 +14652,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -12955,7 +14677,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -12973,7 +14702,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -12991,7 +14727,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -13009,7 +14752,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -13027,7 +14777,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -13045,7 +14802,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -13320,7 +15084,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -13338,7 +15109,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -13356,7 +15134,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -13374,7 +15159,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -13392,7 +15184,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -13410,7 +15209,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -13610,7 +15416,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -13628,7 +15441,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -13646,7 +15466,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -13664,7 +15491,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -13682,7 +15516,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -13700,7 +15541,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -13718,7 +15566,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -14013,7 +15868,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -14031,7 +15893,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -14049,7 +15918,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -14067,7 +15943,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -14085,7 +15968,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -14103,7 +15993,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -14662,7 +16559,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -14680,7 +16584,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -14698,7 +16609,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -14716,7 +16634,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -14734,7 +16659,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -14752,7 +16684,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -14770,7 +16709,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -15129,7 +17075,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -15147,7 +17100,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -15165,7 +17125,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -15183,7 +17150,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -15201,7 +17175,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -15219,7 +17200,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -15601,7 +17589,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -15619,7 +17614,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -15637,7 +17639,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -15655,7 +17664,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -15673,7 +17689,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -15691,7 +17714,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -15709,7 +17739,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -16496,7 +18533,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -16514,7 +18558,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -16532,7 +18583,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -16550,7 +18608,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -16568,7 +18633,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -16586,7 +18658,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -16983,7 +19062,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "401": {
           "generatedName": "UnauthorizedError",
@@ -17001,7 +19087,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -17019,7 +19112,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -17037,7 +19137,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -17055,7 +19162,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -17073,7 +19187,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -17091,7 +19212,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],

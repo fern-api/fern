@@ -8,16 +8,42 @@
         "errors": {
           "BadRequestError": {
             "docs": "Default Response",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                  "type": "error",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "unknown",
           },
           "InternalServerError": {
             "docs": "Default Response",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "InternalServerErrorBody",
           },
           "NotFoundError": {
             "docs": "The val was not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 404,
             "type": "unknown",
           },
@@ -872,14 +898,23 @@ errors:
     status-code: 400
     type: unknown
     docs: Default Response
+    examples:
+      - value:
+          type: error
+          error: error
   InternalServerError:
     status-code: 500
     type: InternalServerErrorBody
     docs: Default Response
+    examples:
+      - value:
+          error: error
   NotFoundError:
     status-code: 404
     type: unknown
     docs: The val was not found
+    examples:
+      - value: string
 navigation:
   - vals
   - alias

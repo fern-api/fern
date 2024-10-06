@@ -2789,7 +2789,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -2806,7 +2816,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -4511,7 +4531,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "409": {
           "generatedName": "ConflictError",
@@ -4528,7 +4558,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -4545,7 +4585,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -5261,7 +5311,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -5278,7 +5338,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -5878,7 +5948,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -6669,7 +6749,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -6686,7 +6776,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -11356,7 +11456,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -11373,7 +11483,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -11819,7 +11939,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -11836,7 +11966,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -14887,7 +15027,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -14904,7 +15054,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -16406,7 +16566,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -16423,7 +16593,17 @@
             "file": "../swagger.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],

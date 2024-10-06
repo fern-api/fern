@@ -564,7 +564,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -582,7 +611,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -908,7 +966,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -926,7 +1013,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1219,7 +1335,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -1237,7 +1382,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1429,7 +1603,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1761,7 +1964,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -1779,7 +2011,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1970,7 +2231,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2078,7 +2368,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2265,7 +2584,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2679,7 +3027,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -2697,7 +3074,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2969,7 +3375,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -3819,7 +4254,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -3837,7 +4301,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -4133,7 +4626,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -4151,7 +4673,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -4377,7 +4928,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -4697,7 +5277,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -4715,7 +5324,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -4733,7 +5371,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -4948,7 +5615,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -5113,7 +5809,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -5131,7 +5856,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -5149,7 +5903,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6157,7 +6940,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -6175,7 +6987,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6553,7 +7394,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -6571,7 +7441,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6907,7 +7806,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -6925,7 +7853,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -7101,7 +8058,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -7479,7 +8465,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -7497,7 +8512,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -7515,7 +8559,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -7702,7 +8775,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -7877,7 +8979,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -9835,7 +10966,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -9853,7 +11013,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -10132,7 +11321,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -10403,7 +11621,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -10511,7 +11758,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -10920,7 +12196,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -13781,7 +15086,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -13799,7 +15133,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -15642,7 +17005,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -15660,7 +17052,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -17432,7 +18853,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -17450,7 +18900,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -17561,7 +19040,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -17781,7 +19289,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -18929,7 +20466,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -18947,7 +20513,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -19362,7 +20957,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -19380,7 +21004,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -19724,7 +21377,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -19742,7 +21424,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -19853,7 +21564,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -20073,7 +21813,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -20319,7 +22088,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -20337,7 +22135,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -20693,7 +22520,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -20711,7 +22567,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -20940,7 +22825,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -21290,7 +23204,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -21308,7 +23251,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -21326,7 +23298,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -21518,7 +23519,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -21642,7 +23672,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -21660,7 +23719,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -21794,7 +23882,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -21812,7 +23929,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -23345,7 +25491,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -23363,7 +25538,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -25176,7 +27380,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -25304,7 +27537,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -25853,7 +28115,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -25871,7 +28162,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -26112,7 +28432,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -27777,7 +30126,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -27795,7 +30173,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -28057,7 +30464,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -28311,7 +30747,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -28465,7 +30930,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -28483,7 +30977,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -28501,7 +31024,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -30722,7 +33274,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -30740,7 +33321,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -30758,7 +33368,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -31292,7 +33931,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -31310,7 +33978,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -31328,7 +34025,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -33764,7 +36490,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -33782,7 +36537,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -35280,7 +38064,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -35298,7 +38111,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -36725,7 +39567,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -36743,7 +39614,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -36854,7 +39754,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -37074,7 +40003,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -38121,7 +41079,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -38139,7 +41126,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -38428,7 +41444,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -38446,7 +41491,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -38693,7 +41767,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -38711,7 +41814,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -38889,7 +42021,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -39183,7 +42344,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -39201,7 +42391,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -39219,7 +42438,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -39400,7 +42648,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -39577,7 +42854,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -40421,7 +43727,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -40439,7 +43774,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -40695,7 +44059,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -40713,7 +44106,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -40927,7 +44349,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -40945,7 +44396,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -41135,7 +44615,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -41396,7 +44905,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -41414,7 +44952,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -41432,7 +44999,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -41625,7 +45221,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -41814,7 +45439,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -42462,7 +46116,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -42480,7 +46163,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -42774,7 +46486,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -42792,7 +46533,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -43069,7 +46839,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -43087,7 +46886,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -43270,7 +47098,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -43566,7 +47423,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -43584,7 +47470,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -43602,7 +47517,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -44070,7 +48014,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -44088,7 +48061,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -44813,7 +48815,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -44831,7 +48862,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -45114,7 +49174,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -46296,7 +50385,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -46314,7 +50432,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -47163,7 +51310,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -47181,7 +51357,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -48080,7 +52285,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -48098,7 +52332,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -48556,7 +52819,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -49200,7 +53492,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -49218,7 +53539,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -49236,7 +53586,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -49697,7 +54076,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -50154,7 +54562,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -50611,7 +55048,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -51068,7 +55534,36 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": "code",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "float"
+                    },
+                    "type": "primitive"
+                  },
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],

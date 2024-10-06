@@ -8,26 +8,71 @@
         "errors": {
           "BadRequestError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "unknown",
           },
           "ConflictError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "RegisterPromptErrorResponse",
           },
           "ForbiddenError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "GenerateErrorResponse",
           },
           "InternalServerError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 500,
             "type": "unknown",
           },
           "NotFoundError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "unknown",
           },
@@ -2618,22 +2663,37 @@ errors:
     status-code: 400
     type: unknown
     docs: ''
+    examples:
+      - value:
+          detail: detail
   ForbiddenError:
     status-code: 403
     type: GenerateErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
   NotFoundError:
     status-code: 404
     type: unknown
     docs: ''
+    examples:
+      - value:
+          detail: detail
   InternalServerError:
     status-code: 500
     type: unknown
     docs: ''
+    examples:
+      - value:
+          detail: detail
   ConflictError:
     status-code: 409
     type: RegisterPromptErrorResponse
     docs: ''
+    examples:
+      - value:
+          detail: detail
 types:
   BlockTypeEnum:
     enum:
