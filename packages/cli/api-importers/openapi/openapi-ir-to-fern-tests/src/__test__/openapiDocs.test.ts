@@ -1,4 +1,6 @@
-import { AbsoluteFilePath, join, RelativeFilePath, listFiles } from "@fern-api/fs-utils";
+// eslint-disable-file @typescript-eslint/no-misused-promises
+
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import { readdir } from "fs/promises";
