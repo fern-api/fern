@@ -8,106 +8,253 @@
         "errors": {
           "CreateAPromptApiV1PromptsPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateAToolApiV1ToolsPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateAgentApiV1AgentsPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateApiTokenApiV1ApiTokensPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "CreateDocumentApiV1DocumentsPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteAgentApiV1AgentsAgentIdDeleteRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteDocumentApiV1DocumentsDocumentIdDeleteRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeletePromptApiV1PromptsPromptIdDeleteRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "DeleteToolApiV1ToolsToolIdDeleteRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetAgentApiV1AgentsAgentIdGetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetApiTokenApiV1ApiTokensTokenIdGetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetDocumentApiV1DocumentsDocumentIdGetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetPromptApiV1PromptsPromptIdGetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "GetToolApiV1ToolsToolIdGetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "PatchAgentApiV1AgentsAgentIdPatchRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "PatchPromptApiV1PromptsPromptIdPatchRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "PromptAgentApiV1AgentsAgentIdPredictPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "ReadUserApiV1UsersUserIdGetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "SignInApiV1AuthSignInPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
           "SignUpApiV1AuthSignUpPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
@@ -156,86 +303,128 @@
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetAgentApiV1AgentsAgentIdGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteAgentApiV1AgentsAgentIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   PatchAgentApiV1AgentsAgentIdPatchRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   PromptAgentApiV1AgentsAgentIdPredictPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   SignInApiV1AuthSignInPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   SignUpApiV1AuthSignUpPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   ReadUserApiV1UsersUserIdGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateApiTokenApiV1ApiTokensPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetApiTokenApiV1ApiTokensTokenIdGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateDocumentApiV1DocumentsPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetDocumentApiV1DocumentsDocumentIdGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteDocumentApiV1DocumentsDocumentIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateAPromptApiV1PromptsPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetPromptApiV1PromptsPromptIdGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeletePromptApiV1PromptsPromptIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   PatchPromptApiV1PromptsPromptIdPatchRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   CreateAToolApiV1ToolsPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   GetToolApiV1ToolsToolIdGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   DeleteToolApiV1ToolsToolIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
 types:
   HTTPValidationError:
     properties:

@@ -8,21 +8,62 @@
         "errors": {
           "BadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "invalidMemberError": {},
+                  "message": "string",
+                  "reason": "INVALID_MEMBER",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "unknown",
           },
           "ForbiddenError": {
             "docs": "Forbidden",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "string",
+                  "permissionCheckFailedError": {
+                    "permission": "permission",
+                  },
+                  "reason": "PERMISSION_CHECK_FAILED",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "ForbiddenErrorBody",
           },
           "NotFoundError": {
             "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "invalidMemberError": {},
+                  "message": "message",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "InvalidMemberErrorResponse",
           },
           "UnprocessableEntityError": {
             "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
             "status-code": 422,
             "type": "HTTPValidationError",
           },
@@ -2521,18 +2562,35 @@ errors:
     status-code: 400
     type: unknown
     docs: Bad Request
+    examples:
+      - value:
+          reason: INVALID_MEMBER
+          message: string
+          invalidMemberError: {}
   ForbiddenError:
     status-code: 403
     type: ForbiddenErrorBody
     docs: Forbidden
+    examples:
+      - value:
+          reason: PERMISSION_CHECK_FAILED
+          message: string
+          permissionCheckFailedError:
+            permission: permission
   UnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
+    examples:
+      - value: {}
   NotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
     docs: Not Found
+    examples:
+      - value:
+          message: message
+          invalidMemberError: {}
 types:
   ForbiddenErrorBody:
     discriminant: reason

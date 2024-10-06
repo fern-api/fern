@@ -8,21 +8,49 @@
         "errors": {
           "BadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 400,
             "type": "unknown",
           },
           "ConflictError": {
             "docs": "Conflict request error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 409,
             "type": "string",
           },
           "InternalServerError": {
             "docs": "Internal Server Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 500,
             "type": "unknown",
           },
           "NotFoundError": {
             "docs": "Integration not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 404,
             "type": "string",
           },
@@ -3829,18 +3857,26 @@ the same customer, dimension, and time, but a different quantity.",
     status-code: 500
     type: unknown
     docs: Internal Server Error
+    examples:
+      - value: string
   BadRequestError:
     status-code: 400
     type: unknown
     docs: Bad Request
+    examples:
+      - value: string
   ConflictError:
     status-code: 409
     type: string
     docs: Conflict request error description
+    examples:
+      - value: string
   NotFoundError:
     status-code: 404
     type: string
     docs: Integration not found
+    examples:
+      - value: string
 types:
   AzureAudience:
     properties:

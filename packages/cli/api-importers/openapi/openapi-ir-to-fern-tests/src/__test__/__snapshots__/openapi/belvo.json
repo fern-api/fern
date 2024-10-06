@@ -8,36 +8,130 @@
         "errors": {
           "BadRequestError": {
             "docs": "400 Bad Request.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": [
+                  {
+                    "code": "invalid_link",
+                    "message": "This link doesn't have stored credentials hence it can't be switched to recurrent mode"",
+                    "request_id": "9e7b283c6efa449c9c028a16b5c249fb",
+                  },
+                ],
+              },
+            ],
             "status-code": 400,
             "type": "list<BadRequestErrorBodyItem>",
           },
           "ForbiddenError": {
             "docs": "Access to Belvo API denied",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": [
+                  {
+                    "code": "access_to_resource_denied",
+                    "message": "You don't have access to this resource.",
+                    "request_id": "9e7b283c6efa449c9c028a16b5c249fb",
+                  },
+                ],
+              },
+            ],
             "status-code": 403,
             "type": "list<AccessToResourceDenied>",
           },
           "InternalServerError": {
             "docs": "Unexpected Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": [
+                  {
+                    "code": "unexpected_error",
+                    "message": "Belvo is unable to process the request due to an internal system issue or to an unsupported response from an institution",
+                    "request_id": "9e7b283c6efa449c9c028a16b5c249fb",
+                  },
+                ],
+              },
+            ],
             "status-code": 500,
             "type": "list<UnexpectedError>",
           },
           "NotFoundError": {
             "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": [
+                  {
+                    "code": "not_found",
+                    "message": "Not found",
+                    "request_id": "9e7b283c6efa449c9c028a16b5c249fb",
+                  },
+                ],
+              },
+            ],
             "status-code": 404,
             "type": "list<NotFoundErrorBody>",
           },
           "PreconditionError": {
             "docs": "MFA Token Required",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": [
+                  {
+                    "code": "token_required",
+                    "expiry": 9600,
+                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "message": "A MFA token is required by the institution to login",
+                    "request_id": "8c7b283c6efa449c9c028a16b5c249fa",
+                    "session": "2675b703b9d4451f8d4861a3eee54449",
+                  },
+                ],
+              },
+            ],
             "status-code": 428,
             "type": "list<TokenRequiredResponse>",
           },
           "RequestTimeoutError": {
             "docs": "Request Timeout",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": [
+                  {
+                    "code": "request_timeout",
+                    "message": "The request timed out, you can retry asking for less data by changing your query parameters",
+                    "request_id": "9e7b283c6efa449c9c028a16b5c249fb",
+                  },
+                ],
+              },
+            ],
             "status-code": 408,
             "type": "list<RequestTimeoutErrorBody>",
           },
           "UnauthorizedError": {
             "docs": "Authentication to Belvo API failed",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": [
+                  {
+                    "code": "authentication_failed",
+                    "message": "Invalid Secret Keys",
+                    "request_id": "9e7b283c6efa449c9c028a16b5c249fb",
+                  },
+                ],
+              },
+            ],
             "status-code": 401,
             "type": "list<UnauthorizedErrorBody>",
           },
@@ -11336,30 +11430,74 @@ For `session_expired` errors, the description can be (among others):
     status-code: 401
     type: list<UnauthorizedErrorBody>
     docs: Authentication to Belvo API failed
+    examples:
+      - value:
+          - code: authentication_failed
+            message: Invalid Secret Keys
+            request_id: 9e7b283c6efa449c9c028a16b5c249fb
   BadRequestError:
     status-code: 400
     type: list<BadRequestErrorBodyItem>
     docs: 400 Bad Request.
+    examples:
+      - value:
+          - code: invalid_link
+            message: >-
+              This link doesn't have stored credentials hence it can't be
+              switched to recurrent mode"
+            request_id: 9e7b283c6efa449c9c028a16b5c249fb
   PreconditionError:
     status-code: 428
     type: list<TokenRequiredResponse>
     docs: MFA Token Required
+    examples:
+      - value:
+          - code: token_required
+            message: A MFA token is required by the institution to login
+            request_id: 8c7b283c6efa449c9c028a16b5c249fa
+            session: 2675b703b9d4451f8d4861a3eee54449
+            expiry: 9600
+            link: 30cb4806-6e00-48a4-91c9-ca55968576c8
   InternalServerError:
     status-code: 500
     type: list<UnexpectedError>
     docs: Unexpected Error
+    examples:
+      - value:
+          - code: unexpected_error
+            message: >-
+              Belvo is unable to process the request due to an internal system
+              issue or to an unsupported response from an institution
+            request_id: 9e7b283c6efa449c9c028a16b5c249fb
   NotFoundError:
     status-code: 404
     type: list<NotFoundErrorBody>
     docs: Not Found
+    examples:
+      - value:
+          - code: not_found
+            message: Not found
+            request_id: 9e7b283c6efa449c9c028a16b5c249fb
   RequestTimeoutError:
     status-code: 408
     type: list<RequestTimeoutErrorBody>
     docs: Request Timeout
+    examples:
+      - value:
+          - code: request_timeout
+            message: >-
+              The request timed out, you can retry asking for less data by
+              changing your query parameters
+            request_id: 9e7b283c6efa449c9c028a16b5c249fb
   ForbiddenError:
     status-code: 403
     type: list<AccessToResourceDenied>
     docs: Access to Belvo API denied
+    examples:
+      - value:
+          - code: access_to_resource_denied
+            message: You don't have access to this resource.
+            request_id: 9e7b283c6efa449c9c028a16b5c249fb
 types:
   BadRequestErrorBodyItem:
     discriminated: false

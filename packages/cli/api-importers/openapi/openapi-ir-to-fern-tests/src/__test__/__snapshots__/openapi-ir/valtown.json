@@ -4743,7 +4743,29 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "error",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  },
+                  "error": {
+                    "value": {
+                      "value": "error",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -5006,7 +5028,29 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "error",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  },
+                  "error": {
+                    "value": {
+                      "value": "error",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6349,7 +6393,22 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "error": {
+                    "value": {
+                      "value": "error",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -8648,7 +8707,17 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],

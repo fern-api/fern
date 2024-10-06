@@ -8,11 +8,25 @@
         "errors": {
           "AddEntitlementCreditRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 400,
             "type": "string",
           },
           "AddEntitlementCreditRequestInternalServerError": {
             "docs": "Internal Server Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 500,
             "type": "string",
           },
@@ -28,11 +42,25 @@
           },
           "CreateIntegrationRequestBadRequestError": {
             "docs": "Bad request error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 400,
             "type": "string",
           },
           "CreateIntegrationRequestInternalServerError": {
             "docs": "internal error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 500,
             "type": "string",
           },
@@ -98,6 +126,13 @@
           },
           "GetIntegrationRequestNotFoundError": {
             "docs": "Integration not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 404,
             "type": "string",
           },
@@ -113,11 +148,25 @@
           },
           "GetRevenueReportRequestBadRequestError": {
             "docs": "Bad request error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 400,
             "type": "string",
           },
           "GetRevenueReportRequestInternalServerError": {
             "docs": "internal error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 500,
             "type": "string",
           },
@@ -133,11 +182,25 @@
           },
           "GetUsageReportRequestBadRequestError": {
             "docs": "Bad request error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 400,
             "type": "string",
           },
           "GetUsageReportRequestInternalServerError": {
             "docs": "internal error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 500,
             "type": "string",
           },
@@ -218,21 +281,49 @@
           },
           "ListRevenueRecordDetailsRequestBadRequestError": {
             "docs": "Bad request error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 400,
             "type": "string",
           },
           "ListRevenueRecordDetailsRequestInternalServerError": {
             "docs": "internal error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 500,
             "type": "string",
           },
           "ListRevenueRecordsRequestBadRequestError": {
             "docs": "Bad request error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 400,
             "type": "string",
           },
           "ListRevenueRecordsRequestInternalServerError": {
             "docs": "internal error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 500,
             "type": "string",
           },
@@ -298,16 +389,37 @@
           },
           "ReportUsageRecordGroupRequestBadRequestError": {
             "docs": "all the quantity of usage records are zero",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 400,
             "type": "string",
           },
           "ReportUsageRecordGroupRequestConflictError": {
             "docs": "Conflict request error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 409,
             "type": "string",
           },
           "ReportUsageRecordGroupRequestInternalServerError": {
             "docs": "internal error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 500,
             "type": "string",
           },
@@ -323,11 +435,25 @@
           },
           "UpdateIntegrationRequestBadRequestError": {
             "docs": "Bad request error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 400,
             "type": "string",
           },
           "UpdateIntegrationRequestInternalServerError": {
             "docs": "internal error description",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 500,
             "type": "string",
           },
@@ -4176,10 +4302,14 @@ the same customer, dimension, and time, but a different quantity.",
     status-code: 400
     type: string
     docs: Bad Request
+    examples:
+      - value: string
   AddEntitlementCreditRequestInternalServerError:
     status-code: 500
     type: string
     docs: Internal Server Error
+    examples:
+      - value: string
   UpdateEntitlementNameRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -4204,14 +4334,20 @@ the same customer, dimension, and time, but a different quantity.",
     status-code: 400
     type: string
     docs: all the quantity of usage records are zero
+    examples:
+      - value: string
   ReportUsageRecordGroupRequestConflictError:
     status-code: 409
     type: string
     docs: Conflict request error description
+    examples:
+      - value: string
   ReportUsageRecordGroupRequestInternalServerError:
     status-code: 500
     type: string
     docs: internal error description
+    examples:
+      - value: string
   ListUsageRecordReportsByEntitlementRequestBadRequestError:
     status-code: 400
     type: unknown
@@ -4228,14 +4364,20 @@ the same customer, dimension, and time, but a different quantity.",
     status-code: 400
     type: string
     docs: Bad request error description
+    examples:
+      - value: string
   CreateIntegrationRequestInternalServerError:
     status-code: 500
     type: string
     docs: internal error description
+    examples:
+      - value: string
   GetIntegrationRequestNotFoundError:
     status-code: 404
     type: string
     docs: Integration not found
+    examples:
+      - value: string
   GetIntegrationRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -4248,10 +4390,14 @@ the same customer, dimension, and time, but a different quantity.",
     status-code: 400
     type: string
     docs: Bad request error description
+    examples:
+      - value: string
   UpdateIntegrationRequestInternalServerError:
     status-code: 500
     type: string
     docs: internal error description
+    examples:
+      - value: string
   VerifyIntegrationRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -4308,18 +4454,26 @@ the same customer, dimension, and time, but a different quantity.",
     status-code: 400
     type: string
     docs: Bad request error description
+    examples:
+      - value: string
   ListRevenueRecordsRequestInternalServerError:
     status-code: 500
     type: string
     docs: internal error description
+    examples:
+      - value: string
   ListRevenueRecordDetailsRequestBadRequestError:
     status-code: 400
     type: string
     docs: Bad request error description
+    examples:
+      - value: string
   ListRevenueRecordDetailsRequestInternalServerError:
     status-code: 500
     type: string
     docs: internal error description
+    examples:
+      - value: string
   ListProductsByOrganizationRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -4368,10 +4522,14 @@ the same customer, dimension, and time, but a different quantity.",
     status-code: 400
     type: string
     docs: Bad request error description
+    examples:
+      - value: string
   GetRevenueReportRequestInternalServerError:
     status-code: 500
     type: string
     docs: internal error description
+    examples:
+      - value: string
   ListUsageRecordGroupsByOrganizationRequestBadRequestError:
     status-code: 400
     type: unknown
@@ -4400,10 +4558,14 @@ the same customer, dimension, and time, but a different quantity.",
     status-code: 400
     type: string
     docs: Bad request error description
+    examples:
+      - value: string
   GetUsageReportRequestInternalServerError:
     status-code: 500
     type: string
     docs: internal error description
+    examples:
+      - value: string
   GetApiClientAccessTokenRequestInternalServerError:
     status-code: 500
     type: unknown

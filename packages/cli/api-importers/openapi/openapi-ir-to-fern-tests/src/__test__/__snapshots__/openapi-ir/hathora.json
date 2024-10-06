@@ -311,7 +311,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -328,7 +338,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -523,7 +543,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -540,7 +570,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -727,7 +767,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -880,7 +930,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -897,7 +957,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1009,7 +1079,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1171,7 +1251,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1345,7 +1435,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -1362,7 +1462,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1484,7 +1594,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1684,7 +1804,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1873,7 +2003,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -1890,7 +2030,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -1907,7 +2057,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2109,7 +2269,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -2126,7 +2296,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2198,7 +2378,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -2215,7 +2405,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -2232,7 +2432,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2340,7 +2550,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2554,7 +2774,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2792,7 +3022,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -2809,7 +3049,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -2826,7 +3076,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -3213,7 +3473,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -3230,7 +3500,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -3247,7 +3527,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -3264,7 +3554,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -3281,7 +3581,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -3451,7 +3761,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -3468,7 +3788,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -3485,7 +3815,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -3502,7 +3842,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -3519,7 +3869,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -3694,7 +4054,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -3711,7 +4081,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -4011,7 +4391,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -4028,7 +4418,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -4045,7 +4445,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -4062,7 +4472,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -4079,7 +4499,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -4404,7 +4834,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -4421,7 +4861,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -4438,7 +4888,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -4455,7 +4915,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -4472,7 +4942,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -4797,7 +5277,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -4814,7 +5304,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -4831,7 +5331,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -4848,7 +5358,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -4865,7 +5385,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -5222,7 +5752,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -5239,7 +5779,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -5256,7 +5806,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "429": {
           "generatedName": "TooManyRequestsError",
@@ -5273,7 +5833,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -5290,7 +5860,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -5730,7 +6310,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -5986,7 +6576,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -6003,7 +6603,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6274,7 +6884,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6396,7 +7016,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6518,7 +7148,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6696,7 +7336,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "422": {
           "generatedName": "UnprocessableEntityError",
@@ -6713,7 +7363,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -6943,7 +7603,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -7216,7 +7886,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -7444,7 +8124,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -7701,7 +8391,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -7718,7 +8418,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -7843,7 +8553,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -8061,7 +8781,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -8246,7 +8976,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -8408,7 +9148,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -8425,7 +9175,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -8526,7 +9286,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -8543,7 +9313,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -8662,7 +9442,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "404": {
           "generatedName": "NotFoundError",
@@ -8679,7 +9469,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         },
         "500": {
           "generatedName": "InternalServerError",
@@ -8696,7 +9496,17 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       },
       "server": [],

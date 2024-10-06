@@ -8,31 +8,73 @@
         "errors": {
           "BadRequestError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 400,
             "type": "string",
           },
           "InternalServerError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 500,
             "type": "string",
           },
           "NotFoundError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 404,
             "type": "string",
           },
           "TooManyRequestsError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 429,
             "type": "string",
           },
           "UnauthorizedError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 401,
             "type": "string",
           },
           "UnprocessableEntityError": {
             "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
             "status-code": 422,
             "type": "string",
           },
@@ -506,26 +548,38 @@
     status-code: 422
     type: string
     docs: ''
+    examples:
+      - value: string
   InternalServerError:
     status-code: 500
     type: string
     docs: ''
+    examples:
+      - value: string
   NotFoundError:
     status-code: 404
     type: string
     docs: ''
+    examples:
+      - value: string
   UnauthorizedError:
     status-code: 401
     type: string
     docs: ''
+    examples:
+      - value: string
   BadRequestError:
     status-code: 400
     type: string
     docs: ''
+    examples:
+      - value: string
   TooManyRequestsError:
     status-code: 429
     type: string
     docs: ''
+    examples:
+      - value: string
 types:
   RecordStringNever:
     docs: Construct a type with a set of properties K of type T

@@ -129,7 +129,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -247,7 +254,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -357,7 +371,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -496,7 +517,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -646,7 +674,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -783,7 +818,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -901,7 +943,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1079,7 +1128,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1251,7 +1307,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1362,7 +1425,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1472,7 +1542,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1645,7 +1722,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1770,7 +1854,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -1880,7 +1971,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2053,7 +2151,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2175,7 +2280,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2285,7 +2397,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2424,7 +2543,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2618,7 +2744,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2736,7 +2869,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],
@@ -2846,7 +2986,14 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "server": [],

@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Fern's OpenAPI importer will now handle generating examples for declared 
+        errors so that they show up in the generated documentation. 
+      type: fix
+  irVersion: 53
+  version: 0.44.4
+
+- changelogEntry:
+    - summary: |
         Fern's OpenAPI importer can now handle `readOnly` properties in the top level 
         request schema. Note that Fern does not handle nested `readOnly` properties 
         just yet; please file a GitHub issue if this is important!

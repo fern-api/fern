@@ -14,6 +14,32 @@ This error response may have one of the following `type` values:
   The request body and/or parameters was not well-formed.
   Remediation: Correct any syntax or schema errors in the request body or parameters.
 ",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "No account exists for the given account reference",
+                  "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                  "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                  "occurredAt": "2022-04-25T12:42:21Z",
+                  "problems": [
+                    {
+                      "detail": "No account exists at the given account_url",
+                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                      "occurredAt": "2022-04-25T12:42:21Z",
+                      "status": 422,
+                      "title": "Account Not Found",
+                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
+                    },
+                  ],
+                  "status": 422,
+                  "title": "Account Not Found",
+                  "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ProblemResponse",
           },
@@ -25,6 +51,32 @@ This error response may have one of the following `type` values:
   The delete operation is only allowed for transfers which have not begun processing.
   Remediation: Select a pending or scheduled transfer.
 ",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "No account exists for the given account reference",
+                  "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                  "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                  "occurredAt": "2022-04-25T12:42:21Z",
+                  "problems": [
+                    {
+                      "detail": "No account exists at the given account_url",
+                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                      "occurredAt": "2022-04-25T12:42:21Z",
+                      "status": 422,
+                      "title": "Account Not Found",
+                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
+                    },
+                  ],
+                  "status": 422,
+                  "title": "Account Not Found",
+                  "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "ProblemResponse",
           },
@@ -48,6 +100,32 @@ This error response may have one of the following `type` values:
   The customer is properly authenticated but not authorized to create, modify, or delete resources.
   Remediation: Avoid modification operation for customers with read-only authorization.
 ",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "No account exists for the given account reference",
+                  "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                  "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                  "occurredAt": "2022-04-25T12:42:21Z",
+                  "problems": [
+                    {
+                      "detail": "No account exists at the given account_url",
+                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                      "occurredAt": "2022-04-25T12:42:21Z",
+                      "status": 422,
+                      "title": "Account Not Found",
+                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
+                    },
+                  ],
+                  "status": 422,
+                  "title": "Account Not Found",
+                  "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "ProblemResponse",
           },
@@ -59,11 +137,63 @@ This error response may have one of the following `type` values:
   The server did not receive a timely response from an upstream server it needed to access in order to complete the request.
   Remediation: Wait a few minutes and try again, or gracefully fail the client request.
 ",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "No account exists for the given account reference",
+                  "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                  "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                  "occurredAt": "2022-04-25T12:42:21Z",
+                  "problems": [
+                    {
+                      "detail": "No account exists at the given account_url",
+                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                      "occurredAt": "2022-04-25T12:42:21Z",
+                      "status": 422,
+                      "title": "Account Not Found",
+                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
+                    },
+                  ],
+                  "status": 422,
+                  "title": "Account Not Found",
+                  "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
+                },
+              },
+            ],
             "status-code": 504,
             "type": "ProblemResponse",
           },
           "NotFoundError": {
             "docs": "Not Found. There is no such banking account resource at the specified `{accountId}`. The response body contains details about the request error.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "No account exists for the given account reference",
+                  "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                  "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                  "occurredAt": "2022-04-25T12:42:21Z",
+                  "problems": [
+                    {
+                      "detail": "No account exists at the given account_url",
+                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                      "occurredAt": "2022-04-25T12:42:21Z",
+                      "status": 422,
+                      "title": "Account Not Found",
+                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
+                    },
+                  ],
+                  "status": 422,
+                  "title": "Account Not Found",
+                  "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
+                },
+              },
+            ],
             "status-code": 404,
             "type": "ProblemResponse",
           },
@@ -75,11 +205,63 @@ This error response may have one of the following `type` values:
   One or more conditions given in the request header fields evaluated to false when tested on the server.
   Remediation: Update resources and use it's most recent ETag or modification time stamp.
 ",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "No account exists for the given account reference",
+                  "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                  "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                  "occurredAt": "2022-04-25T12:42:21Z",
+                  "problems": [
+                    {
+                      "detail": "No account exists at the given account_url",
+                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                      "occurredAt": "2022-04-25T12:42:21Z",
+                      "status": 422,
+                      "title": "Account Not Found",
+                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
+                    },
+                  ],
+                  "status": 422,
+                  "title": "Account Not Found",
+                  "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
+                },
+              },
+            ],
             "status-code": 412,
             "type": "ProblemResponse",
           },
           "ServiceUnavailableError": {
             "docs": "Service Unavailable. Could not fetch the account balance from the banking core.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "No account exists for the given account reference",
+                  "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                  "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                  "occurredAt": "2022-04-25T12:42:21Z",
+                  "problems": [
+                    {
+                      "detail": "No account exists at the given account_url",
+                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                      "occurredAt": "2022-04-25T12:42:21Z",
+                      "status": 422,
+                      "title": "Account Not Found",
+                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
+                    },
+                  ],
+                  "status": 422,
+                  "title": "Account Not Found",
+                  "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
+                },
+              },
+            ],
             "status-code": 503,
             "type": "ProblemResponse",
           },
@@ -91,6 +273,32 @@ This error response may have one of the following `type` values:
   The client has sent too many requests in a given amount of time, exceeding rate limiting.
   Remediation: Slow down the rate of API calls.
 ",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "No account exists for the given account reference",
+                  "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                  "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                  "occurredAt": "2022-04-25T12:42:21Z",
+                  "problems": [
+                    {
+                      "detail": "No account exists at the given account_url",
+                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                      "occurredAt": "2022-04-25T12:42:21Z",
+                      "status": 422,
+                      "title": "Account Not Found",
+                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
+                    },
+                  ],
+                  "status": 422,
+                  "title": "Account Not Found",
+                  "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "ProblemResponse",
           },
@@ -134,6 +342,32 @@ The `attributes` object in the error may have the properties defined by the [`re
   The additional on-time `Challenge` header in this request is expired, already used, or otherwise invalid.
   Remediation: Supply a valid, unexpired, unclaimed `Challenge` header in the request.
 ",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "No account exists for the given account reference",
+                  "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                  "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                  "occurredAt": "2022-04-25T12:42:21Z",
+                  "problems": [
+                    {
+                      "detail": "No account exists at the given account_url",
+                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                      "occurredAt": "2022-04-25T12:42:21Z",
+                      "status": 422,
+                      "title": "Account Not Found",
+                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
+                    },
+                  ],
+                  "status": 422,
+                  "title": "Account Not Found",
+                  "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "ProblemResponse",
           },
@@ -146,6 +380,30 @@ This error response may have one of the following `type` values:
   Remediation: Provide a semantically correct request.
 ",
             "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "No account exists for the given account reference",
+                  "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                  "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                  "occurredAt": "2022-04-25T12:42:21Z",
+                  "problems": [
+                    {
+                      "detail": "No account exists at the given account_url",
+                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
+                      "occurredAt": "2022-04-25T12:42:21Z",
+                      "status": 422,
+                      "title": "Account Not Found",
+                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
+                    },
+                  ],
+                  "status": 422,
+                  "title": "Account Not Found",
+                  "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
+                },
+              },
               {
                 "docs": undefined,
                 "name": undefined,
@@ -2727,6 +2985,25 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
       [`https://production.api.apiture.com/errors/badRequest/v1.0.0`](https://production.api.apiture.com/errors/badRequest/v1.0.0)<br>
         The request body and/or parameters was not well-formed.
         Remediation: Correct any syntax or schema errors in the request body or parameters.
+    examples:
+      - value:
+          type: https://production.api.apiture.com/errors/noSuchAccount/v1.0.0
+          title: Account Not Found
+          status: 422
+          detail: No account exists for the given account reference
+          instance: >-
+            https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+          id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+          occurredAt: '2022-04-25T12:42:21Z'
+          problems:
+            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
+              title: Account Not Found
+              status: 422
+              detail: No account exists at the given account_url
+              instance: >-
+                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+              occurredAt: '2022-04-25T12:42:21Z'
   UnauthorizedError:
     status-code: 401
     type: ProblemResponse
@@ -2784,6 +3061,25 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
       [`https://production.api.apiture.com/errors/invalidIdentityChallengeHeader/v1.0.0`](https://production.api.apiture.com/errors/invalidIdentityChallengeHeader/v1.0.0)<br>
         The additional on-time `Challenge` header in this request is expired, already used, or otherwise invalid.
         Remediation: Supply a valid, unexpired, unclaimed `Challenge` header in the request.
+    examples:
+      - value:
+          type: https://production.api.apiture.com/errors/noSuchAccount/v1.0.0
+          title: Account Not Found
+          status: 422
+          detail: No account exists for the given account reference
+          instance: >-
+            https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+          id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+          occurredAt: '2022-04-25T12:42:21Z'
+          problems:
+            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
+              title: Account Not Found
+              status: 422
+              detail: No account exists at the given account_url
+              instance: >-
+                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+              occurredAt: '2022-04-25T12:42:21Z'
   ForbiddenError:
     status-code: 403
     type: ProblemResponse
@@ -2813,6 +3109,25 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
       [`https://production.api.apiture.com/errors/modificationForbidden/v1.0.0`](https://production.api.apiture.com/errors/modificationForbidden/v1.0.0)<br>
         The customer is properly authenticated but not authorized to create, modify, or delete resources.
         Remediation: Avoid modification operation for customers with read-only authorization.
+    examples:
+      - value:
+          type: https://production.api.apiture.com/errors/noSuchAccount/v1.0.0
+          title: Account Not Found
+          status: 422
+          detail: No account exists for the given account reference
+          instance: >-
+            https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+          id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+          occurredAt: '2022-04-25T12:42:21Z'
+          problems:
+            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
+              title: Account Not Found
+              status: 422
+              detail: No account exists at the given account_url
+              instance: >-
+                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+              occurredAt: '2022-04-25T12:42:21Z'
   UnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
@@ -2829,6 +3144,24 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
         Remediation: Provide a semantically correct request.
     examples:
       - value:
+          type: https://production.api.apiture.com/errors/noSuchAccount/v1.0.0
+          title: Account Not Found
+          status: 422
+          detail: No account exists for the given account reference
+          instance: >-
+            https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+          id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+          occurredAt: '2022-04-25T12:42:21Z'
+          problems:
+            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
+              title: Account Not Found
+              status: 422
+              detail: No account exists at the given account_url
+              instance: >-
+                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+              occurredAt: '2022-04-25T12:42:21Z'
+      - value:
           id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
           type: https://production.api.apiture.com/errors/invalidAccountId/v1.0.0
           title: Unprocessable Entity
@@ -2843,6 +3176,25 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
     docs: >-
       Not Found. There is no such banking account resource at the specified
       `{accountId}`. The response body contains details about the request error.
+    examples:
+      - value:
+          type: https://production.api.apiture.com/errors/noSuchAccount/v1.0.0
+          title: Account Not Found
+          status: 422
+          detail: No account exists for the given account reference
+          instance: >-
+            https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+          id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+          occurredAt: '2022-04-25T12:42:21Z'
+          problems:
+            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
+              title: Account Not Found
+              status: 422
+              detail: No account exists at the given account_url
+              instance: >-
+                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+              occurredAt: '2022-04-25T12:42:21Z'
   TooManyRequestsError:
     status-code: 429
     type: ProblemResponse
@@ -2857,12 +3209,50 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
       [`https://production.api.apiture.com/errors/tooManyRequests/v1.0.0`](https://production.api.apiture.com/errors/tooManyRequests/v1.0.0)<br>
         The client has sent too many requests in a given amount of time, exceeding rate limiting.
         Remediation: Slow down the rate of API calls.
+    examples:
+      - value:
+          type: https://production.api.apiture.com/errors/noSuchAccount/v1.0.0
+          title: Account Not Found
+          status: 422
+          detail: No account exists for the given account reference
+          instance: >-
+            https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+          id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+          occurredAt: '2022-04-25T12:42:21Z'
+          problems:
+            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
+              title: Account Not Found
+              status: 422
+              detail: No account exists at the given account_url
+              instance: >-
+                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+              occurredAt: '2022-04-25T12:42:21Z'
   ServiceUnavailableError:
     status-code: 503
     type: ProblemResponse
     docs: >-
       Service Unavailable. Could not fetch the account balance from the banking
       core.
+    examples:
+      - value:
+          type: https://production.api.apiture.com/errors/noSuchAccount/v1.0.0
+          title: Account Not Found
+          status: 422
+          detail: No account exists for the given account reference
+          instance: >-
+            https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+          id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+          occurredAt: '2022-04-25T12:42:21Z'
+          problems:
+            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
+              title: Account Not Found
+              status: 422
+              detail: No account exists at the given account_url
+              instance: >-
+                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+              occurredAt: '2022-04-25T12:42:21Z'
   PreconditionFailedError:
     status-code: 412
     type: ProblemResponse
@@ -2877,6 +3267,25 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
       [`https://production.api.apiture.com/errors/preconditionFailed/v1.0.0`](https://production.api.apiture.com/errors/preconditionFailed/v1.0.0)<br>
         One or more conditions given in the request header fields evaluated to false when tested on the server.
         Remediation: Update resources and use it's most recent ETag or modification time stamp.
+    examples:
+      - value:
+          type: https://production.api.apiture.com/errors/noSuchAccount/v1.0.0
+          title: Account Not Found
+          status: 422
+          detail: No account exists for the given account reference
+          instance: >-
+            https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+          id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+          occurredAt: '2022-04-25T12:42:21Z'
+          problems:
+            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
+              title: Account Not Found
+              status: 422
+              detail: No account exists at the given account_url
+              instance: >-
+                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+              occurredAt: '2022-04-25T12:42:21Z'
   GatewayTimeoutError:
     status-code: 504
     type: ProblemResponse
@@ -2891,6 +3300,25 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
       [`https://production.api.apiture.com/errors/gatewayTimeout/v1.0.0`](https://production.api.apiture.com/errors/gatewayTimeout/v1.0.0)<br>
         The server did not receive a timely response from an upstream server it needed to access in order to complete the request.
         Remediation: Wait a few minutes and try again, or gracefully fail the client request.
+    examples:
+      - value:
+          type: https://production.api.apiture.com/errors/noSuchAccount/v1.0.0
+          title: Account Not Found
+          status: 422
+          detail: No account exists for the given account reference
+          instance: >-
+            https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+          id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+          occurredAt: '2022-04-25T12:42:21Z'
+          problems:
+            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
+              title: Account Not Found
+              status: 422
+              detail: No account exists at the given account_url
+              instance: >-
+                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+              occurredAt: '2022-04-25T12:42:21Z'
   ConflictError:
     status-code: 409
     type: ProblemResponse
@@ -2904,6 +3332,25 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
       [`https://production.api.apiture.com/errors/cannotDeleteProcessedTransfers/v1.0.0`](https://production.api.apiture.com/errors/cannotDeleteProcessedTransfers/v1.0.0)<br>
         The delete operation is only allowed for transfers which have not begun processing.
         Remediation: Select a pending or scheduled transfer.
+    examples:
+      - value:
+          type: https://production.api.apiture.com/errors/noSuchAccount/v1.0.0
+          title: Account Not Found
+          status: 422
+          detail: No account exists for the given account reference
+          instance: >-
+            https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+          id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+          occurredAt: '2022-04-25T12:42:21Z'
+          problems:
+            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
+              title: Account Not Found
+              status: 422
+              detail: No account exists at the given account_url
+              instance: >-
+                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
+              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
+              occurredAt: '2022-04-25T12:42:21Z'
 types:
   AccountIds:
     docs: An array of account IDs.

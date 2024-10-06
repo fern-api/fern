@@ -8,16 +8,50 @@
         "errors": {
           "BadRequestError": {
             "docs": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "key": "value",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "unknown",
           },
           "ConflictError": {
             "docs": "To access this feature, the site needs to be republished.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 409,
             "type": "unknown",
           },
           "ForbiddenError": {
             "docs": "Provided access token is valid, but is missing the required scopes.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 403,
+                },
+              },
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "Request not authorized",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "unknown",
           },
@@ -33,6 +67,16 @@
           },
           "TooManyRequestsError": {
             "docs": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "too_many_requests",
+                  "message": "too many requests",
+                },
+              },
+            ],
             "status-code": 429,
             "type": "unknown",
           },
@@ -589,6 +633,11 @@ errors:
     status-code: 403
     type: unknown
     docs: Provided access token is valid, but is missing the required scopes.
+    examples:
+      - value:
+          status: 403
+      - value:
+          message: Request not authorized
   NotFoundError:
     status-code: 404
     type: unknown
@@ -600,10 +649,17 @@ errors:
       The rate limit of the provided access_token has been reached. Please have
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
+    examples:
+      - value:
+          message: too many requests
+          code: too_many_requests
   BadRequestError:
     status-code: 400
     type: unknown
     docs: Request body was incorrectly formatted. Likely invalid JSON being sent up.
+    examples:
+      - value:
+          key: value
   InternalServerError:
     status-code: 500
     type: unknown
@@ -612,6 +668,9 @@ errors:
     status-code: 409
     type: unknown
     docs: To access this feature, the site needs to be republished.
+    examples:
+      - value:
+          message: Request not authorized
 ",
     },
     "accessGroups.yml": {
