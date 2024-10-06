@@ -41,6 +41,9 @@ types:
       method: HttpMethod
       headers: list<HttpHeader>
       baseUrl: optional<environment.EnvironmentBaseUrlId>
+      basePath: 
+        type: optional<HttpPath>
+        docs: Overrides the service and endpoint level base paths
       path: HttpPath
       fullPath: HttpPath
       pathParameters: list<PathParameter>

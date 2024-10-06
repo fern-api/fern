@@ -1,0 +1,152 @@
+{
+  "types": {
+    "type_payment:Currency": {
+      "name": "Currency",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "USD"
+          },
+          {
+            "value": "YEN"
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_payment": {
+      "subpackageId": "subpackage_payment",
+      "name": "payment",
+      "endpoints": [
+        {
+          "auth": true,
+          "method": "POST",
+          "id": "create",
+          "originalEndpointId": "endpoint_payment.create",
+          "name": "Create",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/payment"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "amount",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  {
+                    "key": "currency",
+                    "valueType": {
+                      "type": "id",
+                      "value": "type_payment:Currency"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "uuid"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": []
+        },
+        {
+          "auth": true,
+          "method": "DELETE",
+          "id": "delete",
+          "originalEndpointId": "endpoint_payment.delete",
+          "name": "Delete",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "paymentId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/payment"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "paymentId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": []
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
+        "type_payment:Currency"
+      ],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": [
+      "subpackage_payment"
+    ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

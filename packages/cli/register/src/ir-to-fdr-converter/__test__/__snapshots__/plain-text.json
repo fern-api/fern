@@ -1,0 +1,50 @@
+{
+  "types": {},
+  "subpackages": {
+    "subpackage_service": {
+      "subpackageId": "subpackage_service",
+      "name": "service",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "getText",
+          "originalEndpointId": "endpoint_service.getText",
+          "name": "Get Text",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/text"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": []
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": [
+      "subpackage_service"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

@@ -108,14 +108,20 @@ export async function convertHttpService({
                     idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
                     baseUrl: endpoint.url ?? serviceDefinition.url ?? rootDefaultUrl,
                     method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
+                    basePath: endpoint["base-path"] != null ? constructHttpPath(endpoint["base-path"]) : undefined,
                     path: constructHttpPath(endpoint.path),
                     fullPath: constructHttpPath(
-                        file.rootApiFile["base-path"] != null
+                        endpoint["base-path"] != null
+                            ? urlJoin(endpoint["base-path"], endpoint.path)
+                            : file.rootApiFile["base-path"] != null
                             ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
                             : urlJoin(serviceDefinition["base-path"], endpoint.path)
                     ),
                     pathParameters: endpointPathParameters,
-                    allPathParameters: [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
+                    allPathParameters:
+                        endpoint["base-path"] != null
+                            ? [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters]
+                            : endpointPathParameters,
                     queryParameters:
                         typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
                             ? await Promise.all(
