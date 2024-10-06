@@ -54,8 +54,8 @@ importers:
         specifier: ^4.17.6
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.27.1
         version: 5.30.5(@typescript-eslint/parser@6.21.0(eslint@8.56.0)(typescript@4.6.4))(eslint@8.56.0)(typescript@4.6.4)
@@ -79,7 +79,7 @@ importers:
         version: 2.29.0(@typescript-eslint/parser@6.21.0(eslint@8.56.0)(typescript@4.6.4))(eslint@8.56.0)
       eslint-plugin-jest:
         specifier: ^27.9.0
-        version: 27.9.0(@typescript-eslint/eslint-plugin@5.30.5(@typescript-eslint/parser@6.21.0(eslint@8.56.0)(typescript@4.6.4))(eslint@8.56.0)(typescript@4.6.4))(eslint@8.56.0)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+        version: 27.9.0(@typescript-eslint/eslint-plugin@5.30.5(@typescript-eslint/parser@6.21.0(eslint@8.56.0)(typescript@4.6.4))(eslint@8.56.0)(typescript@4.6.4))(eslint@8.56.0)(jest@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)))(typescript@4.6.4)
       eslint-plugin-react:
         specifier: ^7.34.1
         version: 7.34.1(eslint@8.56.0)
@@ -88,7 +88,7 @@ importers:
         version: 4.6.0(eslint@8.56.0)
       eslint-plugin-tailwindcss:
         specifier: ^3.15.1
-        version: 3.15.1(tailwindcss@3.3.2(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))
+        version: 3.15.1(tailwindcss@3.3.2(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)))
       execa:
         specifier: ^5.1.1
         version: 5.1.1
@@ -130,16 +130,16 @@ importers:
         version: 5.0.0(postcss@8.4.38)(stylelint@14.14.0)
       tailwindcss:
         specifier: ^3.3.2
-        version: 3.3.2(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+        version: 3.3.2(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@types/node@18.7.18)(typescript@4.6.4)
+        version: 10.9.2(@types/node@22.7.4)(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
     dependenciesMeta:
       jsonc-parser@2.2.1:
         unplugged: true
@@ -184,8 +184,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -206,7 +206,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/csharp/codegen:
     dependencies:
@@ -239,8 +239,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -258,7 +258,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/csharp/model:
     dependencies:
@@ -282,8 +282,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
@@ -292,7 +292,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -310,7 +310,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/csharp/sdk:
     dependencies:
@@ -358,8 +358,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
@@ -368,7 +368,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -386,7 +386,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/openapi:
     dependencies:
@@ -425,8 +425,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
@@ -435,7 +435,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -453,7 +453,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/php/codegen:
     dependencies:
@@ -486,8 +486,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -505,7 +505,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/php/model:
     devDependencies:
@@ -525,8 +525,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
@@ -535,7 +535,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -550,13 +550,13 @@ importers:
         version: 2.7.1
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
       zod:
         specifier: ^3.22.3
         version: 3.22.4
@@ -591,8 +591,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
@@ -601,7 +601,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -619,13 +619,13 @@ importers:
         version: 2.7.1
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
       zod:
         specifier: ^3.22.3
         version: 3.22.4
@@ -664,8 +664,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
@@ -674,7 +674,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -692,7 +692,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/ruby/cli:
     dependencies:
@@ -719,8 +719,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -738,7 +738,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/ruby/codegen:
     dependencies:
@@ -768,8 +768,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -787,7 +787,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/ruby/model:
     dependencies:
@@ -820,8 +820,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
@@ -830,7 +830,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -851,7 +851,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/ruby/sdk:
     dependencies:
@@ -887,8 +887,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
@@ -897,7 +897,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -915,7 +915,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/swift/codegen:
     dependencies:
@@ -933,8 +933,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
@@ -943,7 +943,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -961,7 +961,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/codegen:
     devDependencies:
@@ -978,8 +978,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -997,7 +997,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/cli:
     devDependencies:
@@ -1029,8 +1029,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/tmp':
         specifier: ^0.2.4
         version: 0.2.4
@@ -1054,13 +1054,13 @@ importers:
         version: 9.5.1(typescript@4.6.4)(webpack@5.94.0)
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
       zod:
         specifier: ^3.22.3
         version: 3.22.4
@@ -1090,8 +1090,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1109,7 +1109,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/express-error-generator:
     dependencies:
@@ -1133,8 +1133,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1152,7 +1152,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/express-error-schema-generator:
     dependencies:
@@ -1179,8 +1179,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1198,7 +1198,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/express-inlined-request-body-generator:
     dependencies:
@@ -1216,8 +1216,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1235,7 +1235,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/express-inlined-request-body-schema-generator:
     dependencies:
@@ -1259,8 +1259,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1278,7 +1278,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/express-register-generator:
     dependencies:
@@ -1308,8 +1308,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1327,7 +1327,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/express-service-generator:
     dependencies:
@@ -1351,8 +1351,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1370,7 +1370,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/generator:
     dependencies:
@@ -1436,8 +1436,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1455,7 +1455,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/generic-express-error-generators:
     dependencies:
@@ -1476,8 +1476,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1495,7 +1495,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/model/type-generator:
     dependencies:
@@ -1519,8 +1519,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1538,7 +1538,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/model/type-reference-converters:
     dependencies:
@@ -1559,8 +1559,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1578,7 +1578,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/model/type-reference-example-generator:
     dependencies:
@@ -1602,8 +1602,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1621,7 +1621,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/model/type-schema-generator:
     dependencies:
@@ -1648,8 +1648,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1667,7 +1667,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/model/union-generator:
     dependencies:
@@ -1691,8 +1691,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1710,7 +1710,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/model/union-schema-generator:
     dependencies:
@@ -1734,8 +1734,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1753,7 +1753,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/playground/browser:
     dependencies:
@@ -1780,8 +1780,8 @@ importers:
         version: 5.0.0
     devDependencies:
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/node-fetch':
         specifier: 2.6.9
         version: 2.6.9
@@ -1799,7 +1799,7 @@ importers:
         version: 4.0.1
       '@vitejs/plugin-react':
         specifier: ^4.2.1
-        version: 4.2.1(vite@5.2.8(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5))
+        version: 4.2.1(vite@5.2.8(@types/node@22.7.4)(sass@1.72.0)(terser@5.31.5))
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1823,13 +1823,13 @@ importers:
         version: 4.6.4
       vite:
         specifier: ^5.2.8
-        version: 5.2.8(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5)
+        version: 5.2.8(@types/node@22.7.4)(sass@1.72.0)(terser@5.31.5)
       vite-plugin-checker:
         specifier: ^0.6.4
-        version: 0.6.4(eslint@8.56.0)(meow@9.0.0)(optionator@0.9.3)(stylelint@16.2.1(typescript@4.6.4))(typescript@4.6.4)(vite@5.2.8(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5))
+        version: 0.6.4(eslint@8.56.0)(meow@9.0.0)(optionator@0.9.3)(stylelint@16.2.1(typescript@4.6.4))(typescript@4.6.4)(vite@5.2.8(@types/node@22.7.4)(sass@1.72.0)(terser@5.31.5))
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/cli:
     devDependencies:
@@ -1864,8 +1864,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/tmp':
         specifier: ^0.2.4
         version: 0.2.4
@@ -1889,13 +1889,13 @@ importers:
         version: 9.5.1(typescript@4.6.4)(webpack@5.94.0)
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
       zod:
         specifier: ^3.22.3
         version: 3.22.4
@@ -1928,8 +1928,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1947,7 +1947,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/endpoint-error-union-generator:
     dependencies:
@@ -1974,8 +1974,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1993,7 +1993,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/environments-generator:
     dependencies:
@@ -2014,8 +2014,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2033,7 +2033,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/generator:
     dependencies:
@@ -2135,8 +2135,8 @@ importers:
         specifier: ^0.5.9
         version: 0.5.9
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/url-join':
         specifier: 4.0.1
         version: 4.0.1
@@ -2151,7 +2151,7 @@ importers:
         version: link:@types/vitest/globals
       jest-specific-snapshot:
         specifier: ^8.0.0
-        version: 8.0.0(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))
+        version: 8.0.0(jest@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -2163,7 +2163,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/generic-sdk-error-generators:
     dependencies:
@@ -2184,8 +2184,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2203,7 +2203,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/request-wrapper-generator:
     dependencies:
@@ -2227,8 +2227,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2246,7 +2246,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/sdk-endpoint-type-schemas-generator:
     dependencies:
@@ -2279,8 +2279,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2298,7 +2298,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/sdk-error-generator:
     dependencies:
@@ -2322,8 +2322,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2341,7 +2341,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/sdk-error-schema-generator:
     dependencies:
@@ -2368,8 +2368,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2387,7 +2387,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/sdk-inlined-request-body-schema-generator:
     dependencies:
@@ -2411,8 +2411,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2430,7 +2430,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/utils/abstract-error-class-generator:
     dependencies:
@@ -2448,8 +2448,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2467,7 +2467,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/utils/abstract-generator-cli:
     dependencies:
@@ -2497,8 +2497,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2516,7 +2516,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/utils/abstract-schema-generator:
     dependencies:
@@ -2534,8 +2534,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2553,7 +2553,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/utils/commons:
     dependencies:
@@ -2628,8 +2628,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/url-join':
         specifier: 4.0.1
         version: 4.0.1
@@ -2653,7 +2653,7 @@ importers:
         version: 2.7.1
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/utils/contexts:
     dependencies:
@@ -2680,8 +2680,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2699,7 +2699,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/utils/core-utilities/auth:
     dependencies:
@@ -2714,8 +2714,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2724,7 +2724,7 @@ importers:
         version: 8.56.0
       jest:
         specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+        version: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -2733,7 +2733,7 @@ importers:
         version: 2.7.1
       ts-jest:
         specifier: ^29.2.4
-        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -2744,8 +2744,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2754,7 +2754,7 @@ importers:
         version: 8.56.0
       jest:
         specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+        version: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -2763,7 +2763,7 @@ importers:
         version: 2.7.1
       ts-jest:
         specifier: ^29.2.4
-        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -2774,8 +2774,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2784,7 +2784,7 @@ importers:
         version: 8.56.0
       jest:
         specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+        version: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -2826,8 +2826,8 @@ importers:
         specifier: ^1.4.11
         version: 1.4.11
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/node-fetch':
         specifier: 2.6.9
         version: 2.6.9
@@ -2854,7 +2854,7 @@ importers:
         version: 4.0.0
       jest:
         specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+        version: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       jest-environment-jsdom:
         specifier: ^29.7.0
         version: 29.7.0
@@ -2869,7 +2869,7 @@ importers:
         version: 2.7.1
       ts-jest:
         specifier: ^29.2.4
-        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)))(typescript@4.6.4)
       ts-loader:
         specifier: ^9.3.1
         version: 9.5.1(typescript@4.6.4)(webpack@5.94.0)
@@ -2886,8 +2886,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2896,7 +2896,7 @@ importers:
         version: 8.56.0
       jest:
         specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+        version: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -2905,7 +2905,7 @@ importers:
         version: 2.7.1
       ts-jest:
         specifier: ^29.2.4
-        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -2922,8 +2922,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2932,7 +2932,7 @@ importers:
         version: 8.56.0
       jest:
         specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+        version: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -2941,7 +2941,7 @@ importers:
         version: 2.7.1
       ts-jest:
         specifier: ^29.2.4
-        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -2959,8 +2959,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2978,7 +2978,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/api-importers/commons:
     dependencies:
@@ -3002,8 +3002,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -3021,7 +3021,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/api-importers/conjure/conjure-sdk:
     devDependencies:
@@ -3029,8 +3029,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -3066,8 +3066,8 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -3085,7 +3085,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/api-importers/conjure/conjure-to-fern-tests:
     dependencies:
@@ -3100,8 +3100,8 @@ importers:
         version: link:../../../workspace-loader
     devDependencies:
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -3122,7 +3122,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/api-importers/openapi/openapi-ir:
     devDependencies:
@@ -3130,8 +3130,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -3149,7 +3149,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/api-importers/openapi/openapi-ir-parser:
     dependencies:
@@ -3200,8 +3200,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/swagger2openapi':
         specifier: ^7.0.4
         version: 7.0.4
@@ -3225,7 +3225,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/api-importers/openapi/openapi-ir-to-fern:
     dependencies:
@@ -3264,8 +3264,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -3286,7 +3286,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/api-importers/openapi/openapi-ir-to-fern-tests:
     dependencies:
@@ -3304,8 +3304,8 @@ importers:
         version: link:../../../workspace-loader
     devDependencies:
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -3326,7 +3326,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/auth:
     dependencies:
@@ -3359,8 +3359,8 @@ importers:
         specifier: ^9.0.6
         version: 9.0.6
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -3378,7 +3378,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/cli:
     dependencies:
@@ -3561,8 +3561,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/tar':
         specifier: ^6.1.11
         version: 6.1.11
@@ -3577,7 +3577,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -3595,7 +3595,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/cli-migrations:
     dependencies:
@@ -3655,8 +3655,8 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -3677,11 +3677,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/cli/dist/dev: {}
-
-  packages/cli/cli/dist/prod: {}
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/configuration:
     dependencies:
@@ -3735,8 +3731,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/semver':
         specifier: ^7.5.8
         version: 7.5.8
@@ -3760,7 +3756,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/docs-importers/commons:
     dependencies:
@@ -3784,8 +3780,8 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -3806,7 +3802,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/docs-importers/mintlify:
     dependencies:
@@ -3836,8 +3832,8 @@ importers:
         version: 4.0.3
     devDependencies:
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -3858,7 +3854,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/docs-markdown-utils:
     dependencies:
@@ -3891,8 +3887,8 @@ importers:
         specifier: ^5.2.1
         version: 5.2.1
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -3916,7 +3912,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/docs-preview:
     dependencies:
@@ -3982,8 +3978,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
@@ -4013,7 +4009,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/docs-resolver:
     dependencies:
@@ -4064,8 +4060,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -4086,7 +4082,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/ete-tests:
     dependencies:
@@ -4128,8 +4124,8 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/node-fetch':
         specifier: 2.6.9
         version: 2.6.9
@@ -4159,7 +4155,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/fern-definition/formatter:
     dependencies:
@@ -4186,8 +4182,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/prettier':
         specifier: ^2.7.1
         version: 2.7.3
@@ -4211,7 +4207,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/fern-definition/schema:
     dependencies:
@@ -4229,8 +4225,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -4251,7 +4247,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/fern-definition/validator:
     dependencies:
@@ -4311,8 +4307,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -4333,7 +4329,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/generation/ir-generator:
     dependencies:
@@ -4381,8 +4377,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/object-hash':
         specifier: ^3.0.6
         version: 3.0.6
@@ -4409,7 +4405,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/generation/ir-migrations:
     dependencies:
@@ -4607,8 +4603,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -4629,7 +4625,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/generation/local-generation/docker-utils:
     dependencies:
@@ -4650,8 +4646,8 @@ importers:
         specifier: ^3.3.9
         version: 3.3.9
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -4672,7 +4668,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/generation/local-generation/local-workspace-runner:
     dependencies:
@@ -4732,8 +4728,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/tmp':
         specifier: ^0.2.4
         version: 0.2.4
@@ -4754,7 +4750,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/generation/remote-generation/remote-workspace-runner:
     dependencies:
@@ -4856,8 +4852,8 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/tar':
         specifier: ^6.1.11
         version: 6.1.11
@@ -4884,7 +4880,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/init:
     dependencies:
@@ -4944,8 +4940,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -4963,7 +4959,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/lazy-fern-workspace:
     dependencies:
@@ -5053,8 +5049,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/object-hash':
         specifier: ^3.0.6
         version: 3.0.6
@@ -5081,7 +5077,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/logger:
     dependencies:
@@ -5096,8 +5092,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5115,7 +5111,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/login:
     dependencies:
@@ -5160,8 +5156,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/qs':
         specifier: 6.9.15
         version: 6.9.15
@@ -5182,7 +5178,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/mock:
     dependencies:
@@ -5215,8 +5211,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/url-join':
         specifier: 4.0.1
         version: 4.0.1
@@ -5240,7 +5236,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/posthog-manager:
     dependencies:
@@ -5264,8 +5260,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
@@ -5286,7 +5282,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/project-loader:
     dependencies:
@@ -5313,8 +5309,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5332,7 +5328,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/register:
     dependencies:
@@ -5377,8 +5373,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5399,7 +5395,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/semver-utils:
     dependencies:
@@ -5411,8 +5407,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5430,7 +5426,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/task-context:
     dependencies:
@@ -5442,8 +5438,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5461,7 +5457,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/workspace-commons:
     dependencies:
@@ -5491,8 +5487,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5513,7 +5509,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/workspace-loader:
     dependencies:
@@ -5564,8 +5560,8 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5586,7 +5582,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/yaml/docs-validator:
     dependencies:
@@ -5658,8 +5654,8 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5680,7 +5676,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/commons/core-utils:
     dependencies:
@@ -5707,8 +5703,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/title':
         specifier: ^3.4.3
         version: 3.4.3
@@ -5738,7 +5734,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/commons/fs-utils:
     dependencies:
@@ -5765,8 +5761,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/stream-json':
         specifier: ^1.7.7
         version: 1.7.7
@@ -5787,7 +5783,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/commons/loadable:
     dependencies:
@@ -5799,8 +5795,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5818,7 +5814,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/commons/logging-execa:
     dependencies:
@@ -5833,8 +5829,8 @@ importers:
         version: 3.0.3
     devDependencies:
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5855,7 +5851,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/core:
     dependencies:
@@ -5879,8 +5875,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5898,7 +5894,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/ir-sdk:
     devDependencies:
@@ -5906,8 +5902,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5925,7 +5921,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/scripts:
     devDependencies:
@@ -5942,8 +5938,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/yargs':
         specifier: ^17.0.28
         version: 17.0.28
@@ -5982,16 +5978,16 @@ importers:
         version: 2.7.1
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@types/node@18.7.18)(typescript@4.6.4)
+        version: 10.9.2(@types/node@22.7.4)(typescript@4.6.4)
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
@@ -6087,8 +6083,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
+        specifier: ^22.7.4
+        version: 22.7.4
       '@types/semver':
         specifier: ^7.5.8
         version: 7.5.8
@@ -6103,7 +6099,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -6124,7 +6120,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
 packages:
 
@@ -7808,8 +7804,8 @@ packages:
   '@types/node@14.18.63':
     resolution: {integrity: sha512-fAtCfv4jJg+ExtXhvCkCqUKZ+4ok/JQk01qDKhL5BDDoS3AxKXhV5/MAVUZyQnSEd2GT92fkgZl0pz0Q0AzcIQ==}
 
-  '@types/node@18.7.18':
-    resolution: {integrity: sha512-m+6nTEOadJZuTPkKR/SYK3A2d7FZrgElol9UP1Kae90VVU4a6mxnPuLiIW1m4Cq4gZ/nWb9GrdVXJCoCazDAbg==}
+  '@types/node@22.7.4':
+    resolution: {integrity: sha512-y+NPi1rFzDs1NdQHHToqeiX2TIS79SWEAw9GYhkkx8bD0ChpfqC+n2j5OXOCpzfojBEBt6DnEnnG9MY0zk1XLg==}
 
   '@types/normalize-package-data@2.4.1':
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -9131,8 +9127,8 @@ packages:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
     engines: {node: '>=0.12'}
 
-  env-cmd@https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b:
-    resolution: {tarball: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b}
+  env-cmd@git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b:
+    resolution: {commit: 8f35b71651f6a78710308ff38ab30896ea72ee8b, repo: git@github.com:toddbluhm/env-cmd.git, type: git}
     version: 10.1.0
     engines: {node: '>=8.0.0'}
     hasBin: true
@@ -9440,6 +9436,7 @@ packages:
   eslint@8.56.0:
     resolution: {integrity: sha512-Go19xM6T9puCOWntie1/P997aXxFsOi37JIHRWI514Hc6ZnaHGKY9xFhrU65RT6CcBEzZoGG1e6Nq+DT04ZtZQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -12738,6 +12735,9 @@ packages:
   unbzip2-stream@1.4.3:
     resolution: {integrity: sha512-mlExGW4w71ebDJviH16lQLtZS32VKqsSfk80GCfUlwT/4/hNRFsoscrF/c++9xinkMzECL1uL9DDwXqFWkruPg==}
 
+  undici-types@6.19.8:
+    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
+
   unicode-canonical-property-names-ecmascript@2.0.0:
     resolution: {integrity: sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ==}
     engines: {node: '>=4'}
@@ -14511,27 +14511,27 @@ snapshots:
   '@jest/console@29.7.0':
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       chalk: 4.1.2
       jest-message-util: 29.7.0
       jest-util: 29.7.0
       slash: 3.0.0
 
-  '@jest/core@29.7.0(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))':
+  '@jest/core@29.7.0(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))':
     dependencies:
       '@jest/console': 29.7.0
       '@jest/reporters': 29.7.0
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       ci-info: 3.3.2
       exit: 0.1.2
       graceful-fs: 4.2.11
       jest-changed-files: 29.7.0
-      jest-config: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      jest-config: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       jest-haste-map: 29.7.0
       jest-message-util: 29.7.0
       jest-regex-util: 29.6.3
@@ -14556,7 +14556,7 @@ snapshots:
     dependencies:
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       jest-mock: 29.7.0
 
   '@jest/expect-utils@29.7.0':
@@ -14574,7 +14574,7 @@ snapshots:
     dependencies:
       '@jest/types': 29.6.3
       '@sinonjs/fake-timers': 10.2.0
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       jest-message-util: 29.7.0
       jest-mock: 29.7.0
       jest-util: 29.7.0
@@ -14596,7 +14596,7 @@ snapshots:
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
       '@jridgewell/trace-mapping': 0.3.25
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       chalk: 4.1.2
       collect-v8-coverage: 1.0.1
       exit: 0.1.2
@@ -14666,7 +14666,7 @@ snapshots:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       '@types/yargs': 17.0.28
       chalk: 4.1.2
 
@@ -14901,7 +14901,7 @@ snapshots:
   '@types/body-parser@1.19.2':
     dependencies:
       '@types/connect': 3.4.35
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/boxen@3.0.1':
     dependencies:
@@ -14909,11 +14909,11 @@ snapshots:
 
   '@types/connect@3.4.35':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/cors@2.8.17':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/debug@4.1.8':
     dependencies:
@@ -14921,19 +14921,19 @@ snapshots:
 
   '@types/decompress@4.2.7':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/diff@5.2.1': {}
 
   '@types/docker-modem@3.0.2':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       '@types/ssh2': 1.11.4
 
   '@types/dockerode@3.3.9':
     dependencies:
       '@types/docker-modem': 3.0.2
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/estree-jsx@1.0.0':
     dependencies:
@@ -14945,7 +14945,7 @@ snapshots:
 
   '@types/express-serve-static-core@4.17.39':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       '@types/qs': 6.9.15
       '@types/range-parser': 1.2.4
       '@types/send': 0.17.3
@@ -14964,7 +14964,7 @@ snapshots:
   '@types/fs-extra@11.0.1':
     dependencies:
       '@types/jsonfile': 6.1.1
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/get-port@4.2.0':
     dependencies:
@@ -14973,11 +14973,11 @@ snapshots:
   '@types/glob@8.1.0':
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/graceful-fs@4.1.5':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/hast@3.0.4':
     dependencies:
@@ -15015,7 +15015,7 @@ snapshots:
 
   '@types/jsdom@20.0.1':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       '@types/tough-cookie': 4.0.5
       parse5: 7.1.2
 
@@ -15025,11 +15025,11 @@ snapshots:
 
   '@types/jsonfile@6.1.1':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/jsonwebtoken@9.0.6':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/katex@0.16.7': {}
 
@@ -15069,12 +15069,14 @@ snapshots:
 
   '@types/node-fetch@2.6.9':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       form-data: 4.0.0
 
   '@types/node@14.18.63': {}
 
-  '@types/node@18.7.18': {}
+  '@types/node@22.7.4':
+    dependencies:
+      undici-types: 6.19.8
 
   '@types/normalize-package-data@2.4.1': {}
 
@@ -15106,7 +15108,7 @@ snapshots:
 
   '@types/readable-stream@4.0.15':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       safe-buffer: 5.1.2
 
   '@types/scheduler@0.16.3': {}
@@ -15116,26 +15118,26 @@ snapshots:
   '@types/send@0.17.3':
     dependencies:
       '@types/mime': 1.3.4
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/serve-static@1.15.0':
     dependencies:
       '@types/mime': 3.0.1
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/ssh2@1.11.4':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/stack-utils@2.0.1': {}
 
   '@types/stream-chain@2.1.0':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/stream-json@1.7.7':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       '@types/stream-chain': 2.1.0
 
   '@types/strip-bom@3.0.0': {}
@@ -15144,12 +15146,12 @@ snapshots:
 
   '@types/swagger2openapi@7.0.4':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       openapi-types: 12.1.3
 
   '@types/tar@6.1.11':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       minipass: 4.0.0
 
   '@types/terminal-link@1.2.0':
@@ -15158,7 +15160,7 @@ snapshots:
 
   '@types/through@0.0.30':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/tinycolor2@1.4.6': {}
 
@@ -15184,11 +15186,11 @@ snapshots:
 
   '@types/ws@8.5.10':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/xml2js@0.4.14':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
 
   '@types/yargs-parser@21.0.0': {}
 
@@ -15386,14 +15388,14 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-react@4.2.1(vite@5.2.8(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5))':
+  '@vitejs/plugin-react@4.2.1(vite@5.2.8(@types/node@22.7.4)(sass@1.72.0)(terser@5.31.5))':
     dependencies:
       '@babel/core': 7.25.2
       '@babel/plugin-transform-react-jsx-self': 7.23.3(@babel/core@7.25.2)
       '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.25.2)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.0
-      vite: 5.2.8(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5)
+      vite: 5.2.8(@types/node@22.7.4)(sass@1.72.0)(terser@5.31.5)
     transitivePeerDependencies:
       - supports-color
 
@@ -16254,13 +16256,13 @@ snapshots:
       nan: 2.19.0
     optional: true
 
-  create-jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)):
+  create-jest@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)):
     dependencies:
       '@jest/types': 29.6.3
       chalk: 4.1.2
       exit: 0.1.2
       graceful-fs: 4.2.11
-      jest-config: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      jest-config: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       jest-util: 29.7.0
       prompts: 2.4.2
     transitivePeerDependencies:
@@ -16581,7 +16583,7 @@ snapshots:
 
   entities@4.5.0: {}
 
-  env-cmd@https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b:
+  env-cmd@git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b:
     dependencies:
       commander: 5.1.0
       cross-spawn: 7.0.3
@@ -16899,13 +16901,13 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-jest@27.9.0(@typescript-eslint/eslint-plugin@5.30.5(@typescript-eslint/parser@6.21.0(eslint@8.56.0)(typescript@4.6.4))(eslint@8.56.0)(typescript@4.6.4))(eslint@8.56.0)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4):
+  eslint-plugin-jest@27.9.0(@typescript-eslint/eslint-plugin@5.30.5(@typescript-eslint/parser@6.21.0(eslint@8.56.0)(typescript@4.6.4))(eslint@8.56.0)(typescript@4.6.4))(eslint@8.56.0)(jest@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)))(typescript@4.6.4):
     dependencies:
       '@typescript-eslint/utils': 5.32.0(eslint@8.56.0)(typescript@4.6.4)
       eslint: 8.56.0
     optionalDependencies:
       '@typescript-eslint/eslint-plugin': 5.30.5(@typescript-eslint/parser@6.21.0(eslint@8.56.0)(typescript@4.6.4))(eslint@8.56.0)(typescript@4.6.4)
-      jest: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      jest: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -16936,11 +16938,11 @@ snapshots:
       semver: 6.3.1
       string.prototype.matchall: 4.0.11
 
-  eslint-plugin-tailwindcss@3.15.1(tailwindcss@3.3.2(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))):
+  eslint-plugin-tailwindcss@3.15.1(tailwindcss@3.3.2(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))):
     dependencies:
       fast-glob: 3.3.2
       postcss: 8.4.38
-      tailwindcss: 3.3.2(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      tailwindcss: 3.3.2(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
 
   eslint-scope@5.1.1:
     dependencies:
@@ -17993,7 +17995,7 @@ snapshots:
       '@jest/expect': 29.7.0
       '@jest/test-result': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       chalk: 4.1.2
       co: 4.6.0
       dedent: 1.5.1
@@ -18013,16 +18015,16 @@ snapshots:
       - babel-plugin-macros
       - supports-color
 
-  jest-cli@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)):
+  jest-cli@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)):
     dependencies:
-      '@jest/core': 29.7.0(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      '@jest/core': 29.7.0(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       '@jest/test-result': 29.7.0
       '@jest/types': 29.6.3
       chalk: 4.1.2
-      create-jest: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      create-jest: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       exit: 0.1.2
       import-local: 3.2.0
-      jest-config: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      jest-config: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       jest-util: 29.7.0
       jest-validate: 29.7.0
       yargs: 17.7.2
@@ -18032,7 +18034,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  jest-config@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)):
+  jest-config@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)):
     dependencies:
       '@babel/core': 7.25.2
       '@jest/test-sequencer': 29.7.0
@@ -18057,8 +18059,8 @@ snapshots:
       slash: 3.0.0
       strip-json-comments: 3.1.1
     optionalDependencies:
-      '@types/node': 18.7.18
-      ts-node: 10.9.2(@types/node@18.7.18)(typescript@4.6.4)
+      '@types/node': 22.7.4
+      ts-node: 10.9.2(@types/node@22.7.4)(typescript@4.6.4)
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
@@ -18088,7 +18090,7 @@ snapshots:
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
       '@types/jsdom': 20.0.1
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       jest-mock: 29.7.0
       jest-util: 29.7.0
       jsdom: 20.0.3
@@ -18102,7 +18104,7 @@ snapshots:
       '@jest/environment': 29.7.0
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       jest-mock: 29.7.0
       jest-util: 29.7.0
 
@@ -18119,7 +18121,7 @@ snapshots:
     dependencies:
       '@jest/types': 29.6.3
       '@types/graceful-fs': 4.1.5
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       anymatch: 3.1.2
       fb-watchman: 2.0.1
       graceful-fs: 4.2.11
@@ -18158,7 +18160,7 @@ snapshots:
   jest-mock@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       jest-util: 29.7.0
 
   jest-pnp-resolver@1.2.2(jest-resolve@29.7.0):
@@ -18193,7 +18195,7 @@ snapshots:
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       chalk: 4.1.2
       emittery: 0.13.1
       graceful-fs: 4.2.11
@@ -18221,7 +18223,7 @@ snapshots:
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       chalk: 4.1.2
       cjs-module-lexer: 1.2.2
       collect-v8-coverage: 1.0.1
@@ -18264,9 +18266,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  jest-specific-snapshot@8.0.0(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))):
+  jest-specific-snapshot@8.0.0(jest@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))):
     dependencies:
-      jest: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      jest: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       jest-snapshot: 29.7.0
     transitivePeerDependencies:
       - supports-color
@@ -18274,7 +18276,7 @@ snapshots:
   jest-util@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       chalk: 4.1.2
       ci-info: 3.3.2
       graceful-fs: 4.2.11
@@ -18293,7 +18295,7 @@ snapshots:
     dependencies:
       '@jest/test-result': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       emittery: 0.13.1
@@ -18302,23 +18304,23 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
   jest-worker@29.7.0:
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       jest-util: 29.7.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
-  jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)):
+  jest@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)):
     dependencies:
-      '@jest/core': 29.7.0(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      '@jest/core': 29.7.0(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       '@jest/types': 29.6.3
       import-local: 3.2.0
-      jest-cli: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      jest-cli: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -19609,13 +19611,13 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.38
 
-  postcss-load-config@4.0.1(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)):
+  postcss-load-config@4.0.1(postcss@8.4.38)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)):
     dependencies:
       lilconfig: 2.1.0
       yaml: 2.3.3
     optionalDependencies:
       postcss: 8.4.38
-      ts-node: 10.9.2(@types/node@18.7.18)(typescript@4.6.4)
+      ts-node: 10.9.2(@types/node@22.7.4)(typescript@4.6.4)
 
   postcss-media-query-parser@0.2.3: {}
 
@@ -20624,7 +20626,7 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  tailwindcss@3.3.2(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)):
+  tailwindcss@3.3.2(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -20643,7 +20645,7 @@ snapshots:
       postcss: 8.4.38
       postcss-import: 15.1.0(postcss@8.4.38)
       postcss-js: 4.0.1(postcss@8.4.38)
-      postcss-load-config: 4.0.1(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      postcss-load-config: 4.0.1(postcss@8.4.38)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       postcss-nested: 6.0.1(postcss@8.4.38)
       postcss-selector-parser: 6.0.15
       postcss-value-parser: 4.2.0
@@ -20827,12 +20829,12 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  ts-jest@29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4):
+  ts-jest@29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4)))(typescript@4.6.4):
     dependencies:
       bs-logger: 0.2.6
       ejs: 3.1.10
       fast-json-stable-stringify: 2.1.0
-      jest: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      jest: 29.7.0(@types/node@22.7.4)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       jest-util: 29.7.0
       json5: 2.2.2
       lodash.memoize: 4.1.2
@@ -20871,14 +20873,14 @@ snapshots:
       '@ts-morph/common': 0.16.0
       code-block-writer: 11.0.3
 
-  ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4):
+  ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.8
       '@tsconfig/node12': 1.0.9
       '@tsconfig/node14': 1.0.1
       '@tsconfig/node16': 1.0.2
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       acorn: 8.11.3
       acorn-walk: 8.3.2
       arg: 4.1.3
@@ -20911,7 +20913,7 @@ snapshots:
 
   tslib@2.6.2: {}
 
-  tsup@8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4):
+  tsup@8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))(typescript@4.6.4):
     dependencies:
       bundle-require: 4.0.2(esbuild@0.19.12)
       cac: 6.7.14
@@ -20921,7 +20923,7 @@ snapshots:
       execa: 5.1.1
       globby: 11.1.0
       joycon: 3.1.1
-      postcss-load-config: 4.0.1(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      postcss-load-config: 4.0.1(postcss@8.4.38)(ts-node@10.9.2(@types/node@22.7.4)(typescript@4.6.4))
       resolve-from: 5.0.0
       rollup: 4.14.1
       source-map: 0.8.0-beta.0
@@ -21015,6 +21017,8 @@ snapshots:
     dependencies:
       buffer: 5.7.1
       through: 2.3.8
+
+  undici-types@6.19.8: {}
 
   unicode-canonical-property-names-ecmascript@2.0.0: {}
 
@@ -21160,13 +21164,13 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  vite-node@2.0.5(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5):
+  vite-node@2.0.5(@types/node@22.7.4)(sass@1.72.0)(terser@5.31.5):
     dependencies:
       cac: 6.7.14
       debug: 4.3.6
       pathe: 1.1.2
       tinyrainbow: 1.2.0
-      vite: 5.2.8(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5)
+      vite: 5.2.8(@types/node@22.7.4)(sass@1.72.0)(terser@5.31.5)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -21177,7 +21181,7 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-checker@0.6.4(eslint@8.56.0)(meow@9.0.0)(optionator@0.9.3)(stylelint@16.2.1(typescript@4.6.4))(typescript@4.6.4)(vite@5.2.8(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5)):
+  vite-plugin-checker@0.6.4(eslint@8.56.0)(meow@9.0.0)(optionator@0.9.3)(stylelint@16.2.1(typescript@4.6.4))(typescript@4.6.4)(vite@5.2.8(@types/node@22.7.4)(sass@1.72.0)(terser@5.31.5)):
     dependencies:
       '@babel/code-frame': 7.24.7
       ansi-escapes: 4.3.2
@@ -21190,7 +21194,7 @@ snapshots:
       semver: 7.6.2
       strip-ansi: 6.0.1
       tiny-invariant: 1.3.1
-      vite: 5.2.8(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5)
+      vite: 5.2.8(@types/node@22.7.4)(sass@1.72.0)(terser@5.31.5)
       vscode-languageclient: 7.0.0
       vscode-languageserver: 7.0.0
       vscode-languageserver-textdocument: 1.0.11
@@ -21202,18 +21206,18 @@ snapshots:
       stylelint: 16.2.1(typescript@4.6.4)
       typescript: 4.6.4
 
-  vite@5.2.8(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5):
+  vite@5.2.8(@types/node@22.7.4)(sass@1.72.0)(terser@5.31.5):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.14.1
     optionalDependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       fsevents: 2.3.3
       sass: 1.72.0
       terser: 5.31.5
 
-  vitest@2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5):
+  vitest@2.0.5(@types/node@22.7.4)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5):
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@vitest/expect': 2.0.5
@@ -21231,11 +21235,11 @@ snapshots:
       tinybench: 2.9.0
       tinypool: 1.0.0
       tinyrainbow: 1.2.0
-      vite: 5.2.8(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5)
-      vite-node: 2.0.5(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5)
+      vite: 5.2.8(@types/node@22.7.4)(sass@1.72.0)(terser@5.31.5)
+      vite-node: 2.0.5(@types/node@22.7.4)(sass@1.72.0)(terser@5.31.5)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 18.7.18
+      '@types/node': 22.7.4
       jsdom: 20.0.3
     transitivePeerDependencies:
       - less
