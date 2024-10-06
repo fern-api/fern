@@ -25858,7 +25858,7 @@ Other details about this invoice",
       "BadRequestError": {
         "docs": "error",
         "status-code": 400,
-        "type": "BadRequestErrorBody",
+        "type": "unknown",
       },
     },
     "types": {

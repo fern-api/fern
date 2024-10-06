@@ -5678,7 +5678,7 @@ let you get, create, and run vals.",
       "BadRequestError": {
         "docs": "Default Response",
         "status-code": 400,
-        "type": "BadRequestErrorBody",
+        "type": "unknown",
       },
       "InternalServerError": {
         "docs": "Default Response",
@@ -5686,6 +5686,7 @@ let you get, create, and run vals.",
         "type": "InternalServerErrorBody",
       },
       "NotFoundError": {
+        "docs": "The val was not found",
         "status-code": 404,
         "type": "unknown",
       },
