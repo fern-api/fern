@@ -204,6 +204,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -218,43 +219,7 @@
                         ]
                     },
                     "pathParameters": [],
-                    "allPathParameters": [
-                        {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
-                            "valueType": {
-                                "_type": "primitive",
-                                "primitive": {
-                                    "v1": "STRING",
-                                    "v2": {
-                                        "type": "string",
-                                        "default": null,
-                                        "validation": null
-                                    }
-                                }
-                            },
-                            "location": "ROOT",
-                            "variable": null,
-                            "docs": null
-                        }
-                    ],
+                    "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
@@ -937,6 +902,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -997,41 +963,6 @@
                         }
                     ],
                     "allPathParameters": [
-                        {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
-                            "valueType": {
-                                "_type": "primitive",
-                                "primitive": {
-                                    "v1": "STRING",
-                                    "v2": {
-                                        "type": "string",
-                                        "default": null,
-                                        "validation": null
-                                    }
-                                }
-                            },
-                            "location": "ROOT",
-                            "variable": null,
-                            "docs": null
-                        },
                         {
                             "name": {
                                 "originalName": "nestedId",

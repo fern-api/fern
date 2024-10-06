@@ -20368,6 +20368,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -20766,6 +20767,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -20780,43 +20782,7 @@
                         ]
                     },
                     "pathParameters": [],
-                    "allPathParameters": [
-                        {
-                            "name": {
-                                "originalName": "notificationId",
-                                "camelCase": {
-                                    "unsafeName": "notificationID",
-                                    "safeName": "notificationID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "notification_id",
-                                    "safeName": "notification_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NOTIFICATION_ID",
-                                    "safeName": "NOTIFICATION_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "NotificationID",
-                                    "safeName": "NotificationID"
-                                }
-                            },
-                            "valueType": {
-                                "_type": "primitive",
-                                "primitive": {
-                                    "v1": "STRING",
-                                    "v2": {
-                                        "type": "string",
-                                        "default": null,
-                                        "validation": null
-                                    }
-                                }
-                            },
-                            "location": "SERVICE",
-                            "variable": null,
-                            "docs": null
-                        }
-                    ],
+                    "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
@@ -22059,6 +22025,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -23197,6 +23164,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/check/",
                         "parts": [
@@ -23594,6 +23562,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/ping",
                         "parts": []
@@ -23805,6 +23774,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/movie/",
                         "parts": [
@@ -27275,6 +27245,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/movie",
                         "parts": []
@@ -30674,6 +30645,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/metadata",
                         "parts": []
@@ -31618,6 +31590,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/response",
                         "parts": []

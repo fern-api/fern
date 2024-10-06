@@ -808,6 +808,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/extended-inline-request-body",
                         "parts": []

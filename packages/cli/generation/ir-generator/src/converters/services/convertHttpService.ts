@@ -120,8 +120,8 @@ export async function convertHttpService({
                     pathParameters: endpointPathParameters,
                     allPathParameters:
                         endpoint["base-path"] != null
-                            ? [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters]
-                            : endpointPathParameters,
+                            ? endpointPathParameters
+                            : [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
                     queryParameters:
                         typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
                             ? await Promise.all(

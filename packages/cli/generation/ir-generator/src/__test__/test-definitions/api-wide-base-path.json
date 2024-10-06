@@ -161,6 +161,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -268,76 +269,6 @@
                         }
                     ],
                     "allPathParameters": [
-                        {
-                            "name": {
-                                "originalName": "pathParam",
-                                "camelCase": {
-                                    "unsafeName": "pathParam",
-                                    "safeName": "pathParam"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "path_param",
-                                    "safeName": "path_param"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "PATH_PARAM",
-                                    "safeName": "PATH_PARAM"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "PathParam",
-                                    "safeName": "PathParam"
-                                }
-                            },
-                            "valueType": {
-                                "_type": "primitive",
-                                "primitive": {
-                                    "v1": "STRING",
-                                    "v2": {
-                                        "type": "string",
-                                        "default": null,
-                                        "validation": null
-                                    }
-                                }
-                            },
-                            "location": "ROOT",
-                            "variable": null,
-                            "docs": null
-                        },
-                        {
-                            "name": {
-                                "originalName": "serviceParam",
-                                "camelCase": {
-                                    "unsafeName": "serviceParam",
-                                    "safeName": "serviceParam"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "service_param",
-                                    "safeName": "service_param"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SERVICE_PARAM",
-                                    "safeName": "SERVICE_PARAM"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ServiceParam",
-                                    "safeName": "ServiceParam"
-                                }
-                            },
-                            "valueType": {
-                                "_type": "primitive",
-                                "primitive": {
-                                    "v1": "STRING",
-                                    "v2": {
-                                        "type": "string",
-                                        "default": null,
-                                        "validation": null
-                                    }
-                                }
-                            },
-                            "location": "SERVICE",
-                            "variable": null,
-                            "docs": null
-                        },
                         {
                             "name": {
                                 "originalName": "resourceParam",
