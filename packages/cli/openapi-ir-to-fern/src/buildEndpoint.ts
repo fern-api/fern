@@ -282,7 +282,9 @@ export function buildEndpoint({
 
         context.builder.addError(errorDeclarationFile, {
             name: errorName,
-            schema: errorDeclaration
+            schema: context.isErrorUnknownSchema(parseInt(statusCode))
+                ? { ...errorDeclaration, type: "unknown" }
+                : errorDeclaration
         });
 
         if (convertedEndpoint.errors == null) {

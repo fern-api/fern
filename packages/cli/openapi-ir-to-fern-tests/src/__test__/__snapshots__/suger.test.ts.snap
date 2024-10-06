@@ -12857,6 +12857,7 @@ exports[`open api parser > suger > simple 1`] = `
   "packageMarkerFile": {
     "errors": {
       "BadRequestError": {
+        "docs": "Bad Request",
         "status-code": 400,
         "type": "unknown",
       },
@@ -12866,6 +12867,7 @@ exports[`open api parser > suger > simple 1`] = `
         "type": "string",
       },
       "InternalServerError": {
+        "docs": "Internal Server Error",
         "status-code": 500,
         "type": "unknown",
       },

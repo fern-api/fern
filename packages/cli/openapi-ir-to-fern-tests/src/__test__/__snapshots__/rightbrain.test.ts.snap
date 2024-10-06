@@ -26497,6 +26497,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
   "packageMarkerFile": {
     "errors": {
       "BadRequestError": {
+        "docs": "Bad Request",
         "status-code": 400,
         "type": "unknown",
       },

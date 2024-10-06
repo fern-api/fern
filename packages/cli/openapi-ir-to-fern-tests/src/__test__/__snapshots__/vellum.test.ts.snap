@@ -4496,6 +4496,7 @@ or overwritten with default values.",
   "packageMarkerFile": {
     "errors": {
       "BadRequestError": {
+        "docs": "",
         "status-code": 400,
         "type": "unknown",
       },
@@ -4510,10 +4511,12 @@ or overwritten with default values.",
         "type": "GenerateErrorResponse",
       },
       "InternalServerError": {
+        "docs": "",
         "status-code": 500,
         "type": "unknown",
       },
       "NotFoundError": {
+        "docs": "",
         "status-code": 404,
         "type": "unknown",
       },

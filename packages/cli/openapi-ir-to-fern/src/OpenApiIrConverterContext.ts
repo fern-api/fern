@@ -1,8 +1,9 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Logger } from "@fern-api/logger";
-import { OpenApiIntermediateRepresentation, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
+import { OpenApiIntermediateRepresentation, Schema, SchemaId, SchemaWithExample } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
+import { isSchemaEqual } from "@fern-api/openapi-parser";
 
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext;
@@ -36,7 +37,9 @@ export class OpenApiIrConverterContext {
     public authOverrides: RawSchemas.WithAuthSchema | undefined;
     public globalHeaderOverrides: RawSchemas.WithHeadersSchema | undefined;
     public detectGlobalHeaders: boolean;
+    private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
+    private unknownSchema: Set<number> = new Set();
 
     constructor({
         taskContext,
@@ -50,6 +53,7 @@ export class OpenApiIrConverterContext {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.ir = ir;
+        this.enableUniqueErrorsPerEndpoint = enableUniqueErrorsPerEndpoint;
         this.builder = new FernDefinitionBuilderImpl(enableUniqueErrorsPerEndpoint);
         if (ir.title != null) {
             this.builder.setDisplayName({ displayName: ir.title });
@@ -58,6 +62,27 @@ export class OpenApiIrConverterContext {
         this.environmentOverrides = environmentOverrides;
         this.authOverrides = authOverrides;
         this.globalHeaderOverrides = globalHeaderOverrides;
+
+        const schemaByStatusCode: Record<number, Schema> = {};
+        if (!this.enableUniqueErrorsPerEndpoint) {
+            for (const endpoint of ir.endpoints) {
+                for (const [statusCodeString, error] of Object.entries(endpoint.errors)) {
+                    const statusCode = parseInt(statusCodeString);
+                    const existingSchema = schemaByStatusCode[statusCode];
+                    if (existingSchema == null && error.schema != null) {
+                        schemaByStatusCode[statusCode] = error.schema;
+                    } else if (
+                        existingSchema != null &&
+                        error.schema != null &&
+                        isSchemaEqual(existingSchema, error.schema)
+                    ) {
+                        // pass
+                    } else {
+                        this.unknownSchema.add(statusCode);
+                    }
+                }
+            }
+        }
     }
 
     public getSchema(id: SchemaId, namespace: string | undefined): Schema | undefined {
@@ -80,5 +105,12 @@ export class OpenApiIrConverterContext {
      */
     public setDefaultServerName(name: string): void {
         this.defaultServerName = name;
+    }
+
+    /**
+     * Is error an unknown schema
+     */
+    public isErrorUnknownSchema(statusCode: number): boolean {
+        return this.unknownSchema.has(statusCode);
     }
 }
