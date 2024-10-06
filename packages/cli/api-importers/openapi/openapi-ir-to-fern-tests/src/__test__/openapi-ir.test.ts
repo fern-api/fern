@@ -1,5 +1,3 @@
-// eslint-disable-file @typescript-eslint/no-misused-promises
-
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
@@ -8,6 +6,7 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("openapi-ir", async () => {
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
         if (!fixture.isDirectory()) {
