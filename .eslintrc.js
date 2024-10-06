@@ -88,6 +88,8 @@ module.exports = {
             }
         ],
         "jest/unbound-method": ["error"],
+        "jest/valid-describe-callback": "off",
+        "jest/valid-title": "off",
         "object-shorthand": ["error"],
         "@typescript-eslint/no-invalid-void-type": "off",
         "no-unused-vars": "off",
