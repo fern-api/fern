@@ -36501,6 +36501,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "BalancesRequest",
                 "query-parameters": {
@@ -38915,6 +38916,7 @@ types:
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "CategorizationRequest",
                 "query-parameters": undefined,
@@ -40380,6 +40382,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "EmploymentRecordRequest",
                 "query-parameters": {
@@ -40850,6 +40853,7 @@ docs: "# Employment Records\n\nOur employment records\_resource lets you get a c
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "EyodIncomeVerificationRequest",
                 "query-parameters": undefined,
@@ -41895,6 +41899,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "IncomesRequest",
                 "query-parameters": {
@@ -48858,6 +48863,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "InvoicesRequest",
                 "query-parameters": {
@@ -52343,6 +52349,7 @@ For single links, you have to perform POST calls to an institution **every time*
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "ChangeAccessMode",
                 "query-parameters": {
@@ -53266,6 +53273,7 @@ For a list of standards codes, see the table below.
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "LinksRequest",
                 "query-parameters": {
@@ -53494,6 +53502,7 @@ Belvo supports a base64 encoded `private_key`. If the `private_key` parameter is
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "LinksPutRequest",
                 "query-parameters": {
@@ -56928,6 +56937,7 @@ A payment intent captures all payment information (such as the amount to be char
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "CreatePaymentIntentPse",
                 "query-parameters": undefined,
@@ -57426,6 +57436,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "PatchPaymentIntentPse",
                 "query-parameters": undefined,
@@ -59503,6 +59514,7 @@ docs: >
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "PaymentWebhookRequest",
                 "query-parameters": undefined,
@@ -60056,6 +60068,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "ReceivableTransactionRequest",
                 "query-parameters": {
@@ -61399,6 +61412,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "RecurringExpensesRequest",
                 "query-parameters": {
@@ -65134,6 +65148,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "TaxComplianceStatusRequest",
                 "query-parameters": {
@@ -66608,6 +66623,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "TaxDeclarationsRequest",
                 "query-parameters": {
@@ -67871,6 +67887,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "TaxRetentionsRequest",
                 "query-parameters": {
@@ -78181,6 +78198,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "TaxStatusRequest",
                 "query-parameters": {

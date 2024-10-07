@@ -38,6 +38,7 @@
                   },
                 },
                 "content-type": "multipart/form-data",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "UploadFileRequest",
                 "query-parameters": undefined,

@@ -493,7 +493,7 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.reg
         }
     );
     if (type != null) {
-        return { type, statusCode: irResponse.statusCode, description };
+        return { type, statusCode: irResponse.statusCode, ...(description ? { description } : {}) };
     } else {
         return undefined;
     }

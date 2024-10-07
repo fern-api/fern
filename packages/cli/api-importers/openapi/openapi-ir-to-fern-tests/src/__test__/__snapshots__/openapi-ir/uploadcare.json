@@ -936,6 +936,7 @@
       "headers": [],
       "generatedRequestName": "MultipartFileUploadStartRequest",
       "request": {
+        "description": "Multipart upload parameters to start multipart uploading.",
         "properties": [
           {
             "key": "UPLOADCARE_PUB_KEY",

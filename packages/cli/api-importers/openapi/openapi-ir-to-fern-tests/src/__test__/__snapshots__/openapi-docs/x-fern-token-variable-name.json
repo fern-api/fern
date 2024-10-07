@@ -70,6 +70,7 @@
                   },
                 },
                 "content-type": "application/json",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "CreateCompletionRequest",
                 "query-parameters": undefined,

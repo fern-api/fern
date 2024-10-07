@@ -519,7 +519,6 @@ function getRequest({
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {
             name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
-            docs: request.description,
             "query-parameters": queryParameters,
             headers,
             body: requestBodySchema
@@ -540,7 +539,7 @@ function getRequest({
             value: {
                 body: "bytes",
                 "content-type": MediaType.APPLICATION_OCTET_STREAM,
-                docs: request.description
+                ...(request.description ? { docs: request.description } : {})
             }
         };
     } else if (request.type === "multipart") {
@@ -594,7 +593,7 @@ function getRequest({
                     properties
                 },
                 "content-type": MediaType.MULTIPART_FORM_DATA,
-                docs: request.description
+                ...(request.description ? { docs: request.description } : {})
             }
         };
     } else {

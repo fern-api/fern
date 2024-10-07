@@ -3484,6 +3484,7 @@ processing operations.
                   },
                 },
                 "content-type": "multipart/form-data",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "CreateFilesGroupRequest",
                 "query-parameters": undefined,
@@ -4229,6 +4230,7 @@ Log.d("TAG", file.toString())
                   },
                 },
                 "content-type": "multipart/form-data",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "BaseUploadRequest",
                 "query-parameters": undefined,
@@ -4862,6 +4864,7 @@ to the value of the `check_URL_duplicates` parameter.
                   },
                 },
                 "content-type": "multipart/form-data",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "FromUrlUploadRequest",
                 "query-parameters": undefined,
@@ -5708,6 +5711,7 @@ Log.d("TAG", file.toString())
                   },
                 },
                 "content-type": "multipart/form-data",
+                "docs": undefined,
                 "headers": undefined,
                 "name": "MultipartFileUploadCompleteRequest",
                 "query-parameters": undefined,
@@ -5840,6 +5844,7 @@ Log.d("TAG", file.toString())
               "request": {
                 "body": "bytes",
                 "content-type": "application/octet-stream",
+                "docs": undefined,
               },
             },
             "multipartFileUploadStart": {
@@ -6039,6 +6044,7 @@ to us as a value of the `part_size` parameter (in bytes).
                   },
                 },
                 "content-type": "multipart/form-data",
+                "docs": "Multipart upload parameters to start multipart uploading.",
                 "headers": undefined,
                 "name": "MultipartFileUploadStartRequest",
                 "query-parameters": undefined,
@@ -6472,6 +6478,7 @@ service:
             signature: optional<root.SignatureType>
             expire: optional<root.ExpireType>
         content-type: multipart/form-data
+        docs: Multipart upload parameters to start multipart uploading.
       response:
         docs: Multipart upload started successfully.
         type: MultipartFileUploadStartResponse

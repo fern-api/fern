@@ -136,7 +136,8 @@
                     "requestBody": {
                         "type": "bytes",
                         "isOptional": false,
-                        "contentType": "application/octet-stream"
+                        "contentType": "application/octet-stream",
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -144,7 +145,8 @@
                             "value": {
                                 "type": "bytes",
                                 "isOptional": false,
-                                "contentType": null
+                                "contentType": null,
+                                "docs": null
                             }
                         },
                         "requestParameterName": {
