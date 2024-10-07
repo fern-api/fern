@@ -15,10 +15,11 @@ To filter server URLs, add the `environments` property to the `PlaygroundSetting
 
 ```yaml
 navigation:
-  playground: 
-    environments:
-      - Staging-A
-      - Staging-B
+  api:
+    playground: 
+      environments:
+        - Staging-A
+        - Staging-B
 ```
 
 ### Enabling OAuth 2.0 Authorization Injection
@@ -30,6 +31,7 @@ To enable OAuth 2.0 Authorization Injection, simply add the `oauth` feature flag
 
 ```yaml
 navigation:
-  playground:
-    oauth: true
+  api: 
+    playground:
+      oauth: true
 ``` 
