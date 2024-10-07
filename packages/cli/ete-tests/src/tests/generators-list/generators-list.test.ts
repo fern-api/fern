@@ -16,7 +16,7 @@ describe("fern generator list", () => {
     it("fern generator list with exclude", async () => {
         const pathOfDirectory = await init();
 
-        const out = await runFernCli(["generator", "list", "--excluded-modes", "local-file-system"], {
+        const out = await runFernCli(["generator", "list", "--exclude-mode", "local-file-system"], {
             cwd: pathOfDirectory
         });
 
@@ -26,7 +26,7 @@ describe("fern generator list", () => {
     it("fern generator list with include", async () => {
         const pathOfDirectory = await init();
 
-        const out = await runFernCli(["generator", "list", "--included-modes", "local-file-system"], {
+        const out = await runFernCli(["generator", "list", "--include-mode", "local-file-system"], {
             cwd: pathOfDirectory
         });
 

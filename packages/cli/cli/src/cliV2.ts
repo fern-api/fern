@@ -80,12 +80,12 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             description:
                                 "The APIs to list the generators for. If not specified, the generator will be upgraded for all APIs."
                         })
-                        .option("included-modes", {
+                        .option("include-mode", {
                             choices: Object.values(GenerationModeFilter),
                             type: "array",
                             description: "The generator output modes to include within the outputted list."
                         })
-                        .option("excluded-modes", {
+                        .option("exclude-mode", {
                             choices: Object.values(GenerationModeFilter),
                             type: "array",
                             description: "The generator output modes to exclude within the outputted list."
@@ -108,8 +108,8 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         apiKeyFallback: argv.apiFallback,
                         cliContext,
                         outputLocation: argv.output,
-                        includedModes: argv["included-modes"] ? new Set(argv["included-modes"]) : undefined,
-                        excludedModes: argv["excluded-modes"] ? new Set(argv["excluded-modes"]) : undefined
+                        includedModes: argv["include-mode"] ? new Set(argv["include-mode"]) : undefined,
+                        excludedModes: argv["exclude-mode"] ? new Set(argv["exclude-mode"]) : undefined
                     });
                 }
             )

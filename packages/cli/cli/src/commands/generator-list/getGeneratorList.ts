@@ -8,7 +8,7 @@ import { Values, assertNever } from "@fern-api/core-utils";
 export const GenerationModeFilter = {
     GitHub: "github",
     Local: "local-file-system",
-    PackageRegistry: "package-registry"
+    PackageRegistry: "publish"
 } as const;
 
 export type GenerationModeFilter = Values<typeof GenerationModeFilter>;
