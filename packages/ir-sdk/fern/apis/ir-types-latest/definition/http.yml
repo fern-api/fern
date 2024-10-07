@@ -105,6 +105,7 @@ types:
       fileUpload: FileUploadRequest
       bytes: BytesRequest
   InlinedRequestBody:
+    extends: commons.WithDocs
     properties:
       name: commons.Name
       extends: list<types.DeclaredTypeName>
@@ -122,10 +123,12 @@ types:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
   FileUploadRequest:
+    extends: commons.WithDocs
     properties:
       name: commons.Name
       properties: list<FileUploadRequestProperty>
   BytesRequest:
+    extends: commons.WithDocs
     properties:
       isOptional: boolean
       contentType: optional<string>

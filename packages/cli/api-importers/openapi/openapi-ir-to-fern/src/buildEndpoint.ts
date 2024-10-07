@@ -422,6 +422,10 @@ function getRequest({
                 convertedRequest.value["content-type"] = request.contentType;
             }
 
+            if (request.description != null) {
+                convertedRequest.value.docs = request.description;
+            }
+
             return convertedRequest;
         }
         const properties = Object.fromEntries(
@@ -515,12 +519,16 @@ function getRequest({
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {
             name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
+            docs: request.description,
             "query-parameters": queryParameters,
             headers,
             body: requestBodySchema
         };
         if (request.contentType != null) {
             convertedRequestValue["content-type"] = request.contentType;
+        }
+        if (request.description != null) {
+            convertedRequestValue.docs = request.description;
         }
         return {
             schemaIdsToExclude: maybeSchemaId != null ? [maybeSchemaId] : [],
@@ -531,7 +539,8 @@ function getRequest({
             schemaIdsToExclude: [],
             value: {
                 body: "bytes",
-                "content-type": MediaType.APPLICATION_OCTET_STREAM
+                "content-type": MediaType.APPLICATION_OCTET_STREAM,
+                docs: request.description
             }
         };
     } else if (request.type === "multipart") {
@@ -584,7 +593,8 @@ function getRequest({
                 body: {
                     properties
                 },
-                "content-type": MediaType.MULTIPART_FORM_DATA
+                "content-type": MediaType.MULTIPART_FORM_DATA,
+                docs: request.description
             }
         };
     } else {

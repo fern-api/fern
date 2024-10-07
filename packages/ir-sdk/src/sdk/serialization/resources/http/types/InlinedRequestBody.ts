@@ -9,21 +9,24 @@ import { Name } from "../../commons/types/Name";
 import { DeclaredTypeName } from "../../types/types/DeclaredTypeName";
 import { InlinedRequestBodyProperty } from "./InlinedRequestBodyProperty";
 import { ObjectProperty } from "../../types/types/ObjectProperty";
+import { WithDocs } from "../../commons/types/WithDocs";
 
 export const InlinedRequestBody: core.serialization.ObjectSchema<
     serializers.InlinedRequestBody.Raw,
     FernIr.InlinedRequestBody
-> = core.serialization.objectWithoutOptionalProperties({
-    name: Name,
-    extends: core.serialization.list(DeclaredTypeName),
-    properties: core.serialization.list(InlinedRequestBodyProperty),
-    extendedProperties: core.serialization.list(ObjectProperty).optional(),
-    contentType: core.serialization.string().optional(),
-    extraProperties: core.serialization.property("extra-properties", core.serialization.boolean()),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        name: Name,
+        extends: core.serialization.list(DeclaredTypeName),
+        properties: core.serialization.list(InlinedRequestBodyProperty),
+        extendedProperties: core.serialization.list(ObjectProperty).optional(),
+        contentType: core.serialization.string().optional(),
+        extraProperties: core.serialization.property("extra-properties", core.serialization.boolean()),
+    })
+    .extend(WithDocs);
 
 export declare namespace InlinedRequestBody {
-    interface Raw {
+    interface Raw extends WithDocs.Raw {
         name: Name.Raw;
         extends: DeclaredTypeName.Raw[];
         properties: InlinedRequestBodyProperty.Raw[];
