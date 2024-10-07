@@ -1,5 +1,5 @@
 import { generatorsYml, getFernDirectory } from "@fern-api/configuration";
-import { isPlainObject } from "@fern-api/core-utils";
+import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { join, RelativeFilePath, AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
@@ -50,13 +50,13 @@ export async function updateApiSpec({
                     context
                 });
             if (generatorConfig == null) {
-                cliContext.logger.info(`No API configuration was found, skipping API update.`);
+                cliContext.logger.info("No API configuration was found, skipping API update.");
                 return;
             }
 
             if (generatorConfig.api != null) {
                 if (generatorConfig.api.type === "conjure") {
-                    cliContext.logger.info(`Encountered conjure API definition, skipping API update.`);
+                    cliContext.logger.info("Encountered conjure API definition, skipping API update.");
                     return;
                 }
                 if (generatorConfig.api.type === "singleNamespace") {
@@ -66,7 +66,7 @@ export async function updateApiSpec({
                         apiLocations: generatorConfig.api.definitions
                     });
                     return;
-                } else if (generatorConfig.api?.type === "multiNamespace") {
+                } else if (generatorConfig.api.type === "multiNamespace") {
                     // process root definitions
                     if (generatorConfig.api.rootDefinitions != null) {
                         await processDefinitions({
@@ -84,7 +84,6 @@ export async function updateApiSpec({
                             apiLocations
                         });
                     }
-                } else {
                 }
             }
             return;
@@ -101,8 +100,8 @@ async function getAndFetchFromAPIDefinitionLocation({
     workspacePath: AbsoluteFilePath;
     apiLocation: generatorsYml.APIDefinitionLocation;
 }) {
-    if (apiLocation.schema.type == "protobuf") {
-        cliContext.logger.info(`Encountered conjure API definition, skipping API update.`);
+    if (apiLocation.schema.type === "protobuf") {
+        cliContext.logger.info("Encountered conjure API definition, skipping API update.");
         return;
     }
     if (apiLocation.origin != null) {
