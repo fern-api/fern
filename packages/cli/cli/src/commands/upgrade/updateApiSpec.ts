@@ -60,7 +60,7 @@ export async function updateApiSpec({
                     return;
                 }
                 if (generatorConfig.api.type === "singleNamespace") {
-                    processDefinitions({
+                    await processDefinitions({
                         cliContext,
                         workspacePath: workspace.absoluteFilePath,
                         apiLocations: generatorConfig.api.definitions
@@ -69,7 +69,7 @@ export async function updateApiSpec({
                 } else if (generatorConfig.api?.type === "multiNamespace") {
                     // process root definitions
                     if (generatorConfig.api.rootDefinitions != null) {
-                        processDefinitions({
+                        await processDefinitions({
                             cliContext,
                             workspacePath: workspace.absoluteFilePath,
                             apiLocations: generatorConfig.api.rootDefinitions
@@ -78,7 +78,7 @@ export async function updateApiSpec({
 
                     // process namespaced definitions
                     for (const [_, apiLocations] of Object.entries(generatorConfig.api.definitions)) {
-                        processDefinitions({
+                        await processDefinitions({
                             cliContext,
                             workspacePath: workspace.absoluteFilePath,
                             apiLocations
@@ -125,7 +125,7 @@ async function processDefinitions({
     apiLocations: generatorsYml.APIDefinitionLocation[];
 }) {
     for (const apiLocation of apiLocations) {
-        getAndFetchFromAPIDefinitionLocation({
+        await getAndFetchFromAPIDefinitionLocation({
             cliContext,
             workspacePath,
             apiLocation
