@@ -59,7 +59,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "description": "Id of the created resource"
           },
           "errorsV2": [],
           "examples": []

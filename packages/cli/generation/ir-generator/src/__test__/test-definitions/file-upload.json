@@ -1158,7 +1158,8 @@
                                 "availability": null,
                                 "docs": null
                             }
-                        ]
+                        ],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -1348,7 +1349,8 @@
                                     "contentType": null
                                 }
                             }
-                        ]
+                        ],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -1747,7 +1749,8 @@
                                     "contentType": null
                                 }
                             }
-                        ]
+                        ],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -2324,7 +2327,8 @@
                                 "availability": null,
                                 "docs": null
                             }
-                        ]
+                        ],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
