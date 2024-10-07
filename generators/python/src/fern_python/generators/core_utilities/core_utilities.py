@@ -3,20 +3,22 @@ from typing import Set
 
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
-from fern_python.external_dependencies.pydantic import PYDANTIC_CORE_DEPENDENCY
+from fern_python.external_dependencies import Pydantic
+from fern_python.external_dependencies.pydantic import PYDANTIC_CORE_DEPENDENCY, PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from fern_python.source_file_factory import SourceFileFactory
 
 
 class CoreUtilities:
     def __init__(
-        self, allow_skipping_validation: bool, use_typeddict_requests: bool, use_pydantic_field_aliases: bool
+        self, allow_skipping_validation: bool, use_typeddict_requests: bool, use_pydantic_field_aliases: bool, pydantic_compatibility: PydanticVersionCompatibility
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         self._allow_skipping_validation = allow_skipping_validation
         self._use_typeddict_requests = use_typeddict_requests
         self._use_pydantic_field_aliases = use_pydantic_field_aliases
+        self._pydantic_compatibility = pydantic_compatibility
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -239,4 +241,4 @@ class CoreUtilities:
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="UniversalRootModel"
             ),
-        )
+        ) if self._pydantic_compatibility == PydanticVersionCompatibility.Both else Pydantic.RootModel() if PydanticVersionCompatibility.V2 else Pydantic.BaseModel()
