@@ -3,7 +3,7 @@ import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
 import { Argv } from "yargs";
 import { CliContext } from "./cli-context/CliContext";
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
-import { getGeneratorList } from "./commands/generator-list/getGeneratorList";
+import { getGeneratorList, GenerationModeFilter } from "./commands/generator-list/getGeneratorList";
 import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata";
 import { getOrganziation } from "./commands/organization/getOrganization";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
@@ -79,6 +79,16 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             // which this feels better than.
                             description:
                                 "The APIs to list the generators for. If not specified, the generator will be upgraded for all APIs."
+                        })
+                        .option("included-modes", {
+                            choices: Object.values(GenerationModeFilter),
+                            type: "array",
+                            description: "The generator output modes to include within the outputted list."
+                        })
+                        .option("excluded-modes", {
+                            choices: Object.values(GenerationModeFilter),
+                            type: "array",
+                            description: "The generator output modes to exclude within the outputted list."
                         }),
                 async (argv) => {
                     await cliContext.instrumentPostHogEvent({
@@ -97,7 +107,9 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         apiFilter: argv.apis ? new Set(argv.apis) : undefined,
                         apiKeyFallback: argv.apiFallback,
                         cliContext,
-                        outputLocation: argv.output
+                        outputLocation: argv.output,
+                        includedModes: argv["included-modes"] ? new Set(argv["included-modes"]) : undefined,
+                        excludedModes: argv["excluded-modes"] ? new Set(argv["excluded-modes"]) : undefined
                     });
                 }
             )
