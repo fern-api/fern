@@ -19,7 +19,7 @@ class ServiceClient:
         Parameters
         ----------
         request_options : typing.Optional[BytesResponseRequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -62,7 +62,7 @@ class AsyncServiceClient:
         Parameters
         ----------
         request_options : typing.Optional[BytesResponseRequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------

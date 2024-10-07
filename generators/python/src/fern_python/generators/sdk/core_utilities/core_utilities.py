@@ -23,7 +23,11 @@ class CoreUtilities:
     SYNC_CLIENT_WRAPPER_CLASS_NAME = "SyncClientWrapper"
 
     def __init__(
-        self, has_paginated_endpoints: bool, project_module_path: AST.ModulePath, custom_config: SDKCustomConfig, has_bytes_responses: bool
+        self,
+        has_paginated_endpoints: bool,
+        project_module_path: AST.ModulePath,
+        custom_config: SDKCustomConfig,
+        has_bytes_responses: bool,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -349,7 +353,8 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "bytes_response_request_options"), named_import="BytesResponseRequestOptions"
+                module=AST.Module.local(*self._module_path, "bytes_response_request_options"),
+                named_import="BytesResponseRequestOptions",
             ),
         )
 

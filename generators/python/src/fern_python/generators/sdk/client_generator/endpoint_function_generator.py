@@ -1,4 +1,4 @@
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import fern.ir.resources as ir_types
@@ -408,18 +408,24 @@ class EndpointFunctionGenerator:
                     )
         parameters.sort(key=lambda x: x.type_hint is None or x.type_hint.is_optional)
         # Always include request options last.
-        if endpoint.response is not None and endpoint.response.body is not None and endpoint.response.body.get_as_union().type == "fileDownload":
-            request_options_class_reference = self._context.core_utilities.get_reference_to_bytes_response_request_options()
+        if (
+            endpoint.response is not None
+            and endpoint.response.body is not None
+            and endpoint.response.body.get_as_union().type == "fileDownload"
+        ):
+            request_options_docs = "Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response."
+            request_options_class_reference = (
+                self._context.core_utilities.get_reference_to_bytes_response_request_options()
+            )
         else:
+            request_options_docs = "Request-specific configuration."
             request_options_class_reference = self._context.core_utilities.get_reference_to_request_options()
 
         parameters.append(
             AST.NamedFunctionParameter(
                 name=EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
-                docs="Request-specific configuration.",
-                type_hint=AST.TypeHint.optional(
-                    AST.TypeHint(request_options_class_reference)
-                ),
+                docs=request_options_docs,
+                type_hint=AST.TypeHint.optional(AST.TypeHint(request_options_class_reference)),
             ),
         )
 

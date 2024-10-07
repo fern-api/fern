@@ -1,4 +1,3 @@
-import typing
 
 from .request_options import RequestOptions
 

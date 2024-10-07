@@ -41,7 +41,7 @@ class EndpointResponseCodeWriter:
         streaming_parameter: Optional[StreamingParameterType] = None,
         pagination: Optional[ir_types.Pagination],
         pagination_snippet_config: PaginationSnippetConfig,
-        chunk_size_parameter: Optional[str] = None
+        chunk_size_parameter: Optional[str] = None,
     ):
         self._context = context
         self._response = response
@@ -240,7 +240,9 @@ class EndpointResponseCodeWriter:
     def _handle_success_file_download(self, *, writer: AST.NodeWriter) -> None:
         maybe_chunk_size_default = self._context.custom_config.default_bytes_stream_chunk_size
         chunk_size_variable = "_chunk_size"
-        writer.write_line(f'{chunk_size_variable} = request_options.get("chunk_size", {maybe_chunk_size_default if maybe_chunk_size_default is not None else "None"}) if request_options is not None else None')
+        writer.write_line(
+            f'{chunk_size_variable} = request_options.get("chunk_size", {maybe_chunk_size_default if maybe_chunk_size_default is not None else "None"}) if request_options is not None else None'
+        )
         if self._is_async:
             writer.write("async ")
         writer.write_line(
