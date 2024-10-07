@@ -53,6 +53,12 @@ customFixtureConfig:
     use_typeddict_requests: true
   outputFolder: client-filename
 fixtures:
+  file-download:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        default_bytes_stream_chunk_size: 1024
+      outputFolder: default-chunk-size
   examples:
     - customConfig: null
       outputFolder: no-custom-config
