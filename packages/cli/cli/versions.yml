@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        API Configuration V2 schema now takes in `origin` as well, allowing `fern api update` to function as expected in the new config.
+      type: fix
+  irVersion: 53
+  version: 0.44.8
+
+- changelogEntry:
+    - summary: |
         The Fern CLI command `fern generator list` now accepts filters for the output mode, for example, you may now specify `fern generator list --excluded-modes local-file-system`
         in order to filter any generators from the list that are outputting locally.
       type: internal

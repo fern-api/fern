@@ -13,6 +13,7 @@ export type OpenAPISettingsSchema = z.infer<typeof OpenAPISettingsSchema>;
 
 export const OpenAPISpecSchema = z.strictObject({
     openapi: z.string(),
+    origin: z.string().optional(),
     overrides: z.string().optional(),
     namespace: z.string().optional(),
     settings: z.optional(OpenAPISettingsSchema)
@@ -32,6 +33,7 @@ export type AsyncAPISettingsSchema = z.infer<typeof AsyncAPISettingsSchema>;
 
 export const AsyncAPISchema = z.strictObject({
     asyncapi: z.string(),
+    origin: z.string().optional(),
     overrides: z.string().optional(),
     namespace: z.string().optional(),
     settings: z.optional(AsyncAPISettingsSchema)
