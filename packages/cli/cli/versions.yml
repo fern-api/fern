@@ -1,9 +1,16 @@
 - changelogEntry:
     - summary: |
-        Now, the fern definition supports descriptions supplied on request and response bodies.
+        The fern definition now supports descriptions supplied on request and response bodies.
         You can enable this by simply supplying `docs` in your fern definition, or `description` 
         in your OpenAPI spec.
       type: feat
+  irVersion: 53
+  version: 0.44.9
+
+- changelogEntry:
+    - summary: |
+        API Configuration V2 schema now takes in `origin` as well, allowing `fern api update` to function as expected in the new config.
+      type: fix
   irVersion: 53
   version: 0.44.8
 
