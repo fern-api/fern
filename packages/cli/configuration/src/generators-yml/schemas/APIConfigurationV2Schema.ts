@@ -33,7 +33,7 @@ export type AsyncAPISettingsSchema = z.infer<typeof AsyncAPISettingsSchema>;
 
 export const AsyncAPISchema = z.strictObject({
     asyncapi: z.string(),
-    origin: z.string(),
+    origin: z.string().optional(),
     overrides: z.string().optional(),
     namespace: z.string().optional(),
     settings: z.optional(AsyncAPISettingsSchema)
