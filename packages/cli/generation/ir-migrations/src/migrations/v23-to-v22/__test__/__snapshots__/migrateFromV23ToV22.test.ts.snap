@@ -10003,6 +10003,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           "requestBody": {
             "_visit": [Function],
             "contentType": undefined,
+            "docs": undefined,
             "extendedProperties": [],
             "extends": [],
             "extraProperties": false,

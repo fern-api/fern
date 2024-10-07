@@ -104,6 +104,7 @@ async function visitEndpoint({
             }
             await visitObject(request, {
                 name: noop,
+                docs: createDocsVisitor(visitor, nodePathForRequest),
                 "query-parameters": async (queryParameters) => {
                     if (queryParameters == null) {
                         return;

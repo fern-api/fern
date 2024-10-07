@@ -365,7 +365,8 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                 availability: convertIrAvailability(property.availability)
                             })
                         )
-                    }
+                    },
+                    description: inlinedRequestBody.docs ?? undefined
                 };
             },
             reference: (reference) => {
@@ -375,7 +376,8 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                     shape: {
                         type: "reference",
                         value: convertTypeReference(reference.requestBodyType)
-                    }
+                    },
+                    description: reference.docs ?? undefined
                 };
             },
             fileUpload: (fileUpload) => ({
@@ -420,12 +422,13 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                             });
                         })
                         .filter(isNonNullish)
-                }
+                },
+                description: fileUpload.docs ?? undefined
             }),
             bytes: (bytes) => ({
                 type: "bytes",
                 // TODO: support description and availability
-                description: undefined,
+                description: bytes.docs ?? undefined,
                 availability: undefined,
                 isOptional: bytes.isOptional,
                 contentType: bytes.contentType
@@ -442,15 +445,18 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.reg
     if (irResponse.body == null) {
         return undefined;
     }
+    let description;
     const type = Ir.http.HttpResponseBody._visit<FdrCjsSdk.api.v1.register.HttpResponseBodyShape | undefined>(
         irResponse.body,
         {
-            fileDownload: () => {
+            fileDownload: (fileDownload) => {
+                description = fileDownload.docs;
                 return {
                     type: "fileDownload"
                 };
             },
             json: (jsonResponse) => {
+                description = jsonResponse.docs;
                 return {
                     type: "reference",
                     value: convertTypeReference(jsonResponse.responseBodyType)
@@ -460,16 +466,19 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.reg
             streamParameter: () => undefined, // TODO: support stream parameter in FDR
             streaming: (streamingResponse) => {
                 if (streamingResponse.type === "text") {
+                    description = streamingResponse.docs;
                     return {
                         type: "streamingText"
                     };
                 } else if (streamingResponse.type === "json") {
+                    description = streamingResponse.docs;
                     return {
                         type: "stream",
                         shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) }
                     };
                     // TODO(dsinghvi): update FDR with SSE.
                 } else if (streamingResponse.type === "sse") {
+                    description = streamingResponse.docs;
                     return {
                         type: "stream",
                         shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) }
@@ -484,7 +493,7 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.reg
         }
     );
     if (type != null) {
-        return { type, statusCode: irResponse.statusCode };
+        return { type, statusCode: irResponse.statusCode, ...(description ? { description } : {}) };
     } else {
         return undefined;
     }

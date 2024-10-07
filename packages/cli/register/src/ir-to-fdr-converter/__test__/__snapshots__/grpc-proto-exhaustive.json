@@ -731,7 +731,8 @@
                 "type": "id",
                 "value": "type_:UploadResponse"
               }
-            }
+            },
+            "description": "OK"
           },
           "errorsV2": [],
           "examples": [
@@ -865,7 +866,8 @@
                 "type": "id",
                 "value": "type_:DeleteResponse"
               }
-            }
+            },
+            "description": "OK"
           },
           "errorsV2": [],
           "examples": [
@@ -938,7 +940,8 @@
                 "type": "id",
                 "value": "type_:DescribeResponse"
               }
-            }
+            },
+            "description": "OK"
           },
           "errorsV2": [],
           "examples": [
@@ -1032,7 +1035,8 @@
                 "type": "id",
                 "value": "type_:FetchResponse"
               }
-            }
+            },
+            "description": "OK"
           },
           "errorsV2": [],
           "examples": [
@@ -1175,7 +1179,8 @@
                 "type": "id",
                 "value": "type_:ListResponse"
               }
-            }
+            },
+            "description": "OK"
           },
           "errorsV2": [],
           "examples": [
@@ -1364,7 +1369,8 @@
                 "type": "id",
                 "value": "type_:QueryResponse"
               }
-            }
+            },
+            "description": "OK"
           },
           "errorsV2": [],
           "examples": [
@@ -1557,7 +1563,8 @@
                 "type": "id",
                 "value": "type_:UpdateResponse"
               }
-            }
+            },
+            "description": "OK"
           },
           "errorsV2": [],
           "examples": [

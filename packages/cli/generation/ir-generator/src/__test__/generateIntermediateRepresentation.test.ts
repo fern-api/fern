@@ -131,3 +131,13 @@ it("availability", async () => {
         workspaceName: "availability"
     });
 }, 200_000);
+
+it("docs", async () => {
+    const DOCS_DIR = path.join(__dirname, "fixtures/docs/fern");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
+        absolutePathToWorkspace: AbsoluteFilePath.of(DOCS_DIR),
+        audiences: { type: "all" },
+        workspaceName: "docs"
+    });
+}, 200_000);

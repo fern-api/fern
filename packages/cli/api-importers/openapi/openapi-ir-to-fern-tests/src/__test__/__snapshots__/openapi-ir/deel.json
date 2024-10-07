@@ -7621,6 +7621,7 @@
       "headers": [],
       "generatedRequestName": "AddContractDocumentRequest",
       "request": {
+        "description": "This is the file you will upload in a multi-part form.",
         "properties": [
           {
             "key": "file",
@@ -7920,6 +7921,7 @@
       "headers": [],
       "generatedRequestName": "EditContractDocumentRequest",
       "request": {
+        "description": "This is the file you will upload in a multi-part form.",
         "properties": [
           {
             "key": "file",

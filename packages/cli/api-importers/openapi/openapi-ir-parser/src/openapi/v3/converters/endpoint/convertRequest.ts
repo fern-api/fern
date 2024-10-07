@@ -75,7 +75,7 @@ export function convertRequest({
     // convert as application/octet-stream
     if (isOctetStreamRequest(resolvedRequestBody)) {
         return RequestWithExample.octetStream({
-            description: undefined,
+            description: resolvedRequestBody.description,
             source
         });
     }
@@ -180,7 +180,7 @@ export function convertRequest({
                 isReferenceObject(multipartSchema) && context.getNumberOfOccurrencesForRef(multipartSchema) === 1
                     ? resolvedMultipartSchema.id
                     : undefined,
-            description: undefined,
+            description: resolvedMultipartSchema.schema.description,
             properties,
             source
         });
