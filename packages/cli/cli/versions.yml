@@ -1,7 +1,14 @@
 - changelogEntry:
     - summary: |
+        API update now supports consuming the API origin from spec V2 configurations.
+      type: fix
+  irVersion: 53
+  version: 0.44.10
+
+- changelogEntry:
+    - summary: |
         The fern definition now supports descriptions supplied on request and response bodies.
-        You can enable this by simply supplying `docs` in your fern definition, or `description` 
+        You can enable this by simply supplying `docs` in your fern definition, or `description`
         in your OpenAPI spec.
       type: feat
   irVersion: 53

@@ -1,6 +1,6 @@
 import { generatorsYml, getFernDirectory } from "@fern-api/configuration";
 import { isPlainObject } from "@fern-api/core-utils";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath, AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import * as fs from "fs";
@@ -44,88 +44,91 @@ export async function updateApiSpec({
         }
 
         await cliContext.runTaskForWorkspace(workspace, async (context) => {
-            const generatorConfig =
-                (await generatorsYml.loadRawGeneratorsConfiguration({
+            const generatorConfig: generatorsYml.GeneratorsConfiguration | undefined =
+                await generatorsYml.loadGeneratorsConfiguration({
                     absolutePathToWorkspace: workspace.absoluteFilePath,
                     context
-                })) ?? {};
-
-            const fernDirectory = await getFernDirectory();
-            if (fernDirectory == null) {
-                return context.failAndThrow("Fern directory not found.");
+                });
+            if (generatorConfig == null) {
+                cliContext.logger.info(`No API configuration was found, skipping API update.`);
+                return;
             }
+
             if (generatorConfig.api != null) {
-                let apis;
-                if (generatorConfig.api instanceof Array) {
-                    apis = generatorConfig.api;
+                if (generatorConfig.api.type === "conjure") {
+                    cliContext.logger.info(`Encountered conjure API definition, skipping API update.`);
+                    return;
+                }
+                if (generatorConfig.api.type === "singleNamespace") {
+                    processDefinitions({
+                        cliContext,
+                        workspacePath: workspace.absoluteFilePath,
+                        apiLocations: generatorConfig.api.definitions
+                    });
+                    return;
+                } else if (generatorConfig.api?.type === "multiNamespace") {
+                    // process root definitions
+                    if (generatorConfig.api.rootDefinitions != null) {
+                        processDefinitions({
+                            cliContext,
+                            workspacePath: workspace.absoluteFilePath,
+                            apiLocations: generatorConfig.api.rootDefinitions
+                        });
+                    }
+
+                    // process namespaced definitions
+                    for (const [_, apiLocations] of Object.entries(generatorConfig.api.definitions)) {
+                        processDefinitions({
+                            cliContext,
+                            workspacePath: workspace.absoluteFilePath,
+                            apiLocations
+                        });
+                    }
                 } else {
-                    apis = [generatorConfig.api];
-                }
-                for (const api of apis) {
-                    if (generatorsYml.isRawProtobufAPIDefinitionSchema(api)) {
-                        continue;
-                    }
-                    if (isPlainObject(api) && "origin" in api && api.origin != null) {
-                        cliContext.logger.info(`Origin found, fetching spec from ${api.origin}`);
-                        await fetchAndWriteFile(
-                            api.origin,
-                            join(workspace.absoluteFilePath, RelativeFilePath.of(api.path)),
-                            cliContext.logger
-                        );
-                    } else if (isPlainObject(api)) {
-                        for (const [_, value] of Object.entries(api)) {
-                            if (
-                                isPlainObject(value) &&
-                                "origin" in value &&
-                                typeof value.origin === "string" &&
-                                "path" in value &&
-                                typeof value.path === "string"
-                            ) {
-                                cliContext.logger.info(`Origin found, fetching spec from ${value.origin}`);
-                                await fetchAndWriteFile(
-                                    value.origin,
-                                    join(workspace.absoluteFilePath, RelativeFilePath.of(value.path)),
-                                    cliContext.logger
-                                );
-                            }
-                        }
-                    }
-                }
-            } else if (generatorConfig[generatorsYml.ASYNC_API_LOCATION_KEY] != null) {
-                if (generatorConfig[generatorsYml.API_ORIGIN_LOCATION_KEY] != null) {
-                    cliContext.logger.info(
-                        `Origin found, fetching spec from ${generatorConfig[generatorsYml.API_ORIGIN_LOCATION_KEY]}`
-                    );
-                    const origin = generatorConfig[generatorsYml.API_ORIGIN_LOCATION_KEY];
-                    const location = generatorConfig[generatorsYml.ASYNC_API_LOCATION_KEY];
-                    if (origin != null && location != null) {
-                        await fetchAndWriteFile(
-                            origin,
-                            join(workspace.absoluteFilePath, RelativeFilePath.of(location)),
-                            cliContext.logger
-                        );
-                    }
-                }
-            } else if (generatorConfig[generatorsYml.OPENAPI_LOCATION_KEY] != null) {
-                const apiBlock = generatorConfig[generatorsYml.OPENAPI_LOCATION_KEY];
-                const apiOrigin =
-                    typeof apiBlock !== "string"
-                        ? apiBlock?.origin ?? generatorConfig[generatorsYml.API_ORIGIN_LOCATION_KEY]
-                        : generatorConfig[generatorsYml.API_ORIGIN_LOCATION_KEY];
-
-                const apiOutput = typeof apiBlock !== "string" ? apiBlock?.path : apiBlock;
-
-                if (apiOrigin != null && apiOutput != null) {
-                    origin = apiOrigin;
-                    cliContext.logger.info(`Origin found, fetching spec from ${apiOrigin}`);
-                    await fetchAndWriteFile(
-                        apiOrigin,
-                        join(workspace.absoluteFilePath, RelativeFilePath.of(apiOutput)),
-                        cliContext.logger
-                    );
                 }
             }
             return;
+        });
+    }
+}
+
+async function getAndFetchFromAPIDefinitionLocation({
+    cliContext,
+    workspacePath,
+    apiLocation
+}: {
+    cliContext: CliContext;
+    workspacePath: AbsoluteFilePath;
+    apiLocation: generatorsYml.APIDefinitionLocation;
+}) {
+    if (apiLocation.schema.type == "protobuf") {
+        cliContext.logger.info(`Encountered conjure API definition, skipping API update.`);
+        return;
+    }
+    if (apiLocation.origin != null) {
+        cliContext.logger.info(`Origin found, fetching spec from ${apiLocation.origin}`);
+        await fetchAndWriteFile(
+            apiLocation.origin,
+            join(workspacePath, RelativeFilePath.of(apiLocation.schema.path)),
+            cliContext.logger
+        );
+    }
+}
+
+async function processDefinitions({
+    cliContext,
+    workspacePath,
+    apiLocations
+}: {
+    cliContext: CliContext;
+    workspacePath: AbsoluteFilePath;
+    apiLocations: generatorsYml.APIDefinitionLocation[];
+}) {
+    for (const apiLocation of apiLocations) {
+        getAndFetchFromAPIDefinitionLocation({
+            cliContext,
+            workspacePath,
+            apiLocation
         });
     }
 }
