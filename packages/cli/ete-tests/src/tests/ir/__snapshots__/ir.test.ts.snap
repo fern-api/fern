@@ -1651,7 +1651,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                 "availability": null,
                                 "docs": null
                             }
-                        ]
+                        ],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -35121,7 +35122,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
                             }
                         ],
                         "extra-properties": false,
-                        "extendedProperties": []
+                        "extendedProperties": [],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {

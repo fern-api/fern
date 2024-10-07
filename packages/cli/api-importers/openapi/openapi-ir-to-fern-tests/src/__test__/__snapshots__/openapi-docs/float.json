@@ -33,7 +33,6 @@
                   },
                 },
                 "content-type": "application/json",
-                "docs": undefined,
                 "headers": undefined,
                 "name": "Request",
                 "query-parameters": undefined,

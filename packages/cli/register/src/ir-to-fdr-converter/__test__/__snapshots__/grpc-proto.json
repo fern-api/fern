@@ -260,7 +260,8 @@
                 "type": "id",
                 "value": "type_:CreateResponse"
               }
-            }
+            },
+            "description": "OK"
           },
           "errorsV2": [],
           "examples": [

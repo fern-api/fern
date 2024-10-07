@@ -37,7 +37,6 @@
                   },
                 },
                 "content-type": "application/json",
-                "docs": undefined,
                 "headers": undefined,
                 "name": "SendRequest",
                 "query-parameters": undefined,

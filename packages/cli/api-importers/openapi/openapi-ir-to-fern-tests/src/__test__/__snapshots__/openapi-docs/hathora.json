@@ -2692,7 +2692,6 @@ service:
                   },
                 },
                 "content-type": "application/json",
-                "docs": undefined,
                 "headers": undefined,
                 "name": "LoginGoogleRequest",
                 "query-parameters": undefined,
@@ -2736,7 +2735,6 @@ service:
                   },
                 },
                 "content-type": "application/json",
-                "docs": undefined,
                 "headers": undefined,
                 "name": "LoginNicknameRequest",
                 "query-parameters": undefined,
@@ -3065,7 +3063,6 @@ service:
                   },
                 },
                 "content-type": "multipart/form-data",
-                "docs": undefined,
                 "headers": undefined,
                 "name": "RunBuildRequest",
                 "query-parameters": undefined,
@@ -3924,7 +3921,6 @@ service:
                   },
                 },
                 "content-type": "application/json",
-                "docs": undefined,
                 "headers": {
                   "Authorization": {
                     "name": "authorization",
@@ -3999,7 +3995,6 @@ service:
                   },
                 },
                 "content-type": "application/json",
-                "docs": undefined,
                 "headers": {
                   "Authorization": {
                     "name": "authorization",
@@ -4074,7 +4069,6 @@ service:
                   },
                 },
                 "content-type": "application/json",
-                "docs": undefined,
                 "headers": {
                   "Authorization": {
                     "name": "authorization",
@@ -4149,7 +4143,6 @@ service:
                   },
                 },
                 "content-type": "application/json",
-                "docs": undefined,
                 "headers": {
                   "Authorization": {
                     "name": "authorization",
@@ -4306,7 +4299,6 @@ service:
                   },
                 },
                 "content-type": "application/json",
-                "docs": undefined,
                 "headers": undefined,
                 "name": "SetLobbyStateRequest",
                 "query-parameters": undefined,
@@ -5277,7 +5269,6 @@ service:
                   },
                 },
                 "content-type": "application/json",
-                "docs": undefined,
                 "headers": undefined,
                 "name": "CreateRoomRequest",
                 "query-parameters": undefined,

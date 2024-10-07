@@ -171,7 +171,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                   },
                 },
                 "content-type": "application/json; charset=utf-8",
-                "docs": undefined,
                 "headers": undefined,
                 "name": "BaseRequest",
                 "query-parameters": undefined,
