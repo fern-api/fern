@@ -241,4 +241,4 @@ class CoreUtilities:
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="UniversalRootModel"
             ),
-        ) if self._pydantic_compatibility == PydanticVersionCompatibility.Both else Pydantic.RootModel() if PydanticVersionCompatibility.V2 else Pydantic.BaseModel()
+        ) if self._pydantic_compatibility == PydanticVersionCompatibility.Both else Pydantic.RootModel() if self._pydantic_compatibility == PydanticVersionCompatibility.V2 else Pydantic.BaseModel()

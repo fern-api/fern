@@ -19,7 +19,7 @@ class _Factory:
         return Animal(__root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))  # type: ignore
 
 
-class Animal(pydantic.RootModel):
+class Animal(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     __root__: typing_extensions.Annotated[

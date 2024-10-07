@@ -23,7 +23,7 @@ class _Factory:
         )  # type: ignore
 
 
-class Animal(pydantic.RootModel):
+class Animal(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     __root__: typing_extensions.Annotated[
