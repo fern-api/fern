@@ -113,6 +113,11 @@ fixtures:
       outputFolder: pydantic-v1-wrapped
     - customConfig:
         pydantic_config:
+          version: v1
+          include_union_utils: true
+      outputFolder: pydantic-v1-with-utils
+    - customConfig:
+        pydantic_config:
           extra_fields: "allow"
       outputFolder: pydantic-extra-fields
     - customConfig:
