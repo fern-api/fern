@@ -3052,6 +3052,9 @@ importers:
       '@fern-api/conjure-sdk':
         specifier: workspace:*
         version: link:../conjure-sdk
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../../commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../commons/fs-utils

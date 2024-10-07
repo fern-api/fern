@@ -1,13 +1,9 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    ConjureTypeDeclaration,
-    DefinitionFile,
-    ConjureAliasDeclaration,
-    ConjureObjectDeclaration,
-    ConjureEnumDeclaration
-} from "@fern-api/conjure-sdk";
+import { DefinitionFile } from "@fern-api/conjure-sdk";
 import { APIDefinitionImporter, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
-import { listConjureFiles } from "./listConjureFiles";
+import { visitConjureTypeDeclaration } from "./utils/visitConjureTypeDeclaration";
+import { parseEndpointLocator, removeSuffi, getFilename, removeSuffix } from "@fern-api/core-utils";
+import { listConjureFiles } from "./utils/listConjureFiles";
 
 export declare namespace ConjureImporter {
     interface Args {
@@ -19,56 +15,56 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
     private fernDefinitionBuilder = new FernDefinitionBuilderImpl(false);
 
     public async import({ absolutePathToConjureFolder }: ConjureImporter.Args): Promise<APIDefinitionImporter.Return> {
+        const conjureFilepathToFernFilepath: Record<RelativeFilePath, RelativeFilePath> = {};
         await visitAllConjureDefinitionFiles(absolutePathToConjureFolder, (filepath, definition) => {
-            for (const [import_, importedFilepath] of Object.entries(definition.imports ?? {})) {
-                this.fernDefinitionBuilder.addImport({
-                    file: filepath,
-                    fileToImport: RelativeFilePath.of(importedFilepath),
-                    alias: import_
-                });
+            for (const [serviceName, _] of Object.entries(definition.services ?? {})) {
+                const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: "Service" });
+                conjureFilepathToFernFilepath[filepath] = RelativeFilePath.of(`${unsuffixedServiceName}.yml`);
+                return;
             }
 
-            for (const [typeName, typeDeclaration] of Object.entries(definition.types?.definitions?.objects ?? {})) {
-                if (isAlias(typeDeclaration)) {
-                    this.fernDefinitionBuilder.addType(filepath, {
-                        name: typeName,
-                        schema: {
-                            type: typeDeclaration.alias,
-                            docs: typeDeclaration.docs
-                        }
-                    });
-                } else if (isObject(typeDeclaration)) {
-                    this.fernDefinitionBuilder.addType(filepath, {
-                        name: typeName,
-                        schema: {
-                            properties: typeDeclaration.fields
-                        }
-                    });
-                } else if (isEnum(typeDeclaration)) {
-                    this.fernDefinitionBuilder.addType(filepath, {
-                        name: typeName,
-                        schema: {
-                            enum: typeDeclaration.values
-                        }
+            conjureFilepathToFernFilepath[filepath] = getFilename(filepath);
+        });
+
+        await visitAllConjureDefinitionFiles(absolutePathToConjureFolder, (filepath, definition) => {
+            if (definition.services == null || Object.keys(definition.services ?? {}).length === 0) {
+                this.importAllTypes({ conjureFile: definition, fernFilePath: getFilename(filepath) });
+                return;
+            }
+
+            let visitedFirstService = false;
+            for (const [serviceName, serviceDeclaration] of Object.entries(definition.services)) {
+                const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: "Service" });
+                const fernFilePath = RelativeFilePath.of(`${unsuffixedServiceName}.yml`);
+
+                for (const [import_, importedFilepath] of Object.entries(definition.imports ?? {})) {
+                    this.fernDefinitionBuilder.addImport({
+                        file: fernFilePath,
+                        fileToImport: RelativeFilePath.of(importedFilepath),
+                        alias: import_
                     });
                 }
-            }
 
-            for (const [serviceName, serviceDeclaration] of Object.entries(definition.services ?? {})) {
+                if (!visitedFirstService) {
+                    visitedFirstService = true;
+                    // import all types into the first service
+                    this.importAllTypes({ conjureFile: definition, fernFilePath });
+                }
+
                 for (const [endpointName, endpointDeclaration] of Object.entries(serviceDeclaration.endpoints ?? {})) {
-                    const splitConjurePath = endpointDeclaration.http.split(" ");
-                    const method = splitConjurePath[1];
-                    const path = splitConjurePath[0];
-                    if (method == null || path == null) {
-                        break;
+                    const endpointLocator = parseEndpointLocator(endpointDeclaration.http);
+
+                    if (endpointLocator.type === "failure") {
+                        this.context?.logger.error(`Failed to parse ${endpointDeclaration.http}. Skipping.`);
+                        continue;
                     }
-                    this.fernDefinitionBuilder.addEndpoint(filepath, {
+
+                    this.fernDefinitionBuilder.addEndpoint(fernFilePath, {
                         name: endpointName,
                         schema: {
                             auth: true,
-                            path,
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            method: method as any,
+                            path: endpointLocator.path,
+                            method: endpointLocator.method,
                             response: endpointDeclaration.returns
                         },
                         source: undefined
@@ -77,6 +73,52 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
             }
         });
         return this.fernDefinitionBuilder.build();
+    }
+
+    private importAllTypes({
+        conjureFile,
+        fernFilePath
+    }: {
+        conjureFile: DefinitionFile;
+        fernFilePath: RelativeFilePath;
+    }): void {
+        for (const [typeName, typeDeclaration] of Object.entries(conjureFile.types?.definitions?.objects ?? {})) {
+            visitConjureTypeDeclaration(typeDeclaration, {
+                alias: (value) => {
+                    this.fernDefinitionBuilder.addType(fernFilePath, {
+                        name: typeName,
+                        schema: {
+                            type: value.alias,
+                            docs: value.docs
+                        }
+                    });
+                },
+                object: (value) => {
+                    this.fernDefinitionBuilder.addType(fernFilePath, {
+                        name: typeName,
+                        schema: {
+                            properties: value.fields
+                        }
+                    });
+                },
+                enum: (value) => {
+                    this.fernDefinitionBuilder.addType(fernFilePath, {
+                        name: typeName,
+                        schema: {
+                            enum: value.values
+                        }
+                    });
+                },
+                union: (value) => {
+                    this.fernDefinitionBuilder.addType(fernFilePath, {
+                        name: typeName,
+                        schema: {
+                            union: value.union
+                        }
+                    });
+                }
+            });
+        }
     }
 }
 
@@ -87,16 +129,4 @@ export async function visitAllConjureDefinitionFiles(
     for (const conjureFile of await listConjureFiles(absolutePathToConjureFolder, "{yml,yaml}")) {
         await visitor(conjureFile.relativeFilepath, conjureFile.fileContents);
     }
-}
-
-function isAlias(type: ConjureTypeDeclaration): type is ConjureAliasDeclaration {
-    return (type as ConjureAliasDeclaration)?.alias != null;
-}
-
-function isEnum(type: ConjureTypeDeclaration): type is ConjureEnumDeclaration {
-    return (type as ConjureEnumDeclaration)?.values != null;
-}
-
-function isObject(type: ConjureTypeDeclaration): type is ConjureObjectDeclaration {
-    return (type as ConjureObjectDeclaration)?.fields != null;
 }
