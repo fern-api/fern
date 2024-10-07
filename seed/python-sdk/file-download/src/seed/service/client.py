@@ -2,7 +2,7 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 import typing
-from ..core.request_options import RequestOptions
+from ..core.bytes_response_request_options import BytesResponseRequestOptions
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
@@ -12,11 +12,13 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def download_file(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[bytes]:
+    def download_file(
+        self, *, request_options: typing.Optional[BytesResponseRequestOptions] = None
+    ) -> typing.Iterator[bytes]:
         """
         Parameters
         ----------
-        request_options : typing.Optional[RequestOptions]
+        request_options : typing.Optional[BytesResponseRequestOptions]
             Request-specific configuration.
 
         Yields
@@ -38,7 +40,8 @@ class ServiceClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -53,12 +56,12 @@ class AsyncServiceClient:
         self._client_wrapper = client_wrapper
 
     async def download_file(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self, *, request_options: typing.Optional[BytesResponseRequestOptions] = None
     ) -> typing.AsyncIterator[bytes]:
         """
         Parameters
         ----------
-        request_options : typing.Optional[RequestOptions]
+        request_options : typing.Optional[BytesResponseRequestOptions]
             Request-specific configuration.
 
         Yields
@@ -88,7 +91,8 @@ class AsyncServiceClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()

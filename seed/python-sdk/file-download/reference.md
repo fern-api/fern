@@ -34,7 +34,7 @@ client.service.download_file()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**request_options:** `typing.Optional[BytesResponseRequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
