@@ -27,6 +27,7 @@ import { GeneratedEndpointImplementation, GeneratedSdkClientClass, SdkContext } 
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
 import { code } from "ts-poet";
+import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
 import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest";
 import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
@@ -152,7 +153,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
                 const getGeneratedEndpointRequest = () => {
                     if (requestBody?.type === "bytes") {
-                        throw new Error("bytes is not supported");
+                        return new GeneratedBytesEndpointRequest({
+                            ir: this.intermediateRepresentation,
+                            service,
+                            endpoint,
+                            requestBody,
+                            generatedSdkClientClass: this,
+                            targetRuntime: this.targetRuntime
+                        });
                     }
                     if (requestBody?.type === "fileUpload") {
                         return new GeneratedFileUploadEndpointRequest({

@@ -150,7 +150,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     }
                 },
                 bytes: () => {
-                    throw new Error("bytes is not supported");
+                    throw new Error("bytes requests do not leverage a request wrapper.");
                 },
                 _other: () => {
                     throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
