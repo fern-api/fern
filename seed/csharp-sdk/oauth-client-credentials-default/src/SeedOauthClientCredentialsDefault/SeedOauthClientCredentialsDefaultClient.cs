@@ -34,11 +34,7 @@ public partial class SeedOauthClientCredentialsDefaultClient
         var tokenProvider = new OAuthTokenProvider(
             clientId,
             clientSecret,
-            new AuthClient(
-                clientId = clientId,
-                clientSecret = clientSecret,
-                client = new AuthClient(client = new RawClient(clientOptions.Clone()))
-            )
+            new AuthClient(new RawClient(clientOptions.Clone()))
         );
         clientOptions.Headers["Authorization"] = new Func<string>(
             () => tokenProvider.GetAccessTokenAsync().Result

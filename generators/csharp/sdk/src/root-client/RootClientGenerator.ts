@@ -264,34 +264,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     const authClientClassReference = this.context.getSubpackageClassReferenceForServiceIdOrThrow(
                         this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                     );
-                    writer.write(`var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, `);
+                    writer.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
                     writer.writeNode(
                         csharp.instantiateClass({
                             classReference: authClientClassReference,
-                            // names are ignored since forceUseConstructor is set to true
-                            arguments_: [
-                                { name: "clientId", assignment: csharp.codeblock("clientId") },
-                                { name: "clientSecret", assignment: csharp.codeblock("clientSecret") },
-                                {
-                                    name: "client",
-                                    assignment: csharp.codeblock((writer) => {
-                                        writer.writeNode(
-                                            csharp.instantiateClass({
-                                                classReference: authClientClassReference,
-                                                arguments_: [
-                                                    {
-                                                        name: "client",
-                                                        assignment: csharp.codeblock(
-                                                            "new RawClient(clientOptions.Clone())"
-                                                        )
-                                                    }
-                                                ],
-                                                forceUseConstructor: true
-                                            })
-                                        );
-                                    })
-                                }
-                            ],
+                            arguments_: [csharp.codeblock("new RawClient(clientOptions.Clone())")],
                             forceUseConstructor: true
                         })
                     );
@@ -383,11 +360,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         break;
                     case "oauth": {
                         if (this.context.getOauth() != null) {
-                            arguments_.push(csharp.codeblock(`"CLIENT_ID"`));
-                            arguments_.push(csharp.codeblock(`"CLIENT_SECRET"`));
+                            arguments_.push(csharp.codeblock("\"CLIENT_ID\""));
+                            arguments_.push(csharp.codeblock("\"CLIENT_SECRET\""));
                         } else {
                             // default to bearer
-                            arguments_.push(csharp.codeblock(`"TOKEN"`));
+                            arguments_.push(csharp.codeblock("\"TOKEN\""));
                         }
                         break;
                     }
