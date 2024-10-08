@@ -27,6 +27,7 @@ import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerat
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { buildReference } from "./reference/buildReference";
+import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -144,6 +145,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
         const baseApiException = new BaseApiExceptionGenerator(context);
         context.project.addSourceFiles(baseApiException.generate());
+
+        if (context.ir.auth.schemes[0] != null && context.ir.auth.schemes[0].type === "oauth") {
+            const oauthTokenProvider = new OauthTokenProviderGenerator({
+                context,
+                scheme: context.ir.auth.schemes[0]
+            });
+            context.project.addSourceFiles(oauthTokenProvider.generate());
+        }
 
         if (context.customConfig["generate-error-types"] ?? true) {
             for (const _error of Object.values(context.ir.errors)) {
