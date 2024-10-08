@@ -10,6 +10,7 @@ import {
     HttpService,
     IntermediateRepresentation,
     Name,
+    NameAndWireValue,
     OAuthScheme,
     ProtobufService,
     ServiceId,
@@ -434,6 +435,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             return this.ir.auth.schemes[0];
         }
         return undefined;
+    }
+
+    public getNameForField(name: NameAndWireValue): string {
+        return name.name.pascalCase.safeName;
     }
 
     private getGrpcClientPrivatePropertyName(protobufService: ProtobufService): string {

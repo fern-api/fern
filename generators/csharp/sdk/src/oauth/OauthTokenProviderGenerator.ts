@@ -1,6 +1,7 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
+    EndpointId,
     EndpointReference,
     ExampleRequestBody,
     http,
@@ -66,12 +67,10 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         this.classReference = this.context.getOauthTokenProviderClassReference();
         this.tokenEndpointReference = this.scheme.configuration.tokenEndpoint.endpointReference;
         this.tokenEndpointHttpService = this.context.getHttpServiceOrThrow(this.tokenEndpointReference.serviceId);
-        const httpEndpoint = this.tokenEndpointHttpService.endpoints.find(
-            (endpoint) => endpoint.id === this.tokenEndpointReference.endpointId
+        const httpEndpoint = this.resolveEndpointOrThrow(
+            this.tokenEndpointHttpService,
+            this.tokenEndpointReference.endpointId
         );
-        if (httpEndpoint == null) {
-            throw new Error(`Failed to find token endpoint ${this.tokenEndpointReference.endpointId}`);
-        }
         this.tokenEndpoint = httpEndpoint;
     }
 
@@ -95,7 +94,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         const clientField = csharp.field({
             access: "private",
             name: "_client",
-            type: csharp.Type.reference(this.context.getSubpackageClassReferenceForServiceIdOrThrow(this.tokenEndpointReference.serviceId))
+            type: csharp.Type.reference(
+                this.context.getSubpackageClassReferenceForServiceIdOrThrow(this.tokenEndpointReference.serviceId)
+            )
         });
         class_.addField(clientField);
 
@@ -200,15 +201,19 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                                     // TODO(dsinghvi): assumes only top level client id and client secret inputs
                                     arguments_: [
                                         {
-                                            name: this.scheme.configuration.tokenEndpoint.requestProperties.clientId
-                                                .property.name.name.snakeCase.safeName,
+                                            name: this.context.getNameForField(
+                                                this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret
+                                                    .property.name
+                                            ),
                                             assignment: csharp.codeblock(
                                                 OauthTokenProviderGenerator.CLIENT_ID_FIELD.name
                                             )
                                         },
                                         {
-                                            name: this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret
-                                                .property.name.name.snakeCase.safeName,
+                                            name: this.context.getNameForField(
+                                                this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret
+                                                    .property.name
+                                            ),
                                             assignment: csharp.codeblock(
                                                 OauthTokenProviderGenerator.CLIENT_ID_FIELD.name
                                             )
@@ -254,5 +259,15 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
             return `${path.map((val) => val.pascalCase).join(".")}.${property.name.name.pascalCase.safeName}`;
         }
         return property.name.name.pascalCase.safeName;
+    }
+
+    private resolveEndpointOrThrow(service: HttpService, endpointId: EndpointId): HttpEndpoint {
+        const httpEndpoint = service.endpoints.find(
+            (endpoint) => endpoint.id === this.tokenEndpointReference.endpointId
+        );
+        if (httpEndpoint == null) {
+            throw new Error(`Failed to find token endpoint ${this.tokenEndpointReference.endpointId}`);
+        }
+        return httpEndpoint;
     }
 }

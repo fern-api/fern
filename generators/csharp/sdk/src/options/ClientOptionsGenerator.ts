@@ -155,6 +155,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
     private getCloneMethod(): csharp.Method {
         return csharp.method({
             access: "public",
+            summary: "Clones the ClientOptions and returns a new instance",
             name: "Clone",
             return_: csharp.Type.reference(this.context.getClientOptionsClassReference()),
             body: csharp.codeblock((writer) => {

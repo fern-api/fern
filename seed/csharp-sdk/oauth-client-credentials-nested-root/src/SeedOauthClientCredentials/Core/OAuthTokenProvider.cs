@@ -1,4 +1,4 @@
-using SeedOauthClientCredentials;
+using SeedOauthClientCredentials.Auth;
 
 #nullable enable
 
@@ -29,7 +29,7 @@ public partial class OAuthTokenProvider
     {
         if (_accessToken == null || DateTime.UtcNow >= _expiresAt)
         {
-            var tokenResponse = await client.GetTokenWithClientCredentials(
+            var tokenResponse = await client.GetToken(
                 new GetTokenRequest { ClientSecret = _clientId, ClientSecret = _clientId }
             );
             _accessToken = tokenResponse.AccessToken;

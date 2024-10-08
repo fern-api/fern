@@ -33,6 +33,9 @@ public partial class ClientOptions
     /// </summary>
     internal Headers Headers { get; init; } = new();
 
+    /// <summary>
+    /// Clones the ClientOptions and returns a new instance
+    /// </summary>
     public ClientOptions Clone()
     {
         return new ClientOptions

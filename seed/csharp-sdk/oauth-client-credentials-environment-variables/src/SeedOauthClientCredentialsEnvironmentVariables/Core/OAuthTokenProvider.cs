@@ -1,8 +1,8 @@
-using SeedOauthClientCredentials;
+using SeedOauthClientCredentialsEnvironmentVariables;
 
 #nullable enable
 
-namespace SeedOauthClientCredentials.Core;
+namespace SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 public partial class OAuthTokenProvider
 {
