@@ -2,7 +2,7 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 import typing
-from ..core.bytes_response_request_options import BytesResponseRequestOptions
+from ..core.request_options import RequestOptions
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
@@ -12,13 +12,11 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def download_file(
-        self, *, request_options: typing.Optional[BytesResponseRequestOptions] = None
-    ) -> typing.Iterator[bytes]:
+    def download_file(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[bytes]:
         """
         Parameters
         ----------
-        request_options : typing.Optional[BytesResponseRequestOptions]
+        request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
@@ -56,12 +54,12 @@ class AsyncServiceClient:
         self._client_wrapper = client_wrapper
 
     async def download_file(
-        self, *, request_options: typing.Optional[BytesResponseRequestOptions] = None
+        self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[bytes]:
         """
         Parameters
         ----------
-        request_options : typing.Optional[BytesResponseRequestOptions]
+        request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields

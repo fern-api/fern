@@ -414,18 +414,14 @@ class EndpointFunctionGenerator:
             and endpoint.response.body.get_as_union().type == "fileDownload"
         ):
             request_options_docs = "Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response."
-            request_options_class_reference = (
-                self._context.core_utilities.get_reference_to_bytes_response_request_options()
-            )
         else:
             request_options_docs = "Request-specific configuration."
-            request_options_class_reference = self._context.core_utilities.get_reference_to_request_options()
 
         parameters.append(
             AST.NamedFunctionParameter(
                 name=EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
                 docs=request_options_docs,
-                type_hint=AST.TypeHint.optional(AST.TypeHint(request_options_class_reference)),
+                type_hint=AST.TypeHint.optional(AST.TypeHint(self._context.core_utilities.get_reference_to_request_options())),
             ),
         )
 

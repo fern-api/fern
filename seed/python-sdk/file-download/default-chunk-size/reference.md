@@ -34,7 +34,7 @@ client.service.download_file()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[BytesResponseRequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>

@@ -27,7 +27,6 @@ class CoreUtilities:
         has_paginated_endpoints: bool,
         project_module_path: AST.ModulePath,
         custom_config: SDKCustomConfig,
-        has_bytes_responses: bool,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -36,7 +35,6 @@ class CoreUtilities:
         self._allow_skipping_validation = custom_config.pydantic_config.skip_validation
         self._use_typeddict_requests = custom_config.pydantic_config.use_typeddict_requests
         self._has_paginated_endpoints = has_paginated_endpoints
-        self._has_bytes_responses = has_bytes_responses
         self._version = custom_config.pydantic_config.version
         self._project_module_path = project_module_path
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
@@ -87,16 +85,6 @@ class CoreUtilities:
             ),
             exports={"RequestOptions"},
         )
-        if self._has_bytes_responses:
-            self._copy_file_to_project(
-                project=project,
-                relative_filepath_on_disk="bytes_response_request_options.py",
-                filepath_in_project=Filepath(
-                    directories=self.filepath,
-                    file=Filepath.FilepathPart(module_name="bytes_response_request_options"),
-                ),
-                exports={"BytesResponseRequestOptions"},
-            )
 
         self._copy_file_to_project(
             project=project,
@@ -346,15 +334,6 @@ class CoreUtilities:
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "request_options"), named_import="RequestOptions"
-            ),
-        )
-
-    def get_reference_to_bytes_response_request_options(self) -> AST.ClassReference:
-        return AST.ClassReference(
-            qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "bytes_response_request_options"),
-                named_import="BytesResponseRequestOptions",
             ),
         )
 
