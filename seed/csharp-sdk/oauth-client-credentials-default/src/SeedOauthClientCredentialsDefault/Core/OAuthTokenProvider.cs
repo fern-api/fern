@@ -32,6 +32,6 @@ public partial class OAuthTokenProvider
             );
             _accessToken = tokenResponse.AccessToken;
         }
-        return $"Bearer _accessToken";
+        return $"Bearer {_accessToken}";
     }
 }

@@ -37,6 +37,6 @@ public partial class OAuthTokenProvider
                 .UtcNow.AddSeconds(tokenResponse.ExpiresIn)
                 .AddMinutes(-BufferInMinutes);
         }
-        return $"Bearer _accessToken";
+        return $"Bearer {_accessToken}";
     }
 }
