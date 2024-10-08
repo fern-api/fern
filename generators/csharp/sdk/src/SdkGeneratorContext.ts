@@ -4,6 +4,7 @@ import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     DeclaredErrorName,
+    EndpointId,
     ExampleEndpointCall,
     FernFilepath,
     HttpEndpoint,
@@ -435,6 +436,14 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             return this.ir.auth.schemes[0];
         }
         return undefined;
+    }
+
+    public resolveEndpointOrThrow(service: HttpService, endpointId: EndpointId): HttpEndpoint {
+        const httpEndpoint = service.endpoints.find((endpoint) => endpoint.id === endpointId);
+        if (httpEndpoint == null) {
+            throw new Error(`Failed to find token endpoint ${endpointId}`);
+        }
+        return httpEndpoint;
     }
 
     public getNameForField(name: NameAndWireValue): string {

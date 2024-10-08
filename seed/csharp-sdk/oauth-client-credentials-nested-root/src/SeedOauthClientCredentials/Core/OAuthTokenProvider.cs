@@ -30,7 +30,7 @@ public partial class OAuthTokenProvider
         if (_accessToken == null || DateTime.UtcNow >= _expiresAt)
         {
             var tokenResponse = await client.GetToken(
-                new GetTokenRequest { ClientSecret = _clientId, ClientSecret = _clientId }
+                new GetTokenRequest { ClientId = _clientId, ClientSecret = _clientSecret }
             );
             _accessToken = tokenResponse.AccessToken;
             _expiresAt = DateTime

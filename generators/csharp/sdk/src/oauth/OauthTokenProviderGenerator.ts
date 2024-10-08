@@ -67,7 +67,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         this.classReference = this.context.getOauthTokenProviderClassReference();
         this.tokenEndpointReference = this.scheme.configuration.tokenEndpoint.endpointReference;
         this.tokenEndpointHttpService = this.context.getHttpServiceOrThrow(this.tokenEndpointReference.serviceId);
-        const httpEndpoint = this.resolveEndpointOrThrow(
+        const httpEndpoint = this.context.resolveEndpointOrThrow(
             this.tokenEndpointHttpService,
             this.tokenEndpointReference.endpointId
         );
@@ -259,15 +259,5 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
             return `${path.map((val) => val.pascalCase).join(".")}.${property.name.name.pascalCase.safeName}`;
         }
         return property.name.name.pascalCase.safeName;
-    }
-
-    private resolveEndpointOrThrow(service: HttpService, endpointId: EndpointId): HttpEndpoint {
-        const httpEndpoint = service.endpoints.find(
-            (endpoint) => endpoint.id === this.tokenEndpointReference.endpointId
-        );
-        if (httpEndpoint == null) {
-            throw new Error(`Failed to find token endpoint ${this.tokenEndpointReference.endpointId}`);
-        }
-        return httpEndpoint;
     }
 }

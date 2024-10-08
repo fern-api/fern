@@ -360,11 +360,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         break;
                     case "oauth": {
                         if (this.context.getOauth() != null) {
-                            arguments_.push(csharp.codeblock("\"CLIENT_ID\""));
-                            arguments_.push(csharp.codeblock("\"CLIENT_SECRET\""));
+                            arguments_.push(csharp.codeblock('"CLIENT_ID"'));
+                            arguments_.push(csharp.codeblock('"CLIENT_SECRET"'));
                         } else {
                             // default to bearer
-                            arguments_.push(csharp.codeblock("\"TOKEN\""));
+                            arguments_.push(csharp.codeblock('"TOKEN"'));
                         }
                         break;
                     }
