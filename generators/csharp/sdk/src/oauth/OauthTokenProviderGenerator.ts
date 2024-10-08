@@ -28,6 +28,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
     private tokenEndpointHttpService: HttpService;
     private tokenEndpointReference: EndpointReference;
     private tokenEndpoint: HttpEndpoint;
+    private clientField: csharp.Field;
 
     private static readonly BUFFER_IN_MINUTES_FIELD = csharp.field({
         access: "private",
@@ -72,6 +73,13 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
             this.tokenEndpointReference.endpointId
         );
         this.tokenEndpoint = httpEndpoint;
+        this.clientField = csharp.field({
+            access: "private",
+            name: "_client",
+            type: csharp.Type.reference(
+                this.context.getSubpackageClassReferenceForServiceIdOrThrow(this.tokenEndpointReference.serviceId)
+            )
+        });
     }
 
     public doGenerate(): CSharpFile {
@@ -91,14 +99,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         class_.addField(OauthTokenProviderGenerator.CLIENT_ID_FIELD);
         class_.addField(OauthTokenProviderGenerator.CLIENT_SECRET_FIELD);
 
-        const clientField = csharp.field({
-            access: "private",
-            name: "_client",
-            type: csharp.Type.reference(
-                this.context.getSubpackageClassReferenceForServiceIdOrThrow(this.tokenEndpointReference.serviceId)
-            )
-        });
-        class_.addField(clientField);
+        class_.addField(this.clientField);
 
         class_.addMethod(this.getAccessTokenMethod());
 
@@ -115,13 +116,13 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                 }),
                 csharp.parameter({
                     name: "client",
-                    type: clientField.type
+                    type: this.clientField.type
                 })
             ],
             body: csharp.codeblock((writer) => {
                 writer.writeTextStatement(`${OauthTokenProviderGenerator.CLIENT_ID_FIELD.name} = clientId`);
                 writer.writeTextStatement(`${OauthTokenProviderGenerator.CLIENT_SECRET_FIELD.name} = clientSecret`);
-                writer.writeTextStatement(`${clientField.name} = client`);
+                writer.writeTextStatement(`${this.clientField.name} = client`);
             })
         });
 
@@ -194,7 +195,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                     writer.writeNode(
                         csharp.invokeMethod({
                             async: true,
-                            method: `client.${this.tokenEndpoint.name.pascalCase.safeName}`,
+                            method: `${this.clientField.name}.${this.context.getEndpointMethodName(
+                                this.tokenEndpoint
+                            )}`,
                             arguments_: [
                                 csharp.instantiateClass({
                                     classReference: requestType.internalType.value,
