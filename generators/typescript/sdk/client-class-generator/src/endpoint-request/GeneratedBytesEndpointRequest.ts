@@ -202,7 +202,8 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
             contentType: this.requestBody.contentType,
             requestType: "bytes",
-            body: ts.factory.createIdentifier(GeneratedBytesEndpointRequest.BYTES_VARIABLE_NAME)
+            body: ts.factory.createIdentifier(GeneratedBytesEndpointRequest.BYTES_VARIABLE_NAME),
+            duplex: ts.factory.createStringLiteral("half")
         };
     }
 
