@@ -202,7 +202,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                                     arguments_: [
                                         {
                                             name: this.context.getNameForField(
-                                                this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret
+                                                this.scheme.configuration.tokenEndpoint.requestProperties.clientId
                                                     .property.name
                                             ),
                                             assignment: csharp.codeblock(
