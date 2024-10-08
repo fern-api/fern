@@ -119,6 +119,11 @@ fixtures:
       outputFolder: pydantic-v1-wrapped
     - customConfig:
         pydantic_config:
+          version: v1
+          include_union_utils: true
+      outputFolder: pydantic-v1-with-utils
+    - customConfig:
+        pydantic_config:
           extra_fields: "allow"
       outputFolder: pydantic-extra-fields
     - customConfig:
@@ -264,6 +269,7 @@ allowedFailures:
   - exhaustive:additional_init_exports
   # This should only succeed in Pydantic V1 tests
   - exhaustive:pydantic-v1-wrapped
+  - exhaustive:pydantic-v1-with-utils
 
   # TODO(FER-1837): Address this list
   - websocket

@@ -4850,6 +4850,7 @@ to us as a value of the `part_size` parameter (in bytes).
                   },
                 },
                 "content-type": "multipart/form-data",
+                "docs": "Multipart upload parameters to start multipart uploading.",
                 "headers": undefined,
                 "name": "MultipartFileUploadStartRequest",
                 "query-parameters": undefined,
@@ -5283,6 +5284,7 @@ service:
             signature: optional<root.SignatureType>
             expire: optional<root.ExpireType>
         content-type: multipart/form-data
+        docs: Multipart upload parameters to start multipart uploading.
       response:
         docs: Multipart upload started successfully.
         type: MultipartFileUploadStartResponse

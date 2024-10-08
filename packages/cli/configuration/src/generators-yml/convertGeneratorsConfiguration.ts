@@ -282,7 +282,7 @@ async function parseApiConfigurationV2Schema({
                     type: "oss",
                     path: spec.openapi
                 },
-                origin: undefined,
+                origin: spec.origin,
                 overrides: spec.overrides,
                 audiences: [],
                 settings: {

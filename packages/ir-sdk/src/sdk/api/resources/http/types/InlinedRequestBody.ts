@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface InlinedRequestBody {
+export interface InlinedRequestBody extends FernIr.WithDocs {
     name: FernIr.Name;
     extends: FernIr.DeclaredTypeName[];
     properties: FernIr.InlinedRequestBodyProperty[];
