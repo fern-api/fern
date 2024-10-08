@@ -21,8 +21,6 @@ export declare namespace OauthTokenProviderGenerator {
     }
 }
 
-const OAUTH_TOKEN_PROVIDER_CLASS_NAME = "OAuthTokenProvider";
-
 export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private classReference: csharp.ClassReference;
     private scheme: OAuthScheme;
@@ -65,17 +63,12 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
     constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
         super(context);
         this.scheme = scheme;
-        this.classReference = csharp.classReference({
-            namespace: this.context.getCoreNamespace(),
-            name: OAUTH_TOKEN_PROVIDER_CLASS_NAME
-        });
-
+        this.classReference = this.context.getOauthTokenProviderClassReference();
         this.tokenEndpointReference = this.scheme.configuration.tokenEndpoint.endpointReference;
         this.tokenEndpointHttpService = this.context.getHttpServiceOrThrow(this.tokenEndpointReference.serviceId);
         const httpEndpoint = this.tokenEndpointHttpService.endpoints.find(
             (endpoint) => endpoint.id === this.tokenEndpointReference.endpointId
         );
-
         if (httpEndpoint == null) {
             throw new Error(`Failed to find token endpoint ${this.tokenEndpointReference.endpointId}`);
         }
@@ -99,18 +92,14 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         class_.addField(OauthTokenProviderGenerator.CLIENT_ID_FIELD);
         class_.addField(OauthTokenProviderGenerator.CLIENT_SECRET_FIELD);
 
-        class_.addMethod(this.getAccessTokenMethod());
-
-        const subpackage = this.context.getSubpackageForServiceId(this.tokenEndpointReference.serviceId);
-        if (subpackage == null) {
-            throw new Error(`Failed to find subpackage for serviceId ${subpackage}`);
-        }
-
         const clientField = csharp.field({
             access: "private",
             name: "_client",
-            type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
+            type: csharp.Type.reference(this.context.getSubpackageClassReferenceForServiceIdOrThrow(this.tokenEndpointReference.serviceId))
         });
+        class_.addField(clientField);
+
+        class_.addMethod(this.getAccessTokenMethod());
 
         class_.addConstructor({
             access: "public",
@@ -146,14 +135,16 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(this.context.getCoreDirectory(), RelativeFilePath.of(`${OAUTH_TOKEN_PROVIDER_CLASS_NAME}.cs`));
+        return join(this.context.getCoreDirectory(), RelativeFilePath.of(`${this.classReference.name}.cs`));
     }
+
+    public static readonly GET_ACCESS_TOKEN_ASYNC_METHOD_NAME = "GetAccessTokenAsync";
 
     private getAccessTokenMethod(): csharp.Method {
         return csharp.method({
             access: "public",
             isAsync: true,
-            name: "GetAccessTokenAsync",
+            name: OauthTokenProviderGenerator.GET_ACCESS_TOKEN_ASYNC_METHOD_NAME,
             parameters: [],
             body: this.getAccessTokenBody(),
             return_: csharp.Type.string()
@@ -198,7 +189,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                         throw new Error("Failed to get request class reference");
                     }
 
-                    writer.write(`var tokenResponse = `);
+                    writer.write("var tokenResponse = ");
                     writer.writeNode(
                         csharp.invokeMethod({
                             async: true,

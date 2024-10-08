@@ -10,6 +10,7 @@ import {
     HttpService,
     IntermediateRepresentation,
     Name,
+    OAuthScheme,
     ProtobufService,
     ServiceId,
     Subpackage,
@@ -203,6 +204,19 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getSubpackageForServiceId(serviceId: ServiceId): Subpackage | undefined {
         return Object.values(this.ir.subpackages).find((subpackage) => subpackage.service === serviceId);
+    }
+
+    public getSubpackageForServiceIdOrThrow(serviceId: ServiceId): Subpackage {
+        const subpackage = this.getSubpackageForServiceId(serviceId);
+        if (subpackage == null) {
+            throw new Error(`No example found for subpackage with serviceId ${serviceId}`);
+        }
+        return subpackage;
+    }
+
+    public getSubpackageClassReferenceForServiceIdOrThrow(serviceId: ServiceId): csharp.ClassReference {
+        const subpackage = this.getSubpackageForServiceIdOrThrow(serviceId);
+        return this.getSubpackageClassReference(subpackage);
     }
 
     private getComputedClientName(): string {
@@ -402,6 +416,24 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getExtraDependencies(): Record<string, string> {
         return this.customConfig["extra-dependencies"] ?? {};
+    }
+
+    public getOauthTokenProviderClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "OAuthTokenProvider"
+        });
+    }
+
+    public getOauth(): OAuthScheme | undefined {
+        if (
+            this.ir.auth.schemes[0] != null &&
+            this.ir.auth.schemes[0].type === "oauth" &&
+            this.config.generateOauthClients
+        ) {
+            return this.ir.auth.schemes[0];
+        }
+        return undefined;
     }
 
     private getGrpcClientPrivatePropertyName(protobufService: ProtobufService): string {

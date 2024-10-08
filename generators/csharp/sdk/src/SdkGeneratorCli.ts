@@ -146,10 +146,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const baseApiException = new BaseApiExceptionGenerator(context);
         context.project.addSourceFiles(baseApiException.generate());
 
-        if (context.ir.auth.schemes[0] != null && context.ir.auth.schemes[0].type === "oauth") {
+        const oauth = context.getOauth();
+        if (oauth != null) {
             const oauthTokenProvider = new OauthTokenProviderGenerator({
                 context,
-                scheme: context.ir.auth.schemes[0]
+                scheme: oauth
             });
             context.project.addSourceFiles(oauthTokenProvider.generate());
         }

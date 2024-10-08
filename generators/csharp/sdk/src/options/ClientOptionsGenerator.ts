@@ -35,6 +35,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         if (this.context.hasGrpcEndpoints()) {
             class_.addField(this.getGrpcOptionsField());
         }
+
+        class_.addMethod(this.getCloneMethod());
+
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getPublicCoreDirectory(),
@@ -146,6 +149,26 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             init: true,
             type: csharp.Type.optional(csharp.Type.reference(this.context.getGrpcChannelOptionsClassReference())),
             summary: "The options used for gRPC client endpoints."
+        });
+    }
+
+    private getCloneMethod(): csharp.Method {
+        return csharp.method({
+            access: "public",
+            name: "Clone",
+            return_: csharp.Type.reference(this.context.getClientOptionsClassReference()),
+            body: csharp.codeblock((writer) => {
+                writer.writeTextStatement(`return new ClientOptions
+{
+    Environment = Environment,
+    HttpClient = HttpClient,
+    MaxRetries = MaxRetries,
+    Timeout = Timeout,
+    Headers = new Headers(new Dictionary<string, HeaderValue>(Headers))
+};`);
+            }),
+            isAsync: false,
+            parameters: []
         });
     }
 }

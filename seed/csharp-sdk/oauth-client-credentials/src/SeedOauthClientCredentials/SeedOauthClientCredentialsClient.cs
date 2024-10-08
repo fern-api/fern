@@ -8,7 +8,11 @@ public partial class SeedOauthClientCredentialsClient
 {
     private RawClient _client;
 
-    public SeedOauthClientCredentialsClient(ClientOptions? clientOptions = null)
+    public SeedOauthClientCredentialsClient(
+        string clientId,
+        string clientSecret,
+        ClientOptions? clientOptions = null
+    )
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
@@ -27,6 +31,18 @@ public partial class SeedOauthClientCredentialsClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
+        var tokenProvider = new OAuthTokenProvider(
+            clientId,
+            clientSecret,
+            new AuthClient(
+                clientId = clientId,
+                clientSecret = clientSecret,
+                client = new AuthClient(client = new RawClient(clientOptions.Clone()))
+            )
+        );
+        clientOptions.Headers["Authorization"] = new Func<string>(
+            () => tokenProvider.GetAccessTokenAsync().Result
+        );
         _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);
     }

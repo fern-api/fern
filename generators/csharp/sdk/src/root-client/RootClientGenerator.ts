@@ -5,6 +5,7 @@ import {
     AuthScheme,
     HttpHeader,
     Literal,
+    OAuthScheme,
     PrimitiveTypeV1,
     PrimitiveTypeV2,
     ServiceId,
@@ -13,6 +14,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "../endpoint/http/RawClient";
 import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
+import { OauthTokenProviderGenerator } from "../oauth/OauthTokenProviderGenerator";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -48,8 +50,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
     private rawClient: RawClient;
     private serviceId: ServiceId | undefined;
     private grpcClientInfo: GrpcClientInfo | undefined;
+    private oauth: OAuthScheme | undefined;
+
     constructor(context: SdkGeneratorContext) {
         super(context);
+        this.oauth = context.getOauth();
         this.rawClient = new RawClient(context);
         this.serviceId = this.context.ir.rootPackage.service;
         this.grpcClientInfo =
@@ -255,6 +260,52 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 writer.endControlFlow();
                 writer.endControlFlow();
 
+                if (this.oauth != null) {
+                    const authClientClassReference = this.context.getSubpackageClassReferenceForServiceIdOrThrow(
+                        this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
+                    );
+                    writer.write(`var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, `);
+                    writer.writeNode(
+                        csharp.instantiateClass({
+                            classReference: authClientClassReference,
+                            // names are ignored since forceUseConstructor is set to true
+                            arguments_: [
+                                { name: "clientId", assignment: csharp.codeblock("clientId") },
+                                { name: "clientSecret", assignment: csharp.codeblock("clientSecret") },
+                                {
+                                    name: "client",
+                                    assignment: csharp.codeblock((writer) => {
+                                        writer.writeNode(
+                                            csharp.instantiateClass({
+                                                classReference: authClientClassReference,
+                                                arguments_: [
+                                                    {
+                                                        name: "client",
+                                                        assignment: csharp.codeblock(
+                                                            "new RawClient(clientOptions.Clone())"
+                                                        )
+                                                    }
+                                                ],
+                                                forceUseConstructor: true
+                                            })
+                                        );
+                                    })
+                                }
+                            ],
+                            forceUseConstructor: true
+                        })
+                    );
+                    writer.writeTextStatement(")");
+
+                    writer.writeNode(
+                        csharp.codeblock((writer) => {
+                            writer.write(
+                                `clientOptions.Headers["Authorization"] = new Func<string>( () => tokenProvider.${OauthTokenProviderGenerator.GET_ACCESS_TOKEN_ASYNC_METHOD_NAME}().Result );`
+                            );
+                        })
+                    );
+                }
+
                 writer.writeLine("_client = ");
                 writer.writeNodeStatement(
                     csharp.instantiateClass({
@@ -330,8 +381,16 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                             arguments_.push(csharp.codeblock(`"${scheme.token.screamingSnakeCase.safeName}"`));
                         }
                         break;
-                    case "oauth":
+                    case "oauth": {
+                        if (this.context.getOauth() != null) {
+                            arguments_.push(csharp.codeblock(`"CLIENT_ID"`));
+                            arguments_.push(csharp.codeblock(`"CLIENT_SECRET"`));
+                        } else {
+                            // default to bearer
+                            arguments_.push(csharp.codeblock(`"TOKEN"`));
+                        }
                         break;
+                    }
                 }
             }
         }
@@ -451,6 +510,31 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                             v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
                         }),
                         environmentVariable: scheme.passwordEnvVar
+                    }
+                ];
+            }
+        } else if (this.oauth != null) {
+            {
+                return [
+                    {
+                        name: "clientId",
+                        docs: "The clientId to use for authentication.",
+                        isOptional,
+                        typeReference: TypeReference.primitive({
+                            v1: PrimitiveTypeV1.String,
+                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                        }),
+                        environmentVariable: scheme.configuration.clientIdEnvVar
+                    },
+                    {
+                        name: "clientSecret",
+                        docs: "The clientSecret to use for authentication.",
+                        isOptional,
+                        typeReference: TypeReference.primitive({
+                            v1: PrimitiveTypeV1.String,
+                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                        }),
+                        environmentVariable: scheme.configuration.clientSecretEnvVar
                     }
                 ];
             }
