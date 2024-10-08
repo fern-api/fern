@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.41.0-rc0] - 2024-10-05
+## [0.41.0-rc1] - 2024-10-08
+
+- Fix: Fixes a broken unit test introduced in 0.41.0-rc0.
+
+## [0.41.0-rc0] - 2024-10-08
 
 - Feat: The generated SDK now supports bytes (`application/octet-stream`) requests.
 
