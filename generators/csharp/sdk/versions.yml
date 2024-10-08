@@ -1,4 +1,5 @@
 - version: 1.8.1
+  irVersion: 53
   createdAt: '2024-10-08'
   changelogEntry:
     - type: fix
