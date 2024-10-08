@@ -2,7 +2,7 @@
 
 ## Service
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">upload</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">upload</a>(bytes) -> void</code></summary>
 <dl>
 <dd>
 
@@ -31,7 +31,7 @@ await client.service.upload(fs.createReadStream("/path/to/your/file"));
 <dl>
 <dd>
 
-**request:** `File | fs.ReadStream | Blob`
+**bytes:** `File | fs.ReadStream | Blob`
 
 </dd>
 </dl>

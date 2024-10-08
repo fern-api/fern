@@ -155,11 +155,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     if (requestBody?.type === "bytes") {
                         return new GeneratedBytesEndpointRequest({
                             ir: this.intermediateRepresentation,
+                            packageId,
                             service,
                             endpoint,
                             requestBody,
                             generatedSdkClientClass: this,
-                            targetRuntime: this.targetRuntime
+                            targetRuntime: this.targetRuntime,
+                            retainOriginalCasing: this.retainOriginalCasing
                         });
                     }
                     if (requestBody?.type === "fileUpload") {

@@ -27,13 +27,13 @@ export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
     /**
-     * @param {File | fs.ReadStream | Blob} request
+     * @param {File | fs.ReadStream | Blob} bytes
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.service.upload(fs.createReadStream("/path/to/your/file"))
      */
-    public async upload(request: File | fs.ReadStream | Blob, requestOptions?: Service.RequestOptions): Promise<void> {
+    public async upload(bytes: File | fs.ReadStream | Blob, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "upload-content"),
             method: "POST",
@@ -47,7 +47,7 @@ export class Service {
             },
             contentType: "application/octet-stream",
             requestType: "bytes",
-            body: request,
+            body: bytes,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
