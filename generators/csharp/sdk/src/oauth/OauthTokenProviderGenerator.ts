@@ -249,7 +249,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
 
             writer.endControlFlow();
 
-            writer.writeTextStatement(`return $"Bearer \{${OauthTokenProviderGenerator.ACCESS_TOKEN_FIELD.name}\}"`);
+            writer.writeTextStatement(`return $"Bearer {${OauthTokenProviderGenerator.ACCESS_TOKEN_FIELD.name}}"`);
         });
     }
 
