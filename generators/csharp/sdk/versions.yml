@@ -1,3 +1,11 @@
+- version: 1.8.1
+  irVersion: 53
+  createdAt: '2024-10-08'
+  changelogEntry:
+    - type: fix
+      summary: | 
+        Fixes a bug where the `OauthTokenProvider.cs` was incorrectly referencing
+        the endpoint method, causing code to fail to compile.
 - version: 1.8.0
   createdAt: '2024-08-29'
   changelogEntry:

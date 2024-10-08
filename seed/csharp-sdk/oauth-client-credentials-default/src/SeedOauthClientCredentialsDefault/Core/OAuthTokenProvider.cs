@@ -27,7 +27,7 @@ public partial class OAuthTokenProvider
     {
         if (_accessToken == null)
         {
-            var tokenResponse = await client.GetToken(
+            var tokenResponse = await _client.GetTokenAsync(
                 new GetTokenRequest { ClientId = _clientId, ClientSecret = _clientSecret }
             );
             _accessToken = tokenResponse.AccessToken;
