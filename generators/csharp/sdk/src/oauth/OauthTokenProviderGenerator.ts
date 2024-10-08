@@ -215,7 +215,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                                                     .property.name
                                             ),
                                             assignment: csharp.codeblock(
-                                                OauthTokenProviderGenerator.CLIENT_ID_FIELD.name
+                                                OauthTokenProviderGenerator.CLIENT_SECRET_FIELD.name
                                             )
                                         }
                                     ]
