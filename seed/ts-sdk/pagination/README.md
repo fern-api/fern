@@ -20,14 +20,28 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedPaginationClient } from "@fern/pagination";
+import { SeedPaginationClient, SeedPagination } from "@fern/pagination";
+import * as core from "../src/core";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.users.listWithBodyCursorPagination({
+const response = await client.users.listWithBodyCursorPagination({
     pagination: {
         cursor: "string",
     },
 });
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+const page = await client.users.listWithBodyCursorPagination({
+    pagination: {
+        cursor: "string",
+    },
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
 ```
 
 ## Request And Response Types

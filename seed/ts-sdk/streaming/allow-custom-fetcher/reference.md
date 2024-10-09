@@ -15,9 +15,12 @@
 <dd>
 
 ```typescript
-await client.dummy.generateStream({
+const response = await client.dummy.generateStream({
     numEvents: 1,
 });
+for await (const item of response) {
+    console.log(item);
+}
 ```
 
 </dd>
