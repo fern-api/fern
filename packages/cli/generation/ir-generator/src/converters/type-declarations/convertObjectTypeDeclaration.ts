@@ -1,4 +1,4 @@
-import { ObjectProperty, Type } from "@fern-api/ir-sdk";
+import { ObjectExtraProperty, ObjectProperty, Type } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
@@ -14,9 +14,27 @@ export async function convertObjectTypeDeclaration({
     return Type.object({
         extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         properties: await getObjectPropertiesFromRawObjectSchema(object, file),
-        extraProperties: object["extra-properties"] ?? false,
+        extraProperties: await getExtraPropertiesFromRawObjectSchema(object, file),
         extendedProperties: undefined
     });
+}
+
+async function getExtraPropertiesFromRawObjectSchema(
+    object: RawSchemas.ObjectSchema,
+    file: FernFileContext
+): Promise<ObjectExtraProperty> {
+    if (object["extra-properties"] == null) {
+        return false;
+    }
+
+    if (typeof object["extra-properties"] === "boolean") {
+        return object["extra-properties"];
+    }
+
+    return {
+        ...(await convertDeclaration(object["extra-properties"])),
+        ...file.parseTypeReference(object["extra-properties"])
+    };
 }
 
 export async function getObjectPropertiesFromRawObjectSchema(

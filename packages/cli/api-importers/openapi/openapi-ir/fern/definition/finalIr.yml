@@ -394,7 +394,7 @@ types:
     properties:
       schema: Schema
       contentType: optional<string>
-      additionalProperties: boolean
+      additionalProperties: ObjectExtraProperty
 
   MultipartRequest:
     extends:
@@ -570,7 +570,7 @@ types:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
       allOfPropertyConflicts: list<AllOfPropertyConflict>
-      additionalProperties: boolean
+      additionalProperties: ObjectExtraProperty
 
   # OpenAPI IR to Fern:
   # For every allOfPropertyConflict, we will inline the SchemaIds that conflict.
@@ -603,6 +603,19 @@ types:
         type: optional<string>
         docs: | 
           An optional name override populated via `x-fern-property-name`. 
+      audiences: list<string>
+
+  ObjectExtraProperty:
+    union:
+    - boolean
+    - ObjectExtraPropertyShape
+
+  ObjectExtraPropertyShape:
+    extends:
+      - commons.WithAvailability
+    properties:
+      schema: Schema
+      readonly: optional<boolean>
       audiences: list<string>
 
   ObjectPropertyConflictInfo:

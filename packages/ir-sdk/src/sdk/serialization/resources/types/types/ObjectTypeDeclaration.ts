@@ -7,6 +7,7 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { DeclaredTypeName } from "./DeclaredTypeName";
 import { ObjectProperty } from "./ObjectProperty";
+import { ObjectExtraProperty } from "./ObjectExtraProperty";
 
 export const ObjectTypeDeclaration: core.serialization.ObjectSchema<
     serializers.ObjectTypeDeclaration.Raw,
@@ -15,7 +16,7 @@ export const ObjectTypeDeclaration: core.serialization.ObjectSchema<
     extends: core.serialization.list(DeclaredTypeName),
     properties: core.serialization.list(ObjectProperty),
     extendedProperties: core.serialization.list(ObjectProperty).optional(),
-    extraProperties: core.serialization.property("extra-properties", core.serialization.boolean()),
+    extraProperties: core.serialization.property("extra-properties", ObjectExtraProperty),
 });
 
 export declare namespace ObjectTypeDeclaration {
@@ -23,6 +24,6 @@ export declare namespace ObjectTypeDeclaration {
         extends: DeclaredTypeName.Raw[];
         properties: ObjectProperty.Raw[];
         extendedProperties?: ObjectProperty.Raw[] | null;
-        "extra-properties": boolean;
+        "extra-properties": ObjectExtraProperty.Raw;
     }
 }
