@@ -6,7 +6,7 @@ describe("parseEndpointLocator", () => {
         expect(result).toEqual("User");
     });
 
-    it("simple", () => {
+    it("suffix not present", () => {
         const result = removeSuffix({ value: "UserService", suffix: "Services" });
         expect(result).toEqual("UserService");
     });
