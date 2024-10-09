@@ -928,6 +928,7 @@
       "path": "/transactions/{transactionId}",
       "examples": [
         {
+          "name": "example-1",
           "pathParameters": [
             {
               "name": "transactionId",
@@ -1714,7 +1715,7 @@
       "path": "/events/transaction",
       "examples": [
         {
-          "name": "example-2",
+          "name": "example-1",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -3181,6 +3182,7 @@
       "path": "/consumer/users/{userId}",
       "examples": [
         {
+          "name": "example-1",
           "pathParameters": [
             {
               "name": "userId",
@@ -3861,6 +3863,7 @@
       "path": "/business/users",
       "examples": [
         {
+          "name": "example-1",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -4295,6 +4298,7 @@
       "path": "/business/users/{userId}",
       "examples": [
         {
+          "name": "example-2",
           "pathParameters": [
             {
               "name": "userId",

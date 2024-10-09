@@ -678,6 +678,7 @@
       "path": "/booking_amendments",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -2313,6 +2314,7 @@
       "path": "/booking_line_items",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -2870,6 +2872,7 @@
       "path": "/booking_line_items",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -3361,6 +3364,7 @@
       "path": "/booking_line_items/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -4589,6 +4593,7 @@
       "path": "/bookings",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -6410,6 +6415,7 @@
       "path": "/bookings",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -8808,6 +8814,7 @@
       "path": "/bookings/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -10603,6 +10610,7 @@
       "path": "/carbon_calculation",
       "examples": [
         {
+          "name": "response",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -11190,6 +11198,7 @@
       "path": "/commercial_invoices",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -12222,6 +12231,7 @@
       "path": "/commercial_invoices",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -13312,6 +13322,7 @@
       "path": "/commercial_invoices",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -14341,6 +14352,7 @@
       "path": "/commercial_invoices/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -15466,6 +15478,7 @@
       "path": "/customs_entries",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -15957,6 +15970,7 @@
       "path": "/customs_entries/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -16721,6 +16735,7 @@
       "path": "/documents",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -17259,6 +17274,7 @@
       "path": "/documents",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -17729,6 +17745,7 @@
       "path": "/documents/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -20665,6 +20682,7 @@
       "path": "/invoices",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -22531,6 +22549,7 @@
       "path": "/invoices/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -24274,6 +24293,7 @@
       "path": "/network/companies",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -24992,6 +25012,7 @@
       "path": "/network/companies",
       "examples": [
         {
+          "name": "response",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -25532,6 +25553,7 @@
       "path": "/network/companies/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -26221,6 +26243,7 @@
       "path": "/network/companies/{id}",
       "examples": [
         {
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -27132,6 +27155,7 @@
       "path": "/network/company_entities",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -27720,6 +27744,7 @@
       "path": "/network/company_entities",
       "examples": [
         {
+          "name": "response",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -28263,6 +28288,7 @@
       "path": "/network/company_entities/{id}",
       "examples": [
         {
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -28820,6 +28846,7 @@
       "path": "/network/company_entities/{id}",
       "examples": [
         {
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -29578,6 +29605,7 @@
       "path": "/network/contacts",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -30111,6 +30139,7 @@
       "path": "/network/contacts",
       "examples": [
         {
+          "name": "response",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -30610,6 +30639,7 @@
       "path": "/network/contacts/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -31113,6 +31143,7 @@
       "path": "/network/contacts/{id}",
       "examples": [
         {
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -31880,6 +31911,7 @@
       "path": "/network/locations",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -32522,6 +32554,7 @@
       "path": "/network/locations",
       "examples": [
         {
+          "name": "response",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -33140,6 +33173,7 @@
       "path": "/network/locations/{id}",
       "examples": [
         {
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -33765,6 +33799,7 @@
       "path": "/network/locations/{id}",
       "examples": [
         {
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -34367,6 +34402,7 @@
       "path": "/network/me/companies",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -35235,6 +35271,7 @@
       "path": "/ocean/shipment_container_legs",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -35766,6 +35803,7 @@
       "path": "/ocean/shipment_container_legs/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -36498,6 +36536,7 @@
       "path": "/ocean/shipment_containers",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -37328,6 +37367,7 @@
       "path": "/ocean/shipment_containers/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -38351,6 +38391,7 @@
       "path": "/ports",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -39270,6 +39311,7 @@
       "path": "/products",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -39858,6 +39900,7 @@
       "path": "/products",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -40446,6 +40489,7 @@
       "path": "/products/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -41031,6 +41075,7 @@
       "path": "/products/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -41946,6 +41991,7 @@
       "path": "/purchase_order_line_items",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -43044,6 +43090,7 @@
       "path": "/purchase_order_line_items/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -44953,6 +45000,7 @@
       "path": "/purchase_orders",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -46733,6 +46781,7 @@
       "path": "/purchase_orders",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -48651,6 +48700,7 @@
       "path": "/purchase_orders/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -49851,6 +49901,7 @@
       "path": "/purchase_orders/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -51536,6 +51587,7 @@
       "path": "/shipment_legs",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -52780,6 +52832,7 @@
       "path": "/shipment_legs/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -55063,6 +55116,7 @@
       "path": "/shipments",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -57210,6 +57264,7 @@
       "path": "/shipments/{id}",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -59447,6 +59502,7 @@
       "path": "/shipments/{id}",
       "examples": [
         {
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -61598,6 +61654,7 @@
       "path": "/shipments_shareable",
       "examples": [
         {
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],

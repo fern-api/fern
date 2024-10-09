@@ -3397,6 +3397,7 @@ Log.d("TAG", file.toString())
                       "name": "Kotlin",
                     },
                   ],
+                  "name": "type-token",
                   "request": {
                     "pub_key": "caa9d29da887ee88ffe6",
                     "source_url": "source_url",
@@ -3511,6 +3512,7 @@ Log.d("TAG", file.toString())
                       "name": "Kotlin",
                     },
                   ],
+                  "name": "type-file-info",
                   "request": {
                     "pub_key": "caa9d29da887ee88ffe6",
                     "source_url": "source_url",
@@ -3777,6 +3779,7 @@ Log.d("TAG", status.toString())
                       "name": "Kotlin",
                     },
                   ],
+                  "name": "status-waiting",
                   "query-parameters": {
                     "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                   },
@@ -3868,6 +3871,7 @@ Log.d("TAG", status.toString())
                       "name": "Kotlin",
                     },
                   ],
+                  "name": "status-progress",
                   "query-parameters": {
                     "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                   },
@@ -3961,6 +3965,7 @@ Log.d("TAG", status.toString())
                       "name": "Kotlin",
                     },
                   ],
+                  "name": "status-success",
                   "query-parameters": {
                     "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                   },
@@ -4149,6 +4154,7 @@ Log.d("TAG", status.toString())
                       "name": "Kotlin",
                     },
                   ],
+                  "name": "status-error",
                   "query-parameters": {
                     "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                   },
@@ -4242,6 +4248,7 @@ Log.d("TAG", status.toString())
                       "name": "Kotlin",
                     },
                   ],
+                  "name": "status-unknown",
                   "query-parameters": {
                     "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                   },
@@ -5907,7 +5914,8 @@ service:
         - root.ForbiddenError
         - root.TooManyRequestsError
       examples:
-        - request:
+        - name: type-token
+          request:
             pub_key: caa9d29da887ee88ffe6
             source_url: source_url
           response:
@@ -6017,7 +6025,8 @@ service:
                 val file = uploader.upload()
 
                 Log.d("TAG", file.toString())
-        - request:
+        - name: type-file-info
+          request:
             pub_key: caa9d29da887ee88ffe6
             source_url: source_url
           response:
@@ -6233,7 +6242,8 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - query-parameters:
+        - name: status-waiting
+          query-parameters:
             token: 945ebb27-1fd6-46c6-a859-b9893712d650
           response:
             body:
@@ -6317,7 +6327,8 @@ service:
                 "945ebb27-1fd6-46c6-a859-b9893712d650")
 
                 Log.d("TAG", status.toString())
-        - query-parameters:
+        - name: status-progress
+          query-parameters:
             token: 945ebb27-1fd6-46c6-a859-b9893712d650
           response:
             body:
@@ -6403,7 +6414,8 @@ service:
                 "945ebb27-1fd6-46c6-a859-b9893712d650")
 
                 Log.d("TAG", status.toString())
-        - query-parameters:
+        - name: status-success
+          query-parameters:
             token: 945ebb27-1fd6-46c6-a859-b9893712d650
           response:
             body:
@@ -6565,7 +6577,8 @@ service:
                 "945ebb27-1fd6-46c6-a859-b9893712d650")
 
                 Log.d("TAG", status.toString())
-        - query-parameters:
+        - name: status-error
+          query-parameters:
             token: 945ebb27-1fd6-46c6-a859-b9893712d650
           response:
             body:
@@ -6651,7 +6664,8 @@ service:
                 "945ebb27-1fd6-46c6-a859-b9893712d650")
 
                 Log.d("TAG", status.toString())
-        - query-parameters:
+        - name: status-unknown
+          query-parameters:
             token: 945ebb27-1fd6-46c6-a859-b9893712d650
           response:
             body:

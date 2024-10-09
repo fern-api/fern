@@ -16943,6 +16943,7 @@
       "path": "/selective-sync/configurations",
       "examples": [
         {
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [
@@ -17397,6 +17398,7 @@
       "path": "/selective-sync/meta",
       "examples": [
         {
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [

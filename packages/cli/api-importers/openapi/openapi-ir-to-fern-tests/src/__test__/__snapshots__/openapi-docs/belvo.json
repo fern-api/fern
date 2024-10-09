@@ -29099,6 +29099,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Checking Account",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -29276,6 +29277,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Credit Card Account",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -29453,6 +29455,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Loan Account",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -29631,6 +29634,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Pension Account",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -29829,6 +29833,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Savings Account",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -30433,6 +30438,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Checking Account",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -30620,6 +30626,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Credit Card Account",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -30807,6 +30814,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Loan Account",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -30995,6 +31003,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Pension Account",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -31213,6 +31222,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Savings Account",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -31442,6 +31452,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Checking Account",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -31620,6 +31631,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Credit Card Account",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -31798,6 +31810,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Loan Account",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -31977,6 +31990,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Pension Account",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -32186,6 +32200,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Savings Account",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -32731,7 +32746,8 @@ service:
         - root.RetrieveAccountsRequestPreconditionError
         - root.RetrieveAccountsRequestInternalServerError
       examples:
-        - query-parameters:
+        - name: Checking Account
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -32876,7 +32892,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Credit Card Account
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -33021,7 +33038,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Loan Account
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -33167,7 +33185,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Pension Account
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -33331,7 +33350,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Savings Account
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -33527,7 +33547,8 @@ service:
         - root.PatchAccountsRequestPreconditionError
         - root.PatchAccountsRequestInternalServerError
       examples:
-        - query-parameters:
+        - name: Checking Account
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -33681,7 +33702,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Credit Card Account
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -33835,7 +33857,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Loan Account
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -33990,7 +34013,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Pension Account
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -34163,7 +34187,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Savings Account
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -34366,7 +34391,8 @@ service:
         - root.DetailAccountRequestUnauthorizedError
         - root.DetailAccountRequestNotFoundError
       examples:
-        - path-parameters:
+        - name: Checking Account
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -34509,7 +34535,8 @@ service:
                         console.log(error);
                       });
                 });
-        - path-parameters:
+        - name: Credit Card Account
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -34652,7 +34679,8 @@ service:
                         console.log(error);
                       });
                 });
-        - path-parameters:
+        - name: Loan Account
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -34796,7 +34824,8 @@ service:
                         console.log(error);
                       });
                 });
-        - path-parameters:
+        - name: Pension Account
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -34951,7 +34980,8 @@ service:
                         console.log(error);
                       });
                 });
-        - path-parameters:
+        - name: Savings Account
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -35598,6 +35628,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Balance Example (Checking Account)",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -35811,6 +35842,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Balance Example (Checking Account)",
                   "query-parameters": {
                     "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
                     "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
@@ -36128,6 +36160,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Balance Example (Checking Account)",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -36329,6 +36362,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Balance Example (Checking Account)",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -36644,7 +36678,8 @@ service:
       errors:
         - root.ListBalancesRequestUnauthorizedError
       examples:
-        - query-parameters:
+        - name: Balance Example (Checking Account)
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -36864,7 +36899,8 @@ service:
         - root.RetrieveBalancesRequestPreconditionError
         - root.RetrieveBalancesRequestInternalServerError
       examples:
-        - query-parameters:
+        - name: Balance Example (Checking Account)
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -37039,7 +37075,8 @@ service:
         - root.PatchBalancesRequestPreconditionError
         - root.PatchBalancesRequestInternalServerError
       examples:
-        - query-parameters:
+        - name: Balance Example (Checking Account)
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -37209,7 +37246,8 @@ service:
         - root.DetailBalanceRequestUnauthorizedError
         - root.DetailBalanceRequestNotFoundError
       examples:
-        - path-parameters:
+        - name: Balance Example (Checking Account)
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -37728,6 +37766,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "Organization (PIX Info)",
                   "request": {
                     "details": {
                       "account_type": "CHECKINGS",
@@ -37770,6 +37809,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "Organization (PIX Key)",
                   "request": {
                     "details": {
                       "account_type": "CHECKINGS",
@@ -37810,6 +37850,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "Organization (PSE)",
                   "request": {
                     "details": {
                       "account_type": "CHECKINGS",
@@ -37873,6 +37914,7 @@ docs: >-
               ],
               "examples": [
                 {
+                  "name": "Organization (PIX Info)",
                   "path-parameters": {
                     "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
                   },
@@ -37901,6 +37943,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "Organization (PIX Key)",
                   "path-parameters": {
                     "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
                   },
@@ -37927,6 +37970,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "Organization (PSE)",
                   "path-parameters": {
                     "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
                   },
@@ -37977,6 +38021,7 @@ docs: >-
               ],
               "examples": [
                 {
+                  "name": "Organization (PIX Info)",
                   "query-parameters": {
                     "created_at": "2022-09-15",
                     "created_at__gt": "2022-09-15",
@@ -38026,6 +38071,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "Organization (PIX Key)",
                   "query-parameters": {
                     "created_at": "2022-09-15",
                     "created_at__gt": "2022-09-15",
@@ -38073,6 +38119,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "Organization (PSE)",
                   "query-parameters": {
                     "created_at": "2022-09-15",
                     "created_at__gt": "2022-09-15",
@@ -38318,7 +38365,8 @@ service:
       errors:
         - root.ListBankAccountRequestUnauthorizedError
       examples:
-        - query-parameters:
+        - name: Organization (PIX Info)
+          query-parameters:
             page: 1
             id__in: >-
               24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264
@@ -38357,7 +38405,8 @@ service:
                       name: Music Production Brazil
                       identifier_type: CNPJ
                       identifier: 00.000.000/0001-91
-        - query-parameters:
+        - name: Organization (PIX Key)
+          query-parameters:
             page: 1
             id__in: >-
               24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264
@@ -38394,7 +38443,8 @@ service:
                       name: Music Production Brazil
                       identifier_type: CNPJ
                       identifier: 00.000.000/0001-91
-        - query-parameters:
+        - name: Organization (PSE)
+          query-parameters:
             page: 1
             id__in: >-
               24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264
@@ -38542,7 +38592,8 @@ service:
                   name: Music Production Brazil
                   identifier_type: CNPJ
                   identifier: 00.000.000/0001-91
-        - request:
+        - name: Organization (PIX Info)
+          request:
             institution: f512d996-583a-4a91-8b5b-eba2e103b068
             holder:
               type: BUSINESS
@@ -38573,7 +38624,8 @@ service:
                   name: Music Production Brazil
                   identifier_type: CNPJ
                   identifier: 00.000.000/0001-91
-        - request:
+        - name: Organization (PIX Key)
+          request:
             institution: f512d996-583a-4a91-8b5b-eba2e103b068
             holder:
               type: BUSINESS
@@ -38602,7 +38654,8 @@ service:
                   name: Music Production Brazil
                   identifier_type: CNPJ
                   identifier: 00.000.000/0001-91
-        - request:
+        - name: Organization (PSE)
+          request:
             institution: f512d996-583a-4a91-8b5b-eba2e103b068
             holder:
               type: BUSINESS
@@ -38648,7 +38701,8 @@ service:
         - root.DetailBankAccountRequestUnauthorizedError
         - root.DetailBankAccountRequestNotFoundError
       examples:
-        - path-parameters:
+        - name: Organization (PIX Info)
+          path-parameters:
             id: a3b92311-1888-449f-acaa-49ae28d68fcd
           response:
             body:
@@ -38668,7 +38722,8 @@ service:
                   name: Music Production Brazil
                   identifier_type: CNPJ
                   identifier: 00.000.000/0001-91
-        - path-parameters:
+        - name: Organization (PIX Key)
+          path-parameters:
             id: a3b92311-1888-449f-acaa-49ae28d68fcd
           response:
             body:
@@ -38686,7 +38741,8 @@ service:
                   name: Music Production Brazil
                   identifier_type: CNPJ
                   identifier: 00.000.000/0001-91
-        - path-parameters:
+        - name: Organization (PSE)
+          path-parameters:
             id: a3b92311-1888-449f-acaa-49ae28d68fcd
           response:
             body:
@@ -38771,6 +38827,7 @@ types:
               ],
               "examples": [
                 {
+                  "name": "Categorization",
                   "request": {
                     "language": "pt",
                     "transactions": [
@@ -38922,7 +38979,8 @@ service:
         - root.CategorizeTransactionsRequestForbiddenError
         - root.CategorizeTransactionsRequestInternalServerError
       examples:
-        - request:
+        - name: Categorization
+          request:
             language: pt
             transactions:
               - transaction_id: 3CWE4927CF15355
@@ -39096,6 +39154,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "OFPI Individual",
                   "request": {
                     "country": "BRA",
                     "customer_type": "INDIVIDUAL",
@@ -39121,6 +39180,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "OFPI Business",
                   "request": {
                     "country": "BRA",
                     "customer_type": "INDIVIDUAL",
@@ -39146,6 +39206,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "PSE Individual",
                   "request": {
                     "country": "BRA",
                     "customer_type": "INDIVIDUAL",
@@ -39193,6 +39254,7 @@ docs: >-
               ],
               "examples": [
                 {
+                  "name": "OFPI Individual",
                   "path-parameters": {
                     "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
                   },
@@ -39213,6 +39275,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "OFPI Business",
                   "path-parameters": {
                     "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
                   },
@@ -39233,6 +39296,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "PSE Individual",
                   "path-parameters": {
                     "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
                   },
@@ -39276,6 +39340,7 @@ docs: >-
               ],
               "examples": [
                 {
+                  "name": "OFPI Individual",
                   "query-parameters": {
                     "created_at": "2022-09-15",
                     "created_at__gt": "2022-09-15",
@@ -39325,6 +39390,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "OFPI Business",
                   "query-parameters": {
                     "created_at": "2022-09-15",
                     "created_at__gt": "2022-09-15",
@@ -39374,6 +39440,7 @@ docs: >-
                   },
                 },
                 {
+                  "name": "PSE Individual",
                   "query-parameters": {
                     "created_at": "2022-09-15",
                     "created_at__gt": "2022-09-15",
@@ -39608,7 +39675,8 @@ service:
       errors:
         - root.ListCustomersRequestUnauthorizedError
       examples:
-        - query-parameters:
+        - name: OFPI Individual
+          query-parameters:
             page: 1
             id__in: >-
               24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264
@@ -39648,7 +39716,8 @@ service:
                   identifier_type: CPF
                   address: Rua de Caetano Veloso 432, 70200 Brasilia
                   phone: 3210-9876
-        - query-parameters:
+        - name: OFPI Business
+          query-parameters:
             page: 1
             id__in: >-
               24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264
@@ -39688,7 +39757,8 @@ service:
                   identifier_type: CNPJ
                   address: Rua de Caetano Veloso 432, 70200 Brasilia
                   phone: 3210-9876
-        - query-parameters:
+        - name: PSE Individual
+          query-parameters:
             page: 1
             id__in: >-
               24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264
@@ -39810,7 +39880,8 @@ service:
               identifier_type: CPF
               address: Rua de Caetano Veloso 432, 70200 Brasilia
               phone: 3210-9876
-        - request:
+        - name: OFPI Individual
+          request:
             customer_type: INDIVIDUAL
             name: Caetano Veloso
             country: BRA
@@ -39830,7 +39901,8 @@ service:
               identifier_type: CPF
               address: Rua de Caetano Veloso 432, 70200 Brasilia
               phone: 3210-9876
-        - request:
+        - name: OFPI Business
+          request:
             customer_type: INDIVIDUAL
             name: Caetano Veloso
             country: BRA
@@ -39850,7 +39922,8 @@ service:
               identifier_type: CNPJ
               address: Rua de Caetano Veloso 432, 70200 Brasilia
               phone: 3210-9876
-        - request:
+        - name: PSE Individual
+          request:
             customer_type: INDIVIDUAL
             name: Caetano Veloso
             country: BRA
@@ -39887,7 +39960,8 @@ service:
         - root.DetailCustomerRequestUnauthorizedError
         - root.DetailCustomerRequestNotFoundError
       examples:
-        - path-parameters:
+        - name: OFPI Individual
+          path-parameters:
             id: a3b92311-1888-449f-acaa-49ae28d68fcd
           response:
             body:
@@ -39902,7 +39976,8 @@ service:
               identifier_type: CPF
               address: Rua de Caetano Veloso 432, 70200 Brasilia
               phone: 3210-9876
-        - path-parameters:
+        - name: OFPI Business
+          path-parameters:
             id: a3b92311-1888-449f-acaa-49ae28d68fcd
           response:
             body:
@@ -39917,7 +39992,8 @@ service:
               identifier_type: CNPJ
               address: Rua de Caetano Veloso 432, 70200 Brasilia
               phone: 3210-9876
-        - path-parameters:
+        - name: PSE Individual
+          path-parameters:
             id: a3b92311-1888-449f-acaa-49ae28d68fcd
           response:
             body:
@@ -40644,6 +40720,7 @@ docs: "# Employment Records\n\nOur employment records\_resource lets you get a c
               ],
               "examples": [
                 {
+                  "name": "Income Verfification",
                   "request": {
                     "language": "pt",
                     "transactions": [
@@ -40862,7 +40939,8 @@ service:
         - root.VerifyIncomeRequestForbiddenError
         - root.VerifyIncomeRequestInternalServerError
       examples:
-        - request:
+        - name: Income Verfification
+          request:
             language: pt
             transactions:
               - transaction_id: 3CWE4927CF15355
@@ -45318,6 +45396,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Ingreso",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -45504,6 +45583,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Pago",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -45690,6 +45770,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Nomina",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -45876,6 +45957,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Egreso",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -46062,6 +46144,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Traslado",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -46285,6 +46368,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Ingreso",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -46502,6 +46586,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Pago",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -46720,6 +46805,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Nomina",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -46938,6 +47024,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Egreso",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -47155,6 +47242,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Traslado",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -47775,6 +47863,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Ingreso",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -47979,6 +48068,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Pago",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -48184,6 +48274,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Nomina",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -48388,6 +48479,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Egreso",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -48592,6 +48684,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Invoice Traslado",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -49003,7 +49096,8 @@ service:
       errors:
         - root.ListInvoicesRequestUnauthorizedError
       examples:
-        - query-parameters:
+        - name: Invoice Ingreso
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -49191,7 +49285,8 @@ service:
                         console.log(error);
                       });
                   });
-        - query-parameters:
+        - name: Invoice Pago
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -49380,7 +49475,8 @@ service:
                         console.log(error);
                       });
                   });
-        - query-parameters:
+        - name: Invoice Nomina
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -49569,7 +49665,8 @@ service:
                         console.log(error);
                       });
                   });
-        - query-parameters:
+        - name: Invoice Egreso
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -49757,7 +49854,8 @@ service:
                         console.log(error);
                       });
                   });
-        - query-parameters:
+        - name: Invoice Traslado
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -50034,7 +50132,8 @@ service:
         - root.RetrieveInvoicesRequestRequestTimeoutError
         - root.RetrieveInvoicesRequestInternalServerError
       examples:
-        - query-parameters:
+        - name: Invoice Ingreso
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -50206,7 +50305,8 @@ service:
                         console.log(error);
                       });
                   });
-        - query-parameters:
+        - name: Invoice Pago
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -50379,7 +50479,8 @@ service:
                         console.log(error);
                       });
                   });
-        - query-parameters:
+        - name: Invoice Nomina
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -50551,7 +50652,8 @@ service:
                         console.log(error);
                       });
                   });
-        - query-parameters:
+        - name: Invoice Egreso
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -50723,7 +50825,8 @@ service:
                         console.log(error);
                       });
                   });
-        - query-parameters:
+        - name: Invoice Traslado
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -51134,7 +51237,8 @@ service:
         - root.DetailInvoiceRequestUnauthorizedError
         - root.DetailInvoiceRequestNotFoundError
       examples:
-        - path-parameters:
+        - name: Invoice Ingreso
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -51290,7 +51394,8 @@ service:
                         console.log(error);
                       });
                   });
-        - path-parameters:
+        - name: Invoice Pago
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -51446,7 +51551,8 @@ service:
                         console.log(error);
                       });
                   });
-        - path-parameters:
+        - name: Invoice Nomina
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -51602,7 +51708,8 @@ service:
                         console.log(error);
                       });
                   });
-        - path-parameters:
+        - name: Invoice Egreso
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -51758,7 +51865,8 @@ service:
                         console.log(error);
                       });
                   });
-        - path-parameters:
+        - name: Invoice Traslado
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -54938,6 +55046,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Banking",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -55079,6 +55188,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Banking",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -55305,6 +55415,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Banking",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -55456,6 +55567,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Banking",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -55613,7 +55725,8 @@ service:
       errors:
         - root.ListOwnersRequestUnauthorizedError
       examples:
-        - query-parameters:
+        - name: Banking
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -55754,7 +55867,8 @@ service:
         - root.RetrieveOwnersRequestPreconditionError
         - root.RetrieveOwnersRequestInternalServerError
       examples:
-        - query-parameters:
+        - name: Banking
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -55886,7 +56000,8 @@ service:
         - root.PatchOwnersRequestPreconditionError
         - root.PatchOwnersRequestInternalServerError
       examples:
-        - query-parameters:
+        - name: Banking
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -56024,7 +56139,8 @@ service:
         - root.DetailOwnerRequestUnauthorizedError
         - root.DetailOwnerRequestNotFoundError
       examples:
-        - path-parameters:
+        - name: Banking
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -68468,6 +68584,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Personal",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -68759,6 +68876,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Personal Monthly (PFAE)",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -68916,6 +69034,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Personal Monthly (PFAI)",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -69081,6 +69200,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Business",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -69621,6 +69741,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Business Monthly",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -69880,6 +70001,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Personal",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -70185,6 +70307,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Personal Monthly (PFAe)",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -70344,6 +70467,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Personal Monthly (PFAI)",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -70511,6 +70635,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Business",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -70783,6 +70908,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Business Monthly",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -71205,6 +71331,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Personal",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -71567,6 +71694,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Personal Monthly (PFAE)",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -71795,6 +71923,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Personal Monthly (PFAI)",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -72031,6 +72160,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Business",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -72642,6 +72772,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Tax Return Business Monthly",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -73061,7 +73192,8 @@ service:
       errors:
         - root.ListTaxReturnsRequestUnauthorizedError
       examples:
-        - query-parameters:
+        - name: Tax Return Personal
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -73280,7 +73412,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Tax Return Personal Monthly (PFAe)
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -73417,7 +73550,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Tax Return Personal Monthly (PFAI)
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -73562,7 +73696,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Tax Return Business
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -73799,7 +73934,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Tax Return Business Monthly
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -74043,7 +74179,8 @@ service:
         - root.RetrieveTaxReturnsRequestRequestTimeoutError
         - root.RetrieveTaxReturnsRequestInternalServerError
       examples:
-        - query-parameters:
+        - name: Tax Return Personal
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -74317,7 +74454,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Tax Return Personal Monthly (PFAE)
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -74517,7 +74655,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Tax Return Personal Monthly (PFAI)
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -74725,7 +74864,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Tax Return Business
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -75205,7 +75345,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Tax Return Business Monthly
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -75499,7 +75640,8 @@ service:
         - root.DetailTaxReturnRequestUnauthorizedError
         - root.DetailTaxReturnRequestNotFoundError
       examples:
-        - path-parameters:
+        - name: Tax Return Personal
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -75699,7 +75841,8 @@ service:
                         console.log(error);
                       });
                 });
-        - path-parameters:
+        - name: Tax Return Personal Monthly (PFAE)
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -75825,7 +75968,8 @@ service:
                         console.log(error);
                       });
                 });
-        - path-parameters:
+        - name: Tax Return Personal Monthly (PFAI)
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -75959,7 +76103,8 @@ service:
                         console.log(error);
                       });
                 });
-        - path-parameters:
+        - name: Tax Return Business
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -76365,7 +76510,8 @@ service:
                         console.log(error);
                       });
                 });
-        - path-parameters:
+        - name: Tax Return Business Monthly
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -76977,6 +77123,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Personal Tax Status",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -77134,6 +77281,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Business Tax Status",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -77327,6 +77475,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Personal Tax Status",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -77493,6 +77642,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Business Tax Status",
                   "query-parameters": {
                     "created_at__gt": "2022-05-05",
                     "created_at__gte": "2022-05-04",
@@ -77748,6 +77898,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Personal Tax Status",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -77915,6 +78066,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Business Tax Status",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -78180,7 +78332,8 @@ service:
       errors:
         - root.ListTaxStatusRequestUnauthorizedError
       examples:
-        - query-parameters:
+        - name: Personal Tax Status
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -78320,7 +78473,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Business Tax Status
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -78510,7 +78664,8 @@ service:
         - root.RetrieveTaxStatusRequestRequestTimeoutError
         - root.RetrieveTaxStatusRequestInternalServerError
       examples:
-        - query-parameters:
+        - name: Personal Tax Status
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -78651,7 +78806,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Business Tax Status
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -78824,7 +78980,8 @@ service:
         - root.DetailTaxStatusRequestUnauthorizedError
         - root.DetailTaxStatusRequestNotFoundError
       examples:
-        - path-parameters:
+        - name: Personal Tax Status
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -78955,7 +79112,8 @@ service:
                         console.log(error);
                       });
                 });
-        - path-parameters:
+        - name: Business Tax Status
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -79521,6 +79679,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Checking Account Transaction",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -79718,6 +79877,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Savings Account Transaction",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -79915,6 +80075,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Credit Card Transaction",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -80150,6 +80311,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Checking Account Transaction",
                   "query-parameters": {
                     "account": "d979df3a-5d0f-4cc9-9bd4-b75c28b45963",
                     "account__balance__available": "4000.00",
@@ -80351,6 +80513,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Savings Account Transaction",
                   "query-parameters": {
                     "account": "d979df3a-5d0f-4cc9-9bd4-b75c28b45963",
                     "account__balance__available": "4000.00",
@@ -80551,6 +80714,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Credit Card Transaction",
                   "query-parameters": {
                     "account": "d979df3a-5d0f-4cc9-9bd4-b75c28b45963",
                     "account__balance__available": "4000.00",
@@ -81046,6 +81210,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Checking Account Transaction",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -81232,6 +81397,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Savings Account Transaction",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -81418,6 +81584,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Credit Card Transaction",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -81647,6 +81814,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Checking Account Transaction",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -81838,6 +82006,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Savings Account Transaction",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -82029,6 +82198,7 @@ client.connect()
                       "name": "Belvo Node SDK",
                     },
                   ],
+                  "name": "Credit Card Transaction",
                   "query-parameters": {
                     "fields": "link,balance,account",
                     "omit": "link,balance",
@@ -82621,7 +82791,8 @@ service:
       errors:
         - root.ListTransactionsRequestUnauthorizedError
       examples:
-        - query-parameters:
+        - name: Checking Account Transaction
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -82800,7 +82971,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Savings Account Transaction
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -82978,7 +83150,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Credit Card Transaction
+          query-parameters:
             page: 1
             page_size: 100
             omit: link,balance
@@ -83215,7 +83388,8 @@ service:
         - root.RetrieveTransactionsRequestPreconditionError
         - root.RetrieveTransactionsRequestInternalServerError
       examples:
-        - query-parameters:
+        - name: Checking Account Transaction
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -83376,7 +83550,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Savings Account Transaction
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -83537,7 +83712,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Credit Card Transaction
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -83882,7 +84058,8 @@ service:
         - root.PatchTransactionsRequestPreconditionError
         - root.PatchTransactionsRequestInternalServerError
       examples:
-        - query-parameters:
+        - name: Checking Account Transaction
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -84038,7 +84215,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Savings Account Transaction
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -84194,7 +84372,8 @@ service:
                         console.log(error);
                       });
                 });
-        - query-parameters:
+        - name: Credit Card Transaction
+          query-parameters:
             omit: link,balance
             fields: link,balance,account
           request:
@@ -84384,7 +84563,8 @@ service:
         - root.DetailTransactionRequestUnauthorizedError
         - root.DetailTransactionRequestNotFoundError
       examples:
-        - path-parameters:
+        - name: Checking Account Transaction
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -84547,7 +84727,8 @@ service:
                         console.log(error);
                       });
                 });
-        - path-parameters:
+        - name: Savings Account Transaction
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance
@@ -84710,7 +84891,8 @@ service:
                         console.log(error);
                       });
                 });
-        - path-parameters:
+        - name: Credit Card Transaction
+          path-parameters:
             id: id
           query-parameters:
             omit: link,balance

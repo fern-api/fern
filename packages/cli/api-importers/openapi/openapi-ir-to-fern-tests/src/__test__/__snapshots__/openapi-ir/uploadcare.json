@@ -4138,6 +4138,7 @@
       "path": "/from_url/",
       "examples": [
         {
+          "name": "type-token",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -4223,6 +4224,7 @@
           "type": "full"
         },
         {
+          "name": "type-file-info",
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
@@ -5070,6 +5072,7 @@
       "path": "/from_url/status/",
       "examples": [
         {
+          "name": "status-waiting",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -5140,6 +5143,7 @@
           "type": "full"
         },
         {
+          "name": "status-progress",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -5224,6 +5228,7 @@
           "type": "full"
         },
         {
+          "name": "status-success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -5832,6 +5837,7 @@
           "type": "full"
         },
         {
+          "name": "status-error",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -5916,6 +5922,7 @@
           "type": "full"
         },
         {
+          "name": "status-unknown",
           "pathParameters": [],
           "queryParameters": [
             {

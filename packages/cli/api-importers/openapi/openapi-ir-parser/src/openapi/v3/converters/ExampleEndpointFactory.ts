@@ -129,9 +129,9 @@ export class ExampleEndpointFactory {
                     });
                     if (example != null) {
                         if (endpoint.response?.type === "json") {
-                            responseExamples.push([undefined, EndpointResponseExample.withoutStreaming(example)]);
+                            responseExamples.push([exampleId, EndpointResponseExample.withoutStreaming(example)]);
                         } else if (endpoint.response?.type === "streamingJson") {
-                            responseExamples.push([undefined, EndpointResponseExample.withStreaming([example])]);
+                            responseExamples.push([exampleId, EndpointResponseExample.withStreaming([example])]);
                         }
                     }
                 }
