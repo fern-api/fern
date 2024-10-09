@@ -4,6 +4,4 @@
 
 import * as FernConjure from "../../../index";
 
-export interface ConjureEnumDeclaration {
-    values: FernConjure.ConjureEnumVariant[];
-}
+export type ConjureEnumVariant = string | FernConjure.ConjureEnumWithDocs;

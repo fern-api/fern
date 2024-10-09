@@ -5,16 +5,17 @@
 import * as serializers from "../../../index";
 import * as FernConjure from "../../../../api/index";
 import * as core from "../../../../core";
+import { ConjureEnumVariant } from "./ConjureEnumVariant";
 
 export const ConjureEnumDeclaration: core.serialization.ObjectSchema<
     serializers.ConjureEnumDeclaration.Raw,
     FernConjure.ConjureEnumDeclaration
 > = core.serialization.objectWithoutOptionalProperties({
-    values: core.serialization.list(core.serialization.string()),
+    values: core.serialization.list(ConjureEnumVariant),
 });
 
 export declare namespace ConjureEnumDeclaration {
     interface Raw {
-        values: string[];
+        values: ConjureEnumVariant.Raw[];
     }
 }

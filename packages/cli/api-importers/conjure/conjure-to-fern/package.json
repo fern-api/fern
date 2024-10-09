@@ -32,6 +32,7 @@
     "@fern-api/importer-commons": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
