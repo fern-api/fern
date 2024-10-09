@@ -79,7 +79,7 @@ public partial class CustomAuthClient
     /// <example>
     /// <code>
     /// await client.CustomAuth.PostWithCustomAuthAsync(
-    ///     new Dictionary<object, object?>() { { "key", "value" } }
+    ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
     /// );
     /// </code>
     /// </example>

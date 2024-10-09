@@ -32,9 +32,9 @@ public partial class ObjectClient
     ///         Date = new DateOnly(2023, 1, 15),
     ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         Base64 = "SGVsbG8gd29ybGQh",
-    ///         List = new List<string>() { "string" },
-    ///         Set = new HashSet<string>() { "string" },
-    ///         Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///         List = new List&lt;string&gt;() { "string" },
+    ///         Set = new HashSet&lt;string&gt;() { "string" },
+    ///         Map = new Dictionary&lt;int, string&gt;() { { 1, "string" } },
     ///         Bigint = "123456789123456789",
     ///     }
     /// );
@@ -126,11 +126,11 @@ public partial class ObjectClient
     /// await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
     ///     new ObjectWithMapOfMap
     ///     {
-    ///         Map = new Dictionary<string, Dictionary<string, string>>()
+    ///         Map = new Dictionary&lt;string, Dictionary&lt;string, string&gt;&gt;()
     ///         {
     ///             {
     ///                 "string",
-    ///                 new Dictionary<string, string>() { { "string", "string" } }
+    ///                 new Dictionary&lt;string, string&gt;() { { "string", "string" } }
     ///             },
     ///         },
     ///     }
@@ -191,9 +191,9 @@ public partial class ObjectClient
     ///             Date = new DateOnly(2023, 1, 15),
     ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             Base64 = "SGVsbG8gd29ybGQh",
-    ///             List = new List<string>() { "string" },
-    ///             Set = new HashSet<string>() { "string" },
-    ///             Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///             List = new List&lt;string&gt;() { "string" },
+    ///             Set = new HashSet&lt;string&gt;() { "string" },
+    ///             Map = new Dictionary&lt;int, string&gt;() { { 1, "string" } },
     ///             Bigint = "123456789123456789",
     ///         },
     ///     }
@@ -255,9 +255,9 @@ public partial class ObjectClient
     ///             Date = new DateOnly(2023, 1, 15),
     ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             Base64 = "SGVsbG8gd29ybGQh",
-    ///             List = new List<string>() { "string" },
-    ///             Set = new HashSet<string>() { "string" },
-    ///             Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///             List = new List&lt;string&gt;() { "string" },
+    ///             Set = new HashSet&lt;string&gt;() { "string" },
+    ///             Map = new Dictionary&lt;int, string&gt;() { { 1, "string" } },
     ///             Bigint = "123456789123456789",
     ///         },
     ///     }
@@ -305,7 +305,7 @@ public partial class ObjectClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
-    ///     new List<NestedObjectWithRequiredField>()
+    ///     new List&lt;NestedObjectWithRequiredField&gt;()
     ///     {
     ///         new NestedObjectWithRequiredField
     ///         {
@@ -321,9 +321,9 @@ public partial class ObjectClient
     ///                 Date = new DateOnly(2023, 1, 15),
     ///                 Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 Base64 = "SGVsbG8gd29ybGQh",
-    ///                 List = new List<string>() { "string" },
-    ///                 Set = new HashSet<string>() { "string" },
-    ///                 Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///                 List = new List&lt;string&gt;() { "string" },
+    ///                 Set = new HashSet&lt;string&gt;() { "string" },
+    ///                 Map = new Dictionary&lt;int, string&gt;() { { 1, "string" } },
     ///                 Bigint = "123456789123456789",
     ///             },
     ///         },

@@ -29,18 +29,18 @@ public partial class UserClient
     ///         User = new User
     ///         {
     ///             Name = "string",
-    ///             Tags = new List<string>() { "string" },
+    ///             Tags = new List&lt;string&gt;() { "string" },
     ///         },
-    ///         UserList = new List<User>()
+    ///         UserList = new List&lt;User&gt;()
     ///         {
     ///             new User
     ///             {
     ///                 Name = "string",
-    ///                 Tags = new List<string>() { "string" },
+    ///                 Tags = new List&lt;string&gt;() { "string" },
     ///             },
     ///         },
     ///         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         KeyValue = new Dictionary<string, string>() { { "string", "string" } },
+    ///         KeyValue = new Dictionary&lt;string, string&gt;() { { "string", "string" } },
     ///         OptionalString = "string",
     ///         NestedUser = new NestedUser
     ///         {
@@ -48,20 +48,20 @@ public partial class UserClient
     ///             User = new User
     ///             {
     ///                 Name = "string",
-    ///                 Tags = new List<string>() { "string" },
+    ///                 Tags = new List&lt;string&gt;() { "string" },
     ///             },
     ///         },
     ///         OptionalUser = new User
     ///         {
     ///             Name = "string",
-    ///             Tags = new List<string>() { "string" },
+    ///             Tags = new List&lt;string&gt;() { "string" },
     ///         },
     ///         ExcludeUser =
     ///         [
     ///             new User
     ///             {
     ///                 Name = "string",
-    ///                 Tags = new List<string>() { "string" },
+    ///                 Tags = new List&lt;string&gt;() { "string" },
     ///             },
     ///         ],
     ///         Filter = ["string"],

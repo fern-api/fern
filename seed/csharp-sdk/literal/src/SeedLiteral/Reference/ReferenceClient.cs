@@ -27,7 +27,7 @@ public partial class ReferenceClient
     ///         Query = "What is the weather today",
     ///         ContainerObject = new ContainerObject
     ///         {
-    ///             NestedObjects = new List<NestedObjectWithLiterals>()
+    ///             NestedObjects = new List&lt;NestedObjectWithLiterals&gt;()
     ///             {
     ///                 new NestedObjectWithLiterals
     ///                 {

@@ -31,7 +31,7 @@ public partial class PlaylistClient
     ///         Body = new PlaylistCreateRequest
     ///         {
     ///             Name = "string",
-    ///             Problems = new List<string>() { "string" },
+    ///             Problems = new List&lt;string&gt;() { "string" },
     ///         },
     ///     }
     /// );
@@ -205,7 +205,7 @@ public partial class PlaylistClient
     ///     new UpdatePlaylistRequest
     ///     {
     ///         Name = "string",
-    ///         Problems = new List<string>() { "string" },
+    ///         Problems = new List&lt;string&gt;() { "string" },
     ///     }
     /// );
     /// </code>

@@ -188,12 +188,12 @@ public partial class AdminClient
     ///             Result = new TestCaseResult
     ///             {
     ///                 ExpectedResult = 1,
-    ///                 ActualResult = new Dictionary<object, object?>() { { "key", "value" } },
+    ///                 ActualResult = new Dictionary&lt;object, object?&gt;() { { "key", "value" } },
     ///                 Passed = true,
     ///             },
     ///             Stdout = "string",
     ///         },
-    ///         TraceResponses = new List<TraceResponse>()
+    ///         TraceResponses = new List&lt;TraceResponse&gt;()
     ///         {
     ///             new TraceResponse
     ///             {
@@ -208,9 +208,9 @@ public partial class AdminClient
     ///                     {
     ///                         MethodName = "string",
     ///                         LineNumber = 1,
-    ///                         Scopes = new List<Scope>()
+    ///                         Scopes = new List&lt;Scope&gt;()
     ///                         {
-    ///                             new Scope { Variables = new Dictionary<string, object>() { } },
+    ///                             new Scope { Variables = new Dictionary&lt;string, object&gt;() { } },
     ///                         },
     ///                     },
     ///                 },
@@ -257,7 +257,7 @@ public partial class AdminClient
     /// await client.Admin.StoreTracedTestCaseV2Async(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///     "string",
-    ///     new List<TraceResponseV2>()
+    ///     new List&lt;TraceResponseV2&gt;()
     ///     {
     ///         new TraceResponseV2
     ///         {
@@ -273,9 +273,9 @@ public partial class AdminClient
     ///                 {
     ///                     MethodName = "string",
     ///                     LineNumber = 1,
-    ///                     Scopes = new List<Scope>()
+    ///                     Scopes = new List&lt;Scope&gt;()
     ///                     {
-    ///                         new Scope { Variables = new Dictionary<string, object>() { } },
+    ///                         new Scope { Variables = new Dictionary&lt;string, object&gt;() { } },
     ///                     },
     ///                 },
     ///             },
@@ -339,7 +339,7 @@ public partial class AdminClient
     ///             },
     ///             Stdout = "string",
     ///         },
-    ///         TraceResponses = new List<TraceResponse>()
+    ///         TraceResponses = new List&lt;TraceResponse&gt;()
     ///         {
     ///             new TraceResponse
     ///             {
@@ -354,9 +354,9 @@ public partial class AdminClient
     ///                     {
     ///                         MethodName = "string",
     ///                         LineNumber = 1,
-    ///                         Scopes = new List<Scope>()
+    ///                         Scopes = new List&lt;Scope&gt;()
     ///                         {
-    ///                             new Scope { Variables = new Dictionary<string, object>() { } },
+    ///                             new Scope { Variables = new Dictionary&lt;string, object&gt;() { } },
     ///                         },
     ///                     },
     ///                 },
@@ -401,7 +401,7 @@ public partial class AdminClient
     /// <code>
     /// await client.Admin.StoreTracedWorkspaceV2Async(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new List<TraceResponseV2>()
+    ///     new List&lt;TraceResponseV2&gt;()
     ///     {
     ///         new TraceResponseV2
     ///         {
@@ -417,9 +417,9 @@ public partial class AdminClient
     ///                 {
     ///                     MethodName = "string",
     ///                     LineNumber = 1,
-    ///                     Scopes = new List<Scope>()
+    ///                     Scopes = new List&lt;Scope&gt;()
     ///                     {
-    ///                         new Scope { Variables = new Dictionary<string, object>() { } },
+    ///                         new Scope { Variables = new Dictionary&lt;string, object&gt;() { } },
     ///                     },
     ///                 },
     ///             },

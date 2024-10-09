@@ -162,9 +162,9 @@ public partial class HttpMethodsClient
     ///         Date = new DateOnly(2023, 1, 15),
     ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         Base64 = "SGVsbG8gd29ybGQh",
-    ///         List = new List<string>() { "string" },
-    ///         Set = new HashSet<string>() { "string" },
-    ///         Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///         List = new List&lt;string&gt;() { "string" },
+    ///         Set = new HashSet&lt;string&gt;() { "string" },
+    ///         Map = new Dictionary&lt;int, string&gt;() { { 1, "string" } },
     ///         Bigint = "123456789123456789",
     ///     }
     /// );

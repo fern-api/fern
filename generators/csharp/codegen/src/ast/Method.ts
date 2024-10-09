@@ -3,6 +3,7 @@ import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
+import { DocXmlWriter } from "./core/DocXmlWriter";
 import { Writer } from "./core/Writer";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
@@ -89,24 +90,16 @@ export class Method extends AstNode {
     }
 
     public write(writer: Writer): void {
+        const docXmlWriter = new DocXmlWriter(writer);
         if (this.summary != null) {
-            writer.writeLine("/// <summary>");
-            this.summary.split("\n").forEach((line) => {
-                writer.writeLine(`/// ${line}`);
-            });
-
-            writer.writeLine("/// </summary>");
+            docXmlWriter.writeNodeWithEscaping("summary", this.summary);
         }
         if (this.codeExample != null) {
-            writer.writeLine("/// <example>");
-            writer.writeLine("/// <code>");
-            this.codeExample.split("\n").forEach((line) => {
-                if (line !== "") {
-                    writer.writeLine(`/// ${line}`);
-                }
-            });
-            writer.writeLine("/// </code>");
-            writer.writeLine("/// </example>");
+            docXmlWriter.writeOpenNode("example");
+            docXmlWriter.writeOpenNode("code");
+            docXmlWriter.writeMultilineWithEscaping(this.codeExample);
+            docXmlWriter.writeCloseNode("code");
+            docXmlWriter.writeCloseNode("example");
         }
 
         if (this.annotations.length > 0) {
