@@ -112,7 +112,7 @@ export function generateTypeDeclarationExample({
             let i = 0;
             const discriminant = typeDeclaration.shape.discriminant;
             for (const variant of typeDeclaration.shape.types) {
-                return variant.shape._visit({
+                const variantExample = variant.shape._visit<ExampleGenerationResult<ExampleTypeShape>>({
                     noProperties: () => {
                         return {
                             type: "success",
@@ -199,6 +199,10 @@ export function generateTypeDeclarationExample({
                         throw new Error("Encountered unknown union type");
                     }
                 });
+                if (variantExample.type === "failure") {
+                    continue;
+                }
+                return variantExample;
             }
         }
     }

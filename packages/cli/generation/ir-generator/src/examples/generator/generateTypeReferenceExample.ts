@@ -29,6 +29,9 @@ export function generateTypeReferenceExample({
     maxDepth,
     currentDepth
 }: generateTypeReferenceExample.Args): ExampleGenerationResult<ExampleTypeReference> {
+    if (currentDepth > maxDepth) {
+        return { type: "failure" };
+    }
     switch (typeReference.type) {
         case "named": {
             const typeDeclaration = typeDeclarations[typeReference.typeId];
