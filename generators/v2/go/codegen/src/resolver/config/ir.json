@@ -1,0 +1,120 @@
+{
+    "endpoints": {
+      "endpoint_.user.create": {
+        "declaration": {
+          "fernFilepath": {
+            "packagePath": [
+              {
+                "pascalCase": {
+                  "unsafeName": "User"
+                }
+              }
+            ]
+          },
+          "name": {
+            "pascalCase": {
+              "unsafeName": "Create"
+            }
+          }
+        },
+        "request": {
+          "type": "inlined",
+          "declaration": {
+            "fernFilepath": {
+              "packagePath": []
+            },
+            "name": {
+              "pascalCase": {
+                "unsafeName": "CreateUserRequest"
+              }
+            }
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "body": {
+            "bodyType": "properties",
+            "value": [
+              {
+                "name": {
+                  "name": {
+                    "pascalCase": {
+                      "unsafeName": "Name"
+                    }
+                  },
+                  "wireValue": "name"
+                },
+                "type": {
+                  "type": "primitive",
+                  "value": "STRING"
+                }
+              },
+              {
+                "name": {
+                  "name": {
+                    "pascalCase": {
+                      "unsafeName": "Age"
+                    }
+                  },
+                  "wireValue": "age"
+                },
+                "type": {
+                  "type": "primitive",
+                  "value": "INTEGER"
+                }
+              },
+              {
+                "name": {
+                  "name": {
+                    "pascalCase": {
+                      "unsafeName": "Status"
+                    }
+                  },
+                  "wireValue": "status"
+                },
+                "type": {
+                  "type": "enum",
+                    "declaration": {
+                      "fernFilepath": {
+                        "packagePath": []
+                      },
+                      "name": {
+                        "pascalCase": {
+                          "unsafeName": "Status"
+                        }
+                      }
+                    },
+                    "values": [
+                      {
+                        "name": {
+                          "pascalCase": {
+                            "unsafeName": "Active"
+                          }
+                        },
+                        "wireValue": "ACTIVE"
+                      },
+                      {
+                        "name": {
+                          "pascalCase": {
+                            "unsafeName": "Inactive"
+                          }
+                        },
+                        "wireValue": "INACTIVE"
+                      },
+                      {
+                        "name": {
+                          "pascalCase": {
+                            "unsafeName": "Pending"
+                          }
+                        },
+                        "wireValue": "PENDING"
+                      }
+                    ]
+                  }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
