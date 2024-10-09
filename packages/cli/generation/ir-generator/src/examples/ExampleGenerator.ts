@@ -467,7 +467,7 @@ export class ExampleGenerator {
         }
 
         for (const extended of requestBody.extends) {
-            const value = this.flattenedProperties.get(extended.typeId); 
+            const value = this.flattenedProperties.get(extended.typeId);
             if (value == null) {
                 return undefined;
             }
@@ -990,7 +990,7 @@ export class ExampleGenerator {
         const exampleTypeReference = this.generateExampleTypeReference(typeReference, depth);
         if (exampleTypeReference == null) {
             return undefined;
-        }        
+        }
         return {
             // NOTE: you will have to manage this within the generator to ensure this list becomes a set,
             // as you can't represent a set in JSON.
