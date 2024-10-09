@@ -1,0 +1,142 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getExample": {
+              "auth": false,
+              "display-name": "Get Example",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "custom_fields": {
+                        "key": "value",
+                      },
+                      "message": "message",
+                      "status": "success",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/example",
+              "response": {
+                "docs": "Successful response",
+                "type": "ExampleResponse",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "ExampleResponse": {
+            "docs": undefined,
+            "properties": {
+              "custom_fields": "optional<map<string, string>>",
+              "message": "optional<string>",
+              "status": "optional<ExampleResponseStatus>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ExampleResponseStatus": {
+            "enum": [
+              "success",
+              "failure",
+            ],
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "GrantTypeEnum": {
+            "enum": [
+              {
+                "name": "UrnDevrevParamsOauthGrantTypeTokenIssue",
+                "value": "urn:devrev:params:oauth:grant-type:token-issue",
+              },
+              {
+                "name": "UrnIetfParamsOauthGrantTypeTokenExchange",
+                "value": "urn:ietf:params:oauth:grant-type:token-exchange",
+              },
+            ],
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getExample:
+      path: /example
+      method: GET
+      auth: false
+      display-name: Get Example
+      response:
+        docs: Successful response
+        type: ExampleResponse
+      examples:
+        - response:
+            body:
+              status: success
+              message: message
+              custom_fields:
+                key: value
+  source:
+    openapi: ../openapi.yml
+types:
+  ExampleResponseStatus:
+    enum:
+      - success
+      - failure
+    source:
+      openapi: ../openapi.yml
+  ExampleResponse:
+    properties:
+      status: optional<ExampleResponseStatus>
+      message: optional<string>
+      custom_fields: optional<map<string, string>>
+    source:
+      openapi: ../openapi.yml
+  GrantTypeEnum:
+    enum:
+      - value: urn:devrev:params:oauth:grant-type:token-issue
+        name: UrnDevrevParamsOauthGrantTypeTokenIssue
+      - value: urn:ietf:params:oauth:grant-type:token-exchange
+        name: UrnIetfParamsOauthGrantTypeTokenExchange
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Example API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Example API
+",
+  },
+}

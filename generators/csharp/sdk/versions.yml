@@ -1,8 +1,31 @@
-- version: 1.7.1
-  createdAt: '2024-10-01'
+- version: 1.8.2
+  createdAt: '2024-10-09'
   changelogEntry:
     - type: fix
       summary: Make sure summary and code examples in XML code comments are XML encoded.
+  irVersion: 53
+- version: 1.8.1
+  createdAt: '2024-10-08'
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixes a bug where the `OauthTokenProvider.cs` was incorrectly referencing
+        the endpoint method, causing code to fail to compile.
+  irVersion: 53
+- version: 1.8.0
+  createdAt: '2024-08-29'
+  changelogEntry:
+    - type: feat
+      summary: |
+        Adds support for Client Credentials OAuth with token refresh.
+
+        Now you can instantiate your SDK by passing in clientId and clientSecret,
+        and let fern handle retrieving and refreshing the token.
+
+        ```cs
+        var client = new ImdbClient("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET");
+        await client.doThing();
+        ```
   irVersion: 53
 - version: 1.7.0
   createdAt: '2024-08-29'

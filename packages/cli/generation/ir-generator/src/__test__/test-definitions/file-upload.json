@@ -480,6 +480,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -1157,7 +1158,8 @@
                                 "availability": null,
                                 "docs": null
                             }
-                        ]
+                        ],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -1282,6 +1284,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/just-file",
                         "parts": []
@@ -1346,7 +1349,8 @@
                                     "contentType": null
                                 }
                             }
-                        ]
+                        ],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -1471,6 +1475,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/just-file-with-query-params",
                         "parts": []
@@ -1744,7 +1749,8 @@
                                     "contentType": null
                                 }
                             }
-                        ]
+                        ],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -2121,6 +2127,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/with-content-type",
                         "parts": []
@@ -2320,7 +2327,8 @@
                                 "availability": null,
                                 "docs": null
                             }
-                        ]
+                        ],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {

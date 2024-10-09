@@ -358,6 +358,7 @@
                     "idempotent": true,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -527,7 +528,8 @@
                             }
                         ],
                         "extra-properties": false,
-                        "extendedProperties": []
+                        "extendedProperties": [],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -838,6 +840,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "DELETE",
+                    "basePath": null,
                     "path": {
                         "head": "/",
                         "parts": [

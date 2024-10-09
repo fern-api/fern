@@ -1,0 +1,142 @@
+{
+  "types": {
+    "type_:Failure": {
+      "name": "Failure",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "status",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "failure"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_user:User": {
+      "name": "User",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_user": {
+      "subpackageId": "subpackage_user",
+      "name": "user",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "createUser",
+          "originalEndpointId": "endpoint_user.createUser",
+          "name": "Create User",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": "/user"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "_type",
+                    "valueType": {
+                      "type": "literal",
+                      "value": {
+                        "type": "stringLiteral",
+                        "value": "CreateUserRequest"
+                      }
+                    }
+                  },
+                  {
+                    "key": "_version",
+                    "valueType": {
+                      "type": "literal",
+                      "value": {
+                        "type": "stringLiteral",
+                        "value": "v1"
+                      }
+                    }
+                  },
+                  {
+                    "key": "name",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_user:User"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": []
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
+        "type_user:User"
+      ],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "type_:Failure"
+    ],
+    "subpackages": [
+      "subpackage_user"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

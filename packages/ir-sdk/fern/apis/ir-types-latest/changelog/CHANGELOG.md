@@ -5,23 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v53.12.0] - 2024-08-13
+## [v53.13.0] - 2024-10-07
 
 - Feature: Add `contentType` to file upload body properties.
 
-## [v53.11.0] - 2024-08-13
+## [v53.12.0] - 2024-09-13
 
-- Fix: Add availability to inline websocket, webhook, and http body parameter properties.
+- Feature: Add `contentType` to file upload body properties.
 
-## [v53.10.0] - 2024-08-12
+## [v53.11.0] - 2024-09-13
+
+- Fix: Add `availability` to inline websocket, webhook, and http body parameter properties.
+
+## [v53.10.0] - 2024-09-12
 
 - Feature: Add `display-name` to discriminated union values for use with displaying docs.
 
-## [v53.9.0] - 2024-08-12 (TODO: Make required in next major)
+## [v53.9.0] - 2024-08-29 (TODO: Make required in next major)
 
 - Feature: Introduce a `PublishingConfig` to the IR instead of trying to go through Fiddle.
 
-## [v53.8.0] - 2024-08-12 (TODO: Make required in next major)
+## [v53.8.0] - 2024-08-23 (TODO: Make required in next major)
 
 - Fix: Include the raw datetime alongside the parsed datetime in `ExamplePrimitive`.
 

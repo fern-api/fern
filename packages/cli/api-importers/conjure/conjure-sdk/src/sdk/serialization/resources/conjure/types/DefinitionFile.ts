@@ -13,14 +13,12 @@ export const DefinitionFile: core.serialization.ObjectSchema<
     serializers.DefinitionFile.Raw,
     FernConjure.DefinitionFile
 > = core.serialization.objectWithoutOptionalProperties({
-    imports: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
     types: ConjureTypes.optional(),
     services: core.serialization.record(ConjureServiceName, ConjureService).optional(),
 });
 
 export declare namespace DefinitionFile {
     interface Raw {
-        imports?: Record<string, string> | null;
         types?: ConjureTypes.Raw | null;
         services?: Record<ConjureServiceName.Raw, ConjureService.Raw> | null;
     }

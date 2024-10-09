@@ -1,7 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
-import { serialization } from "@fern-api/openapi-ir-sdk";
-import { parse } from "@fern-api/openapi-parser";
+import { serialization } from "@fern-api/openapi-ir";
+import { parse } from "@fern-api/openapi-ir-parser";
 import { Project } from "@fern-api/project-loader";
 import { getAllOpenAPISpecs, LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { writeFile } from "fs/promises";

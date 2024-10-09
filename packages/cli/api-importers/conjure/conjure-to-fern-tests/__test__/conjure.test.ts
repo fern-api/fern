@@ -35,7 +35,9 @@ describe("ir", () => {
                     );
                 }
                 // eslint-disable-next-line jest/no-standalone-expect
-                expect(await workspace.workspace.getDefinition({ context })).toMatchSnapshot();
+                expect(
+                    JSON.stringify(await workspace.workspace.getDefinition({ context }), undefined, 2)
+                ).toMatchFileSnapshot(`__snapshots__/${fixture.name}.json`);
             },
             90_000
         );

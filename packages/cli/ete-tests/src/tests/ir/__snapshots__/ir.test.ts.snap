@@ -1478,6 +1478,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -1650,7 +1651,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                 "availability": null,
                                 "docs": null
                             }
-                        ]
+                        ],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -8091,6 +8093,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "idempotent": false,
                     "baseUrl": "ServerA",
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/a",
                         "parts": []
@@ -8165,6 +8168,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "idempotent": false,
                     "baseUrl": "ServerB",
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/b",
                         "parts": []
@@ -8303,6 +8307,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "idempotent": false,
                     "baseUrl": "ServerA",
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -9618,6 +9623,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -11755,6 +11761,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -12989,6 +12996,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/movie",
                         "parts": []
@@ -13476,6 +13484,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/movie",
                         "parts": []
@@ -14374,6 +14383,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -16541,6 +16551,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -26583,6 +26594,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -27476,6 +27488,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -30259,6 +30272,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -33644,6 +33658,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "DELETE",
+                    "basePath": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -34917,6 +34932,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/streaming",
                         "parts": []
@@ -35034,6 +35050,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/maybe-streaming",
                         "parts": []
@@ -35105,7 +35122,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
                             }
                         ],
                         "extra-properties": false,
-                        "extendedProperties": []
+                        "extendedProperties": [],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -35666,6 +35684,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/",
                         "parts": [

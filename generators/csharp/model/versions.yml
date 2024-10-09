@@ -1,5 +1,5 @@
 - version: 0.0.2
-  createdAt: '2024-10-01'
+  createdAt: '2024-10-09'
   changelogEntry:
     - type: fix
       summary: Make sure summary and code examples in XML code comments are XML encoded.

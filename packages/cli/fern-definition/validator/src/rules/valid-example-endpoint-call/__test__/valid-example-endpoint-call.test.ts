@@ -495,4 +495,19 @@ describe("valid-example-endpoint-call", () => {
 
         expect(violations).toEqual(expectedViolations);
     });
+
+    it("endpoint-level-base-path", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidExampleEndpointCallRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("endpoint-level-base-path")
+            )
+        });
+
+        const expectedViolations: ValidationViolation[] = [];
+
+        expect(violations).toEqual(expectedViolations);
+    });
 });

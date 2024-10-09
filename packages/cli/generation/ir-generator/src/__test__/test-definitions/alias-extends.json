@@ -808,6 +808,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/extended-inline-request-body",
                         "parts": []
@@ -949,7 +950,8 @@
                                 "availability": null,
                                 "docs": null
                             }
-                        ]
+                        ],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {

@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedOauthClientCredentials;
 
-var client = new SeedOauthClientCredentialsClient();
+var client = new SeedOauthClientCredentialsClient("CLIENT_ID", "CLIENT_SECRET");
 await client.Auth.GetTokenWithClientCredentialsAsync(
     new GetTokenRequest
     {
