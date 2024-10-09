@@ -265,10 +265,33 @@ async function parseApiConfigurationV2Schema({
     apiConfiguration: APIConfigurationV2Schema;
     rawConfiguration: GeneratorsConfigurationSchema;
 }): Promise<APIDefinition> {
+    const partialConfig = {
+        "auth-schemes":
+            apiConfiguration.auth != null
+                ? Object.fromEntries(
+                      Object.entries(rawConfiguration["auth-schemes"] ?? {}).filter(([name, _]) => {
+                          if (apiConfiguration.auth == null) {
+                              return false;
+                          }
+                          return visitRawApiAuth(apiConfiguration.auth, {
+                              any: (any) => {
+                                  return any.any.includes(name);
+                              },
+                              single: (single) => {
+                                  return single === name;
+                              }
+                          });
+                      })
+                  )
+                : undefined,
+        ...apiConfiguration
+    };
+
     if (isConjureSchema(apiConfiguration.specs)) {
         return {
             type: "conjure",
-            pathToConjureDefinition: apiConfiguration.specs.conjure
+            pathToConjureDefinition: apiConfiguration.specs.conjure,
+            ...partialConfig
         };
     }
 
@@ -302,28 +325,6 @@ async function parseApiConfigurationV2Schema({
             }
         }
     }
-
-    const partialConfig = {
-        "auth-schemes":
-            apiConfiguration.auth != null
-                ? Object.fromEntries(
-                      Object.entries(rawConfiguration["auth-schemes"] ?? {}).filter(([name, _]) => {
-                          if (apiConfiguration.auth == null) {
-                              return false;
-                          }
-                          return visitRawApiAuth(apiConfiguration.auth, {
-                              any: (any) => {
-                                  return any.any.includes(name);
-                              },
-                              single: (single) => {
-                                  return single === name;
-                              }
-                          });
-                      })
-                  )
-                : undefined,
-        ...apiConfiguration
-    };
 
     // No namespaces
     if (Object.keys(namespacedDefinitions).length === 0) {

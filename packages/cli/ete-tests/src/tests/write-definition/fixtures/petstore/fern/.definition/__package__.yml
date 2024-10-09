@@ -1,4 +1,10 @@
 types:
+  Error:
+    properties:
+      code: integer
+      message: string
+    source:
+      openapi: openapi/openapi.yml
   Pet:
     properties:
       id: long
@@ -7,9 +13,3 @@ types:
     source:
       openapi: openapi/openapi.yml
   Pets: list<Pet>
-  Error:
-    properties:
-      code: integer
-      message: string
-    source:
-      openapi: openapi/openapi.yml

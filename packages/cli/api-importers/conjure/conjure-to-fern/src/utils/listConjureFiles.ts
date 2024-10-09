@@ -31,7 +31,18 @@ async function createConjureFile({
     relativeFilepath: RelativeFilePath;
     absoluteFilepath: AbsoluteFilePath;
 }): Promise<ConjureFile> {
-    const rawContents = (await readFile(absoluteFilepath)).toString();
+    const rawContents = (await readFile(absoluteFilepath))
+        .toString()
+        .replaceAll(": rid", ": string")
+        .replaceAll("<rid>", "<string>")
+        .replaceAll("rid>", "string>")
+        .replaceAll(": safelong", ": long")
+        .replaceAll("<safelong>", "<long>")
+        .replaceAll("safelong>", "long>")
+        .replaceAll(": binary", ": file")
+        .replaceAll(": any", ": unknown")
+        .replaceAll("<any>", "<unknown>")
+        .replaceAll("any>", "unknown>");
     return {
         relativeFilepath,
         absoluteFilepath,
