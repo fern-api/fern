@@ -30,7 +30,7 @@ export function generateTypeReferenceExample({
     currentDepth
 }: generateTypeReferenceExample.Args): ExampleGenerationResult<ExampleTypeReference> {
     if (currentDepth > maxDepth) {
-        return { type: "failure" };
+        return { type: "failure", message: "Exceeded max depth" };
     }
     switch (typeReference.type) {
         case "named": {

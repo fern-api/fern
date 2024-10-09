@@ -141,11 +141,11 @@ export function generateSuccessEndpointExample({
     if (endpoint.requestBody != null) {
         switch (endpoint.requestBody.type) {
             case "bytes":
-                return { type: "failure" };
+                return { type: "failure", message: "Bytes request unsupported" };
             case "fileUpload":
-                return { type: "failure" };
+                return { type: "failure", message: "File upload unsupported" };
             case "inlinedRequestBody":
-                return { type: "failure" };
+                return { type: "failure", message: "Inlined Request unsupported" };
             case "reference": {
                 const generatedExample = generateTypeReferenceExample({
                     currentDepth: 0,
@@ -168,7 +168,7 @@ export function generateSuccessEndpointExample({
     if (endpoint.response?.body != null) {
         switch (endpoint.response.body.type) {
             case "fileDownload":
-                return { type: "failure" };
+                return { type: "failure", message: "File download unsupported" };
             case "json": {
                 const generatedExample = generateTypeReferenceExample({
                     currentDepth: 0,
@@ -184,11 +184,11 @@ export function generateSuccessEndpointExample({
                 break;
             }
             case "streamParameter":
-                return { type: "failure" };
+                return { type: "failure", message: "Stream parameter unsupported" };
             case "streaming":
-                return { type: "failure" };
+                return { type: "failure", message: "Streaming unsupported" };
             case "text":
-                return { type: "failure" };
+                return { type: "failure", message: "Text unsupported" };
             default:
                 assertNever(endpoint.response.body);
         }

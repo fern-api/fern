@@ -54,7 +54,7 @@ export function generateTypeDeclarationExample({
         case "enum": {
             const enumValue = typeDeclaration.shape.values[0];
             if (enumValue == null) {
-                return { type: "failure" };
+                return { type: "failure", message: "No enum values present" };
             }
             return {
                 type: "success",
@@ -147,7 +147,7 @@ export function generateTypeDeclarationExample({
                             typeDeclarations
                         });
                         if (objectExample.type === "failure") {
-                            return { type: "failure" };
+                            return objectExample;
                         }
                         const { example, jsonExample } = objectExample;
                         return {
@@ -177,7 +177,7 @@ export function generateTypeDeclarationExample({
                             typeDeclarations
                         });
                         if (singlePropertyExample.type === "failure") {
-                            return { type: "failure" };
+                            return singlePropertyExample;
                         }
                         const { example, jsonExample } = singlePropertyExample;
                         return {
@@ -206,7 +206,7 @@ export function generateTypeDeclarationExample({
             }
         }
     }
-    return { type: "failure" };
+    return { type: "failure", message: `Failed to generate example for type reference` };
 }
 
 function generateObjectDeclarationExample({
@@ -238,10 +238,15 @@ function generateObjectDeclarationExample({
             maxDepth
         });
         if (
-            propertyExample.type === "failure" ||
+            propertyExample.type === "failure" &&
             !(property.valueType.type === "container" && property.valueType.container.type === "optional")
         ) {
-            return { type: "failure" };
+            return {
+                type: "failure",
+                message: `Failed to generate required property ${property.name.wireValue} b/c ${propertyExample.message}`
+            };
+        } else if (propertyExample.type === "failure") {
+            continue;
         }
         const { example, jsonExample: propertyJsonExample } = propertyExample;
         properties.push({
