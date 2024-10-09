@@ -6,7 +6,7 @@
 #         The C# SDK now uses forward compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 33
-- version: 0.1.0
+- version: 0.1.0-rc0
   createdAt: '2024-10-02'
   changelogEntry:
     - type: feat
