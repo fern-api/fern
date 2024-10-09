@@ -127,7 +127,7 @@ class ReferencedAPICollector {
         } catch (e) {
             // Print Error
             const err = e as Error;
-            this.context.logger.error(`Failed to read referenced API: ${err?.message}`);
+            this.context.logger.error(`Failed to read referenced API: ${err?.message} ${err?.stack}`);
             if (err.stack != null) {
                 this.context.logger.error(err?.stack);
             }

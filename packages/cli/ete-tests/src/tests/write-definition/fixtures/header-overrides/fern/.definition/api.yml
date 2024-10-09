@@ -1,9 +1,9 @@
-name: api
-error-discrimination:
-  strategy: status-code
+default-environment: Default
 display-name: Swagger Petstore
 environments:
   Default: http://petstore.swagger.io/v1
-default-environment: Default
+error-discrimination:
+  strategy: status-code
 headers:
   X-Dummy-Header: optional<string>
+name: api
