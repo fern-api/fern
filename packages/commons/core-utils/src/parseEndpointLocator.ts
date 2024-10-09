@@ -17,7 +17,7 @@ export declare namespace ParseEndpointLocator {
 /**
  * Parses an endpoint locator like `POST /users` or `GET /users/{userId}`
  * @param input a string containing the Http method and path (e.g. `GET /users/{userId}`)
- * @returns 
+ * @returns
  */
 export function parseEndpointLocator(input: string): ParseEndpointLocator.Result {
     const [method, path] = input.split(" ");
@@ -40,7 +40,7 @@ export function parseEndpointLocator(input: string): ParseEndpointLocator.Result
     const paramRegex = /{([^}]+)}/g;
     let match;
 
-    while ((match = paramRegex.exec(path)) !== null) {
+    while ((match = paramRegex.exec(path)) != null) {
         const maybePathParm = match[1];
         if (maybePathParm != null) {
             pathParameters.add(maybePathParm);

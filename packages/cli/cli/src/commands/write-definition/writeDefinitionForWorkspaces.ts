@@ -87,7 +87,7 @@ async function writeFernDefinition({
     absolutePathToOutputDirectory: AbsoluteFilePath;
 }): Promise<void> {
     const sortKeys = (a: string, b: string): number => {
-        const customOrder: { [key: string]: number } = {
+        const customOrder: Record<string, number> = {
             imports: 0,
             types: 1,
             services: 2

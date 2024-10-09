@@ -123,9 +123,10 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                                 );
                             }
                             pathParameters[pathParameter] =
-                                typeof pathParameterType == "string"
+                                typeof pathParameterType === "string"
                                     ? pathParameterType
-                                    : { type: pathParameterType.type as any };
+                                    : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                      { type: pathParameterType.type as any };
                         }
                     }
 
