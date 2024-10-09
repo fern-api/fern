@@ -236,6 +236,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/apiKey",
                         "parts": []
@@ -338,6 +339,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/apiKeyInHeader",
                         "parts": []

@@ -286,6 +286,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/generate-stream",
                         "parts": []
@@ -397,7 +398,8 @@
                             }
                         ],
                         "extra-properties": false,
-                        "extendedProperties": []
+                        "extendedProperties": [],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -1281,6 +1283,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/generate",
                         "parts": []
@@ -1392,7 +1395,8 @@
                             }
                         ],
                         "extra-properties": false,
-                        "extendedProperties": []
+                        "extendedProperties": [],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {

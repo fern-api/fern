@@ -7,17 +7,20 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { Name } from "../../commons/types/Name";
 import { FileUploadRequestProperty } from "./FileUploadRequestProperty";
+import { WithDocs } from "../../commons/types/WithDocs";
 
 export const FileUploadRequest: core.serialization.ObjectSchema<
     serializers.FileUploadRequest.Raw,
     FernIr.FileUploadRequest
-> = core.serialization.objectWithoutOptionalProperties({
-    name: Name,
-    properties: core.serialization.list(FileUploadRequestProperty),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        name: Name,
+        properties: core.serialization.list(FileUploadRequestProperty),
+    })
+    .extend(WithDocs);
 
 export declare namespace FileUploadRequest {
-    interface Raw {
+    interface Raw extends WithDocs.Raw {
         name: Name.Raw;
         properties: FileUploadRequestProperty.Raw[];
     }

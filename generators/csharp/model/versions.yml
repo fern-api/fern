@@ -1,5 +1,5 @@
 # - version: 1.0.0
-#   createdAt: '2024-10-02'
+#   createdAt: '2024-10-09'
 #   changelogEntry:
 #     - type: break
 #       summary: >-
@@ -7,7 +7,7 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 33
 - version: 0.1.0-rc0
-  createdAt: '2024-10-02'
+  createdAt: '2024-10-09'
   changelogEntry:
     - type: feat
       summary: >-

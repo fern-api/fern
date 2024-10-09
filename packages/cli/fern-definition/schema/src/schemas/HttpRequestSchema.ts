@@ -2,9 +2,9 @@ import { z } from "zod";
 import { HttpHeaderSchema } from "./HttpHeaderSchema";
 import { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
 import { HttpRequestBodySchema } from "./HttpRequestBodySchema";
-import { WithNameSchema } from "./WithNameSchema";
+import { WithNameAndDocsSchema } from "./WithNameAndDocsSchema";
 
-export const HttpRequestSchema = WithNameSchema.extend({
+export const HttpRequestSchema = WithNameAndDocsSchema.extend({
     ["content-type"]: z.optional(z.string()),
     ["query-parameters"]: z.optional(z.record(HttpQueryParameterSchema)),
     headers: z.optional(z.record(HttpHeaderSchema)),

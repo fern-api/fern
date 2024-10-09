@@ -3358,6 +3358,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -6170,6 +6171,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -6308,7 +6310,8 @@
                             }
                         ],
                         "extra-properties": false,
-                        "extendedProperties": []
+                        "extendedProperties": [],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -8832,6 +8835,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -11567,6 +11571,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -11705,7 +11710,8 @@
                             }
                         ],
                         "extra-properties": false,
-                        "extendedProperties": []
+                        "extendedProperties": [],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -14150,6 +14156,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -16829,6 +16836,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -19549,6 +19557,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -20989,6 +20998,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -22523,6 +22533,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -23290,6 +23301,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []

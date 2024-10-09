@@ -67,6 +67,7 @@ The value you enter for this field is appended to every page's title across your
 
 For example, with the above setting in `docs.yml`, the `Overview` page's title becomes `Overview - Fern | Documentation`.
 
+
 ## Subtitle
 
 **Name**: `subtitle`<br />
@@ -182,6 +183,8 @@ Fern also supports adding SEO-specific metadata in the frontmatter.
 
 | Property | Description | Type |
 | -------- | ----------- | ---- | 
+| `headline` | When set, the `<title />` tag in the document head will use this value rather than the `title` property. This property changes the title that search engines see when crawling this page, and can be used to address Duplicate Title issues in your SEO report. | string |
+| `canonical-url` | Overrides the canonical url for this page. Must be a full URL including the protocol (i.e. `https://buildwithfern.com/learn/docs/content/frontmatter`) | string |
 | `og:site_name` | The name of your website as it should appear when your content is shared. | string |
 | `og:title` | The title of your page as it should appear when your content is shared. | string |
 | `og:description` | The description of your page as it should appear when your content is shared. | string |

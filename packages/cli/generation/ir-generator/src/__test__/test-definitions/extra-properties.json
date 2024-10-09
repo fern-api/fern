@@ -326,6 +326,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/user",
                         "parts": []
@@ -473,7 +474,8 @@
                             }
                         ],
                         "extra-properties": true,
-                        "extendedProperties": []
+                        "extendedProperties": [],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {

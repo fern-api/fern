@@ -31,4 +31,20 @@ public partial class ClientOptions
     /// The http headers sent with the request.
     /// </summary>
     internal Headers Headers { get; init; } = new();
+
+    /// <summary>
+    /// Clones this and returns a new instance
+    /// </summary>
+    internal ClientOptions Clone()
+    {
+        return new ClientOptions
+        {
+            Environment = Environment,
+            HttpClient = HttpClient,
+            MaxRetries = MaxRetries,
+            Timeout = Timeout,
+            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+        };
+        ;
+    }
 }

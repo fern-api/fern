@@ -1,0 +1,162 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getExample": {
+              "auth": false,
+              "display-name": "Get Example",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "message": "message",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/example",
+              "response": {
+                "docs": "Successful response",
+                "type": "GetExampleResponse",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "GetExampleResponse": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "NotFound",
+              "Schema1",
+              "Schema2",
+              "GetExampleResponseMessage",
+            ],
+          },
+          "GetExampleResponseMessage": {
+            "docs": undefined,
+            "properties": {
+              "message": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "NotFound": {
+            "docs": undefined,
+            "properties": {
+              "message": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Schema1": {
+            "docs": undefined,
+            "properties": {
+              "id": "optional<integer>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Schema2": {
+            "docs": undefined,
+            "properties": {
+              "age": "optional<integer>",
+              "email": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  NotFound:
+    properties:
+      message: optional<string>
+    source:
+      openapi: ../openapi.yml
+  GetExampleResponseMessage:
+    properties:
+      message: optional<string>
+    source:
+      openapi: ../openapi.yml
+  GetExampleResponse:
+    discriminated: false
+    union:
+      - NotFound
+      - Schema1
+      - Schema2
+      - GetExampleResponseMessage
+    source:
+      openapi: ../openapi.yml
+  Schema1:
+    properties:
+      id: optional<integer>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+  Schema2:
+    properties:
+      email: optional<string>
+      age: optional<integer>
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getExample:
+      path: /example
+      method: GET
+      auth: false
+      display-name: Get Example
+      response:
+        docs: Successful response
+        type: GetExampleResponse
+      examples:
+        - response:
+            body:
+              message: message
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Sample API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Sample API
+",
+  },
+}

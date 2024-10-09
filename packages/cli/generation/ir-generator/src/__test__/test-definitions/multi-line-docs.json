@@ -543,6 +543,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/users/",
                         "parts": [
@@ -733,6 +734,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/users",
                         "parts": []
@@ -851,7 +853,8 @@
                             }
                         ],
                         "extra-properties": false,
-                        "extendedProperties": []
+                        "extendedProperties": [],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {

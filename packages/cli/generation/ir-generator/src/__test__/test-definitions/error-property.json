@@ -404,6 +404,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/property-based-error",
                         "parts": []

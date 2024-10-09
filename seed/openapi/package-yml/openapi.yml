@@ -14,6 +14,10 @@ paths:
           required: true
           schema:
             type: string
+          example: id-ksfd9c1
+          examples:
+            Example1:
+              value: id-ksfd9c1
       responses:
         '200':
           description: ''
@@ -46,6 +50,10 @@ paths:
           required: true
           schema:
             type: string
+          example: id-a2ijs82
+          examples:
+            Example1:
+              value: id-a2ijs82
         - name: nestedId
           in: path
           required: true

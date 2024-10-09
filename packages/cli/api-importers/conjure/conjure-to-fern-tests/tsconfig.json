@@ -5,14 +5,7 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     { "path": "../../../../commons/fs-utils" },
-    { "path": "../../../configuration" },
-    { "path": "../../../logger" },
-    { "path": "../../../openapi-parser" },
     { "path": "../../../task-context" },
-    { "path": "../../../workspace-commons" },
     { "path": "../../../workspace-loader" },
-    { "path": "../../../openapi-ir-to-fern" },
-    { "path": "../../../fern-definition/schema" },
-    { "path": "../../../fern-definition/validator" }
   ]
 }

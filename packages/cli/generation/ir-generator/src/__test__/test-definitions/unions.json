@@ -3814,6 +3814,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -4409,6 +4410,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "PATCH",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []

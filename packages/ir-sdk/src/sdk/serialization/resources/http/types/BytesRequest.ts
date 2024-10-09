@@ -5,15 +5,18 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { WithDocs } from "../../commons/types/WithDocs";
 
 export const BytesRequest: core.serialization.ObjectSchema<serializers.BytesRequest.Raw, FernIr.BytesRequest> =
-    core.serialization.objectWithoutOptionalProperties({
-        isOptional: core.serialization.boolean(),
-        contentType: core.serialization.string().optional(),
-    });
+    core.serialization
+        .objectWithoutOptionalProperties({
+            isOptional: core.serialization.boolean(),
+            contentType: core.serialization.string().optional(),
+        })
+        .extend(WithDocs);
 
 export declare namespace BytesRequest {
-    interface Raw {
+    interface Raw extends WithDocs.Raw {
         isOptional: boolean;
         contentType?: string | null;
     }

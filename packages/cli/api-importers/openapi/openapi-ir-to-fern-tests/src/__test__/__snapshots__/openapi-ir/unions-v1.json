@@ -1,0 +1,60 @@
+{
+  "title": "Test setting to disable usage of title param",
+  "servers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channel": [],
+  "groupedSchemas": {
+    "rootSchemas": {
+      "SchemaWithALongNameIsRightHereAndNotSomewhereElse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
+            "key": "id",
+            "schema": {
+              "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
+              "nameOverride": "EnticingTitle",
+              "title": "EnticingTitle",
+              "value": {
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElseId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElse",
+        "nameOverride": "EnticingTitle",
+        "title": "EnticingTitle",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

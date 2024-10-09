@@ -1,0 +1,137 @@
+{
+  "types": {},
+  "subpackages": {
+    "subpackage_realtime": {
+      "subpackageId": "subpackage_realtime",
+      "name": "realtime",
+      "endpoints": [],
+      "webhooks": [],
+      "websockets": [
+        {
+          "auth": true,
+          "environments": [],
+          "id": "realtime",
+          "name": "Realtime",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/realtime/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "headers": [],
+          "queryParameters": [
+            {
+              "key": "model",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_realtime:Model"
+                }
+              }
+            },
+            {
+              "key": "temperature",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "type": "send",
+              "displayName": "Send",
+              "origin": "client",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "type": "receive",
+              "displayName": "Receive",
+              "origin": "server",
+              "body": {
+                "type": "object",
+                "extends": [],
+                "properties": []
+              }
+            }
+          ],
+          "examples": [
+            {
+              "name": "Default example",
+              "path": "/realtime/doc_123",
+              "pathParameters": {
+                "id": "doc_123"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "messages": [
+                {
+                  "type": "send",
+                  "body": "uvxcdv12344412b"
+                },
+                {
+                  "type": "receive",
+                  "body": {
+                    "text": "The weather for today..."
+                  }
+                },
+                {
+                  "type": "send",
+                  "body": "uvxcdv12344412b"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": [
+      "subpackage_realtime"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

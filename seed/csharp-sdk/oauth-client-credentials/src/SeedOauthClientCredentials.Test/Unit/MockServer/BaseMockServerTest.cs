@@ -26,7 +26,7 @@ public class BaseMockServerTest
         );
 
         // Initialize the Client
-        Client = new SeedOauthClientCredentialsClient();
+        Client = new SeedOauthClientCredentialsClient("CLIENT_ID", "CLIENT_SECRET");
 
         RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
     }

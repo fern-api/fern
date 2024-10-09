@@ -9,7 +9,7 @@
     { "path": "../../core" },
     { "path": "../configuration" },
     { "path": "../logger" },
-    { "path": "../openapi-parser" },
+    { "path": "../api-importers/openapi/openapi-ir-parser" },
     { "path": "../semver-utils" },
     { "path": "../task-context" },
     { "path": "../workspace-commons" },

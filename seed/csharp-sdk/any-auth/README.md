@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedAnyAuth;
 
-var client = new SeedAnyAuthClient();
+var client = new SeedAnyAuthClient("TOKEN");
 await client.Auth.GetTokenAsync(
     new GetTokenRequest
     {

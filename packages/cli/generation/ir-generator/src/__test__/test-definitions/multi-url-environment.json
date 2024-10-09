@@ -145,6 +145,7 @@
                     "idempotent": false,
                     "baseUrl": "ec2",
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/boot",
                         "parts": []
@@ -220,7 +221,8 @@
                             }
                         ],
                         "extra-properties": false,
-                        "extendedProperties": []
+                        "extendedProperties": [],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -453,6 +455,7 @@
                     "idempotent": false,
                     "baseUrl": "s3",
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/presigned-url",
                         "parts": []
@@ -528,7 +531,8 @@
                             }
                         ],
                         "extra-properties": false,
-                        "extendedProperties": []
+                        "extendedProperties": [],
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {

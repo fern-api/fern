@@ -59,7 +59,7 @@ export declare namespace Field {
 export class Field extends AstNode {
     public readonly name: string;
     public readonly access: Access;
-    private type: Type;
+    public readonly type: Type;
     private const_: boolean;
     private new_: boolean;
     private get: Access | boolean;

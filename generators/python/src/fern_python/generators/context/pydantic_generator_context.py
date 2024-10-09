@@ -5,6 +5,7 @@ from typing import Callable, Dict, List, Optional, Set
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
+from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from ordered_set import OrderedSet
 
 from fern_python.codegen import AST, Filepath
@@ -28,6 +29,7 @@ class PydanticGeneratorContext(ABC):
         skip_formatting: bool,
         union_naming_version: UnionNamingVersions,
         use_pydantic_field_aliases: bool,
+        pydantic_compatibility: PydanticVersionCompatibility
     ):
         self.ir = ir
         self.generator_config = generator_config
@@ -35,6 +37,7 @@ class PydanticGeneratorContext(ABC):
             allow_skipping_validation=allow_skipping_validation,
             use_typeddict_requests=use_typeddict_requests,
             use_pydantic_field_aliases=use_pydantic_field_aliases,
+            pydantic_compatibility=pydantic_compatibility
         )
         self.use_typeddict_requests = use_typeddict_requests
         self.type_declaration_referencer = type_declaration_referencer
