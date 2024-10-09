@@ -351,9 +351,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const generatedEndpoint = this.generatedEndpointImplementations.find((generatedEndpoint) => {
             return generatedEndpoint.endpoint.id === endpointId;
         });
-        if (generatedEndpoint == null) {
-            return undefined;
-        }
         return generatedEndpoint;
     }
 

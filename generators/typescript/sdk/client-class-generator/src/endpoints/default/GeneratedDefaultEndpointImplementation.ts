@@ -161,7 +161,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         if (exampleParameters == null) {
             return undefined;
         }
-        const invocation = ts.factory.createAwaitExpression(
+        return ts.factory.createAwaitExpression(
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
                     this.generatedSdkClientClass.accessFromRootClient({
@@ -173,8 +173,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 exampleParameters
             )
         );
-
-        return invocation;
     }
 
     public maybeLeverageInvocation({
@@ -183,10 +181,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }: {
         invocation: ts.Expression;
         context: SdkContext;
-    }): ts.Node[] {
+    }): ts.Node[] | undefined {
         const paginationInfo = this.response.getPaginationInfo(context);
         if (paginationInfo == null) {
-            return [invocation];
+            return undefined;
         }
 
         const responseVariableName = "response";
