@@ -21,10 +21,6 @@ service:
 
 
 types:
-  TypeWithOptionalUnion:
-    properties:
-      myUnion: optional<MyUnion>
-
   MyUnion:
     docs: |
       Several different types are accepted.
