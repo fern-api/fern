@@ -39,7 +39,7 @@ class ReadmeSnippetBuilder:
         generated_root_client: GeneratedRootClient,
         api_error_reference: AST.ClassReference,
         source_file_factory: SourceFileFactory,
-        pagination_enabled: Union[bool, None] = False,
+        pagination_enabled: Optional[bool] = False,
     ):
         self._ir = ir
         self._package_name = package_name
