@@ -51,6 +51,7 @@
           "generatedName": "UserGetResponse",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -75,16 +76,19 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -141,6 +145,7 @@
             "generatedName": "UserGetAllResponseItem",
             "groupName": [],
             "additionalProperties": false,
+            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -169,21 +174,24 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

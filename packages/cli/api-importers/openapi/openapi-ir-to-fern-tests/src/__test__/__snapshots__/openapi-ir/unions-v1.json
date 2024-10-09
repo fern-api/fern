@@ -42,6 +42,7 @@
         "title": "EnticingTitle",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"

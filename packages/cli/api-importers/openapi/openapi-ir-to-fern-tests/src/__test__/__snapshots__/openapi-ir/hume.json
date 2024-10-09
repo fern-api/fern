@@ -210,119 +210,122 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "user_id": {
-                    "value": {
-                      "value": "user_id",
-                      "type": "string"
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "user_id": {
+                      "value": {
+                        "value": "user_id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "job_id": {
-                    "value": {
-                      "value": "job_id",
-                      "type": "string"
+                    "job_id": {
+                      "value": {
+                        "value": "job_id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "request": {
-                    "properties": {
-                      "urls": {
-                        "value": [
-                          {
+                    "request": {
+                      "properties": {
+                        "urls": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "urls",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "callback_url": {
+                          "value": {
+                            "value": "callback_url",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "notify": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        },
+                        "files": {
+                          "value": [
+                            {
+                              "properties": {
+                                "md5sum": {
+                                  "value": {
+                                    "value": "md5sum",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "state": {
+                      "value": {
+                        "value": {
+                          "status": {
                             "value": {
-                              "value": "urls",
+                              "value": "FAILED",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "created_timestamp_ms": {
+                            "value": {
+                              "value": 1000000,
+                              "type": "int64"
+                            },
+                            "type": "primitive"
+                          },
+                          "started_timestamp_ms": {
+                            "value": {
+                              "value": 1000000,
+                              "type": "int64"
+                            },
+                            "type": "primitive"
+                          },
+                          "ended_timestamp_ms": {
+                            "value": {
+                              "value": 1000000,
+                              "type": "int64"
+                            },
+                            "type": "primitive"
+                          },
+                          "message": {
+                            "value": {
+                              "value": "state",
                               "type": "string"
                             },
                             "type": "primitive"
                           }
-                        ],
-                        "type": "array"
-                      },
-                      "callback_url": {
-                        "value": {
-                          "value": "callback_url",
-                          "type": "string"
                         },
-                        "type": "primitive"
+                        "type": "discriminated"
                       },
-                      "notify": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
-                      },
-                      "files": {
-                        "value": [
-                          {
-                            "properties": {
-                              "md5sum": {
-                                "value": {
-                                  "value": "md5sum",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      }
-                    },
-                    "type": "object"
+                      "type": "oneOf"
+                    }
                   },
-                  "state": {
-                    "value": {
-                      "value": {
-                        "status": {
-                          "value": {
-                            "value": "FAILED",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "created_timestamp_ms": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        },
-                        "started_timestamp_ms": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        },
-                        "ended_timestamp_ms": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        },
-                        "message": {
-                          "value": {
-                            "value": "state",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "discriminated"
-                    },
-                    "type": "oneOf"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -397,16 +400,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "job_id": {
-                "value": {
-                  "value": "job_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "job_id": {
+                  "value": {
+                    "value": "job_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -491,107 +497,110 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "source": {
-                    "value": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "source": {
                       "value": {
-                        "type": {
-                          "value": {
-                            "value": "file",
-                            "type": "string"
+                        "value": {
+                          "type": {
+                            "value": {
+                              "value": "file",
+                              "type": "string"
+                            },
+                            "type": "primitive"
                           },
-                          "type": "primitive"
+                          "filename": {
+                            "value": {
+                              "value": "source",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "content_type": {
+                            "value": {
+                              "value": "source",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "md5sum": {
+                            "value": {
+                              "value": "source",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
                         },
-                        "filename": {
-                          "value": {
-                            "value": "source",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                        "type": "discriminated"
+                      },
+                      "type": "oneOf"
+                    },
+                    "results": {
+                      "properties": {
+                        "predictions": {
+                          "value": [
+                            {
+                              "properties": {
+                                "file": {
+                                  "value": {
+                                    "value": "file",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "models": {
+                                  "properties": {},
+                                  "type": "object"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
                         },
-                        "content_type": {
-                          "value": {
-                            "value": "source",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "md5sum": {
-                          "value": {
-                            "value": "source",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                        "errors": {
+                          "value": [
+                            {
+                              "properties": {
+                                "message": {
+                                  "value": {
+                                    "value": "message",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "file": {
+                                  "value": {
+                                    "value": "file",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
                         }
                       },
-                      "type": "discriminated"
+                      "type": "object"
                     },
-                    "type": "oneOf"
-                  },
-                  "results": {
-                    "properties": {
-                      "predictions": {
-                        "value": [
-                          {
-                            "properties": {
-                              "file": {
-                                "value": {
-                                  "value": "file",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "models": {
-                                "properties": {},
-                                "type": "object"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
+                    "error": {
+                      "value": {
+                        "value": "error",
+                        "type": "string"
                       },
-                      "errors": {
-                        "value": [
-                          {
-                            "properties": {
-                              "message": {
-                                "value": {
-                                  "value": "message",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "file": {
-                                "value": {
-                                  "value": "file",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      }
-                    },
-                    "type": "object"
+                      "type": "primitive"
+                    }
                   },
-                  "error": {
-                    "value": {
-                      "value": "error",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -719,170 +728,173 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "user_id": {
-                "value": {
-                  "value": "user_id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "user_id": {
+                  "value": {
+                    "value": "user_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "job_id": {
-                "value": {
-                  "value": "job_id",
-                  "type": "string"
+                "job_id": {
+                  "value": {
+                    "value": "job_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "request": {
-                "properties": {
-                  "models": {
-                    "properties": {
-                      "burst": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                "request": {
+                  "properties": {
+                    "models": {
+                      "properties": {
+                        "burst": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
+                          ],
+                          "type": "map"
+                        },
+                        "facemesh": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "type": "unknown"
+                              }
+                            }
+                          ],
+                          "type": "map"
+                        }
                       },
-                      "facemesh": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "object"
+                    },
+                    "transcription": {
+                      "properties": {
+                        "language": {
+                          "value": "zh",
+                          "type": "enum"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "urls": {
+                      "value": [
+                        {
+                          "value": {
+                            "value": "urls",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "callback_url": {
+                      "value": {
+                        "value": "callback_url",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "notify": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "files": {
+                      "value": [
+                        {
+                          "properties": {
+                            "md5sum": {
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "value": "md5sum",
+                                "type": "string"
                               },
-                              "type": "unknown"
+                              "type": "primitive"
                             }
-                          }
-                        ],
-                        "type": "map"
-                      }
-                    },
-                    "type": "object"
+                          },
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    }
                   },
-                  "transcription": {
-                    "properties": {
-                      "language": {
-                        "value": "zh",
-                        "type": "enum"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "urls": {
-                    "value": [
-                      {
+                  "type": "object"
+                },
+                "state": {
+                  "value": {
+                    "value": {
+                      "status": {
                         "value": {
-                          "value": "urls",
+                          "value": "FAILED",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "created_timestamp_ms": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "started_timestamp_ms": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "ended_timestamp_ms": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "state",
                           "type": "string"
                         },
                         "type": "primitive"
                       }
-                    ],
-                    "type": "array"
-                  },
-                  "callback_url": {
-                    "value": {
-                      "value": "callback_url",
-                      "type": "string"
                     },
-                    "type": "primitive"
+                    "type": "discriminated"
                   },
-                  "notify": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "files": {
-                    "value": [
-                      {
-                        "properties": {
-                          "md5sum": {
-                            "value": {
-                              "value": "md5sum",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      }
-                    ],
-                    "type": "array"
-                  }
-                },
-                "type": "object"
+                  "type": "oneOf"
+                }
               },
-              "state": {
-                "value": {
-                  "value": {
-                    "status": {
-                      "value": {
-                        "value": "FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_timestamp_ms": {
-                      "value": {
-                        "value": 1000000,
-                        "type": "int64"
-                      },
-                      "type": "primitive"
-                    },
-                    "started_timestamp_ms": {
-                      "value": {
-                        "value": 1000000,
-                        "type": "int64"
-                      },
-                      "type": "primitive"
-                    },
-                    "ended_timestamp_ms": {
-                      "value": {
-                        "value": 1000000,
-                        "type": "int64"
-                      },
-                      "type": "primitive"
-                    },
-                    "message": {
-                      "value": {
-                        "value": "state",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "discriminated"
-                },
-                "type": "oneOf"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1016,6 +1028,7 @@
         "generatedName": "BaseRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1247,6 +1260,7 @@
         "generatedName": "BoundingBox",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1321,6 +1335,7 @@
         "generatedName": "BurstPrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1410,6 +1425,7 @@
         "generatedName": "Completed",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1454,6 +1470,7 @@
         "generatedName": "DescriptionsScore",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1519,6 +1536,7 @@
         "generatedName": "EmotionScore",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1584,6 +1602,7 @@
         "generatedName": "Error",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1667,6 +1686,7 @@
               "value": {
                 "description": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
                 "schema": {
+                  "default": 60,
                   "type": "uint64"
                 },
                 "generatedName": "FaceMinFaceSize",
@@ -1746,6 +1766,7 @@
         "generatedName": "Face",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1897,6 +1918,7 @@
         "generatedName": "FacePrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1933,6 +1955,7 @@
         "generatedName": "FacemeshPrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1977,6 +2000,7 @@
         "generatedName": "FacsScore",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2052,6 +2076,7 @@
         "generatedName": "Failed",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2121,6 +2146,7 @@
         "generatedName": "File",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2202,6 +2228,7 @@
         "generatedName": "GroupedPredictionsBurstPrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2251,6 +2278,7 @@
         "generatedName": "GroupedPredictionsFacePrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2300,6 +2328,7 @@
         "generatedName": "GroupedPredictionsFacemeshPrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2349,6 +2378,7 @@
         "generatedName": "GroupedPredictionsLanguagePrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2398,6 +2428,7 @@
         "generatedName": "GroupedPredictionsNerPrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2447,6 +2478,7 @@
         "generatedName": "GroupedPredictionsProsodyPrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2491,6 +2523,7 @@
         "generatedName": "InProgress",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2569,6 +2602,7 @@
         "generatedName": "JobRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2599,6 +2633,7 @@
         "generatedName": "JobId",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2698,6 +2733,7 @@
         "generatedName": "Language",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2885,6 +2921,7 @@
         "generatedName": "LanguagePrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3025,6 +3062,7 @@
         "generatedName": "Models",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3165,6 +3203,7 @@
         "generatedName": "ModelsPredictions",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3201,6 +3240,7 @@
         "generatedName": "Ner",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3392,6 +3432,7 @@
         "generatedName": "NerPrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3455,6 +3496,7 @@
         "generatedName": "PositionInterval",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3502,6 +3544,7 @@
         "generatedName": "Prediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3557,6 +3600,7 @@
         "generatedName": "PredictionsOptionalNullBurstPrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3612,6 +3656,7 @@
         "generatedName": "PredictionsOptionalNullFacePrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3667,6 +3712,7 @@
         "generatedName": "PredictionsOptionalNullFacemeshPrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3722,6 +3768,7 @@
         "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3777,6 +3824,7 @@
         "generatedName": "PredictionsOptionalTranscriptionMetadataNerPrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3832,6 +3880,7 @@
         "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3911,6 +3960,7 @@
         "generatedName": "Prosody",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4028,6 +4078,7 @@
         "generatedName": "ProsodyPrediction",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4057,6 +4108,7 @@
         "generatedName": "Queued",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4201,6 +4253,7 @@
         "generatedName": "Request",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4255,6 +4308,7 @@
         "generatedName": "Results",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4299,6 +4353,7 @@
         "generatedName": "SentimentScore",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4431,6 +4486,7 @@
         "generatedName": "SourceResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4454,6 +4510,7 @@
         "generatedName": "SourceFile",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4477,6 +4534,7 @@
         "generatedName": "SourceUrl",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4506,6 +4564,7 @@
         "generatedName": "Url",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4581,6 +4640,7 @@
         "generatedName": "StateCompleted",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4604,6 +4664,7 @@
         "generatedName": "StateFailed",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4627,6 +4688,7 @@
         "generatedName": "StateInProgress",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4650,6 +4712,7 @@
         "generatedName": "StateQueued",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4726,6 +4789,7 @@
         "generatedName": "TimeInterval",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4770,6 +4834,7 @@
         "generatedName": "ToxicityScore",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4805,6 +4870,7 @@
         "generatedName": "Transcription",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4856,6 +4922,7 @@
         "generatedName": "TranscriptionMetadata",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4935,6 +5002,7 @@
         "generatedName": "Window",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"

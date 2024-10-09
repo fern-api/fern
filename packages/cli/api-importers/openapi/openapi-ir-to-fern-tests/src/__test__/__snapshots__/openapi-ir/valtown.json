@@ -169,6 +169,7 @@
           "generatedName": "SearchValsResponse",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -225,140 +226,143 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "value": [
-                  {
-                    "properties": {
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "version": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "public": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
-                      },
-                      "createdAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "privacy": {
-                        "value": "public",
-                        "type": "enum"
-                      },
-                      "type": {
-                        "value": "interval",
-                        "type": "enum"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "url",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "links": {
-                        "properties": {
-                          "self": {
-                            "value": {
-                              "value": "self",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "properties": {
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
                           },
-                          "versions": {
-                            "value": {
-                              "value": "versions",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "type": "primitive"
+                        },
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
                           },
-                          "module": {
-                            "value": {
-                              "value": "module",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
+                          "type": "primitive"
                         },
-                        "type": "object"
+                        "version": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "public": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        },
+                        "createdAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "privacy": {
+                          "value": "public",
+                          "type": "enum"
+                        },
+                        "type": {
+                          "value": "interval",
+                          "type": "enum"
+                        },
+                        "url": {
+                          "value": {
+                            "value": "url",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "links": {
+                          "properties": {
+                            "self": {
+                              "value": {
+                                "value": "self",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "versions": {
+                              "value": {
+                                "value": "versions",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "module": {
+                              "value": {
+                                "value": "module",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "author": {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "id",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
                       },
-                      "author": {
-                        "properties": {
-                          "id": {
-                            "value": {
-                              "value": "id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "prev": {
-                    "value": {
-                      "value": "prev",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "next": {
-                    "value": {
-                      "value": "next",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              }
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "prev": {
+                      "value": {
+                        "value": "prev",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "next": {
+                      "value": {
+                        "value": "next",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -437,56 +441,59 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "bio": {
+                  "value": {
+                    "value": "bio",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "username": {
+                  "value": {
+                    "value": "username",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "profileImageUrl": {
+                  "value": {
+                    "value": "profileImageUrl",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "url": {
+                  "value": {
+                    "value": "url",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
               },
-              "bio": {
-                "value": {
-                  "value": "bio",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "username": {
-                "value": {
-                  "value": "username",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "profileImageUrl": {
-                "value": {
-                  "value": "profileImageUrl",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "url": {
-                "value": {
-                  "value": "url",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -803,6 +810,7 @@
                 "generatedName": "AliasValResponseLinks",
                 "groupName": [],
                 "additionalProperties": false,
+                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -860,6 +868,7 @@
                   "generatedName": "AliasValResponseAuthor",
                   "groupName": [],
                   "additionalProperties": false,
+                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -928,6 +937,7 @@
           "generatedName": "AliasValResponse",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -974,132 +984,135 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "version": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "code": {
-                "value": {
-                  "value": "code",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "public": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              },
-              "privacy": {
-                "value": "public",
-                "type": "enum"
-              },
-              "type": {
-                "value": "interval",
-                "type": "enum"
-              },
-              "url": {
-                "value": {
-                  "value": "url",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+            "value": {
+              "properties": {
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
                   },
-                  "versions": {
-                    "value": {
-                      "value": "versions",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+                  "type": "primitive"
+                },
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
                   },
-                  "module": {
-                    "value": {
-                      "value": "module",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                  "type": "primitive"
                 },
-                "type": "object"
-              },
-              "author": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+                "version": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
                   },
-                  "username": {
-                    "value": {
-                      "value": "username",
-                      "type": "string"
+                  "type": "primitive"
+                },
+                "code": {
+                  "value": {
+                    "value": "code",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "public": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "privacy": {
+                  "value": "public",
+                  "type": "enum"
+                },
+                "type": {
+                  "value": "interval",
+                  "type": "enum"
+                },
+                "url": {
+                  "value": {
+                    "value": "url",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    "versions": {
+                      "value": {
+                        "value": "versions",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "module": {
+                      "value": {
+                        "value": "module",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
+                "author": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "username": {
+                      "value": {
+                        "value": "username",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "likeCount": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "referenceCount": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "readme": {
+                  "value": {
+                    "value": "readme",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
               },
-              "likeCount": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "referenceCount": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "readme": {
-                "value": {
-                  "value": "readme",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1246,6 +1259,7 @@
                 "generatedName": "MeGetResponseLinks",
                 "groupName": [],
                 "additionalProperties": false,
+                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -1308,6 +1322,7 @@
           "generatedName": "MeGetResponse",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1344,67 +1359,70 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "00000000-0000-0000-0000-000000000000",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "00000000-0000-0000-0000-000000000000",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "bio": {
-                "value": {
-                  "value": "Hello world",
-                  "type": "string"
+                "bio": {
+                  "value": {
+                    "value": "Hello world",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "username": {
-                "value": {
-                  "value": "tmcw",
-                  "type": "string"
+                "username": {
+                  "value": {
+                    "value": "tmcw",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "profileImageUrl": {
-                "value": {
-                  "value": "profileImageUrl",
-                  "type": "string"
+                "profileImageUrl": {
+                  "value": {
+                    "value": "profileImageUrl",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "url": {
-                "value": {
-                  "value": "url",
-                  "type": "string"
+                "url": {
+                  "value": {
+                    "value": "url",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "tier": {
-                "value": "pro",
-                "type": "enum"
-              },
-              "email": {
-                "value": {
-                  "value": "example@example.com",
-                  "type": "string"
+                "tier": {
+                  "value": "pro",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              }
+                "email": {
+                  "value": {
+                    "value": "example@example.com",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1510,6 +1528,7 @@
           "generatedName": "MeLikesResponse",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1556,140 +1575,143 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "value": [
-                  {
-                    "properties": {
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "version": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "public": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
-                      },
-                      "createdAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "privacy": {
-                        "value": "public",
-                        "type": "enum"
-                      },
-                      "type": {
-                        "value": "interval",
-                        "type": "enum"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "url",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "links": {
-                        "properties": {
-                          "self": {
-                            "value": {
-                              "value": "self",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "properties": {
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
                           },
-                          "versions": {
-                            "value": {
-                              "value": "versions",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "type": "primitive"
+                        },
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
                           },
-                          "module": {
-                            "value": {
-                              "value": "module",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
+                          "type": "primitive"
                         },
-                        "type": "object"
+                        "version": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "public": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        },
+                        "createdAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "privacy": {
+                          "value": "public",
+                          "type": "enum"
+                        },
+                        "type": {
+                          "value": "interval",
+                          "type": "enum"
+                        },
+                        "url": {
+                          "value": {
+                            "value": "url",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "links": {
+                          "properties": {
+                            "self": {
+                              "value": {
+                                "value": "self",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "versions": {
+                              "value": {
+                                "value": "versions",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "module": {
+                              "value": {
+                                "value": "module",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "author": {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "id",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
                       },
-                      "author": {
-                        "properties": {
-                          "id": {
-                            "value": {
-                              "value": "id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "prev": {
-                    "value": {
-                      "value": "prev",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "next": {
-                    "value": {
-                      "value": "next",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              }
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "prev": {
+                      "value": {
+                        "value": "prev",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "next": {
+                      "value": {
+                        "value": "next",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1933,6 +1955,7 @@
                         "generatedName": "MeCommentsResponseDataItemAuthor",
                         "groupName": [],
                         "additionalProperties": false,
+                        "fullExamples": [],
                         "source": {
                           "file": "../openapi.yml",
                           "type": "openapi"
@@ -2075,6 +2098,7 @@
                                 "generatedName": "MeCommentsResponseDataItemValAuthor",
                                 "groupName": [],
                                 "additionalProperties": false,
+                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -2091,6 +2115,7 @@
                         "generatedName": "MeCommentsResponseDataItemVal",
                         "groupName": [],
                         "additionalProperties": false,
+                        "fullExamples": [],
                         "source": {
                           "file": "../openapi.yml",
                           "type": "openapi"
@@ -2104,6 +2129,7 @@
                   "generatedName": "MeCommentsResponseDataItem",
                   "groupName": [],
                   "additionalProperties": false,
+                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -2138,6 +2164,7 @@
           "generatedName": "MeCommentsResponse",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -2191,108 +2218,111 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "value": [
-                  {
-                    "properties": {
-                      "comment": {
-                        "value": {
-                          "value": "comment",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "createdAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "author": {
-                        "properties": {
-                          "id": {
-                            "value": {
-                              "value": "id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "val": {
-                        "properties": {
-                          "name": {
-                            "value": {
-                              "value": "name",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "properties": {
+                        "comment": {
+                          "value": {
+                            "value": "comment",
+                            "type": "string"
                           },
-                          "id": {
-                            "value": {
-                              "value": "id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "version": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
-                            },
-                            "type": "primitive"
-                          },
-                          "privacy": {
-                            "value": "public",
-                            "type": "enum"
-                          }
+                          "type": "primitive"
                         },
-                        "type": "object"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "prev": {
-                    "value": {
-                      "value": "prev",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "next": {
-                    "value": {
-                      "value": "next",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "createdAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "author": {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "id",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "val": {
+                          "properties": {
+                            "name": {
+                              "value": {
+                                "value": "name",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "id": {
+                              "value": {
+                                "value": "id",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "version": {
+                              "value": {
+                                "value": 1,
+                                "type": "int"
+                              },
+                              "type": "primitive"
+                            },
+                            "privacy": {
+                              "value": "public",
+                              "type": "enum"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              }
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "prev": {
+                      "value": {
+                        "value": "prev",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "next": {
+                      "value": {
+                        "value": "next",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2491,6 +2521,7 @@
                         "generatedName": "MeReferencesResponseDataItemReference",
                         "groupName": [],
                         "additionalProperties": false,
+                        "fullExamples": [],
                         "source": {
                           "file": "../openapi.yml",
                           "type": "openapi"
@@ -2584,6 +2615,7 @@
                         "generatedName": "MeReferencesResponseDataItemDependsOn",
                         "groupName": [],
                         "additionalProperties": false,
+                        "fullExamples": [],
                         "source": {
                           "file": "../openapi.yml",
                           "type": "openapi"
@@ -2612,6 +2644,7 @@
                   "generatedName": "MeReferencesResponseDataItem",
                   "groupName": [],
                   "additionalProperties": false,
+                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -2646,6 +2679,7 @@
           "generatedName": "MeReferencesResponse",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -2692,90 +2726,93 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "value": [
-                  {
-                    "properties": {
-                      "reference": {
-                        "properties": {
-                          "id": {
-                            "value": {
-                              "value": "id",
-                              "type": "string"
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "properties": {
+                        "reference": {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "id",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
+                            "name": {
+                              "value": {
+                                "value": "name",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
                           },
-                          "name": {
-                            "value": {
-                              "value": "name",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
+                          "type": "object"
                         },
-                        "type": "object"
-                      },
-                      "dependsOn": {
-                        "properties": {
-                          "id": {
-                            "value": {
-                              "value": "id",
-                              "type": "string"
+                        "dependsOn": {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "id",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
+                            "name": {
+                              "value": {
+                                "value": "name",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
                           },
-                          "name": {
-                            "value": {
-                              "value": "name",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
+                          "type": "object"
                         },
-                        "type": "object"
+                        "referencedAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "referencedAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "prev": {
-                    "value": {
-                      "value": "prev",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "next": {
-                    "value": {
-                      "value": "next",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              }
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "prev": {
+                      "value": {
+                        "value": "prev",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "next": {
+                      "value": {
+                        "value": "next",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2890,6 +2927,7 @@
             "title": "BlobListingItem",
             "groupName": [],
             "additionalProperties": false,
+            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -2929,35 +2967,38 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "key": {
-                    "value": {
-                      "value": "hello_world",
-                      "type": "string"
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "key": {
+                      "value": {
+                        "value": "hello_world",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
+                    "size": {
+                      "value": {
+                        "value": 20,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "lastModified": {
+                      "value": {
+                        "value": "2024-06-24T20:00:59.702Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    }
                   },
-                  "size": {
-                    "value": {
-                      "value": 20,
-                      "type": "int"
-                    },
-                    "type": "primitive"
-                  },
-                  "lastModified": {
-                    "value": {
-                      "value": "2024-06-24T20:00:59.702Z",
-                      "type": "datetime"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3232,56 +3273,59 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "bio": {
+                  "value": {
+                    "value": "bio",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "username": {
+                  "value": {
+                    "value": "username",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "profileImageUrl": {
+                  "value": {
+                    "value": "profileImageUrl",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "url": {
+                  "value": {
+                    "value": "url",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
               },
-              "bio": {
-                "value": {
-                  "value": "bio",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "username": {
-                "value": {
-                  "value": "username",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "profileImageUrl": {
-                "value": {
-                  "value": "profileImageUrl",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "url": {
-                "value": {
-                  "value": "url",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3404,6 +3448,7 @@
           "generatedName": "UsersValsResponse",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3461,140 +3506,143 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "value": [
-                  {
-                    "properties": {
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "version": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "public": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
-                      },
-                      "createdAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "privacy": {
-                        "value": "public",
-                        "type": "enum"
-                      },
-                      "type": {
-                        "value": "interval",
-                        "type": "enum"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "url",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "links": {
-                        "properties": {
-                          "self": {
-                            "value": {
-                              "value": "self",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "properties": {
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
                           },
-                          "versions": {
-                            "value": {
-                              "value": "versions",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "type": "primitive"
+                        },
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
                           },
-                          "module": {
-                            "value": {
-                              "value": "module",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
+                          "type": "primitive"
                         },
-                        "type": "object"
+                        "version": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "public": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        },
+                        "createdAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "privacy": {
+                          "value": "public",
+                          "type": "enum"
+                        },
+                        "type": {
+                          "value": "interval",
+                          "type": "enum"
+                        },
+                        "url": {
+                          "value": {
+                            "value": "url",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "links": {
+                          "properties": {
+                            "self": {
+                              "value": {
+                                "value": "self",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "versions": {
+                              "value": {
+                                "value": "versions",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "module": {
+                              "value": {
+                                "value": "module",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "author": {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "id",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
                       },
-                      "author": {
-                        "properties": {
-                          "id": {
-                            "value": {
-                              "value": "id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "prev": {
-                    "value": {
-                      "value": "prev",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "next": {
-                    "value": {
-                      "value": "next",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              }
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "prev": {
+                      "value": {
+                        "value": "prev",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "next": {
+                      "value": {
+                        "value": "next",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3801,6 +3849,7 @@
                       "title": "ParameterizedQuery",
                       "groupName": [],
                       "additionalProperties": false,
+                      "fullExamples": [],
                       "source": {
                         "file": "../openapi.yml",
                         "type": "openapi"
@@ -3825,6 +3874,7 @@
           "generatedName": "SqliteExecuteRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3901,75 +3951,78 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "columns": {
-                "value": [
-                  {
-                    "value": {
-                      "value": "columns",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                ],
-                "type": "array"
-              },
-              "columnTypes": {
-                "value": [
-                  {
-                    "value": {
-                      "value": "columnTypes",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                ],
-                "type": "array"
-              },
-              "rows": {
-                "value": [
-                  {
-                    "value": [
-                      {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
-                              "value": {
-                                "value": "value",
+            "value": {
+              "properties": {
+                "columns": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "columns",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "columnTypes": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "columnTypes",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "rows": {
+                  "value": [
+                    {
+                      "value": [
+                        {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
                                 "type": "string"
                               },
-                              "type": "primitive"
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      }
-                    ],
-                    "type": "array"
-                  }
-                ],
-                "type": "array"
-              },
-              "rowsAffected": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                          ],
+                          "type": "map"
+                        }
+                      ],
+                      "type": "array"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "primitive"
-              },
-              "lastInsertRowid": {
-                "value": {
-                  "value": "lastInsertRowid",
-                  "type": "string"
+                "rowsAffected": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "lastInsertRowid": {
+                  "value": {
+                    "value": "lastInsertRowid",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -4009,75 +4062,78 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "columns": {
-                "value": [
-                  {
-                    "value": {
-                      "value": "columns",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                ],
-                "type": "array"
-              },
-              "columnTypes": {
-                "value": [
-                  {
-                    "value": {
-                      "value": "columnTypes",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                ],
-                "type": "array"
-              },
-              "rows": {
-                "value": [
-                  {
-                    "value": [
-                      {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
-                              "value": {
-                                "value": "value",
+            "value": {
+              "properties": {
+                "columns": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "columns",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "columnTypes": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "columnTypes",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "rows": {
+                  "value": [
+                    {
+                      "value": [
+                        {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
                                 "type": "string"
                               },
-                              "type": "primitive"
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      }
-                    ],
-                    "type": "array"
-                  }
-                ],
-                "type": "array"
-              },
-              "rowsAffected": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                          ],
+                          "type": "map"
+                        }
+                      ],
+                      "type": "array"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "primitive"
-              },
-              "lastInsertRowid": {
-                "value": {
-                  "value": "lastInsertRowid",
-                  "type": "string"
+                "rowsAffected": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "lastInsertRowid": {
+                  "value": {
+                    "value": "lastInsertRowid",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -4285,6 +4341,7 @@
                         "title": "ParameterizedQuery",
                         "groupName": [],
                         "additionalProperties": false,
+                        "fullExamples": [],
                         "source": {
                           "file": "../openapi.yml",
                           "type": "openapi"
@@ -4350,6 +4407,7 @@
           "generatedName": "SqliteBatchRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -4451,72 +4509,75 @@
             "type": "object"
           },
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "columns": {
-                    "value": [
-                      {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    ],
-                    "type": "array"
-                  },
-                  "columnTypes": {
-                    "value": [
-                      {
-                        "value": {
-                          "value": "number",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    ],
-                    "type": "array"
-                  },
-                  "rows": {
-                    "value": [
-                      {
-                        "value": [
-                          {
-                            "value": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "columns": {
+                      "value": [
+                        {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "columnTypes": {
+                      "value": [
+                        {
+                          "value": {
+                            "value": "number",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "rows": {
+                      "value": [
+                        {
+                          "value": [
+                            {
                               "value": {
-                                "value": 1,
-                                "type": "int"
+                                "value": {
+                                  "value": 1,
+                                  "type": "int"
+                                },
+                                "type": "primitive"
                               },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        ],
-                        "type": "array"
-                      }
-                    ],
-                    "type": "array"
-                  },
-                  "rowsAffected": {
-                    "value": {
-                      "value": 0,
-                      "type": "double"
+                              "type": "unknown"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      ],
+                      "type": "array"
                     },
-                    "type": "primitive"
-                  },
-                  "lastInsertRowid": {
-                    "value": {
-                      "value": "lastInsertRowid",
-                      "type": "string"
+                    "rowsAffected": {
+                      "value": {
+                        "value": 0,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                    "lastInsertRowid": {
+                      "value": {
+                        "value": "lastInsertRowid",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -4583,6 +4644,7 @@
           "generatedName": "EvalPostRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -4732,6 +4794,7 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
+            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -4793,10 +4856,13 @@
           },
           "response": {
             "value": {
-              "value": "string",
-              "type": "string"
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
             },
-            "type": "primitive"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -4835,10 +4901,13 @@
           },
           "response": {
             "value": {
-              "value": "string",
-              "type": "string"
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
             },
-            "type": "primitive"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -5017,6 +5086,7 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
+            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -5076,10 +5146,13 @@
           "headers": [],
           "response": {
             "value": {
-              "value": "string",
-              "type": "string"
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
             },
-            "type": "primitive"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -5230,6 +5303,7 @@
           "generatedName": "RunPostRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -5405,6 +5479,7 @@
                         "title": "EmailNameAndAddress",
                         "groupName": [],
                         "additionalProperties": false,
+                        "fullExamples": [],
                         "source": {
                           "file": "../openapi.yml",
                           "type": "openapi"
@@ -5499,6 +5574,7 @@
                               "title": "EmailNameAndAddress",
                               "groupName": [],
                               "additionalProperties": false,
+                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -5576,6 +5652,7 @@
                                 "title": "EmailNameAndAddress",
                                 "groupName": [],
                                 "additionalProperties": false,
+                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -5686,6 +5763,7 @@
                               "title": "EmailNameAndAddress",
                               "groupName": [],
                               "additionalProperties": false,
+                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -5763,6 +5841,7 @@
                                 "title": "EmailNameAndAddress",
                                 "groupName": [],
                                 "additionalProperties": false,
+                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -5873,6 +5952,7 @@
                               "title": "EmailNameAndAddress",
                               "groupName": [],
                               "additionalProperties": false,
+                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -5950,6 +6030,7 @@
                                 "title": "EmailNameAndAddress",
                                 "groupName": [],
                                 "additionalProperties": false,
+                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -6136,6 +6217,7 @@
                     "title": "AttachmentObject",
                     "groupName": [],
                     "additionalProperties": false,
+                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -6210,6 +6292,7 @@
                         "title": "EmailNameAndAddress",
                         "groupName": [],
                         "additionalProperties": false,
+                        "fullExamples": [],
                         "source": {
                           "file": "../openapi.yml",
                           "type": "openapi"
@@ -6263,6 +6346,7 @@
                           "title": "EmailNameAndAddress",
                           "groupName": [],
                           "additionalProperties": false,
+                          "fullExamples": [],
                           "source": {
                             "file": "../openapi.yml",
                             "type": "openapi"
@@ -6296,6 +6380,7 @@
           "generatedName": "EmailsSendRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -6344,6 +6429,7 @@
           "generatedName": "EmailsSendResponse",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -6382,6 +6468,7 @@
             "generatedName": "InternalServerErrorBody",
             "groupName": [],
             "additionalProperties": false,
+            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -6448,16 +6535,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "message": {
-                "value": {
-                  "value": "message",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "message": {
+                  "value": {
+                    "value": "message",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -6629,6 +6719,7 @@
           "generatedName": "ValsCreateRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -6718,132 +6809,135 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "version": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "code": {
-                "value": {
-                  "value": "code",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "public": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              },
-              "privacy": {
-                "value": "public",
-                "type": "enum"
-              },
-              "type": {
-                "value": "interval",
-                "type": "enum"
-              },
-              "url": {
-                "value": {
-                  "value": "url",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+            "value": {
+              "properties": {
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
                   },
-                  "versions": {
-                    "value": {
-                      "value": "versions",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+                  "type": "primitive"
+                },
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
                   },
-                  "module": {
-                    "value": {
-                      "value": "module",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                  "type": "primitive"
                 },
-                "type": "object"
-              },
-              "author": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+                "version": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
                   },
-                  "username": {
-                    "value": {
-                      "value": "username",
-                      "type": "string"
+                  "type": "primitive"
+                },
+                "code": {
+                  "value": {
+                    "value": "code",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "public": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "privacy": {
+                  "value": "public",
+                  "type": "enum"
+                },
+                "type": {
+                  "value": "interval",
+                  "type": "enum"
+                },
+                "url": {
+                  "value": {
+                    "value": "url",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    "versions": {
+                      "value": {
+                        "value": "versions",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "module": {
+                      "value": {
+                        "value": "module",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
+                "author": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "username": {
+                      "value": {
+                        "value": "username",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "likeCount": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "referenceCount": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "readme": {
+                  "value": {
+                    "value": "readme",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
               },
-              "likeCount": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "referenceCount": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "readme": {
-                "value": {
-                  "value": "readme",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -6908,6 +7002,7 @@
           "generatedName": "ValsPutRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -7038,132 +7133,135 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "version": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "code": {
-                "value": {
-                  "value": "code",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "public": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              },
-              "privacy": {
-                "value": "public",
-                "type": "enum"
-              },
-              "type": {
-                "value": "interval",
-                "type": "enum"
-              },
-              "url": {
-                "value": {
-                  "value": "url",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+            "value": {
+              "properties": {
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
                   },
-                  "versions": {
-                    "value": {
-                      "value": "versions",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+                  "type": "primitive"
+                },
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
                   },
-                  "module": {
-                    "value": {
-                      "value": "module",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                  "type": "primitive"
                 },
-                "type": "object"
-              },
-              "author": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+                "version": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
                   },
-                  "username": {
-                    "value": {
-                      "value": "username",
-                      "type": "string"
+                  "type": "primitive"
+                },
+                "code": {
+                  "value": {
+                    "value": "code",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "public": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "privacy": {
+                  "value": "public",
+                  "type": "enum"
+                },
+                "type": {
+                  "value": "interval",
+                  "type": "enum"
+                },
+                "url": {
+                  "value": {
+                    "value": "url",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    "versions": {
+                      "value": {
+                        "value": "versions",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "module": {
+                      "value": {
+                        "value": "module",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
+                "author": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "username": {
+                      "value": {
+                        "value": "username",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "likeCount": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "referenceCount": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "readme": {
+                  "value": {
+                    "value": "readme",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
               },
-              "likeCount": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "referenceCount": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "readme": {
-                "value": {
-                  "value": "readme",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -7331,6 +7429,7 @@
           "generatedName": "ValsUpdateRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -7641,6 +7740,7 @@
                   "generatedName": "ValsListResponseDataItem",
                   "groupName": [],
                   "additionalProperties": false,
+                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -7675,6 +7775,7 @@
           "generatedName": "ValsListResponse",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -7732,66 +7833,69 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "value": [
-                  {
-                    "properties": {
-                      "val_id": {
-                        "value": {
-                          "value": "val_id",
-                          "type": "string"
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "properties": {
+                        "val_id": {
+                          "value": {
+                            "value": "val_id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "version": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "createdAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "version": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "createdAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "prev": {
-                    "value": {
-                      "value": "prev",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "next": {
-                    "value": {
-                      "value": "next",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              }
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "prev": {
+                      "value": {
+                        "value": "prev",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "next": {
+                      "value": {
+                        "value": "next",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -7981,6 +8085,7 @@
           "generatedName": "ValsCreateVersionRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -8081,132 +8186,135 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "version": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "code": {
-                "value": {
-                  "value": "code",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "public": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              },
-              "privacy": {
-                "value": "public",
-                "type": "enum"
-              },
-              "type": {
-                "value": "interval",
-                "type": "enum"
-              },
-              "url": {
-                "value": {
-                  "value": "url",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+            "value": {
+              "properties": {
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
                   },
-                  "versions": {
-                    "value": {
-                      "value": "versions",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+                  "type": "primitive"
+                },
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
                   },
-                  "module": {
-                    "value": {
-                      "value": "module",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                  "type": "primitive"
                 },
-                "type": "object"
-              },
-              "author": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+                "version": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
                   },
-                  "username": {
-                    "value": {
-                      "value": "username",
-                      "type": "string"
+                  "type": "primitive"
+                },
+                "code": {
+                  "value": {
+                    "value": "code",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "public": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "privacy": {
+                  "value": "public",
+                  "type": "enum"
+                },
+                "type": {
+                  "value": "interval",
+                  "type": "enum"
+                },
+                "url": {
+                  "value": {
+                    "value": "url",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    "versions": {
+                      "value": {
+                        "value": "versions",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "module": {
+                      "value": {
+                        "value": "module",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
+                "author": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "username": {
+                      "value": {
+                        "value": "username",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "likeCount": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "referenceCount": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "readme": {
+                  "value": {
+                    "value": "readme",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
               },
-              "likeCount": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "referenceCount": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "readme": {
-                "value": {
-                  "value": "readme",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -8372,132 +8480,135 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "version": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "code": {
-                "value": {
-                  "value": "code",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "public": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              },
-              "privacy": {
-                "value": "public",
-                "type": "enum"
-              },
-              "type": {
-                "value": "interval",
-                "type": "enum"
-              },
-              "url": {
-                "value": {
-                  "value": "url",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "links": {
-                "properties": {
-                  "self": {
-                    "value": {
-                      "value": "self",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+            "value": {
+              "properties": {
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
                   },
-                  "versions": {
-                    "value": {
-                      "value": "versions",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+                  "type": "primitive"
+                },
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
                   },
-                  "module": {
-                    "value": {
-                      "value": "module",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                  "type": "primitive"
                 },
-                "type": "object"
-              },
-              "author": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+                "version": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
                   },
-                  "username": {
-                    "value": {
-                      "value": "username",
-                      "type": "string"
+                  "type": "primitive"
+                },
+                "code": {
+                  "value": {
+                    "value": "code",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "public": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "privacy": {
+                  "value": "public",
+                  "type": "enum"
+                },
+                "type": {
+                  "value": "interval",
+                  "type": "enum"
+                },
+                "url": {
+                  "value": {
+                    "value": "url",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "links": {
+                  "properties": {
+                    "self": {
+                      "value": {
+                        "value": "self",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    "versions": {
+                      "value": {
+                        "value": "versions",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "module": {
+                      "value": {
+                        "value": "module",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
+                "author": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "username": {
+                      "value": {
+                        "value": "username",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "likeCount": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "referenceCount": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "readme": {
+                  "value": {
+                    "value": "readme",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
               },
-              "likeCount": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "referenceCount": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "readme": {
-                "value": {
-                  "value": "readme",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -8678,6 +8789,7 @@
           "generatedName": "ValsCancelResponse",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -8752,16 +8864,19 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "found": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "found": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -8901,6 +9016,7 @@
               "generatedName": "UserLinks",
               "groupName": [],
               "additionalProperties": false,
+              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -8915,6 +9031,7 @@
         "generatedName": "User",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9060,6 +9177,7 @@
         "title": "ResultSet",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9327,6 +9445,7 @@
               "generatedName": "ExtendedValLinks",
               "groupName": [],
               "additionalProperties": false,
+              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -9384,6 +9503,7 @@
                 "generatedName": "ExtendedValAuthor",
                 "groupName": [],
                 "additionalProperties": false,
+                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -9452,6 +9572,7 @@
         "generatedName": "ExtendedVal",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9719,6 +9840,7 @@
               "generatedName": "BasicValLinks",
               "groupName": [],
               "additionalProperties": false,
+              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -9776,6 +9898,7 @@
                 "generatedName": "BasicValAuthor",
                 "groupName": [],
                 "additionalProperties": false,
+                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -9793,6 +9916,7 @@
         "generatedName": "BasicVal",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9866,6 +9990,7 @@
         "generatedName": "PaginationLinks",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

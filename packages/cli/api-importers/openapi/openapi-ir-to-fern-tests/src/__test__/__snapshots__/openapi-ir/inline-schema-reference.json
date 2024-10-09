@@ -47,6 +47,7 @@
                 "generatedName": "NotFound",
                 "groupName": [],
                 "additionalProperties": false,
+                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -98,6 +99,7 @@
                 "generatedName": "GetExampleResponseMessage",
                 "groupName": [],
                 "additionalProperties": false,
+                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -132,16 +134,19 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "message": {
-                "value": {
-                  "value": "message",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "message": {
+                  "value": {
+                    "value": "message",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -203,6 +208,7 @@
         "generatedName": "Schema1",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -255,6 +261,7 @@
         "generatedName": "Schema2",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

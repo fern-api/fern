@@ -60,6 +60,7 @@
           "generatedName": "UserGetStreamRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -77,6 +78,7 @@
       },
       "response": {
         "description": "",
+        "fullExamples": [],
         "schema": {
           "generatedName": "UserGetStreamResponse",
           "schema": "StreamUser",
@@ -97,7 +99,62 @@
       "authed": false,
       "method": "POST",
       "path": "/user/{userId}",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "userId",
+              "value": {
+                "value": {
+                  "value": "userId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": [
+              {
+                "properties": {
+                  "id": {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "streamed": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "literal"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -157,6 +214,7 @@
           "generatedName": "UserGetRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -224,23 +282,26 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "streamed": {
+                  "value": {
+                    "value": false,
+                    "type": "boolean"
+                  },
+                  "type": "literal"
+                }
               },
-              "streamed": {
-                "value": {
-                  "value": false,
-                  "type": "boolean"
-                },
-                "type": "literal"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -303,6 +364,7 @@
         "generatedName": "User",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -356,6 +418,7 @@
         "generatedName": "StreamUser",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

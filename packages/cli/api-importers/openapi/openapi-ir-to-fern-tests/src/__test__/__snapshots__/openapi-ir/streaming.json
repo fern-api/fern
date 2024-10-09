@@ -58,6 +58,7 @@
           "generatedName": "UserStreamRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -75,6 +76,7 @@
       },
       "response": {
         "description": "",
+        "fullExamples": [],
         "schema": {
           "generatedName": "UserStreamResponse",
           "schema": "StreamUser",
@@ -95,7 +97,44 @@
       "authed": false,
       "method": "POST",
       "path": "/v1/users",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": [
+              {
+                "properties": {
+                  "id": {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -153,6 +192,7 @@
           "generatedName": "UserRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -209,16 +249,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -281,6 +324,7 @@
           "generatedName": "UserV2StreamRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -298,6 +342,7 @@
       },
       "response": {
         "description": "",
+        "fullExamples": [],
         "schema": {
           "generatedName": "UserV2StreamResponse",
           "schema": "StreamUser-2",
@@ -318,7 +363,58 @@
       "authed": false,
       "method": "POST",
       "path": "/v2/users",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": [
+              {
+                "properties": {
+                  "id": {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "name": {
+                    "value": {
+                      "value": "name",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "streamed": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "literal"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -376,6 +472,7 @@
           "generatedName": "UserV2Request",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -432,30 +529,33 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "streamed": {
+                  "value": {
+                    "value": false,
+                    "type": "boolean"
+                  },
+                  "type": "literal"
+                }
               },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "streamed": {
-                "value": {
-                  "value": false,
-                  "type": "boolean"
-                },
-                "type": "literal"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -518,6 +618,7 @@
           "generatedName": "UserV3StreamRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -535,6 +636,7 @@
       },
       "response": {
         "description": "",
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "properties": [
@@ -601,6 +703,7 @@
           "generatedName": "UserV3StreamResponse",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -618,7 +721,58 @@
       "authed": false,
       "method": "POST",
       "path": "/v3/users",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": [
+              {
+                "properties": {
+                  "id": {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "inline": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "streamed": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -676,6 +830,7 @@
           "generatedName": "UserV3Request",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -740,6 +895,7 @@
           "generatedName": "UserV3Response",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -776,23 +932,26 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "inline": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
               },
-              "inline": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -836,6 +995,7 @@
         "generatedName": "User",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -870,6 +1030,7 @@
         "generatedName": "StreamUser",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -943,6 +1104,7 @@
         "generatedName": "User2",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1016,6 +1178,7 @@
         "generatedName": "StreamUser2",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

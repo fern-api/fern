@@ -56,6 +56,7 @@
                 "generatedName": "GetExampleResponseMessage",
                 "groupName": [],
                 "additionalProperties": false,
+                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -90,37 +91,40 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "age": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "value": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                }
               },
-              "age": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "value": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -258,6 +262,7 @@
         "generatedName": "Schema",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

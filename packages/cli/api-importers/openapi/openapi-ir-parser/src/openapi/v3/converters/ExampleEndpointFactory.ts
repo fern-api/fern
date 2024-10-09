@@ -3,6 +3,7 @@ import { Logger } from "@fern-api/logger";
 import {
     CustomCodeSample,
     EndpointExample,
+    EndpointResponseExample,
     EndpointWithExample,
     FernOpenapiIr,
     FullExample,
@@ -90,7 +91,7 @@ export class ExampleEndpointFactory {
             }
         }
 
-        const responseExamples: [id: string | undefined, example: FernOpenapiIr.FullExample][] = [];
+        const responseExamples: [id: string | undefined, example: FernOpenapiIr.EndpointResponseExample][] = [];
         if (responseSchemaIdResponse != null && responseSchemaIdResponse.type === "present") {
             const required = this.isSchemaRequired(responseSchemaIdResponse.schema);
 
@@ -107,7 +108,11 @@ export class ExampleEndpointFactory {
                     }
                 });
                 if (example != null) {
-                    responseExamples.push([undefined, example]);
+                    if (endpoint.response?.type === "json") {
+                        responseExamples.push([undefined, EndpointResponseExample.withoutStreaming(example)]);
+                    } else if (endpoint.response?.type === "streamingJson") {
+                        responseExamples.push([undefined, EndpointResponseExample.withStreaming([example])]);
+                    }
                 }
             } else {
                 for (const { name: exampleId, value: rawExample } of responseSchemaIdResponse.examples) {
@@ -123,7 +128,11 @@ export class ExampleEndpointFactory {
                         }
                     });
                     if (example != null) {
-                        responseExamples.push([exampleId, example]);
+                        if (endpoint.response?.type === "json") {
+                            responseExamples.push([undefined, EndpointResponseExample.withoutStreaming(example)]);
+                        } else if (endpoint.response?.type === "streamingJson") {
+                            responseExamples.push([undefined, EndpointResponseExample.withStreaming([example])]);
+                        }
                     }
                 }
             }
@@ -325,7 +334,7 @@ export class ExampleEndpointFactory {
 interface RequestResponsePair {
     id: string | undefined;
     request: FernOpenapiIr.FullExample | undefined;
-    response: FernOpenapiIr.FullExample | undefined;
+    response: FernOpenapiIr.EndpointResponseExample | undefined;
 }
 
 // if request has multiple examples and response has only 1 example, the response example will be repeated for each request example
@@ -335,7 +344,7 @@ interface RequestResponsePair {
 // if all of these conditions fail, then only the first request and response examples will be paired up.
 function consolidateRequestResponseExamples(
     requestExamples: [id: string | undefined, example: FernOpenapiIr.FullExample][],
-    responseExamples: [id: string | undefined, example: FernOpenapiIr.FullExample][]
+    responseExamples: [id: string | undefined, example: FernOpenapiIr.EndpointResponseExample][]
 ): RequestResponsePair[] {
     const pairs: RequestResponsePair[] = [];
     if (requestExamples.length <= 1) {
@@ -484,7 +493,7 @@ function getResponseSchema(response: ResponseWithExample | null | undefined): Sc
     if (response == null) {
         return undefined;
     }
-    if (response.type !== "json") {
+    if (response.type !== "json" && response.type !== "streamingJson") {
         return { type: "unsupported" };
     }
     return { type: "present", schema: response.schema, examples: response.fullExamples ?? [] };

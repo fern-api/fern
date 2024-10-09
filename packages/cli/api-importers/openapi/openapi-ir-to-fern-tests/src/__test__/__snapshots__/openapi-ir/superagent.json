@@ -43,22 +43,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -169,22 +172,25 @@
             "type": "object"
           },
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -286,22 +292,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -403,22 +412,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -570,22 +582,25 @@
             "type": "map"
           },
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -732,22 +747,25 @@
             "type": "object"
           },
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -857,22 +875,25 @@
             "type": "object"
           },
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -982,22 +1003,25 @@
             "type": "object"
           },
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1043,22 +1067,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1159,22 +1186,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1221,22 +1251,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1340,22 +1373,25 @@
             "type": "object"
           },
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1457,22 +1493,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1574,22 +1613,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1636,22 +1678,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1769,22 +1814,25 @@
             "type": "object"
           },
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1886,22 +1934,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2003,22 +2054,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2065,22 +2119,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2195,22 +2252,25 @@
             "type": "object"
           },
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2312,22 +2372,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2429,22 +2492,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2596,22 +2662,25 @@
             "type": "map"
           },
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2658,22 +2727,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2784,22 +2856,25 @@
             "type": "object"
           },
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2901,22 +2976,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3018,22 +3096,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3080,22 +3161,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3277,6 +3361,7 @@
         "title": "Agent",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3309,6 +3394,7 @@
         "title": "ApiToken",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3484,6 +3570,7 @@
         "title": "Document",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3529,6 +3616,7 @@
         "title": "HTTPValidationError",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3593,6 +3681,7 @@
         "title": "PredictAgent",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3657,6 +3746,7 @@
         "title": "Prompt",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3705,6 +3795,7 @@
         "title": "SignIn",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3808,6 +3899,7 @@
         "title": "SignUp",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3888,6 +3980,7 @@
         "title": "Tool",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3978,6 +4071,7 @@
         "title": "ValidationError",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

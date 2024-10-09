@@ -152,7 +152,11 @@ function convertResolvedResponse({
             case "json":
                 return ResponseWithExample.streamingJson({
                     description: resolvedResponse.description,
-                    responseProperty: undefined,
+                    responseProperty: getExtension<string>(
+                        operationContext.operation,
+                        FernOpenAPIExtension.RESPONSE_PROPERTY
+                    ),
+                    fullExamples: textEventStreamObject.examples,
                     schema: convertSchemaWithExampleToSchema(
                         convertSchema(
                             textEventStreamObject.schema,
@@ -192,6 +196,7 @@ function convertResolvedResponse({
                     return ResponseWithExample.streamingJson({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
+                        fullExamples: jsonMediaObject.examples,
                         schema: convertSchemaWithExampleToSchema(
                             convertSchema(
                                 jsonMediaObject.schema,

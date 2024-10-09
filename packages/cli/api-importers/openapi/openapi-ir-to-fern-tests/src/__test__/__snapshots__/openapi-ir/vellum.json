@@ -81,68 +81,71 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "created": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "created": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "label": {
-                "value": {
-                  "value": "label",
-                  "type": "string"
+                "label": {
+                  "value": {
+                    "value": "label",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "status": {
-                "value": "ACTIVE",
-                "type": "enum"
-              },
-              "environment": {
-                "value": "DEVELOPMENT",
-                "type": "enum"
-              },
-              "model_type": {
-                "value": "GENERATE",
-                "type": "enum"
-              },
-              "active_model_version_ids": {
-                "value": [
-                  {
-                    "value": {
-                      "value": "active_model_version_ids",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                ],
-                "type": "array"
-              },
-              "last_deployed_on": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "status": {
+                  "value": "ACTIVE",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              }
+                "environment": {
+                  "value": "DEVELOPMENT",
+                  "type": "enum"
+                },
+                "model_type": {
+                  "value": "GENERATE",
+                  "type": "enum"
+                },
+                "active_model_version_ids": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "active_model_version_ids",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "last_deployed_on": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -451,66 +454,69 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "created": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "created": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "label": {
-                "value": {
-                  "value": "label",
-                  "type": "string"
+                "label": {
+                  "value": {
+                    "value": "label",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "status": {
-                "value": "ACTIVE",
-                "type": "enum"
-              },
-              "environment": {
-                "value": "DEVELOPMENT",
-                "type": "enum"
-              },
-              "indexing_config": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+                "status": {
+                  "value": "ACTIVE",
+                  "type": "enum"
+                },
+                "environment": {
+                  "value": "DEVELOPMENT",
+                  "type": "enum"
+                },
+                "indexing_config": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              }
+                  ],
+                  "type": "map"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -646,66 +652,69 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "created": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "created": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "label": {
-                "value": {
-                  "value": "label",
-                  "type": "string"
+                "label": {
+                  "value": {
+                    "value": "label",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "status": {
-                "value": "ACTIVE",
-                "type": "enum"
-              },
-              "environment": {
-                "value": "DEVELOPMENT",
-                "type": "enum"
-              },
-              "indexing_config": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+                "status": {
+                  "value": "ACTIVE",
+                  "type": "enum"
+                },
+                "environment": {
+                  "value": "DEVELOPMENT",
+                  "type": "enum"
+                },
+                "indexing_config": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              }
+                  ],
+                  "type": "map"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -855,66 +864,69 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "created": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "created": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "label": {
-                "value": {
-                  "value": "label",
-                  "type": "string"
+                "label": {
+                  "value": {
+                    "value": "label",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "status": {
-                "value": "ACTIVE",
-                "type": "enum"
-              },
-              "environment": {
-                "value": "DEVELOPMENT",
-                "type": "enum"
-              },
-              "indexing_config": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+                "status": {
+                  "value": "ACTIVE",
+                  "type": "enum"
+                },
+                "environment": {
+                  "value": "DEVELOPMENT",
+                  "type": "enum"
+                },
+                "indexing_config": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              }
+                  ],
+                  "type": "map"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1051,122 +1063,125 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "count": {
-                "value": {
-                  "value": 123,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "next": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?offset=400&limit=100",
-                  "type": "string"
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?offset=400&limit=100",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "previous": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?offset=200&limit=100",
-                  "type": "string"
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?offset=200&limit=100",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "results": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "external_id": {
-                        "value": {
-                          "value": "external_id",
-                          "type": "string"
+                        "external_id": {
+                          "value": {
+                            "value": "external_id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "last_uploaded_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                        "last_uploaded_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "label": {
-                        "value": {
-                          "value": "label",
-                          "type": "string"
+                        "label": {
+                          "value": {
+                            "value": "label",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "processing_state": {
-                        "value": "QUEUED",
-                        "type": "enum"
-                      },
-                      "processing_failure_reason": {
-                        "value": {
-                          "value": "EXCEEDED_CHARACTER_LIMIT",
-                          "type": "string"
+                        "processing_state": {
+                          "value": "QUEUED",
+                          "type": "enum"
                         },
-                        "type": "literal"
-                      },
-                      "status": {
-                        "value": {
-                          "value": "ACTIVE",
-                          "type": "string"
+                        "processing_failure_reason": {
+                          "value": {
+                            "value": "EXCEEDED_CHARACTER_LIMIT",
+                            "type": "string"
+                          },
+                          "type": "literal"
                         },
-                        "type": "literal"
-                      },
-                      "keywords": {
-                        "value": [
-                          {
-                            "value": {
-                              "value": "keywords",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        ],
-                        "type": "array"
-                      },
-                      "document_to_document_indexes": {
-                        "value": [
-                          {
-                            "properties": {
-                              "id": {
-                                "value": {
-                                  "value": "id",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                        "status": {
+                          "value": {
+                            "value": "ACTIVE",
+                            "type": "string"
+                          },
+                          "type": "literal"
+                        },
+                        "keywords": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "keywords",
+                                "type": "string"
                               },
-                              "document_index_id": {
-                                "value": {
-                                  "value": "document_index_id",
-                                  "type": "string"
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "document_to_document_indexes": {
+                          "value": [
+                            {
+                              "properties": {
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                                "document_index_id": {
+                                  "value": {
+                                    "value": "document_index_id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1208,6 +1223,7 @@
       },
       "response": {
         "description": "",
+        "fullExamples": [],
         "schema": {
           "generatedName": "ExecuteWorkflowStreamResponse",
           "schema": "WorkflowStreamEvent",
@@ -1234,7 +1250,218 @@
       "authed": true,
       "method": "POST",
       "path": "/v1/execute-workflow-stream",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "inputs": {
+                "value": [
+                  {
+                    "value": {
+                      "value": {
+                        "type": {
+                          "value": {
+                            "value": "CHAT_HISTORY",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "inputs",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "value": {
+                          "value": [
+                            {
+                              "properties": {
+                                "text": {
+                                  "value": {
+                                    "value": "text",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "role": {
+                                  "value": "SYSTEM",
+                                  "type": "enum"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "discriminated"
+                    },
+                    "type": "oneOf"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": [
+              {
+                "value": {
+                  "value": {
+                    "type": {
+                      "value": {
+                        "value": "NODE",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "run_id": {
+                      "value": {
+                        "value": "string",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "external_id": {
+                      "value": {
+                        "value": "string",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "data": {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "node_id": {
+                          "value": {
+                            "value": "node_id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "node_result_id": {
+                          "value": {
+                            "value": "node_result_id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "state": {
+                          "value": "INITIATED",
+                          "type": "enum"
+                        },
+                        "ts": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "data": {
+                          "value": {
+                            "value": {
+                              "type": {
+                                "value": {
+                                  "value": "TERMINAL",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "data": {
+                                "properties": {
+                                  "output": {
+                                    "value": {
+                                      "value": {
+                                        "type": {
+                                          "value": {
+                                            "value": "CHAT_HISTORY",
+                                            "type": "string"
+                                          },
+                                          "type": "primitive"
+                                        },
+                                        "name": {
+                                          "value": {
+                                            "value": "output",
+                                            "type": "string"
+                                          },
+                                          "type": "primitive"
+                                        },
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "properties": {
+                                                "text": {
+                                                  "value": {
+                                                    "value": "text",
+                                                    "type": "string"
+                                                  },
+                                                  "type": "primitive"
+                                                },
+                                                "role": {
+                                                  "value": "SYSTEM",
+                                                  "type": "enum"
+                                                }
+                                              },
+                                              "type": "object"
+                                            }
+                                          ],
+                                          "type": "array"
+                                        }
+                                      },
+                                      "type": "discriminated"
+                                    },
+                                    "type": "oneOf"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "type": "discriminated"
+                          },
+                          "type": "oneOf"
+                        },
+                        "error": {
+                          "properties": {
+                            "message": {
+                              "value": {
+                                "value": "message",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "code": {
+                              "value": "WORKFLOW_INITIALIZATION",
+                              "type": "enum"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -1473,67 +1700,70 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "results": {
-                "value": [
-                  {
-                    "properties": {
-                      "data": {
-                        "properties": {
-                          "completions": {
-                            "value": [
-                              {
-                                "properties": {
-                                  "id": {
-                                    "value": {
-                                      "value": "id",
-                                      "type": "string"
+            "value": {
+              "properties": {
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "data": {
+                          "properties": {
+                            "completions": {
+                              "value": [
+                                {
+                                  "properties": {
+                                    "id": {
+                                      "value": {
+                                        "value": "id",
+                                        "type": "string"
+                                      },
+                                      "type": "primitive"
                                     },
-                                    "type": "primitive"
+                                    "text": {
+                                      "value": {
+                                        "value": "text",
+                                        "type": "string"
+                                      },
+                                      "type": "primitive"
+                                    },
+                                    "model_version_id": {
+                                      "value": {
+                                        "value": "model_version_id",
+                                        "type": "string"
+                                      },
+                                      "type": "primitive"
+                                    }
                                   },
-                                  "text": {
-                                    "value": {
-                                      "value": "text",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "model_version_id": {
-                                    "value": {
-                                      "value": "model_version_id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  }
-                                },
-                                "type": "object"
-                              }
-                            ],
-                            "type": "array"
-                          }
+                                  "type": "object"
+                                }
+                              ],
+                              "type": "array"
+                            }
+                          },
+                          "type": "object"
                         },
-                        "type": "object"
+                        "error": {
+                          "properties": {
+                            "message": {
+                              "value": {
+                                "value": "message",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
                       },
-                      "error": {
-                        "properties": {
-                          "message": {
-                            "value": {
-                              "value": "message",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1575,6 +1805,7 @@
       },
       "response": {
         "description": "",
+        "fullExamples": [],
         "schema": {
           "generatedName": "GenerateStreamResponse",
           "schema": "GenerateStreamResponse",
@@ -1734,7 +1965,123 @@
       "authed": true,
       "method": "POST",
       "path": "/v1/generate-stream",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "requests": {
+                "value": [
+                  {
+                    "properties": {
+                      "input_values": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": [
+              {
+                "properties": {
+                  "delta": {
+                    "properties": {
+                      "request_index": {
+                        "value": {
+                          "value": 1,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
+                      "data": {
+                        "properties": {
+                          "completion_index": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "completion": {
+                            "properties": {
+                              "id": {
+                                "value": {
+                                  "value": "id",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "text": {
+                                "value": {
+                                  "value": "text",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "model_version_id": {
+                                "value": {
+                                  "value": "model_version_id",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "error": {
+                        "properties": {
+                          "message": {
+                            "value": {
+                              "value": "message",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -1809,226 +2156,229 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "created": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              },
-              "label": {
-                "value": {
-                  "value": "label",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "model_type": {
-                "value": "GENERATE",
-                "type": "enum"
-              },
-              "provider": {
-                "value": "ANTHROPIC",
-                "type": "enum"
-              },
-              "external_id": {
-                "value": {
-                  "value": "external_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "build_config": {
-                "properties": {
-                  "base_model": {
-                    "value": {
-                      "value": "base_model",
-                      "type": "string"
-                    },
-                    "type": "primitive"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
                   },
-                  "sandbox_snapshot": {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "prompt_index": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "prompt_id": {
-                        "value": {
-                          "value": "prompt_id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sandbox_id": {
-                        "value": {
-                          "value": "sandbox_id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
+                  "type": "primitive"
                 },
-                "type": "object"
-              },
-              "exec_config": {
-                "properties": {
-                  "parameters": {
-                    "properties": {
-                      "temperature": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
+                "created": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "label": {
+                  "value": {
+                    "value": "label",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "model_type": {
+                  "value": "GENERATE",
+                  "type": "enum"
+                },
+                "provider": {
+                  "value": "ANTHROPIC",
+                  "type": "enum"
+                },
+                "external_id": {
+                  "value": {
+                    "value": "external_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "build_config": {
+                  "properties": {
+                    "base_model": {
+                      "value": {
+                        "value": "base_model",
+                        "type": "string"
                       },
-                      "max_tokens": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "top_p": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      },
-                      "frequency_penalty": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      },
-                      "presence_penalty": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      },
-                      "stop": {
-                        "value": [
-                          {
-                            "value": {
-                              "value": "stop",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        ],
-                        "type": "array"
-                      },
-                      "top_k": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "primitive"
                     },
-                    "type": "object"
-                  },
-                  "input_variables": {
-                    "value": [
-                      {
-                        "properties": {
-                          "key": {
-                            "value": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
+                    "sandbox_snapshot": {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "object"
-                      }
-                    ],
-                    "type": "array"
-                  },
-                  "prompt_template": {
-                    "value": {
-                      "value": "prompt_template",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "prompt_block_data": {
-                    "properties": {
-                      "version": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                        "prompt_index": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "prompt_id": {
+                          "value": {
+                            "value": "prompt_id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sandbox_id": {
+                          "value": {
+                            "value": "sandbox_id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "blocks": {
-                        "value": [
-                          {
-                            "properties": {
-                              "id": {
-                                "value": {
-                                  "value": "id",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                },
+                "exec_config": {
+                  "properties": {
+                    "parameters": {
+                      "properties": {
+                        "temperature": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        },
+                        "max_tokens": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "top_p": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        },
+                        "frequency_penalty": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        },
+                        "presence_penalty": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        },
+                        "stop": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "stop",
+                                "type": "string"
                               },
-                              "block_type": {
-                                "value": "CHAT_MESSAGE",
-                                "type": "enum"
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "top_k": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "input_variables": {
+                      "value": [
+                        {
+                          "properties": {
+                            "key": {
+                              "value": {
+                                "value": "key",
+                                "type": "string"
                               },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "prompt_template": {
+                      "value": {
+                        "value": "prompt_template",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "prompt_block_data": {
+                      "properties": {
+                        "version": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "blocks": {
+                          "value": [
+                            {
                               "properties": {
-                                "properties": {},
-                                "type": "object"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      }
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "block_type": {
+                                  "value": "CHAT_MESSAGE",
+                                  "type": "enum"
+                                },
+                                "properties": {
+                                  "properties": {},
+                                  "type": "object"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
+                    "prompt_syntax_version": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    }
                   },
-                  "prompt_syntax_version": {
-                    "value": {
-                      "value": 1,
-                      "type": "int"
-                    },
-                    "type": "primitive"
-                  }
+                  "type": "object"
                 },
-                "type": "object"
+                "status": {
+                  "value": "CREATING",
+                  "type": "enum"
+                }
               },
-              "status": {
-                "value": "CREATING",
-                "type": "enum"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2153,28 +2503,31 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "prompt": {
-                "properties": {
-                  "text": {
-                    "value": {
-                      "value": "text",
-                      "type": "string"
+            "value": {
+              "properties": {
+                "prompt": {
+                  "properties": {
+                    "text": {
+                      "value": {
+                        "value": "text",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
+                    "num_tokens": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    }
                   },
-                  "num_tokens": {
-                    "value": {
-                      "value": 1,
-                      "type": "int"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2407,104 +2760,107 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "prompt": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
+            "value": {
+              "properties": {
+                "prompt": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
+                    "label": {
+                      "value": {
+                        "value": "label",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
                   },
-                  "label": {
-                    "value": {
-                      "value": "label",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                  "type": "object"
                 },
-                "type": "object"
+                "sandbox_snapshot": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "sandbox": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "label": {
+                      "value": {
+                        "value": "label",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "model_version": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "label": {
+                      "value": {
+                        "value": "label",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "deployment": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "label": {
+                      "value": {
+                        "value": "label",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
               },
-              "sandbox_snapshot": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              },
-              "sandbox": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "label": {
-                    "value": {
-                      "value": "label",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              },
-              "model_version": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "label": {
-                    "value": {
-                      "value": "label",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              },
-              "deployment": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "name": {
-                    "value": {
-                      "value": "name",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "label": {
-                    "value": {
-                      "value": "label",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2718,89 +3074,92 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "label": {
-                "value": {
-                  "value": "label",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "label": {
+                  "value": {
+                    "value": "label",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "inputs": {
-                "value": [
-                  {
-                    "properties": {
-                      "key": {
-                        "value": {
-                          "value": "key",
-                          "type": "string"
+                "inputs": {
+                  "value": [
+                    {
+                      "properties": {
+                        "key": {
+                          "value": {
+                            "value": "key",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": {
-                        "value": "TEXT",
-                        "type": "enum"
-                      },
-                      "value": {
-                        "value": {
-                          "value": "value",
-                          "type": "string"
+                        "type": {
+                          "value": "TEXT",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "chat_history": {
-                        "value": [
-                          {
-                            "properties": {
-                              "text": {
-                                "value": {
-                                  "value": "text",
-                                  "type": "string"
+                        "value": {
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "chat_history": {
+                          "value": [
+                            {
+                              "properties": {
+                                "text": {
+                                  "value": {
+                                    "value": "text",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
+                                "role": {
+                                  "value": "SYSTEM",
+                                  "type": "enum"
+                                }
                               },
-                              "role": {
-                                "value": "SYSTEM",
-                                "type": "enum"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "primitive"
-              },
-              "metric_input_params": {
-                "properties": {
-                  "params": {
-                    "properties": {
-                      "target": {
-                        "value": {
-                          "value": "target",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "object"
-              }
+                "metric_input_params": {
+                  "properties": {
+                    "params": {
+                      "properties": {
+                        "target": {
+                          "value": {
+                            "value": "target",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2892,89 +3251,92 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "label": {
-                "value": {
-                  "value": "label",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "label": {
+                  "value": {
+                    "value": "label",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "inputs": {
-                "value": [
-                  {
-                    "properties": {
-                      "key": {
-                        "value": {
-                          "value": "key",
-                          "type": "string"
+                "inputs": {
+                  "value": [
+                    {
+                      "properties": {
+                        "key": {
+                          "value": {
+                            "value": "key",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": {
-                        "value": "TEXT",
-                        "type": "enum"
-                      },
-                      "value": {
-                        "value": {
-                          "value": "value",
-                          "type": "string"
+                        "type": {
+                          "value": "TEXT",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "chat_history": {
-                        "value": [
-                          {
-                            "properties": {
-                              "text": {
-                                "value": {
-                                  "value": "text",
-                                  "type": "string"
+                        "value": {
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "chat_history": {
+                          "value": [
+                            {
+                              "properties": {
+                                "text": {
+                                  "value": {
+                                    "value": "text",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
+                                "role": {
+                                  "value": "SYSTEM",
+                                  "type": "enum"
+                                }
                               },
-                              "role": {
-                                "value": "SYSTEM",
-                                "type": "enum"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "primitive"
-              },
-              "metric_input_params": {
-                "properties": {
-                  "params": {
-                    "properties": {
-                      "target": {
-                        "value": {
-                          "value": "target",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "object"
-              }
+                "metric_input_params": {
+                  "properties": {
+                    "params": {
+                      "properties": {
+                        "target": {
+                          "value": {
+                            "value": "target",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3246,64 +3608,67 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "results": {
-                "value": [
-                  {
-                    "properties": {
-                      "document": {
-                        "properties": {
-                          "id": {
-                            "value": {
-                              "value": "id",
-                              "type": "string"
+            "value": {
+              "properties": {
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "document": {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "id",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
+                            "label": {
+                              "value": {
+                                "value": "label",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
                           },
-                          "label": {
-                            "value": {
-                              "value": "label",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
+                          "type": "object"
                         },
-                        "type": "object"
-                      },
-                      "text": {
-                        "value": {
-                          "value": "text",
-                          "type": "string"
+                        "text": {
+                          "value": {
+                            "value": "text",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "keywords": {
-                        "value": [
-                          {
-                            "value": {
-                              "value": "keywords",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        ],
-                        "type": "array"
-                      },
-                      "score": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
+                        "keywords": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "keywords",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "score": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3600,56 +3965,59 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "test_case_id": {
-                "value": {
-                  "value": "test_case_id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "test_case_id": {
+                  "value": {
+                    "value": "test_case_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "label": {
-                "value": {
-                  "value": "label",
-                  "type": "string"
+                "label": {
+                  "value": {
+                    "value": "label",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "input_values": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+                "input_values": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "evaluation_params": {
-                "properties": {
-                  "target": {
-                    "value": {
-                      "value": "target",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                  ],
+                  "type": "map"
                 },
-                "type": "object"
-              }
+                "evaluation_params": {
+                  "properties": {
+                    "target": {
+                      "value": {
+                        "value": "target",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -4028,16 +4396,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "document_id": {
-                "value": {
-                  "value": "document_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "document_id": {
+                  "value": {
+                    "value": "document_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -4123,6 +4494,7 @@
         "generatedName": "ChatMessage",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4167,6 +4539,7 @@
         "generatedName": "ChatMessageRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4229,6 +4602,7 @@
         "generatedName": "ConditionalNodeResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4267,6 +4641,7 @@
         "generatedName": "ConditionalNodeResultData",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4319,6 +4694,7 @@
         "generatedName": "DeploymentNodeResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4395,6 +4771,7 @@
         "generatedName": "DeploymentNodeResultData",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4568,6 +4945,7 @@
         "generatedName": "DeploymentRead",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4669,6 +5047,7 @@
         "generatedName": "Document",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4739,6 +5118,7 @@
         "generatedName": "DocumentDocumentToDocumentIndex",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4876,6 +5256,7 @@
         "generatedName": "DocumentIndexCreateRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5021,6 +5402,7 @@
         "generatedName": "DocumentIndexRead",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5197,6 +5579,7 @@
         "generatedName": "EnrichedNormalizedCompletion",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5258,6 +5641,7 @@
         "generatedName": "EvaluationParams",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5292,6 +5676,7 @@
         "generatedName": "EvaluationParamsRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5434,6 +5819,7 @@
         "generatedName": "ExecuteWorkflowStreamRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5576,6 +5962,7 @@
         "generatedName": "GenerateBodyRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5605,6 +5992,7 @@
         "generatedName": "GenerateErrorResponse",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5641,6 +6029,7 @@
         "generatedName": "GenerateOptionsRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5737,6 +6126,7 @@
         "generatedName": "GenerateRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5772,6 +6162,7 @@
         "generatedName": "GenerateResponse",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5830,6 +6221,7 @@
         "generatedName": "GenerateResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5865,6 +6257,7 @@
         "generatedName": "GenerateResultData",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5894,6 +6287,7 @@
         "generatedName": "GenerateResultError",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6009,6 +6403,7 @@
         "generatedName": "GenerateStreamBodyRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6039,6 +6434,7 @@
         "generatedName": "GenerateStreamResponse",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6109,6 +6505,7 @@
         "generatedName": "GenerateStreamResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6153,6 +6550,7 @@
         "generatedName": "GenerateStreamResultData",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6289,6 +6687,7 @@
         "generatedName": "ModelVersionBuildConfig",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6327,6 +6726,7 @@
         "generatedName": "ModelVersionCompilePromptRequestRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6358,6 +6758,7 @@
         "generatedName": "ModelVersionCompilePromptResponse",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6403,6 +6804,7 @@
         "generatedName": "ModelVersionCompiledPrompt",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6515,6 +6917,7 @@
         "generatedName": "ModelVersionExecConfig",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6689,6 +7092,7 @@
         "generatedName": "ModelVersionExecConfigParameters",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6857,6 +7261,7 @@
         "generatedName": "ModelVersionRead",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6979,6 +7384,7 @@
         "generatedName": "ModelVersionSandboxSnapshot",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7032,6 +7438,7 @@
         "generatedName": "NormalizedLogProbs",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7130,6 +7537,7 @@
         "generatedName": "NormalizedTokenLogProbs",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7241,6 +7649,7 @@
         "generatedName": "PaginatedSlimDocumentList",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7313,6 +7722,7 @@
         "generatedName": "PromptNodeResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7389,6 +7799,7 @@
         "generatedName": "PromptNodeResultData",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7449,6 +7860,7 @@
         "generatedName": "PromptTemplateBlock",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7497,6 +7909,7 @@
         "generatedName": "PromptTemplateBlockData",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7545,6 +7958,7 @@
         "generatedName": "PromptTemplateBlockDataRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7764,6 +8178,7 @@
         "generatedName": "PromptTemplateBlockProperties",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7985,6 +8400,7 @@
         "generatedName": "PromptTemplateBlockPropertiesRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8046,6 +8462,7 @@
         "generatedName": "PromptTemplateBlockRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8075,6 +8492,7 @@
         "generatedName": "PromptTemplateInputVariable",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8105,6 +8523,7 @@
         "generatedName": "PromptTemplateInputVariableRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8186,6 +8605,7 @@
         "generatedName": "RegisterPromptErrorResponse",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8355,6 +8775,7 @@
         "generatedName": "RegisterPromptModelParametersRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8399,6 +8820,7 @@
         "generatedName": "RegisterPromptPrompt",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8470,6 +8892,7 @@
         "generatedName": "RegisterPromptPromptInfoRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8612,6 +9035,7 @@
         "generatedName": "RegisterPromptRequestRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8711,6 +9135,7 @@
         "generatedName": "RegisterPromptResponse",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8770,6 +9195,7 @@
         "generatedName": "RegisteredPromptDeployment",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8814,6 +9240,7 @@
         "generatedName": "RegisteredPromptModelVersion",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8858,6 +9285,7 @@
         "generatedName": "RegisteredPromptSandbox",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8887,6 +9315,7 @@
         "generatedName": "RegisteredPromptSandboxSnapshot",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8926,6 +9355,7 @@
         "generatedName": "SandboxMetricInputParams",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8965,6 +9395,7 @@
         "generatedName": "SandboxMetricInputParamsRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8995,6 +9426,7 @@
         "generatedName": "SandboxNodeResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9071,6 +9503,7 @@
         "generatedName": "SandboxNodeResultData",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9157,6 +9590,7 @@
         "generatedName": "SandboxScenario",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9254,6 +9688,7 @@
         "generatedName": "ScenarioInput",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9352,6 +9787,7 @@
         "generatedName": "ScenarioInputRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9403,6 +9839,7 @@
         "generatedName": "SearchErrorResponse",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9449,6 +9886,7 @@
         "generatedName": "SearchFiltersRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9479,6 +9917,7 @@
         "generatedName": "SearchNodeResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9583,6 +10022,7 @@
         "generatedName": "SearchNodeResultData",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9693,6 +10133,7 @@
         "generatedName": "SearchRequestBodyRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9811,6 +10252,7 @@
         "generatedName": "SearchRequestOptionsRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9846,6 +10288,7 @@
         "generatedName": "SearchResponse",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9926,6 +10369,7 @@
         "generatedName": "SearchResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9955,6 +10399,7 @@
         "generatedName": "SearchResultMergingRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9999,6 +10444,7 @@
         "generatedName": "SearchWeightsRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10203,6 +10649,7 @@
         "generatedName": "SlimDocument",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10361,6 +10808,7 @@
         "generatedName": "SubmitCompletionActualRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10389,6 +10837,7 @@
         "generatedName": "SubmitCompletionActualsErrorResponse",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10478,6 +10927,7 @@
         "generatedName": "SubmitCompletionActualsRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10527,6 +10977,7 @@
         "generatedName": "TerminalNodeChatHistoryResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10579,6 +11030,7 @@
         "generatedName": "TerminalNodeJsonResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10609,6 +11061,7 @@
         "generatedName": "TerminalNodeResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10639,6 +11092,7 @@
         "generatedName": "TerminalNodeResultData",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10725,6 +11179,7 @@
         "generatedName": "TerminalNodeStringResult",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10826,6 +11281,7 @@
         "generatedName": "TestSuiteTestCase",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10928,6 +11384,7 @@
         "generatedName": "TestSuiteTestCaseRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11065,6 +11522,7 @@
         "generatedName": "UploadDocumentBodyRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11093,6 +11551,7 @@
         "generatedName": "UploadDocumentErrorResponse",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11123,6 +11582,7 @@
         "generatedName": "UploadDocumentResponse",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11220,6 +11680,7 @@
         "generatedName": "UpsertSandboxScenarioRequestRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11264,6 +11725,7 @@
         "generatedName": "WorkflowEventError",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11354,6 +11816,7 @@
         "generatedName": "WorkflowExecutionNodeResultEvent",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11422,6 +11885,7 @@
         "generatedName": "WorkflowExecutionWorkflowResultEvent",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11633,6 +12097,7 @@
         "generatedName": "WorkflowNodeResultEvent",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11715,6 +12180,7 @@
         "generatedName": "WorkflowRequestChatHistoryInputRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11811,6 +12277,7 @@
         "generatedName": "WorkflowRequestJsonInputRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11855,6 +12322,7 @@
         "generatedName": "WorkflowRequestStringInputRequest",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11958,6 +12426,7 @@
         "generatedName": "WorkflowResultEvent",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12111,6 +12580,7 @@
         "generatedName": "WorkflowResultEventOutputDataChatHistory",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12219,6 +12689,7 @@
         "generatedName": "WorkflowResultEventOutputDataJson",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12319,6 +12790,7 @@
         "generatedName": "WorkflowResultEventOutputDataString",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

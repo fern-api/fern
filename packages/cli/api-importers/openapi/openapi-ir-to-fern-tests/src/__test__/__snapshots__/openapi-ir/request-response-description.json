@@ -44,23 +44,26 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
               },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -123,6 +126,7 @@
         "generatedName": "Schema1",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

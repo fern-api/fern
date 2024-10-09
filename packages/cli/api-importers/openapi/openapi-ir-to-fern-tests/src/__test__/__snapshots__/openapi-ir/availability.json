@@ -322,16 +322,19 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "fine_setting": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "fine_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -401,16 +404,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "not_deprecated_setting": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -478,6 +484,7 @@
           "generatedName": "PostSuccessInlinePropertyDeprecationRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -526,16 +533,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "not_deprecated_setting": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -582,6 +592,7 @@
           "groupName": [],
           "additionalProperties": false,
           "availability": "Deprecated",
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -631,16 +642,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "not_deprecated_setting": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -687,6 +701,7 @@
           "groupName": [],
           "additionalProperties": false,
           "availability": "Beta",
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -736,16 +751,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "not_deprecated_setting": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -819,6 +837,7 @@
         "generatedName": "Settings",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -853,6 +872,7 @@
         "groupName": [],
         "additionalProperties": false,
         "availability": "Deprecated",
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -886,6 +906,7 @@
         "generatedName": "NotDeprecatedSettings",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

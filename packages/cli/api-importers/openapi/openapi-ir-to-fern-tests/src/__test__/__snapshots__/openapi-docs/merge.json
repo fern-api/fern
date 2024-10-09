@@ -19054,7 +19054,6 @@ service:
               "examples": [
                 {
                   "headers": {},
-                  "name": "Employees that started on or after January 1st, 2022",
                   "response": {
                     "body": [
                       {
@@ -19141,7 +19140,6 @@ service:
               "examples": [
                 {
                   "headers": {},
-                  "name": "Employees that started on or after January 1st, 2022",
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -19213,8 +19211,7 @@ service:
         docs: ''
         type: list<root.LinkedAccountSelectiveSyncConfiguration>
       examples:
-        - name: Employees that started on or after January 1st, 2022
-          headers: {}
+        - headers: {}
           response:
             body:
               - linked_account_conditions:
@@ -19274,8 +19271,7 @@ service:
         docs: ''
         type: root.PaginatedConditionSchemaList
       examples:
-        - name: Employees that started on or after January 1st, 2022
-          headers: {}
+        - headers: {}
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw

@@ -11424,7 +11424,6 @@ You can view the currently authorised admin along with the embedded app object (
 ",
               "examples": [
                 {
-                  "name": "Successful response",
                   "response": {
                     "body": {
                       "app": {
@@ -11473,7 +11472,6 @@ You can view the currently authorised admin along with the embedded app object (
               ],
               "examples": [
                 {
-                  "name": "Successful response",
                   "query-parameters": {
                     "created_at_after": "1677253093",
                     "created_at_before": "1677861493",
@@ -11551,7 +11549,6 @@ You can view the currently authorised admin along with the embedded app object (
               ],
               "examples": [
                 {
-                  "name": "Successful response",
                   "response": {
                     "body": {
                       "admins": [
@@ -11593,7 +11590,6 @@ You can view the currently authorised admin along with the embedded app object (
               ],
               "examples": [
                 {
-                  "name": "Admin found",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -11877,8 +11873,7 @@ service:
         docs: Successful response
         type: optional<root.Admin>
       examples:
-        - name: Successful response
-          response:
+        - response:
             body:
               type: admin
               id: '991267390'
@@ -12032,8 +12027,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: Successful response
-          query-parameters:
+        - query-parameters:
             created_at_after: '1677253093'
             created_at_before: '1677861493'
           response:
@@ -12080,8 +12074,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: Successful response
-          response:
+        - response:
             body:
               type: admin.list
               admins:
@@ -12113,8 +12106,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Admin found
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -13324,7 +13316,6 @@ imports:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -13365,7 +13356,6 @@ imports:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "response": {
                     "body": {
                       "data": [
@@ -13424,7 +13414,6 @@ imports:
               ],
               "examples": [
                 {
-                  "name": "Article found",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -13894,7 +13883,6 @@ imports:
               ],
               "examples": [
                 {
-                  "name": "Search successful",
                   "query-parameters": {
                     "phrase": "Getting started",
                     "state": "published",
@@ -15149,8 +15137,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: successful
-          response:
+        - response:
             body:
               type: list
               pages:
@@ -16042,8 +16029,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Article found
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -17299,8 +17285,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -17340,8 +17325,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: Search successful
-          query-parameters:
+        - query-parameters:
             phrase: Getting started
             state: published
           response:
@@ -17584,7 +17568,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "path-parameters": {
                     "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                   },
@@ -17694,7 +17677,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "path-parameters": {
                     "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                   },
@@ -17740,7 +17722,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "path-parameters": {
                     "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                   },
@@ -17821,7 +17802,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "path-parameters": {
                     "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                   },
@@ -18190,7 +18170,6 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "path-parameters": {
                     "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
                   },
@@ -18227,7 +18206,6 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "path-parameters": {
                     "contact_id": "58a430d35458202d41b1e65b",
                     "id": "58a430d35458202d41b1e65b",
@@ -18316,7 +18294,6 @@ When using the Companies endpoint and the pages object to iterate through the re
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "query-parameters": {
                     "order": "desc",
                   },
@@ -18425,7 +18402,6 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "query-parameters": {
                     "company_id": "12345",
                     "name": "my company",
@@ -18552,7 +18528,6 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "response": {
                     "body": {
                       "data": [
@@ -18820,8 +18795,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Successful
-          query-parameters:
+        - query-parameters:
             name: my company
             company_id: '12345'
             tag_id: '678910'
@@ -18957,8 +18931,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Successful
-          path-parameters:
+        - path-parameters:
             id: 5f4d3c1c-7b1b-4d7d-a97e-6095715c6632
           response:
             body:
@@ -19016,8 +18989,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Successful
-          path-parameters:
+        - path-parameters:
             id: 5f4d3c1c-7b1b-4d7d-a97e-6095715c6632
           response:
             body:
@@ -19070,8 +19042,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Successful
-          path-parameters:
+        - path-parameters:
             id: 5f4d3c1c-7b1b-4d7d-a97e-6095715c6632
           response:
             body:
@@ -19095,8 +19066,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Successful
-          path-parameters:
+        - path-parameters:
             id: 5f4d3c1c-7b1b-4d7d-a97e-6095715c6632
           response:
             body:
@@ -19183,8 +19153,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Successful
-          path-parameters:
+        - path-parameters:
             id: 5f4d3c1c-7b1b-4d7d-a97e-6095715c6632
           response:
             body:
@@ -19242,8 +19211,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: Successful
-          query-parameters:
+        - query-parameters:
             order: desc
           response:
             body:
@@ -19328,8 +19296,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: Successful
-          response:
+        - response:
             body:
               type: list
               data:
@@ -19537,8 +19504,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Successful
-          path-parameters:
+        - path-parameters:
             contact_id: 58a430d35458202d41b1e65b
             id: 58a430d35458202d41b1e65b
           response:
@@ -19697,7 +19663,6 @@ types:
               "docs": "You can archive a single contact.",
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "id": "63a07ddf05a32042dffac965",
                   },
@@ -19855,7 +19820,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -19897,7 +19861,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "response": {
                     "body": {
                       "data": [
@@ -20354,7 +20317,6 @@ The table below shows the operators you can use to define how you want to search
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "id": "63a07ddf05a32042dffac965",
                   },
@@ -20474,7 +20436,6 @@ The table below shows the operators you can use to define how you want to search
               "docs": "You can unarchive a single contact.",
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "id": "63a07ddf05a32042dffac965",
                   },
@@ -20693,7 +20654,6 @@ The table below shows the operators you can use to define how you want to search
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "id": "63a07ddf05a32042dffac965",
                   },
@@ -20765,7 +20725,6 @@ The table below shows the operators you can use to define how you want to search
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
                   },
@@ -20818,7 +20777,6 @@ The data property will show a combined list of:
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
                   },
@@ -20897,7 +20855,6 @@ The data property will show a combined list of:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
                   },
@@ -21172,8 +21129,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             id: 63a07ddf05a32042dffac965
           response:
             body:
@@ -21226,8 +21182,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             contact_id: 63a07ddf05a32042dffac965
           response:
             body:
@@ -21269,8 +21224,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Successful
-          path-parameters:
+        - path-parameters:
             contact_id: 63a07ddf05a32042dffac965
           response:
             body:
@@ -21323,8 +21277,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             contact_id: 63a07ddf05a32042dffac965
           response:
             body:
@@ -21352,8 +21305,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             id: 63a07ddf05a32042dffac965
           response:
             body:
@@ -21587,8 +21539,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -22033,8 +21984,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: successful
-          response:
+        - response:
             body:
               type: list
               data:
@@ -22210,8 +22160,7 @@ service:
         docs: successful
         type: root.ContactArchived
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             id: 63a07ddf05a32042dffac965
           response:
             body:
@@ -22233,8 +22182,7 @@ service:
         docs: successful
         type: root.ContactUnarchived
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             id: 63a07ddf05a32042dffac965
           response:
             body:
@@ -22836,7 +22784,6 @@ It is not possible to use this endpoint with Workflows.
               ],
               "examples": [
                 {
-                  "name": "Assign a conversation using assignment rules",
                   "path-parameters": {
                     "id": "123",
                   },
@@ -24174,7 +24121,6 @@ You can optionally request the result page size and the cursor to start after to
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "response": {
                     "body": {
                       "data": [
@@ -25219,7 +25165,6 @@ You can optionally request the result page size and the cursor to start after to
                   },
                 },
                 {
-                  "name": "Close a conversation",
                   "path-parameters": {
                     "id": "123",
                   },
@@ -25415,7 +25360,6 @@ You can optionally request the result page size and the cursor to start after to
                   },
                 },
                 {
-                  "name": "Snooze a conversation",
                   "path-parameters": {
                     "id": "123",
                   },
@@ -25610,7 +25554,6 @@ You can optionally request the result page size and the cursor to start after to
                   },
                 },
                 {
-                  "name": "Open a conversation",
                   "path-parameters": {
                     "id": "123",
                   },
@@ -25805,7 +25748,6 @@ You can optionally request the result page size and the cursor to start after to
                   },
                 },
                 {
-                  "name": "Assign a conversation",
                   "path-parameters": {
                     "id": "123",
                   },
@@ -27223,7 +27165,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                 },
                 {
-                  "name": "User reply",
                   "path-parameters": {
                     "id": "123 or "last"",
                   },
@@ -27418,7 +27359,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                 },
                 {
-                  "name": "Admin note reply",
                   "path-parameters": {
                     "id": "123 or "last"",
                   },
@@ -27624,7 +27564,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                 },
                 {
-                  "name": "User last conversation reply",
                   "path-parameters": {
                     "id": "123 or "last"",
                   },
@@ -27858,7 +27797,6 @@ For AI agent conversation metadata, please note that you need to have the agent 
               ],
               "examples": [
                 {
-                  "name": "conversation found",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -29119,8 +29057,7 @@ service:
         - root.UnauthorizedError
         - root.ForbiddenError
       examples:
-        - name: successful
-          response:
+        - response:
             body:
               type: conversation.list
               pages:
@@ -29255,8 +29192,7 @@ service:
         - root.ForbiddenError
         - root.NotFoundError
       examples:
-        - name: conversation found
-          path-parameters:
+        - path-parameters:
             id: 1
           query-parameters:
             display_as: plaintext
@@ -30840,8 +30776,7 @@ service:
                     - url: /fin-ai-agent/content?content=content_snippet&id=3234924
                       title: My internal content snippet
                       locale: en
-        - name: User reply
-          path-parameters:
+        - path-parameters:
             id: 123 or "last"
           request:
             message_type: comment
@@ -30988,8 +30923,7 @@ service:
                     - url: /fin-ai-agent/content?content=content_snippet&id=3234924
                       title: My internal content snippet
                       locale: en
-        - name: Admin note reply
-          path-parameters:
+        - path-parameters:
             id: 123 or "last"
           request:
             message_type: comment
@@ -31148,8 +31082,7 @@ service:
                     - url: /fin-ai-agent/content?content=content_snippet&id=3234924
                       title: My internal content snippet
                       locale: en
-        - name: User last conversation reply
-          path-parameters:
+        - path-parameters:
             id: 123 or "last"
           request:
             message_type: comment
@@ -32067,8 +32000,7 @@ service:
                     - url: /fin-ai-agent/content?content=content_snippet&id=3234924
                       title: My internal content snippet
                       locale: en
-        - name: Close a conversation
-          path-parameters:
+        - path-parameters:
             id: '123'
           request:
             message_type: assignment
@@ -32216,8 +32148,7 @@ service:
                     - url: /fin-ai-agent/content?content=content_snippet&id=3234924
                       title: My internal content snippet
                       locale: en
-        - name: Snooze a conversation
-          path-parameters:
+        - path-parameters:
             id: '123'
           request:
             message_type: assignment
@@ -32364,8 +32295,7 @@ service:
                     - url: /fin-ai-agent/content?content=content_snippet&id=3234924
                       title: My internal content snippet
                       locale: en
-        - name: Open a conversation
-          path-parameters:
+        - path-parameters:
             id: '123'
           request:
             message_type: assignment
@@ -32512,8 +32442,7 @@ service:
                     - url: /fin-ai-agent/content?content=content_snippet&id=3234924
                       title: My internal content snippet
                       locale: en
-        - name: Assign a conversation
-          path-parameters:
+        - path-parameters:
             id: '123'
           request:
             message_type: assignment
@@ -32689,8 +32618,7 @@ service:
         - root.ForbiddenError
         - root.NotFoundError
       examples:
-        - name: Assign a conversation using assignment rules
-          path-parameters:
+        - path-parameters:
             id: '123'
           response:
             body:
@@ -34740,7 +34668,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "Successful response",
                   "response": {
                     "body": {
                       "data": [
@@ -35636,8 +35563,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: Successful response
-          response:
+        - response:
             body:
               type: list
               data:
@@ -36947,7 +36873,6 @@ docs: Everything about your Data Events
               "docs": "You can cancel your job",
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "job_identifier": "job_identifier",
                   },
@@ -37076,7 +37001,6 @@ Your exported message data will be streamed continuously back down to you in a g
 ",
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "job_identifier": "job_identifier",
                   },
@@ -37253,8 +37177,7 @@ Your exported message data will be streamed continuously back down to you in a g
         docs: successful
         type: DataExport
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             job_identifier: job_identifier
           response:
             body:
@@ -37276,8 +37199,7 @@ Your exported message data will be streamed continuously back down to you in a g
         docs: successful
         type: DataExport
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             job_identifier: job_identifier
           response:
             body:
@@ -37840,7 +37762,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -37879,7 +37800,6 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "response": {
                     "body": {
                       "data": [
@@ -37945,7 +37865,6 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               ],
               "examples": [
                 {
-                  "name": "Help Centers found",
                   "response": {
                     "body": {
                       "data": [
@@ -37982,7 +37901,6 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               ],
               "examples": [
                 {
-                  "name": "Collection found",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -38216,7 +38134,6 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               ],
               "examples": [
                 {
-                  "name": "Collection found",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -38866,8 +38783,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: Successful
-          response:
+        - response:
             body:
               type: list
               pages:
@@ -39300,8 +39216,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Collection found
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -39865,8 +39780,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -39892,8 +39806,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Collection found
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -39918,8 +39831,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: Help Centers found
-          response:
+        - response:
             body:
               type: list
               data:
@@ -40223,7 +40135,6 @@ This will return the Message model that has been created.
                   },
                 },
                 {
-                  "name": "user message created",
                   "request": {
                     "body": "heyy",
                     "from": {
@@ -40245,7 +40156,6 @@ This will return the Message model that has been created.
                   },
                 },
                 {
-                  "name": "lead message created",
                   "request": {
                     "body": "heyy",
                     "from": {
@@ -40267,7 +40177,6 @@ This will return the Message model that has been created.
                   },
                 },
                 {
-                  "name": "admin message created",
                   "request": {
                     "body": "heyy",
                     "from": {
@@ -40512,8 +40421,7 @@ service:
               body: heyy
               message_type: inapp
               conversation_id: '476'
-        - name: user message created
-          request:
+        - request:
             from:
               type: user
               id: 667d61698a68186f43bafe50
@@ -40528,8 +40436,7 @@ service:
               body: heyy
               message_type: inapp
               conversation_id: '476'
-        - name: lead message created
-          request:
+        - request:
             from:
               type: user
               id: 667d61698a68186f43bafe50
@@ -40544,8 +40451,7 @@ service:
               body: heyy
               message_type: inapp
               conversation_id: '477'
-        - name: admin message created
-          request:
+        - request:
             from:
               type: user
               id: 667d61698a68186f43bafe50
@@ -40707,7 +40613,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -40743,7 +40648,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "id": "123",
                   },
@@ -40797,7 +40701,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "response": {
                     "body": {
                       "data": [
@@ -40849,7 +40752,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "response": {
                     "body": {
                       "data": [
@@ -40902,7 +40804,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -40960,7 +40861,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "id": "123",
                   },
@@ -41247,8 +41147,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: successful
-          response:
+        - response:
             body:
               type: list
               pages:
@@ -41343,8 +41242,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -41465,8 +41363,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -41491,8 +41388,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             id: '123'
           response:
             body:
@@ -41524,8 +41420,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: successful
-          response:
+        - response:
             body:
               type: list
               pages:
@@ -41566,8 +41461,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             id: '123'
           response:
             body:
@@ -41893,7 +41787,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "Successful response",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -42001,7 +41894,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "Note found",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -42134,8 +42026,7 @@ service:
       errors:
         - root.NotFoundError
       examples:
-        - name: Successful response
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -42344,8 +42235,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Note found
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -42435,7 +42325,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "Successful response",
                   "response": {
                     "body": {
                       "pages": {
@@ -42493,7 +42382,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "Successful response",
                   "path-parameters": {
                     "id": "123",
                   },
@@ -42602,8 +42490,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: Successful response
-          response:
+        - response:
             body:
               type: segment.list
               segments:
@@ -42640,8 +42527,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Successful response
-          path-parameters:
+        - path-parameters:
             id: '123'
           response:
             body:
@@ -42864,7 +42750,6 @@ This will return a subscription type model for the subscription type that was ad
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
                     "id": "37846",
@@ -42921,7 +42806,6 @@ This will return a subscription type model for the subscription type that was ad
               ],
               "examples": [
                 {
-                  "name": "Successful",
                   "response": {
                     "body": {
                       "data": [
@@ -43170,8 +43054,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Successful
-          path-parameters:
+        - path-parameters:
             contact_id: 63a07ddf05a32042dffac965
             id: '37846'
           response:
@@ -43204,8 +43087,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: Successful
-          response:
+        - response:
             body:
               type: list
               data:
@@ -43911,7 +43793,6 @@ Each operation will return a tag object.
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
                     "id": "7522907",
@@ -44176,7 +44057,6 @@ This will return a tag object.
               ],
               "examples": [
                 {
-                  "name": "Tag found",
                   "path-parameters": {
                     "id": "123",
                   },
@@ -44219,7 +44099,6 @@ This will return a tag object.
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "response": {
                     "body": {
                       "data": [
@@ -44400,8 +44279,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             contact_id: 63a07ddf05a32042dffac965
             id: '7522907'
           response:
@@ -44562,8 +44440,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: successful
-          response:
+        - response:
             body:
               type: list
               data:
@@ -44674,8 +44551,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: Tag found
-          path-parameters:
+        - path-parameters:
             id: '123'
           response:
             body:
@@ -44898,7 +44774,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "response": {
                     "body": {
                       "teams": [
@@ -44934,7 +44809,6 @@ types:
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "path-parameters": {
                     "id": "123",
                   },
@@ -45025,8 +44899,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: successful
-          response:
+        - response:
             body:
               type: team.list
               teams:
@@ -45054,8 +44927,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: successful
-          path-parameters:
+        - path-parameters:
             id: '123'
           response:
             body:
@@ -45686,7 +45558,6 @@ docs: Everything about your ticket type attributes
               ],
               "examples": [
                 {
-                  "name": "Ticket type found",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -45753,7 +45624,6 @@ docs: Everything about your ticket type attributes
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "response": {
                     "body": {
                       "ticket_types": [
@@ -45890,8 +45760,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: successful
-          response:
+        - response:
             body:
               type: list
               ticket_types:
@@ -45987,8 +45856,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: Ticket type found
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -46267,7 +46135,6 @@ docs: Everything about your ticket types
               ],
               "examples": [
                 {
-                  "name": "Ticket found",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -46601,7 +46468,6 @@ docs: Everything about your ticket types
                   },
                 },
                 {
-                  "name": "Admin note reply",
                   "path-parameters": {
                     "id": "123",
                   },
@@ -46652,7 +46518,6 @@ docs: Everything about your ticket types
                   },
                 },
                 {
-                  "name": "Admin quick_reply reply",
                   "path-parameters": {
                     "id": "123",
                   },
@@ -48529,8 +48394,7 @@ service:
                   width: 100
                   height: 100
               redacted: false
-        - name: Admin note reply
-          path-parameters:
+        - path-parameters:
             id: '123'
           request:
             message_type: comment
@@ -48571,8 +48435,7 @@ service:
                   width: 100
                   height: 100
               redacted: false
-        - name: Admin quick_reply reply
-          path-parameters:
+        - path-parameters:
             id: '123'
           request:
             message_type: comment
@@ -48732,8 +48595,7 @@ service:
       errors:
         - root.UnauthorizedError
       examples:
-        - name: Ticket found
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -49834,7 +49696,6 @@ docs: Everything about your tickets
               ],
               "examples": [
                 {
-                  "name": "successful",
                   "query-parameters": {
                     "user_id": "user_id",
                   },
@@ -50212,8 +50073,7 @@ service:
         - root.UnauthorizedError
         - root.NotFoundError
       examples:
-        - name: successful
-          query-parameters:
+        - query-parameters:
             user_id: user_id
           response:
             body:

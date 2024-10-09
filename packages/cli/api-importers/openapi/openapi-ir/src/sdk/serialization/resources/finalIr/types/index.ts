@@ -25,6 +25,7 @@ export * from "./SupportedSdkLanguage";
 export * from "./FernExample";
 export * from "./EndpointExample";
 export * from "./FullEndpointExample";
+export * from "./EndpointResponseExample";
 export * from "./PathParameterExample";
 export * from "./QueryParameterExample";
 export * from "./HeaderExample";

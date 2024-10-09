@@ -52,33 +52,36 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "associatedPersons": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
               },
-              "associatedPersons": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -176,6 +179,7 @@
           "user"
         ],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -210,6 +214,7 @@
         "generatedName": "Person",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

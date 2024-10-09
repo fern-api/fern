@@ -8088,7 +8088,6 @@ errors:
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "f.consignee_entity_ref": "amazon-us",
                     "f.shipment.id": 123456,
@@ -8414,7 +8413,6 @@ errors:
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "request": {
                     "cargo": {
                       "contains_hazmat": true,
@@ -8887,7 +8885,6 @@ errors:
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -9439,8 +9436,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
             f.shipment.id: 123456
@@ -9721,8 +9717,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          request:
+        - request:
             name: PO 123
             shipper_entity_ref: zoomit-us
             consignee_entity_ref: zoomit_ref
@@ -10023,8 +10018,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -10268,7 +10262,6 @@ docs: Endpoints relating to Booking objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "request": {
                     "amendment_note": "This is an amendment note with useful context to changes made to the booking.",
                     "booking_id": 12345,
@@ -10657,8 +10650,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          request:
+        - request:
             booking_id: 12345
             new_name: Valentine's Day - 2020
             amendment_note: >-
@@ -10852,7 +10844,6 @@ docs: >-
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "request": {
                     "booking_id": 9876,
                     "purchase_order_line_item_id": 112358,
@@ -10923,7 +10914,6 @@ docs: >-
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "f.booking.id": 54321,
                     "f.purchase_order.id": 123,
@@ -11010,7 +11000,6 @@ docs: >-
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -11203,8 +11192,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
             f.purchase_order.id: 123
@@ -11262,8 +11250,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          request:
+        - request:
             purchase_order_line_item_id: 112358
             booking_id: 9876
             units: 200
@@ -11302,8 +11289,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -11354,7 +11340,6 @@ docs: >-
               ],
               "examples": [
                 {
-                  "name": "response",
                   "request": {
                     "destination_port": "JFK",
                     "origin_coordinates": {
@@ -11683,8 +11668,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: response
-          request:
+        - request:
             transportation_mode: air
             weight:
               value: 40
@@ -11731,7 +11715,6 @@ docs: Endpoints relating to Carbon Calculations
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "request": {
                     "currency_code": "USD",
                     "invoice_number": "INVOICE-04-05-2020",
@@ -11920,7 +11903,6 @@ docs: Endpoints relating to Carbon Calculations
               "docs": "Returns a list of commercial invoices",
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "page": 1,
                     "per": 20,
@@ -12088,7 +12070,6 @@ docs: Endpoints relating to Carbon Calculations
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -12234,7 +12215,6 @@ docs: Endpoints relating to Carbon Calculations
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "request": {},
                   "response": {
                     "body": {
@@ -12537,8 +12517,7 @@ service:
         docs: Success
         type: CommercialInvoicesIndexResponse
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
           response:
@@ -12684,8 +12663,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          request:
+        - request:
             invoice_number: INVOICE-04-05-2020
             currency_code: USD
             proration_amount: {}
@@ -12824,8 +12802,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          request: {}
+        - request: {}
           response:
             body:
               _object: /api/response
@@ -12931,8 +12908,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -13050,7 +13026,6 @@ docs: Endpoints relating to Commercial Invoice objects
               ],
               "examples": [
                 {
-                  "name": "response",
                   "request": {
                     "name": "Zoomit",
                   },
@@ -13151,7 +13126,6 @@ docs: Endpoints relating to Commercial Invoice objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "page": 1,
                     "per": 20,
@@ -13259,7 +13233,6 @@ docs: Endpoints relating to Commercial Invoice objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "response": {
                     "body": {
                       "_object": "/api/response",
@@ -13336,7 +13309,6 @@ docs: Endpoints relating to Commercial Invoice objects
               "docs": "Retrieves the details of a single company.",
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -13420,7 +13392,6 @@ docs: Endpoints relating to Commercial Invoice objects
               ],
               "examples": [
                 {
-                  "name": "response",
                   "path-parameters": {
                     "id": "K67EZV1K8cQ5afQErZwk1Q",
                   },
@@ -13690,8 +13661,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
           response:
@@ -13763,8 +13733,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: response
-          request:
+        - request:
             name: Zoomit
           response:
             body:
@@ -13827,8 +13796,7 @@ service:
         docs: Success
         type: NetworkCompanyShowResponse
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -13898,8 +13866,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: response
-          path-parameters:
+        - path-parameters:
             id: K67EZV1K8cQ5afQErZwk1Q
           request: {}
           response:
@@ -13961,8 +13928,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          response:
+        - response:
             body:
               _object: /api/response
               self: https://api.flexport.com/network/me/companies
@@ -14034,7 +14000,6 @@ docs: Endpoints relating to Company objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "page": 1,
                     "per": 20,
@@ -14124,7 +14089,6 @@ docs: Endpoints relating to Company objects
               ],
               "examples": [
                 {
-                  "name": "response",
                   "request": {
                     "mailing_address": {},
                     "name": "Zoomit",
@@ -14215,7 +14179,6 @@ docs: Endpoints relating to Company objects
               ],
               "examples": [
                 {
-                  "name": "response",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -14277,7 +14240,6 @@ docs: Endpoints relating to Company objects
               ],
               "examples": [
                 {
-                  "name": "response",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -14503,8 +14465,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
           response:
@@ -14584,8 +14545,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: response
-          request:
+        - request:
             name: Zoomit
             mailing_address: {}
           response:
@@ -14630,8 +14590,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: response
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -14691,8 +14650,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: response
-          path-parameters:
+        - path-parameters:
             id: id
           request: {}
           response:
@@ -14748,7 +14706,6 @@ docs: Endpoints relating to CompanyEntity objects
               ],
               "examples": [
                 {
-                  "name": "response",
                   "request": {
                     "email": "john@example.com",
                     "name": "John Smith",
@@ -14824,7 +14781,6 @@ docs: Endpoints relating to CompanyEntity objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "page": 1,
                     "per": 20,
@@ -14906,7 +14862,6 @@ docs: Endpoints relating to CompanyEntity objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -14960,7 +14915,6 @@ docs: Endpoints relating to CompanyEntity objects
               ],
               "examples": [
                 {
-                  "name": "response",
                   "path-parameters": {
                     "id": "FHLKEFHHoW8nwh9UVOMpw",
                   },
@@ -15177,8 +15131,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
           response:
@@ -15237,8 +15190,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: response
-          request:
+        - request:
             name: John Smith
             email: john@example.com
             phone_number: 861-555-5555
@@ -15280,8 +15232,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -15333,8 +15284,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: response
-          path-parameters:
+        - path-parameters:
             id: FHLKEFHHoW8nwh9UVOMpw
           request: {}
           response:
@@ -15386,7 +15336,6 @@ docs: Endpoints relating to Contact objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "page": 1,
                     "per": 20,
@@ -15513,7 +15462,6 @@ docs: Endpoints relating to Contact objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -15721,8 +15669,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
           response:
@@ -15805,8 +15752,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -15896,7 +15842,6 @@ docs: Endpoints relating to Container objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "page": 1,
                     "per": 20,
@@ -15979,7 +15924,6 @@ docs: Endpoints relating to Container objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -16138,8 +16082,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
           response:
@@ -16180,8 +16123,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -16229,7 +16171,6 @@ docs: Endpoints relating to ContainerLeg objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "page": 1,
                     "per": 20,
@@ -16297,7 +16238,6 @@ docs: Endpoints relating to ContainerLeg objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -16438,8 +16378,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
           response:
@@ -16478,8 +16417,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -16524,7 +16462,6 @@ docs: Endpoints relating to Customs Entry objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "request": {
                     "document": "SGVsbG8sIFdvcmxkIQ==",
                     "document_type": "packing_list",
@@ -16592,7 +16529,6 @@ docs: Endpoints relating to Customs Entry objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "page": 1,
                     "per": 20,
@@ -16690,7 +16626,6 @@ docs: Endpoints relating to Customs Entry objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -16886,8 +16821,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
           response:
@@ -16930,8 +16864,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          request:
+        - request:
             file_name: Flexport-Booking.pdf
             mime_type: application/pdf
             document_type: packing_list
@@ -16966,8 +16899,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -17511,7 +17443,6 @@ docs: Endpoints relating to Event objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "f.client_id": 54321,
                     "f.entity.id": 12345,
@@ -17856,7 +17787,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -18302,8 +18232,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
             f.shipment.id: 12345
@@ -18516,8 +18445,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -18725,7 +18653,6 @@ docs: Endpoints relating to Invoice objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "page": 1,
                     "per": 20,
@@ -18830,7 +18757,6 @@ docs: Endpoints relating to Invoice objects
               ],
               "examples": [
                 {
-                  "name": "response",
                   "request": {
                     "address": {},
                     "company_id": "xyz_123_ABC",
@@ -18928,7 +18854,6 @@ docs: Endpoints relating to Invoice objects
               ],
               "examples": [
                 {
-                  "name": "response",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -18999,7 +18924,6 @@ docs: Endpoints relating to Invoice objects
               ],
               "examples": [
                 {
-                  "name": "response",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -19249,8 +19173,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
           response:
@@ -19326,8 +19249,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: response
-          request:
+        - request:
             name: Zoomit
             company_id: xyz_123_ABC
             address: {}
@@ -19383,8 +19305,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: response
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -19459,8 +19380,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: response
-          path-parameters:
+        - path-parameters:
             id: id
           request: {}
           response:
@@ -19526,7 +19446,6 @@ docs: Endpoints relating to Location objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "f.unlocode": "CATOR",
                     "page": 1,
@@ -19742,8 +19661,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
             f.unlocode: CATOR
@@ -19827,7 +19745,6 @@ docs: Endpoints relating to Ports objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "request": {
                     "country_of_origin": "China",
                     "name": "AC Adapter 12V",
@@ -19941,7 +19858,6 @@ docs: Endpoints relating to Ports objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "response": {
                     "body": {
                       "_object": "/api/response",
@@ -20026,7 +19942,6 @@ docs: Endpoints relating to Ports objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -20096,7 +20011,6 @@ docs: Endpoints relating to Ports objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -20352,8 +20266,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          response:
+        - response:
             body:
               _object: /api/response
               self: https://api.flexport.com/products?page=2&per=10
@@ -20437,8 +20350,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          request:
+        - request:
             name: AC Adapter 12V
             sku: WDVCDFD-RM00472
             product_category: Cosmetics
@@ -20487,8 +20399,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -20573,8 +20484,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: id
           request: {}
           response:
@@ -20632,7 +20542,6 @@ docs: Endpoints relating to Product objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "request": {
                     "cargo_ready_date": "2019-06-30",
                     "currency_code": "USD",
@@ -20918,7 +20827,6 @@ docs: Endpoints relating to Product objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "f.buyer_entity_ref": "id-54321",
                     "f.buyer_ref": "amazon-us",
@@ -21235,7 +21143,6 @@ docs: Endpoints relating to Product objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -21383,7 +21290,6 @@ docs: Endpoints relating to Product objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -21815,8 +21721,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
             f.buyer_ref: amazon-us
@@ -21999,8 +21904,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          request:
+        - request:
             name: PO 123
             memo: memo
             status: open
@@ -22228,8 +22132,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -22338,8 +22241,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: 1
           request:
             name: PO 123
@@ -22523,7 +22425,6 @@ docs: >-
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "f.item_key": "item1",
                     "f.purchase_order.id": 123,
@@ -22698,7 +22599,6 @@ docs: >-
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -23007,8 +22907,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
             f.purchase_order.id: 123
@@ -23120,8 +23019,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
@@ -23277,7 +23175,6 @@ docs: >-
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "f.container_number": "BWSE3982156",
                     "f.purchase_order": "PO002811",
@@ -23714,7 +23611,6 @@ docs: >-
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "request": {
                     "shipment_ids": [
                       123,
@@ -23777,7 +23673,6 @@ docs: >-
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": "id",
                   },
@@ -24107,7 +24002,6 @@ docs: >-
               ],
               "examples": [
                 {
-                  "name": "response",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -24787,8 +24681,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
             f.container_number: BWSE3982156
@@ -25036,8 +24929,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
@@ -25305,8 +25197,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: response
-          path-parameters:
+        - path-parameters:
             id: 1
           request: {}
           response:
@@ -25572,8 +25463,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          request:
+        - request:
             shipment_ids:
               - 123
               - 456
@@ -25618,7 +25508,6 @@ docs: Endpoints relating to Shipment objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "query-parameters": {
                     "page": 1,
                     "per": 20,
@@ -25807,7 +25696,6 @@ docs: Endpoints relating to Shipment objects
               ],
               "examples": [
                 {
-                  "name": "Success",
                   "path-parameters": {
                     "id": 1,
                   },
@@ -26111,8 +25999,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          query-parameters:
+        - query-parameters:
             page: 1
             per: 20
           response:
@@ -26247,8 +26134,7 @@ service:
       errors:
         - root.BadRequestError
       examples:
-        - name: Success
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:

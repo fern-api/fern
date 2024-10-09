@@ -76,16 +76,19 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "bar": {
-                "value": {
-                  "value": "bar",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "bar": {
+                  "value": {
+                    "value": "bar",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -128,6 +131,7 @@
         "generatedName": "GenerateContentResponse",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

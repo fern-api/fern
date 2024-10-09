@@ -57,6 +57,7 @@
           "generatedName": "ChatCompletionsCreateStreamRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -74,6 +75,7 @@
       },
       "response": {
         "description": "",
+        "fullExamples": [],
         "schema": {
           "generatedName": "ChatCompletionsCreateStreamResponse",
           "schema": "CompletionChunk",
@@ -94,7 +96,51 @@
       "authed": false,
       "method": "POST",
       "path": "/completions/chat",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              },
+              "prompt": {
+                "value": {
+                  "value": "prompt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": [
+              {
+                "properties": {
+                  "text": {
+                    "value": {
+                      "value": "text",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -151,6 +197,7 @@
           "generatedName": "ChatCompletionsCreateRequest",
           "groupName": [],
           "additionalProperties": false,
+          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -214,16 +261,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "text": {
-                "value": {
-                  "value": "text",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "text": {
+                  "value": {
+                    "value": "text",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -266,6 +316,7 @@
         "generatedName": "Completion",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -299,6 +350,7 @@
         "generatedName": "CompletionChunk",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

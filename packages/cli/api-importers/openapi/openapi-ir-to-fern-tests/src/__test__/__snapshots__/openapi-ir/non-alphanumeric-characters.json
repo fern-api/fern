@@ -65,13 +65,16 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "separator": {
-                "value": "/",
-                "type": "enum"
-              }
+            "value": {
+              "properties": {
+                "separator": {
+                  "value": "/",
+                  "type": "enum"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -116,6 +119,7 @@
         "generatedName": "Settings",
         "groupName": [],
         "additionalProperties": false,
+        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
