@@ -1,16 +1,34 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.2.8
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Requests for file download will now allow users to pass in a `chunk_size` option that allows them to receive chunks of a specific size
+        from the resultant `iter_bytes` invocation on the response byte stream.
+
+        Concretely, a user would leverage the following:
+        ```python
+        client.download(
+          ...,
+          request_options={
+            "chunk_size": 1024    # 1MB
+          }
+        )
+        ```
+
 - version: 4.2.7
   irVersion: 53
   changelogEntry:
     - type: fix
-      summary: | 
+      summary: |
         The generated README will now have a section that links to the generated
-        SDK Reference (in `reference.md`). 
-        
+        SDK Reference (in `reference.md`).
+
         ```md
         ## Reference
 
-        A full reference for this library can be found [here](./reference.md). 
+        A full reference for this library can be found [here](./reference.md).
         ```
 
 - version: 4.2.7-rc4
