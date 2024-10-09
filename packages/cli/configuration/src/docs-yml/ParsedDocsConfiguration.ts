@@ -15,12 +15,12 @@ export interface ParsedDocsConfiguration {
     /* navigation */
     landingPage: DocsNavigationItem.Page | undefined;
     navigation: DocsNavigationConfiguration;
-    navbarLinks: CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined;
-    footerLinks: CjsFdrSdk.docs.v1.commons.FooterLink[] | undefined;
+    navbarLinks: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.NavbarLink>[] | undefined;
+    footerLinks: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.FooterLink>[] | undefined;
 
     /* seo */
     metadata: ParsedMetadataConfig | undefined;
-    redirects: CjsFdrSdk.docs.v1.commons.RedirectConfig[] | undefined;
+    redirects: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.RedirectConfig>[] | undefined;
 
     /* branding */
     logo: Logo | undefined;
@@ -34,10 +34,10 @@ export interface ParsedDocsConfiguration {
     announcement: AnnouncementConfig | undefined;
 
     /* integrations */
-    integrations: CjsFdrSdk.docs.v1.commons.IntegrationsConfig | undefined;
+    integrations: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.IntegrationsConfig> | undefined;
 
     /* scripts */
-    css: CjsFdrSdk.docs.v1.commons.CssConfig | undefined;
+    css: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.CssConfig> | undefined;
     js: JavascriptConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
@@ -49,7 +49,7 @@ export interface AbsoluteJsFileConfig {
 }
 
 export interface JavascriptConfig {
-    remote?: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[];
+    remote?: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.JsRemoteConfig>[];
     files: AbsoluteJsFileConfig[];
 }
 
@@ -83,7 +83,7 @@ export interface Logo {
     dark: AbsoluteFilePath | undefined;
     light: AbsoluteFilePath | undefined;
     height: CjsFdrSdk.docs.v1.write.Height | undefined;
-    href: CjsFdrSdk.docs.v1.commons.Url | undefined;
+    href: CjsFdrSdk.Url | undefined;
 }
 
 export interface BackgroundImage {

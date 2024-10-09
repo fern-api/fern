@@ -25,12 +25,13 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
-  },
+  }, 
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-markdown-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "0.108.0-dcb0f740c",
+    "@fern-api/fdr-sdk": "0.115.0-3cf21db72",
+    "@fern-api/ui-core-utils": "0.115.0-3cf21db72", 
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",

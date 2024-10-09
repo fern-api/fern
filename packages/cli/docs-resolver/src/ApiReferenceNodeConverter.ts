@@ -11,6 +11,7 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { isSubpackage } from "./utils/isSubpackage";
 import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
+import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
 export class ApiReferenceNodeConverter {
     apiDefinitionId: FernNavigation.V1.ApiDefinitionId;
@@ -145,7 +146,7 @@ export class ApiReferenceNodeConverter {
                     },
                     package: (pkg) => this.#convertPackage(pkg, parentSlug, idgen),
                     section: (section) => this.#convertSection(section, parentSlug, idgen),
-                    item: ({ value: unknownIdentifier }): FernNavigation.ApiPackageChild | undefined =>
+                    item: ({ value: unknownIdentifier }): FernNavigation.V1.ApiPackageChild | undefined =>
                         this.#convertUnknownIdentifier(unknownIdentifier, apiDefinitionPackageId, parentSlug, idgen),
                     endpoint: (endpoint) => this.#convertEndpoint(endpoint, apiDefinitionPackageId, parentSlug, idgen)
                 })

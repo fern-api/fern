@@ -5,7 +5,7 @@ export function convertDocsSnippetsConfigToFdr(
     snippetsConfiguration: docsYml.RawSchemas.SnippetsConfiguration | undefined
 ): APIV1Write.SnippetsConfig {
     if (snippetsConfiguration == null) {
-        return {};
+        return {} as APIV1Write.SnippetsConfig;
     }
     return {
         pythonSdk:

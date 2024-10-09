@@ -134,7 +134,10 @@ export async function parseDocsConfiguration({
 
         /* seo */
         metadata,
-        redirects,
+        redirects: redirects?.map((redirect) => ({
+            ...redirect,
+            permanent: redirect?.permanent
+        })),
 
         /* branding */
         logo,
@@ -143,10 +146,43 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout),
-        analyticsConfig: rawDocsConfiguration.analytics,
+        analyticsConfig: {
+            ...rawDocsConfiguration.analytics,
+            intercom: rawDocsConfiguration.analytics?.intercom
+                ? {
+                      ...rawDocsConfiguration.analytics.intercom,
+                      appId: rawDocsConfiguration.analytics.intercom.appId,
+                      apiBase: rawDocsConfiguration.analytics.intercom.apiBase
+                  }
+                : undefined,
+            fullstory: rawDocsConfiguration.analytics?.fullstory,
+            posthog: rawDocsConfiguration.analytics?.posthog
+                ? {
+                      ...rawDocsConfiguration.analytics.posthog,
+                      apiKey: rawDocsConfiguration.analytics.posthog.apiKey,
+                      endpoint: rawDocsConfiguration.analytics.posthog.endpoint
+                  }
+                : undefined,
+            segment: rawDocsConfiguration.analytics?.segment,
+            gtm: undefined,
+            ga4: undefined,
+            amplitude: undefined,
+            mixpanel: undefined,
+            hotjar: undefined,
+            koala: undefined,
+            logrocket: undefined,
+            pirsch: undefined,
+            plausible: undefined,
+            fathom: undefined,
+            clearbit: undefined,
+            heap: undefined
+        },
 
         /* integrations */
-        integrations,
+        integrations: {
+            ...integrations,
+            intercom: integrations?.intercom ? integrations.intercom : undefined
+        },
 
         /* scripts */
         css,
@@ -165,7 +201,7 @@ function convertLogoReference(
               dark: resolveFilepath(rawLogo.dark, absoluteFilepathToDocsConfig),
               light: resolveFilepath(rawLogo.light, absoluteFilepathToDocsConfig),
               height: rawLogo.height,
-              href: rawLogo.href != null ? rawLogo.href : undefined
+              href: rawLogo.href != null ? CjsFdrSdk.Url(rawLogo.href) : undefined
           }
         : undefined;
 }
@@ -208,7 +244,7 @@ async function convertCssConfig(
 
 function isRemoteJsConfig(
     config: RawDocs.JsRemoteConfig | RawDocs.JsFileConfigSettings
-): config is RawDocs.JsRemoteConfig {
+): config is WithoutQuestionMarks<RawDocs.JsRemoteConfig> {
     return Object.hasOwn(config, "url");
 }
 
@@ -222,7 +258,7 @@ async function convertJsConfig(
     js: RawDocs.JsConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): Promise<JavascriptConfig> {
-    const remote: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[] = [];
+    const remote: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.JsRemoteConfig>[] = [];
     const files: AbsoluteJsFileConfig[] = [];
     if (js == null) {
         return { files: [] };
@@ -236,7 +272,10 @@ async function convertJsConfig(
                 absolutePath: resolveFilepath(config, absoluteFilepathToDocsConfig)
             });
         } else if (isRemoteJsConfig(config)) {
-            remote.push(config);
+            remote.push({
+                ...config,
+                url: CjsFdrSdk.Url(config.url)
+            });
         } else if (isFileJsConfig(config)) {
             files.push({
                 absolutePath: resolveFilepath(config.path, absoluteFilepathToDocsConfig),
@@ -840,16 +879,16 @@ function isTabbedNavigationConfig(
 
 function convertNavbarLinks(
     navbarLinks: RawDocs.NavbarLink[] | undefined
-): CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined {
-    return navbarLinks?.map((navbarLink): CjsFdrSdk.docs.v1.commons.NavbarLink => {
+): WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.NavbarLink>[] | undefined {
+    return navbarLinks?.map((navbarLink): WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.NavbarLink> => {
         if (navbarLink.type === "github") {
-            return { type: "github", url: navbarLink.value };
+            return { type: "github", url: CjsFdrSdk.Url(navbarLink.value) };
         }
 
         return {
             type: navbarLink.type,
             text: navbarLink.text,
-            url: navbarLink.href ?? navbarLink.url ?? "/",
+            url: CjsFdrSdk.Url(navbarLink.href ?? navbarLink.url ?? "/"),
             icon: navbarLink.icon,
             rightIcon: navbarLink.rightIcon,
             rounded: navbarLink.rounded
@@ -871,7 +910,7 @@ function convertFooterLinks(
         if (link == null) {
             return;
         }
-        links.push({ type: key, value: link });
+        links.push({ type: key, value: CjsFdrSdk.Url(link) });
     });
 
     if (links.length === 0) {

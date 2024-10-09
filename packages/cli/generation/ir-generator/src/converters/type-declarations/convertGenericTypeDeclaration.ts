@@ -3,7 +3,11 @@ import { FernFileContext } from "../../FernFileContext";
 import { RawSchemas, isRawObjectDefinition, parseGeneric } from "@fern-api/fern-definition-schema";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
-import { getExtensionsAsList, getObjectPropertiesFromRawObjectSchema } from "./convertObjectTypeDeclaration";
+import {
+    getExtensionsAsList,
+    getObjectPropertiesFromRawObjectSchema,
+    getExtraPropertiesFromRawObjectSchema
+} from "./convertObjectTypeDeclaration";
 
 export async function convertGenericTypeDeclaration({
     generic,
@@ -44,7 +48,9 @@ export async function convertGenericTypeDeclaration({
                 { properties: Object.fromEntries(newProperties) },
                 file
             ),
-            extraProperties: resolvedBaseGeneric.declaration["extra-properties"] ?? false,
+            extraProperties: resolvedBaseGeneric.declaration["extra-properties"]
+                ? await getExtraPropertiesFromRawObjectSchema(resolvedBaseGeneric.declaration, file)
+                : false,
             extendedProperties: undefined
         });
     }

@@ -19,7 +19,7 @@ export async function convertObjectTypeDeclaration({
     });
 }
 
-async function getExtraPropertiesFromRawObjectSchema(
+export async function getExtraPropertiesFromRawObjectSchema(
     object: RawSchemas.ObjectSchema,
     file: FernFileContext
 ): Promise<ObjectExtraProperty> {
