@@ -4,12 +4,6 @@
 
 import * as fs from "fs";
 
-/**
- * @example
- *     {
- *         file: fs.createReadStream("/path/to/your/file")
- *     }
- */
 export interface JustFileRequet {
     file: File | fs.ReadStream | Blob;
 }

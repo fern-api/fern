@@ -34,9 +34,6 @@ export class Service {
      * @param {File[] | fs.ReadStream[] | Blob[] | undefined} maybeFileList
      * @param {SeedFileUpload.MyRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {})
      */
     public async post(
         file: File | fs.ReadStream | Blob,
@@ -148,9 +145,6 @@ export class Service {
     /**
      * @param {File | fs.ReadStream | Blob} file
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.justFile(fs.createReadStream("/path/to/your/file"))
      */
     public async justFile(file: File | fs.ReadStream | Blob, requestOptions?: Service.RequestOptions): Promise<void> {
         const _request = await core.newFormData();
@@ -205,15 +199,6 @@ export class Service {
      * @param {File | fs.ReadStream | Blob} file
      * @param {SeedFileUpload.JustFileWithQueryParamsRequet} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.justFileWithQueryParams(fs.createReadStream("/path/to/your/file"), {
-     *         maybeString: "string",
-     *         integer: 1,
-     *         maybeInteger: 1,
-     *         listOfStrings: "string",
-     *         optionalListOfStrings: "string"
-     *     })
      */
     public async justFileWithQueryParams(
         file: File | fs.ReadStream | Blob,
@@ -297,9 +282,6 @@ export class Service {
      * @param {File | fs.ReadStream | Blob} file
      * @param {SeedFileUpload.WithContentTypeRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.withContentType(fs.createReadStream("/path/to/your/file"), {})
      */
     public async withContentType(
         file: File | fs.ReadStream | Blob,

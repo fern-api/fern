@@ -5,12 +5,6 @@
 import * as fs from "fs";
 import * as SeedFileUpload from "../../../../index";
 
-/**
- * @example
- *     {
- *         file: fs.createReadStream("/path/to/your/file")
- *     }
- */
 export interface WithContentTypeRequest {
     file: File | fs.ReadStream | Blob;
     foo: string;
