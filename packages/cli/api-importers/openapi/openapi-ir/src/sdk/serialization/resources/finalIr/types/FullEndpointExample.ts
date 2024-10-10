@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { PathParameterExample } from "./PathParameterExample";
 import { QueryParameterExample } from "./QueryParameterExample";
 import { HeaderExample } from "./HeaderExample";
+import { EndpointResponseExample } from "./EndpointResponseExample";
 import { CustomCodeSample } from "./CustomCodeSample";
 import { WithDescription } from "../../commons/types/WithDescription";
 
@@ -21,7 +22,7 @@ export const FullEndpointExample: core.serialization.ObjectSchema<
         queryParameters: core.serialization.list(QueryParameterExample).optional(),
         headers: core.serialization.list(HeaderExample).optional(),
         request: core.serialization.lazy(() => serializers.FullExample).optional(),
-        response: core.serialization.lazy(() => serializers.FullExample).optional(),
+        response: EndpointResponseExample.optional(),
         codeSamples: core.serialization.list(CustomCodeSample),
     })
     .extend(WithDescription);
@@ -33,7 +34,7 @@ export declare namespace FullEndpointExample {
         queryParameters?: QueryParameterExample.Raw[] | null;
         headers?: HeaderExample.Raw[] | null;
         request?: serializers.FullExample.Raw | null;
-        response?: serializers.FullExample.Raw | null;
+        response?: EndpointResponseExample.Raw | null;
         codeSamples: CustomCodeSample.Raw[];
     }
 }

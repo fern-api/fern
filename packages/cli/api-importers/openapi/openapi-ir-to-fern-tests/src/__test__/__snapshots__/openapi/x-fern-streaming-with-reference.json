@@ -88,6 +88,21 @@
             "create_stream": {
               "auth": false,
               "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "prompt": "prompt",
+                    "stream": true,
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "text": "text",
+                      },
+                    ],
+                  },
+                },
+              ],
               "method": "POST",
               "pagination": undefined,
               "path": "/completions/chat",
@@ -136,6 +151,13 @@ service:
         docs: ''
         type: root.CompletionChunk
         format: json
+      examples:
+        - request:
+            stream: true
+            prompt: prompt
+          response:
+            stream:
+              - text: text
     create:
       path: /completions/chat
       method: POST

@@ -210,119 +210,122 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "user_id": {
-                    "value": {
-                      "value": "user_id",
-                      "type": "string"
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "user_id": {
+                      "value": {
+                        "value": "user_id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "job_id": {
-                    "value": {
-                      "value": "job_id",
-                      "type": "string"
+                    "job_id": {
+                      "value": {
+                        "value": "job_id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "request": {
-                    "properties": {
-                      "urls": {
-                        "value": [
-                          {
+                    "request": {
+                      "properties": {
+                        "urls": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "urls",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "callback_url": {
+                          "value": {
+                            "value": "callback_url",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "notify": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        },
+                        "files": {
+                          "value": [
+                            {
+                              "properties": {
+                                "md5sum": {
+                                  "value": {
+                                    "value": "md5sum",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "state": {
+                      "value": {
+                        "value": {
+                          "status": {
                             "value": {
-                              "value": "urls",
+                              "value": "FAILED",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "created_timestamp_ms": {
+                            "value": {
+                              "value": 1000000,
+                              "type": "int64"
+                            },
+                            "type": "primitive"
+                          },
+                          "started_timestamp_ms": {
+                            "value": {
+                              "value": 1000000,
+                              "type": "int64"
+                            },
+                            "type": "primitive"
+                          },
+                          "ended_timestamp_ms": {
+                            "value": {
+                              "value": 1000000,
+                              "type": "int64"
+                            },
+                            "type": "primitive"
+                          },
+                          "message": {
+                            "value": {
+                              "value": "state",
                               "type": "string"
                             },
                             "type": "primitive"
                           }
-                        ],
-                        "type": "array"
-                      },
-                      "callback_url": {
-                        "value": {
-                          "value": "callback_url",
-                          "type": "string"
                         },
-                        "type": "primitive"
+                        "type": "discriminated"
                       },
-                      "notify": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
-                      },
-                      "files": {
-                        "value": [
-                          {
-                            "properties": {
-                              "md5sum": {
-                                "value": {
-                                  "value": "md5sum",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      }
-                    },
-                    "type": "object"
+                      "type": "oneOf"
+                    }
                   },
-                  "state": {
-                    "value": {
-                      "value": {
-                        "status": {
-                          "value": {
-                            "value": "FAILED",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "created_timestamp_ms": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        },
-                        "started_timestamp_ms": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        },
-                        "ended_timestamp_ms": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        },
-                        "message": {
-                          "value": {
-                            "value": "state",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "discriminated"
-                    },
-                    "type": "oneOf"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -397,16 +400,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "job_id": {
-                "value": {
-                  "value": "job_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "job_id": {
+                  "value": {
+                    "value": "job_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -491,107 +497,110 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "source": {
-                    "value": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "source": {
                       "value": {
-                        "type": {
-                          "value": {
-                            "value": "file",
-                            "type": "string"
+                        "value": {
+                          "type": {
+                            "value": {
+                              "value": "file",
+                              "type": "string"
+                            },
+                            "type": "primitive"
                           },
-                          "type": "primitive"
+                          "filename": {
+                            "value": {
+                              "value": "source",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "content_type": {
+                            "value": {
+                              "value": "source",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "md5sum": {
+                            "value": {
+                              "value": "source",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
                         },
-                        "filename": {
-                          "value": {
-                            "value": "source",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                        "type": "discriminated"
+                      },
+                      "type": "oneOf"
+                    },
+                    "results": {
+                      "properties": {
+                        "predictions": {
+                          "value": [
+                            {
+                              "properties": {
+                                "file": {
+                                  "value": {
+                                    "value": "file",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "models": {
+                                  "properties": {},
+                                  "type": "object"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
                         },
-                        "content_type": {
-                          "value": {
-                            "value": "source",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "md5sum": {
-                          "value": {
-                            "value": "source",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                        "errors": {
+                          "value": [
+                            {
+                              "properties": {
+                                "message": {
+                                  "value": {
+                                    "value": "message",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "file": {
+                                  "value": {
+                                    "value": "file",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
                         }
                       },
-                      "type": "discriminated"
+                      "type": "object"
                     },
-                    "type": "oneOf"
-                  },
-                  "results": {
-                    "properties": {
-                      "predictions": {
-                        "value": [
-                          {
-                            "properties": {
-                              "file": {
-                                "value": {
-                                  "value": "file",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "models": {
-                                "properties": {},
-                                "type": "object"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
+                    "error": {
+                      "value": {
+                        "value": "error",
+                        "type": "string"
                       },
-                      "errors": {
-                        "value": [
-                          {
-                            "properties": {
-                              "message": {
-                                "value": {
-                                  "value": "message",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "file": {
-                                "value": {
-                                  "value": "file",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      }
-                    },
-                    "type": "object"
+                      "type": "primitive"
+                    }
                   },
-                  "error": {
-                    "value": {
-                      "value": "error",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -719,170 +728,173 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "user_id": {
-                "value": {
-                  "value": "user_id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "user_id": {
+                  "value": {
+                    "value": "user_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "job_id": {
-                "value": {
-                  "value": "job_id",
-                  "type": "string"
+                "job_id": {
+                  "value": {
+                    "value": "job_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "request": {
-                "properties": {
-                  "models": {
-                    "properties": {
-                      "burst": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                "request": {
+                  "properties": {
+                    "models": {
+                      "properties": {
+                        "burst": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
+                          ],
+                          "type": "map"
+                        },
+                        "facemesh": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "type": "unknown"
+                              }
+                            }
+                          ],
+                          "type": "map"
+                        }
                       },
-                      "facemesh": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "object"
+                    },
+                    "transcription": {
+                      "properties": {
+                        "language": {
+                          "value": "zh",
+                          "type": "enum"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "urls": {
+                      "value": [
+                        {
+                          "value": {
+                            "value": "urls",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "callback_url": {
+                      "value": {
+                        "value": "callback_url",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "notify": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "files": {
+                      "value": [
+                        {
+                          "properties": {
+                            "md5sum": {
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "value": "md5sum",
+                                "type": "string"
                               },
-                              "type": "unknown"
+                              "type": "primitive"
                             }
-                          }
-                        ],
-                        "type": "map"
-                      }
-                    },
-                    "type": "object"
+                          },
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    }
                   },
-                  "transcription": {
-                    "properties": {
-                      "language": {
-                        "value": "zh",
-                        "type": "enum"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "urls": {
-                    "value": [
-                      {
+                  "type": "object"
+                },
+                "state": {
+                  "value": {
+                    "value": {
+                      "status": {
                         "value": {
-                          "value": "urls",
+                          "value": "FAILED",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "created_timestamp_ms": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "started_timestamp_ms": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "ended_timestamp_ms": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "state",
                           "type": "string"
                         },
                         "type": "primitive"
                       }
-                    ],
-                    "type": "array"
-                  },
-                  "callback_url": {
-                    "value": {
-                      "value": "callback_url",
-                      "type": "string"
                     },
-                    "type": "primitive"
+                    "type": "discriminated"
                   },
-                  "notify": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "files": {
-                    "value": [
-                      {
-                        "properties": {
-                          "md5sum": {
-                            "value": {
-                              "value": "md5sum",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      }
-                    ],
-                    "type": "array"
-                  }
-                },
-                "type": "object"
+                  "type": "oneOf"
+                }
               },
-              "state": {
-                "value": {
-                  "value": {
-                    "status": {
-                      "value": {
-                        "value": "FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_timestamp_ms": {
-                      "value": {
-                        "value": 1000000,
-                        "type": "int64"
-                      },
-                      "type": "primitive"
-                    },
-                    "started_timestamp_ms": {
-                      "value": {
-                        "value": 1000000,
-                        "type": "int64"
-                      },
-                      "type": "primitive"
-                    },
-                    "ended_timestamp_ms": {
-                      "value": {
-                        "value": 1000000,
-                        "type": "int64"
-                      },
-                      "type": "primitive"
-                    },
-                    "message": {
-                      "value": {
-                        "value": "state",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "discriminated"
-                },
-                "type": "oneOf"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

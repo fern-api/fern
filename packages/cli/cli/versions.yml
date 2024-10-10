@@ -1,5 +1,13 @@
 - changelogEntry:
-    - summary: The Docs now support rendering `additionalProperties` in the API Playground so that users can send out arbitrary key,value pairs. 
+    - summary: | 
+        The OpenAPI importer now generates streaming examples based on OpenAPI examples. 
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc1
+
+- changelogEntry:
+    - summary: | 
+        The Docs now support rendering `additionalProperties` in the API Playground so that users can send out arbitrary key,value pairs. 
       type: fix
   irVersion: 53
   version: 0.45.0-rc0

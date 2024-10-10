@@ -15,6 +15,6 @@ export interface FullEndpointExample extends FernOpenapiIr.WithDescription {
     queryParameters: FernOpenapiIr.QueryParameterExample[] | undefined;
     headers: FernOpenapiIr.HeaderExample[] | undefined;
     request: FernOpenapiIr.FullExample | undefined;
-    response: FernOpenapiIr.FullExample | undefined;
+    response: FernOpenapiIr.EndpointResponseExample | undefined;
     codeSamples: FernOpenapiIr.CustomCodeSample[];
 }
