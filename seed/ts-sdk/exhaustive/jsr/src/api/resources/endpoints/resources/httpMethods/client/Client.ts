@@ -32,7 +32,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.httpMethods.testGet("string")
+     *     await client.endpoints.httpMethods.testGet("id")
      */
     public async testGet(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
@@ -153,7 +153,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.httpMethods.testPut("string", {
+     *     await client.endpoints.httpMethods.testPut("id", {
      *         string: "string"
      *     })
      */
@@ -218,22 +218,20 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.httpMethods.testPatch("string", {
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["string"],
-     *         set: new Set(["string"]),
-     *         map: {
-     *             1: "string"
-     *         },
-     *         bigint: "123456789123456789"
+     *     await client.endpoints.httpMethods.testPatch("id", {
+     *         string: undefined,
+     *         integer: undefined,
+     *         long: undefined,
+     *         double: undefined,
+     *         bool: undefined,
+     *         datetime: undefined,
+     *         date: undefined,
+     *         uuid: undefined,
+     *         base64: undefined,
+     *         list: undefined,
+     *         set: undefined,
+     *         map: undefined,
+     *         bigint: undefined
      *     })
      */
     public async testPatch(
@@ -296,7 +294,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.httpMethods.testDelete("string")
+     *     await client.endpoints.httpMethods.testDelete("id")
      */
     public async testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({

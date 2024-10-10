@@ -326,7 +326,8 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "date"
+                      "type": "date",
+                      "default": "1970-01-01T00:00:00.000Z"
                     }
                   }
                 }
@@ -343,7 +344,8 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "datetime"
+                      "type": "datetime",
+                      "default": "1970-01-01T00:00:00.000Z"
                     }
                   }
                 }
@@ -371,7 +373,8 @@
                     "itemType": {
                       "type": "primitive",
                       "value": {
-                        "type": "date"
+                        "type": "date",
+                        "default": "1970-01-01T00:00:00.000Z"
                       }
                     }
                   }
@@ -391,7 +394,8 @@
                     "itemType": {
                       "type": "primitive",
                       "value": {
-                        "type": "datetime"
+                        "type": "datetime",
+                        "default": "1970-01-01T00:00:00.000Z"
                       }
                     }
                   }
@@ -435,7 +439,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:Bar": {
@@ -453,7 +460,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_union:GetShapeRequest": {
@@ -471,7 +481,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_union:Shape": {
@@ -536,7 +549,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_union:Square": {
@@ -554,7 +570,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -634,7 +653,29 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "circle",
+                "radius": 1.1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "circle",
+                  "radius": 1.1
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -676,13 +717,39 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "type": "circle",
+                "radius": 1.1
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "circle",
+                  "radius": 1.1
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": true,
+              "responseBodyV3": {
+                "type": "json",
+                "value": true
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

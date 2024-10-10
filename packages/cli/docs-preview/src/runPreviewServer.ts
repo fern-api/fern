@@ -20,12 +20,35 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     filesV2: {},
     config: {
         navigation: {
+            landingPage: undefined,
             items: []
-        }
+        },
+        title: undefined,
+        defaultLanguage: undefined,
+        announcement: undefined,
+        navbarLinks: undefined,
+        footerLinks: undefined,
+        logoHeight: undefined,
+        logoHref: undefined,
+        favicon: undefined,
+        metadata: undefined,
+        redirects: undefined,
+        colorsV3: undefined,
+        layout: undefined,
+        typographyV2: undefined,
+        analyticsConfig: undefined,
+        integrations: undefined,
+        css: undefined,
+        js: undefined,
+        playground: undefined
     },
     search: {
-        type: "legacyMultiAlgoliaIndex"
-    }
+        type: "legacyMultiAlgoliaIndex",
+        algoliaIndex: undefined
+    },
+    algoliaSearchIndex: undefined,
+    jsFiles: undefined,
+    id: undefined
 };
 
 export async function runPreviewServer({

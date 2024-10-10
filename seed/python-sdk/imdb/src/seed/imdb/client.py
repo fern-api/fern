@@ -48,7 +48,7 @@ class ImdbClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.imdb.create_movie(
-            title="string",
+            title="title",
             rating=1.1,
         )
         """
@@ -98,7 +98,7 @@ class ImdbClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.imdb.get_movie(
-            movie_id="string",
+            movie_id="movieId",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -168,7 +168,7 @@ class AsyncImdbClient:
 
         async def main() -> None:
             await client.imdb.create_movie(
-                title="string",
+                title="title",
                 rating=1.1,
             )
 
@@ -226,7 +226,7 @@ class AsyncImdbClient:
 
         async def main() -> None:
             await client.imdb.get_movie(
-                movie_id="string",
+                movie_id="movieId",
             )
 
 

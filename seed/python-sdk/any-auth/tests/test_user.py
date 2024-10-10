@@ -7,8 +7,11 @@ from .utilities import validate_response
 
 
 async def test_get(client: SeedAnyAuth, async_client: AsyncSeedAnyAuth) -> None:
-    expected_response: typing.Any = [{"id": "string", "name": "string"}]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: {"id": None, "name": None}})
+    expected_response: typing.Any = [{"id": "id", "name": "name"}, {"id": "id", "name": "name"}]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {0: {"id": None, "name": None}, 1: {"id": None, "name": None}},
+    )
     response = client.user.get()
     validate_response(response, expected_response, expected_types)
 

@@ -75,6 +75,7 @@
       },
       "response": {
         "description": "",
+        "fullExamples": [],
         "schema": {
           "generatedName": "UserStreamResponse",
           "schema": "StreamUser",
@@ -95,7 +96,44 @@
       "authed": false,
       "method": "POST",
       "path": "/v1/users",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": [
+              {
+                "properties": {
+                  "id": {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -209,16 +247,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -298,6 +339,7 @@
       },
       "response": {
         "description": "",
+        "fullExamples": [],
         "schema": {
           "generatedName": "UserV2StreamResponse",
           "schema": "StreamUser-2",
@@ -318,7 +360,58 @@
       "authed": false,
       "method": "POST",
       "path": "/v2/users",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": [
+              {
+                "properties": {
+                  "id": {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "name": {
+                    "value": {
+                      "value": "name",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "streamed": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "literal"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -432,30 +525,33 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "streamed": {
+                  "value": {
+                    "value": false,
+                    "type": "boolean"
+                  },
+                  "type": "literal"
+                }
               },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "streamed": {
-                "value": {
-                  "value": false,
-                  "type": "boolean"
-                },
-                "type": "literal"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -535,71 +631,73 @@
       },
       "response": {
         "description": "",
+        "fullExamples": [],
         "schema": {
-          "allOf": [],
           "properties": [
             {
-              "conflict": {},
-              "generatedName": "userV3StreamResponseId",
               "key": "id",
               "schema": {
                 "generatedName": "userV3StreamResponseId",
                 "value": {
+                  "generatedName": "UserV3StreamResponseId",
                   "schema": {
                     "format": "uuid",
                     "type": "string"
                   },
-                  "generatedName": "UserV3StreamResponseId",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "userV3StreamResponseId"
             },
             {
-              "conflict": {},
-              "generatedName": "userV3StreamResponseInline",
               "key": "inline",
               "schema": {
                 "generatedName": "userV3StreamResponseInline",
                 "value": {
+                  "generatedName": "UserV3StreamResponseInline",
                   "schema": {
                     "type": "boolean"
                   },
-                  "generatedName": "UserV3StreamResponseInline",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "userV3StreamResponseInline"
             },
             {
-              "conflict": {},
-              "generatedName": "userV3StreamResponseStreamed",
               "key": "streamed",
               "schema": {
                 "generatedName": "userV3StreamResponseStreamed",
                 "value": {
+                  "generatedName": "UserV3StreamResponseStreamed",
                   "schema": {
                     "type": "boolean"
                   },
-                  "generatedName": "UserV3StreamResponseStreamed",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "userV3StreamResponseStreamed"
             }
           ],
-          "allOfPropertyConflicts": [],
           "generatedName": "UserV3StreamResponse",
+          "allOf": [],
+          "allOfPropertyConflicts": [],
           "groupName": [],
+          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -618,7 +716,58 @@
       "authed": false,
       "method": "POST",
       "path": "/v3/users",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": [
+              {
+                "properties": {
+                  "id": {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "inline": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "streamed": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -776,23 +925,26 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "inline": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
               },
-              "inline": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

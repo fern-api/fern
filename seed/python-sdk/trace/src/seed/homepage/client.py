@@ -83,7 +83,7 @@ class HomepageClient:
             token="YOUR_TOKEN",
         )
         client.homepage.set_homepage_problems(
-            request=["string"],
+            request=["string", "string"],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -185,7 +185,7 @@ class AsyncHomepageClient:
 
         async def main() -> None:
             await client.homepage.set_homepage_problems(
-                request=["string"],
+                request=["string", "string"],
             )
 
 

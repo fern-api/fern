@@ -129,7 +129,7 @@ class ProblemClient:
             token="YOUR_TOKEN",
         )
         client.v_2.problem.get_latest_problem(
-            problem_id="string",
+            problem_id="problemId",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -179,7 +179,7 @@ class ProblemClient:
             token="YOUR_TOKEN",
         )
         client.v_2.problem.get_problem_version(
-            problem_id="string",
+            problem_id="problemId",
             problem_version=1,
         )
         """
@@ -342,7 +342,7 @@ class AsyncProblemClient:
 
         async def main() -> None:
             await client.v_2.problem.get_latest_problem(
-                problem_id="string",
+                problem_id="problemId",
             )
 
 
@@ -400,7 +400,7 @@ class AsyncProblemClient:
 
         async def main() -> None:
             await client.v_2.problem.get_problem_version(
-                problem_id="string",
+                problem_id="problemId",
                 problem_version=1,
             )
 

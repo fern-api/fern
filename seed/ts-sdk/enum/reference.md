@@ -195,9 +195,7 @@ await client.queryParam.send({
 ```typescript
 await client.queryParam.sendList({
     operand: ">",
-    maybeOperand: ">",
     operandOrColor: "red",
-    maybeOperandOrColor: "red",
 });
 ```
 

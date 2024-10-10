@@ -20,10 +20,7 @@ public class TestDeleteTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/http-methods/string")
-                    .UsingDelete()
+                WireMock.RequestBuilders.Request.Create().WithPath("/http-methods/id").UsingDelete()
             )
             .RespondWith(
                 WireMock
@@ -32,7 +29,7 @@ public class TestDeleteTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.HttpMethods.TestDeleteAsync("string", RequestOptions);
+        var response = await Client.Endpoints.HttpMethods.TestDeleteAsync("id", RequestOptions);
         JToken
             .Parse(mockResponse)
             .Should()

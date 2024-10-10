@@ -322,16 +322,19 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "fine_setting": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "fine_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -401,16 +404,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "not_deprecated_setting": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -526,16 +532,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "not_deprecated_setting": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -631,16 +640,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "not_deprecated_setting": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -736,16 +748,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "not_deprecated_setting": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

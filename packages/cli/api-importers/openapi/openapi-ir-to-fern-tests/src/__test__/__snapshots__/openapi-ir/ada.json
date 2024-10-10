@@ -366,22 +366,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1247,22 +1250,25 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
                     "type": "string"
                   },
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
                 }
-              }
-            ],
-            "type": "map"
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

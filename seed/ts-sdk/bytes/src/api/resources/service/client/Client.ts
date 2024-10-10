@@ -29,9 +29,6 @@ export class Service {
     /**
      * @param {File | fs.ReadStream | Blob} bytes
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.upload(fs.createReadStream("/path/to/your/file"))
      */
     public async upload(bytes: File | fs.ReadStream | Blob, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({

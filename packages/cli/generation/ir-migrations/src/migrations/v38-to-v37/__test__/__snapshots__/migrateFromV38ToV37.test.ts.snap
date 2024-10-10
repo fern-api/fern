@@ -114,70 +114,7 @@ exports[`migrateFromV38ToV37 > snapshot 1`] = `
           "displayName": null,
           "docs": null,
           "errors": [],
-          "examples": [
-            {
-              "codeSamples": null,
-              "docs": null,
-              "endpointHeaders": [],
-              "endpointPathParameters": [],
-              "exampleType": "generated",
-              "name": null,
-              "queryParameters": [],
-              "request": {
-                "jsonExample": {
-                  "query": "string",
-                },
-                "properties": [
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "query",
-                          "unsafeName": "query",
-                        },
-                        "originalName": "query",
-                        "pascalCase": {
-                          "safeName": "Query",
-                          "unsafeName": "Query",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "QUERY",
-                          "unsafeName": "QUERY",
-                        },
-                        "snakeCase": {
-                          "safeName": "query",
-                          "unsafeName": "query",
-                        },
-                      },
-                      "wireValue": "query",
-                    },
-                    "originalTypeDeclaration": null,
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "primitive": {
-                          "string": {
-                            "original": "string",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                ],
-                "type": "inlinedRequestBody",
-              },
-              "response": {
-                "body": null,
-                "type": "ok",
-              },
-              "rootPathParameters": [],
-              "serviceHeaders": [],
-              "servicePathParameters": [],
-              "url": "/stream",
-            },
-          ],
+          "examples": [],
           "fullPath": {
             "head": "stream",
             "parts": [],

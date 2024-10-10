@@ -17,8 +17,7 @@ public class CreateExecutionSessionTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "sessionId": "string",
-              "executionSessionUrl": "string",
+              "sessionId": "sessionId",
               "language": "JAVA",
               "status": "CREATING_CONTAINER"
             }

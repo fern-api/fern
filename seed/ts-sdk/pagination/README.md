@@ -25,9 +25,7 @@ import * as core from "../src/core";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const response = await client.users.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "string",
-    },
+    pagination: undefined,
 });
 for await (const item of response) {
     console.log(item);
@@ -35,9 +33,7 @@ for await (const item of response) {
 
 // Or you can manually iterate page-by-page
 const page = await client.users.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "string",
-    },
+    pagination: undefined,
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();

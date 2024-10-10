@@ -16,6 +16,7 @@ public class GetHomepageProblemsTest : BaseMockServerTest
     {
         const string mockResponse = """
             [
+              "string",
               "string"
             ]
             """;

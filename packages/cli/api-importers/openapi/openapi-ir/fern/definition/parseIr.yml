@@ -16,7 +16,7 @@ types:
       headers: list<HeaderWithExample>
 
   EndpointWithExample:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
@@ -96,7 +96,7 @@ types:
       streamingSse: finalIr.JsonResponse
       streamingText: finalIr.TextResponse
       streamingJson:
-        type: finalIr.JsonResponse
+        type: JsonResponseWithExample
         docs: Checks if `x-fern-streaming` is present and is true.
 
   JsonResponseWithExample:
@@ -109,7 +109,7 @@ types:
       fullExamples: optional<list<NamedFullExample>>
 
   PathParameterWithExample:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
@@ -123,7 +123,7 @@ types:
           Populated by `x-fern-parameter-name` on a parameter object.
 
   QueryParameterWithExample:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
@@ -135,9 +135,8 @@ types:
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
 
-
   HeaderWithExample:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
@@ -257,10 +256,10 @@ types:
       conflict:
         type: map<commons.SchemaId, finalIr.ObjectPropertyConflictInfo>
         docs: The schemas that conflict with this property
-      nameOverride: 
+      nameOverride:
         type: optional<string>
-        docs: | 
-          An optional name override populated via `x-fern-property-name`. 
+        docs: |
+          An optional name override populated via `x-fern-property-name`.
       generatedName:
         type: string
         docs: |

@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedAlias;
 
 var client = new SeedAliasClient();
-await client.GetAsync("type-kaljhv87");
+await client.GetAsync("typeId");
 ```
 
 ## Exception Handling

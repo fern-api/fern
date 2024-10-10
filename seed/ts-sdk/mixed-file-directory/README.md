@@ -24,7 +24,7 @@ import { SeedMixedFileDirectoryClient, SeedMixedFileDirectory } from "@fern/mixe
 
 const client = new SeedMixedFileDirectoryClient({ environment: "YOUR_BASE_URL" });
 await client.organization.create({
-    name: "string",
+    name: "name",
 });
 ```
 

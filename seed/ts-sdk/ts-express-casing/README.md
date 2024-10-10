@@ -24,8 +24,8 @@ import { SeedApiClient, SeedApi } from "@fern/ts-express-casing";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.imdb.createMovie({
-    id: "string",
-    movieTitle: "string",
+    id: "id",
+    movieTitle: "movie_title",
     movieRating: 1.1,
 });
 ```

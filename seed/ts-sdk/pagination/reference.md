@@ -15,23 +15,13 @@
 <dd>
 
 ```typescript
-const response = await client.users.listWithCursorPagination({
-    page: 1,
-    perPage: 1,
-    order: "asc",
-    startingAfter: "string",
-});
+const response = await client.users.listWithCursorPagination();
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithCursorPagination({
-    page: 1,
-    perPage: 1,
-    order: "asc",
-    startingAfter: "string",
-});
+const page = await client.users.listWithCursorPagination();
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
@@ -83,9 +73,7 @@ while (page.hasNextPage()) {
 
 ```typescript
 const response = await client.users.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "string",
-    },
+    pagination: undefined,
 });
 for await (const item of response) {
     console.log(item);
@@ -93,9 +81,7 @@ for await (const item of response) {
 
 // Or you can manually iterate page-by-page
 const page = await client.users.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "string",
-    },
+    pagination: undefined,
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
@@ -147,23 +133,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithOffsetPagination({
-    page: 1,
-    perPage: 1,
-    order: "asc",
-    startingAfter: "string",
-});
+const response = await client.users.listWithOffsetPagination();
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithOffsetPagination({
-    page: 1,
-    perPage: 1,
-    order: "asc",
-    startingAfter: "string",
-});
+const page = await client.users.listWithOffsetPagination();
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
@@ -215,9 +191,7 @@ while (page.hasNextPage()) {
 
 ```typescript
 const response = await client.users.listWithBodyOffsetPagination({
-    pagination: {
-        page: 1,
-    },
+    pagination: undefined,
 });
 for await (const item of response) {
     console.log(item);
@@ -225,9 +199,7 @@ for await (const item of response) {
 
 // Or you can manually iterate page-by-page
 const page = await client.users.listWithBodyOffsetPagination({
-    pagination: {
-        page: 1,
-    },
+    pagination: undefined,
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
@@ -279,21 +251,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithOffsetStepPagination({
-    page: 1,
-    limit: 1,
-    order: "asc",
-});
+const response = await client.users.listWithOffsetStepPagination();
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithOffsetStepPagination({
-    page: 1,
-    limit: 1,
-    order: "asc",
-});
+const page = await client.users.listWithOffsetStepPagination();
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
@@ -344,21 +308,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithOffsetPaginationHasNextPage({
-    page: 1,
-    limit: 1,
-    order: "asc",
-});
+const response = await client.users.listWithOffsetPaginationHasNextPage();
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithOffsetPaginationHasNextPage({
-    page: 1,
-    limit: 1,
-    order: "asc",
-});
+const page = await client.users.listWithOffsetPaginationHasNextPage();
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
@@ -409,17 +365,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithExtendedResults({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-});
+const response = await client.users.listWithExtendedResults();
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithExtendedResults({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-});
+const page = await client.users.listWithExtendedResults();
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
@@ -470,17 +422,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithExtendedResultsAndOptionalData({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-});
+const response = await client.users.listWithExtendedResultsAndOptionalData();
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithExtendedResultsAndOptionalData({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-});
+const page = await client.users.listWithExtendedResultsAndOptionalData();
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
@@ -531,17 +479,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listUsernames({
-    startingAfter: "string",
-});
+const response = await client.users.listUsernames();
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listUsernames({
-    startingAfter: "string",
-});
+const page = await client.users.listUsernames();
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
@@ -592,17 +536,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithGlobalConfig({
-    offset: 1,
-});
+const response = await client.users.listWithGlobalConfig();
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithGlobalConfig({
-    offset: 1,
-});
+const page = await client.users.listWithGlobalConfig();
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }

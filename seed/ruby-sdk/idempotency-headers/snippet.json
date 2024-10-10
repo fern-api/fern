@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_payment.delete"
             },
             "snippet": {
-                "client": "require \"fern_idempotency_headers\"\n\nidempotency_headers = SeedIdempotencyHeadersClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nidempotency_headers.payment.delete(payment_id: \"string\")",
+                "client": "require \"fern_idempotency_headers\"\n\nidempotency_headers = SeedIdempotencyHeadersClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nidempotency_headers.payment.delete(payment_id: \"paymentId\")",
                 "type": "ruby"
             }
         },
@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_payment.delete"
             },
             "snippet": {
-                "client": "require \"fern_idempotency_headers\"\n\nidempotency_headers = SeedIdempotencyHeadersClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nidempotency_headers.payment.delete(payment_id: \"string\")",
+                "client": "require \"fern_idempotency_headers\"\n\nidempotency_headers = SeedIdempotencyHeadersClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nidempotency_headers.payment.delete(payment_id: \"paymentId\")",
                 "type": "ruby"
             }
         }

@@ -26,7 +26,7 @@ public class ModifyWithPathTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/params/path/string")
+                    .WithPath("/params/path/param")
                     .UsingPut()
                     .WithBody(requestJson)
             )
@@ -38,7 +38,7 @@ public class ModifyWithPathTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Params.ModifyWithPathAsync(
-            "string",
+            "param",
             "string",
             RequestOptions
         );

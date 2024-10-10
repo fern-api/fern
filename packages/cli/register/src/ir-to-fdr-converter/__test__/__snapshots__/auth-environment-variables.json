@@ -39,7 +39,23 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/apiKey",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "X-API-Version": "01-01-2000"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -86,7 +102,24 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/apiKeyInHeader",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "X-API-Version": "01-01-2000",
+                "X-Endpoint-Header": "X-Endpoint-Header"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

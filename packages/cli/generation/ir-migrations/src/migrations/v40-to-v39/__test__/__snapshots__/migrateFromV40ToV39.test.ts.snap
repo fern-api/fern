@@ -125,7 +125,7 @@ exports[`migrateFromV40ToV39 > snapshot 1`] = `
               "queryParameters": [],
               "request": {
                 "jsonExample": {
-                  "name": "string",
+                  "name": "name",
                 },
                 "properties": [
                   {
@@ -153,11 +153,11 @@ exports[`migrateFromV40ToV39 > snapshot 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "string",
+                      "jsonExample": "name",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "string",
+                            "original": "name",
                           },
                           "type": "string",
                         },
@@ -171,7 +171,7 @@ exports[`migrateFromV40ToV39 > snapshot 1`] = `
               "response": {
                 "body": {
                   "jsonExample": {
-                    "name": "string",
+                    "name": "name",
                   },
                   "shape": {
                     "shape": {
@@ -265,11 +265,11 @@ exports[`migrateFromV40ToV39 > snapshot 1`] = `
                             "typeId": "type_user:User",
                           },
                           "value": {
-                            "jsonExample": "string",
+                            "jsonExample": "name",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "string",
+                                  "original": "name",
                                 },
                                 "type": "string",
                               },

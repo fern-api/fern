@@ -17,8 +17,18 @@ public class GetLightweightProblemsTest : BaseMockServerTest
         const string mockResponse = """
             [
               {
-                "problemId": "string",
-                "problemName": "string",
+                "problemId": "problemId",
+                "problemName": "problemName",
+                "problemVersion": 1,
+                "variableTypes": [
+                  {
+                    "type": "integerType"
+                  }
+                ]
+              },
+              {
+                "problemId": "problemId",
+                "problemName": "problemName",
                 "problemVersion": 1,
                 "variableTypes": [
                   {

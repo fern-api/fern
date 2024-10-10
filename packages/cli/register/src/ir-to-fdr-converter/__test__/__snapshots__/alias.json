@@ -36,7 +36,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_:Object": {
@@ -92,7 +95,18 @@
         "queryParameters": [],
         "headers": [],
         "errorsV2": [],
-        "examples": []
+        "examples": [
+          {
+            "path": "/typeId",
+            "pathParameters": {
+              "typeId": "typeId"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 204,
+            "codeSamples": []
+          }
+        ]
       }
     ],
     "webhooks": [],

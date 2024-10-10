@@ -32,21 +32,19 @@ export class Object_ {
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithOptionalField({
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["string"],
-     *         set: new Set(["string"]),
-     *         map: {
-     *             1: "string"
-     *         },
-     *         bigint: "123456789123456789"
+     *         string: undefined,
+     *         integer: undefined,
+     *         long: undefined,
+     *         double: undefined,
+     *         bool: undefined,
+     *         datetime: undefined,
+     *         date: undefined,
+     *         uuid: undefined,
+     *         base64: undefined,
+     *         list: undefined,
+     *         set: undefined,
+     *         map: undefined,
+     *         bigint: undefined
      *     })
      */
     public async getAndReturnWithOptionalField(
@@ -163,8 +161,8 @@ export class Object_ {
      * @example
      *     await client.endpoints.object.getAndReturnWithMapOfMap({
      *         map: {
-     *             "string": {
-     *                 "string": "string"
+     *             "map": {
+     *                 "map": "map"
      *             }
      *         }
      *     })
@@ -218,24 +216,8 @@ export class Object_ {
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
-     *         string: "string",
-     *         nestedObject: {
-     *             string: "string",
-     *             integer: 1,
-     *             long: 1000000,
-     *             double: 1.1,
-     *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
-     *             date: "2023-01-15",
-     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *             base64: "SGVsbG8gd29ybGQh",
-     *             list: ["string"],
-     *             set: new Set(["string"]),
-     *             map: {
-     *                 1: "string"
-     *             },
-     *             bigint: "123456789123456789"
-     *         }
+     *         string: undefined,
+     *         nestedObject: undefined
      *     })
      */
     public async getAndReturnNestedWithOptionalField(
@@ -298,21 +280,19 @@ export class Object_ {
      *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
      *         string: "string",
      *         nestedObject: {
-     *             string: "string",
-     *             integer: 1,
-     *             long: 1000000,
-     *             double: 1.1,
-     *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
-     *             date: "2023-01-15",
-     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *             base64: "SGVsbG8gd29ybGQh",
-     *             list: ["string"],
-     *             set: new Set(["string"]),
-     *             map: {
-     *                 1: "string"
-     *             },
-     *             bigint: "123456789123456789"
+     *             string: undefined,
+     *             integer: undefined,
+     *             long: undefined,
+     *             double: undefined,
+     *             bool: undefined,
+     *             datetime: undefined,
+     *             date: undefined,
+     *             uuid: undefined,
+     *             base64: undefined,
+     *             list: undefined,
+     *             set: undefined,
+     *             map: undefined,
+     *             bigint: undefined
      *         }
      *     })
      */
@@ -376,21 +356,36 @@ export class Object_ {
      *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
      *             string: "string",
      *             nestedObject: {
-     *                 string: "string",
-     *                 integer: 1,
-     *                 long: 1000000,
-     *                 double: 1.1,
-     *                 bool: true,
-     *                 datetime: "2024-01-15T09:30:00Z",
-     *                 date: "2023-01-15",
-     *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *                 base64: "SGVsbG8gd29ybGQh",
-     *                 list: ["string"],
-     *                 set: new Set(["string"]),
-     *                 map: {
-     *                     1: "string"
-     *                 },
-     *                 bigint: "123456789123456789"
+     *                 string: undefined,
+     *                 integer: undefined,
+     *                 long: undefined,
+     *                 double: undefined,
+     *                 bool: undefined,
+     *                 datetime: undefined,
+     *                 date: undefined,
+     *                 uuid: undefined,
+     *                 base64: undefined,
+     *                 list: undefined,
+     *                 set: undefined,
+     *                 map: undefined,
+     *                 bigint: undefined
+     *             }
+     *         }, {
+     *             string: "string",
+     *             nestedObject: {
+     *                 string: undefined,
+     *                 integer: undefined,
+     *                 long: undefined,
+     *                 double: undefined,
+     *                 bool: undefined,
+     *                 datetime: undefined,
+     *                 date: undefined,
+     *                 uuid: undefined,
+     *                 base64: undefined,
+     *                 list: undefined,
+     *                 set: undefined,
+     *                 map: undefined,
+     *                 bigint: undefined
      *             }
      *         }])
      */

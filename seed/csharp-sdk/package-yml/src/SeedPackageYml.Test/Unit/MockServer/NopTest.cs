@@ -11,11 +11,11 @@ public class NopTest : BaseMockServerTest
     public void MockServerTest_1()
     {
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/string//string").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/id//nestedId").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(
-            async () => await Client.Service.NopAsync("string", "string", RequestOptions)
+            async () => await Client.Service.NopAsync("id", "nestedId", RequestOptions)
         );
     }
 

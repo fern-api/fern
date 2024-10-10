@@ -54,10 +54,7 @@ await client.Unknown.PostAsync(new Dictionary<object, object?>() { { "key", "val
 
 ```csharp
 await client.Unknown.PostObjectAsync(
-    new MyObject
-    {
-        Unknown = new Dictionary<object, object?>() { { "boolVal", true }, { "strVal", "string" } },
-    }
+    new MyObject { Unknown = new Dictionary<object, object?>() { { "key", "value" } } }
 );
 ```
 </dd>

@@ -15,7 +15,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -52,7 +55,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
@@ -67,10 +71,25 @@
                 }
               },
               "statusCode": 401,
+              "name": "UnauthorizedRequest",
               "examples": []
             }
           ],
-          "examples": []
+          "examples": [
+            {
+              "path": "/custom-auth",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": true,
+              "responseBodyV3": {
+                "type": "json",
+                "value": true
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -112,7 +131,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
@@ -127,14 +147,39 @@
                 }
               },
               "statusCode": 401,
+              "name": "UnauthorizedRequest",
               "examples": []
             },
             {
               "statusCode": 400,
+              "name": "BadRequest",
               "examples": []
             }
           ],
-          "examples": []
+          "examples": [
+            {
+              "path": "/custom-auth",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "key": "value"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "key": "value"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": true,
+              "responseBodyV3": {
+                "type": "json",
+                "value": true
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

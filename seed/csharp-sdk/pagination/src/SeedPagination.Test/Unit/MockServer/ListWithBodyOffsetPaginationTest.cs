@@ -16,29 +16,19 @@ public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
     public async Task MockServerTest()
     {
         const string requestJson = """
-            {
-              "pagination": {
-                "page": 1
-              }
-            }
+            {}
             """;
 
         const string mockResponse = """
             {
-              "hasNextPage": true,
-              "page": {
-                "page": 1,
-                "next": {
-                  "page": 1,
-                  "starting_after": "string"
-                },
-                "per_page": 1,
-                "total_page": 1
-              },
               "total_count": 1,
               "data": [
                 {
-                  "name": "string",
+                  "name": "name",
+                  "id": 1
+                },
+                {
+                  "name": "name",
                   "id": 1
                 }
               ]
@@ -61,7 +51,7 @@ public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
             );
 
         var response = await Client.Users.ListWithBodyOffsetPaginationAsync(
-            new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } },
+            new ListUsersBodyOffsetPaginationRequest { Pagination = null },
             RequestOptions
         );
         JToken

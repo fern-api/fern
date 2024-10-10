@@ -76,7 +76,7 @@
                     "body": null
                   },
                   "description": null,
-                  "body": "{\n    \"foo\": {\n        \"foo\": {\n            \"bar_property\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n        }\n    }\n}",
+                  "body": "{}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -148,7 +148,7 @@
                     "body": null
                   },
                   "description": null,
-                  "body": "{\n    \"foo\": {\n        \"foo\": {\n            \"bar_property\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n        }\n    }\n}",
+                  "body": "{}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -168,18 +168,12 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}?optionalString=string",
+              "raw": "{{baseUrl}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [],
-              "query": [
-                {
-                  "key": "optionalString",
-                  "description": null,
-                  "value": "string"
-                }
-              ],
+              "query": [],
               "variable": []
             },
             "header": [
@@ -193,7 +187,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"publicProperty\": \"string\",\n    \"privateProperty\": 1\n}",
+              "raw": "{}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -209,18 +203,12 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}?optionalString=string",
+                  "raw": "{{baseUrl}}",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [],
-                  "query": [
-                    {
-                      "key": "optionalString",
-                      "description": null,
-                      "value": "string"
-                    }
-                  ],
+                  "query": [],
                   "variable": []
                 },
                 "header": [
@@ -234,7 +222,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"publicProperty\": \"string\",\n    \"privateProperty\": 1\n}",
+                  "raw": "{}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -243,7 +231,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"imported\": \"string\"\n}",
+              "body": "{\n    \"imported\": \"imported\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]

@@ -7,9 +7,7 @@ import * as SeedPagination from "../../../../index";
 /**
  * @example
  *     {
- *         pagination: {
- *             page: 1
- *         }
+ *         pagination: undefined
  *     }
  */
 export interface ListUsersBodyOffsetPaginationRequest {

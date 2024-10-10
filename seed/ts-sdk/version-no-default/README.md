@@ -23,7 +23,7 @@ Instantiate and use the client with the following:
 import { SeedVersionClient, SeedVersion } from "@fern/version-no-default";
 
 const client = new SeedVersionClient({ environment: "YOUR_BASE_URL", xApiVersion: "1.0.0" });
-await client.user.getUser("string");
+await client.user.getUser("userId");
 ```
 
 ## Exception Handling

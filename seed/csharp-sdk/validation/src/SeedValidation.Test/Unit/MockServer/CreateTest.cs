@@ -19,7 +19,7 @@ public class CreateTest : BaseMockServerTest
             {
               "decimal": 1.1,
               "even": 1,
-              "name": "string",
+              "name": "name",
               "shape": "SQUARE"
             }
             """;
@@ -27,8 +27,8 @@ public class CreateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "decimal": 1.1,
-              "even": 2,
-              "name": "rules",
+              "even": 1,
+              "name": "name",
               "shape": "SQUARE"
             }
             """;
@@ -53,7 +53,7 @@ public class CreateTest : BaseMockServerTest
             {
                 Decimal = 1.1,
                 Even = 1,
-                Name = "string",
+                Name = "name",
                 Shape = Shape.Square,
             },
             RequestOptions

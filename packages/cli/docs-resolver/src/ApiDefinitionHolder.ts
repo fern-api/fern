@@ -45,10 +45,12 @@ export class ApiDefinitionHolder {
         return isSubpackage(pkg) ? pkg.subpackageId : ROOT_PACKAGE_ID;
     }
 
-    public getSubpackageByIdOrLocator(subpackageId: string | undefined): APIV1Read.ApiDefinitionPackage | undefined {
-        if (subpackageId == null) {
+    public getSubpackageByIdOrLocator(subpackageIdRaw: string | undefined): APIV1Read.ApiDefinitionPackage | undefined {
+        if (subpackageIdRaw == null) {
             return undefined;
-        } else if (subpackageId === ROOT_PACKAGE_ID) {
+        }
+        const subpackageId = APIV1Read.SubpackageId(subpackageIdRaw);
+        if (subpackageId === ROOT_PACKAGE_ID) {
             return this.api.rootPackage;
         } else {
             return this.api.subpackages[subpackageId] ?? this.#subpackagesByLocator.get(subpackageId);
@@ -69,7 +71,7 @@ export class ApiDefinitionHolder {
 
     private constructor(public readonly api: APIV1Read.ApiDefinition, private readonly context?: TaskContext) {
         [api.rootPackage, ...Object.values(api.subpackages)].forEach((pkg) => {
-            const subpackageId = ApiDefinitionHolder.getSubpackageId(pkg);
+            const subpackageId = APIV1Read.SubpackageId(ApiDefinitionHolder.getSubpackageId(pkg));
             const subpackageHolder = {
                 endpoints: new Map<APIV1Read.EndpointId, APIV1Read.EndpointDefinition>(),
                 webSockets: new Map<APIV1Read.WebSocketId, APIV1Read.WebSocketChannel>(),

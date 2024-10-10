@@ -2,6 +2,7 @@ import { z } from "zod";
 import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 import { ObjectExtendsSchema } from "./ObjectExtendsSchema";
 import { ObjectPropertySchema } from "./ObjectPropertySchema";
+import { TypeReferenceDeclarationSchema } from "./TypeReferenceSchema";
 
 // for Object schemas, you need either extends/properties (or both).
 export const ObjectSchema = z.union([

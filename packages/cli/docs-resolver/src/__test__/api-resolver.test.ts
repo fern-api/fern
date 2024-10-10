@@ -53,7 +53,7 @@ it.skip("converts to api reference node", async () => {
 
     const apiWorkspace = await result.workspace.toFernWorkspace({ context });
 
-    const slug = FernNavigation.SlugGenerator.init("/base/path");
+    const slug = FernNavigation.V1.SlugGenerator.init("/base/path");
 
     const ir = await generateIntermediateRepresentation({
         workspace: apiWorkspace,

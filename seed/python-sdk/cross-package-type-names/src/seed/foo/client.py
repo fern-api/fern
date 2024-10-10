@@ -49,11 +49,7 @@ class FooClient:
         client = SeedCrossPackageTypeNames(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.foo.find(
-            optional_string="string",
-            public_property="string",
-            private_property=1,
-        )
+        client.foo.find()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
@@ -122,11 +118,7 @@ class AsyncFooClient:
 
 
         async def main() -> None:
-            await client.foo.find(
-                optional_string="string",
-                public_property="string",
-                private_property=1,
-            )
+            await client.foo.find()
 
 
         asyncio.run(main())

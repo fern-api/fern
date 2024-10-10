@@ -27,7 +27,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -87,7 +90,8 @@
                   "type": "id",
                   "value": "type_completions:StreamedCompletion"
                 }
-              }
+              },
+              "terminator": "[[DONE]]"
             }
           },
           "errorsV2": [],

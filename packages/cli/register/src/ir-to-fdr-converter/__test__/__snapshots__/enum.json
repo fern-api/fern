@@ -401,7 +401,19 @@
           ],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/query-list",
+              "pathParameters": {},
+              "queryParameters": {
+                "operand": ">",
+                "operandOrColor": "red"
+              },
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

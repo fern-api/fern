@@ -20,15 +20,12 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedStreamingClient } from "@fern/streaming";
+import { SeedStreamingClient, SeedStreaming } from "@fern/streaming";
 
 const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
-const response = await client.dummy.generateStream({
-    numEvents: 1,
+await client.dummy.generate({
+    numEvents: 5,
 });
-for await (const item of response) {
-    console.log(item);
-}
 ```
 
 ## Request And Response Types
@@ -53,7 +50,7 @@ will be thrown.
 import { SeedStreamingError } from "@fern/streaming";
 
 try {
-    await client.dummy.generateStream(...);
+    await client.dummy.generate(...);
 } catch (err) {
     if (err instanceof SeedStreamingError) {
         console.log(err.statusCode);
@@ -80,7 +77,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.dummy.generateStream(..., {
+const response = await client.dummy.generate(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -90,7 +87,7 @@ const response = await client.dummy.generateStream(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.dummy.generateStream(..., {
+const response = await client.dummy.generate(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -101,7 +98,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.dummy.generateStream(..., {
+const response = await client.dummy.generate(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

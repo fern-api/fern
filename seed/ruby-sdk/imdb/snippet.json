@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_imdb.createMovie"
             },
             "snippet": {
-                "client": "require \"fern_imdb\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\napi.imdb.create_movie(request: { title: \"string\", rating: 1.1 })",
+                "client": "require \"fern_imdb\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\napi.imdb.create_movie(request: { title: \"title\", rating: 1.1 })",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_imdb.getMovie"
             },
             "snippet": {
-                "client": "require \"fern_imdb\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\napi.imdb.get_movie(movie_id: \"string\")",
+                "client": "require \"fern_imdb\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\napi.imdb.get_movie(movie_id: \"movieId\")",
                 "type": "ruby"
             }
         },
@@ -29,7 +29,7 @@
                 "identifierOverride": "endpoint_imdb.createMovie"
             },
             "snippet": {
-                "client": "require \"fern_imdb\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\napi.imdb.create_movie(request: { title: \"string\", rating: 1.1 })",
+                "client": "require \"fern_imdb\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\napi.imdb.create_movie(request: { title: \"title\", rating: 1.1 })",
                 "type": "ruby"
             }
         },
@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_imdb.getMovie"
             },
             "snippet": {
-                "client": "require \"fern_imdb\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\napi.imdb.get_movie(movie_id: \"string\")",
+                "client": "require \"fern_imdb\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\napi.imdb.get_movie(movie_id: \"movieId\")",
                 "type": "ruby"
             }
         }

@@ -19,7 +19,7 @@ const client = new SeedIdempotencyHeadersClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-await client.payment.delete("string");
+await client.payment.delete("paymentId");
  
 ```                        
 

@@ -12,12 +12,15 @@ public class DeleteTest : BaseMockServerTest
     {
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/payment/string").UsingDelete()
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/payment/paymentId")
+                    .UsingDelete()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(
-            async () => await Client.Payment.DeleteAsync("string", RequestOptions)
+            async () => await Client.Payment.DeleteAsync("paymentId", RequestOptions)
         );
     }
 }

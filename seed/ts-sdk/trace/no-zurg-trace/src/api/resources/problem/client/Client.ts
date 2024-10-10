@@ -39,22 +39,28 @@ export class Problem {
      *
      * @example
      *     await client.problem.createProblem({
-     *         problemName: "string",
+     *         problemName: "problemName",
      *         problemDescription: {
      *             boards: [{
      *                     type: "html",
-     *                     value: "string"
+     *                     value: "boards"
+     *                 }, {
+     *                     type: "html",
+     *                     value: "boards"
      *                 }]
      *         },
      *         files: {
      *             ["JAVA"]: {
      *                 solutionFile: {
-     *                     filename: "string",
-     *                     contents: "string"
+     *                     filename: "filename",
+     *                     contents: "contents"
      *                 },
      *                 readOnlyFiles: [{
-     *                         filename: "string",
-     *                         contents: "string"
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }, {
+     *                         filename: "filename",
+     *                         contents: "contents"
      *                     }]
      *             }
      *         },
@@ -62,15 +68,38 @@ export class Problem {
      *                 variableType: {
      *                     type: "integerType"
      *                 },
-     *                 name: "string"
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
      *             }],
      *         outputType: {
      *             type: "integerType"
      *         },
      *         testcases: [{
      *                 testCase: {
-     *                     id: "string",
+     *                     id: "id",
      *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }, {
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
      *                             type: "integerValue",
      *                             value: 1
      *                         }]
@@ -80,7 +109,7 @@ export class Problem {
      *                     value: 1
      *                 }
      *             }],
-     *         methodName: "string"
+     *         methodName: "methodName"
      *     })
      */
     public async createProblem(
@@ -147,23 +176,29 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.problem.updateProblem("string", {
-     *         problemName: "string",
+     *     await client.problem.updateProblem("problemId", {
+     *         problemName: "problemName",
      *         problemDescription: {
      *             boards: [{
      *                     type: "html",
-     *                     value: "string"
+     *                     value: "boards"
+     *                 }, {
+     *                     type: "html",
+     *                     value: "boards"
      *                 }]
      *         },
      *         files: {
      *             ["JAVA"]: {
      *                 solutionFile: {
-     *                     filename: "string",
-     *                     contents: "string"
+     *                     filename: "filename",
+     *                     contents: "contents"
      *                 },
      *                 readOnlyFiles: [{
-     *                         filename: "string",
-     *                         contents: "string"
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }, {
+     *                         filename: "filename",
+     *                         contents: "contents"
      *                     }]
      *             }
      *         },
@@ -171,15 +206,38 @@ export class Problem {
      *                 variableType: {
      *                     type: "integerType"
      *                 },
-     *                 name: "string"
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
      *             }],
      *         outputType: {
      *             type: "integerType"
      *         },
      *         testcases: [{
      *                 testCase: {
-     *                     id: "string",
+     *                     id: "id",
      *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }, {
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
      *                             type: "integerValue",
      *                             value: 1
      *                         }]
@@ -189,7 +247,7 @@ export class Problem {
      *                     value: 1
      *                 }
      *             }],
-     *         methodName: "string"
+     *         methodName: "methodName"
      *     })
      */
     public async updateProblem(
@@ -256,7 +314,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.problem.deleteProblem("string")
+     *     await client.problem.deleteProblem("problemId")
      */
     public async deleteProblem(problemId: SeedTrace.ProblemId, requestOptions?: Problem.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -322,12 +380,17 @@ export class Problem {
      *                 variableType: {
      *                     type: "integerType"
      *                 },
-     *                 name: "string"
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
      *             }],
      *         outputType: {
      *             type: "integerType"
      *         },
-     *         methodName: "string"
+     *         methodName: "methodName"
      *     })
      */
     public async getDefaultStarterFiles(

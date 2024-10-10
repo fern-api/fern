@@ -36,7 +36,7 @@ export class S3 {
      *
      * @example
      *     await client.s3.getPresignedUrl({
-     *         s3Key: "string"
+     *         s3Key: "s3Key"
      *     })
      */
     public async getPresignedUrl(

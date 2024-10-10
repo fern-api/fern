@@ -33,9 +33,9 @@ export class Auth {
      *
      * @example
      *     await client.auth.getToken({
-     *         clientId: "string",
-     *         clientSecret: "string",
-     *         scope: "string"
+     *         clientId: "client_id",
+     *         clientSecret: "client_secret",
+     *         scope: undefined
      *     })
      */
     public async getToken(

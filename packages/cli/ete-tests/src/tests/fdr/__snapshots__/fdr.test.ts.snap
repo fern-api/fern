@@ -74,7 +74,10 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             "value": "type_director:Age"
                         }
                     }
-                ]
+                ],
+                "extraProperties": {
+                    "type": "unknown"
+                }
             }
         },
         "type_director:Age": {
@@ -169,7 +172,10 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             }
                         }
                     }
-                ]
+                ],
+                "extraProperties": {
+                    "type": "unknown"
+                }
             }
         },
         "type_imdb:CreateMovieRequest": {
@@ -199,7 +205,10 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             }
                         }
                     }
-                ]
+                ],
+                "extraProperties": {
+                    "type": "unknown"
+                }
             }
         },
         "type_imdb:DirectorWrapper": {
@@ -215,7 +224,10 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             "value": "type_director:Director"
                         }
                     }
-                ]
+                ],
+                "extraProperties": {
+                    "type": "unknown"
+                }
             }
         },
         "type_imdb:Person": {
@@ -284,7 +296,10 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             }
                         }
                     }
-                ]
+                ],
+                "extraProperties": {
+                    "type": "unknown"
+                }
             }
         }
     },
@@ -385,7 +400,8 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
                     "examples": [
@@ -564,11 +580,13 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                                 ]
                             },
                             "statusCode": 404,
-                            "name": "NotFoundError"
+                            "name": "NotFoundError",
+                            "examples": []
                         },
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
                     "examples": [
@@ -677,10 +695,23 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "path": "/test/rootPathParam/movies/movieId",
+                            "pathParameters": {
+                                "rootPathParam": "rootPathParam",
+                                "movieId": "movieId"
+                            },
+                            "queryParameters": {},
+                            "headers": {},
+                            "responseStatusCode": 204,
+                            "codeSamples": []
+                        }
+                    ]
                 },
                 {
                     "auth": false,
@@ -749,7 +780,8 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
                     "examples": []
@@ -873,7 +905,10 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             "value": "type_director:Age"
                         }
                     }
-                ]
+                ],
+                "extraProperties": {
+                    "type": "unknown"
+                }
             }
         },
         "type_director:Age": {
@@ -968,7 +1003,10 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             }
                         }
                     }
-                ]
+                ],
+                "extraProperties": {
+                    "type": "unknown"
+                }
             }
         },
         "type_imdb:CreateMovieRequest": {
@@ -998,7 +1036,10 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             }
                         }
                     }
-                ]
+                ],
+                "extraProperties": {
+                    "type": "unknown"
+                }
             }
         },
         "type_imdb:DirectorWrapper": {
@@ -1014,7 +1055,10 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             "value": "type_director:Director"
                         }
                     }
-                ]
+                ],
+                "extraProperties": {
+                    "type": "unknown"
+                }
             }
         },
         "type_imdb:Person": {
@@ -1083,7 +1127,10 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             }
                         }
                     }
-                ]
+                ],
+                "extraProperties": {
+                    "type": "unknown"
+                }
             }
         }
     },
@@ -1184,7 +1231,8 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
                     "examples": [
@@ -1363,11 +1411,13 @@ exports[`fdr > {"name":"simple"} 1`] = `
                                 ]
                             },
                             "statusCode": 404,
-                            "name": "NotFoundError"
+                            "name": "NotFoundError",
+                            "examples": []
                         },
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
                     "examples": [
@@ -1476,10 +1526,23 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "path": "/test/rootPathParam/movies/movieId",
+                            "pathParameters": {
+                                "rootPathParam": "rootPathParam",
+                                "movieId": "movieId"
+                            },
+                            "queryParameters": {},
+                            "headers": {},
+                            "responseStatusCode": 204,
+                            "codeSamples": []
+                        }
+                    ]
                 },
                 {
                     "auth": false,
@@ -1548,7 +1611,8 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
                     "examples": []
