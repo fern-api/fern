@@ -51,7 +51,6 @@
           "generatedName": "UserGetResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -145,7 +144,6 @@
             "generatedName": "UserGetAllResponseItem",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"

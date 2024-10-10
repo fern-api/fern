@@ -130,7 +130,6 @@
         "title": "A simple request title",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -173,7 +172,6 @@
         "title": "A simple response title",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

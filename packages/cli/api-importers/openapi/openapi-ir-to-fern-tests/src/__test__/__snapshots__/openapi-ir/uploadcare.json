@@ -193,13 +193,6 @@
           "generatedName": "BaseUploadResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [
-            {
-              "value": {
-                "my_file.jpg": "17be4678-dab7-4bc7-8753-28914a22960a"
-              }
-            }
-          ],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -1169,20 +1162,6 @@
           "generatedName": "MultipartFileUploadStartResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [
-            {
-              "value": {
-                "uuid": "67947755-1584-4e3f-902b-d4e2bf76a841",
-                "parts": [
-                  "<presigned-url-1>",
-                  "<presigned-url-2>",
-                  "<presigned-url-3>",
-                  "<presigned-url-4>",
-                  "<presigned-url-5>"
-                ]
-              }
-            }
-          ],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -9322,67 +9301,6 @@
         "generatedName": "FileUploadInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-              "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-              "size": 2667636,
-              "total": 2667636,
-              "done": 2667636,
-              "original_filename": "IMG-0412_123.JPG",
-              "filename": "IMG0412_123.JPG",
-              "mime_type": "image/jpeg",
-              "image_info": {
-                "color_mode": "RGB",
-                "orientation": 6,
-                "format": "JPEG",
-                "height": 4032,
-                "width": 3024,
-                "sequence": false,
-                "geo_location": {
-                  "latitude": 55.62013611111111,
-                  "longitude": 37.66299166666666
-                },
-                "dpi": [
-                  72,
-                  72
-                ]
-              },
-              "video_info": null,
-              "content_info": {
-                "mime": {
-                  "mime": "image/jpeg",
-                  "type": "image",
-                  "subtype": "jpeg"
-                },
-                "image": {
-                  "color_mode": "RGB",
-                  "orientation": 6,
-                  "format": "JPEG",
-                  "height": 4032,
-                  "width": 3024,
-                  "sequence": false,
-                  "geo_location": {
-                    "latitude": 55.62013611111111,
-                    "longitude": 37.66299166666666
-                  },
-                  "dpi": [
-                    72,
-                    72
-                  ]
-                }
-              },
-              "metadata": {
-                "subsystem": "uploader",
-                "pet": "cat"
-              },
-              "is_image": true,
-              "is_stored": true,
-              "is_ready": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9418,7 +9336,6 @@
         "generatedName": "FileUploadInfoWaitingStatus",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9502,7 +9419,6 @@
         "generatedName": "FileUploadInfoProgressStatus",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9548,68 +9464,6 @@
         "generatedName": "FileUploadInfoSuccessStatus",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "status": "success",
-              "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-              "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-              "size": 2667636,
-              "total": 2667636,
-              "done": 2667636,
-              "original_filename": "IMG-0412_123.JPG",
-              "filename": "IMG0412_123.JPG",
-              "mime_type": "image/jpeg",
-              "image_info": {
-                "color_mode": "RGB",
-                "orientation": 6,
-                "format": "JPEG",
-                "height": 4032,
-                "width": 3024,
-                "sequence": false,
-                "geo_location": {
-                  "latitude": 55.62013611111111,
-                  "longitude": 37.66299166666666
-                },
-                "dpi": [
-                  72,
-                  72
-                ]
-              },
-              "video_info": null,
-              "content_info": {
-                "mime": {
-                  "mime": "image/jpeg",
-                  "type": "image",
-                  "subtype": "jpeg"
-                },
-                "image": {
-                  "color_mode": "RGB",
-                  "orientation": 6,
-                  "format": "JPEG",
-                  "height": 4032,
-                  "width": 3024,
-                  "sequence": false,
-                  "geo_location": {
-                    "latitude": 55.62013611111111,
-                    "longitude": 37.66299166666666
-                  },
-                  "dpi": [
-                    72,
-                    72
-                  ]
-                }
-              },
-              "metadata": {
-                "subsystem": "uploader",
-                "pet": "cat"
-              },
-              "is_image": true,
-              "is_stored": true,
-              "is_ready": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9687,7 +9541,6 @@
         "generatedName": "FileUploadInfoErrorStatus",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9723,7 +9576,6 @@
         "generatedName": "FileUploadInfoUnknownStatus",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9768,7 +9620,6 @@
         "generatedName": "FileUploadInfoFromUrl",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9826,7 +9677,6 @@
         "generatedName": "FromUrlUploadResponseSchema",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10005,78 +9855,6 @@
         "generatedName": "GroupInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
-              "datetime_created": "2018-09-12T10:03:38.686710Z",
-              "datetime_stored": null,
-              "files_count": 1,
-              "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
-              "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
-              "files": [
-                {
-                  "default_effects": "resize/x800/",
-                  "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                  "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                  "size": 2667636,
-                  "total": 2667636,
-                  "done": 2667636,
-                  "original_filename": "IMG-0412_123.JPG",
-                  "filename": "IMG0412_123.JPG",
-                  "mime_type": "image/jpeg",
-                  "image_info": {
-                    "color_mode": "RGB",
-                    "orientation": 6,
-                    "format": "JPEG",
-                    "height": 4032,
-                    "width": 3024,
-                    "sequence": false,
-                    "geo_location": {
-                      "latitude": 55.62013611111111,
-                      "longitude": 37.66299166666666
-                    },
-                    "dpi": [
-                      72,
-                      72
-                    ]
-                  },
-                  "video_info": null,
-                  "content_info": {
-                    "mime": {
-                      "mime": "image/jpeg",
-                      "type": "image",
-                      "subtype": "jpeg"
-                    },
-                    "image": {
-                      "color_mode": "RGB",
-                      "orientation": 6,
-                      "format": "JPEG",
-                      "height": 4032,
-                      "width": 3024,
-                      "sequence": false,
-                      "geo_location": {
-                        "latitude": 55.62013611111111,
-                        "longitude": 37.66299166666666
-                      },
-                      "dpi": [
-                        72,
-                        72
-                      ]
-                    }
-                  },
-                  "metadata": {
-                    "subsystem": "uploader",
-                    "pet": "cat"
-                  },
-                  "is_image": true,
-                  "is_stored": true,
-                  "is_ready": true
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10930,7 +10708,6 @@
                   "generatedName": "ImageInfoGeoLocation",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.json",
                     "type": "openapi"
@@ -10982,10 +10759,6 @@
                     "type": "primitive"
                   },
                   "generatedName": "ImageInfoDpi",
-                  "example": [
-                    72,
-                    72
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -11000,7 +10773,6 @@
           "generatedName": "ImageInfo",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -11205,7 +10977,6 @@
                     "generatedName": "LegacyVideoInfoAudio",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.json",
                       "type": "openapi"
@@ -11340,7 +11111,6 @@
                   "generatedName": "LegacyVideoInfoVideo",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.json",
                     "type": "openapi"
@@ -11358,7 +11128,6 @@
           "generatedName": "LegacyVideoInfo",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -11590,7 +11359,6 @@
                 "generatedName": "SchemasImageInfoGeoLocation",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -11642,10 +11410,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "SchemasImageInfoDpi",
-                "example": [
-                  72,
-                  72
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -11660,7 +11424,6 @@
         "generatedName": "SchemasImageInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -11832,7 +11595,6 @@
                 "generatedName": "VideoInfoAudioItem",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -11951,7 +11713,6 @@
                 "generatedName": "VideoInfoVideoItem",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -11970,7 +11731,6 @@
         "generatedName": "VideoInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -12046,7 +11806,6 @@
                   "generatedName": "ContentInfoMime",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.json",
                     "type": "openapi"
@@ -12106,7 +11865,6 @@
           "generatedName": "ContentInfo",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"

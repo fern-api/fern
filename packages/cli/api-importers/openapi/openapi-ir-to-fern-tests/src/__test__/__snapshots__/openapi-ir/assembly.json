@@ -7735,7 +7735,6 @@
         "generatedName": "RedactedAudioResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7833,7 +7832,6 @@
         "generatedName": "WordSearchResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7919,7 +7917,6 @@
         "generatedName": "WordSearchMatch",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7979,7 +7976,6 @@
         "generatedName": "Timestamp",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8733,7 +8729,6 @@
         "generatedName": "CreateTranscriptOptionalParameters",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8774,7 +8769,6 @@
         "generatedName": "CreateTranscriptParameters",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8927,7 +8921,6 @@
         "generatedName": "TranscriptCustomSpelling",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9034,7 +9027,6 @@
         "generatedName": "TranscriptUtterance",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10245,7 +10237,6 @@
                   "generatedName": "TranscriptContentSafetyLabels",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -10372,7 +10363,6 @@
                   "generatedName": "TranscriptIabCategoriesResult",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -10867,7 +10857,6 @@
         "generatedName": "Transcript",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10958,7 +10947,6 @@
         "generatedName": "Chapter",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11036,7 +11024,6 @@
         "generatedName": "Entity",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11343,7 +11330,6 @@
         "generatedName": "SentimentAnalysisResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11441,7 +11427,6 @@
                   "generatedName": "TopicDetectionResultLabelsItem",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -11484,7 +11469,6 @@
         "generatedName": "TopicDetectionResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11548,7 +11532,6 @@
         "generatedName": "ContentSafetyLabel",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11706,7 +11689,6 @@
         "generatedName": "ContentSafetyLabelResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11769,7 +11751,6 @@
         "generatedName": "SeverityScoreSummary",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11809,7 +11790,6 @@
           "generatedName": "AutoHighlightsResult",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -11893,7 +11873,6 @@
         "generatedName": "AutoHighlightResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11990,7 +11969,6 @@
         "generatedName": "TranscriptWord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12083,7 +12061,6 @@
         "generatedName": "TranscriptSentence",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12162,7 +12139,6 @@
         "generatedName": "SentencesResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12255,7 +12231,6 @@
         "generatedName": "TranscriptParagraph",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12334,7 +12309,6 @@
         "generatedName": "ParagraphsResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12429,7 +12403,6 @@
         "generatedName": "PageDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12568,7 +12541,6 @@
         "generatedName": "TranscriptListParameters",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12672,7 +12644,6 @@
         "generatedName": "TranscriptListItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12723,7 +12694,6 @@
         "generatedName": "TranscriptList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12753,7 +12723,6 @@
         "generatedName": "UploadedFile",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12784,7 +12753,6 @@
         "generatedName": "CreateRealtimeTemporaryTokenParameters",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12814,7 +12782,6 @@
         "generatedName": "RealtimeTemporaryTokenResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12896,7 +12863,6 @@
         "generatedName": "PurgeLemurRequestDataResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12926,7 +12892,6 @@
         "generatedName": "LemurBaseResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12966,7 +12931,6 @@
         "generatedName": "LemurSummaryResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13012,7 +12976,6 @@
         "generatedName": "LemurQuestionAnswerResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13058,7 +13021,6 @@
         "generatedName": "LemurQuestionAnswer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13098,7 +13060,6 @@
         "generatedName": "LemurActionItemsResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13138,7 +13099,6 @@
         "generatedName": "LemurTaskResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13285,7 +13245,6 @@
         "generatedName": "LemurBaseParameters",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13330,7 +13289,6 @@
         "generatedName": "LemurSummaryParameters",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13376,7 +13334,6 @@
         "generatedName": "LemurQuestionAnswerParameters",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13502,7 +13459,6 @@
         "generatedName": "LemurQuestion",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13552,7 +13508,6 @@
         "generatedName": "LemurTaskParameters",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13624,7 +13579,6 @@
         "generatedName": "Error",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

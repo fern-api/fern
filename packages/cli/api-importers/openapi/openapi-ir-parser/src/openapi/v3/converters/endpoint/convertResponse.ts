@@ -157,15 +157,13 @@ function convertResolvedResponse({
                         FernOpenAPIExtension.RESPONSE_PROPERTY
                     ),
                     fullExamples: textEventStreamObject.examples,
-                    schema: convertSchemaWithExampleToSchema(
-                        convertSchema(
-                            textEventStreamObject.schema,
-                            false,
-                            context,
-                            responseBreadcrumbs,
-                            source,
-                            namespace
-                        )
+                    schema: convertSchema(
+                        textEventStreamObject.schema,
+                        false,
+                        context,
+                        responseBreadcrumbs,
+                        source,
+                        namespace
                     ),
                     source
                 });
@@ -197,15 +195,13 @@ function convertResolvedResponse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         fullExamples: jsonMediaObject.examples,
-                        schema: convertSchemaWithExampleToSchema(
-                            convertSchema(
-                                jsonMediaObject.schema,
-                                false,
-                                context,
-                                responseBreadcrumbs,
-                                source,
-                                namespace
-                            )
+                        schema: convertSchema(
+                            jsonMediaObject.schema,
+                            false,
+                            context,
+                            responseBreadcrumbs,
+                            source,
+                            namespace
                         ),
                         source
                     });

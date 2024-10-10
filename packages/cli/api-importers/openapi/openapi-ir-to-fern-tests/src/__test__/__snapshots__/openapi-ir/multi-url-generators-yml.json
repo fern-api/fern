@@ -437,7 +437,6 @@
         "generatedName": "User",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -509,7 +508,6 @@
         "generatedName": "Token",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

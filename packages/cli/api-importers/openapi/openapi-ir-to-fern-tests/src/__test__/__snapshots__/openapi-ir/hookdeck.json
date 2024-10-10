@@ -292,7 +292,6 @@
                     "generatedName": "GetIssueTriggersRequestDisabledAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -920,7 +919,6 @@
           "generatedName": "CreateIssueTriggerRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1293,7 +1291,6 @@
           "generatedName": "UpsertIssueTriggerRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1929,7 +1926,6 @@
           "generatedName": "UpdateIssueTriggerRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -4036,7 +4032,6 @@
                     "generatedName": "GetBookmarksRequestLastUsedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -4614,7 +4609,6 @@
           "generatedName": "CreateBookmarkRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -5272,7 +5266,6 @@
           "generatedName": "UpdateBookmarkRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -5811,7 +5804,6 @@
           "generatedName": "TriggerBookmarkRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -6417,7 +6409,6 @@
                     "generatedName": "GetDestinationsRequestNameAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -6610,7 +6601,6 @@
                     "generatedName": "GetDestinationsRequestArchivedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -6732,7 +6722,6 @@
                     "generatedName": "GetDestinationsRequestCliPathAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -7406,7 +7395,6 @@
           "generatedName": "CreateDestinationRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -7822,7 +7810,6 @@
           "generatedName": "UpsertDestinationRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -8488,7 +8475,6 @@
           "generatedName": "UpdateDestinationRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -9670,7 +9656,6 @@
                     "generatedName": "GetEventsRequestAttemptsAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -9847,7 +9832,6 @@
                     "generatedName": "GetEventsRequestResponseStatusAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -10008,7 +9992,6 @@
                     "generatedName": "GetEventsRequestSuccessfulAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -10154,7 +10137,6 @@
                     "generatedName": "GetEventsRequestCreatedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -10273,7 +10255,6 @@
                     "generatedName": "GetEventsRequestCliIdAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -10479,7 +10460,6 @@
                     "generatedName": "GetEventsRequestLastAttemptAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -10578,7 +10558,6 @@
                     "generatedName": "GetEventsRequestHeadersOne",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -10628,7 +10607,6 @@
                     "generatedName": "GetEventsRequestBodyOne",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -10678,7 +10656,6 @@
                     "generatedName": "GetEventsRequestParsedQueryOne",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -12695,7 +12672,6 @@
                     "generatedName": "GetEventBulkRetriesRequestCancelledAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -12866,7 +12842,6 @@
                     "generatedName": "GetEventBulkRetriesRequestCompletedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -13037,7 +13012,6 @@
                     "generatedName": "GetEventBulkRetriesRequestCreatedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -13571,7 +13545,6 @@
                             "generatedName": "GetEventBulkRetriesRequestQueryAttemptsAny",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -13749,7 +13722,6 @@
                               "generatedName": "GetEventBulkRetriesRequestQueryResponseStatusAny",
                               "groupName": [],
                               "additionalProperties": false,
-                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -13914,7 +13886,6 @@
                               "generatedName": "GetEventBulkRetriesRequestQuerySuccessfulAtAny",
                               "groupName": [],
                               "additionalProperties": false,
-                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -14061,7 +14032,6 @@
                             "generatedName": "GetEventBulkRetriesRequestQueryCreatedAtAny",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -14180,7 +14150,6 @@
                               "generatedName": "GetEventBulkRetriesRequestQueryCliIdAny",
                               "groupName": [],
                               "additionalProperties": false,
-                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -14394,7 +14363,6 @@
                               "generatedName": "GetEventBulkRetriesRequestQueryLastAttemptAtAny",
                               "groupName": [],
                               "additionalProperties": false,
-                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -14493,7 +14461,6 @@
                             "generatedName": "GetEventBulkRetriesRequestQueryHeadersOne",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -14541,7 +14508,6 @@
                             "generatedName": "GetEventBulkRetriesRequestQueryBodyOne",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -14589,7 +14555,6 @@
                             "generatedName": "GetEventBulkRetriesRequestQueryParsedQueryOne",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -14919,7 +14884,6 @@
               "generatedName": "GetEventBulkRetriesRequestQuery",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -15957,7 +15921,6 @@
                                 "generatedName": "CreateEventBulkRetryRequestQueryAttemptsAny",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -16135,7 +16098,6 @@
                                   "generatedName": "CreateEventBulkRetryRequestQueryResponseStatusAny",
                                   "groupName": [],
                                   "additionalProperties": false,
-                                  "fullExamples": [],
                                   "source": {
                                     "file": "../openapi.yml",
                                     "type": "openapi"
@@ -16300,7 +16262,6 @@
                                   "generatedName": "CreateEventBulkRetryRequestQuerySuccessfulAtAny",
                                   "groupName": [],
                                   "additionalProperties": false,
-                                  "fullExamples": [],
                                   "source": {
                                     "file": "../openapi.yml",
                                     "type": "openapi"
@@ -16447,7 +16408,6 @@
                                 "generatedName": "CreateEventBulkRetryRequestQueryCreatedAtAny",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -16566,7 +16526,6 @@
                                   "generatedName": "CreateEventBulkRetryRequestQueryCliIdAny",
                                   "groupName": [],
                                   "additionalProperties": false,
-                                  "fullExamples": [],
                                   "source": {
                                     "file": "../openapi.yml",
                                     "type": "openapi"
@@ -16780,7 +16739,6 @@
                                   "generatedName": "CreateEventBulkRetryRequestQueryLastAttemptAtAny",
                                   "groupName": [],
                                   "additionalProperties": false,
-                                  "fullExamples": [],
                                   "source": {
                                     "file": "../openapi.yml",
                                     "type": "openapi"
@@ -16879,7 +16837,6 @@
                                 "generatedName": "CreateEventBulkRetryRequestQueryHeadersOne",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -16927,7 +16884,6 @@
                                 "generatedName": "CreateEventBulkRetryRequestQueryBodyOne",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -16975,7 +16931,6 @@
                                 "generatedName": "CreateEventBulkRetryRequestQueryParsedQueryOne",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -17071,7 +17026,6 @@
                   "generatedName": "CreateEventBulkRetryRequestQuery",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -17088,7 +17042,6 @@
           "generatedName": "CreateEventBulkRetryRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -17833,7 +17786,6 @@
                             "generatedName": "GenerateEventBulkRetryPlanRequestQueryAttemptsAny",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -18011,7 +17963,6 @@
                               "generatedName": "GenerateEventBulkRetryPlanRequestQueryResponseStatusAny",
                               "groupName": [],
                               "additionalProperties": false,
-                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -18176,7 +18127,6 @@
                               "generatedName": "GenerateEventBulkRetryPlanRequestQuerySuccessfulAtAny",
                               "groupName": [],
                               "additionalProperties": false,
-                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -18323,7 +18273,6 @@
                             "generatedName": "GenerateEventBulkRetryPlanRequestQueryCreatedAtAny",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -18442,7 +18391,6 @@
                               "generatedName": "GenerateEventBulkRetryPlanRequestQueryCliIdAny",
                               "groupName": [],
                               "additionalProperties": false,
-                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -18656,7 +18604,6 @@
                               "generatedName": "GenerateEventBulkRetryPlanRequestQueryLastAttemptAtAny",
                               "groupName": [],
                               "additionalProperties": false,
-                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -18755,7 +18702,6 @@
                             "generatedName": "GenerateEventBulkRetryPlanRequestQueryHeadersOne",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -18803,7 +18749,6 @@
                             "generatedName": "GenerateEventBulkRetryPlanRequestQueryBodyOne",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -18851,7 +18796,6 @@
                             "generatedName": "GenerateEventBulkRetryPlanRequestQueryParsedQueryOne",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -18947,7 +18891,6 @@
               "generatedName": "GenerateEventBulkRetryPlanRequestQuery",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -19786,7 +19729,6 @@
                     "generatedName": "GetIgnoredEventBulkRetriesRequestCancelledAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -19957,7 +19899,6 @@
                     "generatedName": "GetIgnoredEventBulkRetriesRequestCompletedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -20128,7 +20069,6 @@
                     "generatedName": "GetIgnoredEventBulkRetriesRequestCreatedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -20339,7 +20279,6 @@
               "generatedName": "GetIgnoredEventBulkRetriesRequestQuery",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -21054,7 +20993,6 @@
                   "generatedName": "CreateIgnoredEventBulkRetryRequestQuery",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -21071,7 +21009,6 @@
           "generatedName": "CreateIgnoredEventBulkRetryRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -21493,7 +21430,6 @@
               "generatedName": "GenerateIgnoredEventBulkRetryPlanRequestQuery",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -22651,7 +22587,6 @@
           "generatedName": "CreateIntegrationRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -23342,7 +23277,6 @@
           "generatedName": "UpdateIntegrationRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -24711,7 +24645,6 @@
               "generatedName": "GetIssuesRequestAggregationKeys",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -24872,7 +24805,6 @@
                     "generatedName": "GetIssuesRequestCreatedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -25043,7 +24975,6 @@
                     "generatedName": "GetIssuesRequestFirstSeenAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -25214,7 +25145,6 @@
                     "generatedName": "GetIssuesRequestLastSeenAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -25385,7 +25315,6 @@
                     "generatedName": "GetIssuesRequestDismissedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -26608,7 +26537,6 @@
               "generatedName": "GetIssueCountRequestAggregationKeys",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -26769,7 +26697,6 @@
                     "generatedName": "GetIssueCountRequestCreatedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -26940,7 +26867,6 @@
                     "generatedName": "GetIssueCountRequestFirstSeenAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -27111,7 +27037,6 @@
                     "generatedName": "GetIssueCountRequestLastSeenAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -27282,7 +27207,6 @@
                     "generatedName": "GetIssueCountRequestDismissedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -28285,7 +28209,6 @@
           "generatedName": "UpdateIssueRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -29103,7 +29026,6 @@
                     "generatedName": "GetRequestsRequestRejectionCauseAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -29286,7 +29208,6 @@
                     "generatedName": "GetRequestsRequestIgnoredCountAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -29469,7 +29390,6 @@
                     "generatedName": "GetRequestsRequestEventsCountAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -29608,7 +29528,6 @@
                     "generatedName": "GetRequestsRequestHeadersOne",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -29658,7 +29577,6 @@
                     "generatedName": "GetRequestsRequestBodyOne",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -29708,7 +29626,6 @@
                     "generatedName": "GetRequestsRequestParsedQueryOne",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -29874,7 +29791,6 @@
                     "generatedName": "GetRequestsRequestCreatedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -30018,7 +29934,6 @@
                     "generatedName": "GetRequestsRequestIngestedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -31124,7 +31039,6 @@
           "generatedName": "RetryRequestRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -32143,7 +32057,6 @@
                     "generatedName": "GetRequestEventsRequestAttemptsAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -32320,7 +32233,6 @@
                     "generatedName": "GetRequestEventsRequestResponseStatusAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -32481,7 +32393,6 @@
                     "generatedName": "GetRequestEventsRequestSuccessfulAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -32627,7 +32538,6 @@
                     "generatedName": "GetRequestEventsRequestCreatedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -32746,7 +32656,6 @@
                     "generatedName": "GetRequestEventsRequestCliIdAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -32952,7 +32861,6 @@
                     "generatedName": "GetRequestEventsRequestLastAttemptAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -33051,7 +32959,6 @@
                     "generatedName": "GetRequestEventsRequestHeadersOne",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -33101,7 +33008,6 @@
                     "generatedName": "GetRequestEventsRequestBodyOne",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -33151,7 +33057,6 @@
                     "generatedName": "GetRequestEventsRequestParsedQueryOne",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -34614,7 +34519,6 @@
                     "generatedName": "GetRequestBulkRetriesRequestCancelledAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -34785,7 +34689,6 @@
                     "generatedName": "GetRequestBulkRetriesRequestCompletedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -34956,7 +34859,6 @@
                     "generatedName": "GetRequestBulkRetriesRequestCreatedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -35302,7 +35204,6 @@
                               "generatedName": "GetRequestBulkRetriesRequestQueryRejectionCauseAny",
                               "groupName": [],
                               "additionalProperties": false,
-                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -35487,7 +35388,6 @@
                             "generatedName": "GetRequestBulkRetriesRequestQueryIgnoredCountAny",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -35669,7 +35569,6 @@
                             "generatedName": "GetRequestBulkRetriesRequestQueryEventsCountAny",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -35802,7 +35701,6 @@
                             "generatedName": "GetRequestBulkRetriesRequestQueryHeadersOne",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -35850,7 +35748,6 @@
                             "generatedName": "GetRequestBulkRetriesRequestQueryBodyOne",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -35898,7 +35795,6 @@
                             "generatedName": "GetRequestBulkRetriesRequestQueryParsedQueryOne",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -36061,7 +35957,6 @@
                             "generatedName": "GetRequestBulkRetriesRequestQueryCreatedAtAny",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -36204,7 +36099,6 @@
                             "generatedName": "GetRequestBulkRetriesRequestQueryIngestedAtAny",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -36500,7 +36394,6 @@
               "generatedName": "GetRequestBulkRetriesRequestQuery",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -37306,7 +37199,6 @@
                                   "generatedName": "CreateRequestBulkRetryRequestQueryRejectionCauseAny",
                                   "groupName": [],
                                   "additionalProperties": false,
-                                  "fullExamples": [],
                                   "source": {
                                     "file": "../openapi.yml",
                                     "type": "openapi"
@@ -37491,7 +37383,6 @@
                                 "generatedName": "CreateRequestBulkRetryRequestQueryIgnoredCountAny",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -37673,7 +37564,6 @@
                                 "generatedName": "CreateRequestBulkRetryRequestQueryEventsCountAny",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -37806,7 +37696,6 @@
                                 "generatedName": "CreateRequestBulkRetryRequestQueryHeadersOne",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -37854,7 +37743,6 @@
                                 "generatedName": "CreateRequestBulkRetryRequestQueryBodyOne",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -37902,7 +37790,6 @@
                                 "generatedName": "CreateRequestBulkRetryRequestQueryParsedQueryOne",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -38065,7 +37952,6 @@
                                 "generatedName": "CreateRequestBulkRetryRequestQueryCreatedAtAny",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -38208,7 +38094,6 @@
                                 "generatedName": "CreateRequestBulkRetryRequestQueryIngestedAtAny",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -38284,7 +38169,6 @@
                   "generatedName": "CreateRequestBulkRetryRequestQuery",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -38301,7 +38185,6 @@
           "generatedName": "CreateRequestBulkRetryRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -38836,7 +38719,6 @@
                               "generatedName": "GenerateRequestBulkRetryPlanRequestQueryRejectionCauseAny",
                               "groupName": [],
                               "additionalProperties": false,
-                              "fullExamples": [],
                               "source": {
                                 "file": "../openapi.yml",
                                 "type": "openapi"
@@ -39021,7 +38903,6 @@
                             "generatedName": "GenerateRequestBulkRetryPlanRequestQueryIgnoredCountAny",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -39203,7 +39084,6 @@
                             "generatedName": "GenerateRequestBulkRetryPlanRequestQueryEventsCountAny",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -39336,7 +39216,6 @@
                             "generatedName": "GenerateRequestBulkRetryPlanRequestQueryHeadersOne",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -39384,7 +39263,6 @@
                             "generatedName": "GenerateRequestBulkRetryPlanRequestQueryBodyOne",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -39432,7 +39310,6 @@
                             "generatedName": "GenerateRequestBulkRetryPlanRequestQueryParsedQueryOne",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -39595,7 +39472,6 @@
                             "generatedName": "GenerateRequestBulkRetryPlanRequestQueryCreatedAtAny",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -39738,7 +39614,6 @@
                             "generatedName": "GenerateRequestBulkRetryPlanRequestQueryIngestedAtAny",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -39814,7 +39689,6 @@
               "generatedName": "GenerateRequestBulkRetryPlanRequestQuery",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -40944,7 +40818,6 @@
                     "generatedName": "GetRulesetsRequestNameAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -41137,7 +41010,6 @@
                     "generatedName": "GetRulesetsRequestArchivedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -41708,7 +41580,6 @@
           "generatedName": "CreateRulesetRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -42035,7 +41906,6 @@
           "generatedName": "UpsertRulesetRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -42619,7 +42489,6 @@
           "generatedName": "UpdateRulesetRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -43544,7 +43413,6 @@
                     "generatedName": "GetSourcesRequestNameAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -43737,7 +43605,6 @@
                     "generatedName": "GetSourcesRequestArchivedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -43812,7 +43679,6 @@
                     "generatedName": "GetSourcesRequestIntegrationIdAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -44350,7 +44216,6 @@
           "generatedName": "CreateSourceRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -44644,7 +44509,6 @@
           "generatedName": "UpsertSourceRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -45207,7 +45071,6 @@
           "generatedName": "UpdateSourceRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -46042,7 +45905,6 @@
           "generatedName": "ToggleWebhookNotificationsRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -46805,7 +46667,6 @@
           "generatedName": "CreateTransformationRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -47162,7 +47023,6 @@
           "generatedName": "UpsertTransformationRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -47753,7 +47613,6 @@
           "generatedName": "UpdateTransformationRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -48075,7 +47934,6 @@
                   "generatedName": "TestTransformationRequestEnv",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -48202,7 +48060,6 @@
                                 "generatedName": "TestTransformationRequestRequestBodyZero",
                                 "groupName": [],
                                 "additionalProperties": false,
-                                "fullExamples": [],
                                 "source": {
                                   "file": "../openapi.yml",
                                   "type": "openapi"
@@ -48298,7 +48155,6 @@
                           "generatedName": "TestTransformationRequestRequestParsedQuery",
                           "groupName": [],
                           "additionalProperties": false,
-                          "fullExamples": [],
                           "source": {
                             "file": "../openapi.yml",
                             "type": "openapi"
@@ -48316,7 +48172,6 @@
                   "generatedName": "TestTransformationRequestRequest",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -48352,7 +48207,6 @@
           "generatedName": "TestTransformationRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -48955,7 +48809,6 @@
                     "generatedName": "GetTransformationExecutionsRequestCreatedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -50044,7 +49897,6 @@
                     "generatedName": "GetConnectionsRequestNameAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -50339,7 +50191,6 @@
                     "generatedName": "GetConnectionsRequestArchivedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -50534,7 +50385,6 @@
                     "generatedName": "GetConnectionsRequestPausedAtAny",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -51465,7 +51315,6 @@
                   "generatedName": "CreateConnectionRequestDestination",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -51509,7 +51358,6 @@
                   "generatedName": "CreateConnectionRequestSource",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -51598,7 +51446,6 @@
                   "generatedName": "CreateConnectionRequestRuleset",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -51668,7 +51515,6 @@
           "generatedName": "CreateConnectionRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -52447,7 +52293,6 @@
                   "generatedName": "UpsertConnectionRequestDestination",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -52491,7 +52336,6 @@
                   "generatedName": "UpsertConnectionRequestSource",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -52580,7 +52424,6 @@
                   "generatedName": "UpsertConnectionRequestRuleset",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -52650,7 +52493,6 @@
           "generatedName": "UpsertConnectionRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -53795,7 +53637,6 @@
                   "generatedName": "UpdateConnectionRequestRuleset",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -53865,7 +53706,6 @@
           "generatedName": "UpdateConnectionRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -56591,7 +56431,6 @@
         "generatedName": "SeekPagination",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56714,7 +56553,6 @@
         "generatedName": "IssueTriggerDeliveryConfigs",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56825,7 +56663,6 @@
         "generatedName": "IssueTriggerTransformationConfigs",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56910,7 +56747,6 @@
         "generatedName": "IssueTriggerBackpressureConfigs",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56983,7 +56819,6 @@
         "generatedName": "IssueTriggerSlackChannel",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56998,7 +56833,6 @@
         "generatedName": "IssueTriggerIntegrationChannel",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57013,7 +56847,6 @@
         "generatedName": "IssueTriggerEmailChannel",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57095,7 +56928,6 @@
           "generatedName": "IssueTriggerChannels",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -57315,7 +57147,6 @@
         "generatedName": "IssueTrigger",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57395,7 +57226,6 @@
         "generatedName": "IssueTriggerPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57465,7 +57295,6 @@
                   "generatedName": "ApiErrorResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -57486,7 +57315,6 @@
         "generatedName": "ApiErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57515,7 +57343,6 @@
         "generatedName": "DeletedIssueTriggerResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57906,7 +57733,6 @@
                     "generatedName": "EventAttemptBody",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -58225,7 +58051,6 @@
           "generatedName": "EventAttempt",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -58308,7 +58133,6 @@
         "generatedName": "EventAttemptPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58390,7 +58214,6 @@
                           "generatedName": "ShortEventDataParsedQueryOne",
                           "groupName": [],
                           "additionalProperties": false,
-                          "fullExamples": [],
                           "source": {
                             "file": "../openapi.yml",
                             "type": "openapi"
@@ -58506,7 +58329,6 @@
                           "generatedName": "ShortEventDataBodyOne",
                           "groupName": [],
                           "additionalProperties": false,
-                          "fullExamples": [],
                           "source": {
                             "file": "../openapi.yml",
                             "type": "openapi"
@@ -58569,7 +58391,6 @@
           "generatedName": "ShortEventData",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -58765,7 +58586,6 @@
         "generatedName": "Bookmark",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58845,7 +58665,6 @@
         "generatedName": "BookmarkPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59092,7 +58911,6 @@
                                   "generatedName": "EventDataParsedQueryOne",
                                   "groupName": [],
                                   "additionalProperties": false,
-                                  "fullExamples": [],
                                   "source": {
                                     "file": "../openapi.yml",
                                     "type": "openapi"
@@ -59208,7 +59026,6 @@
                                   "generatedName": "EventDataBodyOne",
                                   "groupName": [],
                                   "additionalProperties": false,
-                                  "fullExamples": [],
                                   "source": {
                                     "file": "../openapi.yml",
                                     "type": "openapi"
@@ -59271,7 +59088,6 @@
                   "generatedName": "EventData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -59505,7 +59321,6 @@
         "generatedName": "Event",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59549,7 +59364,6 @@
         "generatedName": "DeletedBookmarkResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59828,7 +59642,6 @@
         "generatedName": "Destination",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59908,7 +59721,6 @@
         "generatedName": "DestinationPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59988,7 +59800,6 @@
         "generatedName": "EventPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60017,7 +59828,6 @@
         "generatedName": "RawBody",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60064,7 +59874,6 @@
         "generatedName": "RetriedEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60448,7 +60257,6 @@
         "generatedName": "BatchOperation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60528,7 +60336,6 @@
         "generatedName": "BatchOperationPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60621,7 +60428,6 @@
         "generatedName": "BatchOperationPlan",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60891,7 +60697,6 @@
         "generatedName": "HmacIntegrationConfigs",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60934,7 +60739,6 @@
         "generatedName": "ApiKeyIntegrationConfigs",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60963,7 +60767,6 @@
         "generatedName": "HandledHmacConfigs",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61006,7 +60809,6 @@
         "generatedName": "BasicAuthIntegrationConfigs",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61168,7 +60970,6 @@
         "generatedName": "ShopifyIntegrationConfigs",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61382,7 +61183,6 @@
         "generatedName": "Integration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61462,7 +61262,6 @@
         "generatedName": "IntegrationPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61491,7 +61290,6 @@
         "generatedName": "AttachedIntegrationToSource",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61505,7 +61303,6 @@
         "generatedName": "DetachedIntegrationFromSource",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61534,7 +61331,6 @@
         "generatedName": "DeletedIntegration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61640,7 +61436,6 @@
         "generatedName": "DeliveryIssueAggregationKeys",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61684,7 +61479,6 @@
         "generatedName": "DeliveryIssueReference",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61745,7 +61539,6 @@
           "generatedName": "DeliveryIssueData",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -62039,7 +61832,6 @@
         "generatedName": "DeliveryIssueWithData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62090,7 +61882,6 @@
         "generatedName": "TransformationIssueAggregationKeys",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62146,7 +61937,6 @@
         "generatedName": "TransformationIssueReference",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62217,7 +62007,6 @@
         "generatedName": "ConsoleLine",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62446,7 +62235,6 @@
         "generatedName": "TransformationExecution",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62502,7 +62290,6 @@
           "generatedName": "TransformationIssueData",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -62796,7 +62583,6 @@
         "generatedName": "TransformationIssueWithData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62910,7 +62696,6 @@
         "generatedName": "IssueWithDataPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62941,7 +62726,6 @@
         "generatedName": "IssueCount",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63211,7 +62995,6 @@
         "generatedName": "DeliveryIssue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63481,7 +63264,6 @@
         "generatedName": "TransformationIssue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63993,7 +63775,6 @@
                                   "generatedName": "RequestDataParsedQueryOne",
                                   "groupName": [],
                                   "additionalProperties": false,
-                                  "fullExamples": [],
                                   "source": {
                                     "file": "../openapi.yml",
                                     "type": "openapi"
@@ -64109,7 +63890,6 @@
                                   "generatedName": "RequestDataBodyOne",
                                   "groupName": [],
                                   "additionalProperties": false,
-                                  "fullExamples": [],
                                   "source": {
                                     "file": "../openapi.yml",
                                     "type": "openapi"
@@ -64172,7 +63952,6 @@
                   "generatedName": "RequestData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -64222,7 +64001,6 @@
         "generatedName": "Request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64302,7 +64080,6 @@
         "generatedName": "RequestPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64363,7 +64140,6 @@
         "generatedName": "RetryRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64454,7 +64230,6 @@
         "generatedName": "TransformationFailedMeta",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64617,7 +64392,6 @@
         "generatedName": "IgnoredEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64697,7 +64471,6 @@
         "generatedName": "IgnoredEventPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64802,7 +64575,6 @@
         "generatedName": "RetryRule",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64855,7 +64627,6 @@
         "generatedName": "AlertRule",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64906,7 +64677,6 @@
                 "generatedName": "ConnectionFilterPropertyThree",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -65018,7 +64788,6 @@
         "generatedName": "FilterRule",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65064,7 +64833,6 @@
         "generatedName": "TransformReference",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65205,7 +64973,6 @@
                 "generatedName": "TransformFullTransformation",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -65222,7 +64989,6 @@
         "generatedName": "TransformFull",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65284,7 +65050,6 @@
         "generatedName": "DelayRule",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65501,7 +65266,6 @@
           "generatedName": "Ruleset",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -65584,7 +65348,6 @@
         "generatedName": "RulesetPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65766,7 +65529,6 @@
                   "generatedName": "SourceIntegration",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -65843,7 +65605,6 @@
         "generatedName": "Source",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65923,7 +65684,6 @@
         "generatedName": "SourcePaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66028,7 +65788,6 @@
         "generatedName": "ToggleWebhookNotifications",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66225,7 +65984,6 @@
         "generatedName": "Transformation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66305,7 +66063,6 @@
         "generatedName": "TransformationPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66504,7 +66261,6 @@
                                     "generatedName": "TransformationExecutorOutputRequestQueryZero",
                                     "groupName": [],
                                     "additionalProperties": false,
-                                    "fullExamples": [],
                                     "source": {
                                       "file": "../openapi.yml",
                                       "type": "openapi"
@@ -66572,7 +66328,6 @@
                                   "generatedName": "TransformationExecutorOutputRequestParsedQueryOne",
                                   "groupName": [],
                                   "additionalProperties": false,
-                                  "fullExamples": [],
                                   "source": {
                                     "file": "../openapi.yml",
                                     "type": "openapi"
@@ -66629,7 +66384,6 @@
                                   "generatedName": "TransformationExecutorOutputRequestBodyOne",
                                   "groupName": [],
                                   "additionalProperties": false,
-                                  "fullExamples": [],
                                   "source": {
                                     "file": "../openapi.yml",
                                     "type": "openapi"
@@ -66659,7 +66413,6 @@
                   "generatedName": "TransformationExecutorOutputRequest",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -66709,7 +66462,6 @@
         "generatedName": "TransformationExecutorOutput",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66789,7 +66541,6 @@
         "generatedName": "TransformationExecutionPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -67048,7 +66799,6 @@
         "generatedName": "Connection",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -67128,7 +66878,6 @@
         "generatedName": "ConnectionPaginatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

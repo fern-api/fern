@@ -148,7 +148,6 @@
         "generatedName": "Request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -202,7 +201,6 @@
         "generatedName": "Response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

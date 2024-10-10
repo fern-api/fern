@@ -6782,9 +6782,6 @@
                 "type": "primitive"
               },
               "generatedName": "PartsListRequestCreatedBy",
-              "example": [
-                "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -6900,9 +6897,6 @@
                 "type": "primitive"
               },
               "generatedName": "PartsListRequestOwnedBy",
-              "example": [
-                "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -16914,9 +16908,6 @@
                 "type": "primitive"
               },
               "generatedName": "WorksExportRequestAppliesToPart",
-              "example": [
-                "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -16943,9 +16934,6 @@
                 "type": "primitive"
               },
               "generatedName": "WorksExportRequestCreatedBy",
-              "example": [
-                "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -17020,9 +17008,6 @@
                 "type": "primitive"
               },
               "generatedName": "WorksExportRequestIssueRevOrgs",
-              "example": [
-                "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -17049,9 +17034,6 @@
                 "type": "primitive"
               },
               "generatedName": "WorksExportRequestOwnedBy",
-              "example": [
-                "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -17104,9 +17086,6 @@
                 "type": "primitive"
               },
               "generatedName": "WorksExportRequestTicketRevOrg",
-              "example": [
-                "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -18351,9 +18330,6 @@
                 "type": "primitive"
               },
               "generatedName": "WorksListRequestAppliesToPart",
-              "example": [
-                "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -18380,9 +18356,6 @@
                 "type": "primitive"
               },
               "generatedName": "WorksListRequestCreatedBy",
-              "example": [
-                "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -18457,9 +18430,6 @@
                 "type": "primitive"
               },
               "generatedName": "WorksListRequestIssueRevOrgs",
-              "example": [
-                "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -18528,9 +18498,6 @@
                 "type": "primitive"
               },
               "generatedName": "WorksListRequestOwnedBy",
-              "example": [
-                "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -18583,9 +18550,6 @@
                 "type": "primitive"
               },
               "generatedName": "WorksListRequestTicketRevOrg",
-              "example": [
-                "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -19901,7 +19865,6 @@
         "title": "artifacts-locate-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19933,7 +19896,6 @@
         "title": "artifacts-prepare-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20002,7 +19964,6 @@
         "title": "artifacts-prepare-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20048,7 +20009,6 @@
         "title": "artifacts-prepare-response-form-data",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20186,7 +20146,6 @@
         "title": "atom-base",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20238,7 +20197,6 @@
         "title": "atom-base-summary",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20430,7 +20388,6 @@
         "title": "auth-connection-options-azure-ad",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20510,7 +20467,6 @@
         "title": "auth-connection-options-google-apps",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20590,7 +20546,6 @@
         "title": "auth-connection-options-oidc",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20649,7 +20604,6 @@
         "title": "auth-connection-options-saml",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20918,7 +20872,6 @@
         "title": "auth-token",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21317,7 +21270,6 @@
         "title": "auth-tokens-create-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21443,7 +21395,6 @@
         "title": "auth-tokens-create-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21481,7 +21432,6 @@
         "title": "auth-tokens-delete-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21514,7 +21464,6 @@
         "title": "auth-tokens-get-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21552,7 +21501,6 @@
         "title": "auth-tokens-list-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21611,7 +21559,6 @@
         "title": "auth-tokens-org-traits",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21729,7 +21676,6 @@
         "title": "auth-tokens-rev-info",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21768,7 +21714,6 @@
         "title": "auth-tokens-self-delete-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21815,7 +21760,6 @@
         "title": "auth-tokens-update-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21848,7 +21792,6 @@
         "title": "auth-tokens-update-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21928,7 +21871,6 @@
         "title": "auth-tokens-user-traits",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22086,7 +22028,6 @@
         "title": "dev-org-auth-connections-create-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22118,7 +22059,6 @@
         "title": "dev-org-auth-connections-delete-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22151,7 +22091,6 @@
         "title": "dev-org-auth-connections-get-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22189,7 +22128,6 @@
         "title": "dev-org-auth-connections-list-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22243,7 +22181,6 @@
         "title": "dev-org-auth-connections-toggle-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22407,7 +22344,6 @@
         "title": "dev-org-auth-connections-update-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22459,7 +22395,6 @@
         "title": "dev-user",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22549,7 +22484,6 @@
         "title": "dev-users-list-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22582,7 +22516,6 @@
         "title": "dev-users-self-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22648,7 +22581,6 @@
         "title": "enhancement",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22782,7 +22714,6 @@
         "title": "part-base",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22817,7 +22748,6 @@
         "title": "error-bad-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22901,7 +22831,6 @@
         "title": "error-bad-request-invalid-enum-value",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22932,7 +22861,6 @@
         "title": "error-bad-request-missing-required-field",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23038,7 +22966,6 @@
         "title": "error-bad-request-value-not-permitted",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23075,7 +23002,6 @@
         "title": "error-base",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23100,7 +23026,6 @@
         "title": "error-forbidden",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23152,7 +23077,6 @@
         "title": "error-internal-server-error",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23204,7 +23128,6 @@
         "title": "error-not-found",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23256,7 +23179,6 @@
         "title": "error-service-unavailable",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23308,7 +23230,6 @@
         "title": "error-too-many-requests",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23360,7 +23281,6 @@
         "title": "error-unauthorized",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23419,7 +23339,6 @@
         "title": "event-part-created",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23451,7 +23370,6 @@
         "title": "event-part-deleted",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23483,7 +23401,6 @@
         "title": "event-part-updated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23515,7 +23432,6 @@
         "title": "event-rev-org-created",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23547,7 +23463,6 @@
         "title": "event-rev-org-deleted",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23579,7 +23494,6 @@
         "title": "event-rev-org-updated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23611,7 +23525,6 @@
         "title": "event-tag-created",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23643,7 +23556,6 @@
         "title": "event-tag-deleted",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23675,7 +23587,6 @@
         "title": "event-tag-updated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23707,7 +23618,6 @@
         "title": "event-timeline-entry-created",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23738,7 +23648,6 @@
         "title": "event-timeline-entry-deleted",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23770,7 +23679,6 @@
         "title": "event-timeline-entry-updated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23802,7 +23710,6 @@
         "title": "event-webhook-created",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23834,7 +23741,6 @@
         "title": "event-webhook-deleted",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23866,7 +23772,6 @@
         "title": "event-webhook-updated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23898,7 +23803,6 @@
         "title": "event-work-created",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23930,7 +23834,6 @@
         "title": "event-work-deleted",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23962,7 +23865,6 @@
         "title": "event-work-updated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24059,7 +23961,6 @@
         "title": "issue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24281,7 +24182,6 @@
         "title": "work-base",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24381,7 +24281,6 @@
         "title": "org-base",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24427,7 +24326,6 @@
         "title": "org-base-summary",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24584,7 +24482,6 @@
         "title": "part-base-summary",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24721,9 +24618,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "PartsCreateRequestOwnedBy",
-                "example": [
-                  "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>"
-                ],
                 "groupName": [],
                 "type": "array"
               }
@@ -24797,9 +24691,6 @@
                 "type": "primitive"
               },
               "generatedName": "PartsCreateRequestCapabilityParentPart",
-              "example": [
-                "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -24811,7 +24702,6 @@
         "title": "parts-create-request-capability",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24836,9 +24726,6 @@
                 "type": "primitive"
               },
               "generatedName": "PartsCreateRequestEnhancementParentPart",
-              "example": [
-                "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -24871,7 +24758,6 @@
         "title": "parts-create-request-enhancement",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24896,9 +24782,6 @@
                 "type": "primitive"
               },
               "generatedName": "PartsCreateRequestFeatureParentPart",
-              "example": [
-                "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -24910,7 +24793,6 @@
         "title": "parts-create-request-feature",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24960,7 +24842,6 @@
         "title": "parts-create-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24992,7 +24873,6 @@
         "title": "parts-delete-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25042,7 +24922,6 @@
         "title": "parts-get-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25121,7 +25000,6 @@
         "title": "parts-list-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25304,7 +25182,6 @@
         "title": "parts-update-request-enhancement",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25350,9 +25227,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "PartsUpdateRequestOwnedBySet",
-                "example": [
-                  "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -25367,7 +25241,6 @@
         "title": "parts-update-request-owned-by",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25417,7 +25290,6 @@
         "title": "parts-update-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25523,7 +25395,6 @@
         "title": "rev-org",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25671,7 +25542,6 @@
         "title": "rev-orgs-create-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25704,7 +25574,6 @@
         "title": "rev-orgs-create-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25737,7 +25606,6 @@
         "title": "rev-orgs-delete-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25789,7 +25657,6 @@
         "title": "rev-orgs-get-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25869,7 +25736,6 @@
         "title": "rev-orgs-list-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26029,7 +25895,6 @@
         "title": "rev-orgs-update-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26062,7 +25927,6 @@
         "title": "rev-orgs-update-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26129,7 +25993,6 @@
         "title": "rev-user-summary",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26257,7 +26120,6 @@
         "title": "user-base-summary",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26310,7 +26172,6 @@
         "title": "set-tag-with-value",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26343,7 +26204,6 @@
         "title": "stage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26381,7 +26241,6 @@
         "title": "stage-init",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26419,7 +26278,6 @@
         "title": "stage-update",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26516,7 +26374,6 @@
         "title": "tag",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26557,7 +26414,6 @@
         "title": "tag-summary",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26610,7 +26466,6 @@
         "title": "tag-with-value",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26689,7 +26544,6 @@
         "title": "tags-create-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26722,7 +26576,6 @@
         "title": "tags-create-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26755,7 +26608,6 @@
         "title": "tags-delete-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26807,7 +26659,6 @@
         "title": "tags-get-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26887,7 +26738,6 @@
         "title": "tags-list-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26930,7 +26780,6 @@
         "title": "tags-update-allowed-values",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27027,7 +26876,6 @@
         "title": "tags-update-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27060,7 +26908,6 @@
         "title": "tags-update-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27150,7 +26997,6 @@
         "title": "ticket",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27304,7 +27150,6 @@
         "title": "timeline-comment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27411,9 +27256,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "TimelineEntriesCreateRequestTimelineCommentArtifacts",
-                "example": [
-                  "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -27501,7 +27343,6 @@
         "title": "timeline-entries-create-request-timeline-comment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27543,7 +27384,6 @@
         "title": "timeline-entries-create-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27576,7 +27416,6 @@
         "title": "timeline-entries-get-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27656,7 +27495,6 @@
         "title": "timeline-entries-list-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27807,7 +27645,6 @@
         "title": "timeline-entries-update-request-timeline-comment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27835,9 +27672,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifactsAdd",
-                "example": [
-                  "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -27864,9 +27698,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifactsRemove",
-                "example": [
-                  "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -27893,9 +27724,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifactsSet",
-                "example": [
-                  "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -27910,7 +27738,6 @@
         "title": "timeline-entries-update-request-timeline-comment-artifacts",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27952,7 +27779,6 @@
         "title": "timeline-entries-update-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28160,7 +27986,6 @@
         "title": "user-base",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28367,7 +28192,6 @@
         "title": "webhook",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28875,7 +28699,6 @@
         "title": "webhook-event-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28913,7 +28736,6 @@
         "title": "webhook-event-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29052,7 +28874,6 @@
         "title": "webhook-event-verify",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29160,7 +28981,6 @@
         "title": "webhooks-create-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29193,7 +29013,6 @@
         "title": "webhooks-create-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29226,7 +29045,6 @@
         "title": "webhooks-delete-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29278,7 +29096,6 @@
         "title": "webhooks-get-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29316,7 +29133,6 @@
         "title": "webhooks-list-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29458,7 +29274,6 @@
         "title": "webhooks-update-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29555,7 +29370,6 @@
         "title": "webhooks-update-request-event-types",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29588,7 +29402,6 @@
         "title": "webhooks-update-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29684,9 +29497,6 @@
                     "type": "primitive"
                   },
                   "generatedName": "WorksCreateRequestArtifacts",
-                  "example": [
-                    "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>"
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -29725,9 +29535,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "WorksCreateRequestOwnedBy",
-                "example": [
-                  "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>"
-                ],
                 "groupName": [],
                 "type": "array"
               }
@@ -29748,9 +29555,6 @@
                     "type": "primitive"
                   },
                   "generatedName": "WorksCreateRequestReportedBy",
-                  "example": [
-                    "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>"
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -29913,7 +29717,6 @@
         "title": "works-create-request-issue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29994,7 +29797,6 @@
         "title": "works-create-request-ticket",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30026,7 +29828,6 @@
         "title": "works-create-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30058,7 +29859,6 @@
         "title": "works-delete-request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30113,7 +29913,6 @@
         "title": "works-export-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30145,7 +29944,6 @@
         "title": "works-get-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30224,7 +30022,6 @@
         "title": "works-list-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30463,9 +30260,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "WorksUpdateRequestArtifactIdsSet",
-                "example": [
-                  "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -30480,7 +30274,6 @@
         "title": "works-update-request-artifact-ids",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30545,7 +30338,6 @@
         "title": "works-update-request-issue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30573,9 +30365,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "WorksUpdateRequestOwnedBySet",
-                "example": [
-                  "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -30590,7 +30379,6 @@
         "title": "works-update-request-owned-by",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30618,9 +30406,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "WorksUpdateRequestReportedBySet",
-                "example": [
-                  "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -30635,7 +30420,6 @@
         "title": "works-update-request-reported-by",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30678,7 +30462,6 @@
         "title": "works-update-request-tags",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30765,7 +30548,6 @@
         "title": "works-update-request-ticket",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30797,7 +30579,6 @@
         "title": "works-update-response",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

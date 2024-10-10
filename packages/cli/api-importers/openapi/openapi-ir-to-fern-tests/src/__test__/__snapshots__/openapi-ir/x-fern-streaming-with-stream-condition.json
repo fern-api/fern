@@ -111,7 +111,6 @@
           "generatedName": "ChatStreamRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -302,7 +301,6 @@
           "generatedName": "ChatRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -478,7 +476,6 @@
         "generatedName": "ChatFullResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -515,7 +512,6 @@
         "generatedName": "ChatStreamedResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

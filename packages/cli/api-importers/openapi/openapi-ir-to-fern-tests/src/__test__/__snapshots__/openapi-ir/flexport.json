@@ -375,7 +375,6 @@
           "generatedName": "BookingAmendmentCreateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -594,7 +593,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -628,7 +626,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -2077,7 +2074,6 @@
                   "generatedName": "BookingLineItemIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -2094,7 +2090,6 @@
           "generatedName": "BookingLineItemIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -2229,7 +2224,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -2263,7 +2257,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -2659,7 +2652,6 @@
           "generatedName": "BookingLineItemCreateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -2787,7 +2779,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -2821,7 +2812,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -3151,7 +3141,6 @@
           "generatedName": "BookingLineItemShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3279,7 +3268,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -3313,7 +3301,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -4168,7 +4155,6 @@
                   "generatedName": "BookingsIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -4185,7 +4171,6 @@
           "generatedName": "BookingsIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -4542,7 +4527,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -5983,7 +5967,6 @@
           "generatedName": "BookingCreateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -6331,7 +6314,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -6365,7 +6347,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -8396,7 +8377,6 @@
           "generatedName": "BookingShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -8729,7 +8709,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -8763,7 +8742,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -10406,7 +10384,6 @@
           "generatedName": "CarbonCalculationCreateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -10525,7 +10502,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -10559,7 +10535,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -11057,7 +11032,6 @@
                   "generatedName": "CommercialInvoicesIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -11074,7 +11048,6 @@
           "generatedName": "CommercialInvoicesIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -11952,7 +11925,6 @@
           "generatedName": "CommercialInvoicesCreateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -12180,7 +12152,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -13042,7 +13013,6 @@
           "generatedName": "CommercialInvoicesUpdateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -13237,7 +13207,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -13271,7 +13240,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -14071,7 +14039,6 @@
           "generatedName": "CommercialInvoicesShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -14267,7 +14234,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -14301,7 +14267,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -15245,7 +15210,6 @@
                   "generatedName": "CustomsEntryIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -15262,7 +15226,6 @@
           "generatedName": "CustomsEntryIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -15393,7 +15356,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -15427,7 +15389,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -15761,7 +15722,6 @@
           "generatedName": "CustomsEntriesShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -15885,7 +15845,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -15919,7 +15878,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -16494,7 +16452,6 @@
                   "generatedName": "DocumentsIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -16511,7 +16468,6 @@
           "generatedName": "DocumentsIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -16650,7 +16606,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -16684,7 +16639,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -17056,7 +17010,6 @@
           "generatedName": "DocumentsCreateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -17189,7 +17142,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -17223,7 +17175,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -17529,7 +17480,6 @@
           "generatedName": "DocumentsShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -17660,7 +17610,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -17694,7 +17643,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -18034,7 +17982,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -18068,7 +18015,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -18448,7 +18394,6 @@
                   "generatedName": "EventsIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -18465,7 +18410,6 @@
           "generatedName": "EventsIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -18566,7 +18510,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -18600,7 +18543,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -18920,7 +18862,6 @@
           "generatedName": "EventsShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -19021,7 +18962,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -19055,7 +18995,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -20234,7 +20173,6 @@
                   "generatedName": "InvoiceIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -20251,7 +20189,6 @@
           "generatedName": "InvoiceIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -20597,7 +20534,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -20631,7 +20567,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -22124,7 +22059,6 @@
           "generatedName": "InvoicesShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -22464,7 +22398,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -22498,7 +22431,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -24027,7 +23959,6 @@
                   "generatedName": "NetworkCompanyIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -24044,7 +23975,6 @@
           "generatedName": "NetworkCompanyIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -24242,7 +24172,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -24778,7 +24707,6 @@
           "generatedName": "NetworkCompanyCreateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -24928,7 +24856,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -24962,7 +24889,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -25475,7 +25401,6 @@
           "generatedName": "NetworkCompanyShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -26009,7 +25934,6 @@
           "generatedName": "NetworkCompanyUpdateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -26159,7 +26083,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -26193,7 +26116,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -26908,7 +26830,6 @@
                   "generatedName": "CompanyEntityIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -26925,7 +26846,6 @@
           "generatedName": "CompanyEntityIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -27070,7 +26990,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -27104,7 +27023,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -27523,7 +27441,6 @@
           "generatedName": "NetworkCompanyEntityCreateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -27660,7 +27577,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -27694,7 +27610,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -28067,7 +27982,6 @@
           "generatedName": "NetworkCompanyEntityShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -28203,7 +28117,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -28237,7 +28150,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -28625,7 +28537,6 @@
           "generatedName": "NetworkCompanyEntityUpdateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -28762,7 +28673,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -28796,7 +28706,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -29366,7 +29275,6 @@
                   "generatedName": "NetworkContactIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -29383,7 +29291,6 @@
           "generatedName": "NetworkContactIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -29520,7 +29427,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -29554,7 +29460,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -29926,7 +29831,6 @@
           "generatedName": "NetworkContactCreateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -30055,7 +29959,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -30089,7 +29992,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -30425,7 +30327,6 @@
           "generatedName": "NetworkContactShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -30554,7 +30455,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -30588,7 +30488,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -30930,7 +30829,6 @@
           "generatedName": "NetworkContactUpdateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -31059,7 +30957,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -31093,7 +30990,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -31659,7 +31555,6 @@
                   "generatedName": "LocationIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -31676,7 +31571,6 @@
           "generatedName": "LocationIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -31826,7 +31720,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -31860,7 +31753,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -32328,7 +32220,6 @@
           "generatedName": "NetworkLocationCreateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -32470,7 +32361,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -32504,7 +32394,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -32947,7 +32836,6 @@
           "generatedName": "NetworkLocationShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -33088,7 +32976,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -33122,7 +33009,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -33573,7 +33459,6 @@
           "generatedName": "LocationUpdateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -33715,7 +33600,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -33749,7 +33633,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -34167,7 +34050,6 @@
           "generatedName": "NetworkCompanyMeResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -34317,7 +34199,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -34351,7 +34232,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -35032,7 +34912,6 @@
                   "generatedName": "OceanContainerLegsIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -35049,7 +34928,6 @@
           "generatedName": "OceanContainerLegsIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -35187,7 +35065,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -35221,7 +35098,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -35588,7 +35464,6 @@
           "generatedName": "OceanContainerLegsShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -35719,7 +35594,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -35753,7 +35627,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -36258,7 +36131,6 @@
                   "generatedName": "ContainerListResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -36275,7 +36147,6 @@
           "generatedName": "ContainerListResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -36451,7 +36322,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -36485,7 +36355,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -37113,7 +36982,6 @@
           "generatedName": "ContainerShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -37282,7 +37150,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -37316,7 +37183,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -38111,7 +37977,6 @@
                   "generatedName": "PortsIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -38128,7 +37993,6 @@
           "generatedName": "PortsIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -38307,7 +38171,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -38341,7 +38204,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -39058,7 +38920,6 @@
                   "generatedName": "ProductIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -39075,7 +38936,6 @@
           "generatedName": "ProductIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -39226,7 +39086,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -39260,7 +39119,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -39671,7 +39529,6 @@
           "generatedName": "ProductCreateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -39815,7 +39672,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -39849,7 +39705,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -40260,7 +40115,6 @@
           "generatedName": "ProductShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -40404,7 +40258,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -40438,7 +40291,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -40846,7 +40698,6 @@
           "generatedName": "ProductUpdateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -40990,7 +40841,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -41024,7 +40874,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -41648,7 +41497,6 @@
                   "generatedName": "PurchaseOrderLineItemIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -41665,7 +41513,6 @@
           "generatedName": "PurchaseOrderLineItemIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -41906,7 +41753,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -41940,7 +41786,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -42770,7 +42615,6 @@
           "generatedName": "PurchaseOrderLineItemShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -43005,7 +42849,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -43039,7 +42882,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -44564,7 +44406,6 @@
                   "generatedName": "PurchaseOrderIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -44581,7 +44422,6 @@
           "generatedName": "PurchaseOrderIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -44915,7 +44755,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -44949,7 +44788,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -46697,7 +46535,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -46731,7 +46568,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -48293,7 +48129,6 @@
           "generatedName": "PurchaseOrderShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -48615,7 +48450,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -48649,7 +48483,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -49817,7 +49650,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -49851,7 +49683,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -51236,7 +51067,6 @@
                   "generatedName": "ShipmentLegIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -51253,7 +51083,6 @@
           "generatedName": "ShipmentLegIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -51502,7 +51331,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -51536,7 +51364,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -52507,7 +52334,6 @@
           "generatedName": "ShipmentLegShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -52748,7 +52574,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -52782,7 +52607,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -54637,7 +54461,6 @@
                   "generatedName": "ShipmentIndexResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -54654,7 +54477,6 @@
           "generatedName": "ShipmentIndexResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -55031,7 +54853,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -55065,7 +54886,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -56813,7 +56633,6 @@
           "generatedName": "ShipmentShowResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -57179,7 +56998,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -57213,7 +57031,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -59051,7 +58868,6 @@
           "generatedName": "ShipmentUpdateResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -59418,7 +59234,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -59452,7 +59267,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -61194,10 +61008,6 @@
                     "type": "primitive"
                   },
                   "generatedName": "ShipmentsShareableRequestShipmentIds",
-                  "example": [
-                    123,
-                    456
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -61211,7 +61021,6 @@
           "generatedName": "ShipmentsShareableRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -61405,7 +61214,6 @@
                             "generatedName": "ShipmentsShareableResponseDataShipmentsItem",
                             "groupName": [],
                             "additionalProperties": false,
-                            "fullExamples": [],
                             "source": {
                               "file": "../openapi.yml",
                               "type": "openapi"
@@ -61426,7 +61234,6 @@
                   "generatedName": "ShipmentsShareableResponseData",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -61443,7 +61250,6 @@
           "generatedName": "ShipmentsShareableResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -61569,7 +61375,6 @@
                     },
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": [],
-                    "example": null,
                     "type": "map"
                   },
                   "groupName": [],
@@ -61603,7 +61408,6 @@
             "generatedName": "BadRequestErrorBody",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -61886,7 +61690,6 @@
         "generatedName": "CreateContainerCounts",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61954,7 +61757,6 @@
         "generatedName": "CreateBookingAmendmentHsCode",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62023,7 +61825,6 @@
         "generatedName": "VolumeCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62092,7 +61893,6 @@
         "generatedName": "WeightCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62161,7 +61961,6 @@
         "generatedName": "LengthCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62366,7 +62165,6 @@
         "generatedName": "ShippingUnitCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62456,34 +62254,6 @@
                   "type": "reference"
                 },
                 "generatedName": "CreateCargoShippingUnits",
-                "example": [
-                  {
-                    "name": "Cellular phones",
-                    "volume": {
-                      "value": 10.3,
-                      "unit": "cbm"
-                    },
-                    "weight": {
-                      "value": 2300.4,
-                      "unit": "kg"
-                    },
-                    "height": {
-                      "value": 100,
-                      "unit": "cm"
-                    },
-                    "length": {
-                      "value": 100,
-                      "unit": "cm"
-                    },
-                    "width": {
-                      "value": 100,
-                      "unit": "cm"
-                    },
-                    "count": 9,
-                    "atomic_count": 9,
-                    "unit_type": "pallet"
-                  }
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -62637,9 +62407,6 @@
                   "type": "enum"
                 },
                 "generatedName": "CreateCargoLithiumBatteriesPackingTypes",
-                "example": [
-                  "packed_loose"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -62654,7 +62421,6 @@
         "generatedName": "CreateCargo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62699,11 +62465,6 @@
               "generatedName": "MetadataCreateExampleKey",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [
-                {
-                  "value": "{color: [\"red\", \"blue\"], size: [\"large\", \"medium\", \"small\"]}"
-                }
-              ],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -62763,7 +62524,6 @@
                 "generatedName": "MetadataCreateItem",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -63167,7 +62927,6 @@
         "generatedName": "CreateBookingAmendment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63287,7 +63046,6 @@
         "generatedName": "ContainerCounts",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63543,7 +63301,6 @@
         "generatedName": "Address",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63647,7 +63404,6 @@
         "generatedName": "HsCode",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63746,7 +63502,6 @@
         "generatedName": "BookingAmendmentHsCode",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63792,7 +63547,6 @@
         "generatedName": "Volume",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63838,7 +63592,6 @@
         "generatedName": "Weight",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63928,7 +63681,6 @@
         "generatedName": "Length",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64154,7 +63906,6 @@
         "generatedName": "ShippingUnit",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64265,34 +64016,6 @@
                   "type": "reference"
                 },
                 "generatedName": "CargoShippingUnits",
-                "example": [
-                  {
-                    "name": "Cellular phones",
-                    "volume": {
-                      "value": 10.3,
-                      "unit": "cbm"
-                    },
-                    "weight": {
-                      "value": 2300.4,
-                      "unit": "kg"
-                    },
-                    "height": {
-                      "value": 100,
-                      "unit": "cm"
-                    },
-                    "length": {
-                      "value": 100,
-                      "unit": "cm"
-                    },
-                    "width": {
-                      "value": 100,
-                      "unit": "cm"
-                    },
-                    "count": 9,
-                    "atomic_count": 9,
-                    "unit_type": "pallet"
-                  }
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -64446,9 +64169,6 @@
                   "type": "enum"
                 },
                 "generatedName": "CargoLithiumBatteriesPackingTypes",
-                "example": [
-                  "packed_loose"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -64463,7 +64183,6 @@
         "generatedName": "Cargo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64486,14 +64205,6 @@
         },
         "generatedName": "Metadata",
         "groupName": [],
-        "example": {
-          "purchase_order": [
-            "12345"
-          ],
-          "sku": [
-            "abc123"
-          ]
-        },
         "type": "map"
       },
       "BookingAmendment": {
@@ -64872,7 +64583,6 @@
         "generatedName": "BookingAmendment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64971,7 +64681,6 @@
         "generatedName": "Error",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65067,7 +64776,6 @@
         "generatedName": "BookingRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65163,7 +64871,6 @@
         "generatedName": "PurchaseOrderLineItemRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65282,7 +64989,6 @@
         "generatedName": "BookingLineItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65345,7 +65051,6 @@
         "generatedName": "CreateBookingLineItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65445,7 +65150,6 @@
         "generatedName": "ShipmentRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65522,7 +65226,6 @@
         "generatedName": "VatNumber",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65664,7 +65367,6 @@
         "generatedName": "CompanyEntity",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65831,7 +65533,6 @@
         "generatedName": "Airport",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65904,7 +65605,6 @@
         "generatedName": "Placeport",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65960,7 +65660,6 @@
         "generatedName": "Manufacturer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66097,7 +65796,6 @@
           "generatedName": "Place",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -66220,7 +65918,6 @@
         "generatedName": "BookingHsCode",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66488,7 +66185,6 @@
           "generatedName": "OceanBookingDetail",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -66718,7 +66414,6 @@
           "generatedName": "AirBookingDetail",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -66831,7 +66526,6 @@
           "generatedName": "TruckingBookingDetail",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -66913,7 +66607,6 @@
         "generatedName": "BookingLineItemCollectionRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -67513,7 +67206,6 @@
         "generatedName": "Booking",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -67602,7 +67294,6 @@
         "generatedName": "CreateBookingHsCode",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -67737,14 +67428,6 @@
                 "type": "reference"
               },
               "generatedName": "CreateOceanBookingProductDescriptions",
-              "example": [
-                {
-                  "description": "Wristwatches",
-                  "description_for_export_customs": "手表",
-                  "description_for_export_customs_locale": "zh_CN",
-                  "hs_code": "9101.00"
-                }
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -67876,7 +67559,6 @@
         "generatedName": "CreateOceanBooking",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68189,7 +67871,6 @@
         "generatedName": "CreateAirBooking",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68269,7 +67950,6 @@
         "generatedName": "CreateTruckingBooking",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68711,7 +68391,6 @@
         "generatedName": "CreateBooking",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68780,7 +68459,6 @@
         "generatedName": "DistanceCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68835,7 +68513,6 @@
         "generatedName": "CoordinatesCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68990,7 +68667,6 @@
         "generatedName": "AddressForRequestBody",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -69400,7 +69076,6 @@
         "generatedName": "CreateCarbonCalculation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -69457,7 +69132,6 @@
         "generatedName": "CarbonCalculation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -69513,7 +69187,6 @@
         "generatedName": "MoneyCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -69537,7 +69210,6 @@
         "generatedName": "Money",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -69639,7 +69311,6 @@
               "generatedName": "commercialInvoiceLineItemContainerNumberCreatedAt",
               "value": {
                 "schema": {
-                  "example": "2020-01-01T15:28:03.265Z",
                   "type": "datetime"
                 },
                 "generatedName": "CommercialInvoiceLineItemContainerNumberCreatedAt",
@@ -69659,7 +69330,6 @@
               "generatedName": "commercialInvoiceLineItemContainerNumberUpdatedAt",
               "value": {
                 "schema": {
-                  "example": "2020-01-01T15:28:03.265Z",
                   "type": "datetime"
                 },
                 "generatedName": "CommercialInvoiceLineItemContainerNumberUpdatedAt",
@@ -69676,7 +69346,6 @@
         "generatedName": "CommercialInvoiceLineItemContainerNumber",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -69772,7 +69441,6 @@
         "generatedName": "ProductRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70183,7 +69851,6 @@
         "generatedName": "CommercialInvoiceLineItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70279,7 +69946,6 @@
         "generatedName": "CompanyEntityRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70399,7 +70065,6 @@
         "generatedName": "CustomsInvolvedParty",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70803,7 +70468,6 @@
         "generatedName": "CommercialInvoice",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70847,7 +70511,6 @@
         "generatedName": "CreateInvolvedParty",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70930,7 +70593,6 @@
         "generatedName": "CreateQuantity",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -71281,7 +70943,6 @@
         "generatedName": "CreateCommercialInvoiceLineItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -71501,7 +71162,6 @@
         "generatedName": "CreateCommercialInvoice",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -71671,7 +71331,6 @@
         "generatedName": "UpdateCommercialInvoice",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -71827,7 +71486,6 @@
         "generatedName": "CustomsEntry",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -71905,7 +71563,6 @@
         "generatedName": "FileMetadata",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72117,7 +71774,6 @@
         "generatedName": "Document",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72253,7 +71909,6 @@
         "generatedName": "CreateDocument",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72367,7 +72022,6 @@
         "generatedName": "GenericObjectRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72553,7 +72207,6 @@
         "generatedName": "ContainerCollectionRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72675,7 +72328,6 @@
                 "value": {
                   "description": "the date-time at which the carrier confirms space release related to the shipping order",
                   "schema": {
-                    "example": "2021-06-08T06:18:46.299Z",
                     "type": "datetime"
                   },
                   "generatedName": "OceanShipmentDetailConfirmedSpaceReleasedAt",
@@ -72713,7 +72365,6 @@
           "generatedName": "OceanShipmentDetail",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -72836,7 +72487,6 @@
           "generatedName": "AirShipmentDetail",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -72944,10 +72594,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "ShipmentDangerousGoodsClassifications",
-                "example": [
-                  "1.2",
-                  "2"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -72961,7 +72607,6 @@
         "generatedName": "ShipmentDangerousGoods",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73039,7 +72684,6 @@
         "generatedName": "ProductProperty",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73122,7 +72766,6 @@
         "generatedName": "ProductClassification",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73249,7 +72892,6 @@
                 "value": {
                   "description": "If the product has been archived, the time it was archived. If the product is still active this will be null.",
                   "schema": {
-                    "example": "2019-01-18T22:08:38.599Z",
                     "type": "datetime"
                   },
                   "generatedName": "ProductArchivedAt",
@@ -73415,7 +73057,6 @@
         "generatedName": "Product",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73574,7 +73215,6 @@
         "generatedName": "ShipmentItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73653,7 +73293,6 @@
         "generatedName": "LegCollectionRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73729,7 +73368,6 @@
         "generatedName": "CustomsEntryCollectionRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73805,7 +73443,6 @@
         "generatedName": "CommercialInvoiceCollectionRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73881,7 +73518,6 @@
         "generatedName": "DocumentCollectionRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -75159,7 +74795,6 @@
         "generatedName": "Shipment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -75315,7 +74950,6 @@
         "generatedName": "AdditionalDates",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -75418,7 +75052,6 @@
           "generatedName": "Terminal",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -75524,7 +75157,6 @@
         "generatedName": "ShipmentNode",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -75621,7 +75253,6 @@
           "generatedName": "AirShipmentLeg",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -75703,7 +75334,6 @@
         "generatedName": "ContainerLegCollectionRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -75839,7 +75469,6 @@
         "generatedName": "OceanShipmentLeg",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76014,7 +75643,6 @@
           "generatedName": "TruckingShipmentLeg",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -76075,7 +75703,6 @@
           "generatedName": "RailShipmentLeg",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -76466,7 +76093,6 @@
         "generatedName": "ShipmentLeg",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76562,7 +76188,6 @@
         "generatedName": "ContainerRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76658,7 +76283,6 @@
         "generatedName": "LegRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76753,9 +76377,6 @@
                   },
                   "generatedName": "OceanShipmentContainerLegDatesItem",
                   "groupName": [],
-                  "example": {
-                    "actual_loaded_on_board_date": "2019-01-18T22:08:38.599Z"
-                  },
                   "type": "map"
                 },
                 "generatedName": "OceanShipmentContainerLegDates",
@@ -76772,7 +76393,6 @@
         "generatedName": "OceanShipmentContainerLeg",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -77448,7 +77068,6 @@
         "generatedName": "ShipmentContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -77622,7 +77241,6 @@
         "generatedName": "Exception",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -77800,7 +77418,6 @@
         "generatedName": "ShipmentEventData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -77957,7 +77574,6 @@
         "generatedName": "WebhookEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78037,7 +77653,6 @@
         "generatedName": "InvoiceRate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78117,7 +77732,6 @@
         "generatedName": "InvoiceQuantity",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78336,7 +77950,6 @@
         "generatedName": "InvoiceItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78437,7 +78050,6 @@
               "generatedName": "creditMemoCreditedAt",
               "value": {
                 "schema": {
-                  "example": "2019-07-12T20:40:11.572Z",
                   "type": "datetime"
                 },
                 "generatedName": "CreditMemoCreditedAt",
@@ -78466,10 +78078,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "CreditMemoCategories",
-                "example": [
-                  "additional",
-                  "freight"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -78508,7 +78116,6 @@
         "generatedName": "CreditMemo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78590,7 +78197,6 @@
               "value": {
                 "description": "When the invoice was issued",
                 "schema": {
-                  "example": "2019-05-22T18:39:53.679Z",
                   "type": "datetime"
                 },
                 "generatedName": "InvoiceIssuedAt",
@@ -78758,7 +78364,6 @@
               "value": {
                 "description": "When the invoice was voided (if applicable)",
                 "schema": {
-                  "example": "2019-05-22T20:49:15.639Z",
                   "type": "datetime"
                 },
                 "generatedName": "InvoiceVoidedAt",
@@ -78779,7 +78384,6 @@
               "value": {
                 "description": "Time of the last adjustment to in invoice",
                 "schema": {
-                  "example": "2019-05-22T20:49:15.639Z",
                   "type": "datetime"
                 },
                 "generatedName": "InvoiceLastUpdatedAt",
@@ -78876,10 +78480,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "InvoiceNotes",
-                "example": [
-                  "Markdown formatted note 1",
-                  "Markdown formatted note 2"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -78940,7 +78540,6 @@
         "generatedName": "Invoice",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79013,7 +78612,6 @@
         "generatedName": "GenericCollectionRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79214,7 +78812,6 @@
         "generatedName": "Company",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79266,7 +78863,6 @@
         "generatedName": "CreateCompany",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79323,7 +78919,6 @@
         "generatedName": "UpdateCompany",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79370,7 +78965,6 @@
         "generatedName": "WriteVatNumber",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79507,7 +79101,6 @@
         "generatedName": "CreateCompanyEntity",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79611,7 +79204,6 @@
         "generatedName": "UpdateCompanyEntity",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79836,7 +79428,6 @@
                 "generatedName": "ContactCompany",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -79853,7 +79444,6 @@
         "generatedName": "Contact",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79937,7 +79527,6 @@
         "generatedName": "CreateContact",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80015,7 +79604,6 @@
         "generatedName": "UpdateContact",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80213,7 +79801,6 @@
         "generatedName": "Location",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80288,11 +79875,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "CreateLocationContactIds",
-                "example": [
-                  "asdlkfaiowejfa",
-                  "398qehfiaiurh",
-                  "yfhvalnertughv"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -80344,12 +79926,6 @@
                 },
                 "generatedName": "CreateLocationMetadata",
                 "groupName": [],
-                "example": {
-                  "color": [
-                    "blue",
-                    "green"
-                  ]
-                },
                 "type": "map"
               },
               "groupName": [],
@@ -80362,7 +79938,6 @@
         "generatedName": "CreateLocation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80431,11 +80006,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "UpdateLocationContactIds",
-                "example": [
-                  "asdlkfaiowejfa",
-                  "398qehfiaiurh",
-                  "yfhvalnertughv"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -80487,12 +80057,6 @@
                 },
                 "generatedName": "UpdateLocationMetadata",
                 "groupName": [],
-                "example": {
-                  "color": [
-                    "blue",
-                    "green"
-                  ]
-                },
                 "type": "map"
               },
               "groupName": [],
@@ -80505,7 +80069,6 @@
         "generatedName": "UpdateLocation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80552,7 +80115,6 @@
         "generatedName": "WriteProductProperty",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80577,9 +80139,6 @@
                 "type": "primitive"
               },
               "generatedName": "WriteProductClassificationCodes",
-              "example": [
-                "0301.00"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -80606,7 +80165,6 @@
         "generatedName": "WriteProductClassification",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80679,7 +80237,6 @@
         "generatedName": "WriteProductSupplier",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80879,7 +80436,6 @@
         "generatedName": "CreateProduct",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81098,7 +80654,6 @@
         "generatedName": "UpdateProduct",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81194,7 +80749,6 @@
         "generatedName": "PurchaseOrderRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81461,7 +81015,6 @@
         "generatedName": "PurchaseOrderProduct",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81518,7 +81071,6 @@
         "generatedName": "PurchaseOrderLineItemDestinationAddress",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81637,7 +81189,6 @@
         "generatedName": "LineItemMeasurement",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -82452,7 +82003,6 @@
         "generatedName": "PurchaseOrderLineItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -82704,7 +82254,6 @@
                   "generatedName": "PartiesContactsItem",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -82726,7 +82275,6 @@
         "generatedName": "Parties",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -82805,7 +82353,6 @@
         "generatedName": "PurchaseOrderLineItemCollectionRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -83459,7 +83006,6 @@
         "generatedName": "PurchaseOrder",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -83700,7 +83246,6 @@
                   "generatedName": "CreatePartyContactsItem",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -83722,7 +83267,6 @@
         "generatedName": "CreateParty",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -83791,7 +83335,6 @@
         "generatedName": "CreatePurchaseOrderPort",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84053,7 +83596,6 @@
         "generatedName": "CreatePurchaseOrderProduct",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84105,7 +83647,6 @@
         "generatedName": "CreateLineItemDestinationLocation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84152,7 +83693,6 @@
         "generatedName": "CreatePurchaseOrderHsCode",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84257,7 +83797,6 @@
         "generatedName": "CreateLineItemMeasurement",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85414,7 +84953,6 @@
         "generatedName": "CreateLineItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85848,10 +85386,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "CreateOrUpdatePurchaseOrderDestinationLocationRefs",
-                "example": [
-                  "id-123456",
-                  "id-23456"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -86019,7 +85553,6 @@
         "generatedName": "CreateOrUpdatePurchaseOrder",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86051,11 +85584,6 @@
                 },
                 "generatedName": "UpdateShipmentMetadata",
                 "groupName": [],
-                "example": {
-                  "purchase_order": [
-                    "12345"
-                  ]
-                },
                 "type": "map"
               },
               "groupName": [],
@@ -86068,7 +85596,6 @@
         "generatedName": "UpdateShipment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

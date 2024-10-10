@@ -66009,17 +66009,6 @@
         "title": "AMLRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "aml": {
-                "key": "aml"
-              },
-              "amlContext": "amlContext",
-              "version": "version"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66059,13 +66048,6 @@
         "title": "ActionMenuFetchResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "result": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66108,7 +66090,6 @@
                 "generatedName": "AdminConfigConfig",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -66127,13 +66108,6 @@
         "title": "AdminConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "config": "{}"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66206,20 +66180,6 @@
         "title": "AdminMediationDeny",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "mediator_terms": [
-                "mediator_terms",
-                "mediator_terms"
-              ],
-              "recipient_terms": [
-                "recipient_terms",
-                "recipient_terms"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66264,16 +66224,6 @@
         "title": "AdminModules",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "result": [
-                "result",
-                "result"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66333,7 +66283,6 @@
                 "generatedName": "AdminStatusConductor",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -66389,7 +66338,6 @@
                 "generatedName": "AdminStatusTiming",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -66430,16 +66378,6 @@
         "title": "AdminStatus",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "timing": "{}",
-              "label": "label",
-              "conductor": "{}",
-              "version": "version"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66479,13 +66417,6 @@
         "title": "AdminStatusLiveliness",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "alive": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66525,13 +66456,6 @@
         "title": "AdminStatusReadiness",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "ready": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66703,28 +66627,6 @@
         "title": "AttachDecorator",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "filename": "IMG1092348.png",
-              "lastmod_time": "2021-12-31 23:59:59+00:00",
-              "mime-type": "image/png",
-              "data": {
-                "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                "jws": null,
-                "base64": "ey4uLn0=",
-                "json": "{\"sample\": \"content\"}",
-                "links": [
-                  "https://link.to/data",
-                  "https://link.to/data"
-                ]
-              },
-              "description": "view from doorway, facing east, with lights off",
-              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "byte_count": 1234
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66783,7 +66685,6 @@
                 },
                 "generatedName": "AttachDecoratorDataJson",
                 "groupName": [],
-                "example": "{\"sample\": \"content\"}",
                 "type": "map"
               },
               "groupName": [],
@@ -66873,20 +66774,6 @@
         "title": "AttachDecoratorData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-              "jws": null,
-              "base64": "ey4uLn0=",
-              "json": "{\"sample\": \"content\"}",
-              "links": [
-                "https://link.to/data",
-                "https://link.to/data"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66962,7 +66849,6 @@
         "title": "AttachDecoratorData1JWS",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -67084,7 +66970,6 @@
         "title": "AttachDecoratorDataJWS",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -67120,7 +67005,6 @@
         "title": "AttachDecoratorDataJWSHeader",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -67195,14 +67079,6 @@
         "title": "AttachmentDef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "attachment-0",
-              "type": "present-proof"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -67265,15 +67141,6 @@
         "title": "AttributeMimeTypesResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": {
-                "key": "results"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -67317,7 +67184,6 @@
                 "title": "jwt",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -67345,7 +67211,6 @@
                 "title": "jwt_vc",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -67373,7 +67238,6 @@
                 "title": "jwt_vp",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -67402,7 +67266,6 @@
                 "title": "ldp",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -67430,7 +67293,6 @@
                 "title": "ldp_vc",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -67458,7 +67320,6 @@
                 "title": "ldp_vp",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -67477,7 +67338,6 @@
         "title": "ClaimFormat",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -67537,18 +67397,6 @@
         "title": "ClearPendingRevocationsRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "purge": {
-                "key": [
-                  "12345",
-                  "12345"
-                ]
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68116,32 +67964,6 @@
         "title": "ConnRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "error_msg": "No DIDDoc provided; cannot connect to public DID",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "their_role": "requester",
-              "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "their_did": "WgWxqztrNooG92RXvxSTWv",
-              "accept": "auto",
-              "connection_protocol": "connections/1.0",
-              "routing_state": "active",
-              "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
-              "rfc23_state": "invitation-sent",
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "alias": "Bob, providing quotes",
-              "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "my_did": "WgWxqztrNooG92RXvxSTWv",
-              "state": "active",
-              "their_label": "Bob",
-              "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-              "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "invitation_mode": "once"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68365,26 +68187,6 @@
         "title": "ConnectionInvitation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "recipientKeys": [
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-              ],
-              "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-              "imageUrl": "http://192.168.56.101/img/logo.jpg",
-              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "label": "Bob",
-              "routingKeys": [
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-              ],
-              "serviceEndpoint": "http://192.168.56.101:8020",
-              "did": "WgWxqztrNooG92RXvxSTWv"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68429,58 +68231,6 @@
         "title": "ConnectionList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "error_msg": "No DIDDoc provided; cannot connect to public DID",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "their_role": "requester",
-                  "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "their_did": "WgWxqztrNooG92RXvxSTWv",
-                  "accept": "auto",
-                  "connection_protocol": "connections/1.0",
-                  "routing_state": "active",
-                  "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
-                  "rfc23_state": "invitation-sent",
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "alias": "Bob, providing quotes",
-                  "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "my_did": "WgWxqztrNooG92RXvxSTWv",
-                  "state": "active",
-                  "their_label": "Bob",
-                  "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "invitation_mode": "once"
-                },
-                {
-                  "error_msg": "No DIDDoc provided; cannot connect to public DID",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "their_role": "requester",
-                  "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "their_did": "WgWxqztrNooG92RXvxSTWv",
-                  "accept": "auto",
-                  "connection_protocol": "connections/1.0",
-                  "routing_state": "active",
-                  "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
-                  "rfc23_state": "invitation-sent",
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "alias": "Bob, providing quotes",
-                  "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "my_did": "WgWxqztrNooG92RXvxSTWv",
-                  "state": "active",
-                  "their_label": "Bob",
-                  "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "invitation_mode": "once"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68506,7 +68256,6 @@
                 "generatedName": "ConnectionMetadataResults",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -68525,13 +68274,6 @@
         "title": "ConnectionMetadata",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": "{}"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68553,7 +68295,6 @@
               "generatedName": "ConnectionMetadataSetRequestMetadata",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -68569,13 +68310,6 @@
         "title": "ConnectionMetadataSetRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "metadata": "{}"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68791,20 +68525,6 @@
         "title": "ConnectionStaticRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "their_endpoint": "https://myhost:8021",
-              "their_seed": "their_seed",
-              "my_seed": "my_seed",
-              "their_verkey": "their_verkey",
-              "alias": "alias",
-              "my_did": "WgWxqztrNooG92RXvxSTWv",
-              "their_did": "WgWxqztrNooG92RXvxSTWv",
-              "their_label": "their_label"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -68922,39 +68642,6 @@
         "title": "ConnectionStaticResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "record": {
-                "error_msg": "No DIDDoc provided; cannot connect to public DID",
-                "created_at": "2021-12-31 23:59:59+00:00",
-                "their_role": "requester",
-                "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "their_did": "WgWxqztrNooG92RXvxSTWv",
-                "accept": "auto",
-                "connection_protocol": "connections/1.0",
-                "routing_state": "active",
-                "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
-                "rfc23_state": "invitation-sent",
-                "updated_at": "2021-12-31 23:59:59+00:00",
-                "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "alias": "Bob, providing quotes",
-                "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "my_did": "WgWxqztrNooG92RXvxSTWv",
-                "state": "active",
-                "their_label": "Bob",
-                "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "invitation_mode": "once"
-              },
-              "their_verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-              "my_did": "WgWxqztrNooG92RXvxSTWv",
-              "my_endpoint": "https://myhost:8021",
-              "their_did": "WgWxqztrNooG92RXvxSTWv",
-              "my_verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -69207,7 +68894,6 @@
         "title": "Constraints",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -69257,7 +68943,6 @@
                 "generatedName": "CreateInvitationRequestMetadata",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -69382,24 +69067,6 @@
         "title": "CreateInvitationRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "recipient_keys": [
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-              ],
-              "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "metadata": "{}",
-              "service_endpoint": "http://192.168.56.102:8020",
-              "my_label": "Bob",
-              "routing_keys": [
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -69680,24 +69347,6 @@
         "title": "CreateWalletRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "wallet_key": "MySecretKey123",
-              "image_url": "https://aries.ca/images/sample.png",
-              "wallet_webhook_urls": [
-                "http://localhost:8022/webhooks",
-                "http://localhost:8022/webhooks"
-              ],
-              "wallet_key_derivation": "RAW",
-              "wallet_name": "MyNewWallet",
-              "key_management_mode": "managed",
-              "wallet_type": "indy",
-              "label": "Alice",
-              "wallet_dispatch_type": "default"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -69775,7 +69424,6 @@
                 "generatedName": "CreateWalletResponseSettings",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -69880,19 +69528,6 @@
         "title": "CreateWalletResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "settings": "{}",
-              "wallet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "key_management_mode": "managed",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "state": "active",
-              "token": "eyJhbGciOiJFZERTQSJ9.eyJhIjogIjAifQ.dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -69932,13 +69567,6 @@
         "title": "CreateWalletTokenRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "wallet_key": "MySecretKey123"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -69978,13 +69606,6 @@
         "title": "CreateWalletTokenResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "token": "eyJhbGciOiJFZERTQSJ9.eyJhIjogIjAifQ.dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70062,15 +69683,6 @@
         "title": "CredAttrSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "mime-type": "image/jpeg",
-              "name": "favourite_drink",
-              "value": "martini"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70133,7 +69745,6 @@
         "title": "CredDefValue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70273,7 +69884,6 @@
         "title": "CredDefValuePrimary",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70549,7 +70159,6 @@
         "title": "CredDefValueRevocation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70593,34 +70202,6 @@
         "title": "CredInfoList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "cred_rev_id": "12345",
-                  "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                  "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                  "attrs": {
-                    "key": "alice"
-                  }
-                },
-                {
-                  "cred_rev_id": "12345",
-                  "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                  "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                  "attrs": {
-                    "key": "alice"
-                  }
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70646,7 +70227,6 @@
                 "generatedName": "CredRevIndyRecordsResultRevRegDelta",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -70665,13 +70245,6 @@
         "title": "CredRevIndyRecordsResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "rev_reg_delta": "{}"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70715,36 +70288,6 @@
         "title": "CredRevRecordDetailsResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "cred_rev_id": "12345",
-                  "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "cred_ex_version": "cred_ex_version",
-                  "state": "issued",
-                  "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-                },
-                {
-                  "cred_rev_id": "12345",
-                  "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "cred_ex_version": "cred_ex_version",
-                  "state": "issued",
-                  "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70784,23 +70327,6 @@
         "title": "CredRevRecordResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "result": {
-                "cred_rev_id": "12345",
-                "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                "updated_at": "2021-12-31 23:59:59+00:00",
-                "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                "created_at": "2021-12-31 23:59:59+00:00",
-                "cred_ex_version": "cred_ex_version",
-                "state": "issued",
-                "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70839,13 +70365,6 @@
         "title": "CredRevokedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "revoked": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -70880,10 +70399,6 @@
               },
               "generatedName": "CredentialContext",
               "title": "@context",
-              "example": [
-                "https://www.w3.org/2018/credentials/v1",
-                "https://www.w3.org/2018/credentials/examples/v1"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -70911,7 +70426,6 @@
               "title": "credentialSubject",
               "nameOverride": "credentialSubject",
               "groupName": [],
-              "example": "",
               "type": "map"
             },
             "audiences": []
@@ -71009,7 +70523,6 @@
               "title": "issuer",
               "nameOverride": "issuer",
               "groupName": [],
-              "example": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
               "type": "map"
             },
             "audiences": []
@@ -71054,10 +70567,6 @@
               "generatedName": "CredentialType",
               "nameOverride": "type",
               "title": "type",
-              "example": [
-                "VerifiableCredential",
-                "AlumniCredential"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -71070,7 +70579,6 @@
         "title": "Credential",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -71175,7 +70683,6 @@
                 },
                 "generatedName": "CredentialDefinitionType",
                 "groupName": [],
-                "example": "CL",
                 "type": "map"
               },
               "groupName": [],
@@ -71237,18 +70744,6 @@
         "title": "CredentialDefinition",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "ver": "1.0",
-              "schemaId": "20",
-              "id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "tag": "tag",
-              "type": "CL",
-              "value": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -71288,20 +70783,6 @@
         "title": "CredentialDefinitionGetResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "credential_definition": {
-                "ver": "1.0",
-                "schemaId": "20",
-                "id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                "tag": "tag",
-                "type": "CL",
-                "value": null
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -71412,16 +70893,6 @@
         "title": "CredentialDefinitionSendRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "revocation_registry_size": 1000,
-              "support_revocation": true,
-              "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-              "tag": "default"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -71462,13 +70933,6 @@
         "title": "CredentialDefinitionSendResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -71514,16 +70978,6 @@
         "title": "CredentialDefinitionsCreatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "credential_definition_ids": [
-                "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -71665,7 +71119,6 @@
         "title": "CredentialOffer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -71725,25 +71178,6 @@
         "title": "CredentialPreview",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "@type": "issue-credential/1.0/credential-preview",
-              "attributes": [
-                {
-                  "mime-type": "image/jpeg",
-                  "name": "favourite_drink",
-                  "value": "martini"
-                },
-                {
-                  "mime-type": "image/jpeg",
-                  "name": "favourite_drink",
-                  "value": "martini"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72006,7 +71440,6 @@
         "title": "CredentialProposal",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72041,7 +71474,6 @@
         "title": "CredentialStatusOptions",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72204,17 +71636,6 @@
         "title": "DID",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "key_type": "ed25519",
-              "method": "sov",
-              "posture": "wallet_only",
-              "verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-              "did": "did:peer:WgWxqztrNooG92RXvxSTWv"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72300,15 +71721,6 @@
         "title": "DIDCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "method": "sov",
-              "seed": "000000000000000000000000Trustee1",
-              "options": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72380,7 +71792,6 @@
         "title": "DIDCreateOptions",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72438,14 +71849,6 @@
         "title": "DIDEndpoint",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "endpoint": "https://myhost:8021",
-              "did": "WgWxqztrNooG92RXvxSTWv"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72543,15 +71946,6 @@
         "title": "DIDEndpointWithType",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "endpoint": "https://myhost:8021",
-              "endpoint_type": "Endpoint",
-              "did": "WgWxqztrNooG92RXvxSTWv"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72596,28 +71990,6 @@
         "title": "DIDList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "key_type": "ed25519",
-                  "method": "sov",
-                  "posture": "wallet_only",
-                  "verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  "did": "did:peer:WgWxqztrNooG92RXvxSTWv"
-                },
-                {
-                  "key_type": "ed25519",
-                  "method": "sov",
-                  "posture": "wallet_only",
-                  "verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  "did": "did:peer:WgWxqztrNooG92RXvxSTWv"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72657,19 +72029,6 @@
         "title": "DIDResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "result": {
-                "key_type": "ed25519",
-                "method": "sov",
-                "posture": "wallet_only",
-                "verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                "did": "did:peer:WgWxqztrNooG92RXvxSTWv"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72796,17 +72155,6 @@
         "title": "DIDXRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "label": "Request to connect with Bob",
-              "did": "WgWxqztrNooG92RXvxSTWv",
-              "did_doc~attach": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -72960,7 +72308,6 @@
         "title": "DIFField",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73044,7 +72391,6 @@
         "title": "DIFHolder",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73112,7 +72458,6 @@
         "title": "DIFOptions",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73185,19 +72530,6 @@
                 "title": "record_ids",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [
-                  {
-                    "value": {
-                      "<input descriptor id_1>": [
-                        "<record id_1>",
-                        "<record id_2>"
-                      ],
-                      "<input descriptor id_2>": [
-                        "<record id>"
-                      ]
-                    }
-                  }
-                ],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -73226,35 +72558,6 @@
                 "title": "reveal_doc",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [
-                  {
-                    "value": {
-                      "@context": [
-                        "https://www.w3.org/2018/credentials/v1",
-                        "https://w3id.org/security/bbs/v1"
-                      ],
-                      "@explicit": true,
-                      "@requireAll": true,
-                      "credentialSubject": {
-                        "@explicit": true,
-                        "@requireAll": true,
-                        "Observation": [
-                          {
-                            "effectiveDateTime": {},
-                            "@explicit": true,
-                            "@requireAll": true
-                          }
-                        ]
-                      },
-                      "issuanceDate": {},
-                      "issuer": {},
-                      "type": [
-                        "VerifiableCredential",
-                        "LabReport"
-                      ]
-                    }
-                  }
-                ],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -73273,7 +72576,6 @@
         "title": "DIFPresSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73341,7 +72643,6 @@
         "title": "DIFProofProposal",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73397,7 +72698,6 @@
         "title": "DIFProofRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73429,13 +72729,6 @@
         "title": "Date",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "expires_time": "2021-03-29 05:22:19+00:00"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73524,7 +72817,6 @@
         "title": "Disclose",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73621,7 +72913,6 @@
         "title": "Disclosures",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73643,7 +72934,6 @@
               "generatedName": "DocCredential",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -73675,14 +72965,6 @@
         "title": "Doc",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "credential": "{}",
-              "options": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73736,14 +73018,6 @@
         "title": "EndorserInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "endorser_did": "endorser_did",
-              "endorser_name": "endorser_name"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -73808,14 +73082,6 @@
         "title": "EndpointsResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "their_endpoint": "https://myhost:8021",
-              "my_endpoint": "https://myhost:8021"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -74182,7 +73448,6 @@
         "title": "Filter",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -74273,7 +73538,6 @@
         "title": "Generated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -74320,13 +73584,6 @@
         "title": "GetDIDEndpointResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "endpoint": "https://myhost:8021"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -74373,13 +73630,6 @@
         "title": "GetDIDVerkeyResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -74451,13 +73701,6 @@
         "title": "GetNymRoleResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "role": "ENDORSER"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -74527,7 +73770,6 @@
         "title": "IndyAttrValue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -74615,7 +73857,6 @@
         "title": "IndyCredAbstract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -74799,20 +74040,6 @@
         "title": "IndyCredInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "cred_rev_id": "12345",
-              "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-              "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-              "attrs": {
-                "key": "alice"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -74903,18 +74130,6 @@
         "title": "IndyCredPrecis",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "interval": null,
-              "cred_info": null,
-              "presentation_referents": [
-                "1_age_uuid",
-                "1_age_uuid"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -74937,7 +74152,6 @@
               "title": "blinded_ms",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -74959,7 +74173,6 @@
               "title": "blinded_ms_correctness_proof",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -75030,7 +74243,6 @@
         "title": "IndyCredRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -75079,7 +74291,6 @@
                   "title": "rev_reg",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -75158,7 +74369,6 @@
               "title": "signature",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -75180,7 +74390,6 @@
               "title": "signature_correctness_proof",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -75243,7 +74452,6 @@
                   "title": "witness",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -75265,7 +74473,6 @@
         "title": "IndyCredential",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -75455,7 +74662,6 @@
         "title": "IndyEQProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -75659,7 +74865,6 @@
         "title": "IndyGEProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -75769,7 +74974,6 @@
         "title": "IndyGEProofPred",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -75851,7 +75055,6 @@
         "title": "IndyKeyCorrectnessProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -75938,7 +75141,6 @@
         "title": "IndyNonRevocProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76009,7 +75211,6 @@
         "title": "IndyNonRevocationInterval",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76134,17 +75335,6 @@
         "title": "IndyPresAttrSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "mime-type": "image/jpeg",
-              "referent": "0",
-              "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "name": "favourite_drink",
-              "value": "martini"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76258,16 +75448,6 @@
         "title": "IndyPresPredSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "predicate": ">=",
-              "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "name": "high_score",
-              "threshold": 0
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76347,43 +75527,6 @@
         "title": "IndyPresPreview",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "predicates": [
-                {
-                  "predicate": ">=",
-                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "name": "high_score",
-                  "threshold": 0
-                },
-                {
-                  "predicate": ">=",
-                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "name": "high_score",
-                  "threshold": 0
-                }
-              ],
-              "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
-              "attributes": [
-                {
-                  "mime-type": "image/jpeg",
-                  "referent": "0",
-                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "name": "favourite_drink",
-                  "value": "martini"
-                },
-                {
-                  "mime-type": "image/jpeg",
-                  "referent": "0",
-                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "name": "favourite_drink",
-                  "value": "martini"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76511,28 +75654,6 @@
         "title": "IndyPresSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "trace": false,
-              "requested_attributes": {
-                "key": {
-                  "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "revealed": true
-                }
-              },
-              "requested_predicates": {
-                "key": {
-                  "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "timestamp": 1640995199
-                }
-              },
-              "self_attested_attributes": {
-                "key": "self_attested_value"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76608,7 +75729,6 @@
         "title": "IndyPrimaryProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76701,7 +75821,6 @@
         "title": "IndyProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76835,7 +75954,6 @@
         "title": "IndyProofIdentifier",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76905,7 +76023,6 @@
         "title": "IndyProofProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -76978,7 +76095,6 @@
         "title": "IndyProofProofAggregatedProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -77041,7 +76157,6 @@
         "title": "IndyProofProofProofsProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -77173,26 +76288,6 @@
         "title": "IndyProofReqAttrSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "names": [
-                "age",
-                "age"
-              ],
-              "name": "favouriteDrink",
-              "restrictions": [
-                {
-                  "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                },
-                {
-                  "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                }
-              ],
-              "non_revoked": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -77263,7 +76358,6 @@
         "title": "IndyProofReqAttrSpecNonRevoked",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -77417,24 +76511,6 @@
         "title": "IndyProofReqPredSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "p_value": 0,
-              "name": "index",
-              "p_type": ">=",
-              "restrictions": [
-                {
-                  "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                },
-                {
-                  "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                }
-              ],
-              "non_revoked": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -77505,7 +76581,6 @@
         "title": "IndyProofReqPredSpecNonRevoked",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -77674,50 +76749,6 @@
         "title": "IndyProofRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "name": "Proof request",
-              "requested_attributes": {
-                "key": {
-                  "names": [
-                    "age",
-                    "age"
-                  ],
-                  "name": "favouriteDrink",
-                  "restrictions": [
-                    {
-                      "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                    },
-                    {
-                      "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                    }
-                  ],
-                  "non_revoked": null
-                }
-              },
-              "non_revoked": null,
-              "nonce": "1",
-              "requested_predicates": {
-                "key": {
-                  "p_value": 0,
-                  "name": "index",
-                  "p_type": ">=",
-                  "restrictions": [
-                    {
-                      "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                    },
-                    {
-                      "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                    }
-                  ],
-                  "non_revoked": null
-                }
-              },
-              "version": "1.0"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -77788,7 +76819,6 @@
         "title": "IndyProofRequestNonRevoked",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -77949,7 +76979,6 @@
                 "title": "self_attested_attrs",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -77978,7 +77007,6 @@
                 "title": "unrevealed_attrs",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -77997,7 +77025,6 @@
         "title": "IndyProofRequestedProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78037,7 +77064,6 @@
         "title": "IndyProofRequestedProofPredicate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78127,7 +77153,6 @@
         "title": "IndyProofRequestedProofRevealedAttr",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78205,7 +77230,6 @@
         "title": "IndyProofRequestedProofRevealedAttrGroup",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78260,14 +77284,6 @@
         "title": "IndyRequestedCredsRequestedAttr",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "revealed": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78325,14 +77341,6 @@
         "title": "IndyRequestedCredsRequestedPred",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "timestamp": 1640995199
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78499,7 +77507,6 @@
         "title": "IndyRevRegDef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78652,7 +77659,6 @@
         "title": "IndyRevRegDefValue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78692,7 +77698,6 @@
         "title": "IndyRevRegDefValuePublicKeys",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78734,7 +77739,6 @@
         "title": "IndyRevRegDefValuePublicKeysAccumKey",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78800,7 +77804,6 @@
         "title": "IndyRevRegEntry",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -78896,7 +77899,6 @@
         "title": "IndyRevRegEntryValue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79000,7 +78002,6 @@
                 "title": "metadata",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -79090,7 +78091,6 @@
         "title": "InputDescriptors",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79136,10 +78136,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "InvitationCreateRequestAccept",
-                "example": [
-                  "didcomm/aip1",
-                  "didcomm/aip2;env=rfc19"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -79267,7 +78263,6 @@
                 "generatedName": "InvitationCreateRequestMetadata",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -79355,36 +78350,6 @@
         "title": "InvitationCreateRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "metadata": "{}",
-              "protocol_version": "1.1",
-              "attachments": [
-                {
-                  "id": "attachment-0",
-                  "type": "present-proof"
-                },
-                {
-                  "id": "attachment-0",
-                  "type": "present-proof"
-                }
-              ],
-              "use_public_did": false,
-              "alias": "Barry",
-              "handshake_protocols": [
-                "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
-                "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0"
-              ],
-              "my_label": "Invitation to Barry",
-              "accept": [
-                "didcomm/aip1",
-                "didcomm/aip2;env=rfc19"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79459,10 +78424,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "InvitationMessageAccept",
-                "example": [
-                  "didcomm/aip1",
-                  "didcomm/aip2;env=rfc19"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -79608,21 +78569,6 @@
                   "type": "map"
                 },
                 "generatedName": "InvitationMessageServices",
-                "example": [
-                  {
-                    "did": "WgWxqztrNooG92RXvxSTWv",
-                    "id": "string",
-                    "recipientKeys": [
-                      "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-                    ],
-                    "routingKeys": [
-                      "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-                    ],
-                    "serviceEndpoint": "http://192.168.56.101:8020",
-                    "type": "string"
-                  },
-                  "did:sov:WgWxqztrNooG92RXvxSTWv"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -79638,77 +78584,6 @@
         "title": "InvitationMessage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "requests~attach": [
-                {
-                  "filename": "IMG1092348.png",
-                  "lastmod_time": "2021-12-31 23:59:59+00:00",
-                  "mime-type": "image/png",
-                  "data": {
-                    "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                    "jws": null,
-                    "base64": "ey4uLn0=",
-                    "json": "{\"sample\": \"content\"}",
-                    "links": [
-                      "https://link.to/data",
-                      "https://link.to/data"
-                    ]
-                  },
-                  "description": "view from doorway, facing east, with lights off",
-                  "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "byte_count": 1234
-                },
-                {
-                  "filename": "IMG1092348.png",
-                  "lastmod_time": "2021-12-31 23:59:59+00:00",
-                  "mime-type": "image/png",
-                  "data": {
-                    "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                    "jws": null,
-                    "base64": "ey4uLn0=",
-                    "json": "{\"sample\": \"content\"}",
-                    "links": [
-                      "https://link.to/data",
-                      "https://link.to/data"
-                    ]
-                  },
-                  "description": "view from doorway, facing east, with lights off",
-                  "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "byte_count": 1234
-                }
-              ],
-              "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-              "imageUrl": "http://192.168.56.101/img/logo.jpg",
-              "handshake_protocols": [
-                "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
-                "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0"
-              ],
-              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "label": "Bob",
-              "services": [
-                {
-                  "did": "WgWxqztrNooG92RXvxSTWv",
-                  "id": "string",
-                  "recipientKeys": [
-                    "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-                  ],
-                  "routingKeys": [
-                    "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-                  ],
-                  "serviceEndpoint": "http://192.168.56.101:8020",
-                  "type": "string"
-                },
-                "did:sov:WgWxqztrNooG92RXvxSTWv"
-              ],
-              "accept": [
-                "didcomm/aip1",
-                "didcomm/aip2;env=rfc19"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -79933,21 +78808,6 @@
         "title": "InvitationRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "invitation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "trace": true,
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "invitation": null,
-              "invi_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "state": "await_response",
-              "oob_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "invitation_url": "https://example.com/endpoint?c_i=eyJAdHlwZSI6ICIuLi4iLCAiLi4uIjogIi4uLiJ9XX0="
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80033,30 +78893,6 @@
         "title": "InvitationResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "invitation": {
-                "recipientKeys": [
-                  "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-                ],
-                "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                "imageUrl": "http://192.168.56.101/img/logo.jpg",
-                "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "label": "Bob",
-                "routingKeys": [
-                  "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-                ],
-                "serviceEndpoint": "http://192.168.56.101:8020",
-                "did": "WgWxqztrNooG92RXvxSTWv"
-              },
-              "invitation_url": "http://192.168.56.101:8020/invite?c_i=eyJAdHlwZSI6Li4ufQ=="
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80301,21 +79137,6 @@
         "title": "IssuerCredRevRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "cred_rev_id": "12345",
-              "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "cred_ex_version": "cred_ex_version",
-              "state": "issued",
-              "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80731,32 +79552,6 @@
         "title": "IssuerRevRegRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "revoc_reg_def": null,
-              "error_msg": "Revocation registry undefined",
-              "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-              "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "revoc_def_type": "CL_ACCUM",
-              "tails_local_path": "tails_local_path",
-              "max_cred_num": 1000,
-              "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-              "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "pending_pub": [
-                "23",
-                "23"
-              ],
-              "revoc_reg_entry": null,
-              "state": "active",
-              "tag": "tag",
-              "tails_public_uri": "tails_public_uri"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80801,34 +79596,6 @@
         "title": "Keylist",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "record_id": "record_id",
-                  "wallet_id": "wallet_id",
-                  "role": "role",
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "connection_id": "connection_id",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "state": "active",
-                  "recipient_key": "recipient_key"
-                },
-                {
-                  "record_id": "record_id",
-                  "wallet_id": "wallet_id",
-                  "role": "role",
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "connection_id": "connection_id",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "state": "active",
-                  "recipient_key": "recipient_key"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80901,13 +79668,6 @@
                 "generatedName": "KeylistQueryFilter",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [
-                  {
-                    "value": {
-                      "filter": {}
-                    }
-                  }
-                ],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -80949,18 +79709,6 @@
         "title": "KeylistQuery",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "filter": {
-                "filter": {}
-              },
-              "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-              "paginate": null,
-              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -80986,7 +79734,6 @@
                 "generatedName": "KeylistQueryFilterRequestFilter",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -81005,13 +79752,6 @@
         "title": "KeylistQueryFilterRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "filter": "{}"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81078,7 +79818,6 @@
         "title": "KeylistQueryPaginate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81170,24 +79909,6 @@
         "title": "KeylistUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "updates": [
-                {
-                  "action": "add",
-                  "recipient_key": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-                },
-                {
-                  "action": "add",
-                  "recipient_key": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81231,22 +79952,6 @@
         "title": "KeylistUpdateRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "updates": [
-                {
-                  "action": "add",
-                  "recipient_key": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-                },
-                {
-                  "action": "add",
-                  "recipient_key": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81308,14 +80013,6 @@
         "title": "KeylistUpdateRule",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "action": "add",
-              "recipient_key": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81364,7 +80061,6 @@
         "title": "LDProofVCDetail",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81523,7 +80219,6 @@
         "title": "LDProofVCDetailOptions",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81650,17 +80345,6 @@
         "title": "LedgerConfigInstance",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "genesis_transactions": "genesis_transactions",
-              "is_production": true,
-              "id": "id",
-              "genesis_file": "genesis_file",
-              "genesis_url": "genesis_url"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81697,28 +80381,6 @@
         "title": "LedgerConfigList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "ledger_config_list": [
-                {
-                  "genesis_transactions": "genesis_transactions",
-                  "is_production": true,
-                  "id": "id",
-                  "genesis_file": "genesis_file",
-                  "genesis_url": "genesis_url"
-                },
-                {
-                  "genesis_transactions": "genesis_transactions",
-                  "is_production": true,
-                  "id": "id",
-                  "genesis_file": "genesis_file",
-                  "genesis_url": "genesis_url"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -81952,7 +80614,6 @@
         "title": "LinkedDataProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -82025,20 +80686,6 @@
         "title": "MediationCreateRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "mediator_terms": [
-                "mediator_terms",
-                "mediator_terms"
-              ],
-              "recipient_terms": [
-                "recipient_terms",
-                "recipient_terms"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -82156,22 +80803,6 @@
         "title": "MediationDeny",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "mediator_terms": [
-                "mediator_terms",
-                "mediator_terms"
-              ],
-              "recipient_terms": [
-                "recipient_terms",
-                "recipient_terms"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -82285,19 +80916,6 @@
         "title": "MediationGrant",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "endpoint": "http://192.168.56.102:8020/",
-              "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "routing_keys": [
-                "routing_keys",
-                "routing_keys"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -82338,13 +80956,6 @@
         "title": "MediationIdMatchInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -82389,56 +81000,6 @@
         "title": "MediationList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "endpoint": "endpoint",
-                  "mediation_id": "mediation_id",
-                  "role": "role",
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "connection_id": "connection_id",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "mediator_terms": [
-                    "mediator_terms",
-                    "mediator_terms"
-                  ],
-                  "state": "active",
-                  "routing_keys": [
-                    "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                    "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-                  ],
-                  "recipient_terms": [
-                    "recipient_terms",
-                    "recipient_terms"
-                  ]
-                },
-                {
-                  "endpoint": "endpoint",
-                  "mediation_id": "mediation_id",
-                  "role": "role",
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "connection_id": "connection_id",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "mediator_terms": [
-                    "mediator_terms",
-                    "mediator_terms"
-                  ],
-                  "state": "active",
-                  "routing_keys": [
-                    "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                    "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-                  ],
-                  "recipient_terms": [
-                    "recipient_terms",
-                    "recipient_terms"
-                  ]
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -82676,31 +81237,6 @@
         "title": "MediationRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "endpoint": "endpoint",
-              "mediation_id": "mediation_id",
-              "role": "role",
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "connection_id": "connection_id",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "mediator_terms": [
-                "mediator_terms",
-                "mediator_terms"
-              ],
-              "state": "active",
-              "routing_keys": [
-                "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-              ],
-              "recipient_terms": [
-                "recipient_terms",
-                "recipient_terms"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -82864,7 +81400,6 @@
         "title": "Menu",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -82985,7 +81520,6 @@
         "title": "MenuForm",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -83138,7 +81672,6 @@
         "title": "MenuFormParam",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -83253,7 +81786,6 @@
         "title": "MenuJson",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -83379,7 +81911,6 @@
         "title": "MenuOption",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -83711,34 +82242,6 @@
         "title": "OobRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "their_service": {
-                "recipientKeys": [
-                  "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-                ],
-                "routingKeys": [
-                  "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-                ],
-                "serviceEndpoint": "http://192.168.56.101:8020"
-              },
-              "attach_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "trace": true,
-              "role": "receiver",
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "invitation": null,
-              "invi_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "state": "await-response",
-              "oob_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "our_recipient_key": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -83814,16 +82317,6 @@
         "title": "PerformRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "name": "Query",
-              "params": {
-                "key": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -83868,13 +82361,6 @@
         "title": "PingRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "comment": "comment"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -83913,13 +82399,6 @@
         "title": "PingRequestResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "thread_id": "thread_id"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84089,7 +82568,6 @@
         "title": "PresentationDefinition",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84203,7 +82681,6 @@
         "title": "PresentationProposal",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84322,7 +82799,6 @@
         "title": "PresentationRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84394,7 +82870,6 @@
         "title": "ProtocolDescriptor",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84454,18 +82929,6 @@
         "title": "PublishRevocations",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "rrid2crid": {
-                "key": [
-                  "12345",
-                  "12345"
-                ]
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84560,7 +83023,6 @@
         "title": "Queries",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84672,7 +83134,6 @@
         "title": "Query",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84735,7 +83196,6 @@
         "title": "QueryItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -84802,7 +83262,6 @@
         "title": "RawEncoded",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85026,26 +83485,6 @@
         "title": "ReceiveInvitationRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "recipientKeys": [
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-              ],
-              "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-              "imageUrl": "http://192.168.56.101/img/logo.jpg",
-              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "label": "Bob",
-              "routingKeys": [
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-              ],
-              "serviceEndpoint": "http://192.168.56.101:8020",
-              "did": "WgWxqztrNooG92RXvxSTWv"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85085,13 +83524,6 @@
         "title": "RemoveWalletRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "wallet_key": "MySecretKey123"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85113,7 +83545,6 @@
               "generatedName": "ResolutionResultDidDocument",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -85134,7 +83565,6 @@
               "generatedName": "ResolutionResultMetadata",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -85150,14 +83580,6 @@
         "title": "ResolutionResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "metadata": "{}",
-              "did_document": "{}"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85223,14 +83645,6 @@
         "title": "RevRegCreateRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "max_cred_num": 1000
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85271,13 +83685,6 @@
         "title": "RevRegIssuedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "result": 0
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85317,34 +83724,6 @@
         "title": "RevRegResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "result": {
-                "revoc_reg_def": null,
-                "error_msg": "Revocation registry undefined",
-                "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                "created_at": "2021-12-31 23:59:59+00:00",
-                "revoc_def_type": "CL_ACCUM",
-                "tails_local_path": "tails_local_path",
-                "max_cred_num": 1000,
-                "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                "updated_at": "2021-12-31 23:59:59+00:00",
-                "pending_pub": [
-                  "23",
-                  "23"
-                ],
-                "revoc_reg_entry": null,
-                "state": "active",
-                "tag": "tag",
-                "tails_public_uri": "tails_public_uri"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85378,13 +83757,6 @@
         "title": "RevRegUpdateTailsFileUri",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "tails_public_uri": "http://192.168.56.133:6543/revocation/registry/WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0/tails-file"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85410,7 +83782,6 @@
                 "generatedName": "RevRegWalletUpdatedResultAccumCalculated",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -85438,7 +83809,6 @@
                 "generatedName": "RevRegWalletUpdatedResultAccumFixed",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -85466,7 +83836,6 @@
                 "generatedName": "RevRegWalletUpdatedResultRevRegDelta",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -85485,15 +83854,6 @@
         "title": "RevRegWalletUpdatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "rev_reg_delta": "{}",
-              "accum_calculated": "{}",
-              "accum_fixed": "{}"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85539,16 +83899,6 @@
         "title": "RevRegsCreated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "rev_reg_ids": [
-                "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85801,21 +84151,6 @@
         "title": "RevokeRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "cred_rev_id": "12345",
-              "thread_id": "thread_id",
-              "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "publish": true,
-              "comment": "comment",
-              "notify_version": "v1_0",
-              "notify": true,
-              "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86001,20 +84336,6 @@
         "title": "RouteRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "record_id": "record_id",
-              "wallet_id": "wallet_id",
-              "role": "role",
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "connection_id": "connection_id",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "state": "active",
-              "recipient_key": "recipient_key"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86179,21 +84500,6 @@
         "title": "Schema",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "ver": "1.0",
-              "seqNo": 10,
-              "name": "schema_name",
-              "id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-              "attrNames": [
-                "score",
-                "score"
-              ],
-              "version": "1.0"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86233,23 +84539,6 @@
         "title": "SchemaGetResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "schema": {
-                "ver": "1.0",
-                "seqNo": 10,
-                "name": "schema_name",
-                "id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                "attrNames": [
-                  "score",
-                  "score"
-                ],
-                "version": "1.0"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86314,7 +84603,6 @@
         "title": "SchemaInputDescriptor",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86386,18 +84674,6 @@
         "title": "SchemaSendRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "schema_version": "1.0",
-              "attributes": [
-                "score",
-                "score"
-              ],
-              "schema_name": "prefs"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86455,7 +84731,6 @@
         "title": "SchemaSendResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86501,16 +84776,6 @@
         "title": "SchemasCreatedResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "schema_ids": [
-                "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86583,7 +84848,6 @@
         "title": "SchemasInputDescriptorFilter",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86616,13 +84880,6 @@
         "title": "SendMenu",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "menu": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86662,13 +84919,6 @@
         "title": "SendMessage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "content": "Hello"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86754,21 +85004,6 @@
         "title": "ServiceDecorator",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "recipientKeys": [
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-              ],
-              "routingKeys": [
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-              ],
-              "serviceEndpoint": "http://192.168.56.101:8020"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86816,17 +85051,6 @@
         "title": "SignRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "doc": {
-                "credential": "{}",
-                "options": null
-              },
-              "verkey": "verkey"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -86874,7 +85098,6 @@
                 "generatedName": "SignResponseSignedDoc",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -86893,14 +85116,6 @@
         "title": "SignResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "signed_doc": "{}",
-              "error": "error"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -87018,7 +85233,6 @@
         "title": "SignatureOptions",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -87051,7 +85265,6 @@
         "title": "SignedDoc",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -87280,7 +85493,6 @@
         "title": "SubmissionRequirements",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -87360,15 +85572,6 @@
         "title": "TAAAccept",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "text": "text",
-              "mechanism": "mechanism",
-              "version": "version"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -87430,14 +85633,6 @@
         "title": "TAAAcceptance",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "time": 1640995199,
-              "mechanism": "mechanism"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -87544,29 +85739,6 @@
         "title": "TAAInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "taa_record": {
-                "digest": "digest",
-                "text": "text",
-                "version": "version"
-              },
-              "taa_required": true,
-              "aml_record": {
-                "aml": {
-                  "key": "aml"
-                },
-                "amlContext": "amlContext",
-                "version": "version"
-              },
-              "taa_accepted": {
-                "time": 1640995199,
-                "mechanism": "mechanism"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -87646,15 +85818,6 @@
         "title": "TAARecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "digest": "digest",
-              "text": "text",
-              "version": "version"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -87694,31 +85857,6 @@
         "title": "TAAResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "result": {
-                "taa_record": {
-                  "digest": "digest",
-                  "text": "text",
-                  "version": "version"
-                },
-                "taa_required": true,
-                "aml_record": {
-                  "aml": {
-                    "key": "aml"
-                  },
-                  "amlContext": "amlContext",
-                  "version": "version"
-                },
-                "taa_accepted": {
-                  "time": 1640995199,
-                  "mechanism": "mechanism"
-                }
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -87756,13 +85894,6 @@
         "title": "TailsDeleteResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "message": "message"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -87859,14 +85990,6 @@
         "title": "TransactionJobs",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "transaction_my_job": "TRANSACTION_AUTHOR",
-              "transaction_their_job": "TRANSACTION_AUTHOR"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -87911,178 +86034,6 @@
         "title": "TransactionList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "formats": [
-                    {
-                      "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "format": "dif/endorse-transaction/request@v1.0"
-                    },
-                    {
-                      "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "format": "dif/endorse-transaction/request@v1.0"
-                    }
-                  ],
-                  "timing": {
-                    "expires_time": "2020-12-13T17:29:06+0000"
-                  },
-                  "endorser_write_txn": true,
-                  "_type": "101",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "messages_attach": [
-                    {
-                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
-                      "data": {
-                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
-                      },
-                      "mime-type": "application/json"
-                    },
-                    {
-                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
-                      "data": {
-                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
-                      },
-                      "mime-type": "application/json"
-                    }
-                  ],
-                  "meta_data": {
-                    "context": {
-                      "param1": "param1_value",
-                      "param2": "param2_value"
-                    },
-                    "post_process": [
-                      {
-                        "topic": "topic_value",
-                        "other": "other_value"
-                      }
-                    ]
-                  },
-                  "signature_response": [
-                    {
-                      "context": "did:sov",
-                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "method": "add-signature",
-                      "signer_goal_code": "aries.transaction.refuse"
-                    },
-                    {
-                      "context": "did:sov",
-                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "method": "add-signature",
-                      "signer_goal_code": "aries.transaction.refuse"
-                    }
-                  ],
-                  "signature_request": [
-                    {
-                      "author_goal_code": "aries.transaction.ledger.write",
-                      "context": "did:sov",
-                      "method": "add-signature",
-                      "signature_type": "<requested signature type>",
-                      "signer_goal_code": "aries.transaction.endorse"
-                    },
-                    {
-                      "author_goal_code": "aries.transaction.ledger.write",
-                      "context": "did:sov",
-                      "method": "add-signature",
-                      "signature_type": "<requested signature type>",
-                      "signer_goal_code": "aries.transaction.endorse"
-                    }
-                  ],
-                  "state": "active"
-                },
-                {
-                  "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "formats": [
-                    {
-                      "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "format": "dif/endorse-transaction/request@v1.0"
-                    },
-                    {
-                      "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "format": "dif/endorse-transaction/request@v1.0"
-                    }
-                  ],
-                  "timing": {
-                    "expires_time": "2020-12-13T17:29:06+0000"
-                  },
-                  "endorser_write_txn": true,
-                  "_type": "101",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "messages_attach": [
-                    {
-                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
-                      "data": {
-                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
-                      },
-                      "mime-type": "application/json"
-                    },
-                    {
-                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
-                      "data": {
-                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
-                      },
-                      "mime-type": "application/json"
-                    }
-                  ],
-                  "meta_data": {
-                    "context": {
-                      "param1": "param1_value",
-                      "param2": "param2_value"
-                    },
-                    "post_process": [
-                      {
-                        "topic": "topic_value",
-                        "other": "other_value"
-                      }
-                    ]
-                  },
-                  "signature_response": [
-                    {
-                      "context": "did:sov",
-                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "method": "add-signature",
-                      "signer_goal_code": "aries.transaction.refuse"
-                    },
-                    {
-                      "context": "did:sov",
-                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "method": "add-signature",
-                      "signer_goal_code": "aries.transaction.refuse"
-                    }
-                  ],
-                  "signature_request": [
-                    {
-                      "author_goal_code": "aries.transaction.ledger.write",
-                      "context": "did:sov",
-                      "method": "add-signature",
-                      "signature_type": "<requested signature type>",
-                      "signer_goal_code": "aries.transaction.endorse"
-                    },
-                    {
-                      "author_goal_code": "aries.transaction.ledger.write",
-                      "context": "did:sov",
-                      "method": "add-signature",
-                      "signature_type": "<requested signature type>",
-                      "signer_goal_code": "aries.transaction.endorse"
-                    }
-                  ],
-                  "state": "active"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -88213,10 +86164,6 @@
                   },
                   "generatedName": "TransactionRecordFormatsItem",
                   "groupName": [],
-                  "example": {
-                    "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "format": "dif/endorse-transaction/request@v1.0"
-                  },
                   "type": "map"
                 },
                 "generatedName": "TransactionRecordFormats",
@@ -88244,17 +86191,6 @@
                   "generatedName": "TransactionRecordMessagesAttachItem",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [
-                    {
-                      "value": {
-                        "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
-                        "data": {
-                          "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
-                        },
-                        "mime-type": "application/json"
-                      }
-                    }
-                  ],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -88285,22 +86221,6 @@
                 "generatedName": "TransactionRecordMetaData",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [
-                  {
-                    "value": {
-                      "context": {
-                        "param1": "param1_value",
-                        "param2": "param2_value"
-                      },
-                      "post_process": [
-                        {
-                          "topic": "topic_value",
-                          "other": "other_value"
-                        }
-                      ]
-                    }
-                  }
-                ],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -88328,17 +86248,6 @@
                   "generatedName": "TransactionRecordSignatureRequestItem",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [
-                    {
-                      "value": {
-                        "author_goal_code": "aries.transaction.ledger.write",
-                        "context": "did:sov",
-                        "method": "add-signature",
-                        "signature_type": "<requested signature type>",
-                        "signer_goal_code": "aries.transaction.endorse"
-                      }
-                    }
-                  ],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -88370,16 +86279,6 @@
                   "generatedName": "TransactionRecordSignatureResponseItem",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [
-                    {
-                      "value": {
-                        "context": "did:sov",
-                        "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "method": "add-signature",
-                        "signer_goal_code": "aries.transaction.refuse"
-                      }
-                    }
-                  ],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -88456,13 +86355,6 @@
                 "generatedName": "TransactionRecordTiming",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [
-                  {
-                    "value": {
-                      "expires_time": "2020-12-13T17:29:06+0000"
-                    }
-                  }
-                ],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -88550,92 +86442,6 @@
         "title": "TransactionRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "formats": [
-                {
-                  "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "format": "dif/endorse-transaction/request@v1.0"
-                },
-                {
-                  "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "format": "dif/endorse-transaction/request@v1.0"
-                }
-              ],
-              "timing": {
-                "expires_time": "2020-12-13T17:29:06+0000"
-              },
-              "endorser_write_txn": true,
-              "_type": "101",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "trace": true,
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "messages_attach": [
-                {
-                  "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
-                  "data": {
-                    "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
-                  },
-                  "mime-type": "application/json"
-                },
-                {
-                  "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
-                  "data": {
-                    "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
-                  },
-                  "mime-type": "application/json"
-                }
-              ],
-              "meta_data": {
-                "context": {
-                  "param1": "param1_value",
-                  "param2": "param2_value"
-                },
-                "post_process": [
-                  {
-                    "topic": "topic_value",
-                    "other": "other_value"
-                  }
-                ]
-              },
-              "signature_response": [
-                {
-                  "context": "did:sov",
-                  "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "method": "add-signature",
-                  "signer_goal_code": "aries.transaction.refuse"
-                },
-                {
-                  "context": "did:sov",
-                  "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "method": "add-signature",
-                  "signer_goal_code": "aries.transaction.refuse"
-                }
-              ],
-              "signature_request": [
-                {
-                  "author_goal_code": "aries.transaction.ledger.write",
-                  "context": "did:sov",
-                  "method": "add-signature",
-                  "signature_type": "<requested signature type>",
-                  "signer_goal_code": "aries.transaction.endorse"
-                },
-                {
-                  "author_goal_code": "aries.transaction.ledger.write",
-                  "context": "did:sov",
-                  "method": "add-signature",
-                  "signature_type": "<requested signature type>",
-                  "signer_goal_code": "aries.transaction.endorse"
-                }
-              ],
-              "state": "active"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -88698,16 +86504,6 @@
         "title": "TxnOrCredentialDefinitionSendResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "txn": null,
-              "sent": {
-                "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -88770,21 +86566,6 @@
         "title": "TxnOrPublishRevocationsResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "txn": null,
-              "sent": {
-                "rrid2crid": {
-                  "key": [
-                    "12345",
-                    "12345"
-                  ]
-                }
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -88847,14 +86628,6 @@
         "title": "TxnOrRegisterLedgerNymResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "success": true,
-              "txn": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -88917,37 +86690,6 @@
         "title": "TxnOrRevRegResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "txn": null,
-              "sent": {
-                "result": {
-                  "revoc_reg_def": null,
-                  "error_msg": "Revocation registry undefined",
-                  "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "revoc_def_type": "CL_ACCUM",
-                  "tails_local_path": "tails_local_path",
-                  "max_cred_num": 1000,
-                  "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "pending_pub": [
-                    "23",
-                    "23"
-                  ],
-                  "revoc_reg_entry": null,
-                  "state": "active",
-                  "tag": "tag",
-                  "tails_public_uri": "tails_public_uri"
-                }
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -89010,14 +86752,6 @@
         "title": "TxnOrSchemaSendResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "txn": null,
-              "sent": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -89149,19 +86883,6 @@
         "title": "UpdateWalletRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "image_url": "https://aries.ca/images/sample.png",
-              "wallet_webhook_urls": [
-                "http://localhost:8022/webhooks",
-                "http://localhost:8022/webhooks"
-              ],
-              "label": "Alice",
-              "wallet_dispatch_type": "default"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -89199,13 +86920,6 @@
         "title": "V10CredentialBoundOfferRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "counter_proposal": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -89344,32 +87058,6 @@
         "title": "V10CredentialConnFreeOfferRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "trace": true,
-              "credential_preview": {
-                "@type": "issue-credential/1.0/credential-preview",
-                "attributes": [
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  },
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  }
-                ]
-              },
-              "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "auto_issue": true,
-              "comment": "comment",
-              "auto_remove": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -89607,36 +87295,6 @@
         "title": "V10CredentialCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "schema_version": "1.0",
-              "trace": true,
-              "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-              "credential_proposal": {
-                "@type": "issue-credential/1.0/credential-preview",
-                "attributes": [
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  },
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  }
-                ]
-              },
-              "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-              "comment": "comment",
-              "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-              "schema_name": "preferences",
-              "auto_remove": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -89949,7 +87607,6 @@
                 "generatedName": "V10CredentialExchangeCredentialRequestMetadata",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -90254,38 +87911,6 @@
         "title": "V10CredentialExchange",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "role": "issuer",
-              "revoc_reg_id": "revoc_reg_id",
-              "initiator": "self",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "auto_remove": false,
-              "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "credential_proposal_dict": null,
-              "raw_credential": null,
-              "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "trace": true,
-              "auto_offer": false,
-              "credential": null,
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "revocation_id": "revocation_id",
-              "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-              "auto_issue": false,
-              "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "credential_request": null,
-              "state": "credential_acked",
-              "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "error_msg": "Credential definition identifier is not set in proposal",
-              "credential_request_metadata": "{}",
-              "credential_offer": null,
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "credential_offer_dict": null,
-              "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -90328,70 +87953,6 @@
         "title": "V10CredentialExchangeListResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "role": "issuer",
-                  "revoc_reg_id": "revoc_reg_id",
-                  "initiator": "self",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "auto_remove": false,
-                  "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "credential_proposal_dict": null,
-                  "raw_credential": null,
-                  "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "trace": true,
-                  "auto_offer": false,
-                  "credential": null,
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "revocation_id": "revocation_id",
-                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                  "auto_issue": false,
-                  "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "credential_request": null,
-                  "state": "credential_acked",
-                  "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "error_msg": "Credential definition identifier is not set in proposal",
-                  "credential_request_metadata": "{}",
-                  "credential_offer": null,
-                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "credential_offer_dict": null,
-                  "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-                },
-                {
-                  "role": "issuer",
-                  "revoc_reg_id": "revoc_reg_id",
-                  "initiator": "self",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "auto_remove": false,
-                  "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "credential_proposal_dict": null,
-                  "raw_credential": null,
-                  "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "trace": true,
-                  "auto_offer": false,
-                  "credential": null,
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "revocation_id": "revocation_id",
-                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                  "auto_issue": false,
-                  "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "credential_request": null,
-                  "state": "credential_acked",
-                  "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "error_msg": "Credential definition identifier is not set in proposal",
-                  "credential_request_metadata": "{}",
-                  "credential_offer": null,
-                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "credential_offer_dict": null,
-                  "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -90547,33 +88108,6 @@
         "title": "V10CredentialFreeOfferRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "trace": true,
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "credential_preview": {
-                "@type": "issue-credential/1.0/credential-preview",
-                "attributes": [
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  },
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  }
-                ]
-              },
-              "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "auto_issue": true,
-              "comment": "comment",
-              "auto_remove": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -90616,13 +88150,6 @@
         "title": "V10CredentialIssueRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "comment": "comment"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -90652,13 +88179,6 @@
         "title": "V10CredentialProblemReportRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "description": "description"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -90913,37 +88433,6 @@
         "title": "V10CredentialProposalRequestMand",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "schema_version": "1.0",
-              "trace": true,
-              "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-              "credential_proposal": {
-                "@type": "issue-credential/1.0/credential-preview",
-                "attributes": [
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  },
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  }
-                ]
-              },
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-              "comment": "comment",
-              "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-              "schema_name": "preferences",
-              "auto_remove": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -91204,37 +88693,6 @@
         "title": "V10CredentialProposalRequestOpt",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "schema_version": "1.0",
-              "trace": true,
-              "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-              "credential_proposal": {
-                "@type": "issue-credential/1.0/credential-preview",
-                "attributes": [
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  },
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  }
-                ]
-              },
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-              "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-              "comment": "comment",
-              "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-              "schema_name": "preferences",
-              "auto_remove": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -91270,13 +88728,6 @@
         "title": "V10CredentialStoreRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "credential_id": "credential_id"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -91318,16 +88769,6 @@
         "title": "V10DiscoveryExchangeListResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                null,
-                null
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -91542,21 +88983,6 @@
         "title": "V10DiscoveryRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "trace": true,
-              "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "query_msg": null,
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "state": "active",
-              "disclose": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -91674,55 +89100,6 @@
         "title": "V10PresentationCreateRequestRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "trace": false,
-              "auto_verify": false,
-              "proof_request": {
-                "name": "Proof request",
-                "requested_attributes": {
-                  "key": {
-                    "names": [
-                      "age",
-                      "age"
-                    ],
-                    "name": "favouriteDrink",
-                    "restrictions": [
-                      {
-                        "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                      },
-                      {
-                        "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                      }
-                    ],
-                    "non_revoked": null
-                  }
-                },
-                "non_revoked": null,
-                "nonce": "1",
-                "requested_predicates": {
-                  "key": {
-                    "p_value": 0,
-                    "name": "index",
-                    "p_type": ">=",
-                    "restrictions": [
-                      {
-                        "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                      },
-                      {
-                        "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                      }
-                    ],
-                    "non_revoked": null
-                  }
-                },
-                "version": "1.0"
-              },
-              "comment": "comment"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -92174,33 +89551,6 @@
         "title": "V10PresentationExchange",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "error_msg": "Invalid structure",
-              "role": "prover",
-              "auto_verify": true,
-              "initiator": "self",
-              "presentation_request": null,
-              "verified": "true",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "presentation_proposal_dict": null,
-              "presentation": null,
-              "verified_msgs": [
-                "verified_msgs",
-                "verified_msgs"
-              ],
-              "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "trace": true,
-              "presentation_request_dict": null,
-              "auto_present": false,
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "state": "verified"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -92243,60 +89593,6 @@
         "title": "V10PresentationExchangeList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "error_msg": "Invalid structure",
-                  "role": "prover",
-                  "auto_verify": true,
-                  "initiator": "self",
-                  "presentation_request": null,
-                  "verified": "true",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "presentation_proposal_dict": null,
-                  "presentation": null,
-                  "verified_msgs": [
-                    "verified_msgs",
-                    "verified_msgs"
-                  ],
-                  "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "trace": true,
-                  "presentation_request_dict": null,
-                  "auto_present": false,
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "state": "verified"
-                },
-                {
-                  "error_msg": "Invalid structure",
-                  "role": "prover",
-                  "auto_verify": true,
-                  "initiator": "self",
-                  "presentation_request": null,
-                  "verified": "true",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "presentation_proposal_dict": null,
-                  "presentation": null,
-                  "verified_msgs": [
-                    "verified_msgs",
-                    "verified_msgs"
-                  ],
-                  "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "trace": true,
-                  "presentation_request_dict": null,
-                  "auto_present": false,
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "state": "verified"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -92326,13 +89622,6 @@
         "title": "V10PresentationProblemReportRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "description": "description"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -92451,49 +89740,6 @@
         "title": "V10PresentationProposalRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "trace": false,
-              "auto_present": true,
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "presentation_proposal": {
-                "predicates": [
-                  {
-                    "predicate": ">=",
-                    "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                    "name": "high_score",
-                    "threshold": 0
-                  },
-                  {
-                    "predicate": ">=",
-                    "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                    "name": "high_score",
-                    "threshold": 0
-                  }
-                ],
-                "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
-                "attributes": [
-                  {
-                    "mime-type": "image/jpeg",
-                    "referent": "0",
-                    "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  },
-                  {
-                    "mime-type": "image/jpeg",
-                    "referent": "0",
-                    "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  }
-                ]
-              },
-              "comment": "comment"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -92611,56 +89857,6 @@
         "title": "V10PresentationSendRequestRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "trace": false,
-              "auto_verify": false,
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "proof_request": {
-                "name": "Proof request",
-                "requested_attributes": {
-                  "key": {
-                    "names": [
-                      "age",
-                      "age"
-                    ],
-                    "name": "favouriteDrink",
-                    "restrictions": [
-                      {
-                        "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                      },
-                      {
-                        "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                      }
-                    ],
-                    "non_revoked": null
-                  }
-                },
-                "non_revoked": null,
-                "nonce": "1",
-                "requested_predicates": {
-                  "key": {
-                    "p_value": 0,
-                    "name": "index",
-                    "p_type": ">=",
-                    "restrictions": [
-                      {
-                        "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                      },
-                      {
-                        "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                      }
-                    ],
-                    "non_revoked": null
-                  }
-                },
-                "version": "1.0"
-              },
-              "comment": "comment"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -92720,14 +89916,6 @@
         "title": "V10PresentationSendRequestToProposal",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "trace": false,
-              "auto_verify": false
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -92803,15 +89991,6 @@
         "title": "V20CredAttrSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "mime-type": "image/jpeg",
-              "name": "favourite_drink",
-              "value": "martini"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -92871,14 +90050,6 @@
         "title": "V20CredBoundOfferRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "filter": null,
-              "counter_preview": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -93045,33 +90216,6 @@
         "title": "V20CredExFree",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "filter": null,
-              "trace": true,
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "credential_preview": {
-                "@type": "issue-credential/2.0/credential-preview",
-                "attributes": [
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  },
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  }
-                ]
-              },
-              "verification_method": "verification_method",
-              "comment": "comment",
-              "auto_remove": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -93614,32 +90758,6 @@
         "title": "V20CredExRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "cred_request": null,
-              "error_msg": "The front fell off",
-              "role": "issuer",
-              "cred_offer": null,
-              "initiator": "self",
-              "cred_issue": null,
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "cred_proposal": null,
-              "auto_remove": false,
-              "by_format": null,
-              "cred_preview": null,
-              "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "trace": true,
-              "auto_offer": false,
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "auto_issue": false,
-              "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "state": "done",
-              "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -93664,7 +90782,6 @@
                 "title": "cred_issue",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -93691,7 +90808,6 @@
                 "title": "cred_offer",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -93718,7 +90834,6 @@
                 "title": "cred_proposal",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -93745,7 +90860,6 @@
                 "title": "cred_request",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -93763,7 +90877,6 @@
         "title": "V20CredExRecordByFormat",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -93845,32 +90958,6 @@
         "title": "V20CredExRecordDetail",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "cred_ex_record": null,
-              "ld_proof": {
-                "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "updated_at": "2021-12-31 23:59:59+00:00",
-                "created_at": "2021-12-31 23:59:59+00:00",
-                "state": "active",
-                "cred_ex_ld_proof_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-              },
-              "indy": {
-                "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "cred_request_metadata": "{}",
-                "cred_rev_id": "12345",
-                "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                "updated_at": "2021-12-31 23:59:59+00:00",
-                "created_at": "2021-12-31 23:59:59+00:00",
-                "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "state": "active",
-                "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -93984,7 +91071,6 @@
                 "generatedName": "V20CredExRecordIndyCredRequestMetadata",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -94093,21 +91179,6 @@
         "title": "V20CredExRecordIndy",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "cred_request_metadata": "{}",
-              "cred_rev_id": "12345",
-              "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "state": "active",
-              "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -94257,18 +91328,6 @@
         "title": "V20CredExRecordLDProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "state": "active",
-              "cred_ex_ld_proof_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -94311,58 +91370,6 @@
         "title": "V20CredExRecordListResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "cred_ex_record": null,
-                  "ld_proof": {
-                    "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "updated_at": "2021-12-31 23:59:59+00:00",
-                    "created_at": "2021-12-31 23:59:59+00:00",
-                    "state": "active",
-                    "cred_ex_ld_proof_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-                  },
-                  "indy": {
-                    "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "cred_request_metadata": "{}",
-                    "cred_rev_id": "12345",
-                    "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                    "updated_at": "2021-12-31 23:59:59+00:00",
-                    "created_at": "2021-12-31 23:59:59+00:00",
-                    "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "state": "active",
-                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-                  }
-                },
-                {
-                  "cred_ex_record": null,
-                  "ld_proof": {
-                    "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "updated_at": "2021-12-31 23:59:59+00:00",
-                    "created_at": "2021-12-31 23:59:59+00:00",
-                    "state": "active",
-                    "cred_ex_ld_proof_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-                  },
-                  "indy": {
-                    "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "cred_request_metadata": "{}",
-                    "cred_rev_id": "12345",
-                    "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                    "updated_at": "2021-12-31 23:59:59+00:00",
-                    "created_at": "2021-12-31 23:59:59+00:00",
-                    "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "state": "active",
-                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-                  }
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -94422,7 +91429,6 @@
         "title": "V20CredFilter",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -94581,7 +91587,6 @@
         "title": "V20CredFilterIndy",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -94613,7 +91618,6 @@
         "title": "V20CredFilterLDProof",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -94664,7 +91668,6 @@
         "title": "V20CredFormat",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -94826,7 +91829,6 @@
         "title": "V20CredIssue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -94856,13 +91858,6 @@
         "title": "V20CredIssueProblemReportRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "description": "description"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -94905,13 +91900,6 @@
         "title": "V20CredIssueRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "comment": "comment"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -95095,7 +92083,6 @@
         "title": "V20CredOffer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -95239,32 +92226,6 @@
         "title": "V20CredOfferConnFreeRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "filter": null,
-              "trace": true,
-              "credential_preview": {
-                "@type": "issue-credential/2.0/credential-preview",
-                "attributes": [
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  },
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  }
-                ]
-              },
-              "auto_issue": true,
-              "comment": "comment",
-              "auto_remove": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -95425,33 +92386,6 @@
         "title": "V20CredOfferRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "filter": null,
-              "trace": true,
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "credential_preview": {
-                "@type": "issue-credential/2.0/credential-preview",
-                "attributes": [
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  },
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  }
-                ]
-              },
-              "auto_issue": true,
-              "comment": "comment",
-              "auto_remove": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -95509,25 +92443,6 @@
         "title": "V20CredPreview",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "@type": "issue-credential/2.0/credential-preview",
-              "attributes": [
-                {
-                  "mime-type": "image/jpeg",
-                  "name": "favourite_drink",
-                  "value": "martini"
-                },
-                {
-                  "mime-type": "image/jpeg",
-                  "name": "favourite_drink",
-                  "value": "martini"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -95688,7 +92603,6 @@
         "title": "V20CredProposal",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -95827,7 +92741,6 @@
         "title": "V20CredRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -95974,18 +92887,6 @@
         "title": "V20CredRequestFree",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "filter": null,
-              "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
-              "trace": false,
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "comment": "comment",
-              "auto_remove": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -96029,13 +92930,6 @@
         "title": "V20CredRequestRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -96071,13 +92965,6 @@
         "title": "V20CredStoreRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "credential_id": "credential_id"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -96119,16 +93006,6 @@
         "title": "V20DiscoveryExchangeListResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                null,
-                null
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -96166,13 +93043,6 @@
         "title": "V20DiscoveryExchangeResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -96396,7 +93266,6 @@
         "title": "V20DiscoveryRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -96519,31 +93388,6 @@
         "title": "V20IssueCredSchemaCore",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "filter": null,
-              "trace": true,
-              "credential_preview": {
-                "@type": "issue-credential/2.0/credential-preview",
-                "attributes": [
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  },
-                  {
-                    "mime-type": "image/jpeg",
-                    "name": "favourite_drink",
-                    "value": "martini"
-                  }
-                ]
-              },
-              "comment": "comment",
-              "auto_remove": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -96698,7 +93542,6 @@
         "title": "V20Pres",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -96799,19 +93642,6 @@
         "title": "V20PresCreateRequestRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "trace": false,
-              "auto_verify": false,
-              "presentation_request": {
-                "dif": null,
-                "indy": null
-              },
-              "comment": "comment"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -97310,33 +94140,6 @@
         "title": "V20PresExRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "error_msg": "Invalid structure",
-              "role": "prover",
-              "auto_verify": true,
-              "pres": null,
-              "pres_request": null,
-              "initiator": "self",
-              "verified": "true",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "by_format": null,
-              "verified_msgs": [
-                "verified_msgs",
-                "verified_msgs"
-              ],
-              "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "trace": true,
-              "auto_present": false,
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "state": "proposal-sent",
-              "pres_proposal": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -97362,7 +94165,6 @@
                 "title": "pres",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -97389,7 +94191,6 @@
                 "title": "pres_proposal",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -97416,7 +94217,6 @@
                 "title": "pres_request",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -97434,7 +94234,6 @@
         "title": "V20PresExRecordByFormat",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -97477,60 +94276,6 @@
         "title": "V20PresExRecordList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "error_msg": "Invalid structure",
-                  "role": "prover",
-                  "auto_verify": true,
-                  "pres": null,
-                  "pres_request": null,
-                  "initiator": "self",
-                  "verified": "true",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "by_format": null,
-                  "verified_msgs": [
-                    "verified_msgs",
-                    "verified_msgs"
-                  ],
-                  "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "trace": true,
-                  "auto_present": false,
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "state": "proposal-sent",
-                  "pres_proposal": null
-                },
-                {
-                  "error_msg": "Invalid structure",
-                  "role": "prover",
-                  "auto_verify": true,
-                  "pres": null,
-                  "pres_request": null,
-                  "initiator": "self",
-                  "verified": "true",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "by_format": null,
-                  "verified_msgs": [
-                    "verified_msgs",
-                    "verified_msgs"
-                  ],
-                  "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "trace": true,
-                  "auto_present": false,
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "state": "proposal-sent",
-                  "pres_proposal": null
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -97581,7 +94326,6 @@
         "title": "V20PresFormat",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -97611,13 +94355,6 @@
         "title": "V20PresProblemReportRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "description": "description"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -97747,7 +94484,6 @@
         "title": "V20PresProposal",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -97807,14 +94543,6 @@
         "title": "V20PresProposalByFormat",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "dif": null,
-              "indy": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -97933,20 +94661,6 @@
         "title": "V20PresProposalRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "trace": false,
-              "auto_present": true,
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "presentation_proposal": {
-                "dif": null,
-                "indy": null
-              },
-              "comment": "comment"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -98098,7 +94812,6 @@
         "title": "V20PresRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -98158,14 +94871,6 @@
         "title": "V20PresRequestByFormat",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "dif": null,
-              "indy": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -98283,20 +94988,6 @@
         "title": "V20PresSendRequestRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "trace": false,
-              "auto_verify": false,
-              "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "presentation_request": {
-                "dif": null,
-                "indy": null
-              },
-              "comment": "comment"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -98377,15 +95068,6 @@
         "title": "V20PresSpecByFormatRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "dif": null,
-              "trace": true,
-              "indy": null
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -98462,14 +95144,6 @@
         "title": "V20PresentationSendRequestToProposal",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "trace": false,
-              "auto_verify": false
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -98559,7 +95233,6 @@
                 "generatedName": "VcRecordCredValue",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -98759,39 +95432,6 @@
         "title": "VCRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "expanded_types": [
-                "https://w3id.org/citizenship#PermanentResidentCard",
-                "https://w3id.org/citizenship#PermanentResidentCard"
-              ],
-              "issuer_id": "https://example.edu/issuers/14",
-              "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "schema_ids": [
-                "https://example.org/examples/degree.json",
-                "https://example.org/examples/degree.json"
-              ],
-              "subject_ids": [
-                "did:example:ebfeb1f712ebc6f1c276e12ec21",
-                "did:example:ebfeb1f712ebc6f1c276e12ec21"
-              ],
-              "given_id": "http://example.edu/credentials/3732",
-              "proof_types": [
-                "Ed25519Signature2018",
-                "Ed25519Signature2018"
-              ],
-              "contexts": [
-                "https://myhost:8021",
-                "https://myhost:8021"
-              ],
-              "cred_tags": {
-                "key": "cred_tags"
-              },
-              "cred_value": "{}"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -98835,72 +95475,6 @@
         "title": "VCRecordList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "expanded_types": [
-                    "https://w3id.org/citizenship#PermanentResidentCard",
-                    "https://w3id.org/citizenship#PermanentResidentCard"
-                  ],
-                  "issuer_id": "https://example.edu/issuers/14",
-                  "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "schema_ids": [
-                    "https://example.org/examples/degree.json",
-                    "https://example.org/examples/degree.json"
-                  ],
-                  "subject_ids": [
-                    "did:example:ebfeb1f712ebc6f1c276e12ec21",
-                    "did:example:ebfeb1f712ebc6f1c276e12ec21"
-                  ],
-                  "given_id": "http://example.edu/credentials/3732",
-                  "proof_types": [
-                    "Ed25519Signature2018",
-                    "Ed25519Signature2018"
-                  ],
-                  "contexts": [
-                    "https://myhost:8021",
-                    "https://myhost:8021"
-                  ],
-                  "cred_tags": {
-                    "key": "cred_tags"
-                  },
-                  "cred_value": "{}"
-                },
-                {
-                  "expanded_types": [
-                    "https://w3id.org/citizenship#PermanentResidentCard",
-                    "https://w3id.org/citizenship#PermanentResidentCard"
-                  ],
-                  "issuer_id": "https://example.edu/issuers/14",
-                  "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "schema_ids": [
-                    "https://example.org/examples/degree.json",
-                    "https://example.org/examples/degree.json"
-                  ],
-                  "subject_ids": [
-                    "did:example:ebfeb1f712ebc6f1c276e12ec21",
-                    "did:example:ebfeb1f712ebc6f1c276e12ec21"
-                  ],
-                  "given_id": "http://example.edu/credentials/3732",
-                  "proof_types": [
-                    "Ed25519Signature2018",
-                    "Ed25519Signature2018"
-                  ],
-                  "contexts": [
-                    "https://myhost:8021",
-                    "https://myhost:8021"
-                  ],
-                  "cred_tags": {
-                    "key": "cred_tags"
-                  },
-                  "cred_value": "{}"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -98955,14 +95529,6 @@
         "title": "VerifyRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "doc": null,
-              "verkey": "verkey"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -99015,14 +95581,6 @@
         "title": "VerifyResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "valid": true,
-              "error": "error"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -99275,38 +95833,6 @@
         "title": "W3CCredentialsListRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "issuer_id": "issuer_id",
-              "schema_ids": [
-                "https://myhost:8021",
-                "https://myhost:8021"
-              ],
-              "tag_query": {
-                "key": "tag_query"
-              },
-              "types": [
-                "https://myhost:8021",
-                "https://myhost:8021"
-              ],
-              "subject_ids": [
-                "subject_ids",
-                "subject_ids"
-              ],
-              "given_id": "given_id",
-              "max_results": 0,
-              "proof_types": [
-                "Ed25519Signature2018",
-                "Ed25519Signature2018"
-              ],
-              "contexts": [
-                "https://myhost:8021",
-                "https://myhost:8021"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -99351,30 +95877,6 @@
         "title": "WalletList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "results": [
-                {
-                  "settings": "{}",
-                  "wallet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "key_management_mode": "managed",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "state": "active"
-                },
-                {
-                  "settings": "{}",
-                  "wallet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "updated_at": "2021-12-31 23:59:59+00:00",
-                  "key_management_mode": "managed",
-                  "created_at": "2021-12-31 23:59:59+00:00",
-                  "state": "active"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -99469,7 +95971,6 @@
                 "generatedName": "WalletRecordSettings",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -99551,18 +96052,6 @@
         "title": "WalletRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "settings": "{}",
-              "wallet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "updated_at": "2021-12-31 23:59:59+00:00",
-              "key_management_mode": "managed",
-              "created_at": "2021-12-31 23:59:59+00:00",
-              "state": "active"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -99600,13 +96089,6 @@
         "title": "WriteLedgerRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "ledger_id": "ledger_id"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

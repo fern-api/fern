@@ -39,7 +39,6 @@
         "generatedName": "BaseUser",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

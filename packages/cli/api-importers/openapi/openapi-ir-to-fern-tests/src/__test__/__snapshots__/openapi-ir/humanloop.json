@@ -21696,7 +21696,6 @@
         "title": "AgentConfigResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21728,7 +21727,6 @@
         "title": "Body_Evaluations_updateStatus",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21858,7 +21856,6 @@
         "title": "BooleanEvaluatorVersionStats",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21924,7 +21921,6 @@
         "title": "CategoricalFeedbackLabel",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22141,7 +22137,6 @@
         "title": "ChatMessage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22388,7 +22383,6 @@
         "title": "ChatMessageWithToolCall",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22497,7 +22491,6 @@
         "title": "CodeEvaluatorRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22530,7 +22523,6 @@
         "title": "CommitRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22777,7 +22769,6 @@
         "title": "CreateDatapointRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22857,7 +22848,6 @@
         "title": "CreateEvaluationRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22945,7 +22935,6 @@
         "title": "CreatePromptLogResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23033,7 +23022,6 @@
         "title": "CreateToolLogResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23101,7 +23089,6 @@
         "title": "DashboardConfiguration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23301,7 +23288,6 @@
         "title": "DatapointResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23552,7 +23538,6 @@
         "title": "DatasetResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23632,7 +23617,6 @@
         "title": "EnvironmentResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23770,7 +23754,6 @@
         "title": "EvaluateeRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23842,7 +23825,6 @@
         "title": "EvaluateeResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24004,7 +23986,6 @@
         "title": "EvaluationDebugResultResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24053,7 +24034,6 @@
         "title": "EvaluationEvaluatorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24218,7 +24198,6 @@
         "title": "EvaluationResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24502,7 +24481,6 @@
         "title": "EvaluationResultResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24558,7 +24536,6 @@
         "title": "EvaluationStats",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24718,7 +24695,6 @@
         "title": "EvaluatorActivationDeactivationRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24999,7 +24975,6 @@
         "title": "EvaluatorConfigResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25331,7 +25306,6 @@
         "title": "EvaluatorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25598,7 +25572,6 @@
         "title": "FeedbackResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25683,7 +25656,6 @@
         "title": "FeedbackTypeModel",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25756,7 +25728,6 @@
         "title": "FunctionTool",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25790,7 +25761,6 @@
         "title": "FunctionToolChoice",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25935,7 +25905,6 @@
         "title": "GenericConfigResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25981,7 +25950,6 @@
         "title": "HTTPValidationError",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26032,7 +26000,6 @@
         "title": "HumanEvaluatorRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26066,7 +26033,6 @@
         "title": "ImageChatContent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26141,7 +26107,6 @@
         "title": "ImageUrl",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26174,7 +26139,6 @@
         "title": "InputResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26249,7 +26213,6 @@
         "title": "LLMEvaluatorRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26411,7 +26374,6 @@
         "title": "LinkedToolRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26526,7 +26488,6 @@
         "title": "LinkedToolResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26566,7 +26527,6 @@
         "title": "ListDatasets",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26606,7 +26566,6 @@
         "title": "ListEvaluators",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26646,7 +26605,6 @@
         "title": "ListPrompts",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26686,7 +26644,6 @@
         "title": "ListTools",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27798,7 +27755,6 @@
         "title": "LogResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27860,7 +27816,6 @@
         "title": "MetricValueResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28366,7 +28321,6 @@
         "title": "ModelConfigRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28874,7 +28828,6 @@
         "title": "ModelConfigResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29065,7 +29018,6 @@
         "title": "ModelConfigToolRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29207,7 +29159,6 @@
         "title": "MonitoringEvaluatorEnvironmentRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29312,7 +29263,6 @@
         "title": "MonitoringEvaluatorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29369,7 +29319,6 @@
         "title": "MonitoringEvaluatorVersionRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29542,21 +29491,6 @@
         "title": "NumericEvaluatorVersionStats",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "mean": 0,
-              "std": 1,
-              "percentiles": {
-                "0": -2.5,
-                "25": -0.6745,
-                "50": 0,
-                "75": 0.6745,
-                "100": 2.5
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29655,7 +29589,6 @@
         "title": "OverallStats",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29741,7 +29674,6 @@
         "title": "PaginatedData[DatapointResponse]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29827,7 +29759,6 @@
         "title": "PaginatedData[DatasetResponse]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29913,7 +29844,6 @@
         "title": "PaginatedData[EvaluationResponse]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29999,7 +29929,6 @@
         "title": "PaginatedData[PromptLogResponse]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30085,7 +30014,6 @@
         "title": "PaginatedData[SessionResponse]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30433,7 +30361,6 @@
         "title": "PromptCallLogResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30967,7 +30894,6 @@
         "title": "PromptCallRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31391,7 +31317,6 @@
         "title": "PromptCallResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31729,7 +31654,6 @@
         "title": "PromptCallStreamResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32170,7 +32094,6 @@
         "title": "PromptKernelRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32881,7 +32804,6 @@
         "title": "PromptLogRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33601,7 +33523,6 @@
         "title": "PromptLogResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34112,7 +34033,6 @@
         "title": "PromptRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34819,7 +34739,6 @@
         "title": "PromptResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34994,7 +34913,6 @@
         "title": "ProviderApiKeys",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35029,7 +34947,6 @@
         "title": "ResponseFormat",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35216,7 +35133,6 @@
         "title": "RunSyncEvaluationRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35302,7 +35218,6 @@
         "title": "SessionResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35360,7 +35275,6 @@
         "title": "TextChatContent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35455,7 +35369,6 @@
         "title": "ToolCall",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35505,7 +35418,6 @@
         "title": "ToolChoice",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35713,7 +35625,6 @@
         "title": "ToolConfigRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36041,7 +35952,6 @@
         "title": "ToolConfigResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36124,7 +36034,6 @@
         "title": "ToolFunction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36220,7 +36129,6 @@
         "title": "ToolKernelRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36700,7 +36608,6 @@
         "title": "ToolLogRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36890,7 +36797,6 @@
         "title": "ToolRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36972,7 +36878,6 @@
         "title": "ToolResultResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37136,7 +37041,6 @@
         "title": "ToolTemplateResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37176,7 +37080,6 @@
         "title": "UpdateDatasetRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37268,7 +37171,6 @@
         "title": "UpdateEvaluatorRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37331,7 +37233,6 @@
         "title": "UpdatePromptRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37394,7 +37295,6 @@
         "title": "UpdateToolRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37485,7 +37385,6 @@
         "title": "ValidationError",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37579,7 +37478,6 @@
         "title": "VersionDeploymentResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37656,7 +37554,6 @@
         "title": "VersionIdResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37787,7 +37684,6 @@
         "title": "VersionStats",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38002,7 +37898,6 @@
         "title": "ToolResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38130,7 +38025,6 @@
         "title": "UserResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38240,7 +38134,6 @@
         "title": "DatasetRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38273,7 +38166,6 @@
         "title": "DatasetRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38330,7 +38222,6 @@
         "title": "EvaluatorRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38468,7 +38359,6 @@
         "title": "EvaluatorRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38916,7 +38806,6 @@
         "title": "ToolResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38988,7 +38877,6 @@
         "title": "UserResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

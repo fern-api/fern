@@ -4494,7 +4494,6 @@
         "generatedName": "ChatMessage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4539,7 +4538,6 @@
         "generatedName": "ChatMessageRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4602,7 +4600,6 @@
         "generatedName": "ConditionalNodeResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4641,7 +4638,6 @@
         "generatedName": "ConditionalNodeResultData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4694,7 +4690,6 @@
         "generatedName": "DeploymentNodeResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4771,7 +4766,6 @@
         "generatedName": "DeploymentNodeResultData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4945,7 +4939,6 @@
         "generatedName": "DeploymentRead",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5047,7 +5040,6 @@
         "generatedName": "Document",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5118,7 +5110,6 @@
         "generatedName": "DocumentDocumentToDocumentIndex",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5256,7 +5247,6 @@
         "generatedName": "DocumentIndexCreateRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5402,7 +5392,6 @@
         "generatedName": "DocumentIndexRead",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5579,7 +5568,6 @@
         "generatedName": "EnrichedNormalizedCompletion",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5641,7 +5629,6 @@
         "generatedName": "EvaluationParams",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5676,7 +5663,6 @@
         "generatedName": "EvaluationParamsRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5819,7 +5805,6 @@
         "generatedName": "ExecuteWorkflowStreamRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5962,7 +5947,6 @@
         "generatedName": "GenerateBodyRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5992,7 +5976,6 @@
         "generatedName": "GenerateErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6029,7 +6012,6 @@
         "generatedName": "GenerateOptionsRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6126,7 +6108,6 @@
         "generatedName": "GenerateRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6162,7 +6143,6 @@
         "generatedName": "GenerateResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6221,7 +6201,6 @@
         "generatedName": "GenerateResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6257,7 +6236,6 @@
         "generatedName": "GenerateResultData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6287,7 +6265,6 @@
         "generatedName": "GenerateResultError",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6403,7 +6380,6 @@
         "generatedName": "GenerateStreamBodyRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6434,7 +6410,6 @@
         "generatedName": "GenerateStreamResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6505,7 +6480,6 @@
         "generatedName": "GenerateStreamResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6550,7 +6524,6 @@
         "generatedName": "GenerateStreamResultData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6687,7 +6660,6 @@
         "generatedName": "ModelVersionBuildConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6726,7 +6698,6 @@
         "generatedName": "ModelVersionCompilePromptRequestRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6758,7 +6729,6 @@
         "generatedName": "ModelVersionCompilePromptResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6804,7 +6774,6 @@
         "generatedName": "ModelVersionCompiledPrompt",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6917,7 +6886,6 @@
         "generatedName": "ModelVersionExecConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7092,7 +7060,6 @@
         "generatedName": "ModelVersionExecConfigParameters",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7261,7 +7228,6 @@
         "generatedName": "ModelVersionRead",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7384,7 +7350,6 @@
         "generatedName": "ModelVersionSandboxSnapshot",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7438,7 +7403,6 @@
         "generatedName": "NormalizedLogProbs",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7537,7 +7501,6 @@
         "generatedName": "NormalizedTokenLogProbs",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7649,7 +7612,6 @@
         "generatedName": "PaginatedSlimDocumentList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7722,7 +7684,6 @@
         "generatedName": "PromptNodeResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7799,7 +7760,6 @@
         "generatedName": "PromptNodeResultData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7860,7 +7820,6 @@
         "generatedName": "PromptTemplateBlock",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7909,7 +7868,6 @@
         "generatedName": "PromptTemplateBlockData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7958,7 +7916,6 @@
         "generatedName": "PromptTemplateBlockDataRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8178,7 +8135,6 @@
         "generatedName": "PromptTemplateBlockProperties",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8400,7 +8356,6 @@
         "generatedName": "PromptTemplateBlockPropertiesRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8462,7 +8417,6 @@
         "generatedName": "PromptTemplateBlockRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8492,7 +8446,6 @@
         "generatedName": "PromptTemplateInputVariable",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8523,7 +8476,6 @@
         "generatedName": "PromptTemplateInputVariableRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8605,7 +8557,6 @@
         "generatedName": "RegisterPromptErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8775,7 +8726,6 @@
         "generatedName": "RegisterPromptModelParametersRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8820,7 +8770,6 @@
         "generatedName": "RegisterPromptPrompt",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8892,7 +8841,6 @@
         "generatedName": "RegisterPromptPromptInfoRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9035,7 +8983,6 @@
         "generatedName": "RegisterPromptRequestRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9135,7 +9082,6 @@
         "generatedName": "RegisterPromptResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9195,7 +9141,6 @@
         "generatedName": "RegisteredPromptDeployment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9240,7 +9185,6 @@
         "generatedName": "RegisteredPromptModelVersion",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9285,7 +9229,6 @@
         "generatedName": "RegisteredPromptSandbox",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9315,7 +9258,6 @@
         "generatedName": "RegisteredPromptSandboxSnapshot",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9355,7 +9297,6 @@
         "generatedName": "SandboxMetricInputParams",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9395,7 +9336,6 @@
         "generatedName": "SandboxMetricInputParamsRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9426,7 +9366,6 @@
         "generatedName": "SandboxNodeResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9503,7 +9442,6 @@
         "generatedName": "SandboxNodeResultData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9590,7 +9528,6 @@
         "generatedName": "SandboxScenario",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9688,7 +9625,6 @@
         "generatedName": "ScenarioInput",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9787,7 +9723,6 @@
         "generatedName": "ScenarioInputRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9839,7 +9774,6 @@
         "generatedName": "SearchErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9886,7 +9820,6 @@
         "generatedName": "SearchFiltersRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9917,7 +9850,6 @@
         "generatedName": "SearchNodeResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10022,7 +9954,6 @@
         "generatedName": "SearchNodeResultData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10133,7 +10064,6 @@
         "generatedName": "SearchRequestBodyRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10252,7 +10182,6 @@
         "generatedName": "SearchRequestOptionsRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10288,7 +10217,6 @@
         "generatedName": "SearchResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10369,7 +10297,6 @@
         "generatedName": "SearchResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10399,7 +10326,6 @@
         "generatedName": "SearchResultMergingRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10444,7 +10370,6 @@
         "generatedName": "SearchWeightsRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10649,7 +10574,6 @@
         "generatedName": "SlimDocument",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10808,7 +10732,6 @@
         "generatedName": "SubmitCompletionActualRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10837,7 +10760,6 @@
         "generatedName": "SubmitCompletionActualsErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10927,7 +10849,6 @@
         "generatedName": "SubmitCompletionActualsRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10977,7 +10898,6 @@
         "generatedName": "TerminalNodeChatHistoryResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11030,7 +10950,6 @@
         "generatedName": "TerminalNodeJsonResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11061,7 +10980,6 @@
         "generatedName": "TerminalNodeResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11092,7 +11010,6 @@
         "generatedName": "TerminalNodeResultData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11179,7 +11096,6 @@
         "generatedName": "TerminalNodeStringResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11281,7 +11197,6 @@
         "generatedName": "TestSuiteTestCase",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11384,7 +11299,6 @@
         "generatedName": "TestSuiteTestCaseRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11522,7 +11436,6 @@
         "generatedName": "UploadDocumentBodyRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11551,7 +11464,6 @@
         "generatedName": "UploadDocumentErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11582,7 +11494,6 @@
         "generatedName": "UploadDocumentResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11680,7 +11591,6 @@
         "generatedName": "UpsertSandboxScenarioRequestRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11725,7 +11635,6 @@
         "generatedName": "WorkflowEventError",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11816,7 +11725,6 @@
         "generatedName": "WorkflowExecutionNodeResultEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11885,7 +11793,6 @@
         "generatedName": "WorkflowExecutionWorkflowResultEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12097,7 +12004,6 @@
         "generatedName": "WorkflowNodeResultEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12180,7 +12086,6 @@
         "generatedName": "WorkflowRequestChatHistoryInputRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12277,7 +12182,6 @@
         "generatedName": "WorkflowRequestJsonInputRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12322,7 +12226,6 @@
         "generatedName": "WorkflowRequestStringInputRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12426,7 +12329,6 @@
         "generatedName": "WorkflowResultEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12580,7 +12482,6 @@
         "generatedName": "WorkflowResultEventOutputDataChatHistory",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12689,7 +12590,6 @@
         "generatedName": "WorkflowResultEventOutputDataJson",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12790,7 +12690,6 @@
         "generatedName": "WorkflowResultEventOutputDataString",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

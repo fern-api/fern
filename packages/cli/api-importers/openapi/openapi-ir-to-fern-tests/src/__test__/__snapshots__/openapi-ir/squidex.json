@@ -70050,7 +70050,6 @@
         "generatedName": "ErrorDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -70095,7 +70094,6 @@
         "generatedName": "UserProperty",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -70140,7 +70138,6 @@
         "generatedName": "UiSettingsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -70165,7 +70162,6 @@
         "generatedName": "UpdateSettingDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -70247,7 +70243,6 @@
         "generatedName": "ContentsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -70638,7 +70633,6 @@
         "generatedName": "ContentDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -70767,7 +70761,6 @@
         "generatedName": "ScheduleJobDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -70934,7 +70927,6 @@
         "generatedName": "FieldDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -71303,7 +71295,6 @@
         "generatedName": "ArrayFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -71817,7 +71808,6 @@
         "generatedName": "AssetsFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -71997,7 +71987,6 @@
         "generatedName": "BooleanFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -72091,7 +72080,6 @@
         "generatedName": "ComponentFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -72220,7 +72208,6 @@
         "generatedName": "ComponentsFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -72400,7 +72387,6 @@
         "generatedName": "DateTimeFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -72502,7 +72488,6 @@
         "generatedName": "GeolocationFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -72553,7 +72538,6 @@
         "generatedName": "JsonFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -72746,7 +72730,6 @@
         "generatedName": "NumberFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -73017,7 +73000,6 @@
         "generatedName": "ReferencesFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -73507,7 +73489,6 @@
         "generatedName": "StringFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -73800,7 +73781,6 @@
         "generatedName": "TagsFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -73859,7 +73839,6 @@
         "generatedName": "UiFieldPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -73988,7 +73967,6 @@
         "generatedName": "NestedFieldDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -74032,7 +74010,6 @@
         "generatedName": "Resource",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -74105,7 +74082,6 @@
         "generatedName": "ResourceLink",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -74150,7 +74126,6 @@
         "generatedName": "StatusInfoDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -74341,7 +74316,6 @@
         "generatedName": "AllContentsByPostDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -74449,7 +74423,6 @@
         "generatedName": "BulkResultDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -74608,7 +74581,6 @@
         "generatedName": "BulkUpdateContentsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -74873,7 +74845,6 @@
         "generatedName": "BulkUpdateContentsJobDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75013,7 +74984,6 @@
         "generatedName": "QueryJsonDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75060,7 +75030,6 @@
         "generatedName": "SortNode",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75203,7 +75172,6 @@
         "generatedName": "UsersDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75308,7 +75276,6 @@
         "generatedName": "UserDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75391,7 +75358,6 @@
         "generatedName": "CreateUserDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75484,7 +75450,6 @@
         "generatedName": "UpdateUserDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75508,7 +75473,6 @@
         "generatedName": "ResourcesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75566,7 +75530,6 @@
         "generatedName": "TranslationDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75675,7 +75638,6 @@
         "generatedName": "TranslateDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75721,7 +75683,6 @@
         "generatedName": "TemplatesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75806,7 +75767,6 @@
         "generatedName": "TemplateDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75846,7 +75806,6 @@
         "generatedName": "TemplateDetailsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -75929,7 +75888,6 @@
         "generatedName": "ContributorsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -76025,7 +75983,6 @@
         "generatedName": "ContributorDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -76055,7 +76012,6 @@
         "generatedName": "ContributorsMetadata",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -76132,7 +76088,6 @@
         "generatedName": "AssignContributorDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -76258,7 +76213,6 @@
         "generatedName": "TeamDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -76289,7 +76243,6 @@
         "generatedName": "CreateTeamDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -76320,7 +76273,6 @@
         "generatedName": "UpdateTeamDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -76361,7 +76313,6 @@
         "generatedName": "LogDownloadDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -76530,7 +76481,6 @@
         "generatedName": "CallsUsageDtoDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -76606,7 +76556,6 @@
         "generatedName": "CallsUsagePerDateDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -76651,7 +76600,6 @@
         "generatedName": "CurrentStorageDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -76712,7 +76660,6 @@
         "generatedName": "StorageUsagePerDateDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -76795,7 +76742,6 @@
         "generatedName": "SearchResultDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -77190,7 +77136,6 @@
         "generatedName": "SchemaDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -77412,7 +77357,6 @@
         "generatedName": "SchemaPropertiesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -77583,7 +77527,6 @@
         "generatedName": "SchemaScriptsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -77657,7 +77600,6 @@
         "generatedName": "FieldRuleDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -77759,7 +77701,6 @@
         "generatedName": "AddFieldDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -77836,7 +77777,6 @@
         "generatedName": "ConfigureUiFieldsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -77871,7 +77811,6 @@
         "generatedName": "ReorderFieldsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -77903,7 +77842,6 @@
         "generatedName": "UpdateFieldDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -77949,7 +77887,6 @@
         "generatedName": "SchemasDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -78025,7 +77962,6 @@
         "generatedName": "CreateSchemaDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -78295,7 +78231,6 @@
         "generatedName": "UpsertSchemaDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -78447,7 +78382,6 @@
         "generatedName": "UpsertSchemaFieldDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -78541,7 +78475,6 @@
         "generatedName": "UpsertSchemaNestedFieldDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -78736,7 +78669,6 @@
         "generatedName": "UpdateSchemaDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -78791,7 +78723,6 @@
         "generatedName": "SynchronizeSchemaDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -78832,7 +78763,6 @@
         "generatedName": "ChangeCategoryDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -78900,7 +78830,6 @@
         "generatedName": "ConfigureFieldRulesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -79070,7 +78999,6 @@
         "generatedName": "RuleElementDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -79219,7 +79147,6 @@
         "generatedName": "RuleElementPropertyDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -79348,7 +79275,6 @@
         "generatedName": "RulesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -79598,7 +79524,6 @@
         "generatedName": "RuleDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -79709,7 +79634,6 @@
         "generatedName": "AssetChangedRuleTriggerDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -79750,7 +79674,6 @@
         "generatedName": "CommentRuleTriggerDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -79844,7 +79767,6 @@
         "generatedName": "ContentChangedRuleTriggerDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -79897,7 +79819,6 @@
         "generatedName": "SchemaCondition",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -79911,7 +79832,6 @@
         "generatedName": "ManualRuleTriggerDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -79952,7 +79872,6 @@
         "generatedName": "SchemaChangedRuleTriggerDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -80010,7 +79929,6 @@
         "generatedName": "UsageRuleTriggerDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -80288,7 +80206,6 @@
         "generatedName": "AlgoliaRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -80355,7 +80272,6 @@
         "generatedName": "AzureQueueRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -80405,7 +80321,6 @@
         "generatedName": "CommentRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -80490,7 +80405,6 @@
         "generatedName": "CreateContentRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -80652,7 +80566,6 @@
         "generatedName": "DiscourseRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -80770,7 +80683,6 @@
         "generatedName": "ElasticSearchRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -80924,7 +80836,6 @@
         "generatedName": "EmailRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -80973,7 +80884,6 @@
         "generatedName": "FastlyRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -81106,7 +81016,6 @@
         "generatedName": "MediumRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -81191,7 +81100,6 @@
         "generatedName": "NotificationRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -81309,7 +81217,6 @@
         "generatedName": "OpenSearchRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -81360,7 +81267,6 @@
         "generatedName": "PrerenderRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -81393,7 +81299,6 @@
         "generatedName": "ScriptRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -81508,7 +81413,6 @@
         "generatedName": "SignalRRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -81586,7 +81490,6 @@
         "generatedName": "SlackRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -81653,7 +81556,6 @@
         "generatedName": "TweetRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -81754,7 +81656,6 @@
         "generatedName": "TypesenseRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -81869,7 +81770,6 @@
         "generatedName": "WebhookRuleActionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -81955,7 +81855,6 @@
         "generatedName": "CreateRuleDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -82066,7 +81965,6 @@
         "generatedName": "UpdateRuleDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -82127,7 +82025,6 @@
         "generatedName": "SimulatedRuleEventsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -82315,7 +82212,6 @@
         "generatedName": "SimulatedRuleEventDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -82443,7 +82339,6 @@
         "generatedName": "RuleEventsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -82629,7 +82524,6 @@
         "generatedName": "RuleEventDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -82852,7 +82746,6 @@
         "generatedName": "PlansDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83076,7 +82969,6 @@
         "generatedName": "PlanDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83133,7 +83025,6 @@
         "generatedName": "ReferralInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83206,7 +83097,6 @@
         "generatedName": "PlanChangedDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83237,7 +83127,6 @@
         "generatedName": "ChangePlanDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83309,7 +83198,6 @@
         "generatedName": "FeaturesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83354,7 +83242,6 @@
         "generatedName": "FeatureDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83414,7 +83301,6 @@
         "generatedName": "LanguageDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83519,7 +83405,6 @@
         "generatedName": "HistoryEventDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83565,7 +83450,6 @@
         "generatedName": "EventConsumersDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83703,7 +83587,6 @@
         "generatedName": "EventConsumerDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83816,7 +83699,6 @@
         "generatedName": "QueryDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83915,7 +83797,6 @@
         "generatedName": "ImportContentsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -83992,7 +83873,6 @@
         "generatedName": "ChangeStatusDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -84117,7 +83997,6 @@
         "generatedName": "CommentsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -84219,7 +84098,6 @@
         "generatedName": "CommentDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -84277,7 +84155,6 @@
         "generatedName": "UpsertCommentDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -84323,7 +84200,6 @@
         "generatedName": "BackupJobsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -84451,7 +84327,6 @@
         "generatedName": "BackupJobDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -84592,7 +84467,6 @@
         "generatedName": "RestoreJobDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -84651,7 +84525,6 @@
         "generatedName": "RestoreRequestDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -84832,7 +84705,6 @@
         "generatedName": "AssetFoldersDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -84917,7 +84789,6 @@
         "generatedName": "AssetFolderDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -84995,7 +84866,6 @@
         "generatedName": "CreateAssetFolderDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -85026,7 +84896,6 @@
         "generatedName": "RenameAssetFolderDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -85061,7 +84930,6 @@
         "generatedName": "MoveAssetFolderDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -85092,7 +84960,6 @@
         "generatedName": "RenameTagDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -85153,7 +85020,6 @@
         "generatedName": "AssetsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -85626,7 +85492,6 @@
         "generatedName": "AssetDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -85656,7 +85521,6 @@
         "generatedName": "AssetMeta",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -85763,7 +85627,6 @@
         "generatedName": "BulkUpdateAssetsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -86024,7 +85887,6 @@
         "generatedName": "BulkUpdateAssetsJobDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -86210,7 +86072,6 @@
         "generatedName": "AnnotateAssetDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -86245,7 +86106,6 @@
         "generatedName": "MoveAssetDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -86467,7 +86327,6 @@
         "generatedName": "AssetScriptsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -86664,7 +86523,6 @@
         "generatedName": "UpdateAssetScriptsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -86710,7 +86568,6 @@
         "generatedName": "ClientsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -86851,7 +86708,6 @@
         "generatedName": "ClientDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -86883,7 +86739,6 @@
         "generatedName": "CreateClientDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -87030,7 +86885,6 @@
         "generatedName": "UpdateClientDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -87076,7 +86930,6 @@
         "generatedName": "AppLanguagesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -87181,7 +87034,6 @@
         "generatedName": "AppLanguageDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -87212,7 +87064,6 @@
         "generatedName": "AddLanguageDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -87304,7 +87155,6 @@
         "generatedName": "UpdateLanguageDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -87350,7 +87200,6 @@
         "generatedName": "RolesDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -87479,7 +87328,6 @@
         "generatedName": "RoleDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -87510,7 +87358,6 @@
         "generatedName": "AddRoleDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -87574,7 +87421,6 @@
         "generatedName": "UpdateRoleDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -87855,7 +87701,6 @@
         "generatedName": "AppDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -87913,7 +87758,6 @@
         "generatedName": "CreateAppDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -87980,7 +87824,6 @@
         "generatedName": "UpdateAppDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -88021,7 +87864,6 @@
         "generatedName": "TransferToTeamDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -88133,7 +87975,6 @@
         "generatedName": "AppSettingsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -88204,7 +88045,6 @@
         "generatedName": "PatternDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -88249,7 +88089,6 @@
         "generatedName": "EditorDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -88346,7 +88185,6 @@
         "generatedName": "UpdateAppSettingsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -88412,7 +88250,6 @@
         "generatedName": "WorkflowsDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -88568,7 +88405,6 @@
         "generatedName": "WorkflowDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -88740,7 +88576,6 @@
         "generatedName": "WorkflowStepDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -88812,7 +88647,6 @@
         "generatedName": "WorkflowTransitionDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -88843,7 +88677,6 @@
         "generatedName": "AddWorkflowDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -88960,7 +88793,6 @@
         "generatedName": "UpdateWorkflowDto",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"

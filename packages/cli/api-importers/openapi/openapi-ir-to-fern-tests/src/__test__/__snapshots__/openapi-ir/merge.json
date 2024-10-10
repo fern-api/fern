@@ -21959,7 +21959,6 @@
         "generatedName": "AccountDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22159,7 +22158,6 @@
         "generatedName": "AccountDetailsAndActions",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22313,7 +22311,6 @@
         "generatedName": "AccountDetailsAndActionsIntegration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22541,7 +22538,6 @@
         "generatedName": "AccountIntegration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22587,7 +22583,6 @@
         "generatedName": "AccountToken",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22667,24 +22662,6 @@
                   "type": "reference"
                 },
                 "generatedName": "AvailableActionsAvailableModelOperations",
-                "example": [
-                  {
-                    "model_name": "Candidate",
-                    "available_operations": [
-                      "FETCH",
-                      "CREATE"
-                    ],
-                    "required_post_parameters": [
-                      "remote_user_id"
-                    ],
-                    "supported_fields": [
-                      "first_name",
-                      "last_name",
-                      "company",
-                      "title"
-                    ]
-                  }
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -22699,7 +22676,6 @@
         "generatedName": "AvailableActions",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22906,7 +22882,6 @@
                 "value": {
                   "description": "When the matching bank object was created in the third party system.",
                   "schema": {
-                    "example": "2021-12-06T10:11:26Z",
                     "type": "datetime"
                   },
                   "generatedName": "BankInfoRemoteCreatedAt",
@@ -22951,7 +22926,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "BankInfoModifiedAt",
@@ -22987,14 +22961,6 @@
                   },
                   "generatedName": "BankInfoFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -23025,14 +22991,6 @@
                     "type": "reference"
                   },
                   "generatedName": "BankInfoRemoteData",
-                  "example": [
-                    {
-                      "path": "/bank-info",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -23051,7 +23009,6 @@
         "generatedName": "BankInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23257,7 +23214,6 @@
                 "value": {
                   "description": "The day and time the benefit started.",
                   "schema": {
-                    "example": "2020-11-15 00:59:25.309761+00:00",
                     "type": "datetime"
                   },
                   "generatedName": "BenefitStartDate",
@@ -23284,7 +23240,6 @@
                 "value": {
                   "description": "The day and time the benefit ended.",
                   "schema": {
-                    "example": "2021-10-15 00:23:25.309761+00:00",
                     "type": "datetime"
                   },
                   "generatedName": "BenefitEndDate",
@@ -23329,7 +23284,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "BenefitModifiedAt",
@@ -23365,14 +23319,6 @@
                   },
                   "generatedName": "BenefitFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -23403,14 +23349,6 @@
                     "type": "reference"
                   },
                   "generatedName": "BenefitRemoteData",
-                  "example": [
-                    {
-                      "path": "/benefits",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -23429,7 +23367,6 @@
         "generatedName": "Benefit",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23564,10 +23501,6 @@
                 "type": "reference"
               },
               "generatedName": "CommonModelScopesBodyRequestEnabledActions",
-              "example": [
-                "READ",
-                "WRITE"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -23588,9 +23521,6 @@
                 "type": "primitive"
               },
               "generatedName": "CommonModelScopesBodyRequestDisabledFields",
-              "example": [
-                "first_name"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -23601,7 +23531,6 @@
         "generatedName": "CommonModelScopesBodyRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23739,11 +23668,6 @@
                     "type": "nullable"
                   },
                   "generatedName": "CompanyEins",
-                  "example": [
-                    "12-3456789",
-                    "12-3451111",
-                    "11-0011000"
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -23785,7 +23709,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "CompanyModifiedAt",
@@ -23821,14 +23744,6 @@
                   },
                   "generatedName": "CompanyFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -23859,14 +23774,6 @@
                     "type": "reference"
                   },
                   "generatedName": "CompanyRemoteData",
-                  "example": [
-                    {
-                      "path": "/companies",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -23885,7 +23792,6 @@
         "generatedName": "Company",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24037,7 +23943,6 @@
         "generatedName": "ConditionSchema",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25491,9 +25396,6 @@
                   },
                   "generatedName": "DataPassthroughRequestHeaders",
                   "groupName": [],
-                  "example": {
-                    "EXTRA-HEADER": "value"
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -25555,7 +25457,6 @@
         "generatedName": "DataPassthroughRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25616,7 +25517,6 @@
         "generatedName": "DebugModeLog",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25676,7 +25576,6 @@
         "generatedName": "DebugModelLogSummary",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25871,7 +25770,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "DeductionModifiedAt",
@@ -25907,14 +25805,6 @@
                   },
                   "generatedName": "DeductionFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -25945,14 +25835,6 @@
                     "type": "reference"
                   },
                   "generatedName": "DeductionRemoteData",
-                  "example": [
-                    {
-                      "path": "/payroll-deduction",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -25971,7 +25853,6 @@
         "generatedName": "Deduction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26138,7 +26019,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "EarningModifiedAt",
@@ -26174,14 +26054,6 @@
                   },
                   "generatedName": "EarningFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -26230,7 +26102,6 @@
         "generatedName": "Earning",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26506,9 +26377,6 @@
                   "type": "nullable"
                 },
                 "generatedName": "EmployeeGroups",
-                "example": [
-                  "21a54124-397f-494d-985e-3c5b330b8a68"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -26625,9 +26493,6 @@
                   "type": "nullable"
                 },
                 "generatedName": "EmployeeEmployments",
-                "example": [
-                  "17a54124-287f-494d-965e-3c5b330c9a68"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -26894,7 +26759,6 @@
                 "value": {
                   "description": "The employee's date of birth.",
                   "schema": {
-                    "example": "1990-11-10T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmployeeDateOfBirth",
@@ -26924,7 +26788,6 @@
                   "description": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.",
                   "availability": "Deprecated",
                   "schema": {
-                    "example": "2020-10-10T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmployeeHireDate",
@@ -26952,7 +26815,6 @@
                 "value": {
                   "description": "The date that the employee started working. If an employee was rehired, the most recent start date will be returned.",
                   "schema": {
-                    "example": "2020-10-11T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmployeeStartDate",
@@ -26979,7 +26841,6 @@
                 "value": {
                   "description": "When the third party's employee was created.",
                   "schema": {
-                    "example": "2020-10-11T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmployeeRemoteCreatedAt",
@@ -27032,7 +26893,6 @@
                 "value": {
                   "description": "The employee's termination date.",
                   "schema": {
-                    "example": "2021-10-12T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmployeeTerminationDate",
@@ -27140,7 +27000,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "EmployeeModifiedAt",
@@ -27176,14 +27035,6 @@
                   },
                   "generatedName": "EmployeeFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -27214,14 +27065,6 @@
                     "type": "reference"
                   },
                   "generatedName": "EmployeeRemoteData",
-                  "example": [
-                    {
-                      "path": "/people",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -27240,7 +27083,6 @@
         "generatedName": "Employee",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27271,7 +27113,6 @@
         "generatedName": "EmployeeEndpointRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27452,7 +27293,6 @@
                 "value": {
                   "description": "The day and time the payroll run started.",
                   "schema": {
-                    "example": "2020-11-08T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmployeePayrollRunStartDate",
@@ -27479,7 +27319,6 @@
                 "value": {
                   "description": "The day and time the payroll run ended.",
                   "schema": {
-                    "example": "2020-11-09T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmployeePayrollRunEndDate",
@@ -27506,7 +27345,6 @@
                 "value": {
                   "description": "The day and time the payroll run was checked.",
                   "schema": {
-                    "example": "2020-11-10T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmployeePayrollRunCheckDate",
@@ -27538,18 +27376,6 @@
                   "type": "reference"
                 },
                 "generatedName": "EmployeePayrollRunEarnings",
-                "example": [
-                  {
-                    "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                    "amount": 1002.34,
-                    "type": "SALARY"
-                  },
-                  {
-                    "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                    "amount": 8342.34,
-                    "type": "OVERTIME"
-                  }
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -27576,14 +27402,6 @@
                   "type": "reference"
                 },
                 "generatedName": "EmployeePayrollRunDeductions",
-                "example": [
-                  {
-                    "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                    "name": "Social Security",
-                    "employee_deduction": 34.54,
-                    "company_deduction": 78.78
-                  }
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -27610,14 +27428,6 @@
                   "type": "reference"
                 },
                 "generatedName": "EmployeePayrollRunTaxes",
-                "example": [
-                  {
-                    "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                    "name": "California State Income Tax",
-                    "amount": 100.25,
-                    "employer_tax": "False"
-                  }
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -27657,7 +27467,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "EmployeePayrollRunModifiedAt",
@@ -27693,14 +27502,6 @@
                   },
                   "generatedName": "EmployeePayrollRunFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -27731,14 +27532,6 @@
                     "type": "reference"
                   },
                   "generatedName": "EmployeePayrollRunRemoteData",
-                  "example": [
-                    {
-                      "path": "/employee-payroll",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -27757,7 +27550,6 @@
         "generatedName": "EmployeePayrollRun",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27952,9 +27744,6 @@
                   "type": "nullable"
                 },
                 "generatedName": "EmployeeRequestGroups",
-                "example": [
-                  "21a54124-397f-494d-985e-3c5b330b8a68"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -28071,9 +27860,6 @@
                   "type": "nullable"
                 },
                 "generatedName": "EmployeeRequestEmployments",
-                "example": [
-                  "17a54124-287f-494d-965e-3c5b330c9a68"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -28340,7 +28126,6 @@
                 "value": {
                   "description": "The employee's date of birth.",
                   "schema": {
-                    "example": "1990-11-10T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmployeeRequestDateOfBirth",
@@ -28370,7 +28155,6 @@
                   "description": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.",
                   "availability": "Deprecated",
                   "schema": {
-                    "example": "2020-10-10T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmployeeRequestHireDate",
@@ -28398,7 +28182,6 @@
                 "value": {
                   "description": "The date that the employee started working. If an employee was rehired, the most recent start date will be returned.",
                   "schema": {
-                    "example": "2020-10-11T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmployeeRequestStartDate",
@@ -28451,7 +28234,6 @@
                 "value": {
                   "description": "The employee's termination date.",
                   "schema": {
-                    "example": "2021-10-12T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmployeeRequestTerminationDate",
@@ -28518,9 +28300,6 @@
                   },
                   "generatedName": "EmployeeRequestIntegrationParams",
                   "groupName": [],
-                  "example": {
-                    "unique_integration_field": "unique_integration_field_value"
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -28554,9 +28333,6 @@
                   },
                   "generatedName": "EmployeeRequestLinkedAccountParams",
                   "groupName": [],
-                  "example": {
-                    "unique_linked_account_field": "unique_linked_account_field_value"
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -28573,7 +28349,6 @@
         "generatedName": "EmployeeRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28669,7 +28444,6 @@
         "generatedName": "EmployeeResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28953,7 +28727,6 @@
                 "value": {
                   "description": "The position's effective date.",
                   "schema": {
-                    "example": "2023-10-06T18:42:34Z",
                     "type": "datetime"
                   },
                   "generatedName": "EmploymentEffectiveDate",
@@ -29024,7 +28797,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "EmploymentModifiedAt",
@@ -29060,14 +28832,6 @@
                   },
                   "generatedName": "EmploymentFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -29098,14 +28862,6 @@
                     "type": "reference"
                   },
                   "generatedName": "EmploymentRemoteData",
-                  "example": [
-                    {
-                      "path": "/jobs",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -29124,7 +28880,6 @@
         "generatedName": "Employment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29433,7 +29188,6 @@
         "generatedName": "EndUserDetailsRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29514,7 +29268,6 @@
         "generatedName": "ErrorValidationProblem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29667,7 +29420,6 @@
         "generatedName": "GenerateRemoteKeyRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29837,7 +29589,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "GroupModifiedAt",
@@ -29873,14 +29624,6 @@
                   },
                   "generatedName": "GroupFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -29911,14 +29654,6 @@
                     "type": "reference"
                   },
                   "generatedName": "GroupRemoteData",
-                  "example": [
-                    {
-                      "path": "/group",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -29937,7 +29672,6 @@
         "generatedName": "Group",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30027,7 +29761,6 @@
         "generatedName": "IgnoreCommonModelRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30117,7 +29850,6 @@
                 },
                 "generatedName": "IssueEndUser",
                 "groupName": [],
-                "example": "b82302de-852e-4e60-b050-edf9da3b7c02",
                 "type": "map"
               },
               "groupName": [],
@@ -30136,7 +29868,6 @@
                 "generatedName": "IssueFirstIncidentTime",
                 "value": {
                   "schema": {
-                    "example": "2022-12-05T16:19:15.161Z",
                     "type": "datetime"
                   },
                   "generatedName": "IssueFirstIncidentTime",
@@ -30161,7 +29892,6 @@
                 "generatedName": "IssueLastIncidentTime",
                 "value": {
                   "schema": {
-                    "example": "2022-12-05T16:19:15.161Z",
                     "type": "datetime"
                   },
                   "generatedName": "IssueLastIncidentTime",
@@ -30213,10 +29943,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "IssueErrorDetails",
-                "example": [
-                  "Missing employee permissions.",
-                  "Missing time off permissions."
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -30231,7 +29957,6 @@
         "generatedName": "Issue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30323,7 +30048,6 @@
         "generatedName": "LinkToken",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30448,7 +30172,6 @@
         "generatedName": "LinkedAccountCondition",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30505,7 +30228,6 @@
         "generatedName": "LinkedAccountConditionRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30547,7 +30269,6 @@
         "generatedName": "LinkedAccountSelectiveSyncConfiguration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30583,7 +30304,6 @@
         "generatedName": "LinkedAccountSelectiveSyncConfigurationListRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30619,7 +30339,6 @@
         "generatedName": "LinkedAccountSelectiveSyncConfigurationRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30662,7 +30381,6 @@
         "generatedName": "LinkedAccountStatus",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30992,7 +30710,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "LocationModifiedAt",
@@ -31028,14 +30745,6 @@
                   },
                   "generatedName": "LocationFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -31066,14 +30775,6 @@
                     "type": "reference"
                   },
                   "generatedName": "LocationRemoteData",
-                  "example": [
-                    {
-                      "path": "/locations",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -31092,7 +30793,6 @@
         "generatedName": "Location",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31266,7 +30966,6 @@
         "generatedName": "MetaResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31352,10 +31051,6 @@
                 "type": "primitive"
               },
               "generatedName": "ModelOperationAvailableOperations",
-              "example": [
-                "FETCH",
-                "CREATE"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -31375,9 +31070,6 @@
                 "type": "primitive"
               },
               "generatedName": "ModelOperationRequiredPostParameters",
-              "example": [
-                "remote_user_id"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -31397,12 +31089,6 @@
                 "type": "primitive"
               },
               "generatedName": "ModelOperationSupportedFields",
-              "example": [
-                "first_name",
-                "last_name",
-                "company",
-                "title"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -31414,7 +31100,6 @@
         "generatedName": "ModelOperation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31546,7 +31231,6 @@
         "generatedName": "MultipartFormFieldRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31603,7 +31287,6 @@
         "generatedName": "OperatorSchema",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31693,7 +31376,6 @@
         "generatedName": "PaginatedAccountDetailsAndActionsList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31783,7 +31465,6 @@
         "generatedName": "PaginatedBankInfoList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31873,7 +31554,6 @@
         "generatedName": "PaginatedBenefitList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31963,7 +31643,6 @@
         "generatedName": "PaginatedCompanyList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32053,7 +31732,6 @@
         "generatedName": "PaginatedConditionSchemaList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32143,7 +31821,6 @@
         "generatedName": "PaginatedEmployeeList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32233,7 +31910,6 @@
         "generatedName": "PaginatedEmployeePayrollRunList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32323,7 +31999,6 @@
         "generatedName": "PaginatedEmploymentList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32413,7 +32088,6 @@
         "generatedName": "PaginatedGroupList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32503,7 +32177,6 @@
         "generatedName": "PaginatedIssueList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32593,7 +32266,6 @@
         "generatedName": "PaginatedLocationList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32683,7 +32355,6 @@
         "generatedName": "PaginatedPayGroupList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32773,7 +32444,6 @@
         "generatedName": "PaginatedPayrollRunList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32863,7 +32533,6 @@
         "generatedName": "PaginatedSyncStatusList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32953,7 +32622,6 @@
         "generatedName": "PaginatedTeamList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33043,7 +32711,6 @@
         "generatedName": "PaginatedTimeOffBalanceList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33133,7 +32800,6 @@
         "generatedName": "PaginatedTimeOffList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34848,7 +34514,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "PayGroupModifiedAt",
@@ -34884,14 +34549,6 @@
                   },
                   "generatedName": "PayGroupFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -34922,14 +34579,6 @@
                     "type": "reference"
                   },
                   "generatedName": "PayGroupRemoteData",
-                  "example": [
-                    {
-                      "path": "/pay-group",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -34948,7 +34597,6 @@
         "generatedName": "PayGroup",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35128,7 +34776,6 @@
                 "value": {
                   "description": "The day and time the payroll run started.",
                   "schema": {
-                    "example": "2020-11-08T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "PayrollRunStartDate",
@@ -35155,7 +34802,6 @@
                 "value": {
                   "description": "The day and time the payroll run ended.",
                   "schema": {
-                    "example": "2020-11-15T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "PayrollRunEndDate",
@@ -35182,7 +34828,6 @@
                 "value": {
                   "description": "The day and time the payroll run was checked.",
                   "schema": {
-                    "example": "2020-11-15T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "PayrollRunCheckDate",
@@ -35227,7 +34872,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "PayrollRunModifiedAt",
@@ -35263,14 +34907,6 @@
                   },
                   "generatedName": "PayrollRunFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -35301,14 +34937,6 @@
                     "type": "reference"
                   },
                   "generatedName": "PayrollRunRemoteData",
-                  "example": [
-                    {
-                      "path": "/payroll",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -35327,7 +34955,6 @@
         "generatedName": "PayrollRun",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35453,7 +35080,6 @@
         "generatedName": "RemoteData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35499,7 +35125,6 @@
         "generatedName": "RemoteKey",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35531,7 +35156,6 @@
         "generatedName": "RemoteKeyForRegenerationRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35617,9 +35241,6 @@
                 },
                 "generatedName": "RemoteResponseResponseHeaders",
                 "groupName": [],
-                "example": {
-                  "X-Page-Token": "value"
-                },
                 "type": "map"
               },
               "groupName": [],
@@ -35669,10 +35290,6 @@
                 },
                 "generatedName": "RemoteResponseHeaders",
                 "groupName": [],
-                "example": {
-                  "EXTRA-HEADER": "value",
-                  "Authorization": "<redacted>"
-                },
                 "type": "map"
               },
               "groupName": [],
@@ -35686,7 +35303,6 @@
         "generatedName": "RemoteResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35921,7 +35537,6 @@
               "generatedName": "syncStatusLastSyncStart",
               "value": {
                 "schema": {
-                  "example": "2021-03-30T19:44:18.695973Z",
                   "type": "datetime"
                 },
                 "generatedName": "SyncStatusLastSyncStart",
@@ -35941,7 +35556,6 @@
               "generatedName": "syncStatusNextSyncStart",
               "value": {
                 "schema": {
-                  "example": "2021-03-30T20:44:18.662942Z",
                   "type": "datetime"
                 },
                 "generatedName": "SyncStatusNextSyncStart",
@@ -36011,7 +35625,6 @@
         "generatedName": "SyncStatus",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36247,7 +35860,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "TaxModifiedAt",
@@ -36283,14 +35895,6 @@
                   },
                   "generatedName": "TaxFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -36339,7 +35943,6 @@
         "generatedName": "Tax",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36483,7 +36086,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "TeamModifiedAt",
@@ -36519,14 +36121,6 @@
                   },
                   "generatedName": "TeamFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -36557,14 +36151,6 @@
                     "type": "reference"
                   },
                   "generatedName": "TeamRemoteData",
-                  "example": [
-                    {
-                      "path": "/teams",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -36583,7 +36169,6 @@
         "generatedName": "Team",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36842,7 +36427,6 @@
                 "value": {
                   "description": "The day and time of the start of the time requested off.",
                   "schema": {
-                    "example": "2020-11-10T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "TimeOffStartTime",
@@ -36869,7 +36453,6 @@
                 "value": {
                   "description": "The day and time of the end of the time requested off.",
                   "schema": {
-                    "example": "2020-11-17T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "TimeOffEndTime",
@@ -36913,7 +36496,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "TimeOffModifiedAt",
@@ -36949,14 +36531,6 @@
                   },
                   "generatedName": "TimeOffFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -36987,14 +36561,6 @@
                     "type": "reference"
                   },
                   "generatedName": "TimeOffRemoteData",
-                  "example": [
-                    {
-                      "path": "/leave",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -37013,7 +36579,6 @@
         "generatedName": "TimeOff",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37208,7 +36773,6 @@
               "value": {
                 "description": "This is the datetime that this object was last updated by Merge",
                 "schema": {
-                  "example": "2021-10-16T00:00:00Z",
                   "type": "datetime"
                 },
                 "generatedName": "TimeOffBalanceModifiedAt",
@@ -37244,14 +36808,6 @@
                   },
                   "generatedName": "TimeOffBalanceFieldMappings",
                   "groupName": [],
-                  "example": {
-                    "organization_defined_targets": {
-                      "custom_key": "custom_value"
-                    },
-                    "linked_account_defined_targets": {
-                      "custom_key": "custom_value"
-                    }
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -37282,14 +36838,6 @@
                     "type": "reference"
                   },
                   "generatedName": "TimeOffBalanceRemoteData",
-                  "example": [
-                    {
-                      "path": "/leave",
-                      "data": [
-                        "Varies by platform"
-                      ]
-                    }
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -37308,7 +36856,6 @@
         "generatedName": "TimeOffBalance",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37339,7 +36886,6 @@
         "generatedName": "TimeOffEndpointRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37549,7 +37095,6 @@
                 "value": {
                   "description": "The day and time of the start of the time requested off.",
                   "schema": {
-                    "example": "2020-11-10T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "TimeOffRequestStartTime",
@@ -37576,7 +37121,6 @@
                 "value": {
                   "description": "The day and time of the end of the time requested off.",
                   "schema": {
-                    "example": "2020-11-17T00:00:00Z",
                     "type": "datetime"
                   },
                   "generatedName": "TimeOffRequestEndTime",
@@ -37614,9 +37158,6 @@
                   },
                   "generatedName": "TimeOffRequestIntegrationParams",
                   "groupName": [],
-                  "example": {
-                    "unique_integration_field": "unique_integration_field_value"
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -37650,9 +37191,6 @@
                   },
                   "generatedName": "TimeOffRequestLinkedAccountParams",
                   "groupName": [],
-                  "example": {
-                    "unique_linked_account_field": "unique_linked_account_field_value"
-                  },
                   "type": "map"
                 },
                 "groupName": [],
@@ -37669,7 +37207,6 @@
         "generatedName": "TimeOffRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37765,7 +37302,6 @@
         "generatedName": "TimeOffResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37853,7 +37389,6 @@
         "generatedName": "ValidationProblemSource",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37934,7 +37469,6 @@
         "generatedName": "WarningValidationProblem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37996,7 +37530,6 @@
         "generatedName": "WebhookReceiver",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38060,7 +37593,6 @@
         "generatedName": "WebhookReceiverRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

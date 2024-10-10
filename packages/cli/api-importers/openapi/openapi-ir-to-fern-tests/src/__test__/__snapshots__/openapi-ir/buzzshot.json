@@ -146,7 +146,6 @@
           "generatedName": "ListAccountsResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -569,7 +568,6 @@
           "generatedName": "ListGamesResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1303,7 +1301,6 @@
           "generatedName": "ListGroupsResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -2118,7 +2115,6 @@
           "generatedName": "ListPlayersResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -2603,7 +2599,6 @@
           "generatedName": "ListLocationsResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -2942,7 +2937,6 @@
           "generatedName": "ListPhotosResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3277,7 +3271,6 @@
         "generatedName": "Room",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3546,7 +3539,6 @@
                   "generatedName": "GamePhotosItem",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -3652,7 +3644,6 @@
                 "generatedName": "GameExtraFieldsItem",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -3767,7 +3758,6 @@
               "generatedName": "GameComplete",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -3781,7 +3771,6 @@
         "generatedName": "Game",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4187,7 +4176,6 @@
                           "generatedName": "GroupGamesItemExtraFieldsItem",
                           "groupName": [],
                           "additionalProperties": false,
-                          "fullExamples": [],
                           "source": {
                             "file": "../openapi.yml",
                             "type": "openapi"
@@ -4302,7 +4290,6 @@
                         "generatedName": "GroupGamesItemComplete",
                         "groupName": [],
                         "additionalProperties": false,
-                        "fullExamples": [],
                         "source": {
                           "file": "../openapi.yml",
                           "type": "openapi"
@@ -4316,7 +4303,6 @@
                   "generatedName": "GroupGamesItem",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -4559,7 +4545,6 @@
                         "generatedName": "GroupPlayersItemExtraFieldsItem",
                         "groupName": [],
                         "additionalProperties": false,
-                        "fullExamples": [],
                         "source": {
                           "file": "../openapi.yml",
                           "type": "openapi"
@@ -4597,7 +4582,6 @@
                 "generatedName": "GroupPlayersItem",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -4720,7 +4704,6 @@
                   "generatedName": "GroupPhotosItem",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -4742,7 +4725,6 @@
         "generatedName": "Group",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4970,7 +4952,6 @@
                 "generatedName": "PlayerExtraFieldsItem",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5008,7 +4989,6 @@
         "generatedName": "Player",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5201,7 +5181,6 @@
                 "generatedName": "PhotoProcessedItem",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5219,7 +5198,6 @@
         "generatedName": "Photo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

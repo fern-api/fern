@@ -177,7 +177,6 @@
           "generatedName": "PostConsumerTransactionResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -2547,7 +2546,6 @@
           "generatedName": "PostConsumerUserResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3797,7 +3795,6 @@
           "generatedName": "PostBusinessUserResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -8081,25 +8078,6 @@
         "title": "Address",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "addressLines": [
-                "Klara-Franke Str 20"
-              ],
-              "postcode": "10557",
-              "city": "Berlin",
-              "state": "Berlin",
-              "country": "Germany",
-              "tags": [
-                {
-                  "key": "customKey",
-                  "value": "customValue"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8173,76 +8151,6 @@
         "title": "UserBase",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "createdTimestamp": 1641654664000,
-              "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-              "userDetails": {
-                "name": {
-                  "firstName": "Baran",
-                  "middleName": "Realblood",
-                  "lastName": "Ozkan"
-                },
-                "dateOfBirth": "1991-01-01",
-                "countryOfResidence": "US",
-                "countryOfNationality": "DE"
-              },
-              "legalDocuments": [
-                {
-                  "documentType": "passport",
-                  "documentNumber": "Z9431P",
-                  "documentIssuedDate": 1639939034000,
-                  "documentExpirationDate": 1839939034000,
-                  "documentIssuedCountry": "DE",
-                  "tags": [
-                    {
-                      "key": "customerType",
-                      "value": "wallet"
-                    }
-                  ]
-                }
-              ],
-              "contactDetails": {
-                "emailIds": [
-                  "baran@flagright.com"
-                ],
-                "contactNumbers": [
-                  "+37112345432"
-                ],
-                "websites": [
-                  "flagright.com"
-                ],
-                "addresses": [
-                  {
-                    "addressLines": [
-                      "Klara-Franke Str 20"
-                    ],
-                    "postcode": "10557",
-                    "city": "Berlin",
-                    "state": "Berlin",
-                    "country": "Germany",
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue"
-                      }
-                    ]
-                  }
-                ]
-              },
-              "tags": [
-                {
-                  "key": "customKey",
-                  "value": "customValue"
-                }
-              ]
-            }
-          },
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8541,76 +8449,6 @@
         "title": "UserOptional",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "createdTimestamp": 1641654664000,
-              "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-              "userDetails": {
-                "name": {
-                  "firstName": "Baran",
-                  "middleName": "Realblood",
-                  "lastName": "Ozkan"
-                },
-                "dateOfBirth": "1991-01-01",
-                "countryOfResidence": "US",
-                "countryOfNationality": "DE"
-              },
-              "legalDocuments": [
-                {
-                  "documentType": "passport",
-                  "documentNumber": "Z9431P",
-                  "documentIssuedDate": 1639939034000,
-                  "documentExpirationDate": 1839939034000,
-                  "documentIssuedCountry": "DE",
-                  "tags": [
-                    {
-                      "key": "customerType",
-                      "value": "wallet"
-                    }
-                  ]
-                }
-              ],
-              "contactDetails": {
-                "emailIds": [
-                  "baran@flagright.com"
-                ],
-                "contactNumbers": [
-                  "+37112345432"
-                ],
-                "websites": [
-                  "flagright.com"
-                ],
-                "addresses": [
-                  {
-                    "addressLines": [
-                      "Klara-Franke Str 20"
-                    ],
-                    "postcode": "10557",
-                    "city": "Berlin",
-                    "state": "Berlin",
-                    "country": "Germany",
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue"
-                      }
-                    ]
-                  }
-                ]
-              },
-              "tags": [
-                {
-                  "key": "customKey",
-                  "value": "customValue"
-                }
-              ]
-            }
-          },
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8646,76 +8484,6 @@
         "title": "User",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "createdTimestamp": 1641654664000,
-              "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-              "userDetails": {
-                "name": {
-                  "firstName": "Baran",
-                  "middleName": "Realblood",
-                  "lastName": "Ozkan"
-                },
-                "dateOfBirth": "1991-01-01",
-                "countryOfResidence": "US",
-                "countryOfNationality": "DE"
-              },
-              "legalDocuments": [
-                {
-                  "documentType": "passport",
-                  "documentNumber": "Z9431P",
-                  "documentIssuedDate": 1639939034000,
-                  "documentExpirationDate": 1839939034000,
-                  "documentIssuedCountry": "DE",
-                  "tags": [
-                    {
-                      "key": "customerType",
-                      "value": "wallet"
-                    }
-                  ]
-                }
-              ],
-              "contactDetails": {
-                "emailIds": [
-                  "baran@flagright.com"
-                ],
-                "contactNumbers": [
-                  "+37112345432"
-                ],
-                "websites": [
-                  "flagright.com"
-                ],
-                "addresses": [
-                  {
-                    "addressLines": [
-                      "Klara-Franke Str 20"
-                    ],
-                    "postcode": "10557",
-                    "city": "Berlin",
-                    "state": "Berlin",
-                    "country": "Germany",
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue"
-                      }
-                    ]
-                  }
-                ]
-              },
-              "tags": [
-                {
-                  "key": "customKey",
-                  "value": "customValue"
-                }
-              ]
-            }
-          },
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8855,71 +8623,6 @@
         "title": "Person",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "generalDetails": {
-                "name": {
-                  "firstName": "Baran",
-                  "middleName": "Realblood",
-                  "lastName": "Ozkan"
-                },
-                "dateOfBirth": "1991-01-01",
-                "countryOfResidence": "US",
-                "countryOfNationality": "DE"
-              },
-              "legalDocuments": [
-                {
-                  "documentType": "passport",
-                  "documentNumber": "Z9431P",
-                  "documentIssuedDate": 1639939034000,
-                  "documentExpirationDate": 1839939034000,
-                  "documentIssuedCountry": "DE",
-                  "tags": [
-                    {
-                      "key": "customerType",
-                      "value": "wallet"
-                    }
-                  ]
-                }
-              ],
-              "contactDetails": {
-                "emailIds": [
-                  "baran@flagright.com"
-                ],
-                "contactNumbers": [
-                  "+371 123132"
-                ],
-                "websites": [
-                  "flagright.com"
-                ],
-                "addresses": [
-                  {
-                    "addressLines": [
-                      "Klara-Franke Str 20"
-                    ],
-                    "postcode": "10557",
-                    "city": "Berlin",
-                    "state": "Berlin",
-                    "country": "Germany",
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue"
-                      }
-                    ]
-                  }
-                ]
-              },
-              "tags": [
-                {
-                  "key": "customKey",
-                  "value": "customValue"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9080,23 +8783,6 @@
         "title": "LegalDocument",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "documentType": "passport",
-              "documentNumber": "Z9431P",
-              "documentIssuedDate": 1639939034000,
-              "documentExpirationDate": 1839939034000,
-              "documentIssuedCountry": "DE",
-              "tags": [
-                {
-                  "key": "customerType",
-                  "value": "wallet"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9146,14 +8832,6 @@
         "title": "Tag",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "key": "customKey",
-              "value": "customValue"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9186,7 +8864,6 @@
         "generatedName": "Transaction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9640,61 +9317,6 @@
         "title": "TransactionUpdatable",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "originAmountDetails": {
-                "country": "DE",
-                "transactionAmount": 800,
-                "transactionCurrency": "EUR"
-              },
-              "destinationAmountDetails": {
-                "country": "IN",
-                "transactionAmount": 68351.34,
-                "transactionCurrency": "INR"
-              },
-              "promotionCodeUsed": true,
-              "timestamp": 1641654664000,
-              "originPaymentDetails": {
-                "method": "CARD",
-                "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
-                "cardIssuedCountry": "US",
-                "transactionReferenceField": "Deposit",
-                "3dsDone": true
-              },
-              "destinationPaymentDetails": {
-                "method": "CARD",
-                "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
-                "cardIssuedCountry": "IN",
-                "transactionReferenceField": "Deposit",
-                "3dsDone": true
-              },
-              "reference": "loan repayment",
-              "deviceData": {
-                "batteryLevel": 95,
-                "deviceLatitude": 13.0033,
-                "deviceLongitude": 76.1004,
-                "ipAddress": "10.23.191.2",
-                "deviceIdentifier": "3c49f915d04485e34caba",
-                "vpnUsed": false,
-                "operatingSystem": "Android 11.2",
-                "deviceMaker": "ASUS",
-                "deviceModel": "Zenphone M2 Pro Max",
-                "deviceYear": "2018",
-                "appVersion": "1.1.0"
-              },
-              "tags": [
-                {
-                  "key": "customKey",
-                  "value": "customValue"
-                }
-              ]
-            }
-          },
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9812,19 +9434,6 @@
         "title": "TransactionBase",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "transactionId": "7b80a539eea6e78acbd6d458e5971482",
-              "originUserId": "8650a2611d0771cba03310f74bf6",
-              "destinationUserId": "9350a2611e0771cba03310f74bf6",
-              "timestamp": 1262300400111
-            }
-          },
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9892,64 +9501,6 @@
         "title": "TransactionWithRulesResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "transactionId": "7b80a539eea6e78acbd6d458e5971482",
-              "originUserId": "8650a2611d0771cba03310f74bf6",
-              "destinationUserId": "9350a2611e0771cba03310f74bf6",
-              "originAmountDetails": {
-                "country": "DE",
-                "transactionAmount": 800,
-                "transactionCurrency": "EUR"
-              },
-              "destinationAmountDetails": {
-                "country": "IN",
-                "transactionAmount": 68351.34,
-                "transactionCurrency": "INR"
-              },
-              "promotionCodeUsed": true,
-              "timestamp": 1641654664,
-              "originPaymentDetails": {
-                "method": "CARD",
-                "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
-                "cardIssuedCountry": "US",
-                "transactionReferenceField": "Deposit",
-                "3dsDone": true
-              },
-              "destinationPaymentDetails": {
-                "method": "CARD",
-                "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
-                "cardIssuedCountry": "IN",
-                "transactionReferenceField": "Deposit",
-                "3dsDone": true
-              },
-              "reference": "loan repayment",
-              "deviceData": {
-                "batteryLevel": 95,
-                "deviceLatitude": 13.0033,
-                "deviceLongitude": 76.1004,
-                "ipAddress": "10.23.191.2",
-                "deviceIdentifier": "3c49f915d04485e34caba",
-                "vpnUsed": false,
-                "operatingSystem": "Android 11.2",
-                "deviceMaker": "ASUS",
-                "deviceModel": "Zenphone M2 Pro Max",
-                "deviceYear": "2018",
-                "appVersion": "1.1.0"
-              },
-              "tags": [
-                {
-                  "key": "customKey",
-                  "value": "customValue"
-                }
-              ]
-            }
-          },
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10216,7 +9767,6 @@
         "title": "DeviceData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10256,11 +9806,6 @@
         "generatedName": "TransactionMonitoringResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10316,11 +9861,6 @@
         "title": "",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10360,7 +9900,6 @@
         "generatedName": "UserMonitoringResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10419,33 +9958,6 @@
         "title": "RulesResults",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "transactionId": "7b80a539eea6e78acbd6d458e5971482",
-              "executedRules": [
-                {
-                  "ruleId": "R-1a",
-                  "ruleName": "Proof of funds for high value transactions",
-                  "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                  "ruleAction": "BLOCK",
-                  "ruleHit": true
-                }
-              ],
-              "hitRules": [
-                {
-                  "ruleId": "R-1a",
-                  "ruleName": "Proof of funds for high value transactions",
-                  "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                  "ruleAction": "BLOCK"
-                }
-              ]
-            }
-          },
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10628,17 +10140,6 @@
         "title": "ExecutedRulesResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "ruleId": "R-1a",
-              "ruleName": "Proof of funds for high value transactions",
-              "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-              "ruleAction": "BLOCK",
-              "ruleHit": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10807,18 +10308,6 @@
         "title": "HitRulesDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "ruleId": "R-1a",
-              "ruleName": "Proof of funds for high value transactions",
-              "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-              "ruleAction": "BLOCK",
-              "ruleHit": true,
-              "nature": "FRAUD"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10900,19 +10389,6 @@
         "title": "FailedRulesResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "ruleId": "R-1a",
-              "ruleName": "Proof of funds for high value transactions",
-              "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-              "failureException": {
-                "exceptionName": "MISSING_DATA",
-                "exceptionDescription": "Some data is missing"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10961,14 +10437,6 @@
         "title": "RuleFailureException",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "exceptionName": "MISSING_DATA",
-              "exceptionDescription": "Some data is missing"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11038,15 +10506,6 @@
         "title": "RiskScoringResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "kycRiskScore": 87.5,
-              "transactionRiskScore": 58.33,
-              "customerRiskAssessment": 73.92
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11126,15 +10585,6 @@
         "title": "ConsumerName",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "firstName": "Baran",
-              "middleName": "Realblood",
-              "lastName": "Ozkan"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11206,15 +10656,6 @@
         "title": "TransactionAmountDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "country": "DE",
-              "transactionAmount": 800,
-              "transactionCurrency": "EUR"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11263,14 +10704,6 @@
         "title": "Amount",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "amountValue": 800,
-              "amountCurrency": "GBP"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11400,7 +10833,6 @@
         "title": "LegalEntity",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11554,7 +10986,6 @@
         "title": "ContactDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11646,20 +11077,6 @@
         "title": "CompanyFinancialDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "expectedTransactionAmountPerMonth": {
-                "amountValue": 800,
-                "amountCurrency": "GBP"
-              },
-              "expectedTurnoverPerMonth": {
-                "amountValue": 8000,
-                "amountCurrency": "USD"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11802,20 +11219,6 @@
         "title": "UserDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "name": {
-                "firstName": "Baran",
-                "middleName": "Realblood",
-                "lastName": "Ozkan"
-              },
-              "dateOfBirth": "1991-01-01",
-              "countryOfResidence": "US",
-              "countryOfNationality": "DE"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12032,19 +11435,6 @@
         "title": "CompanyGeneralDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "legalName": "Ozkan Hazelnut Export JSC",
-              "businessIndustry": [
-                "Farming"
-              ],
-              "mainProductsServicesSold": [
-                "Hazelnut"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12188,14 +11578,6 @@
         "title": "CompanyRegistrationDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "registrationIdentifier": "PSJ554342",
-              "registrationCountry": "DE"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12228,7 +11610,6 @@
         "generatedName": "Business",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12279,196 +11660,6 @@
         "title": "BusinessBase",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "createdTimestamp": 1641654664000,
-              "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-              "legalEntity": {
-                "companyGeneralDetails": {
-                  "legalName": "Ozkan Hazelnut Export JSC",
-                  "businessIndustry": [
-                    "Farming"
-                  ],
-                  "mainProductsServicesSold": [
-                    "Hazelnut"
-                  ]
-                },
-                "companyFinancialDetails": {
-                  "expectedTransactionAmountPerMonth": {
-                    "amountValue": 800,
-                    "amountCurrency": "GBP"
-                  },
-                  "expectedTurnoverPerMonth": {
-                    "amountValue": 8000,
-                    "amountCurrency": "USD"
-                  }
-                },
-                "companyRegistrationDetails": {
-                  "registrationIdentifier": "PSJ554342",
-                  "registrationCountry": "DE"
-                },
-                "reasonForAccountOpening": [
-                  "string"
-                ],
-                "contactDetails": {
-                  "addresses": [
-                    {
-                      "addressLines": [
-                        "Klara-Franke Str 20"
-                      ],
-                      "postcode": "10557",
-                      "city": "Berlin",
-                      "state": "Berlin",
-                      "country": "Germany",
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              },
-              "shareHolders": [
-                {
-                  "generalDetails": {
-                    "name": {
-                      "firstName": "Baran",
-                      "middleName": "Realblood",
-                      "lastName": "Ozkan"
-                    },
-                    "dateOfBirth": "1991-01-01",
-                    "countryOfResidence": "US",
-                    "countryOfNationality": "DE"
-                  },
-                  "legalDocuments": [
-                    {
-                      "documentType": "passport",
-                      "documentNumber": "Z9431P",
-                      "documentIssuedDate": 1639939034000,
-                      "documentExpirationDate": 1839939034000,
-                      "documentIssuedCountry": "DE",
-                      "tags": [
-                        {
-                          "key": "customerType",
-                          "value": "wallet"
-                        }
-                      ]
-                    }
-                  ],
-                  "contactDetails": {
-                    "emailIds": [
-                      "baran@flagright.com"
-                    ],
-                    "contactNumbers": [
-                      "+371 123132"
-                    ],
-                    "websites": [
-                      "flagright.com"
-                    ],
-                    "addresses": [
-                      {
-                        "addressLines": [
-                          "Klara-Franke Str 20"
-                        ],
-                        "postcode": "10557",
-                        "city": "Berlin",
-                        "state": "Berlin",
-                        "country": "Germany",
-                        "tags": [
-                          {
-                            "key": "customKey",
-                            "value": "customValue"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "tags": [
-                    {
-                      "key": "customKey",
-                      "value": "customValue"
-                    }
-                  ]
-                }
-              ],
-              "directors": [
-                {
-                  "generalDetails": {
-                    "name": {
-                      "firstName": "Baran",
-                      "middleName": "Realblood",
-                      "lastName": "Ozkan"
-                    },
-                    "dateOfBirth": "1991-01-01",
-                    "countryOfResidence": "US",
-                    "countryOfNationality": "DE"
-                  },
-                  "legalDocuments": [
-                    {
-                      "documentType": "passport",
-                      "documentNumber": "Z9431P",
-                      "documentIssuedDate": 1639939034000,
-                      "documentExpirationDate": 1839939034000,
-                      "documentIssuedCountry": "DE",
-                      "tags": [
-                        {
-                          "key": "customerType",
-                          "value": "wallet"
-                        }
-                      ]
-                    }
-                  ],
-                  "contactDetails": {
-                    "emailIds": [
-                      "baran@flagright.com"
-                    ],
-                    "contactNumbers": [
-                      "+371 123132"
-                    ],
-                    "websites": [
-                      "flagright.com"
-                    ],
-                    "addresses": [
-                      {
-                        "addressLines": [
-                          "Klara-Franke Str 20"
-                        ],
-                        "postcode": "10557",
-                        "city": "Berlin",
-                        "state": "Berlin",
-                        "country": "Germany",
-                        "tags": [
-                          {
-                            "key": "customKey",
-                            "value": "customValue"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "tags": [
-                    {
-                      "key": "customKey",
-                      "value": "customValue"
-                    }
-                  ]
-                }
-              ],
-              "tags": [
-                {
-                  "key": "customKey",
-                  "value": "customValue"
-                }
-              ]
-            }
-          },
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12896,196 +12087,6 @@
         "title": "BusinessOptional",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "createdTimestamp": 1641654664000,
-              "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-              "legalEntity": {
-                "companyGeneralDetails": {
-                  "legalName": "Ozkan Hazelnut Export JSC",
-                  "businessIndustry": [
-                    "Farming"
-                  ],
-                  "mainProductsServicesSold": [
-                    "Hazelnut"
-                  ]
-                },
-                "companyFinancialDetails": {
-                  "expectedTransactionAmountPerMonth": {
-                    "amountValue": 800,
-                    "amountCurrency": "GBP"
-                  },
-                  "expectedTurnoverPerMonth": {
-                    "amountValue": 8000,
-                    "amountCurrency": "USD"
-                  }
-                },
-                "companyRegistrationDetails": {
-                  "registrationIdentifier": "PSJ554342",
-                  "registrationCountry": "DE"
-                },
-                "reasonForAccountOpening": [
-                  "string"
-                ],
-                "contactDetails": {
-                  "addresses": [
-                    {
-                      "addressLines": [
-                        "Klara-Franke Str 20"
-                      ],
-                      "postcode": "10557",
-                      "city": "Berlin",
-                      "state": "Berlin",
-                      "country": "Germany",
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              },
-              "shareHolders": [
-                {
-                  "generalDetails": {
-                    "name": {
-                      "firstName": "Baran",
-                      "middleName": "Realblood",
-                      "lastName": "Ozkan"
-                    },
-                    "dateOfBirth": "1991-01-01",
-                    "countryOfResidence": "US",
-                    "countryOfNationality": "DE"
-                  },
-                  "legalDocuments": [
-                    {
-                      "documentType": "passport",
-                      "documentNumber": "Z9431P",
-                      "documentIssuedDate": 1639939034000,
-                      "documentExpirationDate": 1839939034000,
-                      "documentIssuedCountry": "DE",
-                      "tags": [
-                        {
-                          "key": "customerType",
-                          "value": "wallet"
-                        }
-                      ]
-                    }
-                  ],
-                  "contactDetails": {
-                    "emailIds": [
-                      "baran@flagright.com"
-                    ],
-                    "contactNumbers": [
-                      "+371 123132"
-                    ],
-                    "websites": [
-                      "flagright.com"
-                    ],
-                    "addresses": [
-                      {
-                        "addressLines": [
-                          "Klara-Franke Str 20"
-                        ],
-                        "postcode": "10557",
-                        "city": "Berlin",
-                        "state": "Berlin",
-                        "country": "Germany",
-                        "tags": [
-                          {
-                            "key": "customKey",
-                            "value": "customValue"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "tags": [
-                    {
-                      "key": "customKey",
-                      "value": "customValue"
-                    }
-                  ]
-                }
-              ],
-              "directors": [
-                {
-                  "generalDetails": {
-                    "name": {
-                      "firstName": "Baran",
-                      "middleName": "Realblood",
-                      "lastName": "Ozkan"
-                    },
-                    "dateOfBirth": "1991-01-01",
-                    "countryOfResidence": "US",
-                    "countryOfNationality": "DE"
-                  },
-                  "legalDocuments": [
-                    {
-                      "documentType": "passport",
-                      "documentNumber": "Z9431P",
-                      "documentIssuedDate": 1639939034000,
-                      "documentExpirationDate": 1839939034000,
-                      "documentIssuedCountry": "DE",
-                      "tags": [
-                        {
-                          "key": "customerType",
-                          "value": "wallet"
-                        }
-                      ]
-                    }
-                  ],
-                  "contactDetails": {
-                    "emailIds": [
-                      "baran@flagright.com"
-                    ],
-                    "contactNumbers": [
-                      "+371 123132"
-                    ],
-                    "websites": [
-                      "flagright.com"
-                    ],
-                    "addresses": [
-                      {
-                        "addressLines": [
-                          "Klara-Franke Str 20"
-                        ],
-                        "postcode": "10557",
-                        "city": "Berlin",
-                        "state": "Berlin",
-                        "country": "Germany",
-                        "tags": [
-                          {
-                            "key": "customKey",
-                            "value": "customValue"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "tags": [
-                    {
-                      "key": "customKey",
-                      "value": "customValue"
-                    }
-                  ]
-                }
-              ],
-              "tags": [
-                {
-                  "key": "customKey",
-                  "value": "customValue"
-                }
-              ]
-            }
-          },
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13119,7 +12120,6 @@
         "title": "BusinessUsersResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13153,11 +12153,6 @@
         "title": "ConsumerUsersResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13536,17 +12531,6 @@
         "title": "CardDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "method": "CARD",
-              "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
-              "cardIssuedCountry": "TR",
-              "transactionReferenceField": "Deposit",
-              "3dsDone": true
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13766,34 +12750,6 @@
         "title": "IBANDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "method": "IBAN",
-              "BIC": "DE761234561",
-              "bankName": "Merryl Lynch",
-              "IBAN": "1234321",
-              "bankAddress": {
-                "addressLines": [
-                  "Klara-Franke Str 20"
-                ],
-                "postcode": "10557",
-                "city": "Berlin",
-                "state": "Berlin",
-                "country": "Germany",
-                "tags": [
-                  {
-                    "key": "customKey",
-                    "value": "customValue"
-                  }
-                ]
-              }
-            }
-          },
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13938,7 +12894,6 @@
         "title": "WalletDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14092,11 +13047,6 @@
         "title": "ACHDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-2"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14272,7 +13222,6 @@
         "title": "SWIFTDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14364,7 +13313,6 @@
         "title": "MpesaDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14560,7 +13508,6 @@
         "title": "GenericBankAccountDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14662,11 +13609,6 @@
         "title": "UPIDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15019,7 +13961,6 @@
                 "generatedName": "TransactionLimitsPaymentMethodLimits",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -15039,11 +13980,6 @@
         "title": "TransactionLimits",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15164,7 +14100,6 @@
         "generatedName": "RuleHitMeta",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15459,11 +14394,6 @@
         "generatedName": "TransactionEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15603,11 +14533,6 @@
         "title": "ConsumerUserEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15747,11 +14672,6 @@
         "title": "BusinessUserEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15940,11 +14860,6 @@
         "title": "CaseManagementEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16007,7 +14922,6 @@
         "title": "Date",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16368,7 +15282,6 @@
         "title": "PEPStatus",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16429,7 +15342,6 @@
         "title": "KYCStatusDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16504,7 +15416,6 @@
         "title": "UserStateDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16683,7 +15594,6 @@
         "title": "CaseClosedDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16946,7 +15856,6 @@
         "title": "AlertClosedDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17043,11 +15952,6 @@
         "title": "CardExpiry",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17168,7 +16072,6 @@
         "title": "WebhookEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17376,7 +16279,6 @@
         "title": "ListData",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17430,7 +16332,6 @@
         "title": "ListItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17533,7 +16434,6 @@
         "title": "ListMetadata",
         "groupName": [],
         "additionalProperties": true,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17602,11 +16502,6 @@
         "title": "ListExisted",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17720,7 +16615,6 @@
         "title": "ListHeader",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17944,7 +16838,6 @@
         "title": "CardMerchantDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18123,7 +17016,6 @@
         "title": "CheckDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20803,7 +19695,6 @@
         "title": "MCCDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20904,7 +19795,6 @@
         "title": "TransactionCountLimit",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21013,7 +19903,6 @@
         "title": "TransactionAmountLimit",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21099,7 +19988,6 @@
         "title": "TransactionLimit",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21144,7 +20032,6 @@
         "title": "FalsePositiveDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21212,7 +20099,6 @@
         "title": "SanctionsDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21329,7 +20215,6 @@
         "title": "BusinessEntityLink",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21407,7 +20292,6 @@
         "title": "UserWithRulesResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21485,7 +20369,6 @@
         "title": "BusinessWithRulesResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21520,7 +20403,6 @@
         "generatedName": "Thing",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

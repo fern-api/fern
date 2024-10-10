@@ -1367,7 +1367,6 @@
         "generatedName": "EndUserCreatedWebhookPayload",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1437,7 +1436,6 @@
         "generatedName": "EndUserUpdatedWebhookPayload",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"

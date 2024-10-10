@@ -33551,7 +33551,6 @@
         "generatedName": "PaymentStatementInitiatedWebhook",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33613,7 +33612,6 @@
         "title": "Root Schema",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33674,7 +33672,6 @@
         "generatedName": "ApiErrorContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33836,7 +33833,6 @@
         "generatedName": "ApiErrorRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33893,7 +33889,6 @@
         "generatedName": "ApiError",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33984,7 +33979,6 @@
         "generatedName": "ContractSearchFormWithCursor",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34298,7 +34292,6 @@
         "generatedName": "ContractSearchFormWithoutCursor",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34345,7 +34338,6 @@
         "generatedName": "ContractListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34628,7 +34620,6 @@
         "generatedName": "BasicContract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34659,7 +34650,6 @@
         "generatedName": "ContractContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34690,7 +34680,6 @@
         "generatedName": "ContractContainerPayAsYouGoTimeBased",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34721,7 +34710,6 @@
         "generatedName": "ContractContainerPaygTasks",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34752,7 +34740,6 @@
         "generatedName": "ContractContainerPaygMilestones",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34783,7 +34770,6 @@
         "generatedName": "ContractContainerOngoingTimeBased",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34814,7 +34800,6 @@
         "generatedName": "ResponseEstimateFirstPaymentContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34875,7 +34860,6 @@
         "generatedName": "ResponseEstimateFirstPayment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35271,7 +35255,6 @@
         "generatedName": "Contract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35307,7 +35290,6 @@
         "generatedName": "ClientOfBasicContract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35400,7 +35382,6 @@
           "generatedName": "ClientOfContract",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -35524,7 +35505,6 @@
           "generatedName": "ClientLegalEntity",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -35582,7 +35562,6 @@
         "value": {
           "description": "Long date-time format following ISO-8601",
           "schema": {
-            "example": "2022-05-24T09:38:46.235Z",
             "type": "datetime"
           },
           "generatedName": "DateTimeStringRequired",
@@ -35598,7 +35577,6 @@
         "value": {
           "description": "Long date-time format following ISO-8601",
           "schema": {
-            "example": "2022-05-24T09:38:46.235Z",
             "type": "datetime"
           },
           "generatedName": "DateTimeString",
@@ -35705,7 +35683,6 @@
           "generatedName": "WorkerOfBasicContract",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -35973,7 +35950,6 @@
           "generatedName": "WorkerOfContract",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -36035,7 +36011,6 @@
         "generatedName": "WorkerLegalEntity",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36092,7 +36067,6 @@
         "generatedName": "TeamOfBasicContract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36137,7 +36111,6 @@
         "generatedName": "TeamOfContract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36194,7 +36167,6 @@
         "generatedName": "InvitationsOfBasicContract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36257,7 +36229,6 @@
         "generatedName": "SignaturesOfBasicContract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36350,7 +36321,6 @@
         "generatedName": "SignaturesOfContract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36495,7 +36465,6 @@
         "generatedName": "CompensationDetailsOfContract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36633,7 +36602,6 @@
         "generatedName": "EmploymentDetailsOfContract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36664,7 +36632,6 @@
         "generatedName": "ContractToAmendDetailsContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37039,7 +37006,6 @@
         "generatedName": "ContractDetailsToAmend",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37070,7 +37036,6 @@
         "generatedName": "ContractToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37151,7 +37116,6 @@
         "generatedName": "ContractToCreateContainerPayAsYouGoTimeBased",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37182,7 +37146,6 @@
         "generatedName": "ContractToCreateContainerPaygTasks",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37213,7 +37176,6 @@
         "generatedName": "ContractToCreateContainerPaygMilestones",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37244,7 +37206,6 @@
         "generatedName": "ContractToCreateContainerOngoingTimeBased",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37318,7 +37279,6 @@
               "generatedName": "ContractToCreatePayAsYouGoTimeBasedCompensationDetails",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -37332,7 +37292,6 @@
         "generatedName": "ContractToCreatePayAsYouGoTimeBased",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37388,7 +37347,6 @@
         "generatedName": "ContractToCreatePaygTasks",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37444,7 +37402,6 @@
         "generatedName": "ContractToCreatePaygMilestones",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37518,7 +37475,6 @@
               "generatedName": "ContractToCreateOngoingTimeBasedCompensationDetails",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -37532,7 +37488,6 @@
         "generatedName": "ContractToCreateOngoingTimeBased",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -37732,7 +37687,6 @@
                     "generatedName": "ContractToCreateSharedClientLegalEntity",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -37768,7 +37722,6 @@
                     "generatedName": "ContractToCreateSharedClientTeam",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -37782,7 +37735,6 @@
               "generatedName": "ContractToCreateSharedClient",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -37857,7 +37809,6 @@
               "generatedName": "ContractToCreateSharedJobTitle",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -37908,7 +37859,6 @@
                   "generatedName": "ContractToCreateSharedSeniority",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -38102,7 +38052,6 @@
                   "generatedName": "ContractToCreateSharedWorker",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -38123,7 +38072,6 @@
         "generatedName": "ContractToCreateShared",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38173,7 +38121,6 @@
         "generatedName": "MetaDataOfContractToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38218,7 +38165,6 @@
         "generatedName": "CompensationDetailsOfContractToCreatePayAsYouGoTimeBased",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38263,7 +38209,6 @@
         "generatedName": "CompensationDetailsOfContractToCreateOngoingTimeBased",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38484,7 +38429,6 @@
         "generatedName": "CompensationDetailsOfContractToCreateShared",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38515,7 +38459,6 @@
         "generatedName": "ContractSignatureToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38572,7 +38515,6 @@
         "generatedName": "ContractSignatureToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38603,7 +38545,6 @@
         "generatedName": "ContractInvitationToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38650,7 +38591,6 @@
         "generatedName": "ContractInvitationToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38924,7 +38864,6 @@
         "generatedName": "LegalEntityListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -39013,7 +38952,6 @@
         "generatedName": "BasicLegalEntity",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -39044,7 +38982,6 @@
         "generatedName": "OrganizationListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -39102,7 +39039,6 @@
         "generatedName": "BasicOrganization",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -39133,7 +39069,6 @@
         "generatedName": "TeamListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -39191,7 +39126,6 @@
         "generatedName": "BasicTeam",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -39238,7 +39172,6 @@
         "generatedName": "TimesheetListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -39570,7 +39503,6 @@
                 "generatedName": "BasicTimesheetWorksheet",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -39655,7 +39587,6 @@
                 "generatedName": "BasicTimesheetReviewedBy",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -39723,7 +39654,6 @@
               "generatedName": "BasicTimesheetContract",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -39788,7 +39718,6 @@
                 "generatedName": "BasicTimesheetPaymentCycle",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -39842,7 +39771,6 @@
               "generatedName": "BasicTimesheetReportedBy",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -39856,7 +39784,6 @@
         "generatedName": "BasicTimesheet",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -39887,7 +39814,6 @@
         "generatedName": "TimesheetContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -39920,7 +39846,6 @@
         "generatedName": "Timesheet",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -39951,7 +39876,6 @@
         "generatedName": "TimesheetApproversContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40022,7 +39946,6 @@
         "generatedName": "TimesheetApprover",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40053,7 +39976,6 @@
         "generatedName": "TimesheetToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40140,7 +40062,6 @@
         "generatedName": "TimesheetSharedProperties",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40183,7 +40104,6 @@
         "generatedName": "TimesheetToCreateWithFile",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40214,7 +40134,6 @@
         "generatedName": "TimesheetToUpdateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40258,7 +40177,6 @@
         "generatedName": "TimesheetToUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40289,7 +40207,6 @@
         "generatedName": "TimesheetReviewsToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40320,7 +40237,6 @@
         "generatedName": "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40351,7 +40267,6 @@
         "generatedName": "RequestBodyToCreatePgoTaskReviewsReviewsContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40433,7 +40348,6 @@
         "generatedName": "TimesheetReviewsToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40464,7 +40378,6 @@
         "generatedName": "GenericReportReviewCreatedContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40546,7 +40459,6 @@
         "generatedName": "GenericReportReviewCreated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40616,7 +40528,6 @@
         "generatedName": "PgoTaskReviewsByIdToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40696,10 +40607,6 @@
                 "type": "primitive"
               },
               "generatedName": "PgoTaskReviewsToCreateIds",
-              "example": [
-                1234,
-                1235
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -40710,7 +40617,6 @@
         "generatedName": "PgoTaskReviewsToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40741,7 +40647,6 @@
         "generatedName": "TimesheetReviewToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40807,7 +40712,6 @@
         "generatedName": "TimesheetReviewToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -41121,7 +41025,6 @@
         "generatedName": "TimesheetSearchContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -41190,7 +41093,6 @@
                     "generatedName": "TimesheetAccountingRefsItemMappingCategory",
                     "groupName": [],
                     "additionalProperties": false,
-                    "fullExamples": [],
                     "source": {
                       "file": "../openapi.yml",
                       "type": "openapi"
@@ -41207,7 +41109,6 @@
             "generatedName": "TimesheetAccountingRefsItem",
             "groupName": [],
             "additionalProperties": false,
-            "fullExamples": [],
             "source": {
               "file": "../openapi.yml",
               "type": "openapi"
@@ -41528,7 +41429,6 @@
         "generatedName": "InvoiceAdjustmentSearchContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -41575,7 +41475,6 @@
         "generatedName": "InvoiceAdjustmentListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -41908,7 +41807,6 @@
                 "generatedName": "BasicInvoiceAdjustmentWorksheet",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -41993,7 +41891,6 @@
                 "generatedName": "BasicInvoiceAdjustmentReviewedBy",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -42061,7 +41958,6 @@
               "generatedName": "BasicInvoiceAdjustmentContract",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -42114,7 +42010,6 @@
               "generatedName": "BasicInvoiceAdjustmentPaymentCycle",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -42165,7 +42060,6 @@
               "generatedName": "BasicInvoiceAdjustmentReportedBy",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -42179,7 +42073,6 @@
         "generatedName": "BasicInvoiceAdjustment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42210,7 +42103,6 @@
         "generatedName": "InvoiceAdjustmentContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42243,7 +42135,6 @@
         "generatedName": "InvoiceAdjustment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42274,7 +42165,6 @@
         "generatedName": "InvoiceAdjustmentApproversContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42345,7 +42235,6 @@
         "generatedName": "InvoiceAdjustmentApprover",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42376,7 +42265,6 @@
         "generatedName": "InvoiceAdjustmentToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42409,7 +42297,6 @@
         "generatedName": "InvoiceAdjustmentToCreateWithFile",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42536,7 +42423,6 @@
         "generatedName": "InvoiceAdjustmentToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42567,7 +42453,6 @@
         "generatedName": "InvoiceAdjustmentCreatedContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42681,7 +42566,6 @@
         "generatedName": "InvoiceAdjustmentCreated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42712,7 +42596,6 @@
         "generatedName": "InvoiceAdjustmentToUpdateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42762,7 +42645,6 @@
         "generatedName": "InvoiceAdjustmentToUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42793,7 +42675,6 @@
         "generatedName": "InvoiceAdjustmentReviewsToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42875,7 +42756,6 @@
         "generatedName": "InvoiceAdjustmentReviewsToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42942,7 +42822,6 @@
         "generatedName": "InvoiceAdjustmentReviewToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -43008,7 +42887,6 @@
         "generatedName": "InvoiceAdjustmentReviewToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -43044,7 +42922,6 @@
               "generatedName": "GenericResultCreatedData",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -43058,7 +42935,6 @@
         "generatedName": "GenericResultCreated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -43098,7 +42974,6 @@
         "generatedName": "ContractExternalIdPatchedContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -43134,7 +43009,6 @@
               "generatedName": "GenericResultUpdatedData",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -43148,7 +43022,6 @@
         "generatedName": "GenericResultUpdated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -43185,7 +43058,6 @@
               "generatedName": "GenericResultDeletedData",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -43199,7 +43071,6 @@
         "generatedName": "GenericResultDeleted",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -43577,7 +43448,6 @@
         "generatedName": "CountryListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -43711,7 +43581,6 @@
         "generatedName": "Country",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -43761,7 +43630,6 @@
         "generatedName": "StateOfCountry",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -43792,7 +43660,6 @@
         "generatedName": "CurrencyListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -43853,7 +43720,6 @@
         "generatedName": "Currency",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -44302,7 +44168,6 @@
               "generatedName": "JobTitleListContainerPage",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -44316,7 +44181,6 @@
         "generatedName": "JobTitleListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -44377,7 +44241,6 @@
         "generatedName": "JobTitle",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -44408,7 +44271,6 @@
         "generatedName": "SeniorityListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -44487,7 +44349,6 @@
         "generatedName": "SeniorityRequired",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -44566,7 +44427,6 @@
           "generatedName": "Seniority",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -45034,7 +44894,6 @@
         "generatedName": "PageInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45063,7 +44922,6 @@
         "generatedName": "PageInfoWithoutCursor",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45124,7 +44982,6 @@
         "generatedName": "PageInfoWithoutCursorNew",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45155,7 +45012,6 @@
         "generatedName": "MilestoneContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45186,7 +45042,6 @@
         "generatedName": "MilestoneToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45219,7 +45074,6 @@
         "generatedName": "MilestoneToCreateFormWithFile",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45292,7 +45146,6 @@
         "generatedName": "MilestoneProperties",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45323,7 +45176,6 @@
         "generatedName": "MilestoneListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45443,7 +45295,6 @@
                 "generatedName": "MilestoneReviewedBy",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -45500,7 +45351,6 @@
               "generatedName": "MilestoneReportedBy",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -45578,7 +45428,6 @@
         "generatedName": "Milestone",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45609,7 +45458,6 @@
         "generatedName": "MilestoneReviewsToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45695,7 +45543,6 @@
         "generatedName": "MilestoneReviewsToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45726,7 +45573,6 @@
         "generatedName": "MilestoneReviewToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45792,7 +45638,6 @@
         "generatedName": "MilestoneReviewToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45823,7 +45668,6 @@
         "generatedName": "OffCyclePaymentContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45854,7 +45698,6 @@
         "generatedName": "OffCyclePaymentToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45885,7 +45728,6 @@
         "generatedName": "EstimateFirstPaymentContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45954,7 +45796,6 @@
         "generatedName": "OffCyclePaymentToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -46258,7 +46099,6 @@
               "generatedName": "EstimateFirstPaymentCompensationDetails",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -46273,7 +46113,6 @@
         "generatedName": "EstimateFirstPayment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -46504,7 +46343,6 @@
         "generatedName": "ProRata",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -46541,7 +46379,6 @@
         "generatedName": "FirstPaymentDate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -46572,7 +46409,6 @@
         "generatedName": "OffCyclePaymentListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -46807,7 +46643,6 @@
                 "generatedName": "OffCyclePaymentReviewedBy",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -46863,7 +46698,6 @@
               "generatedName": "OffCyclePaymentReportedBy",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -46877,7 +46711,6 @@
         "generatedName": "OffCyclePayment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -46926,7 +46759,6 @@
           "generatedName": "FileAttachmentInfo",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -46966,7 +46798,6 @@
         "generatedName": "FileObject",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47041,7 +46872,6 @@
               "generatedName": "InputToCreateFileRefData",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -47055,7 +46885,6 @@
         "generatedName": "InputToCreateFileRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47098,7 +46927,6 @@
         "generatedName": "OutputToCreateFileRef",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47129,7 +46957,6 @@
         "generatedName": "OutputToCreateFileRefContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47160,7 +46987,6 @@
         "generatedName": "InputToPatchContractExternalId",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47191,7 +47017,6 @@
         "generatedName": "InputToCreatePgoTask",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47222,7 +47047,6 @@
         "generatedName": "InputToDeletePgoTask",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47252,7 +47076,6 @@
         "generatedName": "ContractExternalIdToPatch",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47343,7 +47166,6 @@
         "generatedName": "PgoTaskToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47459,7 +47281,6 @@
         "generatedName": "PgoTask",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47526,7 +47347,6 @@
         "generatedName": "PgoTaskToDelete",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47557,7 +47377,6 @@
         "generatedName": "TaskListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47648,7 +47467,6 @@
         "generatedName": "AgreementsSearchForm",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47720,7 +47538,6 @@
         "generatedName": "AgreementListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47827,7 +47644,6 @@
               "generatedName": "AgreementMsa",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -47876,7 +47692,6 @@
               "generatedName": "AgreementClientLegalEntity",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -47926,7 +47741,6 @@
               "generatedName": "AgreementProviderLegalEntity",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -47940,7 +47754,6 @@
         "generatedName": "Agreement",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47977,7 +47790,6 @@
               "generatedName": "InputToShieldContractData",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -47991,7 +47803,6 @@
         "generatedName": "InputToShieldContract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48022,7 +47833,6 @@
         "generatedName": "PremiumToAddContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48069,7 +47879,6 @@
         "generatedName": "PremiumToAdd",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48100,7 +47909,6 @@
         "generatedName": "PremiumResultAddedContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48131,7 +47939,6 @@
         "generatedName": "EorEntitlementsContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48162,7 +47969,6 @@
         "generatedName": "EorTimeoffsContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48193,7 +47999,6 @@
         "generatedName": "EorTimeoffsItemContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48224,7 +48029,6 @@
         "generatedName": "EorClientTimeoffsContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48255,7 +48059,6 @@
         "generatedName": "FinalPaymentCalculatedContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48389,7 +48192,6 @@
               "generatedName": "FinalPaymentCalculatedLastCycle",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -48473,7 +48275,6 @@
         "generatedName": "FinalPaymentCalculated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48567,7 +48368,6 @@
               "generatedName": "PremiumResultAddedMisclassificationGuarantee",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -48628,7 +48428,6 @@
               "generatedName": "PremiumResultAddedPenalties",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -48689,7 +48488,6 @@
               "generatedName": "PremiumResultAddedThirdPartyLiabilities",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -48703,7 +48501,6 @@
         "generatedName": "PremiumResultAdded",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48740,7 +48537,6 @@
         "generatedName": "EorEntitlements",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49112,7 +48908,6 @@
         "generatedName": "EorEntitlementListItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49179,7 +48974,6 @@
         "generatedName": "ContractToTerminateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49254,7 +49048,6 @@
         "generatedName": "ContractToTerminate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49285,7 +49078,6 @@
         "generatedName": "ContractTerminationResultContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49342,7 +49134,6 @@
         "generatedName": "ContractTerminationResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49378,7 +49169,6 @@
         "generatedName": "ContractTemplateListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49439,7 +49229,6 @@
         "generatedName": "ContractTemplateSummary",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49509,7 +49298,6 @@
         "generatedName": "ContractCustomField",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49540,7 +49328,6 @@
         "generatedName": "EorCountryValidationsContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49571,7 +49358,6 @@
         "generatedName": "EorContractToCreateContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49602,7 +49388,6 @@
         "generatedName": "EorContractCreatedContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49817,7 +49602,6 @@
                           "generatedName": "EorContractToCreateEmployeeAddress",
                           "groupName": [],
                           "additionalProperties": false,
-                          "fullExamples": [],
                           "source": {
                             "file": "../openapi.yml",
                             "type": "openapi"
@@ -49837,7 +49621,6 @@
                 "generatedName": "EorContractToCreateEmployee",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -50109,7 +49892,6 @@
               "generatedName": "EorContractToCreateEmployment",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -50171,7 +49953,6 @@
               "generatedName": "EorContractToCreateSeniority",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -50221,7 +50002,6 @@
                       "generatedName": "EorContractToCreateClientLegalEntity",
                       "groupName": [],
                       "additionalProperties": false,
-                      "fullExamples": [],
                       "source": {
                         "file": "../openapi.yml",
                         "type": "openapi"
@@ -50273,7 +50053,6 @@
                       "generatedName": "EorContractToCreateClientTeam",
                       "groupName": [],
                       "additionalProperties": false,
-                      "fullExamples": [],
                       "source": {
                         "file": "../openapi.yml",
                         "type": "openapi"
@@ -50290,7 +50069,6 @@
               "generatedName": "EorContractToCreateClient",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -50403,7 +50181,6 @@
               "generatedName": "EorContractToCreateCompensationDetails",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -50503,7 +50280,6 @@
                   "generatedName": "EorContractToCreateQuoteAdditionalFields",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -50543,7 +50319,6 @@
         "generatedName": "EorContractToCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -50866,7 +50641,6 @@
                 "generatedName": "EorContractCreatedEmployment",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -50921,7 +50695,6 @@
                         "generatedName": "EorContractCreatedClientLegalEntity",
                         "groupName": [],
                         "additionalProperties": false,
-                        "fullExamples": [],
                         "source": {
                           "file": "../openapi.yml",
                           "type": "openapi"
@@ -50938,7 +50711,6 @@
                 "generatedName": "EorContractCreatedClient",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -51050,7 +50822,6 @@
                 "generatedName": "EorContractCreatedCompensationDetails",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -51156,7 +50927,6 @@
                 "generatedName": "EorContractCreatedEmployee",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -51224,7 +50994,6 @@
                   "generatedName": "EorContractCreatedHealthPlan",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -51265,7 +51034,6 @@
         "generatedName": "EorContractCreated",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -51311,7 +51079,6 @@
                 "generatedName": "EorCountryValidationsHoliday",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -51396,7 +51163,6 @@
                 "generatedName": "EorCountryValidationsPartTimeHoliday",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -51464,7 +51230,6 @@
                 "generatedName": "EorCountryValidationsSickDays",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -51533,7 +51298,6 @@
                 "generatedName": "EorCountryValidationsSalary",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -51602,7 +51366,6 @@
                 "generatedName": "EorCountryValidationsProbation",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -51671,7 +51434,6 @@
                 "generatedName": "EorCountryValidationsPartTimeProbation",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -51726,7 +51488,6 @@
                         "generatedName": "EorCountryValidationsWorkScheduleDays",
                         "groupName": [],
                         "additionalProperties": false,
-                        "fullExamples": [],
                         "source": {
                           "file": "../openapi.yml",
                           "type": "openapi"
@@ -51772,7 +51533,6 @@
                         "generatedName": "EorCountryValidationsWorkScheduleHours",
                         "groupName": [],
                         "additionalProperties": false,
-                        "fullExamples": [],
                         "source": {
                           "file": "../openapi.yml",
                           "type": "openapi"
@@ -51790,7 +51550,6 @@
                 "generatedName": "EorCountryValidationsWorkSchedule",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -51958,7 +51717,6 @@
                 "generatedName": "EorCountryValidationsDefiniteContract",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -52053,7 +51811,6 @@
                   "generatedName": "EorCountryValidationsHealthInsurance",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -52073,7 +51830,6 @@
         "generatedName": "EorCountryValidations",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52325,7 +52081,6 @@
                   "generatedName": "HealthInsuranceProviderAttachmentsItem",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -52505,7 +52260,6 @@
                   "generatedName": "HealthInsuranceProviderPlansItem",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -52527,7 +52281,6 @@
         "generatedName": "HealthInsuranceProvider",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52577,7 +52330,6 @@
         "generatedName": "EorClientTimeoffs",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52729,7 +52481,6 @@
         "generatedName": "EorTimeoffsEmployeeItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52885,7 +52636,6 @@
         "generatedName": "EorClientTimeoffRequests",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -53150,7 +52900,6 @@
         "generatedName": "EorTimeoffsItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -53580,7 +53329,6 @@
         "generatedName": "EorTimeoffsBaseItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -53670,7 +53418,6 @@
         "generatedName": "TimeoffsAttachmentsItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -53864,7 +53611,6 @@
         "generatedName": "InvoiceContract",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -53971,7 +53717,6 @@
         "generatedName": "TimeoffsProfile",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54002,7 +53747,6 @@
         "generatedName": "TimeoffToReviewContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54054,7 +53798,6 @@
         "generatedName": "TimeoffReview",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54085,7 +53828,6 @@
         "generatedName": "TimeoffTypeListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54102,11 +53844,6 @@
           "type": "primitive"
         },
         "generatedName": "TimeoffTypeList",
-        "example": [
-          "VACATION",
-          "SICK_LEAVE",
-          "OTHER"
-        ],
         "groupName": [],
         "type": "array"
       },
@@ -54134,7 +53871,6 @@
         "generatedName": "CreateTimeoffContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54323,7 +54059,6 @@
         "generatedName": "CreateTimeoff",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54358,7 +54093,6 @@
         "generatedName": "EmployeeListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54763,7 +54497,6 @@
                   "generatedName": "EmployeeListPaymentsItem",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -54853,7 +54586,6 @@
                 "generatedName": "EmployeeListClientLegalEntity",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -54979,7 +54711,6 @@
                 "generatedName": "EmployeeListMonthlyPayment",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -54996,7 +54727,6 @@
         "generatedName": "EmployeeList",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55162,9 +54892,6 @@
                 "type": "primitive"
               },
               "generatedName": "WebhookItemEvents",
-              "example": [
-                "contract.created"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -55232,7 +54959,6 @@
         "generatedName": "WebhookItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55267,7 +54993,6 @@
         "generatedName": "WebhookListResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55417,9 +55142,6 @@
                 "type": "primitive"
               },
               "generatedName": "CreateWebhookRequestEvents",
-              "example": [
-                "contract.created"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -55430,7 +55152,6 @@
         "generatedName": "CreateWebhookRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55461,7 +55182,6 @@
         "generatedName": "WebhookItemResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55595,9 +55315,6 @@
                 "type": "primitive"
               },
               "generatedName": "PatchWebhookRequestEvents",
-              "example": [
-                "contract.created"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -55608,7 +55325,6 @@
         "generatedName": "PatchWebhookRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55663,7 +55379,6 @@
         "generatedName": "PaymentObject",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55694,7 +55409,6 @@
         "generatedName": "PaymentListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55803,7 +55517,6 @@
         "title": "The worker for the payment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55834,7 +55547,6 @@
         "generatedName": "PaymentMethod",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55993,7 +55705,6 @@
         "generatedName": "Payment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56028,7 +55739,6 @@
         "generatedName": "PaymentBreakDownContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56063,7 +55773,6 @@
         "generatedName": "PeopleContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56103,7 +55812,6 @@
         "generatedName": "ContractDocumentContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56686,7 +56394,6 @@
         "generatedName": "PaymentBreakDown",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56741,7 +56448,6 @@
         "generatedName": "InvoiceObject",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56802,7 +56508,6 @@
               "value": {
                 "description": "Expiration date time of download URL.",
                 "schema": {
-                  "example": "2020-03-31T10:58:49.780Z",
                   "type": "datetime"
                 },
                 "generatedName": "InvoiceDownloadObjectExpiresAt",
@@ -56819,7 +56524,6 @@
         "generatedName": "InvoiceDownloadObject",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56850,7 +56554,6 @@
         "generatedName": "InvoiceListContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56881,7 +56584,6 @@
         "generatedName": "InvoiceDownloadContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56945,9 +56647,6 @@
                 },
                 "generatedName": "ExchangeRatesRates",
                 "groupName": [],
-                "example": {
-                  "USD": 1
-                },
                 "type": "map"
               },
               "groupName": [],
@@ -56960,7 +56659,6 @@
         "generatedName": "ExchangeRates",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57400,7 +57098,6 @@
         "generatedName": "Invoice",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57432,7 +57129,6 @@
         "title": "Contractor",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57571,7 +57267,6 @@
         "generatedName": "HrisDirectEmployeeDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57614,7 +57309,6 @@
         "generatedName": "HrisTeamInformation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57643,7 +57337,6 @@
         "generatedName": "HrisJobInformationBase",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57682,7 +57375,6 @@
         "generatedName": "HrisJobInformationTitleId",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57722,7 +57414,6 @@
         "generatedName": "HrisJobInformationTitleName",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57768,7 +57459,6 @@
         "generatedName": "HrisCompensation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57855,7 +57545,6 @@
         "generatedName": "HrisContractBase",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57897,7 +57586,6 @@
         "generatedName": "HrisContractPartTime",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57921,7 +57609,6 @@
         "generatedName": "HrisContractFullTime",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58104,7 +57791,6 @@
                   "generatedName": "HrisDirectEmployeeVacationInfo",
                   "groupName": [],
                   "additionalProperties": false,
-                  "fullExamples": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -58124,7 +57810,6 @@
         "generatedName": "HrisDirectEmployee",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58170,7 +57855,6 @@
         "generatedName": "HrisDirectEmployeeResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58201,7 +57885,6 @@
         "generatedName": "HrisDirectEmployeeContainer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58256,7 +57939,6 @@
         "generatedName": "PeopleClientLegalEntity",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58351,7 +58033,6 @@
         "generatedName": "PeoplePayment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58792,7 +58473,6 @@
         "generatedName": "Employment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58828,7 +58508,6 @@
         "generatedName": "MonthlyPayment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58883,7 +58562,6 @@
         "generatedName": "Team",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59580,7 +59258,6 @@
         "generatedName": "People",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59949,7 +59626,6 @@
         "generatedName": "PeopleMe",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

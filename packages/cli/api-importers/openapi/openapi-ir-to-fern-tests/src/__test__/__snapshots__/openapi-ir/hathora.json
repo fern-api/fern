@@ -1062,7 +1062,6 @@
           "generatedName": "LoginAnonymousResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -1199,7 +1198,6 @@
           "generatedName": "LoginNicknameRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -1239,7 +1237,6 @@
           "generatedName": "LoginNicknameResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -1388,7 +1385,6 @@
           "generatedName": "LoginGoogleRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -1428,7 +1424,6 @@
           "generatedName": "LoginGoogleResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -4398,7 +4393,6 @@
           "generatedName": "CreatePrivateLobbyRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -4845,7 +4839,6 @@
           "generatedName": "CreatePublicLobbyRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -5292,7 +5285,6 @@
           "generatedName": "CreateLocalLobbyRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -5771,7 +5763,6 @@
           "generatedName": "CreateLobbyRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -6605,7 +6596,6 @@
           "generatedName": "SetLobbyStateRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -8436,7 +8426,6 @@
           "generatedName": "CreateRoomRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -9711,7 +9700,6 @@
         "generatedName": "RecordStringNever",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9846,7 +9834,6 @@
                       "generatedName": "ApplicationAuthConfigurationGoogle",
                       "groupName": [],
                       "additionalProperties": false,
-                      "fullExamples": [],
                       "source": {
                         "file": "../openapi.json",
                         "type": "openapi"
@@ -9905,7 +9892,6 @@
               "generatedName": "ApplicationAuthConfiguration",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.json",
                 "type": "openapi"
@@ -9961,7 +9947,6 @@
         "generatedName": "Application",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10073,7 +10058,6 @@
                 "generatedName": "DeploymentConfigEnvItem",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -10155,7 +10139,6 @@
         "generatedName": "DeploymentConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10308,7 +10291,6 @@
         "generatedName": "Deployment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10349,7 +10331,6 @@
         "generatedName": "ApplicationWithDeployment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10394,7 +10375,6 @@
                       "generatedName": "AppConfigAuthConfigurationGoogle",
                       "groupName": [],
                       "additionalProperties": false,
-                      "fullExamples": [],
                       "source": {
                         "file": "../openapi.json",
                         "type": "openapi"
@@ -10453,7 +10433,6 @@
               "generatedName": "AppConfigAuthConfiguration",
               "groupName": [],
               "additionalProperties": false,
-              "fullExamples": [],
               "source": {
                 "file": "../openapi.json",
                 "type": "openapi"
@@ -10483,7 +10462,6 @@
         "generatedName": "AppConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10597,7 +10575,6 @@
                 "generatedName": "BuildRegionalContainerTagsItem",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -10783,7 +10760,6 @@
         "generatedName": "Build",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10843,7 +10819,6 @@
           "generatedName": "DiscoveryResponseItem",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.json",
             "type": "openapi"
@@ -11043,7 +11018,6 @@
         "generatedName": "Lobby",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -11105,7 +11079,6 @@
         "generatedName": "MetricValue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -11221,7 +11194,6 @@
         "generatedName": "RecordPartialMetricNameMetricValueArray",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -11528,7 +11500,6 @@
         "generatedName": "Process",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -11647,7 +11618,6 @@
         "generatedName": "RoomAllocation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -11731,7 +11701,6 @@
         "generatedName": "PickRoomExcludeKeyofRoomAllocations",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -11809,7 +11778,6 @@
         "generatedName": "ProcessWithRooms",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -11912,7 +11880,6 @@
         "generatedName": "Room",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -11943,7 +11910,6 @@
         "generatedName": "StartingConnectionInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -12018,7 +11984,6 @@
         "generatedName": "ActiveConnectionInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.json",
           "type": "openapi"

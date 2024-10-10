@@ -11357,10 +11357,6 @@
                 "type": "reference"
               },
               "generatedName": "TransactionsListTransactionsRequestCategory",
-              "example": [
-                "Bill",
-                "Transfer"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -17812,7 +17808,6 @@
         "title": "Account Permissions (v0.3.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17869,7 +17864,6 @@
         "title": "Full Account Permissions (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17938,7 +17932,6 @@
         "title": "Account (v2.0.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18024,15 +18017,6 @@
         "title": "Overdraft Account Fields (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "5c9b4e50a0401ef4eb2e",
-              "label": "Premiere Savings *1234",
-              "maskedNumber": "*1234"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18125,27 +18109,6 @@
         "title": "Eligible Overdraft Accounts (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "items": [
-                {
-                  "id": "da1331a9e9168ea91346",
-                  "label": "Checking *3456",
-                  "maskedNumber": "*3456"
-                },
-                {
-                  "id": "5c9b4e50a0401ef4eb2e",
-                  "label": "Premiere Savings *1234",
-                  "maskedNumber": "*1234"
-                }
-              ],
-              "maximumOverdraftAccounts": 1,
-              "limit": 100,
-              "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18189,7 +18152,6 @@
         "title": "Overdraft Protection Fields (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18242,25 +18204,6 @@
         "title": "Overdraft Protection Settings (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "maximumOverdraftAccounts": 1,
-              "items": [
-                {
-                  "id": "da1331a9e9168ea91346",
-                  "label": "Checking *3456",
-                  "maskedNumber": "*3456"
-                },
-                {
-                  "id": "5c9b4e50a0401ef4eb2e",
-                  "label": "Premiere Savings *1234",
-                  "maskedNumber": "*1234"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18295,24 +18238,6 @@
         "title": "Overdraft Protection Patch (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "items": [
-                {
-                  "id": "da1331a9e9168ea91346",
-                  "label": "Checking *3456",
-                  "maskedNumber": "*3456"
-                },
-                {
-                  "id": "5c9b4e50a0401ef4eb2e",
-                  "label": "Premiere Savings *1234",
-                  "maskedNumber": "*1234"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18432,7 +18357,6 @@
         "title": "Accounts (v2.0.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18583,7 +18507,6 @@
         "title": "Account Fields (v1.0.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18780,7 +18703,6 @@
         "title": "Account Item (v2.0.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18908,30 +18830,6 @@
         "title": "Account Balances (v1.1.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "items": [
-                {
-                  "id": "05d00d7d-d630",
-                  "available": "3208.20",
-                  "current": "3448.72",
-                  "currentWithPending": "3448.72",
-                  "updatedAt": "2022-05-02T06:51:19.375Z",
-                  "incomplete": false
-                },
-                {
-                  "id": "cb5d67ea-a5c3",
-                  "available": "1750.80",
-                  "current": "1956.19",
-                  "currentWithPending": "1956.19",
-                  "updatedAt": "2022-05-02T06:51:19.375Z",
-                  "incomplete": false
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19013,48 +18911,6 @@
         "title": "Incomplete Account Balance (v1.1.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "items": [
-                {
-                  "id": "05d00d7d-d630",
-                  "available": "3208.20",
-                  "current": "3448.72",
-                  "currentWithPending": "3448.72",
-                  "updatedAt": "2022-05-02T06:51:19.375Z",
-                  "incomplete": false
-                },
-                {
-                  "id": "cb5d67ea-a5c3",
-                  "available": "1750.80",
-                  "current": "1956.19",
-                  "currentWithPending": "1956.19",
-                  "updatedAt": "2022-05-02T06:51:19.375Z",
-                  "incomplete": false
-                },
-                {
-                  "id": "b5a4f178-2baf",
-                  "incomplete": true
-                },
-                {
-                  "id": "959908db-fd40",
-                  "incomplete": true
-                },
-                {
-                  "id": "97e6166a-2a4c",
-                  "incomplete": true
-                }
-              ],
-              "incompleteAccounts": [
-                "b5a4f178-2baf",
-                "959908db-fd40",
-                "97e6166a-2a4c"
-              ],
-              "retryCount": 1
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19198,7 +19054,6 @@
         "title": "Account Balance (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19257,14 +19112,6 @@
         "title": "Account Joint Owner (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "0399abed-fd3d",
-              "name": "Max Pike"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19300,7 +19147,6 @@
         "generatedName": "AccountJointOwners",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19431,7 +19277,6 @@
         "title": "Joint Owner Invitation Fields (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19466,18 +19311,6 @@
         "title": "New Joint Owner Invitation (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "firstName": "Mary",
-              "lastName": "Jones",
-              "identification": "3333",
-              "sharedSecret": "obsolete obese octopus",
-              "emailAddress": "Mary.Jones@example.com",
-              "disallowDebitCardAccess": false
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19530,19 +19363,6 @@
         "title": "Joint Owner Invitation (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "db4f580290d3e07bf55d",
-              "firstName": "Mary",
-              "lastName": "Jones",
-              "identification": "3333",
-              "sharedSecret": "obsolete obese octopus",
-              "emailAddress": "Mary.Jones@example.com",
-              "disallowDebitCardAccess": false
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19653,22 +19473,6 @@
         "title": "Simple Institution (v1.0.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "name": "First Bank of Andalasia",
-              "address": {
-                "address1": "239 West Princess Ave.",
-                "locality": "Andalasia",
-                "regionCode": "NC",
-                "countryCode": "US",
-                "postalCode": "28407"
-              },
-              "locator": "503000196",
-              "locatorType": "abaRoutingNumber"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19719,22 +19523,6 @@
         "title": "Wire Transfer Institution (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "name": "First Bank of Andalasia",
-              "address": {
-                "address1": "239 West Princess Ave.",
-                "locality": "Andalasia",
-                "regionCode": "NC",
-                "countryCode": "US",
-                "postalCode": "28407"
-              },
-              "locator": "503000196",
-              "locatorType": "abaRoutingNumber"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19824,25 +19612,6 @@
         "title": "Institution Lookup Result (v1.0.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "found": true,
-              "institution": {
-                "name": "First Bank of Andalasia",
-                "address": {
-                  "address1": "239 West Princess Ave.",
-                  "locality": "Andalasia",
-                  "regionCode": "NC",
-                  "countryCode": "US",
-                  "postalCode": "28407"
-                },
-                "locator": "503000196",
-                "locatorType": "abaRoutingNumber"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19907,31 +19676,6 @@
         "title": "Cutoff Times (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "timeZoneId": "America/New_York",
-              "items": [
-                {
-                  "type": "ach",
-                  "time": "13:45"
-                },
-                {
-                  "type": "ach",
-                  "time": "16:45"
-                },
-                {
-                  "type": "sameDayAch",
-                  "time": "16:45"
-                },
-                {
-                  "type": "domesticWireTransfer",
-                  "time": "16:45"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19993,14 +19737,6 @@
         "title": "Cutoff Time (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "type": "ach",
-              "time": "16:45"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20124,38 +19860,6 @@
         "title": "Transfer Schedule List (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "items": [
-                {
-                  "scheduledOn": "2022-06-27",
-                  "effectiveOn": "2022-06-27"
-                },
-                {
-                  "scheduledOn": "2022-07-04",
-                  "effectiveOn": "2022-07-05"
-                },
-                {
-                  "scheduledOn": "2022-07-11",
-                  "effectiveOn": "2022-07-11"
-                },
-                {
-                  "scheduledOn": "2022-07-18",
-                  "effectiveOn": "2022-07-18"
-                },
-                {
-                  "scheduledOn": "2022-07-25",
-                  "effectiveOn": "2022-07-25"
-                },
-                {
-                  "scheduledOn": "2022-08-01",
-                  "effectiveOn": "2022-07-01"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20206,7 +19910,6 @@
         "title": "Transfer Schedule Item (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20371,88 +20074,6 @@
         "title": "Transfer Date Restrictions (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "restrictedDates": [
-                {
-                  "occursOn": "2022-10-01",
-                  "reason": "pastDate"
-                },
-                {
-                  "occursOn": "2022-10-02",
-                  "reason": "pastDate"
-                },
-                {
-                  "occursOn": "2022-10-03",
-                  "reason": "pastDate"
-                },
-                {
-                  "occursOn": "2022-10-04",
-                  "reason": "pastDate"
-                },
-                {
-                  "occursOn": "2022-10-05",
-                  "reason": "pastCutoffTime"
-                },
-                {
-                  "occursOn": "2022-10-06",
-                  "reason": "riskRestricted"
-                },
-                {
-                  "occursOn": "2022-10-07",
-                  "reason": "riskRestricted"
-                },
-                {
-                  "occursOn": "2022-10-08",
-                  "reason": "closure",
-                  "debitsOn": "2022-10-07T00:00:00.000Z"
-                },
-                {
-                  "occursOn": "2022-10-09",
-                  "reason": "closure",
-                  "debitsOn": "2022-10-07T00:00:00.000Z"
-                },
-                {
-                  "occursOn": "2022-10-10",
-                  "reason": "holiday",
-                  "debitsOn": "2022-10-07T00:00:00.000Z"
-                },
-                {
-                  "occursOn": "2022-10-15",
-                  "reason": "closure",
-                  "debitsOn": "2022-10-14T00:00:00.000Z"
-                },
-                {
-                  "occursOn": "2022-10-16",
-                  "reason": "closure",
-                  "debitsOn": "2022-10-14T00:00:00.000Z"
-                },
-                {
-                  "occursOn": "2022-10-22",
-                  "reason": "closure",
-                  "debitsOn": "2022-10-21T00:00:00.000Z"
-                },
-                {
-                  "occursOn": "2022-10-23",
-                  "reason": "closure",
-                  "debitsOn": "2022-10-21T00:00:00.000Z"
-                },
-                {
-                  "occursOn": "2022-10-29",
-                  "reason": "closure",
-                  "debitsOn": "2022-10-28T00:00:00.000Z"
-                },
-                {
-                  "occursOn": "2022-10-30",
-                  "reason": "closure",
-                  "debitsOn": "2022-10-28T00:00:00.000Z"
-                }
-              ],
-              "accuracyEndsOn": "2026-12-31T00:00:00.000Z"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20549,15 +20170,6 @@
         "title": "Transfer Date Restriction (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "occursOn": "2022-10-10",
-              "reason": "holiday",
-              "debitOn": "2022-10-07"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20882,34 +20494,6 @@
         "title": "Transaction Fields (v2.1.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "88f5bf17-ecc4",
-              "type": "debit",
-              "subtype": "check",
-              "occurredOn": "2023-05-18",
-              "memo": "Paid electric bill",
-              "merchant": {
-                "name": "B&T'S Excellent Electric Co",
-                "website_url": "https://BillTedsExcellentElectricCompany.example.com/",
-                "logo_url": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png"
-              },
-              "amount": "1276.21",
-              "posted": true,
-              "balance": "8509.38",
-              "category": {
-                "label": "Utilities",
-                "id": "127"
-              },
-              "check": {
-                "number": 8412,
-                "imageFront_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
-                "imageBack_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20994,7 +20578,6 @@
         "title": "Transaction Merchant (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21073,7 +20656,6 @@
         "title": "Transaction Check (v2.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21125,7 +20707,6 @@
         "title": "Transaction Categorization (v1.2.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21223,34 +20804,6 @@
         "title": "Transaction Item (v2.1.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "88f5bf17-ecc4",
-              "type": "debit",
-              "subtype": "check",
-              "occurredOn": "2023-05-18",
-              "memo": "Paid electric bill",
-              "merchant": {
-                "name": "B&T's Excellent Electric Co.",
-                "website_url": "https://BillTedsExcellentElectricCompany.example.com/",
-                "logo_url": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png"
-              },
-              "amount": "1276.21",
-              "posted": true,
-              "balance": "8509.38",
-              "category": {
-                "label": "Utilities",
-                "id": "127"
-              },
-              "check": {
-                "number": 8412,
-                "imageFront_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
-                "imageBack_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21324,50 +20877,6 @@
         "title": "Transaction Collection (v2.1.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "start": "d1b48af913464aa49fcb07065dcc0616",
-              "limit": 10,
-              "count": 2381,
-              "nextPage_url": "https://production.api.apiture.com/banking/accounts/c9fc25b47d52916fc9ad/transactions?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
-              "items": [
-                {
-                  "id": "d62c0701-0d74",
-                  "type": "balance",
-                  "occurredOn": "2023-06-18",
-                  "amount": "0.00",
-                  "posted": true,
-                  "balance": "8509.38"
-                },
-                {
-                  "id": "88f5bf17-ecc4",
-                  "type": "debit",
-                  "subtype": "check",
-                  "occurredOn": "2023-06-18",
-                  "memo": "Paid electric bill",
-                  "merchant": {
-                    "name": "B&T's Excellent Electric Co.",
-                    "website_url": "https://BillTedsExcellentElectricCompany.example.com/",
-                    "logo_url": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png"
-                  },
-                  "amount": "1276.21",
-                  "posted": true,
-                  "balance": "8509.38",
-                  "category": {
-                    "label": "Utilities",
-                    "id": "127"
-                  },
-                  "check": {
-                    "number": 8412,
-                    "imageFront_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
-                    "imageBack_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content"
-                  }
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21411,7 +20920,6 @@
         "title": "Incomplete Transactions (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21486,15 +20994,6 @@
         "title": "Transaction Category (v1.1.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "0399abed-fd3d",
-              "type": "debit",
-              "label": "Dining"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21530,7 +21029,6 @@
         "generatedName": "TransactionCategories",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21675,7 +21173,6 @@
         "title": "Transfer Schedule (v2.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21746,7 +21243,6 @@
         "title": "Transfer Item Schedule (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21849,16 +21345,6 @@
         "title": "Transfer Account Reference (v2.0.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "e821ce54-c715",
-              "label": "Premiere Checking *6789",
-              "type": "checking",
-              "location": "internal"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21966,7 +21452,6 @@
         "title": "Transfer Fields (v3.0.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22024,26 +21509,6 @@
         "title": "New Transfer (v3.0.1)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "amount": "275.00",
-              "memo": "Cover check for car repair",
-              "sourceAccount": {
-                "id": "bd9b7af2-6f9b",
-                "location": "internal"
-              },
-              "targetAccount": {
-                "id": "88b1ca3e-d0f3",
-                "location": "internal"
-              },
-              "schedule": {
-                "scheduledOn": "2022-06-28",
-                "frequency": "once"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22101,19 +21566,6 @@
         "title": "Transfer Patch Request (v3.1.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "amount": "275.00",
-              "targetAccount": {
-                "id": "88b1ca3e-d0f3"
-              },
-              "schedule": {
-                "scheduledOn": "2022-06-28"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22292,29 +21744,6 @@
         "title": "Transfer Item (v4.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "amount": "275.00",
-              "sourceAccount": {
-                "id": "bd9b7af2-6f9b"
-              },
-              "targetAccount": {
-                "id": "88b1ca3e-d0f3",
-                "label": "Personal Savings *4567",
-                "type": "savings"
-              },
-              "schedule": {
-                "scheduledOn": "2026-06-28",
-                "frequency": "once",
-                "creditsOn": "2026-06-26",
-                "debitsOn": "2026-06-24"
-              },
-              "processedAt": "2026-06-26T021:00:00.000Z",
-              "updatedBy": "James Bond"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22349,33 +21778,6 @@
         "title": "Transfer (v4.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "0399abed-fd3d",
-              "amount": "275.00",
-              "memo": "Cover check for car repair",
-              "sourceAccount": {
-                "id": "bd9b7af2-6f9b",
-                "label": "Premiere Checking *6789",
-                "type": "checking",
-                "location": "internal"
-              },
-              "targetAccount": {
-                "id": "88b1ca3e-d0f3",
-                "label": "Personal Savings *4567",
-                "type": "savings",
-                "location": "internal"
-              },
-              "schedule": {
-                "scheduledOn": "2026-06-28",
-                "frequency": "once",
-                "creditsOn": "2026-06-26",
-                "debitsOn": "2026-06-24"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22444,68 +21846,6 @@
         "title": "Transfer Collection (v4.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "start": "d1b48af913464aa49fcb07065dcc0616",
-              "limit": 10,
-              "nextPage_url": "https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
-              "items": [
-                {
-                  "id": "0399abed-fd3d",
-                  "amount": "275.00",
-                  "memo": "Cover check for car repair",
-                  "state": "processed",
-                  "sourceAccount": {
-                    "id": "bd9b7af2-6f9b",
-                    "label": "Premiere Checking *6789",
-                    "type": "checking",
-                    "location": "internal"
-                  },
-                  "targetAccount": {
-                    "id": "88b1ca3e-d0f3",
-                    "label": "Personal Savings *4567",
-                    "type": "savings",
-                    "location": "internal"
-                  },
-                  "schedule": {
-                    "scheduledOn": "2026-06-28",
-                    "frequency": "once",
-                    "creditsOn": "2026-06-26",
-                    "debitsOn": "2026-06-24"
-                  },
-                  "processedAt": "2022-06-28T021:00:00.000Z"
-                },
-                {
-                  "id": "d62c0701-0d74",
-                  "amount": "100.00",
-                  "state": "scheduled",
-                  "memo": "school expenses",
-                  "sourceAccount": {
-                    "id": "bd9b7af2-6f9b",
-                    "label": "Checking *6789",
-                    "type": "checking",
-                    "location": "internal"
-                  },
-                  "targetAccount": {
-                    "id": "c8396f59-624b",
-                    "label": "Checking *3456",
-                    "type": "checking",
-                    "location": "internal"
-                  },
-                  "schedule": {
-                    "scheduledOn": "2023-08-01",
-                    "frequency": "monthly",
-                    "recurreneType": "fixed",
-                    "count": 9,
-                    "creditsOn": "2023-08-01",
-                    "debitsOn": "2026-08-01"
-                  }
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22583,19 +21923,6 @@
         "title": "Problem Response (v0.3.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
-              "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
-              "title": "Account Not Found",
-              "status": 422,
-              "occurredAt": "2022-04-25T12:42:21.375Z",
-              "detail": "No account exists for the given account reference",
-              "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22757,11 +22084,6 @@
         "title": "Abstract Body (v0.2.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {}
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22818,15 +22140,6 @@
         "title": "Abstract Paged Body (v0.4.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "start": "1922a8531e8384cfa71b",
-              "limit": 100,
-              "nextPage_url": "https://production.api.apiture.com/banking/resources?start=8b76b4a97dccad88890e&limit=100"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22921,16 +22234,6 @@
         "title": "Product Reference (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "type": "cd",
-              "code": "180D_CDA",
-              "label": "180 Day CD",
-              "description": "Certificate of Deposit with a 180 day term"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22952,7 +22255,6 @@
       "readOnlyTimestamp": {
         "description": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) `date-time` UTC format: `YYYY-MM-DDThh:mm:ss.sssZ`.<br>The schema `readOnlyTimestamp` was added on version `0.4.0` of the API.",
         "schema": {
-          "example": "2021-10-30T19:06:04.250Z",
           "type": "datetime"
         },
         "generatedName": "ReadOnlyTimestamp",
@@ -23063,7 +22365,6 @@
         "title": "Address (v1.1.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23129,7 +22430,6 @@
               "value": {
                 "description": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
                 "schema": {
-                  "example": "2022-04-18T07:21:35.375Z",
                   "type": "datetime"
                 },
                 "generatedName": "TimestampFieldsCreatedAt",
@@ -23152,7 +22452,6 @@
               "value": {
                 "description": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
                 "schema": {
-                  "example": "2022-04-18T07:21:35.375Z",
                   "type": "datetime"
                 },
                 "generatedName": "TimestampFieldsUpdatedAt",
@@ -23172,7 +22471,6 @@
         "title": "Timestamp Fields (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23406,19 +22704,6 @@
         "title": "API Problem (v1.1.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
-              "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
-              "title": "Account Not Found",
-              "status": 422,
-              "occurredAt": "2022-04-25T12:42:21.375Z",
-              "detail": "No account exists at the given account_url",
-              "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23580,66 +22865,6 @@
         "title": "Required Challenge (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "x-fern-sdk-method-name": "createTransfer",
-              "challengeId": "0504076c566a3cf7009c",
-              "factors": [
-                {
-                  "type": "sms",
-                  "labels": [
-                    "9876"
-                  ]
-                },
-                {
-                  "type": "voice",
-                  "labels": [
-                    "9876"
-                  ]
-                },
-                {
-                  "type": "voice",
-                  "labels": [
-                    "6754"
-                  ]
-                },
-                {
-                  "type": "email",
-                  "labels": [
-                    "an****nk@example.com",
-                    "an****98@example.com"
-                  ]
-                },
-                {
-                  "type": "authenticatorToken",
-                  "labels": [
-                    "Acme fob"
-                  ]
-                },
-                {
-                  "type": "securityQuestions",
-                  "securityQuestions": {
-                    "questions": [
-                      {
-                        "id": "q1",
-                        "prompt": "What is your mother's maiden name?"
-                      },
-                      {
-                        "id": "q4",
-                        "prompt": "What is your high school's name?"
-                      },
-                      {
-                        "id": "q9",
-                        "prompt": "What is the name of your first pet?"
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23698,7 +22923,6 @@
         "title": "Abstract Paged Body Fields (v1.1.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23788,7 +23012,6 @@
         "title": "Address Fields (v1.1.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23870,16 +23093,6 @@
         "title": "Challenge Factor (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "type": "sms",
-              "labels": [
-                "9876"
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23955,26 +23168,6 @@
         "title": "Challenge Security Questions (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "questions": [
-                {
-                  "id": "q1",
-                  "prompt": "What is your mother's maiden name?"
-                },
-                {
-                  "id": "q4",
-                  "prompt": "What is your high school's name?"
-                },
-                {
-                  "id": "q9",
-                  "prompt": "What is the name of your first pet?"
-                }
-              ]
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24024,14 +23217,6 @@
         "title": "Challenge Security Question (v1.0.0)",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "74699fa628911e762ea5",
-              "prompt": "What is your mother's maiden name?"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

@@ -1028,7 +1028,6 @@
         "generatedName": "BaseRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1260,7 +1259,6 @@
         "generatedName": "BoundingBox",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1335,7 +1333,6 @@
         "generatedName": "BurstPrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1425,7 +1422,6 @@
         "generatedName": "Completed",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1470,7 +1466,6 @@
         "generatedName": "DescriptionsScore",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1536,7 +1531,6 @@
         "generatedName": "EmotionScore",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1602,7 +1596,6 @@
         "generatedName": "Error",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1686,7 +1679,6 @@
               "value": {
                 "description": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
                 "schema": {
-                  "default": 60,
                   "type": "uint64"
                 },
                 "generatedName": "FaceMinFaceSize",
@@ -1766,7 +1758,6 @@
         "generatedName": "Face",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1918,7 +1909,6 @@
         "generatedName": "FacePrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -1955,7 +1945,6 @@
         "generatedName": "FacemeshPrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2000,7 +1989,6 @@
         "generatedName": "FacsScore",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2076,7 +2064,6 @@
         "generatedName": "Failed",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2146,7 +2133,6 @@
         "generatedName": "File",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2228,7 +2214,6 @@
         "generatedName": "GroupedPredictionsBurstPrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2278,7 +2263,6 @@
         "generatedName": "GroupedPredictionsFacePrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2328,7 +2312,6 @@
         "generatedName": "GroupedPredictionsFacemeshPrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2378,7 +2361,6 @@
         "generatedName": "GroupedPredictionsLanguagePrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2428,7 +2410,6 @@
         "generatedName": "GroupedPredictionsNerPrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2478,7 +2459,6 @@
         "generatedName": "GroupedPredictionsProsodyPrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2523,7 +2503,6 @@
         "generatedName": "InProgress",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2602,7 +2581,6 @@
         "generatedName": "JobRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2633,7 +2611,6 @@
         "generatedName": "JobId",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2733,7 +2710,6 @@
         "generatedName": "Language",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -2921,7 +2897,6 @@
         "generatedName": "LanguagePrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3062,7 +3037,6 @@
         "generatedName": "Models",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3203,7 +3177,6 @@
         "generatedName": "ModelsPredictions",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3240,7 +3213,6 @@
         "generatedName": "Ner",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3432,7 +3404,6 @@
         "generatedName": "NerPrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3496,7 +3467,6 @@
         "generatedName": "PositionInterval",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3544,7 +3514,6 @@
         "generatedName": "Prediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3600,7 +3569,6 @@
         "generatedName": "PredictionsOptionalNullBurstPrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3656,7 +3624,6 @@
         "generatedName": "PredictionsOptionalNullFacePrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3712,7 +3679,6 @@
         "generatedName": "PredictionsOptionalNullFacemeshPrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3768,7 +3734,6 @@
         "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3824,7 +3789,6 @@
         "generatedName": "PredictionsOptionalTranscriptionMetadataNerPrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3880,7 +3844,6 @@
         "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -3960,7 +3923,6 @@
         "generatedName": "Prosody",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4078,7 +4040,6 @@
         "generatedName": "ProsodyPrediction",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4108,7 +4069,6 @@
         "generatedName": "Queued",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4253,7 +4213,6 @@
         "generatedName": "Request",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4308,7 +4267,6 @@
         "generatedName": "Results",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4353,7 +4311,6 @@
         "generatedName": "SentimentScore",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4486,7 +4443,6 @@
         "generatedName": "SourceResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4510,7 +4466,6 @@
         "generatedName": "SourceFile",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4534,7 +4489,6 @@
         "generatedName": "SourceUrl",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4564,7 +4518,6 @@
         "generatedName": "Url",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4640,7 +4593,6 @@
         "generatedName": "StateCompleted",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4664,7 +4616,6 @@
         "generatedName": "StateFailed",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4688,7 +4639,6 @@
         "generatedName": "StateInProgress",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4712,7 +4662,6 @@
         "generatedName": "StateQueued",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4789,7 +4738,6 @@
         "generatedName": "TimeInterval",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4834,7 +4782,6 @@
         "generatedName": "ToxicityScore",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4870,7 +4817,6 @@
         "generatedName": "Transcription",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -4922,7 +4868,6 @@
         "generatedName": "TranscriptionMetadata",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -5002,7 +4947,6 @@
         "generatedName": "Window",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"

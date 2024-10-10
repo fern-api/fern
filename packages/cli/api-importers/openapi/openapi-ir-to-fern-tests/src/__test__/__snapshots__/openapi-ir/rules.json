@@ -56,7 +56,6 @@
                 "generatedName": "GetExampleResponseMessage",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -262,7 +261,6 @@
         "generatedName": "Schema",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

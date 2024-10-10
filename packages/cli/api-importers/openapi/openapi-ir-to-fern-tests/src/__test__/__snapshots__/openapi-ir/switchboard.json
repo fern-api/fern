@@ -952,10 +952,6 @@
                 "type": "primitive"
               },
               "generatedName": "ProfilesGetRequestTags",
-              "example": [
-                "blue",
-                "red"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -1469,10 +1465,6 @@
                 "type": "primitive"
               },
               "generatedName": "ProfilesDeleteRequestTags",
-              "example": [
-                "blue",
-                "red"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -1838,10 +1830,6 @@
                 "type": "primitive"
               },
               "generatedName": "SessionsListRequestSessionIds",
-              "example": [
-                "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                "e39522ce-44f0-456f-9efd-07b3d4fdd9f2"
-              ],
               "groupName": [],
               "type": "array"
             },
@@ -3169,7 +3157,6 @@
                 "title": "Event status",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -3243,7 +3230,6 @@
                 "title": "Event error",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -4619,7 +4605,6 @@
         "generatedName": "ClientProvidedResponseMetadata",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4653,7 +4638,6 @@
         "generatedName": "DefaultMetaWrapper",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4766,7 +4750,6 @@
         "generatedName": "ErrorEnvelope",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4826,7 +4809,6 @@
         "generatedName": "ErrorMessage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4909,7 +4891,6 @@
         "generatedName": "ExtensionV1",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5006,7 +4987,6 @@
         "generatedName": "ExtensionV1EnvelopeDefaultMetaWrapper",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5037,7 +5017,6 @@
         "generatedName": "ExtensionsPostRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5140,7 +5119,6 @@
         "generatedName": "ExternalSessionAiResponseMetadata",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5185,7 +5163,6 @@
         "generatedName": "ExternalSessionAiResponseMetadataUsage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5276,7 +5253,6 @@
         "generatedName": "Issue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5382,7 +5358,6 @@
         "generatedName": "ListExtensionV1EnvelopeDefaultMetaWrapper",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5488,7 +5463,6 @@
         "generatedName": "ListProfileV1EnvelopeDefaultMetaWrapper",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5538,7 +5512,6 @@
         "generatedName": "LiveViewConnectionInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5567,7 +5540,6 @@
         "generatedName": "ModelResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5664,7 +5636,6 @@
         "generatedName": "ModelResponseExternalSessionAiResponseMetadataWrapper",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5791,7 +5762,6 @@
         "generatedName": "Pagination",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5839,10 +5809,6 @@
                     "type": "primitive"
                   },
                   "generatedName": "ProfileInputTags",
-                  "example": [
-                    "yellow",
-                    "orange"
-                  ],
                   "groupName": [],
                   "type": "array"
                 },
@@ -5859,7 +5825,6 @@
         "generatedName": "ProfileInput",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5925,10 +5890,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "ProfileV1Tags",
-                "example": [
-                  "blue",
-                  "red"
-                ],
                 "groupName": [],
                 "type": "array"
               },
@@ -5963,7 +5924,6 @@
         "generatedName": "ProfileV1",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6060,7 +6020,6 @@
         "generatedName": "ProfileV1EnvelopeDefaultMetaWrapper",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6170,7 +6129,6 @@
         "generatedName": "PromptContentRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6201,7 +6159,6 @@
         "generatedName": "ScrapeModelResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6298,7 +6255,6 @@
         "generatedName": "ScrapeModelResponseExternalSessionAiResponseMetadataWrapper",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6343,7 +6299,6 @@
         "generatedName": "ScrapeResponseContent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6410,7 +6365,6 @@
         "generatedName": "ScrapeResponseOutput",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6543,7 +6497,6 @@
         "generatedName": "SessionConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6676,7 +6629,6 @@
         "generatedName": "SessionConfigV1",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6713,7 +6665,6 @@
         "generatedName": "SessionRestInputV1",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6940,7 +6891,6 @@
         "generatedName": "SessionWithConnectionInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7037,7 +6987,6 @@
         "generatedName": "SessionWithConnectionInfoEnvelopeDefaultMetaWrapper",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7096,7 +7045,6 @@
         "generatedName": "SessionsWithPagination",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7193,7 +7141,6 @@
         "generatedName": "SessionsWithPaginationEnvelopeDefaultMetaWrapper",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7291,7 +7238,6 @@
         "generatedName": "StatusMessage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7384,7 +7330,6 @@
         "generatedName": "SummarizeContentRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7444,7 +7389,6 @@
         "generatedName": "Window",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7541,7 +7485,6 @@
         "generatedName": "WindowEnvelopeDefaultMetaWrapper",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

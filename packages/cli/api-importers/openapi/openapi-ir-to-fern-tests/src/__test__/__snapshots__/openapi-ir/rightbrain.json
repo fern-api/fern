@@ -52332,7 +52332,6 @@
         "title": "AsyncJobResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52396,7 +52395,6 @@
         "title": "Body_Task Run Parameters",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52456,7 +52454,6 @@
         "title": "Body_document_create_org__org_id__project__project_id__document_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52516,7 +52513,6 @@
         "title": "Body_document_upload_org__org_id__project__project_id__document_upload_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52553,7 +52549,6 @@
         "title": "Body_fetch_org__org_id__project__project_id__datasource_box__connection_id__fetch_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52590,7 +52585,6 @@
         "title": "Body_fetch_org__org_id__project__project_id__datasource_confluence__connection_id__fetch_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52627,7 +52621,6 @@
         "title": "Body_fetch_org__org_id__project__project_id__datasource_dropbox__connection_id__fetch_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52664,7 +52657,6 @@
         "title": "Body_fetch_org__org_id__project__project_id__datasource_gdrive__connection_id__fetch_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52701,7 +52693,6 @@
         "title": "Body_fetch_org__org_id__project__project_id__datasource_notion__connection_id__fetch_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52738,7 +52729,6 @@
         "title": "Body_fetch_org__org_id__project__project_id__datasource_onedrive__connection_id__fetch_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52775,7 +52765,6 @@
         "title": "Body_fetch_org__org_id__project__project_id__datasource_sharepoint__connection_id__fetch_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52823,7 +52812,6 @@
         "title": "Body_generate_org__org_id__project__project_id__compose_generate_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52856,7 +52844,6 @@
         "title": "Body_org_update_avatar_org__org_id__avatar_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52889,7 +52876,6 @@
         "title": "Body_project_update_avatar_org__org_id__project__project_id__avatar_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -52953,7 +52939,6 @@
         "title": "Body_section_talking_points_org__org_id__project__project_id__compose_section_talking_points_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -53017,7 +53002,6 @@
         "title": "Body_update_section_org__org_id__project__project_id__compose_update_section_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -53050,7 +53034,6 @@
         "title": "Body_user_update_avatar_user_avatar_post",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -53259,7 +53242,6 @@
         "title": "Chat",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -53500,7 +53482,6 @@
         "title": "ChatConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -53741,7 +53722,6 @@
         "title": "ChatConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -53852,7 +53832,6 @@
         "title": "ChatCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54152,7 +54131,6 @@
         "title": "ChatDocument",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54252,7 +54230,6 @@
         "title": "ChatDocumentEmbeddingInstance",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54302,7 +54279,6 @@
         "title": "ChatDocumentEmbeddingRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54367,7 +54343,6 @@
         "title": "ChatDocumentQueryResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54426,7 +54401,6 @@
         "title": "ChatDocumentUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54538,7 +54512,6 @@
         "title": "ChatGuardrail",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54676,7 +54649,6 @@
         "title": "ChatIAMMemberRoleUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54794,7 +54766,6 @@
         "title": "ChatIAMPermissionTest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54959,7 +54930,6 @@
         "title": "ChatModel",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54992,7 +54962,6 @@
         "title": "ChatUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55144,7 +55113,6 @@
         "title": "Collection",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55229,7 +55197,6 @@
         "title": "CollectionCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55267,7 +55234,6 @@
         "title": "CollectionEmbeddingUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55405,7 +55371,6 @@
         "title": "CollectionIAMMemberRoleUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55543,7 +55508,6 @@
         "title": "CollectionIAMPermissionTest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55577,7 +55541,6 @@
         "title": "CollectionQuery",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55630,7 +55593,6 @@
         "title": "CollectionStatsResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55663,7 +55625,6 @@
         "title": "CollectionUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55695,7 +55656,6 @@
         "title": "ComposeContent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55734,7 +55694,6 @@
         "title": "ComposeGenerate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56176,7 +56135,6 @@
         "title": "ComposeInit",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56208,7 +56166,6 @@
         "title": "ComposeSectionTalkingPoint",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56303,7 +56260,6 @@
         "title": "ComposeSectionUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56360,7 +56316,6 @@
         "title": "ComposeTopicPoint",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56437,7 +56392,6 @@
         "title": "ConversationalGuardrails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56487,7 +56441,6 @@
         "title": "Datasource",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56555,7 +56508,6 @@
         "title": "DatasourceConfiguration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56752,7 +56704,6 @@
         "title": "DatasourceConnection",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56930,7 +56881,6 @@
         "title": "DatasourceConnectionPublic",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57145,7 +57095,6 @@
         "title": "DatasourceSyncRun",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57261,7 +57210,6 @@
         "title": "DocumentCreateTask",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57399,7 +57347,6 @@
         "title": "DocumentIAMMemberRoleUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57517,7 +57464,6 @@
         "title": "DocumentIAMPermissionTest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57586,7 +57532,6 @@
         "title": "DocumentStatusResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57602,7 +57547,6 @@
         "title": "EmptyErrorDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57648,7 +57592,6 @@
         "title": "HTTPValidationError",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57681,7 +57624,6 @@
         "title": "HydraWebhookTokenHook",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57729,7 +57671,6 @@
         "title": "HydraWebhookTokenHookSession",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57770,7 +57711,6 @@
         "title": "HydraWebhookTokenHookSessionIDTokenClaims",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57911,7 +57851,6 @@
         "title": "IAMMember",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57970,7 +57909,6 @@
         "title": "IAMObjectErrorDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58034,7 +57972,6 @@
         "title": "IAMPermissionTest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58114,7 +58051,6 @@
         "title": "InitialComposeSection",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58160,7 +58096,6 @@
         "title": "InputConversationalGuardrailDefinition",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58231,7 +58166,6 @@
         "title": "InvalidMemberErrorDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58282,7 +58216,6 @@
         "title": "InvalidMemberErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58342,7 +58275,6 @@
         "title": "InvalidRoleErrorDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58393,7 +58325,6 @@
         "title": "InvalidRoleErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58437,7 +58368,6 @@
         "title": "InvalidSubjectTypeErrorDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58488,7 +58418,6 @@
         "title": "InvalidSubjectTypeErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58542,7 +58471,6 @@
         "title": "KratosIdentity",
         "groupName": [],
         "additionalProperties": true,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58718,7 +58646,6 @@
         "title": "KratosIdentityTraits",
         "groupName": [],
         "additionalProperties": true,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58919,7 +58846,6 @@
         "title": "KratosWebhook",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59025,7 +58951,6 @@
         "title": "KratosWebhookDetailedMessage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59087,7 +59012,6 @@
         "title": "KratosWebhookErrorMessage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59199,7 +59123,6 @@
         "title": "KratosWebhookResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59258,7 +59181,6 @@
         "title": "MalformedResourceIdentifierErrorDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59309,7 +59231,6 @@
         "title": "MalformedResourceIdentifierErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59360,7 +59281,6 @@
         "title": "MissingAuthenticationErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59425,7 +59345,6 @@
         "title": "MultipleRolesNotAllowedErrorDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59476,7 +59395,6 @@
         "title": "MultipleRolesNotAllowedErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59568,7 +59486,6 @@
         "title": "OAuthClientCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59676,7 +59593,6 @@
         "title": "OAuthClientCreateResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -59935,7 +59851,6 @@
         "title": "Object",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60089,7 +60004,6 @@
         "title": "Org",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60138,7 +60052,6 @@
         "title": "OrgCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60202,7 +60115,6 @@
         "title": "OrgInviteBase",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60307,7 +60219,6 @@
         "title": "OrgUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60386,7 +60297,6 @@
         "title": "OrganizationDomain",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60419,7 +60329,6 @@
         "title": "OrganizationDomainCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60557,7 +60466,6 @@
         "title": "OrganizationIAMMemberRoleUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60675,7 +60583,6 @@
         "title": "OrganizationIAMPermissionTest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60756,7 +60663,6 @@
         "title": "OrganizationInvite",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60803,7 +60709,6 @@
         "title": "OrganizationInviteAlreadyExistsErrorDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60854,7 +60759,6 @@
         "title": "OrganizationInviteAlreadyExistsErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60901,7 +60805,6 @@
         "title": "OrganizationMemberAlreadyExistsErrorDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60952,7 +60855,6 @@
         "title": "OrganizationMemberAlreadyExistsErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -60986,7 +60888,6 @@
         "title": "OutputConversationalGuardrailDefinition",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61052,17 +60953,6 @@
         "title": "PaginatedResultSet[ChatDocumentEmbeddingRecord]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "pagination": {
-                "has_next": true,
-                "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                "page_limit": 100
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61128,17 +61018,6 @@
         "title": "PaginatedResultSet[ChatDocument]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "pagination": {
-                "has_next": true,
-                "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                "page_limit": 100
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61204,17 +61083,6 @@
         "title": "PaginatedResultSet[Chat]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "pagination": {
-                "has_next": true,
-                "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                "page_limit": 100
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61280,17 +61148,6 @@
         "title": "PaginatedResultSet[Collection]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "pagination": {
-                "has_next": true,
-                "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                "page_limit": 100
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61356,17 +61213,6 @@
         "title": "PaginatedResultSet[DatasourceSyncRun]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "pagination": {
-                "has_next": true,
-                "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                "page_limit": 100
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61432,17 +61278,6 @@
         "title": "PaginatedResultSet[IAMMember]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "pagination": {
-                "has_next": true,
-                "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                "page_limit": 100
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61508,17 +61343,6 @@
         "title": "PaginatedResultSet[OrganizationDomain]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "pagination": {
-                "has_next": true,
-                "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                "page_limit": 100
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61584,17 +61408,6 @@
         "title": "PaginatedResultSet[OrganizationInvite]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "pagination": {
-                "has_next": true,
-                "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                "page_limit": 100
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61660,17 +61473,6 @@
         "title": "PaginatedResultSet[Project]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "pagination": {
-                "has_next": true,
-                "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                "page_limit": 100
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61736,17 +61538,6 @@
         "title": "PaginatedResultSet[TaskForwarder]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "pagination": {
-                "has_next": true,
-                "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                "page_limit": 100
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61812,17 +61603,6 @@
         "title": "PaginatedResultSet[TaskRun]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "pagination": {
-                "has_next": true,
-                "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                "page_limit": 100
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61888,17 +61668,6 @@
         "title": "PaginatedResultSet[Task]",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "pagination": {
-                "has_next": true,
-                "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                "page_limit": 100
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -61996,7 +61765,6 @@
         "title": "PaginationDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62083,7 +61851,6 @@
         "title": "PermissionCheckFailedErrorDetails",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62134,7 +61901,6 @@
         "title": "PermissionCheckFailedErrorResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62253,7 +62019,6 @@
         "title": "Project",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62493,7 +62258,6 @@
         "title": "ProjectConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62733,7 +62497,6 @@
         "title": "ProjectConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62766,7 +62529,6 @@
         "title": "ProjectCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -62954,7 +62716,6 @@
         "title": "ProjectIAMMemberRoleUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63152,7 +62913,6 @@
         "title": "ProjectIAMPermissionTest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63195,7 +62955,6 @@
         "title": "ProjectUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63342,7 +63101,6 @@
         "title": "ProjectWithDatasources",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63406,7 +63164,6 @@
         "title": "SiteScrapeRequest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63503,7 +63260,6 @@
         "title": "SourceRow",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -63673,18 +63429,6 @@
         "title": "Task",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "created": "2024-06-13T14:01:03.021673",
-              "description": "A task to pre-triage user onboarding before IDV.",
-              "id": "019011e6-e530-3aca-6cf7-2973387c255d",
-              "modified": "2024-06-13T14:01:03.021673",
-              "name": "Fintech Pre-Triage",
-              "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64036,33 +63780,6 @@
         "title": "TaskCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "created": "2024-06-13T14:01:03.021673",
-              "description": "A task to pre-triage user onboarding before IDV.",
-              "enabled": "true",
-              "id": "019011e6-e530-3aca-6cf7-2973387c255d",
-              "image_required": "true",
-              "modified": "2024-06-13T14:01:03.021673",
-              "name": "Fintech Pre-Triage",
-              "output_format": {
-                "compliance": "bool",
-                "hint": {
-                  "type": "str"
-                },
-                "match": {
-                  "description": "True if the provided description is a close match",
-                  "type": "bool"
-                },
-                "rationale": "str"
-              },
-              "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
-              "system_prompt": "You are an expert software program specifically designed for the fintech industry that will be used for pre-triage tasks to ensure the best possible client UX and efficient 3rd party platform interoperability.",
-              "user_prompt": "Your task is to validate the uploaded image and determine whether it will be suitable for authentication and onboarding checks. If the image of the person is clear and typical of a passport style photo then set the compliance field to true. Provide rationale for your decision in the rationale field. If the compliance result is false, then provide a helpful hint for the customer who has submitted the photo informing them why it is unacceptable and some steps to remedy it, place this into the hint field. Determine whether the following description matches the provided image: {description}"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64248,22 +63965,6 @@
         "title": "TaskForwarder",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "config": {
-                "destination_url": "https://eoalydnvgieppd9.m.pipedream.net"
-              },
-              "config_sensitive": {
-                "signing_key": "sdkjhsfd2sdfkj3223.23rh"
-              },
-              "description": "Send all Task output to this API endpoint to ensure real-time updates of all Task Runs.",
-              "id": "019011e6-e530-3aca-6cf7-2973387c255d",
-              "name": "Webhook Endpoint",
-              "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64296,7 +63997,6 @@
         "title": "TaskForwarderConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64413,22 +64113,6 @@
         "title": "TaskForwarderCreate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "config": {
-                "destination_url": "https://eoalydnvgieppd9.m.pipedream.net"
-              },
-              "config_sensitive": {
-                "signing_key": "sdkjhsfd2sdfkj3223.23rh"
-              },
-              "description": "Send all Task output to this API endpoint to ensure real-time updates of all Task Runs.",
-              "id": "019011e6-e530-3aca-6cf7-2973387c255d",
-              "name": "Webhook Endpoint",
-              "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64461,7 +64145,6 @@
         "title": "TaskForwarderSensitiveConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64588,7 +64271,6 @@
         "title": "TaskForwarderUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64726,7 +64408,6 @@
         "title": "TaskIAMMemberRoleUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64844,7 +64525,6 @@
         "title": "TaskIAMPermissionTest",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64889,7 +64569,6 @@
         "title": "TaskLLMConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -64937,7 +64616,6 @@
         "title": "TaskRAG",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65305,33 +64983,6 @@
         "title": "TaskRevision",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "created": "2024-06-13T14:01:03.021673",
-              "description": "A task to pre-triage user onboarding before IDV.",
-              "enabled": "true",
-              "id": "019011e6-e530-3aca-6cf7-2973387c255d",
-              "image_required": "true",
-              "modified": "2024-06-13T14:01:03.021673",
-              "name": "Fintech Pre-Triage",
-              "output_format": {
-                "compliance": "bool",
-                "hint": {
-                  "type": "str"
-                },
-                "match": {
-                  "description": "True if the provided description is a close match",
-                  "type": "bool"
-                },
-                "rationale": "str"
-              },
-              "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
-              "system_prompt": "You are an expert software program specifically designed for the fintech industry that will be used for pre-triage tasks to ensure the best possible client UX and efficient 3rd party platform interoperability.",
-              "user_prompt": "Your task is to validate the uploaded image and determine whether it will be suitable for authentication and onboarding checks. If the image of the person is clear and typical of a passport style photo then set the compliance field to true. Provide rationale for your decision in the rationale field. If the compliance result is false, then provide a helpful hint for the customer who has submitted the photo informing them why it is unacceptable and some steps to remedy it, place this into the hint field. Determine whether the following description matches the provided image: {description}"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65451,30 +65102,6 @@
         "title": "TaskRun",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "created": "2024-07-11T14:31:21.989219",
-              "id": "0190a234-cb74-6342-dec6-4be8f73f0c9f",
-              "response": {
-                "compliance": false,
-                "hint": "The image is not suitable for authentication and onboarding checks. Please ensure the photo is a clear, passport-style image with a plain background, good lighting, and no accessories like sunglasses.",
-                "match": false,
-                "rationale": "The image does not meet the requirements for a passport-style photo. The person is wearing sunglasses, and the background is not plain."
-              },
-              "run_data": {
-                "audit": {
-                  "ip": "10.152.3.59",
-                  "ua": "Vercel Edge Functions"
-                },
-                "submitted": {
-                  "description": "brown hair, blue sweater"
-                }
-              },
-              "task_revision_id": "0190a234-8dc6-6d08-aea9-928fcecad8f1"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -65894,7 +65521,6 @@
         "title": "TaskUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66016,7 +65642,6 @@
         "title": "User",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66085,7 +65710,6 @@
         "title": "UserProfileUpdate",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -66176,7 +65800,6 @@
         "title": "ValidationError",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

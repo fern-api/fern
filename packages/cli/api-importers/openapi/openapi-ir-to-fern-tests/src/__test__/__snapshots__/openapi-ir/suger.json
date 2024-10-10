@@ -17062,7 +17062,6 @@
         "generatedName": "AzureAudience",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -17140,7 +17139,6 @@
         "generatedName": "AzureGovernmentCertification",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -17225,7 +17223,6 @@
         "generatedName": "AzureIncludedBaseQuantity",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -17353,7 +17350,6 @@
         "generatedName": "AzureListingContact",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -17444,7 +17440,6 @@
         "generatedName": "AzureListingUri",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -17497,7 +17492,6 @@
         "generatedName": "AzureLocalizedDateTime",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -17554,7 +17548,6 @@
         "generatedName": "AzureLocalizedTimeRange",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -17608,7 +17601,6 @@
         "generatedName": "AzureMarket",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -17685,7 +17677,6 @@
         "generatedName": "AzureMarketState",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -17779,7 +17770,6 @@
         "generatedName": "AzureMarketplacePrice",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -18281,7 +18271,6 @@
         "generatedName": "AzureMarketplacePrivateOffer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -18335,7 +18324,6 @@
         "generatedName": "AzureMarketplacePrivateOfferAcceptanceLink",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -18414,7 +18402,6 @@
         "generatedName": "AzureMarketplacePrivateOfferBeneficiary",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -18480,7 +18467,6 @@
         "generatedName": "AzureMarketplacePrivateOfferBeneficiaryRecipient",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -18721,7 +18707,6 @@
         "generatedName": "AzureMarketplacePrivateOfferPricing",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -18774,7 +18759,6 @@
         "generatedName": "AzureMarketplacePrivateOfferPromotionReference",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -18851,7 +18835,6 @@
         "generatedName": "AzureMarketplaceTerm",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -19042,7 +19025,6 @@
         "generatedName": "AzureMarketplaceValidation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -19095,7 +19077,6 @@
         "generatedName": "AzurePendingUpdateInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -19168,7 +19149,6 @@
         "generatedName": "AzurePrice",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -19231,7 +19211,6 @@
         "generatedName": "AzurePriceAndAvailabilityPrivateOfferCustomMeters",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -19387,7 +19366,6 @@
         "generatedName": "AzurePriceAndAvailabilityPrivateOfferPlan",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -19444,7 +19422,6 @@
         "generatedName": "AzurePriceAndAvailabilityPrivateOfferPrice",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -19517,7 +19494,6 @@
         "generatedName": "AzurePriceAndAvailabilityRecurrentPrice",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -19618,7 +19594,6 @@
         "generatedName": "AzurePriceAndAvailabilityRecurrentPriceItem",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -19684,7 +19659,6 @@
         "generatedName": "AzurePriceCadence",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -19803,7 +19777,6 @@
         "generatedName": "AzurePriceSchedule",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -19926,7 +19899,6 @@
         "generatedName": "AzurePricingUnit",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -20239,7 +20211,6 @@
         "generatedName": "AzureProduct",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -20380,7 +20351,6 @@
         "generatedName": "AzureProductAvailability",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -20528,7 +20498,6 @@
         "generatedName": "AzureProductBranch",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -20829,7 +20798,6 @@
         "generatedName": "AzureProductFeatureAvailability",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -21178,7 +21146,6 @@
         "generatedName": "AzureProductListing",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -21429,7 +21396,6 @@
         "generatedName": "AzureProductListingAsset",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -21559,7 +21525,6 @@
         "generatedName": "AzureProductPackageConfiguration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -21974,7 +21939,6 @@
         "generatedName": "AzureProductProperty",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -22160,7 +22124,6 @@
         "generatedName": "AzureProductSetup",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -22480,7 +22443,6 @@
         "generatedName": "AzureProductSubmission",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -22773,7 +22735,6 @@
         "generatedName": "AzureProductVariant",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -22927,7 +22888,6 @@
         "generatedName": "AzureProductVariantCustomMeter",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -23052,7 +23012,6 @@
         "generatedName": "AzureProductVariantPriceSchedule",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -23186,7 +23145,6 @@
         "generatedName": "AzureProductVariantTrial",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -23239,7 +23197,6 @@
         "generatedName": "AzureTypeValue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -23297,7 +23254,6 @@
         "generatedName": "AzureValidationResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -23356,7 +23312,6 @@
         "generatedName": "AzureVariantResource",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -23411,7 +23366,6 @@
         "generatedName": "GithubComAwsAwsSdkGoV2ServiceMarketplacemeteringTypesTag",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -23470,7 +23424,6 @@
         "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1BatchUsageEventOkResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -23688,7 +23641,6 @@
         "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageBatchEventOkMessage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -23762,7 +23714,6 @@
         "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -23798,7 +23749,6 @@
         "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponseAdditionalInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -23995,7 +23945,6 @@
         "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventOkResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -24617,7 +24566,6 @@
         "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibBillingAwsBillingEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -24955,7 +24903,6 @@
         "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibBillingAzureCmaRevenue",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -25483,7 +25430,6 @@
         "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibBillingGcpChargeUsage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -25574,7 +25520,6 @@
         "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateBuyerNameDescriptionParams",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -25646,7 +25591,6 @@
         "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateEntitlementNameParams",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -25735,7 +25679,6 @@
         "generatedName": "MarketplacemeteringBatchMeterUsageOutput",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -25809,7 +25752,6 @@
         "generatedName": "ServicecontrolReportError",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -25890,7 +25832,6 @@
         "generatedName": "ServicecontrolReportResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -25975,7 +25916,6 @@
         "generatedName": "ServicecontrolStatus",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -26033,7 +25973,6 @@
         "generatedName": "SharedAddEntitlementCreditParams",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -26145,7 +26084,6 @@
         "generatedName": "SharedAddEntitlementCreditResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -26220,7 +26158,6 @@
         "generatedName": "SharedApiClientAccessToken",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -26316,7 +26253,6 @@
         "generatedName": "SharedAwsAccountIdentifier",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -26432,7 +26368,6 @@
         "generatedName": "SharedAwsAceIntegration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -26507,7 +26442,6 @@
         "generatedName": "SharedAwsIntegrationCredential",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -26768,7 +26702,6 @@
         "generatedName": "SharedAwsMarketplaceIntegration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -26935,7 +26868,6 @@
         "generatedName": "SharedAwsSaasProduct",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -27007,7 +26939,6 @@
         "generatedName": "SharedAwsSaasProductAdditionalResource",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -27079,7 +27010,6 @@
         "generatedName": "SharedAwsSaasProductDeliveryOption",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -27375,7 +27305,6 @@
         "generatedName": "SharedAwsSaasProductDescription",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -27490,7 +27419,6 @@
         "generatedName": "SharedAwsSaasProductDimension",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -27549,7 +27477,6 @@
         "generatedName": "SharedAwsSaasProductPromotionalResources",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -27583,7 +27510,6 @@
         "generatedName": "SharedAwsSaasProductSupportInformation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -27642,7 +27568,6 @@
         "generatedName": "SharedAwsSaasProductVersion",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -27754,7 +27679,6 @@
         "generatedName": "SharedAwsSnsSubscription",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -27918,7 +27842,6 @@
         "generatedName": "SharedAzureAdIdentifier",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -28009,7 +27932,6 @@
         "generatedName": "SharedAzureBuyerInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -28085,7 +28007,6 @@
         "generatedName": "SharedAzureIntegration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -28254,7 +28175,6 @@
         "generatedName": "SharedAzureIntegrationCredential",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -28725,7 +28645,6 @@
         "generatedName": "SharedAzureMarketplaceSubscription",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -28857,7 +28776,6 @@
         "generatedName": "SharedAzureTerm",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -28998,7 +28916,6 @@
         "generatedName": "SharedBuyerInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -29285,7 +29202,6 @@
         "generatedName": "SharedCommitDimension",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -29504,7 +29420,6 @@
         "generatedName": "SharedCompanyInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -29576,7 +29491,6 @@
         "generatedName": "SharedContact",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -29687,7 +29601,6 @@
         "generatedName": "SharedCreateIntegrationParams",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -29799,7 +29712,6 @@
         "generatedName": "SharedCreateUsageRecordGroupParams",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -30214,7 +30126,6 @@
         "generatedName": "SharedEntitlementInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -30250,7 +30161,6 @@
         "generatedName": "SharedEntitlementTermInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -30403,7 +30313,6 @@
         "generatedName": "SharedEntitlementUsageRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -30569,7 +30478,6 @@
         "generatedName": "SharedGcpCommerceProducerExternalAccountSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -30667,7 +30575,6 @@
         "generatedName": "SharedGcpCommerceProducerListingSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -30911,7 +30818,6 @@
         "generatedName": "SharedGcpCommerceProducerMarketingSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -30986,7 +30892,6 @@
         "generatedName": "SharedGcpCommerceProducerPrice",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -31093,7 +30998,6 @@
         "generatedName": "SharedGcpCommerceProducerPriceInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -31205,7 +31109,6 @@
         "generatedName": "SharedGcpCommerceProducerPriceSubscription",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -31282,7 +31185,6 @@
         "generatedName": "SharedGcpCommerceProducerPriceTier",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -31382,7 +31284,6 @@
         "generatedName": "SharedGcpCommerceProducerPriceUsage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -31592,7 +31493,6 @@
         "generatedName": "SharedGcpCommerceProducerPurchaseMetric",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -31657,7 +31557,6 @@
         "generatedName": "SharedGcpCommerceProducerPurchaseSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -31697,7 +31596,6 @@
         "generatedName": "SharedGcpCommerceProducerServiceBilling",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -31818,7 +31716,6 @@
         "generatedName": "SharedGcpCommerceProducerServiceConfig",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -31890,7 +31787,6 @@
         "generatedName": "SharedGcpCommerceProducerSupportSpec",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -32125,7 +32021,6 @@
         "generatedName": "SharedGcpIntegration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -32160,7 +32055,6 @@
         "generatedName": "SharedGcpMarketplaceConsumer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -32707,7 +32601,6 @@
         "generatedName": "SharedGcpMarketplaceEntitlement",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -32974,7 +32867,6 @@
         "generatedName": "SharedGcpMarketplaceUserAccount",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -33069,7 +32961,6 @@
         "generatedName": "SharedGcpMarketplaceUserAccountApproval",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -33283,7 +33174,6 @@
         "generatedName": "SharedGcpProduct",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -33379,7 +33269,6 @@
         "generatedName": "SharedGcpPurchasePlan",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -33439,7 +33328,6 @@
         "generatedName": "SharedGcpUserInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -33498,7 +33386,6 @@
         "generatedName": "SharedGetApiClientAccessTokenParams",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -33653,7 +33540,6 @@
         "generatedName": "SharedGetRevenueReportParams",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -33696,7 +33582,6 @@
         "generatedName": "SharedGetUsageReportParams",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -33788,7 +33673,6 @@
         "generatedName": "SharedHubspotCrmCredential",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -33863,7 +33747,6 @@
         "generatedName": "SharedHubspotCrmIntegration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -34069,7 +33952,6 @@
         "generatedName": "SharedIdentityBuyer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -34294,7 +34176,6 @@
         "generatedName": "SharedIdentityIntegration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -34462,7 +34343,6 @@
         "generatedName": "SharedIntegrationInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -34521,7 +34401,6 @@
         "generatedName": "SharedListRevenueRecordDetailsResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -34580,7 +34459,6 @@
         "generatedName": "SharedListRevenueRecordsResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -34639,7 +34517,6 @@
         "generatedName": "SharedListUsageRecordGroupsResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -34698,7 +34575,6 @@
         "generatedName": "SharedListUsageRecordReportsResponse",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -34903,7 +34779,6 @@
         "generatedName": "SharedMeteringDimension",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -35123,7 +34998,6 @@
         "generatedName": "SharedMeteringUsageRecordGroup",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -35171,7 +35045,6 @@
         "generatedName": "SharedMeteringUsageRecordGroupMetaInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -35321,7 +35194,6 @@
         "generatedName": "SharedMeteringUsageRecordReport",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -35719,7 +35591,6 @@
         "generatedName": "SharedMeteringUsageRecordReportInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -35935,7 +35806,6 @@
         "generatedName": "SharedNotificationEvent",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -36482,7 +36352,6 @@
         "generatedName": "SharedOfferInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -36609,7 +36478,6 @@
         "generatedName": "SharedOfferMetaInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -36760,7 +36628,6 @@
         "generatedName": "SharedOperation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -36822,7 +36689,6 @@
         "generatedName": "SharedPaymentInstallment",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -37083,7 +36949,6 @@
         "generatedName": "SharedProductInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -37503,7 +37368,6 @@
         "generatedName": "SharedRevenueRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -37584,7 +37448,6 @@
         "generatedName": "SharedRevenueRecordDetail",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -37677,7 +37540,6 @@
         "generatedName": "SharedRevenueRecordInfo",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -37871,7 +37733,6 @@
         "generatedName": "SharedRevenueReport",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -37991,7 +37852,6 @@
         "generatedName": "SharedSalesforceCrmCredential",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -38130,7 +37990,6 @@
         "generatedName": "SharedSalesforceCrmIntegration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -38198,7 +38057,6 @@
         "generatedName": "SharedSalesforceSyncFilter",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -38450,7 +38308,6 @@
         "generatedName": "SharedSlackIntegration",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -38542,7 +38399,6 @@
         "generatedName": "SharedUpdateIntegrationParams",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -38599,7 +38455,6 @@
         "generatedName": "SharedUpdateProductParams",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -38674,7 +38529,6 @@
         "generatedName": "SharedUsageCount",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -38771,7 +38625,6 @@
         "generatedName": "SharedUsageReport",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -39250,7 +39103,6 @@
         "generatedName": "SharedWorkloadEntitlement",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -39612,7 +39464,6 @@
         "generatedName": "SharedWorkloadEntitlementTerm",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -40071,7 +39922,6 @@
         "generatedName": "SharedWorkloadOffer",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -40406,7 +40256,6 @@
         "generatedName": "SharedWorkloadProduct",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -40497,7 +40346,6 @@
         "generatedName": "SlackOAuthResponseIncomingWebhook",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -40626,7 +40474,6 @@
         "generatedName": "SlackOAuthV2ResponseAuthedUser",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -40679,7 +40526,6 @@
         "generatedName": "SlackOAuthV2ResponseEnterprise",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -40732,7 +40578,6 @@
         "generatedName": "SlackOAuthV2ResponseTeam",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -40786,7 +40631,6 @@
         "generatedName": "SqlNullTime",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -40896,7 +40740,6 @@
         "generatedName": "TypesEntitlement",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -40957,7 +40800,6 @@
         "generatedName": "TypesUsageAllocation",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -41078,7 +40920,6 @@
         "generatedName": "TypesUsageRecord",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -41157,7 +40998,6 @@
         "generatedName": "TypesUsageRecordResult",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../swagger.json",
           "type": "openapi"

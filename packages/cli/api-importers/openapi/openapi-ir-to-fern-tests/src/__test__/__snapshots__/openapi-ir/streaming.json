@@ -58,7 +58,6 @@
           "generatedName": "UserStreamRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -192,7 +191,6 @@
           "generatedName": "UserRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -324,7 +322,6 @@
           "generatedName": "UserV2StreamRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -472,7 +469,6 @@
           "generatedName": "UserV2Request",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -618,7 +614,6 @@
           "generatedName": "UserV3StreamRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -638,72 +633,72 @@
         "description": "",
         "fullExamples": [],
         "schema": {
-          "allOf": [],
           "properties": [
             {
-              "conflict": {},
-              "generatedName": "userV3StreamResponseId",
               "key": "id",
               "schema": {
                 "generatedName": "userV3StreamResponseId",
                 "value": {
+                  "generatedName": "UserV3StreamResponseId",
                   "schema": {
                     "format": "uuid",
                     "type": "string"
                   },
-                  "generatedName": "UserV3StreamResponseId",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "userV3StreamResponseId"
             },
             {
-              "conflict": {},
-              "generatedName": "userV3StreamResponseInline",
               "key": "inline",
               "schema": {
                 "generatedName": "userV3StreamResponseInline",
                 "value": {
+                  "generatedName": "UserV3StreamResponseInline",
                   "schema": {
                     "type": "boolean"
                   },
-                  "generatedName": "UserV3StreamResponseInline",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "userV3StreamResponseInline"
             },
             {
-              "conflict": {},
-              "generatedName": "userV3StreamResponseStreamed",
               "key": "streamed",
               "schema": {
                 "generatedName": "userV3StreamResponseStreamed",
                 "value": {
+                  "generatedName": "UserV3StreamResponseStreamed",
                   "schema": {
                     "type": "boolean"
                   },
-                  "generatedName": "UserV3StreamResponseStreamed",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "userV3StreamResponseStreamed"
             }
           ],
-          "allOfPropertyConflicts": [],
           "generatedName": "UserV3StreamResponse",
+          "allOf": [],
+          "allOfPropertyConflicts": [],
           "groupName": [],
-          "additionalProperties": false,
           "fullExamples": [],
+          "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -830,7 +825,6 @@
           "generatedName": "UserV3Request",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -895,7 +889,6 @@
           "generatedName": "UserV3Response",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -995,7 +988,6 @@
         "generatedName": "User",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1030,7 +1022,6 @@
         "generatedName": "StreamUser",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1104,7 +1095,6 @@
         "generatedName": "User2",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1178,7 +1168,6 @@
         "generatedName": "StreamUser2",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

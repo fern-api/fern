@@ -161,7 +161,6 @@
           "generatedName": "StartIgnitionRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -247,7 +246,6 @@
                 "generatedName": "StartIgnitionResponseData",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -262,11 +260,6 @@
           "generatedName": "StartIgnitionResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [
-            {
-              "name": "example-1"
-            }
-          ],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -453,11 +446,6 @@
           "generatedName": "ExchangeTokenRequest",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [
-            {
-              "name": "example-1"
-            }
-          ],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -552,7 +540,6 @@
                 "generatedName": "ExchangeTokenResponseData",
                 "groupName": [],
                 "additionalProperties": false,
-                "fullExamples": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -567,7 +554,6 @@
           "generatedName": "ExchangeTokenResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -826,7 +812,6 @@
           "generatedName": "GetAccountResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1122,7 +1107,6 @@
           "generatedName": "GetPolicyResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1654,7 +1638,6 @@
           "generatedName": "GetCarrierResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1929,7 +1912,6 @@
           "generatedName": "GetCarriersResponse",
           "groupName": [],
           "additionalProperties": false,
-          "fullExamples": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -2236,11 +2218,6 @@
           "Accounts"
         ],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2527,11 +2504,6 @@
           "Accounts"
         ],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2674,11 +2646,6 @@
         "title": "Address",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2802,11 +2769,6 @@
         "title": "Carrier",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example-1"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2978,16 +2940,6 @@
         "title": "Coverage",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "limitPerPerson": 250000,
-              "code": "BI",
-              "label": "Bodily Injury Liability",
-              "limitPerAccident": 500000
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3049,20 +3001,6 @@
         "title": "Property",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "id": "prp_uSdzLVpi8c76H7kl6AQ-F",
-              "type": "vehicle",
-              "data": {
-                "vin": "SMTD44GN3HT812287",
-                "model": "STREET SCRAMBLER",
-                "year": "2017",
-                "make": "TRIUMPH"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3156,11 +3094,6 @@
         "title": "Vehicle",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3352,20 +3285,6 @@
         "title": "Insured",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "firstName": "Armaan",
-              "lastName": "Sikand",
-              "dateOfBirthYear": "1993",
-              "licenseNo": "•••••7259",
-              "licenseState": "GA",
-              "licenseStatus": "Valid",
-              "dateOfBirth": "",
-              "type": "Primary named insured"
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3474,20 +3393,6 @@
         "title": "Third Party",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "value": {
-              "name": "Georgias Own Credit Union",
-              "type": "lienholder",
-              "address": {
-                "addressLine1": "Po Box 105205",
-                "state": "GA",
-                "city": "Atlanta",
-                "postalCode": "30348-5205"
-              }
-            }
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3608,11 +3513,6 @@
         "title": "User",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [
-          {
-            "name": "example"
-          }
-        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3685,7 +3585,6 @@
         "title": "Error",
         "groupName": [],
         "additionalProperties": false,
-        "fullExamples": [],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
