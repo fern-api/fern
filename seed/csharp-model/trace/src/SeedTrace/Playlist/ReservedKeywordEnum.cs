@@ -6,7 +6,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(StringEnumSerializer<ReservedKeywordEnum>))]
+[JsonConverter(typeof(EnumSerializer<ReservedKeywordEnum>))]
 public enum ReservedKeywordEnum
 {
     [EnumMember(Value = "is")]

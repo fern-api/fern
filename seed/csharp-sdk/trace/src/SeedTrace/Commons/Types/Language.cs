@@ -6,7 +6,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(StringEnumSerializer<Language>))]
+[JsonConverter(typeof(EnumSerializer<Language>))]
 public enum Language
 {
     [EnumMember(Value = "JAVA")]

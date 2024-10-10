@@ -6,7 +6,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(StringEnumSerializer<BasicType>))]
+[JsonConverter(typeof(EnumSerializer<BasicType>))]
 public enum BasicType
 {
     [EnumMember(Value = "primitive")]

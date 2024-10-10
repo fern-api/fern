@@ -24,7 +24,7 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSc
             }),
             argument: csharp.codeblock((writer) => {
                 writer.write("typeof(");
-                writer.writeNode(csharp.classReference(this.context.getStringEnumSerializerClassReference()));
+                writer.writeNode(csharp.classReference(this.context.getEnumSerializerClassReference()));
                 writer.write("<");
                 writer.writeNode(this.classReference);
                 writer.write(">");

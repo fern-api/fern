@@ -19,7 +19,7 @@ export declare namespace Method {
         /* The access of the method */
         access: Access;
         /* Whether the method is sync or async. Defaults to false. */
-        isAsync: boolean;
+        isAsync?: boolean;
         /* The parameters of the method */
         parameters: Parameter[];
         /* Whether the method overrides a method in it's base class */
@@ -71,7 +71,7 @@ export class Method extends AstNode {
     }: Method.Args) {
         super();
         this.name = name;
-        this.isAsync = isAsync;
+        this.isAsync = isAsync ?? false;
         this.override = override ?? false;
         this.access = access;
         this.return = return_;

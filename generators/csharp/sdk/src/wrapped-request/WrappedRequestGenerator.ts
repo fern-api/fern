@@ -43,7 +43,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             ...this.classReference,
             partial: false,
             access: "public",
-            record: true
+            type: "record"
         });
 
         const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];

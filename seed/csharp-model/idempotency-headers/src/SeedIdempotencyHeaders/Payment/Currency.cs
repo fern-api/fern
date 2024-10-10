@@ -6,7 +6,7 @@ using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders;
 
-[JsonConverter(typeof(StringEnumSerializer<Currency>))]
+[JsonConverter(typeof(EnumSerializer<Currency>))]
 public enum Currency
 {
     [EnumMember(Value = "USD")]

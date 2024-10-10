@@ -6,7 +6,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types;
 
-[JsonConverter(typeof(StringEnumSerializer<WeatherReport>))]
+[JsonConverter(typeof(EnumSerializer<WeatherReport>))]
 public enum WeatherReport
 {
     [EnumMember(Value = "SUNNY")]

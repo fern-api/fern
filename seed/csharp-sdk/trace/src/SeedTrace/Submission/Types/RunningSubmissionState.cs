@@ -6,7 +6,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(StringEnumSerializer<RunningSubmissionState>))]
+[JsonConverter(typeof(EnumSerializer<RunningSubmissionState>))]
 public enum RunningSubmissionState
 {
     [EnumMember(Value = "QUEUEING_SUBMISSION")]

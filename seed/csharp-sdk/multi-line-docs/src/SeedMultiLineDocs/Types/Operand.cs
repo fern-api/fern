@@ -6,7 +6,7 @@ using SeedMultiLineDocs.Core;
 
 namespace SeedMultiLineDocs;
 
-[JsonConverter(typeof(StringEnumSerializer<Operand>))]
+[JsonConverter(typeof(EnumSerializer<Operand>))]
 public enum Operand
 {
     [EnumMember(Value = ">")]

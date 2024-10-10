@@ -286,7 +286,8 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
                     type: operatorSpec.parameterType
                 })
             ],
-            body: operatorSpec.body
+            body: operatorSpec.body,
+            useExpressionBody: true
         }));
     }
 

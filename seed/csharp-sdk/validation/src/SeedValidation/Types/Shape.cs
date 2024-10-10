@@ -6,7 +6,7 @@ using SeedValidation.Core;
 
 namespace SeedValidation;
 
-[JsonConverter(typeof(StringEnumSerializer<Shape>))]
+[JsonConverter(typeof(EnumSerializer<Shape>))]
 public enum Shape
 {
     [EnumMember(Value = "SQUARE")]
