@@ -36,7 +36,7 @@
                 {
                   "key": "id",
                   "description": null,
-                  "value": "string"
+                  "value": "id"
                 }
               ]
             },
@@ -71,7 +71,7 @@
                     {
                       "key": "id",
                       "description": null,
-                      "value": "string"
+                      "value": "id"
                     }
                   ]
                 },
@@ -87,7 +87,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"type\": \"circle\",\n    \"id\": \"string\",\n    \"radius\": 1.1\n}",
+              "body": "{\n    \"type\": \"circle\",\n    \"radius\": 1.1\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -117,7 +117,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"type\": \"circle\",\n    \"id\": \"string\",\n    \"radius\": 1.1\n}",
+              "raw": "{\n    \"type\": \"circle\",\n    \"radius\": 1.1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -152,7 +152,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"type\": \"circle\",\n    \"id\": \"string\",\n    \"radius\": 1.1\n}",
+                  "raw": "{\n    \"type\": \"circle\",\n    \"radius\": 1.1\n}",
                   "options": {
                     "raw": {
                       "language": "json"

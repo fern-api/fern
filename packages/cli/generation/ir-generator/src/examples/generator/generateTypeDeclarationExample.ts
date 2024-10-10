@@ -93,7 +93,7 @@ export function generateTypeDeclarationExample({
             let i = 0;
             for (const variant of typeDeclaration.shape.members) {
                 const variantExample = generateTypeReferenceExample({
-                    fieldName: fieldName,
+                    fieldName,
                     typeReference: variant.type,
                     typeDeclarations,
                     currentDepth: currentDepth + 1,
@@ -124,7 +124,7 @@ export function generateTypeDeclarationExample({
                         return {
                             type: "success",
                             example: ExampleTypeShape.union({
-                                discriminant: discriminant,
+                                discriminant,
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
                                     shape: ExampleSingleUnionTypeProperties.noProperties()
