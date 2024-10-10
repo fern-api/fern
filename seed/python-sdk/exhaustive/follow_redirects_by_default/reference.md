@@ -2228,7 +2228,7 @@ client = SeedExhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 client.endpoints.primitive.get_and_return_base_64(
-    request=SGVsbG8gd29ybGQh,
+    request="SGVsbG8gd29ybGQh",
 )
 
 ```
