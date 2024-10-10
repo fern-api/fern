@@ -428,7 +428,7 @@ class PrimitiveClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.primitive.get_and_return_base_64(
-            request="SGVsbG8gd29ybGQh",
+            request=SGVsbG8gd29ybGQh,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -941,7 +941,7 @@ class AsyncPrimitiveClient:
 
         async def main() -> None:
             await client.endpoints.primitive.get_and_return_base_64(
-                request="SGVsbG8gd29ybGQh",
+                request=SGVsbG8gd29ybGQh,
             )
 
 
