@@ -99,8 +99,7 @@ function convertTypes(
                                 ...objectProperty,
                                 valueType: convertTypeReference(objectProperty.valueType)
                             };
-                        }),
-                        extraProperties: false
+                        })
                     });
                 },
                 alias: (aliasTypeDeclaration) => {

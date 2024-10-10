@@ -375,21 +375,12 @@ export class ApiReferenceNodeConverter {
         parentSlug: FernNavigation.V1.SlugGenerator,
         idgen: NodeIdGenerator
     ): FernNavigation.V1.ApiPackageChild | undefined {
-        if (!apiDefinitionPackageIdRaw) {
-            this.taskContext.logger.error(
-                "No ApiDefinition ID supplied in the API reference layout: ",
-                endpointItem.endpoint
-            );
-            return;
-        }
-        const apiDefinitionPackageId = APIV1Read.SubpackageId(apiDefinitionPackageIdRaw);
         const endpoint =
-            (apiDefinitionPackageId != null
+            (apiDefinitionPackageIdRaw != null
                 ? this.#holder.subpackages
-                      .get(apiDefinitionPackageId)
+                      .get(APIV1Read.SubpackageId(apiDefinitionPackageIdRaw))
                       ?.endpoints.get(APIV1Read.EndpointId(endpointItem.endpoint))
                 : undefined) ?? this.#holder.endpointsByLocator.get(endpointItem.endpoint);
-
         if (endpoint != null) {
             const endpointId = this.#holder.getEndpointId(endpoint);
             if (endpointId == null) {
@@ -418,9 +409,9 @@ export class ApiReferenceNodeConverter {
         }
 
         const webSocket =
-            (apiDefinitionPackageId != null
+            (apiDefinitionPackageIdRaw != null
                 ? this.#holder.subpackages
-                      .get(apiDefinitionPackageId)
+                      .get(APIV1Read.SubpackageId(apiDefinitionPackageIdRaw))
                       ?.webSockets.get(APIV1Read.WebSocketId(endpointItem.endpoint))
                 : undefined) ?? this.#holder.webSocketsByLocator.get(endpointItem.endpoint);
 
@@ -451,9 +442,9 @@ export class ApiReferenceNodeConverter {
         }
 
         const webhook =
-            (apiDefinitionPackageId != null
+            (apiDefinitionPackageIdRaw != null
                 ? this.#holder.subpackages
-                      .get(apiDefinitionPackageId)
+                      .get(APIV1Read.SubpackageId(apiDefinitionPackageIdRaw))
                       ?.webhooks.get(APIV1Read.WebhookId(endpointItem.endpoint))
                 : undefined) ?? this.#holder.webhooks.get(FernNavigation.V1.WebhookId(endpointItem.endpoint));
 
