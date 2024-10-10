@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedApiWideBasePath;
 
 var client = new SeedApiWideBasePathClient();
-await client.Service.PostAsync("string", "string", "string", 1);
+await client.Service.PostAsync("pathParam", "serviceParam", "resourceParam", 1);
 ```
 
 ## Exception Handling

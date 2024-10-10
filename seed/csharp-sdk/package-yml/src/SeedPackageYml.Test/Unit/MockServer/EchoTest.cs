@@ -17,20 +17,20 @@ public class EchoTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "name": "Hello world!",
-              "size": 20
+              "name": "name",
+              "size": 1
             }
             """;
 
         const string mockResponse = """
-            "Hello world!"
+            "string"
             """;
 
         Server
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/string/")
+                    .WithPath("/id/")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -42,8 +42,8 @@ public class EchoTest : BaseMockServerTest
             );
 
         var response = await Client.EchoAsync(
-            "string",
-            new EchoRequest { Name = "Hello world!", Size = 20 },
+            "id",
+            new EchoRequest { Name = "name", Size = 1 },
             RequestOptions
         );
         JToken

@@ -9,21 +9,21 @@ from .utilities import validate_response
 async def test_get_user(client: SeedMultiLineDocs, async_client: AsyncSeedMultiLineDocs) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.user.get_user(user_id="string")  # type: ignore[func-returns-value]
+        client.user.get_user(user_id="userId")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.user.get_user(user_id="string")  # type: ignore[func-returns-value]
+        await async_client.user.get_user(user_id="userId")  # type: ignore[func-returns-value]
         is None
     )
 
 
 async def test_create_user(client: SeedMultiLineDocs, async_client: AsyncSeedMultiLineDocs) -> None:
-    expected_response: typing.Any = {"id": "string", "name": "string", "age": 1}
-    expected_types: typing.Any = {"id": None, "name": None, "age": "integer"}
-    response = client.user.create_user(name="string", age=1)
+    expected_response: typing.Any = {"id": "id", "name": "name"}
+    expected_types: typing.Any = {"id": None, "name": None, "age": None}
+    response = client.user.create_user(name="name")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.user.create_user(name="string", age=1)
+    async_response = await async_client.user.create_user(name="name")
     validate_response(async_response, expected_response, expected_types)

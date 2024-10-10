@@ -1,9 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedTrace;
-using SeedTrace.Core;
 
 #nullable enable
 
@@ -13,56 +8,25 @@ namespace SeedTrace.Test.Unit.MockServer;
 public class UpdatePlaylistTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public void MockServerTest()
     {
         const string requestJson = """
-            {
-              "name": "string",
-              "problems": [
-                "string"
-              ]
-            }
-            """;
 
-        const string mockResponse = """
-            {
-              "playlist_id": "string",
-              "owner-id": "string",
-              "name": "string",
-              "problems": [
-                "string"
-              ]
-            }
             """;
 
         Server
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/v2/playlist/1/string")
+                    .WithPath("/v2/playlist/1/playlistId")
                     .UsingPut()
-                    .WithBodyAsJson(requestJson)
+                    .WithBody(requestJson)
             )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        var response = await Client.Playlist.UpdatePlaylistAsync(
-            1,
-            "string",
-            new UpdatePlaylistRequest
-            {
-                Name = "string",
-                Problems = new List<string>() { "string" },
-            },
-            RequestOptions
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Playlist.UpdatePlaylistAsync(1, "playlistId", null, RequestOptions)
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

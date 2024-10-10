@@ -16,7 +16,7 @@ from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.echo(
-	request="Hello world!\\n\\nwith\\n\\tnewlines"
+	request="string"
 )
  
 ```                        
@@ -64,19 +64,7 @@ from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.file.service.get_file(
-	filename="string"
-)
- 
-```                        
-
-
-```python
-from seed import SeedExhaustive
-from seed.environment import SeedExhaustiveEnvironment
-
-client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
-client.file.service.get_file(
-	filename="string"
+	filename="filename"
 )
  
 ```                        
@@ -112,19 +100,7 @@ from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.health.service.check(
-	id="string"
-)
- 
-```                        
-
-
-```python
-from seed import SeedExhaustive
-from seed.environment import SeedExhaustiveEnvironment
-
-client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
-client.health.service.check(
-	id="string"
+	id="id"
 )
  
 ```                        
@@ -172,7 +148,7 @@ from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.service.get_movie(
-	movie_id="movie-c06a4ad7"
+	movie_id="movieId"
 )
  
 ```                        
@@ -207,16 +183,13 @@ from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.service.create_movie(
-	id="movie-c06a4ad7",
-	prequel="movie-cv9b914f",
-	title="The Boy and the Heron",
-	from_="Hayao Miyazaki",
-	rating=8,
-	tag="tag-wf9as23d",
+	id="id",
+	title="title",
+	from_="from",
+	rating=1.1,
+	tag="tag",
 	metadata={
-		"actors": ["Christian Bale","Florence Pugh","Willem Dafoe"],
-		"releaseDate": "2023-12-08",
-		"ratings": {"rottenTomatoes":97,"imdb":7.6}
+		"metadata": {"key":"value"}
 	},
 	revenue=1000000
 )
@@ -244,9 +217,7 @@ from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.service.get_metadata(
-	x_api_version="string",
-	shallow=true,
-	tag="string"
+	x_api_version="X-API-Version"
 )
  
 ```                        

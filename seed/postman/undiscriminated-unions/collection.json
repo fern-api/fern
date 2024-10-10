@@ -181,7 +181,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"name\": \"exampleName\",\n    \"value\": \"exampleValue\",\n    \"default\": \"exampleDefault\"\n}",
+              "body": "{\n    \"name\": \"string\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]

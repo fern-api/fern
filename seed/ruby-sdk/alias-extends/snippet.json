@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_.extendedInlineRequestBody"
             },
             "snippet": {
-                "client": "require \"fern_alias_extends\"\n\nalias_extends = SeedAliasExtendsClient::Client.new(base_url: \"https://api.example.com\")\nalias_extends.extended_inline_request_body(child: \"string\")",
+                "client": "require \"fern_alias_extends\"\n\nalias_extends = SeedAliasExtendsClient::Client.new(base_url: \"https://api.example.com\")\nalias_extends.extended_inline_request_body(child: \"child\")",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_.extendedInlineRequestBody"
             },
             "snippet": {
-                "client": "require \"fern_alias_extends\"\n\nalias_extends = SeedAliasExtendsClient::Client.new(base_url: \"https://api.example.com\")\nalias_extends.extended_inline_request_body(child: \"string\")",
+                "client": "require \"fern_alias_extends\"\n\nalias_extends = SeedAliasExtendsClient::Client.new(base_url: \"https://api.example.com\")\nalias_extends.extended_inline_request_body(child: \"child\")",
                 "type": "ruby"
             }
         }

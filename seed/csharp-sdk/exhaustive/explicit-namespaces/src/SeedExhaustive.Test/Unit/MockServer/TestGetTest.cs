@@ -20,10 +20,7 @@ public class TestGetTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/http-methods/string")
-                    .UsingGet()
+                WireMock.RequestBuilders.Request.Create().WithPath("/http-methods/id").UsingGet()
             )
             .RespondWith(
                 WireMock
@@ -32,7 +29,7 @@ public class TestGetTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.HttpMethods.TestGetAsync("string", RequestOptions);
+        var response = await Client.Endpoints.HttpMethods.TestGetAsync("id", RequestOptions);
         JToken
             .Parse(mockResponse)
             .Should()

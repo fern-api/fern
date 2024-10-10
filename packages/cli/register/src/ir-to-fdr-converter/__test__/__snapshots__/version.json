@@ -93,7 +93,29 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users/userId",
+              "pathParameters": {
+                "userId": "userId"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "id": "id",
+                "name": "name"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "id",
+                  "name": "name"
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

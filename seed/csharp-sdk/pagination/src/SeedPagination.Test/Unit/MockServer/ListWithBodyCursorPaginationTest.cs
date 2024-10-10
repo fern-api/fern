@@ -16,29 +16,19 @@ public class ListWithBodyCursorPaginationTest : BaseMockServerTest
     public async Task MockServerTest()
     {
         const string requestJson = """
-            {
-              "pagination": {
-                "cursor": "string"
-              }
-            }
+            {}
             """;
 
         const string mockResponse = """
             {
-              "hasNextPage": true,
-              "page": {
-                "page": 1,
-                "next": {
-                  "page": 1,
-                  "starting_after": "string"
-                },
-                "per_page": 1,
-                "total_page": 1
-              },
               "total_count": 1,
               "data": [
                 {
-                  "name": "string",
+                  "name": "name",
+                  "id": 1
+                },
+                {
+                  "name": "name",
                   "id": 1
                 }
               ]
@@ -61,10 +51,7 @@ public class ListWithBodyCursorPaginationTest : BaseMockServerTest
             );
 
         var response = await Client.Users.ListWithBodyCursorPaginationAsync(
-            new ListUsersBodyCursorPaginationRequest
-            {
-                Pagination = new WithCursor { Cursor = "string" },
-            },
+            new ListUsersBodyCursorPaginationRequest { Pagination = null },
             RequestOptions
         );
         JToken

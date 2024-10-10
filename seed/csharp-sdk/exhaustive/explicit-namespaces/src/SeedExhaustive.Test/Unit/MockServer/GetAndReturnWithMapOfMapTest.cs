@@ -18,8 +18,8 @@ public class GetAndReturnWithMapOfMapTest : BaseMockServerTest
         const string requestJson = """
             {
               "map": {
-                "string": {
-                  "string": "string"
+                "map": {
+                  "map": "map"
                 }
               }
             }
@@ -28,8 +28,8 @@ public class GetAndReturnWithMapOfMapTest : BaseMockServerTest
         const string mockResponse = """
             {
               "map": {
-                "string": {
-                  "string": "string"
+                "map": {
+                  "map": "map"
                 }
               }
             }
@@ -56,8 +56,8 @@ public class GetAndReturnWithMapOfMapTest : BaseMockServerTest
                 Map = new Dictionary<string, Dictionary<string, string>>()
                 {
                     {
-                        "string",
-                        new Dictionary<string, string>() { { "string", "string" } }
+                        "map",
+                        new Dictionary<string, string>() { { "map", "map" } }
                     },
                 },
             },

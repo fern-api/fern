@@ -1,8 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedTrace.Core;
 
 #nullable enable
 
@@ -12,32 +8,17 @@ namespace SeedTrace.Test.Unit.MockServer;
 public class GetExecutionSessionTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public void MockServerTest()
     {
-        const string mockResponse = """
-            {
-              "sessionId": "string",
-              "executionSessionUrl": "string",
-              "language": "JAVA",
-              "status": "CREATING_CONTAINER"
-            }
-            """;
-
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/sessions/string").UsingGet()
+                WireMock.RequestBuilders.Request.Create().WithPath("/sessions/sessionId").UsingGet()
             )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        var response = await Client.Submission.GetExecutionSessionAsync("string", RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Submission.GetExecutionSessionAsync("sessionId", RequestOptions)
+        );
     }
 }

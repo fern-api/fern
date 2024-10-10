@@ -59,7 +59,7 @@ public partial class HomepageClient
 
     /// <example>
     /// <code>
-    /// await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string" });
+    /// await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string", "string" });
     /// </code>
     /// </example>
     public async Task SetHomepageProblemsAsync(

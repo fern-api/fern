@@ -139,7 +139,25 @@
           }
         },
         "errorsV2": [],
-        "examples": []
+        "examples": [
+          {
+            "path": "/extends/extended-inline-request-body",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "unique": "unique"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "unique": "unique"
+              }
+            },
+            "responseStatusCode": 204,
+            "codeSamples": []
+          }
+        ]
       }
     ],
     "webhooks": [],

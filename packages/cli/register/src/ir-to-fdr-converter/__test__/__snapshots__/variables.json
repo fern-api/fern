@@ -45,7 +45,18 @@
           "queryParameters": [],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/endpointParam",
+              "pathParameters": {
+                "endpointParam": "endpointParam"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

@@ -65,14 +65,7 @@ await client.FolderD.Service.GetDirectThreadAsync();
 <dd>
 
 ```csharp
-await client.Foo.FindAsync(
-    new FindRequest
-    {
-        OptionalString = "string",
-        PublicProperty = "string",
-        PrivateProperty = 1,
-    }
-);
+await client.Foo.FindAsync(new FindRequest { PublicProperty = null, PrivateProperty = null });
 ```
 </dd>
 </dl>

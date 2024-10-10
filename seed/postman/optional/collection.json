@@ -43,15 +43,7 @@
             ],
             "method": "POST",
             "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"string\": {\n        \"key\": \"value\"\n    }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
+            "body": null
           },
           "response": [
             {
@@ -80,15 +72,7 @@
                 ],
                 "method": "POST",
                 "auth": null,
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"string\": {\n        \"key\": \"value\"\n    }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
+                "body": null
               },
               "description": "Id of the created resource",
               "body": "\"string\"",

@@ -699,7 +699,19 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             "examples": []
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "path": "/test/rootPathParam/movies/movieId",
+                            "pathParameters": {
+                                "rootPathParam": "rootPathParam",
+                                "movieId": "movieId"
+                            },
+                            "queryParameters": {},
+                            "headers": {},
+                            "responseStatusCode": 204,
+                            "codeSamples": []
+                        }
+                    ]
                 },
                 {
                     "auth": false,
@@ -1518,7 +1530,19 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             "examples": []
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "path": "/test/rootPathParam/movies/movieId",
+                            "pathParameters": {
+                                "rootPathParam": "rootPathParam",
+                                "movieId": "movieId"
+                            },
+                            "queryParameters": {},
+                            "headers": {},
+                            "responseStatusCode": 204,
+                            "codeSamples": []
+                        }
+                    ]
                 },
                 {
                     "auth": false,

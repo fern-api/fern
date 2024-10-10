@@ -16,7 +16,7 @@ public class GetNumWarmInstancesTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "string": 1
+              "JAVA": 1
             }
             """;
 

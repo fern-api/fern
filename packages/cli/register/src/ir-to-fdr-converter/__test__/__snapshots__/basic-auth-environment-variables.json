@@ -75,7 +75,21 @@
               "examples": []
             }
           ],
-          "examples": []
+          "examples": [
+            {
+              "path": "/basic-auth",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": true,
+              "responseBodyV3": {
+                "type": "json",
+                "value": true
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -142,7 +156,30 @@
               "examples": []
             }
           ],
-          "examples": []
+          "examples": [
+            {
+              "path": "/basic-auth",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "key": "value"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "key": "value"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": true,
+              "responseBodyV3": {
+                "type": "json",
+                "value": true
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

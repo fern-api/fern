@@ -172,7 +172,42 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/token",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "client_id": "client_id",
+                "client_secret": "client_secret",
+                "audience": "https://api.example.com",
+                "grant_type": "client_credentials"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "client_id": "client_id",
+                  "client_secret": "client_secret",
+                  "audience": "https://api.example.com",
+                  "grant_type": "client_credentials"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "access_token": "access_token",
+                "expires_in": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "access_token": "access_token",
+                  "expires_in": 1
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -220,7 +255,39 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "id": "id",
+                  "name": "name"
+                },
+                {
+                  "id": "id",
+                  "name": "name"
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "id": "id",
+                    "name": "name"
+                  },
+                  {
+                    "id": "id",
+                    "name": "name"
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

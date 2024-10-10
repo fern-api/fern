@@ -18,7 +18,7 @@ public class GetAndReturnUnionTest : BaseMockServerTest
         const string requestJson = """
             {
               "animal": "dog",
-              "name": "string",
+              "name": "name",
               "likesToWoof": true
             }
             """;
@@ -26,7 +26,7 @@ public class GetAndReturnUnionTest : BaseMockServerTest
         const string mockResponse = """
             {
               "animal": "dog",
-              "name": "string",
+              "name": "name",
               "likesToWoof": true
             }
             """;
@@ -47,7 +47,7 @@ public class GetAndReturnUnionTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Dog { Name = "string", LikesToWoof = true },
+            new Dog { Name = "name", LikesToWoof = true },
             RequestOptions
         );
         JToken

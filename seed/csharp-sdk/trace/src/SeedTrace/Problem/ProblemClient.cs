@@ -25,25 +25,30 @@ public partial class ProblemClient
     /// await client.Problem.CreateProblemAsync(
     ///     new CreateProblemRequest
     ///     {
-    ///         ProblemName = "string",
-    ///         ProblemDescription = new ProblemDescription { Boards = new List<object>() { "string" } },
+    ///         ProblemName = "problemName",
+    ///         ProblemDescription = new ProblemDescription
+    ///         {
+    ///             Boards = new List<object>() { "boards", "boards" },
+    ///         },
     ///         Files = new Dictionary<Language, ProblemFiles>()
     ///         {
     ///             {
     ///                 Language.Java,
     ///                 new ProblemFiles
     ///                 {
-    ///                     SolutionFile = new FileInfo { Filename = "string", Contents = "string" },
+    ///                     SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
     ///                     ReadOnlyFiles = new List<FileInfo>()
     ///                     {
-    ///                         new FileInfo { Filename = "string", Contents = "string" },
+    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
     ///                     },
     ///                 }
     ///             },
     ///         },
     ///         InputParams = new List<VariableTypeAndName>()
     ///         {
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
     ///         },
     ///         OutputType = "no-properties-union",
     ///         Testcases = new List<TestCaseWithExpectedResult>()
@@ -52,13 +57,22 @@ public partial class ProblemClient
     ///             {
     ///                 TestCase = new TestCase
     ///                 {
-    ///                     Id = "string",
-    ///                     Params = new List<object>() { 1 },
+    ///                     Id = "id",
+    ///                     Params = new List<object>() { 1, 1 },
+    ///                 },
+    ///                 ExpectedResult = 1,
+    ///             },
+    ///             new TestCaseWithExpectedResult
+    ///             {
+    ///                 TestCase = new TestCase
+    ///                 {
+    ///                     Id = "id",
+    ///                     Params = new List<object>() { 1, 1 },
     ///                 },
     ///                 ExpectedResult = 1,
     ///             },
     ///         },
-    ///         MethodName = "string",
+    ///         MethodName = "methodName",
     ///     }
     /// );
     /// </code>
@@ -106,28 +120,33 @@ public partial class ProblemClient
     /// <example>
     /// <code>
     /// await client.Problem.UpdateProblemAsync(
-    ///     "string",
+    ///     "problemId",
     ///     new CreateProblemRequest
     ///     {
-    ///         ProblemName = "string",
-    ///         ProblemDescription = new ProblemDescription { Boards = new List<object>() { "string" } },
+    ///         ProblemName = "problemName",
+    ///         ProblemDescription = new ProblemDescription
+    ///         {
+    ///             Boards = new List<object>() { "boards", "boards" },
+    ///         },
     ///         Files = new Dictionary<Language, ProblemFiles>()
     ///         {
     ///             {
     ///                 Language.Java,
     ///                 new ProblemFiles
     ///                 {
-    ///                     SolutionFile = new FileInfo { Filename = "string", Contents = "string" },
+    ///                     SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
     ///                     ReadOnlyFiles = new List<FileInfo>()
     ///                     {
-    ///                         new FileInfo { Filename = "string", Contents = "string" },
+    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
     ///                     },
     ///                 }
     ///             },
     ///         },
     ///         InputParams = new List<VariableTypeAndName>()
     ///         {
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
     ///         },
     ///         OutputType = "no-properties-union",
     ///         Testcases = new List<TestCaseWithExpectedResult>()
@@ -136,13 +155,22 @@ public partial class ProblemClient
     ///             {
     ///                 TestCase = new TestCase
     ///                 {
-    ///                     Id = "string",
-    ///                     Params = new List<object>() { 1 },
+    ///                     Id = "id",
+    ///                     Params = new List<object>() { 1, 1 },
+    ///                 },
+    ///                 ExpectedResult = 1,
+    ///             },
+    ///             new TestCaseWithExpectedResult
+    ///             {
+    ///                 TestCase = new TestCase
+    ///                 {
+    ///                     Id = "id",
+    ///                     Params = new List<object>() { 1, 1 },
     ///                 },
     ///                 ExpectedResult = 1,
     ///             },
     ///         },
-    ///         MethodName = "string",
+    ///         MethodName = "methodName",
     ///     }
     /// );
     /// </code>
@@ -190,7 +218,7 @@ public partial class ProblemClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Problem.DeleteProblemAsync("string");
+    /// await client.Problem.DeleteProblemAsync("problemId");
     /// </code>
     /// </example>
     public async Task DeleteProblemAsync(
@@ -231,10 +259,11 @@ public partial class ProblemClient
     ///     {
     ///         InputParams = new List<VariableTypeAndName>()
     ///         {
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
     ///         },
     ///         OutputType = "no-properties-union",
-    ///         MethodName = "string",
+    ///         MethodName = "methodName",
     ///     }
     /// );
     /// </code>

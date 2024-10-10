@@ -13,7 +13,7 @@ public class BootInstanceTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "size": "string"
+              "size": "size"
             }
             """;
 
@@ -30,7 +30,7 @@ public class BootInstanceTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.Ec2.BootInstanceAsync(
-                    new BootInstanceRequest { Size = "string" },
+                    new BootInstanceRequest { Size = "size" },
                     RequestOptions
                 )
         );

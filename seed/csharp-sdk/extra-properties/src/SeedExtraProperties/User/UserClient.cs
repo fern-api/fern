@@ -23,7 +23,7 @@ public partial class UserClient
     ///     {
     ///         Type = "CreateUserRequest",
     ///         Version = "v1",
-    ///         Name = "string",
+    ///         Name = "name",
     ///     }
     /// );
     /// </code>

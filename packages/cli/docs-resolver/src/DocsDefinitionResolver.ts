@@ -418,6 +418,7 @@ export class DocsDefinitionResolver {
                     packageName: undefined,
                     context: this.taskContext
                 });
+                // console.log(JSON.stringify(ir, undefined, 2));
                 const apiDefinitionId = await this.registerApi({
                     ir,
                     snippetsConfig,

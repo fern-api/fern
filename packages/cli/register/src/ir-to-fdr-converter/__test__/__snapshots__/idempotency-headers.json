@@ -81,7 +81,32 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/payment",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "amount": 1,
+                "currency": "USD"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "amount": 1,
+                  "currency": "USD"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -123,7 +148,18 @@
           "queryParameters": [],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/payment/paymentId",
+              "pathParameters": {
+                "paymentId": "paymentId"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

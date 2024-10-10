@@ -101,7 +101,21 @@
               "examples": []
             }
           ],
-          "examples": []
+          "examples": [
+            {
+              "path": "/property-based-error",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

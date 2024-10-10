@@ -182,17 +182,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                 union: (value) => {
                     this.fernDefinitionBuilder.addType(fernFilePath, {
                         name: typeName,
-                        schema: {
-                            discriminant: "dummy",
-                            union: Object.fromEntries(
-                                Object.entries(value.union).map(([key, reference]) => {
-                                    return [
-                                        key,
-                                        { type: typeof reference === "string" ? reference : reference.type, key }
-                                    ];
-                                })
-                            )
-                        }
+                        schema: value
                     });
                 }
             });

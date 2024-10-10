@@ -61,7 +61,7 @@ public partial class PaymentClient
 
     /// <example>
     /// <code>
-    /// await client.Payment.DeleteAsync("string");
+    /// await client.Payment.DeleteAsync("paymentId");
     /// </code>
     /// </example>
     public async Task DeleteAsync(

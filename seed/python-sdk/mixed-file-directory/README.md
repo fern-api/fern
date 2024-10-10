@@ -26,7 +26,7 @@ client = SeedMixedFileDirectory(
     base_url="https://yourhost.com/path/to/api",
 )
 client.organization.create(
-    name="string",
+    name="name",
 )
 ```
 
@@ -46,7 +46,7 @@ client = AsyncSeedMixedFileDirectory(
 
 async def main() -> None:
     await client.organization.create(
-        name="string",
+        name="name",
     )
 
 
