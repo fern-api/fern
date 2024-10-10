@@ -103,7 +103,7 @@ export class Service {
      *
      * @example
      *     await client.service.getWithHeader({
-     *         xEndpointHeader: "string"
+     *         xEndpointHeader: "X-Endpoint-Header"
      *     })
      */
     public async getWithHeader(

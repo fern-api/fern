@@ -18,7 +18,7 @@ const client = new SeedAuthEnvironmentVariablesClient({
   apiKey: "YOUR_AUTHORIZATION",
 });
 await client.service.getWithHeader({
-  xEndpointHeader: "string",
+  xEndpointHeader: "X-Endpoint-Header",
 });
  
 ```                        

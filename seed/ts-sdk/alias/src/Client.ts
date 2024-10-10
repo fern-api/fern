@@ -31,7 +31,7 @@ export class SeedAliasClient {
      * @param {SeedAliasClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.get("type-kaljhv87")
+     *     await client.get("typeId")
      */
     public async get(typeId: SeedAlias.TypeId, requestOptions?: SeedAliasClient.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
