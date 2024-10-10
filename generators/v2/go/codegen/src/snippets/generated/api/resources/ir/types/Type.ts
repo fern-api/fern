@@ -6,33 +6,41 @@ import * as FernSnippets from "../../../index";
 
 /**
  * Represents the type of a parameter that can be used to generate a dynamic type.
- *
- * Note that some types are omitted because they aren't required by the Go generator
- * (e.g. a list is the same as a set, literals don't need to be explicitly provided, etc).
- *
- * TODO: Add support for unions.
  */
 export type Type =
+    | FernSnippets.Type.DiscriminatedUnion
     | FernSnippets.Type.Enum
-    | FernSnippets.Type.ListType
-    | FernSnippets.Type.MapType
+    | FernSnippets.Type.List
+    | FernSnippets.Type.Literal
+    | FernSnippets.Type.Map
     | FernSnippets.Type.Object_
     | FernSnippets.Type.Optional
     | FernSnippets.Type.Primitive
+    | FernSnippets.Type.Set
+    | FernSnippets.Type.UndicriminatedUnion
     | FernSnippets.Type.Unknown;
 
 export declare namespace Type {
+    interface DiscriminatedUnion extends FernSnippets.DiscriminatedUnionType {
+        type: "discriminatedUnion";
+    }
+
     interface Enum extends FernSnippets.EnumType {
         type: "enum";
     }
 
-    interface ListType {
-        type: "listType";
+    interface List {
+        type: "list";
         value: FernSnippets.Type;
     }
 
-    interface MapType extends FernSnippets.MapType {
-        type: "mapType";
+    interface Literal {
+        type: "literal";
+        value: FernSnippets.LiteralType;
+    }
+
+    interface Map extends FernSnippets.MapType {
+        type: "map";
     }
 
     interface Object_ extends FernSnippets.ObjectType {
@@ -47,6 +55,15 @@ export declare namespace Type {
     interface Primitive {
         type: "primitive";
         value: FernSnippets.PrimitiveType;
+    }
+
+    interface Set {
+        type: "set";
+        value: FernSnippets.Type;
+    }
+
+    interface UndicriminatedUnion extends FernSnippets.UndiscriminatedUnionType {
+        type: "undicriminatedUnion";
     }
 
     interface Unknown {

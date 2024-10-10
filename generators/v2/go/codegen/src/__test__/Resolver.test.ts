@@ -1,18 +1,16 @@
-import { ResolverProvider } from "../resolver/ResolverProvider";
+import { Resolver } from "../resolver/Resolver";
 
 describe("resolver", () => {
     it("inlined request", async () => {
-        const resolverProvider = new ResolverProvider();
-        const resolver = resolverProvider.getResolver({ language: "go" });
+        const resolver = new Resolver();
+        const snippets = resolver.resolve({ language: "go" });
 
-        const snippet = resolver.resolve({
-            snippet: {
-                endpointID: "endpoint_.user.create",
-                requestBody: {
-                    name: "John Doe",
-                    age: 30,
-                    status: "ACTIVE"
-                }
+        const snippet = snippets.generate({
+            endpointID: "endpoint_.user.create",
+            requestBody: {
+                name: "John Doe",
+                age: 30,
+                status: "ACTIVE"
             }
         });
 

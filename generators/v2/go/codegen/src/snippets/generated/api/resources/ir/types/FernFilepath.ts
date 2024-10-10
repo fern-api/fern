@@ -5,5 +5,7 @@
 import * as FernSnippets from "../../../index";
 
 export interface FernFilepath {
+    allParts: FernSnippets.Name[];
     packagePath: FernSnippets.Name[];
+    file?: FernSnippets.Name;
 }

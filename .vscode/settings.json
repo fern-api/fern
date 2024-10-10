@@ -13,6 +13,9 @@
   "editor.codeActionsOnSave": ["source.fixAll", "source.sortMembers"],
   "editor.defaultFormatter": null,
   "[typescript]": {
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "python.analysis.typeCheckingMode": "basic"

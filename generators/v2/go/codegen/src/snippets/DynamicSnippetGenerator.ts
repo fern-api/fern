@@ -1,33 +1,32 @@
-import { CodeBlock, MethodInvocation, StructInstantiation, Writer } from "../ast";
-import { Context } from "./context/Context";
+import { FernGeneratorExec } from "@fern-api/generator-commons";
+import { camelCase } from "lodash-es";
+import path from "path";
 import { go } from "..";
+import { CodeBlock, MethodInvocation, StructField } from "../ast";
 import { AstNode } from "../go";
+import { Context } from "./context/Context";
+import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import {
     Endpoint,
     InlinedRequest,
     InlinedRequestBody,
     IntermediateRepresentation,
     NamedParameter,
-    SnippetRequest,
-    Values
+    SnippetRequest
 } from "./generated/api";
-import { GoTypeRenderer } from "./GoTypeRenderer";
-import { FernGeneratorExec } from "@fern-api/generator-commons";
-import { camelCase } from "lodash-es";
-import path from "path";
 
 const CLIENT_VAR_NAME = "client";
 
 export class DynamicSnippetGenerator {
     private context: Context;
-    private typeRenderer: GoTypeRenderer;
+    private typeRenderer: DynamicTypeMapper;
 
     constructor({ ir, config }: { ir: IntermediateRepresentation; config: FernGeneratorExec.config.GeneratorConfig }) {
         this.context = new Context({ ir, config });
-        this.typeRenderer = new GoTypeRenderer({ context: this.context });
+        this.typeRenderer = new DynamicTypeMapper({ context: this.context });
     }
 
-    public generate({ snippet }: { snippet: SnippetRequest }): string {
+    public generate(snippet: SnippetRequest): string {
         const code = this.buildCodeBlock({ snippet });
         return code.toString({
             packageName: camelCase(this.context.config.organization).toLowerCase(),
@@ -86,14 +85,14 @@ export class DynamicSnippetGenerator {
         const args: AstNode[] = [];
 
         // Path parameters are specified separate from the in-lined request.
-        const pathParameters = this.associateByWireValue({
+        const pathParameters = this.context.associateByWireValue({
             parameters: request.pathParameters,
             values: snippet.pathParameters ?? {}
         });
         for (const parameter of pathParameters) {
             args.push(
                 go.codeblock((writer) => {
-                    writer.writeNode(this.typeRenderer.render({ args: parameter }));
+                    writer.writeNode(this.typeRenderer.render(parameter));
                 })
             );
         }
@@ -105,14 +104,14 @@ export class DynamicSnippetGenerator {
     }
 
     private getInlinedRequestArg({ request, snippet }: { request: InlinedRequest; snippet: SnippetRequest }): AstNode {
-        const fields: StructInstantiation.Field[] = [];
+        const fields: StructField[] = [];
 
         const parameters = [
-            ...this.associateByWireValue({
+            ...this.context.associateByWireValue({
                 parameters: request.queryParameters,
                 values: snippet.queryParameters ?? {}
             }),
-            ...this.associateByWireValue({
+            ...this.context.associateByWireValue({
                 parameters: request.headers,
                 values: snippet.headers ?? {}
             })
@@ -120,9 +119,7 @@ export class DynamicSnippetGenerator {
         for (const parameter of parameters) {
             fields.push({
                 name: parameter.name.pascalCase.unsafeName,
-                value: go.codeblock((writer) => {
-                    writer.writeNode(this.typeRenderer.render({ args: parameter }));
-                })
+                value: this.typeRenderer.render(parameter)
             });
         }
 
@@ -130,14 +127,16 @@ export class DynamicSnippetGenerator {
             fields.push(...this.getInlinedRequestBodyStructFields({ body: request.body, value: snippet.requestBody }));
         }
 
-        return go.instantiateStruct({
-            typeReference: go.typeReference({
-                name: request.declaration.name.pascalCase.unsafeName,
-                importPath: this.context.getImportPath(request.declaration.fernFilepath)
-            }),
-            fields,
-            pointer: true
-        });
+        // All in-lined requests are generated as pointers, so we wrap the struct in an optional.
+        return go.TypeInstantiation.optional(
+            go.TypeInstantiation.struct({
+                typeReference: go.typeReference({
+                    name: request.declaration.name.pascalCase.unsafeName,
+                    importPath: this.context.getImportPath(request.declaration.fernFilepath)
+                }),
+                fields
+            })
+        );
     }
 
     private getInlinedRequestBodyStructFields({
@@ -146,7 +145,7 @@ export class DynamicSnippetGenerator {
     }: {
         body: InlinedRequestBody;
         value: unknown;
-    }): StructInstantiation.Field[] {
+    }): StructField[] {
         switch (body.bodyType) {
             case "properties":
                 return this.getInlinedRequestBodyPropertyStructFields({ parameters: body.value, value });
@@ -161,43 +160,21 @@ export class DynamicSnippetGenerator {
     }: {
         parameters: NamedParameter[];
         value: unknown;
-    }): StructInstantiation.Field[] {
-        const fields: StructInstantiation.Field[] = [];
+    }): StructField[] {
+        const fields: StructField[] = [];
 
-        const bodyProperties = this.associateByWireValue({
+        const bodyProperties = this.context.associateByWireValue({
             parameters,
             values: this.context.getRecordOrThrow(value)
         });
         for (const parameter of bodyProperties) {
             fields.push({
                 name: parameter.name.pascalCase.unsafeName,
-                value: this.typeRenderer.render({ args: parameter })
+                value: this.typeRenderer.render(parameter)
             });
         }
 
         return fields;
-    }
-
-    private associateByWireValue({
-        parameters,
-        values
-    }: {
-        parameters: NamedParameter[];
-        values: Values;
-    }): GoTypeRenderer.Args[] {
-        const args: GoTypeRenderer.Args[] = [];
-        for (const [key, value] of Object.entries(values)) {
-            const parameter = parameters.find((param) => param.name.wireValue === key);
-            if (parameter == null) {
-                throw new Error(`"${key}" is not a recognized parameter for this endpoint`);
-            }
-            args.push({
-                name: parameter.name.name,
-                type: parameter.type,
-                value
-            });
-        }
-        return args;
     }
 
     private getMethod({ endpoint }: { endpoint: Endpoint }): string {

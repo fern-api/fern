@@ -8,22 +8,16 @@ types:
 
   FernFilepath:
     properties:
+      allParts: list<Name>
       packagePath: list<Name>
+      file: optional<Name>
 
   Name:
-    docs: |
-      The Go generator only needs access to the PascalCase naming convention.
-      
-      This represents a case where we could include a separate IR for each language
-      to reduce size. Alternatively, we could model everything as optional so the
-      same structure could be used for all languages, and the compiler could conditionally
-      set specific values based on the target language.
-
-      Given that each language will need an IR, it probably makes sense to have a single one
-      that is shared across all languages. Otherwise there will be duplication between different
-      languages.
     properties:
+      camelCase: SafeAndUnsafeString
       pascalCase: SafeAndUnsafeString
+      snakeCase: SafeAndUnsafeString
+      screamingSnakeCase: SafeAndUnsafeString
 
   NameAndWireValue:
     properties:
@@ -34,9 +28,8 @@ types:
         type: string
 
   SafeAndUnsafeString:
-    docs: |
-      The Go generator only needs access to the unsafe naming convention.
     properties:
+      safeName: string
       unsafeName: string
 
   IntermediateRepresentation:
@@ -116,25 +109,38 @@ types:
   Type:
     docs: |
       Represents the type of a parameter that can be used to generate a dynamic type.
-
-      Note that some types are omitted because they aren't required by the Go generator
-      (e.g. a list is the same as a set, literals don't need to be explicitly provided, etc).
-
-      TODO: Add support for unions.
     union:
+      discriminatedUnion: DiscriminatedUnionType
       enum: EnumType
-      listType: Type
-      mapType: MapType
+      list: Type
+      literal: LiteralType
+      map: MapType
       object: ObjectType
       optional: Type
       primitive: PrimitiveType
+      set: Type
+      undicriminatedUnion: UndiscriminatedUnionType
       unknown: {}
+
+  DiscriminatedUnionType:
+    properties:
+      declaration: Declaration
+      discriminant: NameAndWireValue
+      types:
+        docs: |
+          Map from the discriminant value (e.g. "user") to the type (e.g. User).
+        type: map<string, Type>
 
   EnumType:
     properties:
       declaration: Declaration
       values: list<NameAndWireValue>
-  
+
+  LiteralType:
+    enum:
+      - BOOLEAN
+      - STRING
+
   MapType:
     properties:
       key: Type
@@ -160,3 +166,11 @@ types:
       - UUID
       - BASE_64
       - BIG_INTEGER
+  
+  UndiscriminatedUnionType:
+    properties:
+      declaration: Declaration
+      types:
+        docs: |
+          The dynamic type will be rendered with the first type that matches.
+        type: list<Type>

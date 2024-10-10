@@ -1,10 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
+import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { FuncInvocation } from "./FuncInvocation";
 import { GoTypeReference } from "./GoTypeReference";
+import { MethodInvocation } from "./MethodInvocation";
 import { Type } from "./Type";
-import { CodeBlock } from "./CodeBlock";
 
 type InternalTypeInstantiation =
     | Any_
@@ -12,12 +13,15 @@ type InternalTypeInstantiation =
     | Bytes
     | Date
     | DateTime
+    | Enum
     | Float64
     | Int
     | Int64
+    | Nop
     | Optional
     | Slice
     | String_
+    | Struct
     | Uuid;
 
 interface Any_ {
@@ -45,6 +49,11 @@ interface DateTime {
     value: string;
 }
 
+interface Enum {
+    type: "enum";
+    typeReference: GoTypeReference;
+}
+
 interface Float64 {
     type: "float64";
     value: number;
@@ -65,10 +74,25 @@ interface Optional {
     value: TypeInstantiation;
 }
 
+interface Nop {
+    type: "nop";
+}
+
 interface Slice {
     type: "slice";
     valueType: Type;
     values: TypeInstantiation[];
+}
+
+interface Struct {
+    type: "struct";
+    typeReference: GoTypeReference;
+    fields: StructField[];
+}
+
+export interface StructField {
+    name: string;
+    value: TypeInstantiation;
 }
 
 interface String_ {
@@ -104,6 +128,9 @@ export class TypeInstantiation extends AstNode {
             case "dateTime":
                 writer.writeNode(invokeMustParseDate({ writer, type: this.internalType }));
                 break;
+            case "enum":
+                writer.writeNode(this.internalType.typeReference);
+                break;
             case "float64":
                 writer.write(this.internalType.value.toString());
                 break;
@@ -111,40 +138,19 @@ export class TypeInstantiation extends AstNode {
             case "int64":
                 writer.write(this.internalType.value.toString());
                 break;
-            case "optional": {
-                // TODO: We need to look ahead in order to know how to instantiate the type.
-                //
-                // This implementation isn't exhaustive yet (e.g. maps).
-                if (POINTER_HELPER_TYPES.has(this.internalType.value.internalType.type)) {
-                    writer.writeNode(invokePointerHelper({ writer, type: this.internalType.value }));
-                    return;
-                }
-                if (ADDRESSABLE_TYPES.has(this.internalType.value.internalType.type)) {
-                    this.internalType.value.write(writer);
-                    return;
-                }
-                writer.write("&");
-                this.internalType.value.write(writer);
+            case "nop":
+                break; // no-op
+            case "optional":
+                this.writeOptional({ writer, type: this.internalType.value });
                 break;
-            }
             case "slice":
-                writer.write("[]");
-                this.internalType.valueType.write(writer);
-                if (this.internalType.values.length === 0) {
-                    writer.write("{}");
-                    return;
-                }
-                writer.writeLine("{");
-                writer.indent();
-                for (const value of this.internalType.values) {
-                    value.write(writer);
-                    writer.writeLine(",");
-                }
-                writer.dedent();
-                writer.write("}");
+                this.writeSlice({ writer, slice: this.internalType });
                 break;
             case "string":
                 writer.write(`"${this.internalType.value}"`);
+                break;
+            case "struct":
+                this.writeStruct({ writer, struct: this.internalType });
                 break;
             case "uuid":
                 writer.writeNode(invokeMustParseUUID({ value: this.internalType.value }));
@@ -190,6 +196,13 @@ export class TypeInstantiation extends AstNode {
         });
     }
 
+    public static enum(typeReference: GoTypeReference): TypeInstantiation {
+        return new this({
+            type: "enum",
+            typeReference
+        });
+    }
+
     public static float64(value: number): TypeInstantiation {
         return new this({
             type: "float64",
@@ -211,6 +224,12 @@ export class TypeInstantiation extends AstNode {
         });
     }
 
+    public static nop(): TypeInstantiation {
+        return new this({
+            type: "nop"
+        });
+    }
+
     public static optional(value: TypeInstantiation): TypeInstantiation {
         return new this({
             type: "optional",
@@ -218,7 +237,7 @@ export class TypeInstantiation extends AstNode {
         });
     }
 
-    public static slice(valueType: Type, values: TypeInstantiation[]): TypeInstantiation {
+    public static slice({ valueType, values }: { valueType: Type; values: TypeInstantiation[] }): TypeInstantiation {
         return new this({
             type: "slice",
             valueType,
@@ -233,11 +252,89 @@ export class TypeInstantiation extends AstNode {
         });
     }
 
+    public static struct({
+        typeReference,
+        fields
+    }: {
+        typeReference: GoTypeReference;
+        fields: StructField[];
+    }): TypeInstantiation {
+        return new this({
+            type: "struct",
+            typeReference,
+            fields
+        });
+    }
+
     public static uuid(value: string): TypeInstantiation {
         return new this({
             type: "uuid",
             value
         });
+    }
+
+    private writeOptional({ writer, type }: { writer: Writer; type: TypeInstantiation }): void {
+        // TODO: This implementation isn't exhaustive yet (e.g. maps).
+        if (POINTER_HELPER_TYPES.has(type.internalType.type)) {
+            writer.writeNode(invokePointerHelper({ writer, type }));
+            return;
+        }
+        if (ADDRESSABLE_TYPES.has(type.internalType.type)) {
+            type.write(writer);
+            return;
+        }
+        if (type.internalType.type === "enum") {
+            writer.writeNode(
+                new MethodInvocation({
+                    on: type.internalType.typeReference,
+                    method: "Ptr",
+                    arguments_: []
+                })
+            );
+            return;
+        }
+        writer.write("&");
+        type.write(writer);
+    }
+
+    private writeSlice({ writer, slice }: { writer: Writer; slice: Slice }): void {
+        writer.write("[]");
+        writer.writeNode(slice.valueType);
+
+        const values = filterNopValues({ values: slice.values });
+        if (values.length === 0) {
+            writer.write("{}");
+            return;
+        }
+
+        writer.writeLine("{");
+        writer.indent();
+        for (const value of values) {
+            value.write(writer);
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.write("}");
+    }
+
+    private writeStruct({ writer, struct }: { writer: Writer; struct: Struct }): void {
+        writer.writeNode(struct.typeReference);
+
+        const fields = filterNopStructFields({ fields: struct.fields });
+        if (fields.length === 0) {
+            writer.write("{}");
+            return;
+        }
+
+        writer.writeLine("{");
+        writer.indent();
+        for (const field of fields) {
+            writer.write(`${field.name}: `);
+            field.value.write(writer);
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.write("}");
     }
 }
 
@@ -292,4 +389,12 @@ function invokeMustParseUUID({ value }: { value: string }): FuncInvocation {
         }),
         arguments_: [new CodeBlock(`"${value}"`)]
     });
+}
+
+function filterNopStructFields({ fields }: { fields: StructField[] }): StructField[] {
+    return fields.filter((field) => field.value.internalType.type !== "nop");
+}
+
+function filterNopValues({ values }: { values: TypeInstantiation[] }): TypeInstantiation[] {
+    return values.filter((value) => value.internalType.type !== "nop");
 }

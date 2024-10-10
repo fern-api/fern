@@ -13,27 +13,25 @@ The high level file layout is shown below:
 ├── pacakge.json
 └── src
     ├── Language.ts
-    ├── Resolver.ts
-    └── ResolverProvider.ts
+    ├── Generator.ts
+    └── Resolver.ts
 ```
 
 Instantiate the snippet resolver like so:
 
 ```typescript
-import { ResolverProvider } from "snippets";
+import { Resolver } from "snippets";
 
-const provider = new ResolverProvider();
-const resolver = provider.getResolver({ language: "go" });
+const resolver = new Resolver();
+const snippets = resolver.resolve({ language: "go" });
 
-const snippet = resolver.resolve({
-  snippet: {
-    endpointID: "GET /users",
-    pathParameters: {
-      username: "john.doe"
-    },
-    queryParameters: {
-      status: "DEACTIVATED"
-    }
+const snippet = snippets.generate({
+  endpointID: "GET /users",
+  pathParameters: {
+    username: "john.doe"
+  },
+  queryParameters: {
+    status: "DEACTIVATED"
   }
 });
 

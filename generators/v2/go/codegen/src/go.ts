@@ -1,15 +1,13 @@
 import {
     CodeBlock,
     Enum,
-    EnumInstantiation,
     Field,
     FuncInvocation,
     GoTypeReference,
     Method,
     MethodInvocation,
     Parameter,
-    Struct,
-    StructInstantiation
+    Struct
 } from "./ast";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
@@ -22,14 +20,6 @@ export function enum_(args: Enum.Args): Enum {
 
 export function field(args: Field.Args): Field {
     return new Field(args);
-}
-
-export function instantiateEnum(args: EnumInstantiation.Args): EnumInstantiation {
-    return new EnumInstantiation(args);
-}
-
-export function instantiateStruct(args: StructInstantiation.Args): StructInstantiation {
-    return new StructInstantiation(args);
 }
 
 export function invokeFunc(args: FuncInvocation.Args): FuncInvocation {
@@ -60,7 +50,6 @@ export { AstNode } from "./ast/core/AstNode";
 export {
     CodeBlock,
     Enum,
-    EnumInstantiation,
     Field,
     FuncInvocation,
     GoTypeReference as TypeReference,
@@ -68,7 +57,6 @@ export {
     MethodInvocation,
     Parameter,
     Struct,
-    StructInstantiation,
     Type,
     TypeInstantiation,
     Writer

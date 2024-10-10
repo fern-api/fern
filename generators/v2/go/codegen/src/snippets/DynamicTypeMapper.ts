@@ -1,50 +1,54 @@
 import { go } from "..";
-import { AstNode } from "../go";
-import { EnumType, Name, NamedParameter, ObjectType, PrimitiveType, Type, Values } from "./generated/api";
-import { Context } from "./context/Context";
 import { TypeInstantiation } from "../ast";
+import { Context } from "./context/Context";
+import {
+    DiscriminatedUnionType,
+    EnumType,
+    ObjectType,
+    PrimitiveType,
+    Type,
+    UndiscriminatedUnionType
+} from "./generated/api";
 
-export declare namespace GoTypeRenderer {
+export declare namespace DynamicTypeMapper {
     interface Args {
-        name: Name;
         type: Type;
         value: unknown;
     }
 }
-export class GoTypeRenderer {
+
+export class DynamicTypeMapper {
     private context: Context;
 
     constructor({ context }: { context: Context }) {
         this.context = context;
     }
 
-    // TODO: Construct the associated Go AST node based on the given value. At this point
-    // we confidently know what type we have, so we just need to make sure the unknown value
-    // fits.
-    //
-    // TODO: Refactor this so we always just return an instantiation and don't need to thread
-    // in the optional.
-    public render({ args, optional }: { args: GoTypeRenderer.Args; optional?: boolean }): AstNode {
+    public render(args: DynamicTypeMapper.Args): TypeInstantiation {
         switch (args.type.type) {
+            case "discriminatedUnion":
+                return this.renderDiscriminatedUnion({
+                    discriminatedUnion: args.type,
+                    value: args.value
+                });
             case "enum":
-                return this.renderEnum({ enum_: args.type, value: args.value, optional });
-            case "listType":
+                return this.renderEnum({ enum_: args.type, value: args.value });
+            case "list":
                 throw new Error("TODO: Implement me!");
-            case "mapType":
+            case "literal":
+                return TypeInstantiation.nop();
+            case "map":
                 throw new Error("TODO: Implement me!");
             case "object":
-                return this.renderObject({ object_: args.type, value: args.value, optional });
+                return this.renderObject({ object_: args.type, value: args.value });
             case "optional":
-                // TODO: This should just call TypeInstantiation.optional(...)
-                return this.render({
-                    args: {
-                        ...args,
-                        type: args.type.value
-                    },
-                    optional: true
-                });
+                return TypeInstantiation.optional(this.render(args));
             case "primitive":
-                return this.renderPrimitive({ primitive: args.type.value, value: args.value, optional });
+                return this.renderPrimitive({ primitive: args.type.value, value: args.value });
+            case "set":
+                throw new Error("TODO: Implement me!");
+            case "undicriminatedUnion":
+                return this.renderUndicriminatedUnion({ undicriminatedUnion: args.type, value: args.value });
             case "unknown":
                 throw new Error("TODO: Implement me!");
             default:
@@ -52,42 +56,44 @@ export class GoTypeRenderer {
         }
     }
 
-    private renderObject({
-        object_,
-        value,
-        optional
+    private renderDiscriminatedUnion({
+        discriminatedUnion,
+        value
     }: {
-        object_: ObjectType;
+        discriminatedUnion: DiscriminatedUnionType;
         value: unknown;
-        optional?: boolean;
-    }): AstNode {
-        // TODO: Refactor this so that the struct is a TypeInstantiation.
-        const properties = this.associateByWireValue({
+    }): TypeInstantiation {
+        const { type, value: discriminatedUnionValue } = this.context.resolveDiscriminatedUnionTypeOrThrow({
+            discriminatedUnion,
+            value
+        });
+        return this.render({ type, value: discriminatedUnionValue });
+    }
+
+    private renderObject({ object_, value }: { object_: ObjectType; value: unknown }): TypeInstantiation {
+        const properties = this.context.associateByWireValue({
             parameters: object_.properties,
             values: this.context.getRecordOrThrow(value)
         });
-        return go.instantiateStruct({
+        return go.TypeInstantiation.struct({
             typeReference: go.typeReference({
                 name: object_.declaration.name.pascalCase.unsafeName,
                 importPath: this.context.getImportPath(object_.declaration.fernFilepath)
             }),
             fields: properties.map((property) => ({
                 name: property.name.pascalCase.unsafeName,
-                value: this.render({ args: property })
-            })),
-            pointer: optional
+                value: this.render(property)
+            }))
         });
     }
 
-    private renderEnum({ enum_, value, optional }: { enum_: EnumType; value: unknown; optional?: boolean }): AstNode {
-        // TODO: Refactor this so that the enum is a TypeInstantiation.
-        return go.instantiateEnum({
-            typeReference: go.typeReference({
+    private renderEnum({ enum_, value }: { enum_: EnumType; value: unknown }): TypeInstantiation {
+        return go.TypeInstantiation.enum(
+            go.typeReference({
                 name: this.getEnumValueNameOrThrow({ enum_, value }),
                 importPath: this.context.getImportPath(enum_.declaration.fernFilepath)
-            }),
-            pointer: optional
-        });
+            })
+        );
     }
 
     private getEnumValueNameOrThrow({ enum_, value }: { enum_: EnumType; value: unknown }): string {
@@ -99,29 +105,7 @@ export class GoTypeRenderer {
         return `${enum_.declaration.name.pascalCase.unsafeName}${enumValue.name.pascalCase.unsafeName}`;
     }
 
-    private renderPrimitive({
-        primitive,
-        value,
-        optional
-    }: {
-        primitive: PrimitiveType;
-        value: unknown;
-        optional?: boolean;
-    }): AstNode {
-        const instantiation = this.getPrimitiveTypeInstantiation({ primitive, value });
-        if (optional) {
-            return go.TypeInstantiation.optional(instantiation);
-        }
-        return instantiation;
-    }
-
-    private getPrimitiveTypeInstantiation({
-        primitive,
-        value
-    }: {
-        primitive: PrimitiveType;
-        value: unknown;
-    }): TypeInstantiation {
+    private renderPrimitive({ primitive, value }: { primitive: PrimitiveType; value: unknown }): TypeInstantiation {
         // TODO: DRY this up.
         switch (primitive) {
             case "INTEGER": {
@@ -212,26 +196,22 @@ export class GoTypeRenderer {
         }
     }
 
-    // TODO: DRY this up and move it into a shared location.
-    private associateByWireValue({
-        parameters,
-        values
+    private renderUndicriminatedUnion({
+        undicriminatedUnion,
+        value
     }: {
-        parameters: NamedParameter[];
-        values: Values;
-    }): GoTypeRenderer.Args[] {
-        const args: GoTypeRenderer.Args[] = [];
-        for (const [key, value] of Object.entries(values)) {
-            const parameter = parameters.find((param) => param.name.wireValue === key);
-            if (parameter == null) {
-                throw new Error(`"${key}" is not a recognized parameter for this endpoint`);
+        undicriminatedUnion: UndiscriminatedUnionType;
+        value: unknown;
+    }): TypeInstantiation {
+        for (const type of undicriminatedUnion.types) {
+            try {
+                return this.render({ type, value });
+            } catch (e) {
+                continue;
             }
-            args.push({
-                name: parameter.name.name,
-                type: parameter.type,
-                value
-            });
         }
-        return args;
+        throw new Error(
+            `None of the types in the undicriminated union matched the given value: ${JSON.stringify(value)}`
+        );
     }
 }

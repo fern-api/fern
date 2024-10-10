@@ -1,6 +1,6 @@
 export { CodeBlock } from "./CodeBlock";
+export { Writer } from "./core/Writer";
 export { Enum } from "./Enum";
-export { EnumInstantiation } from "./EnumInstantiation";
 export { Field } from "./Field";
 export { FuncInvocation } from "./FuncInvocation";
 export { GoTypeReference } from "./GoTypeReference";
@@ -8,7 +8,5 @@ export { Method } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
 export { Parameter } from "./Parameter";
 export { Struct } from "./Struct";
-export { StructInstantiation } from "./StructInstantiation";
 export { Type } from "./Type";
-export { TypeInstantiation } from "./TypeInstantiation";
-export { Writer } from "./core/Writer";
+export { TypeInstantiation, type StructField } from "./TypeInstantiation";
