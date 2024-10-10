@@ -212,7 +212,60 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/organizations/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "name": "name"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "id": "id",
+                "name": "name",
+                "users": [
+                  {
+                    "id": "id",
+                    "name": "name",
+                    "age": 1
+                  },
+                  {
+                    "id": "id",
+                    "name": "name",
+                    "age": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "id",
+                  "name": "name",
+                  "users": [
+                    {
+                      "id": "id",
+                      "name": "name",
+                      "age": 1
+                    },
+                    {
+                      "id": "id",
+                      "name": "name",
+                      "age": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -276,7 +329,43 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "id": "id",
+                  "name": "name",
+                  "age": 1
+                },
+                {
+                  "id": "id",
+                  "name": "name",
+                  "age": 1
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "id": "id",
+                    "name": "name",
+                    "age": 1
+                  },
+                  {
+                    "id": "id",
+                    "name": "name",
+                    "age": 1
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -341,7 +430,39 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users/events/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "id": "id",
+                  "name": "name"
+                },
+                {
+                  "id": "id",
+                  "name": "name"
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "id": "id",
+                    "name": "name"
+                  },
+                  {
+                    "id": "id",
+                    "name": "name"
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -397,7 +518,33 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users/events/metadata/",
+              "pathParameters": {},
+              "queryParameters": {
+                "id": "id"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "id": "id",
+                "value": {
+                  "key": "value"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "id",
+                  "value": {
+                    "key": "value"
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

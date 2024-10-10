@@ -22,8 +22,8 @@ var client = new SeedOauthClientCredentialsDefaultClient("CLIENT_ID", "CLIENT_SE
 await client.Auth.GetTokenAsync(
     new GetTokenRequest
     {
-        ClientId = "string",
-        ClientSecret = "string",
+        ClientId = "client_id",
+        ClientSecret = "client_secret",
         GrantType = "client_credentials",
     }
 );

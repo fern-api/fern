@@ -68,12 +68,7 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.users.list_with_cursor_pagination(
-            page=1,
-            per_page=1,
-            order="asc",
-            starting_after="string",
-        )
+        response = client.users.list_with_cursor_pagination()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -140,17 +135,12 @@ class UsersClient:
         Examples
         --------
         from seed import SeedPagination
-        from seed.users import WithCursor
 
         client = SeedPagination(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.users.list_with_body_cursor_pagination(
-            pagination=WithCursor(
-                cursor="string",
-            ),
-        )
+        response = client.users.list_with_body_cursor_pagination()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -232,12 +222,7 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.users.list_with_offset_pagination(
-            page=1,
-            per_page=1,
-            order="asc",
-            starting_after="string",
-        )
+        response = client.users.list_with_offset_pagination()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -301,17 +286,12 @@ class UsersClient:
         Examples
         --------
         from seed import SeedPagination
-        from seed.users import WithPage
 
         client = SeedPagination(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.users.list_with_body_offset_pagination(
-            pagination=WithPage(
-                page=1,
-            ),
-        )
+        response = client.users.list_with_body_offset_pagination()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -387,11 +367,7 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.users.list_with_offset_step_pagination(
-            page=1,
-            limit=1,
-            order="asc",
-        )
+        response = client.users.list_with_offset_step_pagination()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -468,11 +444,7 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.users.list_with_offset_pagination_has_next_page(
-            page=1,
-            limit=1,
-            order="asc",
-        )
+        response = client.users.list_with_offset_pagination_has_next_page()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -530,19 +502,13 @@ class UsersClient:
 
         Examples
         --------
-        import uuid
-
         from seed import SeedPagination
 
         client = SeedPagination(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.users.list_with_extended_results(
-            cursor=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-        )
+        response = client.users.list_with_extended_results()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -598,19 +564,13 @@ class UsersClient:
 
         Examples
         --------
-        import uuid
-
         from seed import SeedPagination
 
         client = SeedPagination(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.users.list_with_extended_results_and_optional_data(
-            cursor=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-        )
+        response = client.users.list_with_extended_results_and_optional_data()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -674,9 +634,7 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.users.list_usernames(
-            starting_after="string",
-        )
+        response = client.users.list_usernames()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -741,9 +699,7 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.users.list_with_global_config(
-            offset=1,
-        )
+        response = client.users.list_with_global_config()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -829,12 +785,7 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            response = await client.users.list_with_cursor_pagination(
-                page=1,
-                per_page=1,
-                order="asc",
-                starting_after="string",
-            )
+            response = await client.users.list_with_cursor_pagination()
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -906,7 +857,6 @@ class AsyncUsersClient:
         import asyncio
 
         from seed import AsyncSeedPagination
-        from seed.users import WithCursor
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
@@ -915,11 +865,7 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            response = await client.users.list_with_body_cursor_pagination(
-                pagination=WithCursor(
-                    cursor="string",
-                ),
-            )
+            response = await client.users.list_with_body_cursor_pagination()
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -1009,12 +955,7 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            response = await client.users.list_with_offset_pagination(
-                page=1,
-                per_page=1,
-                order="asc",
-                starting_after="string",
-            )
+            response = await client.users.list_with_offset_pagination()
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -1083,7 +1024,6 @@ class AsyncUsersClient:
         import asyncio
 
         from seed import AsyncSeedPagination
-        from seed.users import WithPage
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
@@ -1092,11 +1032,7 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            response = await client.users.list_with_body_offset_pagination(
-                pagination=WithPage(
-                    page=1,
-                ),
-            )
+            response = await client.users.list_with_body_offset_pagination()
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -1180,11 +1116,7 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            response = await client.users.list_with_offset_step_pagination(
-                page=1,
-                limit=1,
-                order="asc",
-            )
+            response = await client.users.list_with_offset_step_pagination()
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -1269,11 +1201,7 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            response = await client.users.list_with_offset_pagination_has_next_page(
-                page=1,
-                limit=1,
-                order="asc",
-            )
+            response = await client.users.list_with_offset_pagination_has_next_page()
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -1335,7 +1263,6 @@ class AsyncUsersClient:
         Examples
         --------
         import asyncio
-        import uuid
 
         from seed import AsyncSeedPagination
 
@@ -1346,11 +1273,7 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            response = await client.users.list_with_extended_results(
-                cursor=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-            )
+            response = await client.users.list_with_extended_results()
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -1410,7 +1333,6 @@ class AsyncUsersClient:
         Examples
         --------
         import asyncio
-        import uuid
 
         from seed import AsyncSeedPagination
 
@@ -1421,11 +1343,7 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            response = await client.users.list_with_extended_results_and_optional_data(
-                cursor=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-            )
+            response = await client.users.list_with_extended_results_and_optional_data()
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -1497,9 +1415,7 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            response = await client.users.list_usernames(
-                starting_after="string",
-            )
+            response = await client.users.list_usernames()
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -1572,9 +1488,7 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            response = await client.users.list_with_global_config(
-                offset=1,
-            )
+            response = await client.users.list_with_global_config()
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page

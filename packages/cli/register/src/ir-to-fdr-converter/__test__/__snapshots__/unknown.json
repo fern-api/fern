@@ -78,7 +78,44 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "key": "value"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "key": "value"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "key": "value"
+                },
+                {
+                  "key": "value"
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "key": "value"
+                  },
+                  {
+                    "key": "value"
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -126,7 +163,48 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/with-object",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "unknown": {
+                  "key": "value"
+                }
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "unknown": {
+                    "key": "value"
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "key": "value"
+                },
+                {
+                  "key": "value"
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "key": "value"
+                  },
+                  {
+                    "key": "value"
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

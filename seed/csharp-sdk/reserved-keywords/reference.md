@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Package.TestAsync(new TestRequest { For = "string" });
+await client.Package.TestAsync(new TestRequest { For = "for" });
 ```
 </dd>
 </dl>

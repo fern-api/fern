@@ -26,7 +26,7 @@ client = SeedVersion(
     base_url="https://yourhost.com/path/to/api",
 )
 client.user.get_user(
-    user_id="string",
+    user_id="userId",
 )
 ```
 
@@ -46,7 +46,7 @@ client = AsyncSeedVersion(
 
 async def main() -> None:
     await client.user.get_user(
-        user_id="string",
+        user_id="userId",
     )
 
 

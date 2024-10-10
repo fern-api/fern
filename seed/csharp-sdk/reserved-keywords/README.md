@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedNurseryApi;
 
 var client = new SeedNurseryApiClient();
-await client.Package.TestAsync(new TestRequest { For = "string" });
+await client.Package.TestAsync(new TestRequest { For = "for" });
 ```
 
 ## Exception Handling

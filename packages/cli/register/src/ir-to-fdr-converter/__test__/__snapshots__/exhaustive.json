@@ -556,7 +556,38 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/container/list-of-primitives",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": [
+                "string",
+                "string"
+              ],
+              "requestBodyV3": {
+                "type": "json",
+                "value": [
+                  "string",
+                  "string"
+                ]
+              },
+              "responseStatusCode": 200,
+              "responseBody": [
+                "string",
+                "string"
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  "string",
+                  "string"
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -608,7 +639,54 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/container/list-of-objects",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": [
+                {
+                  "string": "string"
+                },
+                {
+                  "string": "string"
+                }
+              ],
+              "requestBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "string": "string"
+                  },
+                  {
+                    "string": "string"
+                  }
+                ]
+              },
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "string": "string"
+                },
+                {
+                  "string": "string"
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "string": "string"
+                  },
+                  {
+                    "string": "string"
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -664,7 +742,34 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/container/set-of-primitives",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": [
+                "string"
+              ],
+              "requestBodyV3": {
+                "type": "json",
+                "value": [
+                  "string"
+                ]
+              },
+              "responseStatusCode": 200,
+              "responseBody": [
+                "string"
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  "string"
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -716,7 +821,42 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/container/set-of-objects",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": [
+                {
+                  "string": "string"
+                }
+              ],
+              "requestBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "string": "string"
+                  }
+                ]
+              },
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "string": "string"
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "string": "string"
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -784,7 +924,34 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/container/map-prim-to-prim",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "string": "string"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": "string"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "string": "string"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": "string"
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -848,7 +1015,42 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/container/map-prim-to-object",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "string": {
+                  "string": "string"
+                }
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": {
+                    "string": "string"
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "string": {
+                  "string": "string"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": {
+                    "string": "string"
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -900,7 +1102,22 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/container/opt-objects",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
+              },
+              "responseStatusCode": 200,
+              "responseBodyV3": {
+                "type": "json"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -956,7 +1173,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/enum",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "SUNNY",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "SUNNY"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "SUNNY",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "SUNNY"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -1019,7 +1255,23 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/http-methods/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1065,7 +1317,30 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/http-methods",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "string": "string"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": "string"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1129,7 +1404,32 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/http-methods/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "string": "string"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": "string"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1193,7 +1493,28 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/http-methods/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1247,7 +1568,23 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/http-methods/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": true,
+              "responseBodyV3": {
+                "type": "json",
+                "value": true
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -1303,7 +1640,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/object/get-and-return-with-optional-field",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1349,7 +1705,34 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/object/get-and-return-with-required-field",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "string": "string"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": "string"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "string": "string"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": "string"
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1395,7 +1778,50 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/object/get-and-return-with-map-of-map",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "map": {
+                  "map": {
+                    "map": "map"
+                  }
+                }
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "map": {
+                    "map": {
+                      "map": "map"
+                    }
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "map": {
+                  "map": {
+                    "map": "map"
+                  }
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "map": {
+                    "map": {
+                      "map": "map"
+                    }
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1441,7 +1867,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/object/get-and-return-nested-with-optional-field",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1505,7 +1950,40 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/object/get-and-return-nested-with-required-field/string",
+              "pathParameters": {
+                "string": "string"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "string": "string",
+                "NestedObject": {}
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": "string",
+                  "NestedObject": {}
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "string": "string",
+                "NestedObject": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": "string",
+                  "NestedObject": {}
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1554,7 +2032,50 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/object/get-and-return-nested-with-required-field-list",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": [
+                {
+                  "string": "string",
+                  "NestedObject": {}
+                },
+                {
+                  "string": "string",
+                  "NestedObject": {}
+                }
+              ],
+              "requestBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "string": "string",
+                    "NestedObject": {}
+                  },
+                  {
+                    "string": "string",
+                    "NestedObject": {}
+                  }
+                ]
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "string": "string",
+                "NestedObject": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": "string",
+                  "NestedObject": {}
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -1618,7 +2139,23 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/params/path/param",
+              "pathParameters": {
+                "param": "param"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1662,7 +2199,19 @@
           ],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/params",
+              "pathParameters": {},
+              "queryParameters": {
+                "query": "query",
+                "number": 1
+              },
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1706,7 +2255,19 @@
           ],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/params",
+              "pathParameters": {},
+              "queryParameters": {
+                "query": "query",
+                "numer": 1
+              },
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1759,7 +2320,20 @@
           ],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/params/path-query/param",
+              "pathParameters": {
+                "param": "param"
+              },
+              "queryParameters": {
+                "query": "query"
+              },
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1828,7 +2402,28 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/params/path/param",
+              "pathParameters": {
+                "param": "param"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -1888,7 +2483,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/primitive/string",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1938,7 +2552,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/primitive/integer",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": 1,
+              "requestBodyV3": {
+                "type": "json",
+                "value": 1
+              },
+              "responseStatusCode": 200,
+              "responseBody": 1,
+              "responseBodyV3": {
+                "type": "json",
+                "value": 1
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -1990,7 +2623,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/primitive/long",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": 1000000,
+              "requestBodyV3": {
+                "type": "json",
+                "value": 1000000
+              },
+              "responseStatusCode": 200,
+              "responseBody": 1000000,
+              "responseBodyV3": {
+                "type": "json",
+                "value": 1000000
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -2040,7 +2692,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/primitive/double",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": 1.1,
+              "requestBodyV3": {
+                "type": "json",
+                "value": 1.1
+              },
+              "responseStatusCode": 200,
+              "responseBody": 1.1,
+              "responseBodyV3": {
+                "type": "json",
+                "value": 1.1
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -2092,7 +2763,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/primitive/boolean",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": true,
+              "requestBodyV3": {
+                "type": "json",
+                "value": true
+              },
+              "responseStatusCode": 200,
+              "responseBody": true,
+              "responseBodyV3": {
+                "type": "json",
+                "value": true
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -2144,7 +2834,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/primitive/datetime",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "SGVsbG8gd29ybGQh",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "SGVsbG8gd29ybGQh"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "SGVsbG8gd29ybGQh",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "SGVsbG8gd29ybGQh"
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -2196,7 +2905,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/primitive/date",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "2023-01-15",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "2023-01-15"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "2023-01-15",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "2023-01-15"
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -2246,7 +2974,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/primitive/uuid",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -2298,7 +3045,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/primitive/base64",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "SGVsbG8gd29ybGQh",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "SGVsbG8gd29ybGQh"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "SGVsbG8gd29ybGQh",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "SGVsbG8gd29ybGQh"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -2354,7 +3120,42 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/union",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "animal": "dog",
+                "name": "name",
+                "likesToWoof": true
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "animal": "dog",
+                  "name": "name",
+                  "likesToWoof": true
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "animal": "dog",
+                "name": "name",
+                "likesToWoof": true
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "animal": "dog",
+                  "name": "name",
+                  "likesToWoof": true
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -2459,7 +3260,34 @@
               "examples": []
             }
           ],
-          "examples": []
+          "examples": [
+            {
+              "path": "/req-bodies/object",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "string": "string",
+                "integer": 1,
+                "NestedObject": {}
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": "string",
+                  "integer": 1,
+                  "NestedObject": {}
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -2531,7 +3359,30 @@
               "examples": []
             }
           ],
-          "examples": []
+          "examples": [
+            {
+              "path": "/no-auth",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "key": "value"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "key": "value"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": true,
+              "responseBodyV3": {
+                "type": "json",
+                "value": true
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -2574,7 +3425,21 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/no-req-body",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": true,
@@ -2609,7 +3474,21 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/no-req-body",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -2677,7 +3556,24 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/test-headers/custom-header",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
+                "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER"
+              },
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

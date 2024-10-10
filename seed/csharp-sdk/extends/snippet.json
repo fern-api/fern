@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedExtends;\n\nvar client = new SeedExtendsClient();\nawait client.ExtendedInlineRequestBodyAsync(\n    new Inlined\n    {\n        Unique = \"string\",\n        Name = \"string\",\n        Docs = \"string\",\n    }\n);\n"
+                "client": "using SeedExtends;\n\nvar client = new SeedExtendsClient();\nawait client.ExtendedInlineRequestBodyAsync(new Inlined { Unique = \"unique\" });\n"
             }
         }
     ]

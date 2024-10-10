@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedApi;
 
 var client = new SeedApiClient();
-await client.GetAccountAsync("string");
+await client.GetAccountAsync("account_id");
 ```
 
 ## Exception Handling

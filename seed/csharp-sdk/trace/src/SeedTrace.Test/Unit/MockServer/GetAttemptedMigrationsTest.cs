@@ -18,7 +18,11 @@ public class GetAttemptedMigrationsTest : BaseMockServerTest
         const string mockResponse = """
             [
               {
-                "name": "string",
+                "name": "name",
+                "status": "RUNNING"
+              },
+              {
+                "name": "name",
                 "status": "RUNNING"
               }
             ]
@@ -29,7 +33,7 @@ public class GetAttemptedMigrationsTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/migration-info/all")
-                    .WithHeader("admin-key-header", "string")
+                    .WithHeader("admin-key-header", "admin-key-header")
                     .UsingGet()
             )
             .RespondWith(
@@ -40,7 +44,7 @@ public class GetAttemptedMigrationsTest : BaseMockServerTest
             );
 
         var response = await Client.Migration.GetAttemptedMigrationsAsync(
-            new GetAttemptedMigrationsRequest { AdminKeyHeader = "string" },
+            new GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" },
             RequestOptions
         );
         JToken

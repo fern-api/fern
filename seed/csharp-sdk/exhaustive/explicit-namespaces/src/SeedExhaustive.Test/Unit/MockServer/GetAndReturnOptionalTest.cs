@@ -1,9 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedExhaustive.Core;
-using SeedExhaustive.Types.Object;
 
 #nullable enable
 
@@ -13,18 +8,10 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class GetAndReturnOptionalTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public void MockServerTest()
     {
         const string requestJson = """
-            {
-              "string": "string"
-            }
-            """;
 
-        const string mockResponse = """
-            {
-              "string": "string"
-            }
             """;
 
         Server
@@ -33,22 +20,13 @@ public class GetAndReturnOptionalTest : BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/container/opt-objects")
                     .UsingPost()
-                    .WithBodyAsJson(requestJson)
+                    .WithBody(requestJson)
             )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        var response = await Client.Endpoints.Container.GetAndReturnOptionalAsync(
-            new ObjectWithRequiredField { String = "string" },
-            RequestOptions
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Endpoints.Container.GetAndReturnOptionalAsync(null, RequestOptions)
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

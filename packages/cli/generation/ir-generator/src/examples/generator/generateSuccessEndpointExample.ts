@@ -13,10 +13,14 @@ import {
     HttpHeader,
     ExampleHeader,
     ExampleEndpointSuccessResponse,
-    ExampleRequestBody
+    ExampleRequestBody,
+    ExampleObjectProperty,
+    ExampleInlinedRequestBody,
+    ExampleInlinedRequestBodyProperty
 } from "@fern-api/ir-sdk";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { isOptional } from "./isTypeReferenceOptional";
 
 export declare namespace generateSuccessEndpointExample {
     interface Args {
@@ -24,6 +28,8 @@ export declare namespace generateSuccessEndpointExample {
         service: HttpService;
         endpoint: HttpEndpoint;
         typeDeclarations: Record<TypeId, TypeDeclaration>;
+
+        skipOptionalRequestProperties: boolean;
     }
 
     interface ParameterGroup<T, K> {
@@ -36,7 +42,8 @@ export function generateSuccessEndpointExample({
     ir,
     endpoint,
     service,
-    typeDeclarations
+    typeDeclarations,
+    skipOptionalRequestProperties
 }: generateSuccessEndpointExample.Args): ExampleGenerationResult<ExampleEndpointCall> {
     const result: Omit<ExampleEndpointCall, "id" | "url"> = {
         name: undefined,
@@ -73,7 +80,8 @@ export function generateSuccessEndpointExample({
                 currentDepth: 0,
                 maxDepth: 1,
                 typeDeclarations,
-                typeReference: pathParameter.valueType
+                typeReference: pathParameter.valueType,
+                skipOptionalProperties: skipOptionalRequestProperties
             });
             if (generatedExample.type === "failure") {
                 return generatedExample;
@@ -87,12 +95,19 @@ export function generateSuccessEndpointExample({
     }
 
     for (const queryParameter of endpoint.queryParameters) {
+        if (
+            skipOptionalRequestProperties &&
+            isOptional({ typeDeclarations, typeReference: queryParameter.valueType })
+        ) {
+            continue;
+        }
         const generatedExample = generateTypeReferenceExample({
             fieldName: queryParameter.name.name.originalName,
             currentDepth: 0,
             maxDepth: 1,
             typeDeclarations,
-            typeReference: queryParameter.valueType
+            typeReference: queryParameter.valueType,
+            skipOptionalProperties: skipOptionalRequestProperties
         });
         if (generatedExample.type === "failure") {
             return generatedExample;
@@ -120,12 +135,16 @@ export function generateSuccessEndpointExample({
 
     for (const group of headerGroup) {
         for (const header of group.params) {
+            if (skipOptionalRequestProperties && isOptional({ typeDeclarations, typeReference: header.valueType })) {
+                continue;
+            }
             const generatedExample = generateTypeReferenceExample({
                 fieldName: header.name.name.originalName,
                 currentDepth: 0,
                 maxDepth: 1,
                 typeDeclarations,
-                typeReference: header.valueType
+                typeReference: header.valueType,
+                skipOptionalProperties: skipOptionalRequestProperties
             });
             if (generatedExample.type === "failure") {
                 return generatedExample;
@@ -144,14 +163,53 @@ export function generateSuccessEndpointExample({
                 return { type: "failure", message: "Bytes request unsupported" };
             case "fileUpload":
                 return { type: "failure", message: "File upload unsupported" };
-            case "inlinedRequestBody":
-                return { type: "failure", message: "Inlined Request unsupported" };
+            case "inlinedRequestBody": {
+                const jsonExample: Record<string, unknown> = {};
+                const properties: ExampleInlinedRequestBodyProperty[] = [];
+                for (const property of [
+                    ...(endpoint.requestBody.properties ?? []),
+                    ...(endpoint.requestBody.extendedProperties ?? [])
+                ]) {
+                    const propertyExample = generateTypeReferenceExample({
+                        fieldName: property.name.wireValue,
+                        typeReference: property.valueType,
+                        typeDeclarations,
+                        currentDepth: 1,
+                        maxDepth: 10,
+                        skipOptionalProperties: skipOptionalRequestProperties
+                    });
+                    if (
+                        propertyExample.type === "failure" &&
+                        !isOptional({ typeDeclarations, typeReference: property.valueType })
+                    ) {
+                        return {
+                            type: "failure",
+                            message: `Failed to generate required property ${property.name.wireValue} b/c ${propertyExample.message}`
+                        };
+                    } else if (propertyExample.type === "failure") {
+                        continue;
+                    }
+                    const { example, jsonExample: propertyJsonExample } = propertyExample;
+                    properties.push({
+                        name: property.name,
+                        originalTypeDeclaration: undefined,
+                        value: example
+                    });
+                    jsonExample[property.name.wireValue] = propertyJsonExample;
+                }
+                result.request = ExampleRequestBody.inlinedRequestBody({
+                    jsonExample,
+                    properties
+                });
+                break;
+            }
             case "reference": {
                 const generatedExample = generateTypeReferenceExample({
                     currentDepth: 0,
                     maxDepth: 10,
                     typeDeclarations,
-                    typeReference: endpoint.requestBody.requestBodyType
+                    typeReference: endpoint.requestBody.requestBodyType,
+                    skipOptionalProperties: skipOptionalRequestProperties
                 });
                 if (generatedExample.type === "failure") {
                     return generatedExample;
@@ -174,7 +232,8 @@ export function generateSuccessEndpointExample({
                     currentDepth: 0,
                     maxDepth: 10,
                     typeDeclarations,
-                    typeReference: endpoint.response.body.value.responseBodyType
+                    typeReference: endpoint.response.body.value.responseBodyType,
+                    skipOptionalProperties: skipOptionalRequestProperties
                 });
                 if (generatedExample.type === "failure") {
                     return generatedExample;

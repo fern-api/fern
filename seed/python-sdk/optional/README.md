@@ -25,9 +25,7 @@ from seed import SeedObjectsWithImports
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
 )
-client.optional.send_optional_body(
-    request={"string": {"key": "value"}},
-)
+client.optional.send_optional_body()
 ```
 
 ## Async Client
@@ -45,9 +43,7 @@ client = AsyncSeedObjectsWithImports(
 
 
 async def main() -> None:
-    await client.optional.send_optional_body(
-        request={"string": {"key": "value"}},
-    )
+    await client.optional.send_optional_body()
 
 
 asyncio.run(main())

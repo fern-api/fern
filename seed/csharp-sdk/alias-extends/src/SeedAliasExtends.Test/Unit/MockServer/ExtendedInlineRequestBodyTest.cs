@@ -13,8 +13,7 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "child": "string",
-              "parent": "string"
+              "child": "child"
             }
             """;
 
@@ -31,7 +30,7 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.ExtendedInlineRequestBodyAsync(
-                    new InlinedChildRequest { Child = "string", Parent = "string" },
+                    new InlinedChildRequest { Child = "child" },
                     RequestOptions
                 )
         );

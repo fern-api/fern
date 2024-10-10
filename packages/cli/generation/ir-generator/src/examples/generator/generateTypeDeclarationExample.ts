@@ -10,6 +10,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { isOptional } from "./isTypeReferenceOptional";
 
 export declare namespace generateTypeDeclarationExample {
     interface Args {
@@ -20,6 +21,8 @@ export declare namespace generateTypeDeclarationExample {
 
         maxDepth: number;
         currentDepth: number;
+
+        skipOptionalProperties: boolean;
     }
 }
 
@@ -28,7 +31,8 @@ export function generateTypeDeclarationExample({
     typeDeclarations,
     typeDeclaration,
     maxDepth,
-    currentDepth
+    currentDepth,
+    skipOptionalProperties
 }: generateTypeDeclarationExample.Args): ExampleGenerationResult<ExampleTypeShape> {
     switch (typeDeclaration.shape.type) {
         case "alias": {
@@ -37,7 +41,8 @@ export function generateTypeDeclarationExample({
                 typeDeclarations,
                 typeReference: typeDeclaration.shape.aliasOf,
                 maxDepth,
-                currentDepth
+                currentDepth,
+                skipOptionalProperties
             });
             if (generatedExample.type === "failure") {
                 return generatedExample;
@@ -71,7 +76,8 @@ export function generateTypeDeclarationExample({
                 objectTypeDeclaration: typeDeclaration.shape,
                 typeDeclarations,
                 currentDepth,
-                maxDepth
+                maxDepth,
+                skipOptionalProperties
             });
             if (objectExample.type === "failure") {
                 return objectExample;
@@ -91,7 +97,8 @@ export function generateTypeDeclarationExample({
                     typeReference: variant.type,
                     typeDeclarations,
                     currentDepth: currentDepth + 1,
-                    maxDepth
+                    maxDepth,
+                    skipOptionalProperties
                 });
                 if (variantExample.type === "failure") {
                     continue;
@@ -144,7 +151,8 @@ export function generateTypeDeclarationExample({
                             fieldName,
                             objectTypeDeclaration: typeDeclaration.shape,
                             typeDeclaration,
-                            typeDeclarations
+                            typeDeclarations,
+                            skipOptionalProperties
                         });
                         if (objectExample.type === "failure") {
                             return objectExample;
@@ -174,7 +182,8 @@ export function generateTypeDeclarationExample({
                             maxDepth,
                             fieldName,
                             typeReference: value.type,
-                            typeDeclarations
+                            typeDeclarations,
+                            skipOptionalProperties
                         });
                         if (singlePropertyExample.type === "failure") {
                             return singlePropertyExample;
@@ -215,7 +224,8 @@ function generateObjectDeclarationExample({
     objectTypeDeclaration,
     typeDeclarations,
     maxDepth,
-    currentDepth
+    currentDepth,
+    skipOptionalProperties
 }: {
     fieldName?: string;
     typeDeclaration: TypeDeclaration;
@@ -223,6 +233,7 @@ function generateObjectDeclarationExample({
     typeDeclarations: Record<TypeId, TypeDeclaration>;
     maxDepth: number;
     currentDepth: number;
+    skipOptionalProperties: boolean;
 }): ExampleGenerationResult<ExampleObjectType> {
     const jsonExample: Record<string, unknown> = {};
     const properties: ExampleObjectProperty[] = [];
@@ -235,11 +246,12 @@ function generateObjectDeclarationExample({
             typeReference: property.valueType,
             typeDeclarations,
             currentDepth: currentDepth + 1,
-            maxDepth
+            maxDepth,
+            skipOptionalProperties
         });
         if (
             propertyExample.type === "failure" &&
-            !(property.valueType.type === "container" && property.valueType.container.type === "optional")
+            !isOptional({ typeDeclarations, typeReference: property.valueType })
         ) {
             return {
                 type: "failure",

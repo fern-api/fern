@@ -12,7 +12,7 @@
 <dd>
 
 ```csharp
-await client.GetAsync("type-kaljhv87");
+await client.GetAsync("typeId");
 ```
 </dd>
 </dl>

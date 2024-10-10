@@ -19,6 +19,8 @@ export declare namespace generateTypeReferenceExample {
 
         maxDepth: number;
         currentDepth: number;
+
+        skipOptionalProperties: boolean;
     }
 }
 
@@ -27,7 +29,8 @@ export function generateTypeReferenceExample({
     typeReference,
     typeDeclarations,
     maxDepth,
-    currentDepth
+    currentDepth,
+    skipOptionalProperties
 }: generateTypeReferenceExample.Args): ExampleGenerationResult<ExampleTypeReference> {
     if (currentDepth > maxDepth) {
         return { type: "failure", message: "Exceeded max depth" };
@@ -43,7 +46,8 @@ export function generateTypeReferenceExample({
                 typeDeclaration,
                 typeDeclarations,
                 maxDepth,
-                currentDepth
+                currentDepth,
+                skipOptionalProperties
             });
             if (generatedExample.type === "failure") {
                 return generatedExample;
@@ -67,7 +71,8 @@ export function generateTypeReferenceExample({
                 containerType: typeReference.container,
                 typeDeclarations,
                 maxDepth,
-                currentDepth
+                currentDepth,
+                skipOptionalProperties
             });
             if (generatedExample.type === "failure") {
                 const { example, jsonExample } = generateEmptyContainerExample({

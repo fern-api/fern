@@ -320,7 +320,29 @@
           }
         },
         "errorsV2": [],
-        "examples": []
+        "examples": [
+          {
+            "path": "/account/account_id",
+            "pathParameters": {
+              "account_id": "account_id"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "resource_type": "Account",
+              "name": "name"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "resource_type": "Account",
+                "name": "name"
+              }
+            },
+            "codeSamples": []
+          }
+        ]
       }
     ],
     "webhooks": [],

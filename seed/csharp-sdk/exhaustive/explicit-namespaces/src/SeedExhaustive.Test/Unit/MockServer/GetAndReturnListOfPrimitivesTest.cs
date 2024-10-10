@@ -16,12 +16,14 @@ public class GetAndReturnListOfPrimitivesTest : BaseMockServerTest
     {
         const string requestJson = """
             [
+              "string",
               "string"
             ]
             """;
 
         const string mockResponse = """
             [
+              "string",
               "string"
             ]
             """;
@@ -42,7 +44,7 @@ public class GetAndReturnListOfPrimitivesTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
-            new List<string>() { "string" },
+            new List<string>() { "string", "string" },
             RequestOptions
         );
         JToken

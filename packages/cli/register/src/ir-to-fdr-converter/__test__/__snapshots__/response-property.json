@@ -202,7 +202,36 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/movie",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "data": {
+                  "id": "id",
+                  "name": "name"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "data": {
+                    "id": "id",
+                    "name": "name"
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -250,7 +279,36 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/movie",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "data": {
+                  "id": "id",
+                  "name": "name"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "data": {
+                    "id": "id",
+                    "name": "name"
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -298,7 +356,30 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/movie",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "data": "data"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "data": "data"
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -346,7 +427,36 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/movie",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "data": {
+                  "id": "id",
+                  "name": "name"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "data": {
+                    "id": "id",
+                    "name": "name"
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -397,7 +507,24 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/movie",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBodyV3": {
+                "type": "json"
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -445,7 +572,24 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/movie",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBodyV3": {
+                "type": "json"
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -493,7 +637,24 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/movie",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBodyV3": {
+                "type": "json"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

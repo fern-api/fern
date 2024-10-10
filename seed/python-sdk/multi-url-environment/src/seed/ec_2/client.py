@@ -36,7 +36,7 @@ class Ec2Client:
             token="YOUR_TOKEN",
         )
         client.ec_2.boot_instance(
-            size="string",
+            size="size",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -88,7 +88,7 @@ class AsyncEc2Client:
 
         async def main() -> None:
             await client.ec_2.boot_instance(
-                size="string",
+                size="size",
             )
 
 

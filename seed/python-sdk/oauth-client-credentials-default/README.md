@@ -28,8 +28,8 @@ client = SeedOauthClientCredentialsDefault(
     client_secret="YOUR_CLIENT_SECRET",
 )
 client.auth.get_token(
-    client_id="string",
-    client_secret="string",
+    client_id="client_id",
+    client_secret="client_secret",
 )
 ```
 
@@ -51,8 +51,8 @@ client = AsyncSeedOauthClientCredentialsDefault(
 
 async def main() -> None:
     await client.auth.get_token(
-        client_id="string",
-        client_secret="string",
+        client_id="client_id",
+        client_secret="client_secret",
     )
 
 

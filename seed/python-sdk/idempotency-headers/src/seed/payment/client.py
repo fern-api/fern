@@ -109,7 +109,7 @@ class PaymentClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.payment.delete(
-            payment_id="string",
+            payment_id="paymentId",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -233,7 +233,7 @@ class AsyncPaymentClient:
 
         async def main() -> None:
             await client.payment.delete(
-                payment_id="string",
+                payment_id="paymentId",
             )
 
 
