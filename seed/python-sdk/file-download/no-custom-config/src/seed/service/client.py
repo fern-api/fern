@@ -22,15 +22,6 @@ class ServiceClient:
         Yields
         ------
         typing.Iterator[bytes]
-
-        Examples
-        --------
-        from seed import SeedFileDownload
-
-        client = SeedFileDownload(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.download_file()
         """
         with self._client_wrapper.httpx_client.stream(
             method="POST",
@@ -65,23 +56,6 @@ class AsyncServiceClient:
         Yields
         ------
         typing.AsyncIterator[bytes]
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedFileDownload
-
-        client = AsyncSeedFileDownload(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.download_file()
-
-
-        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             method="POST",

@@ -16,13 +16,13 @@ public class GetUserTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "id": "string",
-              "name": "string"
+              "id": "id",
+              "name": "name"
             }
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users/string").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users/userId").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -30,7 +30,7 @@ public class GetUserTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.User.GetUserAsync("string", RequestOptions);
+        var response = await Client.User.GetUserAsync("userId", RequestOptions);
         JToken
             .Parse(mockResponse)
             .Should()

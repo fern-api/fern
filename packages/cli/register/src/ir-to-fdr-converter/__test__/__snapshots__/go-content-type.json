@@ -24,7 +24,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -80,7 +83,32 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/movies/create-movie",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "title": "title",
+                "rating": 1.1
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "title": "title",
+                  "rating": 1.1
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

@@ -16,7 +16,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_user:User": {
@@ -34,7 +37,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -115,7 +121,38 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/user",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "_type": "CreateUserRequest",
+                "_version": "v1",
+                "name": "name"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "_type": "CreateUserRequest",
+                  "_version": "v1",
+                  "name": "name"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "name": "name"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name"
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

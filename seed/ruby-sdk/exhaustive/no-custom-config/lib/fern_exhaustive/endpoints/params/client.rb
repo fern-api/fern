@@ -23,7 +23,7 @@ module SeedExhaustiveClient
       # @return [String]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.params.get_with_path(param: "string")
+      #  exhaustive.endpoints.params.get_with_path(param: "param")
       def get_with_path(param:, request_options: nil)
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -52,7 +52,7 @@ module SeedExhaustiveClient
       # @return [Void]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.params.get_with_query(query: "string", number: 1)
+      #  exhaustive.endpoints.params.get_with_query(query: "query", number: 1)
       def get_with_query(query:, number:, request_options: nil)
         @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -82,7 +82,7 @@ module SeedExhaustiveClient
       # @return [Void]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.params.get_with_allow_multiple_query(query: "string", numer: 1)
+      #  exhaustive.endpoints.params.get_with_allow_multiple_query(query: "query", numer: 1)
       def get_with_allow_multiple_query(query:, numer:, request_options: nil)
         @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -112,7 +112,7 @@ module SeedExhaustiveClient
       # @return [Void]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.params.get_with_path_and_query(param: "string", query: "string")
+      #  exhaustive.endpoints.params.get_with_path_and_query(param: "param", query: "query")
       def get_with_path_and_query(param:, query:, request_options: nil)
         @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -138,7 +138,7 @@ module SeedExhaustiveClient
       # @return [String]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.params.modify_with_path(param: "string", request: "string")
+      #  exhaustive.endpoints.params.modify_with_path(param: "param", request: "string")
       def modify_with_path(param:, request:, request_options: nil)
         response = @request_client.conn.put do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -175,7 +175,7 @@ module SeedExhaustiveClient
       # @return [String]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.params.get_with_path(param: "string")
+      #  exhaustive.endpoints.params.get_with_path(param: "param")
       def get_with_path(param:, request_options: nil)
         Async do
           response = @request_client.conn.get do |req|
@@ -207,7 +207,7 @@ module SeedExhaustiveClient
       # @return [Void]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.params.get_with_query(query: "string", number: 1)
+      #  exhaustive.endpoints.params.get_with_query(query: "query", number: 1)
       def get_with_query(query:, number:, request_options: nil)
         Async do
           @request_client.conn.get do |req|
@@ -239,7 +239,7 @@ module SeedExhaustiveClient
       # @return [Void]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.params.get_with_allow_multiple_query(query: "string", numer: 1)
+      #  exhaustive.endpoints.params.get_with_allow_multiple_query(query: "query", numer: 1)
       def get_with_allow_multiple_query(query:, numer:, request_options: nil)
         Async do
           @request_client.conn.get do |req|
@@ -271,7 +271,7 @@ module SeedExhaustiveClient
       # @return [Void]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.params.get_with_path_and_query(param: "string", query: "string")
+      #  exhaustive.endpoints.params.get_with_path_and_query(param: "param", query: "query")
       def get_with_path_and_query(param:, query:, request_options: nil)
         Async do
           @request_client.conn.get do |req|
@@ -299,7 +299,7 @@ module SeedExhaustiveClient
       # @return [String]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.params.modify_with_path(param: "string", request: "string")
+      #  exhaustive.endpoints.params.modify_with_path(param: "param", request: "string")
       def modify_with_path(param:, request:, request_options: nil)
         Async do
           response = @request_client.conn.put do |req|

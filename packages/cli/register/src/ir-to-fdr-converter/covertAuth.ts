@@ -42,8 +42,10 @@ export function convertAuth(
                               type: "clientCredentials",
                               value: {
                                   type: "referencedEndpoint",
-                                  endpointId: scheme.configuration.tokenEndpoint.endpointReference.endpointId,
-                                  accessTokenLocator: tokenPath
+                                  endpointId: FdrCjsSdk.EndpointId(
+                                      scheme.configuration.tokenEndpoint.endpointReference.endpointId
+                                  ),
+                                  accessTokenLocator: FdrCjsSdk.JqString(tokenPath)
                               }
                           }
                       }

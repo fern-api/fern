@@ -20,7 +20,7 @@ export const ResponseWithExample: core.serialization.Schema<
         text: TextResponse,
         streamingSse: JsonResponse,
         streamingText: TextResponse,
-        streamingJson: JsonResponse,
+        streamingJson: JsonResponseWithExample,
     })
     .transform<FernOpenapiIr.ResponseWithExample>({
         transform: (value) => {
@@ -73,7 +73,7 @@ export declare namespace ResponseWithExample {
         type: "streamingText";
     }
 
-    interface StreamingJson extends JsonResponse.Raw {
+    interface StreamingJson extends JsonResponseWithExample.Raw {
         type: "streamingJson";
     }
 }

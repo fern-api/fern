@@ -15,7 +15,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_package:Record": {
@@ -51,7 +54,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -92,7 +98,18 @@
           ],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {
+                "for": "for"
+              },
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

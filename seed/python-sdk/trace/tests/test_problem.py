@@ -16,47 +16,79 @@ from .utilities import validate_response
 
 
 async def test_create_problem(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response: typing.Any = {"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "success"}
+    expected_response: typing.Any = {"type": "success", "value": "string"}
     expected_types: typing.Any = "no_validate"
     response = client.problem.create_problem(
-        problem_name="string",
-        problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value="string")]),
+        problem_name="problemName",
+        problem_description=ProblemDescription(
+            boards=[ProblemDescriptionBoard_Html(value="boards"), ProblemDescriptionBoard_Html(value="boards")]
+        ),
         files={
             "JAVA": ProblemFiles(
-                solution_file=FileInfo(filename="string", contents="string"),
-                read_only_files=[FileInfo(filename="string", contents="string")],
+                solution_file=FileInfo(filename="filename", contents="contents"),
+                read_only_files=[
+                    FileInfo(filename="filename", contents="contents"),
+                    FileInfo(filename="filename", contents="contents"),
+                ],
             )
         },
-        input_params=[VariableTypeAndName(variable_type=VariableType(), name="string")],
+        input_params=[
+            VariableTypeAndName(variable_type=VariableType(), name="name"),
+            VariableTypeAndName(variable_type=VariableType(), name="name"),
+        ],
         output_type=VariableType(),
         testcases=[
             TestCaseWithExpectedResult(
-                test_case=TestCase(id="string", params=[VariableValue_IntegerValue(value=1)]),
+                test_case=TestCase(
+                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                ),
                 expected_result=VariableValue_IntegerValue(value=1),
-            )
+            ),
+            TestCaseWithExpectedResult(
+                test_case=TestCase(
+                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                ),
+                expected_result=VariableValue_IntegerValue(value=1),
+            ),
         ],
-        method_name="string",
+        method_name="methodName",
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.problem.create_problem(
-        problem_name="string",
-        problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value="string")]),
+        problem_name="problemName",
+        problem_description=ProblemDescription(
+            boards=[ProblemDescriptionBoard_Html(value="boards"), ProblemDescriptionBoard_Html(value="boards")]
+        ),
         files={
             "JAVA": ProblemFiles(
-                solution_file=FileInfo(filename="string", contents="string"),
-                read_only_files=[FileInfo(filename="string", contents="string")],
+                solution_file=FileInfo(filename="filename", contents="contents"),
+                read_only_files=[
+                    FileInfo(filename="filename", contents="contents"),
+                    FileInfo(filename="filename", contents="contents"),
+                ],
             )
         },
-        input_params=[VariableTypeAndName(variable_type=VariableType(), name="string")],
+        input_params=[
+            VariableTypeAndName(variable_type=VariableType(), name="name"),
+            VariableTypeAndName(variable_type=VariableType(), name="name"),
+        ],
         output_type=VariableType(),
         testcases=[
             TestCaseWithExpectedResult(
-                test_case=TestCase(id="string", params=[VariableValue_IntegerValue(value=1)]),
+                test_case=TestCase(
+                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                ),
                 expected_result=VariableValue_IntegerValue(value=1),
-            )
+            ),
+            TestCaseWithExpectedResult(
+                test_case=TestCase(
+                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                ),
+                expected_result=VariableValue_IntegerValue(value=1),
+            ),
         ],
-        method_name="string",
+        method_name="methodName",
     )
     validate_response(async_response, expected_response, expected_types)
 
@@ -65,46 +97,78 @@ async def test_update_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
     expected_response: typing.Any = {"problemVersion": 1}
     expected_types: typing.Any = {"problemVersion": "integer"}
     response = client.problem.update_problem(
-        problem_id="string",
-        problem_name="string",
-        problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value="string")]),
+        problem_id="problemId",
+        problem_name="problemName",
+        problem_description=ProblemDescription(
+            boards=[ProblemDescriptionBoard_Html(value="boards"), ProblemDescriptionBoard_Html(value="boards")]
+        ),
         files={
             "JAVA": ProblemFiles(
-                solution_file=FileInfo(filename="string", contents="string"),
-                read_only_files=[FileInfo(filename="string", contents="string")],
+                solution_file=FileInfo(filename="filename", contents="contents"),
+                read_only_files=[
+                    FileInfo(filename="filename", contents="contents"),
+                    FileInfo(filename="filename", contents="contents"),
+                ],
             )
         },
-        input_params=[VariableTypeAndName(variable_type=VariableType(), name="string")],
+        input_params=[
+            VariableTypeAndName(variable_type=VariableType(), name="name"),
+            VariableTypeAndName(variable_type=VariableType(), name="name"),
+        ],
         output_type=VariableType(),
         testcases=[
             TestCaseWithExpectedResult(
-                test_case=TestCase(id="string", params=[VariableValue_IntegerValue(value=1)]),
+                test_case=TestCase(
+                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                ),
                 expected_result=VariableValue_IntegerValue(value=1),
-            )
+            ),
+            TestCaseWithExpectedResult(
+                test_case=TestCase(
+                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                ),
+                expected_result=VariableValue_IntegerValue(value=1),
+            ),
         ],
-        method_name="string",
+        method_name="methodName",
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.problem.update_problem(
-        problem_id="string",
-        problem_name="string",
-        problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value="string")]),
+        problem_id="problemId",
+        problem_name="problemName",
+        problem_description=ProblemDescription(
+            boards=[ProblemDescriptionBoard_Html(value="boards"), ProblemDescriptionBoard_Html(value="boards")]
+        ),
         files={
             "JAVA": ProblemFiles(
-                solution_file=FileInfo(filename="string", contents="string"),
-                read_only_files=[FileInfo(filename="string", contents="string")],
+                solution_file=FileInfo(filename="filename", contents="contents"),
+                read_only_files=[
+                    FileInfo(filename="filename", contents="contents"),
+                    FileInfo(filename="filename", contents="contents"),
+                ],
             )
         },
-        input_params=[VariableTypeAndName(variable_type=VariableType(), name="string")],
+        input_params=[
+            VariableTypeAndName(variable_type=VariableType(), name="name"),
+            VariableTypeAndName(variable_type=VariableType(), name="name"),
+        ],
         output_type=VariableType(),
         testcases=[
             TestCaseWithExpectedResult(
-                test_case=TestCase(id="string", params=[VariableValue_IntegerValue(value=1)]),
+                test_case=TestCase(
+                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                ),
                 expected_result=VariableValue_IntegerValue(value=1),
-            )
+            ),
+            TestCaseWithExpectedResult(
+                test_case=TestCase(
+                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                ),
+                expected_result=VariableValue_IntegerValue(value=1),
+            ),
         ],
-        method_name="string",
+        method_name="methodName",
     )
     validate_response(async_response, expected_response, expected_types)
 
@@ -112,12 +176,12 @@ async def test_update_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
 async def test_delete_problem(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.problem.delete_problem(problem_id="string")  # type: ignore[func-returns-value]
+        client.problem.delete_problem(problem_id="problemId")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.problem.delete_problem(problem_id="string")  # type: ignore[func-returns-value]
+        await async_client.problem.delete_problem(problem_id="problemId")  # type: ignore[func-returns-value]
         is None
     )
 
@@ -125,9 +189,12 @@ async def test_delete_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
 async def test_get_default_starter_files(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = {
         "files": {
-            "string": {
-                "solutionFile": {"filename": "string", "contents": "string"},
-                "readOnlyFiles": [{"filename": "string", "contents": "string"}],
+            "JAVA": {
+                "solutionFile": {"filename": "filename", "contents": "contents"},
+                "readOnlyFiles": [
+                    {"filename": "filename", "contents": "contents"},
+                    {"filename": "filename", "contents": "contents"},
+                ],
             }
         }
     }
@@ -139,22 +206,31 @@ async def test_get_default_starter_files(client: SeedTrace, async_client: AsyncS
                     None,
                     {
                         "solutionFile": {"filename": None, "contents": None},
-                        "readOnlyFiles": ("list", {0: {"filename": None, "contents": None}}),
+                        "readOnlyFiles": (
+                            "list",
+                            {0: {"filename": None, "contents": None}, 1: {"filename": None, "contents": None}},
+                        ),
                     },
                 )
             },
         )
     }
     response = client.problem.get_default_starter_files(
-        input_params=[VariableTypeAndName(variable_type=VariableType(), name="string")],
+        input_params=[
+            VariableTypeAndName(variable_type=VariableType(), name="name"),
+            VariableTypeAndName(variable_type=VariableType(), name="name"),
+        ],
         output_type=VariableType(),
-        method_name="string",
+        method_name="methodName",
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.problem.get_default_starter_files(
-        input_params=[VariableTypeAndName(variable_type=VariableType(), name="string")],
+        input_params=[
+            VariableTypeAndName(variable_type=VariableType(), name="name"),
+            VariableTypeAndName(variable_type=VariableType(), name="name"),
+        ],
         output_type=VariableType(),
-        method_name="string",
+        method_name="methodName",
     )
     validate_response(async_response, expected_response, expected_types)

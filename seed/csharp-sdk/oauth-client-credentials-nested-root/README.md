@@ -19,15 +19,15 @@ Instantiate and use the client with the following:
 using SeedOauthClientCredentials.Auth;
 using SeedOauthClientCredentials;
 
-var client = new SeedOauthClientCredentialsClient();
+var client = new SeedOauthClientCredentialsClient("CLIENT_ID", "CLIENT_SECRET");
 await client.Auth.GetTokenAsync(
     new GetTokenRequest
     {
-        ClientId = "string",
-        ClientSecret = "string",
+        ClientId = "client_id",
+        ClientSecret = "client_secret",
         Audience = "https://api.example.com",
         GrantType = "client_credentials",
-        Scope = "string",
+        Scope = null,
     }
 );
 ```

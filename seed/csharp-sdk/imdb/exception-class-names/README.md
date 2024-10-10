@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedApi;
 
 var client = new SeedApiClient("TOKEN");
-await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "string", Rating = 1.1 });
+await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
 ```
 
 ## Exception Handling

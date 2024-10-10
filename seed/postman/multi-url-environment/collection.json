@@ -60,7 +60,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"size\": \"string\"\n}",
+              "raw": "{\n    \"size\": \"size\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -98,7 +98,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"size\": \"string\"\n}",
+                  "raw": "{\n    \"size\": \"size\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -147,7 +147,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"s3Key\": \"string\"\n}",
+              "raw": "{\n    \"s3Key\": \"s3Key\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -185,7 +185,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"s3Key\": \"string\"\n}",
+                  "raw": "{\n    \"s3Key\": \"s3Key\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"

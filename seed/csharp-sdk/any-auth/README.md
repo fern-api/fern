@@ -18,15 +18,15 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedAnyAuth;
 
-var client = new SeedAnyAuthClient();
+var client = new SeedAnyAuthClient("TOKEN");
 await client.Auth.GetTokenAsync(
     new GetTokenRequest
     {
-        ClientId = "string",
-        ClientSecret = "string",
+        ClientId = "client_id",
+        ClientSecret = "client_secret",
         Audience = "https://api.example.com",
         GrantType = "client_credentials",
-        Scope = "string",
+        Scope = null,
     }
 );
 ```

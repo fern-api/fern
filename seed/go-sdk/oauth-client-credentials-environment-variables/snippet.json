@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials-environment-variables/fern\"\n\tfernclient \"github.com/oauth-client-credentials-environment-variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tcontext.TODO(),\n\t\u0026fern.GetTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials-environment-variables/fern\"\n\tfernclient \"github.com/oauth-client-credentials-environment-variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tcontext.TODO(),\n\t\u0026fern.GetTokenRequest{\n\t\tClientId:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t},\n)\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials-environment-variables/fern\"\n\tfernclient \"github.com/oauth-client-credentials-environment-variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.RefreshToken(\n\tcontext.TODO(),\n\t\u0026fern.RefreshTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t\tRefreshToken: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials-environment-variables/fern\"\n\tfernclient \"github.com/oauth-client-credentials-environment-variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.RefreshToken(\n\tcontext.TODO(),\n\t\u0026fern.RefreshTokenRequest{\n\t\tClientId:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t\tRefreshToken: \"refresh_token\",\n\t},\n)\n"
             }
         }
     ]

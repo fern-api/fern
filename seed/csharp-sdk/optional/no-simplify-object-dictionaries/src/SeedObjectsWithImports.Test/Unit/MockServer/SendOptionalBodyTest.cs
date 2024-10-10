@@ -15,11 +15,7 @@ public class SendOptionalBodyTest : BaseMockServerTest
     public async Task MockServerTest()
     {
         const string requestJson = """
-            {
-              "string": {
-                "key": "value"
-              }
-            }
+
             """;
 
         const string mockResponse = """
@@ -32,7 +28,7 @@ public class SendOptionalBodyTest : BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/send-optional-body")
                     .UsingPost()
-                    .WithBodyAsJson(requestJson)
+                    .WithBody(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -41,16 +37,7 @@ public class SendOptionalBodyTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Optional.SendOptionalBodyAsync(
-            new Dictionary<string, object>()
-            {
-                {
-                    "string",
-                    new Dictionary<object, object?>() { { "key", "value" } }
-                },
-            },
-            RequestOptions
-        );
+        var response = await Client.Optional.SendOptionalBodyAsync(null, RequestOptions);
         JToken
             .Parse(mockResponse)
             .Should()

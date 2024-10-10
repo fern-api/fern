@@ -2,7 +2,7 @@ import { isNonNullish } from "@fern-api/core-utils";
 import { EndpointExample, FullExample, PathParameterExample } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { convertFullExample } from "./utils/convertFullExample";
+import { convertEndpointResponseExample, convertFullExample } from "./utils/convertFullExample";
 
 export function buildEndpointExample({
     endpointExample,
@@ -41,11 +41,7 @@ export function buildEndpointExample({
     }
 
     if (endpointExample.response != null) {
-        example.response = { body: convertFullExample(endpointExample.response) };
-    }
-
-    if (endpointExample.response != null) {
-        example.response = { body: convertFullExample(endpointExample.response) };
+        example.response = convertEndpointResponseExample(endpointExample.response);
     }
 
     if (endpointExample.codeSamples != null && endpointExample.codeSamples.length > 0) {

@@ -1,0 +1,7 @@
+# frozen_string_literal: true
+
+require_relative "seed_mixed_file_directory_client/organization/types/organization"
+require_relative "seed_mixed_file_directory_client/organization/types/create_organization_request"
+require_relative "seed_mixed_file_directory_client/user/types/user"
+require_relative "seed_mixed_file_directory_client/user/events/types/event"
+require_relative "seed_mixed_file_directory_client/user/events/metadata/types/metadata"

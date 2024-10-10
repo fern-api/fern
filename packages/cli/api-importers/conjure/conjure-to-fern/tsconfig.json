@@ -5,5 +5,7 @@
   "references": [
     { "path": "../conjure-sdk" },
     { "path": "../../commons" },
+    { "path": "../../../../commons/core-utils" },
+    { "path": "../../../fern-definition/schema" },
   ]
 }

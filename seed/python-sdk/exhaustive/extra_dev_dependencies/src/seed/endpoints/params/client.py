@@ -41,7 +41,7 @@ class ParamsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.params.get_with_path(
-            param="string",
+            param="param",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -91,7 +91,7 @@ class ParamsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.params.get_with_query(
-            query="string",
+            query="query",
             number=1,
         )
         """
@@ -144,7 +144,7 @@ class ParamsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.params.get_with_allow_multiple_query(
-            query="string",
+            query="query",
             numer=1,
         )
         """
@@ -193,8 +193,8 @@ class ParamsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.params.get_with_path_and_query(
-            param="string",
-            query="string",
+            param="param",
+            query="query",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -241,7 +241,7 @@ class ParamsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.params.modify_with_path(
-            param="string",
+            param="param",
             request="string",
         )
         """
@@ -300,7 +300,7 @@ class AsyncParamsClient:
 
         async def main() -> None:
             await client.endpoints.params.get_with_path(
-                param="string",
+                param="param",
             )
 
 
@@ -358,7 +358,7 @@ class AsyncParamsClient:
 
         async def main() -> None:
             await client.endpoints.params.get_with_query(
-                query="string",
+                query="query",
                 number=1,
             )
 
@@ -419,7 +419,7 @@ class AsyncParamsClient:
 
         async def main() -> None:
             await client.endpoints.params.get_with_allow_multiple_query(
-                query="string",
+                query="query",
                 numer=1,
             )
 
@@ -476,8 +476,8 @@ class AsyncParamsClient:
 
         async def main() -> None:
             await client.endpoints.params.get_with_path_and_query(
-                param="string",
-                query="string",
+                param="param",
+                query="query",
             )
 
 
@@ -532,7 +532,7 @@ class AsyncParamsClient:
 
         async def main() -> None:
             await client.endpoints.params.modify_with_path(
-                param="string",
+                param="param",
                 request="string",
             )
 

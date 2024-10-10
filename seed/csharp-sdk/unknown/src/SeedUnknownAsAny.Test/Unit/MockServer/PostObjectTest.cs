@@ -18,14 +18,16 @@ public class PostObjectTest : BaseMockServerTest
         const string requestJson = """
             {
               "unknown": {
-                "boolVal": true,
-                "strVal": "string"
+                "key": "value"
               }
             }
             """;
 
         const string mockResponse = """
             [
+              {
+                "key": "value"
+              },
               {
                 "key": "value"
               }
@@ -48,14 +50,7 @@ public class PostObjectTest : BaseMockServerTest
             );
 
         var response = await Client.Unknown.PostObjectAsync(
-            new MyObject
-            {
-                Unknown = new Dictionary<object, object?>()
-                {
-                    { "boolVal", true },
-                    { "strVal", "string" },
-                },
-            },
+            new MyObject { Unknown = new Dictionary<object, object?>() { { "key", "value" } } },
             RequestOptions
         );
         JToken

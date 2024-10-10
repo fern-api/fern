@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetAccountAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetAccountAsync(\"account_id\");\n"
             }
         }
     ]

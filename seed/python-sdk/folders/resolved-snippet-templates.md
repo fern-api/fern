@@ -64,14 +64,3 @@ client.folder.service.unknown_request(
 ```                        
 
 
-```python
-
-
-client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
-client.folder.service.unknown_request(
-	request={"key":"value"}
-)
- 
-```                        
-
-

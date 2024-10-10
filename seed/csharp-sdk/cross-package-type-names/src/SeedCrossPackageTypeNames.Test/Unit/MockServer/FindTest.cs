@@ -16,15 +16,12 @@ public class FindTest : BaseMockServerTest
     public async Task MockServerTest()
     {
         const string requestJson = """
-            {
-              "publicProperty": "string",
-              "privateProperty": 1
-            }
+            {}
             """;
 
         const string mockResponse = """
             {
-              "imported": "string"
+              "imported": "imported"
             }
             """;
 
@@ -33,7 +30,6 @@ public class FindTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/")
-                    .WithParam("optionalString", "string")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -45,12 +41,7 @@ public class FindTest : BaseMockServerTest
             );
 
         var response = await Client.Foo.FindAsync(
-            new FindRequest
-            {
-                OptionalString = "string",
-                PublicProperty = "string",
-                PrivateProperty = 1,
-            },
+            new FindRequest { PublicProperty = null, PrivateProperty = null },
             RequestOptions
         );
         JToken

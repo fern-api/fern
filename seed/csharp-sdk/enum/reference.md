@@ -167,9 +167,7 @@ await client.QueryParam.SendListAsync(
     new SendEnumListAsQueryParamRequest
     {
         Operand = [Operand.GreaterThan],
-        MaybeOperand = [Operand.GreaterThan],
         OperandOrColor = [Color.Red],
-        MaybeOperandOrColor = [Color.Red],
     }
 );
 ```

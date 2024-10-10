@@ -37,7 +37,7 @@ class UserClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.get_user(
-            user_id="string",
+            user_id="userId",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -90,7 +90,7 @@ class AsyncUserClient:
 
         async def main() -> None:
             await client.user.get_user(
-                user_id="string",
+                user_id="userId",
             )
 
 

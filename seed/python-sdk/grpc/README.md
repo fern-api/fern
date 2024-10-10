@@ -26,10 +26,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 client.user.create_user(
-    username="string",
-    email="string",
-    age=1,
-    weight=1.1,
+    username="username",
 )
 ```
 
@@ -49,10 +46,7 @@ client = AsyncSeedApi(
 
 async def main() -> None:
     await client.user.create_user(
-        username="string",
-        email="string",
-        age=1,
-        weight=1.1,
+        username="username",
     )
 
 

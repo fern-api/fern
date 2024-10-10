@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedIdempotencyHeaders;\n\nvar client = new SeedIdempotencyHeadersClient(\"TOKEN\");\nawait client.Payment.DeleteAsync(\"string\");\n"
+                "client": "using SeedIdempotencyHeaders;\n\nvar client = new SeedIdempotencyHeadersClient(\"TOKEN\");\nawait client.Payment.DeleteAsync(\"paymentId\");\n"
             }
         }
     ]

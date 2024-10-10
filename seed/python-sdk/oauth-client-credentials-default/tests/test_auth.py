@@ -9,10 +9,10 @@ from .utilities import validate_response
 async def test_get_token(
     client: SeedOauthClientCredentialsDefault, async_client: AsyncSeedOauthClientCredentialsDefault
 ) -> None:
-    expected_response: typing.Any = {"access_token": "string", "expires_in": 1}
+    expected_response: typing.Any = {"access_token": "access_token", "expires_in": 1}
     expected_types: typing.Any = {"access_token": None, "expires_in": "integer"}
-    response = client.auth.get_token(client_id="string", client_secret="string")
+    response = client.auth.get_token(client_id="client_id", client_secret="client_secret")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.auth.get_token(client_id="string", client_secret="string")
+    async_response = await async_client.auth.get_token(client_id="client_id", client_secret="client_secret")
     validate_response(async_response, expected_response, expected_types)

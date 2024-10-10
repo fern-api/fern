@@ -189,7 +189,7 @@ exports[`migrateFromV43ToV42 > snapshot 1`] = `
               "response": {
                 "body": {
                   "jsonExample": {
-                    "name": "string",
+                    "name": "name",
                   },
                   "shape": {
                     "shape": {
@@ -283,11 +283,11 @@ exports[`migrateFromV43ToV42 > snapshot 1`] = `
                             "typeId": "type_service:User",
                           },
                           "value": {
-                            "jsonExample": "string",
+                            "jsonExample": "name",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "string",
+                                  "original": "name",
                                 },
                                 "type": "string",
                               },

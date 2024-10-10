@@ -14,7 +14,7 @@ client.unknown.post(
 
 client = SeedUnknownAsAny(base_url="https://yourhost.com/path/to/api", )        
 client.unknown.post_object(
-	unknown={"boolVal":true,"strVal":"string"}
+	unknown={"key":"value"}
 )
  
 ```                        

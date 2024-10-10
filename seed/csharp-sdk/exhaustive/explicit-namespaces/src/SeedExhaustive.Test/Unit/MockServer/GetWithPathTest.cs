@@ -20,7 +20,7 @@ public class GetWithPathTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/params/path/string").UsingGet()
+                WireMock.RequestBuilders.Request.Create().WithPath("/params/path/param").UsingGet()
             )
             .RespondWith(
                 WireMock
@@ -29,7 +29,7 @@ public class GetWithPathTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.Params.GetWithPathAsync("string", RequestOptions);
+        var response = await Client.Endpoints.Params.GetWithPathAsync("param", RequestOptions);
         JToken
             .Parse(mockResponse)
             .Should()

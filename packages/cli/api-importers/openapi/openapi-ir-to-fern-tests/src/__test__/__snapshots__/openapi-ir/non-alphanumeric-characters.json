@@ -65,13 +65,16 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "separator": {
-                "value": "/",
-                "type": "enum"
-              }
+            "value": {
+              "properties": {
+                "separator": {
+                  "value": "/",
+                  "type": "enum"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

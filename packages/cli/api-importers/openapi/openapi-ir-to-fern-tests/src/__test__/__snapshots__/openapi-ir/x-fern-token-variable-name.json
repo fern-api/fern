@@ -79,10 +79,13 @@
           },
           "response": {
             "value": {
-              "value": "string",
-              "type": "string"
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
             },
-            "type": "primitive"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

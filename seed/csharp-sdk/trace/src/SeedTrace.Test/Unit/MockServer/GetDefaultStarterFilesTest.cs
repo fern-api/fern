@@ -22,28 +22,38 @@ public class GetDefaultStarterFilesTest : BaseMockServerTest
                   "variableType": {
                     "type": "integerType"
                   },
-                  "name": "string"
+                  "name": "name"
+                },
+                {
+                  "variableType": {
+                    "type": "integerType"
+                  },
+                  "name": "name"
                 }
               ],
               "outputType": {
                 "type": "integerType"
               },
-              "methodName": "string"
+              "methodName": "methodName"
             }
             """;
 
         const string mockResponse = """
             {
               "files": {
-                "string": {
+                "JAVA": {
                   "solutionFile": {
-                    "filename": "string",
-                    "contents": "string"
+                    "filename": "filename",
+                    "contents": "contents"
                   },
                   "readOnlyFiles": [
                     {
-                      "filename": "string",
-                      "contents": "string"
+                      "filename": "filename",
+                      "contents": "contents"
+                    },
+                    {
+                      "filename": "filename",
+                      "contents": "contents"
                     }
                   ]
                 }
@@ -71,14 +81,11 @@ public class GetDefaultStarterFilesTest : BaseMockServerTest
             {
                 InputParams = new List<VariableTypeAndName>()
                 {
-                    new VariableTypeAndName
-                    {
-                        VariableType = "no-properties-union",
-                        Name = "string",
-                    },
+                    new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+                    new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
                 },
                 OutputType = "no-properties-union",
-                MethodName = "string",
+                MethodName = "methodName",
             },
             RequestOptions
         );

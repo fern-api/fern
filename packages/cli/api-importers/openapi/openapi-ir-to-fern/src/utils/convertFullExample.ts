@@ -1,5 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FullExample, FullOneOfExample, KeyValuePair, LiteralExample, PrimitiveExample } from "@fern-api/openapi-ir";
+import {
+    EndpointResponseExample,
+    FullExample,
+    FullOneOfExample,
+    KeyValuePair,
+    LiteralExample,
+    PrimitiveExample
+} from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function convertFullExample(fullExample: FullExample): RawSchemas.ExampleTypeReferenceSchema {
@@ -22,6 +29,23 @@ export function convertFullExample(fullExample: FullExample): RawSchemas.Example
             return convertFullExample(fullExample.value);
         default:
             assertNever(fullExample);
+    }
+}
+
+export function convertEndpointResponseExample(
+    endpointResponseExample: EndpointResponseExample
+): RawSchemas.ExampleStreamResponseSchema | RawSchemas.ExampleBodyResponseSchema {
+    switch (endpointResponseExample.type) {
+        case "withStreaming":
+            return {
+                stream: convertArrayExample(endpointResponseExample.value)
+            };
+        case "withoutStreaming":
+            return {
+                body: convertFullExample(endpointResponseExample.value)
+            };
+        default:
+            assertNever(endpointResponseExample);
     }
 }
 
@@ -73,7 +97,7 @@ function convertObject(object: Record<PropertyKey, FullExample>): RawSchemas.Exa
     );
 }
 
-function convertArrayExample(fullExamples: FullExample[]): RawSchemas.ExampleTypeReferenceSchema {
+function convertArrayExample(fullExamples: FullExample[]): RawSchemas.ExampleTypeReferenceSchema[] {
     return fullExamples.map((fullExample) => {
         return convertFullExample(fullExample);
     });

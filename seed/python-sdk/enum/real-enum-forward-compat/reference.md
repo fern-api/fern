@@ -267,9 +267,7 @@ client = SeedEnum(
 )
 client.query_param.send_list(
     operand=Operand.GREATER_THAN,
-    maybe_operand=Operand.GREATER_THAN,
     operand_or_color=Color.RED,
-    maybe_operand_or_color=Color.RED,
 )
 
 ```
