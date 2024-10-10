@@ -23,9 +23,12 @@ Instantiate and use the client with the following:
 import { SeedServerSentEventsClient } from "@fern/server-sent-event-examples";
 
 const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
-await client.completions.stream({
+const response = await client.completions.stream({
     query: "foo",
 });
+for await (const item of response) {
+    console.log(item);
+}
 ```
 
 ## Request And Response Types

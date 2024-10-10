@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedQueryParametersClient } from "@fern/query-parameters";
+import { SeedQueryParametersClient, SeedQueryParameters } from "@fern/query-parameters";
 
 const client = new SeedQueryParametersClient({ environment: "YOUR_BASE_URL" });
 await client.user.getUsername({
