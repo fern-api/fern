@@ -14,13 +14,12 @@ import {
     ExampleHeader,
     ExampleEndpointSuccessResponse,
     ExampleRequestBody,
-    ExampleObjectProperty,
-    ExampleInlinedRequestBody,
     ExampleInlinedRequestBodyProperty
 } from "@fern-api/ir-sdk";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 import { isOptional } from "./isTypeReferenceOptional";
+import hash from "object-hash";
 
 export declare namespace generateSuccessEndpointExample {
     interface Args {
@@ -256,7 +255,7 @@ export function generateSuccessEndpointExample({
     return {
         type: "success",
         example: {
-            id: "",
+            id: hash(result),
             url: getUrlForExample(endpoint, result),
             ...result
         },

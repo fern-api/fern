@@ -53,7 +53,7 @@ export function generateTypeDeclarationExample({
                 example: ExampleTypeShape.alias({
                     value: example
                 }),
-                jsonExample: jsonExample
+                jsonExample
             };
         }
         case "enum": {
@@ -101,6 +101,7 @@ export function generateTypeDeclarationExample({
                     skipOptionalProperties
                 });
                 if (variantExample.type === "failure") {
+                    ++i;
                     continue;
                 }
                 const { example, jsonExample } = variantExample;
@@ -116,7 +117,6 @@ export function generateTypeDeclarationExample({
             break;
         }
         case "union": {
-            let i = 0;
             const discriminant = typeDeclaration.shape.discriminant;
             for (const variant of typeDeclaration.shape.types) {
                 const variantExample = variant.shape._visit<ExampleGenerationResult<ExampleTypeShape>>({
@@ -215,7 +215,7 @@ export function generateTypeDeclarationExample({
             }
         }
     }
-    return { type: "failure", message: `Failed to generate example for type reference` };
+    return { type: "failure", message: "Failed to generate example for type reference" };
 }
 
 function generateObjectDeclarationExample({

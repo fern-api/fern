@@ -133,7 +133,7 @@ export function generateContainerExample({
                 typeDeclarations,
                 skipOptionalProperties
             });
-            if (keyExample.type === "failure" || valueExample.type == "failure") {
+            if (keyExample.type === "failure" || valueExample.type === "failure") {
                 return generateEmptyContainerExample({ containerType });
             }
             return {
@@ -148,6 +148,7 @@ export function generateContainerExample({
                     keyType: containerType.keyType,
                     valueType: containerType.valueType
                 }),
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 jsonExample: { [keyExample.jsonExample as any]: valueExample.jsonExample }
             };
         }
