@@ -75,6 +75,8 @@ export class Class extends AstNode {
     }
 
     public write(writer: Writer): void {
+        // required so that we can fully de-conflict imports
+        writer.addReference(new ClassReference({ name: this.name, namespace: this.namespace }));
         if (this.abstract) {
             writer.write("abstract ");
         }
