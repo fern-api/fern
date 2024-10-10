@@ -19,11 +19,11 @@ const CLIENT_VAR_NAME = "client";
 
 export class DynamicSnippetGenerator {
     private context: Context;
-    private typeRenderer: DynamicTypeMapper;
+    private typeMapper: DynamicTypeMapper;
 
     constructor({ ir, config }: { ir: IntermediateRepresentation; config: FernGeneratorExec.config.GeneratorConfig }) {
         this.context = new Context({ ir, config });
-        this.typeRenderer = new DynamicTypeMapper({ context: this.context });
+        this.typeMapper = new DynamicTypeMapper({ context: this.context });
     }
 
     public generate(snippet: SnippetRequest): string {
@@ -92,7 +92,7 @@ export class DynamicSnippetGenerator {
         for (const parameter of pathParameters) {
             args.push(
                 go.codeblock((writer) => {
-                    writer.writeNode(this.typeRenderer.render(parameter));
+                    writer.writeNode(this.typeMapper.convert(parameter));
                 })
             );
         }
@@ -119,7 +119,7 @@ export class DynamicSnippetGenerator {
         for (const parameter of parameters) {
             fields.push({
                 name: parameter.name.pascalCase.unsafeName,
-                value: this.typeRenderer.render(parameter)
+                value: this.typeMapper.convert(parameter)
             });
         }
 
@@ -170,7 +170,7 @@ export class DynamicSnippetGenerator {
         for (const parameter of bodyProperties) {
             fields.push({
                 name: parameter.name.pascalCase.unsafeName,
-                value: this.typeRenderer.render(parameter)
+                value: this.typeMapper.convert(parameter)
             });
         }
 

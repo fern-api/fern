@@ -6,6 +6,6 @@ import * as FernSnippets from "../../../index";
 
 export interface UndiscriminatedUnionType {
     declaration: FernSnippets.Declaration;
-    /** The dynamic type will be rendered with the first type that matches. */
+    /** The dynamic type will be converted with the first type that matches. */
     types: FernSnippets.Type[];
 }

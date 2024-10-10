@@ -24,15 +24,15 @@ export class DynamicTypeMapper {
         this.context = context;
     }
 
-    public render(args: DynamicTypeMapper.Args): TypeInstantiation {
+    public convert(args: DynamicTypeMapper.Args): TypeInstantiation {
         switch (args.type.type) {
             case "discriminatedUnion":
-                return this.renderDiscriminatedUnion({
+                return this.convertDiscriminatedUnion({
                     discriminatedUnion: args.type,
                     value: args.value
                 });
             case "enum":
-                return this.renderEnum({ enum_: args.type, value: args.value });
+                return this.convertEnum({ enum_: args.type, value: args.value });
             case "list":
                 throw new Error("TODO: Implement me!");
             case "literal":
@@ -40,15 +40,15 @@ export class DynamicTypeMapper {
             case "map":
                 throw new Error("TODO: Implement me!");
             case "object":
-                return this.renderObject({ object_: args.type, value: args.value });
+                return this.convertObject({ object_: args.type, value: args.value });
             case "optional":
-                return TypeInstantiation.optional(this.render(args));
+                return TypeInstantiation.optional(this.convert(args));
             case "primitive":
-                return this.renderPrimitive({ primitive: args.type.value, value: args.value });
+                return this.convertPrimitive({ primitive: args.type.value, value: args.value });
             case "set":
                 throw new Error("TODO: Implement me!");
             case "undicriminatedUnion":
-                return this.renderUndicriminatedUnion({ undicriminatedUnion: args.type, value: args.value });
+                return this.convertUndicriminatedUnion({ undicriminatedUnion: args.type, value: args.value });
             case "unknown":
                 throw new Error("TODO: Implement me!");
             default:
@@ -56,7 +56,7 @@ export class DynamicTypeMapper {
         }
     }
 
-    private renderDiscriminatedUnion({
+    private convertDiscriminatedUnion({
         discriminatedUnion,
         value
     }: {
@@ -67,10 +67,10 @@ export class DynamicTypeMapper {
             discriminatedUnion,
             value
         });
-        return this.render({ type, value: discriminatedUnionValue });
+        return this.convert({ type, value: discriminatedUnionValue });
     }
 
-    private renderObject({ object_, value }: { object_: ObjectType; value: unknown }): TypeInstantiation {
+    private convertObject({ object_, value }: { object_: ObjectType; value: unknown }): TypeInstantiation {
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
             values: this.context.getRecordOrThrow(value)
@@ -82,12 +82,12 @@ export class DynamicTypeMapper {
             }),
             fields: properties.map((property) => ({
                 name: property.name.pascalCase.unsafeName,
-                value: this.render(property)
+                value: this.convert(property)
             }))
         });
     }
 
-    private renderEnum({ enum_, value }: { enum_: EnumType; value: unknown }): TypeInstantiation {
+    private convertEnum({ enum_, value }: { enum_: EnumType; value: unknown }): TypeInstantiation {
         return go.TypeInstantiation.enum(
             go.typeReference({
                 name: this.getEnumValueNameOrThrow({ enum_, value }),
@@ -105,7 +105,7 @@ export class DynamicTypeMapper {
         return `${enum_.declaration.name.pascalCase.unsafeName}${enumValue.name.pascalCase.unsafeName}`;
     }
 
-    private renderPrimitive({ primitive, value }: { primitive: PrimitiveType; value: unknown }): TypeInstantiation {
+    private convertPrimitive({ primitive, value }: { primitive: PrimitiveType; value: unknown }): TypeInstantiation {
         // TODO: DRY this up.
         switch (primitive) {
             case "INTEGER": {
@@ -196,7 +196,7 @@ export class DynamicTypeMapper {
         }
     }
 
-    private renderUndicriminatedUnion({
+    private convertUndicriminatedUnion({
         undicriminatedUnion,
         value
     }: {
@@ -205,7 +205,7 @@ export class DynamicTypeMapper {
     }): TypeInstantiation {
         for (const type of undicriminatedUnion.types) {
             try {
-                return this.render({ type, value });
+                return this.convert({ type, value });
             } catch (e) {
                 continue;
             }
