@@ -1,0 +1,162 @@
+types:
+  EndpointId: string
+
+  Declaration:
+    properties:
+      fernFilepath: FernFilepath
+      name: Name
+
+  FernFilepath:
+    properties:
+      packagePath: list<Name>
+
+  Name:
+    docs: |
+      The Go generator only needs access to the PascalCase naming convention.
+      
+      This represents a case where we could include a separate IR for each language
+      to reduce size. Alternatively, we could model everything as optional so the
+      same structure could be used for all languages, and the compiler could conditionally
+      set specific values based on the target language.
+
+      Given that each language will need an IR, it probably makes sense to have a single one
+      that is shared across all languages. Otherwise there will be duplication between different
+      languages.
+    properties:
+      pascalCase: SafeAndUnsafeString
+
+  NameAndWireValue:
+    properties:
+      name: Name
+      wireValue:
+        docs: |
+          This value is primarily used to match the name against the snippet request payload.
+        type: string
+
+  SafeAndUnsafeString:
+    docs: |
+      The Go generator only needs access to the unsafe naming convention.
+    properties:
+      unsafeName: string
+
+  IntermediateRepresentation:
+    docs: |
+      This represents the IR required to generate dynamic snippets.
+      
+      This IR minimizes the space required to generate snippets in a variety
+      of environments (e.g. web, offline, etc).
+
+      TODO: Add auth and global headers.
+    properties:
+      endpoints: map<EndpointId, Endpoint>
+
+  Endpoint:
+    properties:
+      declaration: Declaration
+      request: Request
+
+  Request:
+    docs: |
+      Reperesents the request parameters required to call a specific endpoiont.
+
+      Note that the constructor parameters are not included here - these are
+      resolved from the IntermediateRepresentation.
+
+      ```go
+      import (
+        context "context"
+        acme "github.com/buildwithfern/acme-go"
+        client "github.com/buildwithfern/acme-go/client"
+      )
+
+      client := client.NewClient("<YOUR_API_KEY>")
+      client.User.Create(
+        context.TODO(),
+        &acme.CreateUserRequest{
+          User: &acme.User{
+            FirstName: "John",
+            LastName:  "Doe",
+          },
+        },
+      )
+      ```
+    union:
+      inlined: InlinedRequest
+      referenced: ReferencedRequest
+
+  ReferencedRequest:
+    properties:
+      pathParameters: list<NamedParameter>
+      body: Type
+
+  InlinedRequest:
+    properties:
+      declaration: Declaration
+      pathParameters: list<NamedParameter>
+      queryParameters: list<NamedParameter>
+      headers: list<NamedParameter>
+      body: optional<InlinedRequestBody>
+
+  InlinedRequestBody:
+    discriminant: bodyType
+    union:
+      properties: list<NamedParameter>
+      referenced: ReferencedRequestBody
+
+  ReferencedRequestBody:
+    properties:
+      bodyKey: Name
+      type: Type
+
+  NamedParameter:
+    properties:
+      name: NameAndWireValue
+      type: Type
+
+  Type:
+    docs: |
+      Represents the type of a parameter that can be used to generate a dynamic type.
+
+      Note that some types are omitted because they aren't required by the Go generator
+      (e.g. a list is the same as a set, literals don't need to be explicitly provided, etc).
+
+      TODO: Add support for unions.
+    union:
+      enum: EnumType
+      listType: Type
+      mapType: MapType
+      object: ObjectType
+      optional: Type
+      primitive: PrimitiveType
+      unknown: {}
+
+  EnumType:
+    properties:
+      declaration: Declaration
+      values: list<NameAndWireValue>
+  
+  MapType:
+    properties:
+      key: Type
+      value: Type
+
+  ObjectType:
+    properties:
+      declaration: Declaration
+      properties: list<NamedParameter>
+
+  PrimitiveType:
+    enum:
+      - INTEGER
+      - LONG
+      - UINT
+      - UINT_64
+      - FLOAT
+      - DOUBLE
+      - BOOLEAN
+      - STRING
+      - DATE
+      - DATE_TIME
+      - UUID
+      - BASE_64
+      - BIG_INTEGER
