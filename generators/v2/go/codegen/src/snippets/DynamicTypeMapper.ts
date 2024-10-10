@@ -47,7 +47,7 @@ export class DynamicTypeMapper {
                 return this.convertPrimitive({ primitive: args.type.value, value: args.value });
             case "set":
                 throw new Error("TODO: Implement me!");
-            case "undicriminatedUnion":
+            case "undiscriminatedUnion":
                 return this.convertUndicriminatedUnion({ undicriminatedUnion: args.type, value: args.value });
             case "unknown":
                 throw new Error("TODO: Implement me!");

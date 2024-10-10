@@ -119,7 +119,7 @@ types:
       optional: Type
       primitive: PrimitiveType
       set: Type
-      undicriminatedUnion: UndiscriminatedUnionType
+      undiscriminatedUnion: UndiscriminatedUnionType
       unknown: {}
 
   DiscriminatedUnionType:

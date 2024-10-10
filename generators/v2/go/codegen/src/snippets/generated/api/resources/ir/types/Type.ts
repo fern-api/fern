@@ -17,7 +17,7 @@ export type Type =
     | FernSnippets.Type.Optional
     | FernSnippets.Type.Primitive
     | FernSnippets.Type.Set
-    | FernSnippets.Type.UndicriminatedUnion
+    | FernSnippets.Type.UndiscriminatedUnion
     | FernSnippets.Type.Unknown;
 
 export declare namespace Type {
@@ -62,8 +62,8 @@ export declare namespace Type {
         value: FernSnippets.Type;
     }
 
-    interface UndicriminatedUnion extends FernSnippets.UndiscriminatedUnionType {
-        type: "undicriminatedUnion";
+    interface UndiscriminatedUnion extends FernSnippets.UndiscriminatedUnionType {
+        type: "undiscriminatedUnion";
     }
 
     interface Unknown {
