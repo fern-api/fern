@@ -91,7 +91,7 @@ class SubmissionClient:
             token="YOUR_TOKEN",
         )
         client.submission.get_execution_session(
-            session_id="string",
+            session_id="sessionId",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -139,7 +139,7 @@ class SubmissionClient:
             token="YOUR_TOKEN",
         )
         client.submission.stop_execution_session(
-            session_id="string",
+            session_id="sessionId",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -289,7 +289,7 @@ class AsyncSubmissionClient:
 
         async def main() -> None:
             await client.submission.get_execution_session(
-                session_id="string",
+                session_id="sessionId",
             )
 
 
@@ -345,7 +345,7 @@ class AsyncSubmissionClient:
 
         async def main() -> None:
             await client.submission.stop_execution_session(
-                session_id="string",
+                session_id="sessionId",
             )
 
 

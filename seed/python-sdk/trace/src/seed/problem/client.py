@@ -88,41 +88,65 @@ class ProblemClient:
             token="YOUR_TOKEN",
         )
         client.problem.create_problem(
-            problem_name="string",
+            problem_name="problemName",
             problem_description=ProblemDescription(
-                boards=[ProblemDescriptionBoard_Html(value="string")],
+                boards=[
+                    ProblemDescriptionBoard_Html(value="boards"),
+                    ProblemDescriptionBoard_Html(value="boards"),
+                ],
             ),
             files={
                 "JAVA": ProblemFiles(
                     solution_file=FileInfo(
-                        filename="string",
-                        contents="string",
+                        filename="filename",
+                        contents="contents",
                     ),
                     read_only_files=[
                         FileInfo(
-                            filename="string",
-                            contents="string",
-                        )
+                            filename="filename",
+                            contents="contents",
+                        ),
+                        FileInfo(
+                            filename="filename",
+                            contents="contents",
+                        ),
                     ],
                 )
             },
             input_params=[
                 VariableTypeAndName(
                     variable_type=VariableType(),
-                    name="string",
-                )
+                    name="name",
+                ),
+                VariableTypeAndName(
+                    variable_type=VariableType(),
+                    name="name",
+                ),
             ],
             output_type=VariableType(),
             testcases=[
                 TestCaseWithExpectedResult(
                     test_case=TestCase(
-                        id="string",
-                        params=[VariableValue_IntegerValue(value=1)],
+                        id="id",
+                        params=[
+                            VariableValue_IntegerValue(value=1),
+                            VariableValue_IntegerValue(value=1),
+                        ],
                     ),
                     expected_result=VariableValue_IntegerValue(value=1),
-                )
+                ),
+                TestCaseWithExpectedResult(
+                    test_case=TestCase(
+                        id="id",
+                        params=[
+                            VariableValue_IntegerValue(value=1),
+                            VariableValue_IntegerValue(value=1),
+                        ],
+                    ),
+                    expected_result=VariableValue_IntegerValue(value=1),
+                ),
             ],
-            method_name="string",
+            method_name="methodName",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -227,42 +251,66 @@ class ProblemClient:
             token="YOUR_TOKEN",
         )
         client.problem.update_problem(
-            problem_id="string",
-            problem_name="string",
+            problem_id="problemId",
+            problem_name="problemName",
             problem_description=ProblemDescription(
-                boards=[ProblemDescriptionBoard_Html(value="string")],
+                boards=[
+                    ProblemDescriptionBoard_Html(value="boards"),
+                    ProblemDescriptionBoard_Html(value="boards"),
+                ],
             ),
             files={
                 "JAVA": ProblemFiles(
                     solution_file=FileInfo(
-                        filename="string",
-                        contents="string",
+                        filename="filename",
+                        contents="contents",
                     ),
                     read_only_files=[
                         FileInfo(
-                            filename="string",
-                            contents="string",
-                        )
+                            filename="filename",
+                            contents="contents",
+                        ),
+                        FileInfo(
+                            filename="filename",
+                            contents="contents",
+                        ),
                     ],
                 )
             },
             input_params=[
                 VariableTypeAndName(
                     variable_type=VariableType(),
-                    name="string",
-                )
+                    name="name",
+                ),
+                VariableTypeAndName(
+                    variable_type=VariableType(),
+                    name="name",
+                ),
             ],
             output_type=VariableType(),
             testcases=[
                 TestCaseWithExpectedResult(
                     test_case=TestCase(
-                        id="string",
-                        params=[VariableValue_IntegerValue(value=1)],
+                        id="id",
+                        params=[
+                            VariableValue_IntegerValue(value=1),
+                            VariableValue_IntegerValue(value=1),
+                        ],
                     ),
                     expected_result=VariableValue_IntegerValue(value=1),
-                )
+                ),
+                TestCaseWithExpectedResult(
+                    test_case=TestCase(
+                        id="id",
+                        params=[
+                            VariableValue_IntegerValue(value=1),
+                            VariableValue_IntegerValue(value=1),
+                        ],
+                    ),
+                    expected_result=VariableValue_IntegerValue(value=1),
+                ),
             ],
-            method_name="string",
+            method_name="methodName",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -328,7 +376,7 @@ class ProblemClient:
             token="YOUR_TOKEN",
         )
         client.problem.delete_problem(
-            problem_id="string",
+            problem_id="problemId",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -391,11 +439,15 @@ class ProblemClient:
             input_params=[
                 VariableTypeAndName(
                     variable_type=VariableType(),
-                    name="string",
-                )
+                    name="name",
+                ),
+                VariableTypeAndName(
+                    variable_type=VariableType(),
+                    name="name",
+                ),
             ],
             output_type=VariableType(),
-            method_name="string",
+            method_name="methodName",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -497,41 +549,65 @@ class AsyncProblemClient:
 
         async def main() -> None:
             await client.problem.create_problem(
-                problem_name="string",
+                problem_name="problemName",
                 problem_description=ProblemDescription(
-                    boards=[ProblemDescriptionBoard_Html(value="string")],
+                    boards=[
+                        ProblemDescriptionBoard_Html(value="boards"),
+                        ProblemDescriptionBoard_Html(value="boards"),
+                    ],
                 ),
                 files={
                     "JAVA": ProblemFiles(
                         solution_file=FileInfo(
-                            filename="string",
-                            contents="string",
+                            filename="filename",
+                            contents="contents",
                         ),
                         read_only_files=[
                             FileInfo(
-                                filename="string",
-                                contents="string",
-                            )
+                                filename="filename",
+                                contents="contents",
+                            ),
+                            FileInfo(
+                                filename="filename",
+                                contents="contents",
+                            ),
                         ],
                     )
                 },
                 input_params=[
                     VariableTypeAndName(
                         variable_type=VariableType(),
-                        name="string",
-                    )
+                        name="name",
+                    ),
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="name",
+                    ),
                 ],
                 output_type=VariableType(),
                 testcases=[
                     TestCaseWithExpectedResult(
                         test_case=TestCase(
-                            id="string",
-                            params=[VariableValue_IntegerValue(value=1)],
+                            id="id",
+                            params=[
+                                VariableValue_IntegerValue(value=1),
+                                VariableValue_IntegerValue(value=1),
+                            ],
                         ),
                         expected_result=VariableValue_IntegerValue(value=1),
-                    )
+                    ),
+                    TestCaseWithExpectedResult(
+                        test_case=TestCase(
+                            id="id",
+                            params=[
+                                VariableValue_IntegerValue(value=1),
+                                VariableValue_IntegerValue(value=1),
+                            ],
+                        ),
+                        expected_result=VariableValue_IntegerValue(value=1),
+                    ),
                 ],
-                method_name="string",
+                method_name="methodName",
             )
 
 
@@ -644,42 +720,66 @@ class AsyncProblemClient:
 
         async def main() -> None:
             await client.problem.update_problem(
-                problem_id="string",
-                problem_name="string",
+                problem_id="problemId",
+                problem_name="problemName",
                 problem_description=ProblemDescription(
-                    boards=[ProblemDescriptionBoard_Html(value="string")],
+                    boards=[
+                        ProblemDescriptionBoard_Html(value="boards"),
+                        ProblemDescriptionBoard_Html(value="boards"),
+                    ],
                 ),
                 files={
                     "JAVA": ProblemFiles(
                         solution_file=FileInfo(
-                            filename="string",
-                            contents="string",
+                            filename="filename",
+                            contents="contents",
                         ),
                         read_only_files=[
                             FileInfo(
-                                filename="string",
-                                contents="string",
-                            )
+                                filename="filename",
+                                contents="contents",
+                            ),
+                            FileInfo(
+                                filename="filename",
+                                contents="contents",
+                            ),
                         ],
                     )
                 },
                 input_params=[
                     VariableTypeAndName(
                         variable_type=VariableType(),
-                        name="string",
-                    )
+                        name="name",
+                    ),
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="name",
+                    ),
                 ],
                 output_type=VariableType(),
                 testcases=[
                     TestCaseWithExpectedResult(
                         test_case=TestCase(
-                            id="string",
-                            params=[VariableValue_IntegerValue(value=1)],
+                            id="id",
+                            params=[
+                                VariableValue_IntegerValue(value=1),
+                                VariableValue_IntegerValue(value=1),
+                            ],
                         ),
                         expected_result=VariableValue_IntegerValue(value=1),
-                    )
+                    ),
+                    TestCaseWithExpectedResult(
+                        test_case=TestCase(
+                            id="id",
+                            params=[
+                                VariableValue_IntegerValue(value=1),
+                                VariableValue_IntegerValue(value=1),
+                            ],
+                        ),
+                        expected_result=VariableValue_IntegerValue(value=1),
+                    ),
                 ],
-                method_name="string",
+                method_name="methodName",
             )
 
 
@@ -755,7 +855,7 @@ class AsyncProblemClient:
 
         async def main() -> None:
             await client.problem.delete_problem(
-                problem_id="string",
+                problem_id="problemId",
             )
 
 
@@ -826,11 +926,15 @@ class AsyncProblemClient:
                 input_params=[
                     VariableTypeAndName(
                         variable_type=VariableType(),
-                        name="string",
-                    )
+                        name="name",
+                    ),
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="name",
+                    ),
                 ],
                 output_type=VariableType(),
-                method_name="string",
+                method_name="methodName",
             )
 
 
