@@ -16,7 +16,10 @@
             },
             "availability": "Beta"
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },

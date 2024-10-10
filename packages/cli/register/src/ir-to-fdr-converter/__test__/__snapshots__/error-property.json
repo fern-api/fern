@@ -15,7 +15,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -94,7 +97,8 @@
                 ]
               },
               "statusCode": 400,
-              "name": "PropertyBasedErrorTest"
+              "name": "PropertyBasedErrorTest",
+              "examples": []
             }
           ],
           "examples": []

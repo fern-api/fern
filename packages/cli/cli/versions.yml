@@ -1,4 +1,10 @@
 - changelogEntry:
+    - summary: The Docs now support rendering `additionalProperties` in the API Playground so that users can send out arbitrary key,value pairs. 
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc0
+
+- changelogEntry:
     - summary: Several improvements to the conjure importer. 
       type: fix
   irVersion: 53

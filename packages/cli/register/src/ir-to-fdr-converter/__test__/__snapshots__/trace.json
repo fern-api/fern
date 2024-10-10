@@ -16,7 +16,8 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "default": false
                     }
                   }
                 }
@@ -33,7 +34,8 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "default": false
                     }
                   }
                 }
@@ -183,12 +185,16 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:MapType": {
@@ -211,7 +217,10 @@
               "value": "type_commons:VariableType"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:VariableValue": {
@@ -247,7 +256,8 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "default": false
                     }
                   }
                 }
@@ -402,7 +412,8 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "default": false
                     }
                   }
                 }
@@ -567,7 +578,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:MapValue": {
@@ -586,7 +600,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:KeyValuePair": {
@@ -609,7 +626,10 @@
               "value": "type_commons:VariableValue"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:BinaryTreeValue": {
@@ -642,7 +662,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:BinaryTreeNodeValue": {
@@ -687,7 +710,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:BinaryTreeNodeAndTreeValue": {
@@ -710,7 +736,10 @@
               "value": "type_commons:BinaryTreeValue"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:SinglyLinkedListValue": {
@@ -743,7 +772,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:SinglyLinkedListNodeValue": {
@@ -778,7 +810,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:SinglyLinkedListNodeAndListValue": {
@@ -801,7 +836,10 @@
               "value": "type_commons:SinglyLinkedListValue"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:DoublyLinkedListValue": {
@@ -834,7 +872,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:DoublyLinkedListNodeValue": {
@@ -879,7 +920,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:DoublyLinkedListNodeAndListValue": {
@@ -902,7 +946,10 @@
               "value": "type_commons:DoublyLinkedListValue"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:DebugMapValue": {
@@ -921,7 +968,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:DebugKeyValuePairs": {
@@ -944,7 +994,10 @@
               "value": "type_commons:DebugVariableValue"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:TestCase": {
@@ -972,7 +1025,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:TestCaseWithExpectedResult": {
@@ -995,7 +1051,10 @@
               "value": "type_commons:VariableValue"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:FileInfo": {
@@ -1022,7 +1081,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons:Language": {
@@ -1054,7 +1116,10 @@
               "type": "unknown"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_lang-server:LangServerResponse": {
@@ -1069,7 +1134,10 @@
               "type": "unknown"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_migration:MigrationStatus": {
@@ -1113,7 +1181,10 @@
               "value": "type_migration:MigrationStatus"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_playlist:PlaylistId": {
@@ -1150,7 +1221,10 @@
               "value": "type_commons:UserId"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_playlist:PlaylistCreateRequest": {
@@ -1178,7 +1252,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_playlist:UpdatePlaylistRequest": {
@@ -1207,7 +1284,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_playlist:PlaylistIdNotFoundErrorBody": {
@@ -1341,11 +1421,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_problem:ProblemDescription": {
@@ -1364,7 +1448,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_problem:ProblemDescriptionBoard": {
@@ -1448,7 +1535,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_problem:VariableTypeAndName": {
@@ -1473,7 +1563,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_problem:CreateProblemRequest": {
@@ -1548,7 +1641,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_problem:CreateProblemResponse": {
@@ -1605,7 +1701,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_problem:CreateProblemError": {
@@ -1659,7 +1758,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_problem:GetDefaultStarterFilesResponse": {
@@ -1682,7 +1784,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:SubmissionId": {
@@ -1786,7 +1891,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:SubmitRequestV2": {
@@ -1850,7 +1958,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:WorkspaceSubmitRequest": {
@@ -1895,7 +2006,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:SubmissionFileInfo": {
@@ -1931,7 +2045,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:SubmissionTypeEnum": {
@@ -1959,7 +2076,10 @@
               "value": "type_submission:SubmissionId"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:SubmissionResponse": {
@@ -2172,7 +2292,10 @@
               "value": "type_submission:ExecutionSessionStatus"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:RunningResponse": {
@@ -2195,7 +2318,10 @@
               "value": "type_submission:RunningSubmissionState"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:RunningSubmissionState": {
@@ -2241,7 +2367,10 @@
               "value": "type_submission:ErrorInfo"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:ErrorInfo": {
@@ -2297,7 +2426,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:RuntimeError": {
@@ -2315,7 +2447,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:InternalError": {
@@ -2331,7 +2466,10 @@
               "value": "type_submission:ExceptionInfo"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:StoppedResponse": {
@@ -2347,7 +2485,10 @@
               "value": "type_submission:SubmissionId"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:WorkspaceRanResponse": {
@@ -2370,7 +2511,10 @@
               "value": "type_submission:WorkspaceRunDetails"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:WorkspaceRunDetails": {
@@ -2408,7 +2552,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:GradedResponse": {
@@ -2440,7 +2587,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:GradedResponseV2": {
@@ -2470,7 +2620,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TestCaseGrade": {
@@ -2511,11 +2664,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TestCaseNonHiddenGrade": {
@@ -2529,7 +2686,8 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           },
@@ -2562,7 +2720,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:RecordedResponseNotification": {
@@ -2599,7 +2760,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:RecordingResponseNotification": {
@@ -2653,7 +2817,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:LightweightStackframeInformation": {
@@ -2680,7 +2847,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TestCaseResultWithStdout": {
@@ -2705,7 +2875,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TestCaseResult": {
@@ -2733,11 +2906,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:ActualResult": {
@@ -2846,7 +3023,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:InvalidRequestResponse": {
@@ -2869,7 +3049,10 @@
               "value": "type_submission:InvalidRequestCause"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:InvalidRequestCause": {
@@ -2923,7 +3106,10 @@
               "value": "type_submission:SubmissionId"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:SubmissionIdNotFound": {
@@ -2939,7 +3125,10 @@
               "value": "type_submission:SubmissionId"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:CustomTestCasesUnsupported": {
@@ -2962,7 +3151,10 @@
               "value": "type_submission:SubmissionId"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:UnexpectedLanguageError": {
@@ -2985,7 +3177,10 @@
               "value": "type_commons:Language"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TerminatedResponse": {
@@ -2993,7 +3188,10 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": []
+        "properties": [],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:FinishedResponse": {
@@ -3009,7 +3207,10 @@
               "value": "type_submission:SubmissionId"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:StdoutResponse": {
@@ -3034,7 +3235,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:StderrResponse": {
@@ -3059,7 +3263,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TraceResponse": {
@@ -3123,7 +3330,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TraceResponseV2": {
@@ -3194,7 +3404,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TracedFile": {
@@ -3221,7 +3434,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:ExpressionLocation": {
@@ -3248,7 +3464,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:StackInformation": {
@@ -3276,7 +3495,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:StackFrame": {
@@ -3313,7 +3535,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:Scope": {
@@ -3338,7 +3563,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:ExecutionSessionResponse": {
@@ -3382,7 +3610,10 @@
               "value": "type_submission:ExecutionSessionStatus"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:ExecutionSessionStatus": {
@@ -3477,7 +3708,10 @@
               "value": "type_v2/problem:ProblemInfoV2"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:WorkspaceSubmissionStatusV2": {
@@ -3496,7 +3730,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TestSubmissionUpdate": {
@@ -3510,7 +3747,8 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "datetime"
+                "type": "datetime",
+                "default": "1970-01-01T00:00:00.000Z"
               }
             }
           },
@@ -3521,7 +3759,10 @@
               "value": "type_submission:TestSubmissionUpdateInfo"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TestSubmissionUpdateInfo": {
@@ -3606,7 +3847,8 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "datetime"
+                "type": "datetime",
+                "default": "1970-01-01T00:00:00.000Z"
               }
             }
           },
@@ -3617,7 +3859,10 @@
               "value": "type_submission:WorkspaceSubmissionUpdateInfo"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:WorkspaceSubmissionUpdateInfo": {
@@ -3718,7 +3963,10 @@
               "value": "type_submission:TestCaseGrade"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:RecordedTestCaseUpdate": {
@@ -3743,7 +3991,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:WorkspaceTracedUpdate": {
@@ -3761,7 +4012,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:SubmissionTypeState": {
@@ -3804,7 +4058,10 @@
               "value": "type_submission:WorkspaceSubmissionStatus"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:WorkspaceSubmissionStatus": {
@@ -3911,7 +4168,10 @@
               "value": "type_submission:TestSubmissionStatus"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TestSubmissionStatus": {
@@ -4048,7 +4308,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TraceResponsesPage": {
@@ -4080,7 +4343,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:TraceResponsesPageV2": {
@@ -4112,7 +4378,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:GetTraceResponsesPageRequest": {
@@ -4133,7 +4402,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:WorkspaceStarterFilesResponse": {
@@ -4156,7 +4428,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:WorkspaceStarterFilesResponseV2": {
@@ -4179,7 +4454,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:WorkspaceFiles": {
@@ -4205,7 +4483,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:ExecutionSessionState": {
@@ -4241,7 +4522,8 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           },
@@ -4271,7 +4553,10 @@
               "value": "type_submission:ExecutionSessionStatus"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:GetExecutionSessionStateResponse": {
@@ -4320,7 +4605,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_submission:GetSubmissionStateResponse": {
@@ -4336,7 +4624,8 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "datetime"
+                  "type": "datetime",
+                  "default": "1970-01-01T00:00:00.000Z"
                 }
               }
             }
@@ -4364,7 +4653,10 @@
               "value": "type_submission:SubmissionTypeState"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:TestCaseTemplateId": {
@@ -4490,11 +4782,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:LightweightProblemInfoV2": {
@@ -4538,7 +4834,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:CreateProblemRequestV2": {
@@ -4605,11 +4904,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:TestCaseV2": {
@@ -4656,7 +4959,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:TestCaseExpects": {
@@ -4677,7 +4983,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:TestCaseImplementationReference": {
@@ -4749,7 +5058,10 @@
               "value": "type_v2/problem:ParameterId"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:TestCaseTemplate": {
@@ -4781,7 +5093,10 @@
               "value": "type_v2/problem:TestCaseImplementation"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:TestCaseImplementation": {
@@ -4804,7 +5119,10 @@
               "value": "type_v2/problem:TestCaseFunction"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:TestCaseFunction": {
@@ -4854,7 +5172,10 @@
               "value": "type_v2/problem:AssertCorrectnessCheck"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:VoidFunctionDefinition": {
@@ -4880,7 +5201,10 @@
               "value": "type_v2/problem:FunctionImplementationForMultipleLanguages"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:Parameter": {
@@ -4912,7 +5236,10 @@
               "value": "type_commons:VariableType"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:NonVoidFunctionDefinition": {
@@ -4935,7 +5262,10 @@
               "value": "type_v2/problem:FunctionImplementationForMultipleLanguages"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:VoidFunctionSignature": {
@@ -4954,7 +5284,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:NonVoidFunctionSignature": {
@@ -4980,7 +5313,10 @@
               "value": "type_commons:VariableType"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:VoidFunctionSignatureThatTakesActualResult": {
@@ -5006,7 +5342,10 @@
               "value": "type_commons:VariableType"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:AssertCorrectnessCheck": {
@@ -5049,7 +5388,10 @@
               "value": "type_v2/problem:ParameterId"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:VoidFunctionDefinitionThatTakesActualResult": {
@@ -5076,7 +5418,10 @@
               "value": "type_v2/problem:FunctionImplementationForMultipleLanguages"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:TestCaseImplementationDescription": {
@@ -5095,7 +5440,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:TestCaseImplementationDescriptionBoard": {
@@ -5166,11 +5514,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:FunctionImplementationForMultipleLanguages": {
@@ -5193,7 +5545,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:FunctionImplementation": {
@@ -5223,7 +5578,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:GeneratedFiles": {
@@ -5274,7 +5632,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:CustomFiles": {
@@ -5360,7 +5721,10 @@
               "value": "type_v2/problem:BasicTestCaseTemplate"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:Files": {
@@ -5379,7 +5743,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:FileInfoV2": {
@@ -5420,11 +5787,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:DefaultProvidedFile": {
@@ -5450,7 +5821,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:FunctionSignature": {
@@ -5503,7 +5877,10 @@
               "value": "type_v2/problem:FunctionSignature"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:GetFunctionSignatureResponse": {
@@ -5528,7 +5905,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:GetBasicSolutionFileRequest": {
@@ -5553,7 +5933,10 @@
               "value": "type_v2/problem:NonVoidFunctionSignature"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:GetBasicSolutionFileResponse": {
@@ -5576,7 +5959,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:GetGeneratedTestCaseFileRequest": {
@@ -5602,7 +5988,10 @@
               "value": "type_v2/problem:TestCaseV2"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/problem:GetGeneratedTestCaseTemplateFileRequest": {
@@ -5618,7 +6007,10 @@
               "value": "type_v2/problem:TestCaseTemplate"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:TestCaseTemplateId": {
@@ -5744,11 +6136,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:LightweightProblemInfoV2": {
@@ -5792,7 +6188,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:CreateProblemRequestV2": {
@@ -5859,11 +6258,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:TestCaseV2": {
@@ -5910,7 +6313,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:TestCaseExpects": {
@@ -5931,7 +6337,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:TestCaseImplementationReference": {
@@ -6003,7 +6412,10 @@
               "value": "type_v2/v3/problem:ParameterId"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:TestCaseTemplate": {
@@ -6035,7 +6447,10 @@
               "value": "type_v2/v3/problem:TestCaseImplementation"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:TestCaseImplementation": {
@@ -6058,7 +6473,10 @@
               "value": "type_v2/v3/problem:TestCaseFunction"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:TestCaseFunction": {
@@ -6108,7 +6526,10 @@
               "value": "type_v2/v3/problem:AssertCorrectnessCheck"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:VoidFunctionDefinition": {
@@ -6134,7 +6555,10 @@
               "value": "type_v2/v3/problem:FunctionImplementationForMultipleLanguages"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:Parameter": {
@@ -6166,7 +6590,10 @@
               "value": "type_commons:VariableType"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:NonVoidFunctionDefinition": {
@@ -6189,7 +6616,10 @@
               "value": "type_v2/v3/problem:FunctionImplementationForMultipleLanguages"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:VoidFunctionSignature": {
@@ -6208,7 +6638,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:NonVoidFunctionSignature": {
@@ -6234,7 +6667,10 @@
               "value": "type_commons:VariableType"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:VoidFunctionSignatureThatTakesActualResult": {
@@ -6260,7 +6696,10 @@
               "value": "type_commons:VariableType"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:AssertCorrectnessCheck": {
@@ -6303,7 +6742,10 @@
               "value": "type_v2/v3/problem:ParameterId"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:VoidFunctionDefinitionThatTakesActualResult": {
@@ -6330,7 +6772,10 @@
               "value": "type_v2/v3/problem:FunctionImplementationForMultipleLanguages"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:TestCaseImplementationDescription": {
@@ -6349,7 +6794,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:TestCaseImplementationDescriptionBoard": {
@@ -6420,11 +6868,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:FunctionImplementationForMultipleLanguages": {
@@ -6447,7 +6899,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:FunctionImplementation": {
@@ -6477,7 +6932,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:GeneratedFiles": {
@@ -6528,7 +6986,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:CustomFiles": {
@@ -6614,7 +7075,10 @@
               "value": "type_v2/v3/problem:BasicTestCaseTemplate"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:Files": {
@@ -6633,7 +7097,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:FileInfoV2": {
@@ -6674,11 +7141,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:DefaultProvidedFile": {
@@ -6704,7 +7175,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:FunctionSignature": {
@@ -6757,7 +7231,10 @@
               "value": "type_v2/v3/problem:FunctionSignature"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:GetFunctionSignatureResponse": {
@@ -6782,7 +7259,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:GetBasicSolutionFileRequest": {
@@ -6807,7 +7287,10 @@
               "value": "type_v2/v3/problem:NonVoidFunctionSignature"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:GetBasicSolutionFileResponse": {
@@ -6830,7 +7313,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:GetGeneratedTestCaseFileRequest": {
@@ -6856,7 +7342,10 @@
               "value": "type_v2/v3/problem:TestCaseV2"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_v2/v3/problem:GetGeneratedTestCaseTemplateFileRequest": {
@@ -6872,7 +7361,10 @@
               "value": "type_v2/v3/problem:TestCaseTemplate"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -7752,7 +8244,8 @@
               "type": {
                 "type": "primitive",
                 "value": {
-                  "type": "datetime"
+                  "type": "datetime",
+                  "default": "1970-01-01T00:00:00.000Z"
                 }
               }
             },
@@ -7763,7 +8256,8 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "datetime"
+                    "type": "datetime",
+                    "default": "1970-01-01T00:00:00.000Z"
                   }
                 }
               }
@@ -8008,11 +8502,13 @@
                 ]
               },
               "statusCode": 404,
-              "name": "PlaylistIdNotFoundError"
+              "name": "PlaylistIdNotFoundError",
+              "examples": []
             },
             {
               "statusCode": 401,
-              "name": "UnauthorizedError"
+              "name": "UnauthorizedError",
+              "examples": []
             }
           ],
           "examples": []
@@ -8133,7 +8629,8 @@
                 ]
               },
               "statusCode": 404,
-              "name": "PlaylistIdNotFoundError"
+              "name": "PlaylistIdNotFoundError",
+              "examples": []
             }
           ],
           "examples": []

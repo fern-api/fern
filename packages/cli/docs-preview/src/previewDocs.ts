@@ -8,6 +8,7 @@ import {
     convertDocsDefinitionToDb,
     DocsV1Read,
     FdrAPI,
+    FernNavigation,
     SDKSnippetHolder
 } from "@fern-api/fdr-sdk";
 import { convertToFernHostAbsoluteFilePath } from "@fern-api/fs-utils";
@@ -57,7 +58,7 @@ export async function getPreviewDocsDefinition({
                 const fileId = uuidv4();
                 filesV2[fileId] = {
                     type: "url",
-                    url: `/_local${convertToFernHostAbsoluteFilePath(file.absoluteFilePath)}`
+                    url: FernNavigation.Url(`/_local${convertToFernHostAbsoluteFilePath(file.absoluteFilePath)}`)
                 };
                 return {
                     absoluteFilePath: file.absoluteFilePath,
@@ -83,7 +84,10 @@ export async function getPreviewDocsDefinition({
         files: {},
         filesV2,
         pages: dbDocsDefinition.pages,
-        search: { type: "legacyMultiAlgoliaIndex" }
+        search: { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined },
+        algoliaSearchIndex: undefined,
+        jsFiles: undefined,
+        id: undefined
     };
 }
 
@@ -106,11 +110,9 @@ class ReferencedAPICollector {
         try {
             const id = uuidv4();
 
-            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
-
             const dbApiDefinition = convertAPIDefinitionToDb(
-                apiDefinition,
-                id,
+                convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig }),
+                FdrAPI.ApiDefinitionId(id),
                 new SDKSnippetHolder({
                     snippetsConfigWithSdkId: {},
                     snippetsBySdkId: {},

@@ -15,7 +15,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types/enum:WeatherReport": {
@@ -76,7 +79,8 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "long"
+                  "type": "long",
+                  "default": 0
                 }
               }
             }
@@ -100,7 +104,8 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
@@ -112,7 +117,8 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "datetime"
+                  "type": "datetime",
+                  "default": "1970-01-01T00:00:00.000Z"
                 }
               }
             }
@@ -124,7 +130,8 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "date"
+                  "type": "date",
+                  "default": "1970-01-01T00:00:00.000Z"
                 }
               }
             }
@@ -148,7 +155,8 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "base64"
+                  "type": "base64",
+                  "default": "0"
                 }
               }
             }
@@ -211,12 +219,16 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "bigInteger"
+                  "type": "bigInteger",
+                  "default": "0"
                 }
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types/object:ObjectWithRequiredField": {
@@ -234,7 +246,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types/object:ObjectWithMapOfMap": {
@@ -270,7 +285,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types/object:NestedObjectWithOptionalField": {
@@ -301,7 +319,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types/object:NestedObjectWithRequiredField": {
@@ -326,7 +347,10 @@
               "value": "type_types/object:ObjectWithOptionalField"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types/object:DoubleOptional": {
@@ -345,7 +369,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types/object:OptionalAlias": {
@@ -410,11 +437,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types/union:Cat": {
@@ -437,11 +468,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -1205,7 +1240,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
@@ -1934,7 +1970,8 @@
                 "value": {
                   "type": "primitive",
                   "value": {
-                    "type": "long"
+                    "type": "long",
+                    "default": 0
                   }
                 }
               }
@@ -1946,7 +1983,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "long"
+                  "type": "long",
+                  "default": 0
                 }
               }
             }
@@ -2034,7 +2072,8 @@
                 "value": {
                   "type": "primitive",
                   "value": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "default": false
                   }
                 }
               }
@@ -2046,7 +2085,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
@@ -2084,7 +2124,8 @@
                 "value": {
                   "type": "primitive",
                   "value": {
-                    "type": "datetime"
+                    "type": "datetime",
+                    "default": "1970-01-01T00:00:00.000Z"
                   }
                 }
               }
@@ -2096,7 +2137,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "datetime"
+                  "type": "datetime",
+                  "default": "1970-01-01T00:00:00.000Z"
                 }
               }
             }
@@ -2134,7 +2176,8 @@
                 "value": {
                   "type": "primitive",
                   "value": {
-                    "type": "date"
+                    "type": "date",
+                    "default": "1970-01-01T00:00:00.000Z"
                   }
                 }
               }
@@ -2146,7 +2189,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "date"
+                  "type": "date",
+                  "default": "1970-01-01T00:00:00.000Z"
                 }
               }
             }
@@ -2234,7 +2278,8 @@
                 "value": {
                   "type": "primitive",
                   "value": {
-                    "type": "base64"
+                    "type": "base64",
+                    "default": "0"
                   }
                 }
               }
@@ -2246,7 +2291,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "base64"
+                  "type": "base64",
+                  "default": "0"
                 }
               }
             }
@@ -2409,6 +2455,7 @@
                 }
               },
               "statusCode": 400,
+              "name": "BadRequestBody",
               "examples": []
             }
           ],
@@ -2464,7 +2511,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
@@ -2479,6 +2527,7 @@
                 }
               },
               "statusCode": 400,
+              "name": "BadRequestBody",
               "examples": []
             }
           ],
