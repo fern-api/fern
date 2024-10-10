@@ -20,4 +20,5 @@ export interface GeneratedEndpointImplementation {
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
     }) => ts.Expression | undefined;
+    maybeLeverageInvocation: (args: { invocation: ts.Expression; context: SdkContext }) => ts.Node[] | undefined;
 }

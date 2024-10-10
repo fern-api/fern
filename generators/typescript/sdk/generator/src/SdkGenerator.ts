@@ -821,19 +821,30 @@ export class SdkGenerator {
                 ts.NodeFlags.Const
             )
         );
-        const endpointInvocation = context.sdkClientClass.getGeneratedSdkClientClass(packageId).invokeEndpoint({
+        const clientClass = context.sdkClientClass.getGeneratedSdkClientClass(packageId);
+        const endpointInvocation = clientClass.invokeEndpoint({
             context,
             endpointId: endpoint.id,
             example,
             clientReference: context.sdkInstanceReferenceForSnippet
         });
+        const maybeLeveragedInvocation = clientClass.maybeLeverageInvocation({
+            context,
+            endpointId: endpoint.id,
+            example,
+            clientReference: context.sdkInstanceReferenceForSnippet
+        });
+
         if (endpointInvocation == null) {
             return undefined;
         }
+
+        const snippet = maybeLeveragedInvocation ?? [ts.factory.createExpressionStatement(endpointInvocation)];
+
         if (includeImports) {
-            return [clientAssignment, ts.factory.createExpressionStatement(endpointInvocation)];
+            return [clientAssignment, ...snippet];
         }
-        return [ts.factory.createExpressionStatement(endpointInvocation)];
+        return snippet;
     }
 
     private generateSnippets() {

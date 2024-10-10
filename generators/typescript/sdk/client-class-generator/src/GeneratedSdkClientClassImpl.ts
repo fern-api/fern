@@ -347,21 +347,44 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
     }
 
+    private getGeneratedEndpointImplementation(endpointId: string): GeneratedEndpointImplementation | undefined {
+        const generatedEndpoint = this.generatedEndpointImplementations.find((generatedEndpoint) => {
+            return generatedEndpoint.endpoint.id === endpointId;
+        });
+        return generatedEndpoint;
+    }
+
     public invokeEndpoint(args: {
         context: SdkContext;
         endpointId: string;
         example: ExampleEndpointCall;
         clientReference: ts.Identifier;
     }): ts.Expression | undefined {
-        const generatedEndpoint = this.generatedEndpointImplementations.find((generatedEndpoint) => {
-            return generatedEndpoint.endpoint.id === args.endpointId;
-        });
+        const generatedEndpoint = this.getGeneratedEndpointImplementation(args.endpointId);
         if (generatedEndpoint == null) {
             return undefined;
         }
         return generatedEndpoint.getExample({
             ...args,
             opts: {}
+        });
+    }
+
+    public maybeLeverageInvocation(args: {
+        context: SdkContext;
+        endpointId: string;
+        example: ExampleEndpointCall;
+        clientReference: ts.Identifier;
+    }): ts.Node[] | undefined {
+        const generatedEndpoint = this.getGeneratedEndpointImplementation(args.endpointId);
+        const invocation = this.invokeEndpoint(args);
+        if (generatedEndpoint == null || invocation == null) {
+            return undefined;
+        }
+
+        return generatedEndpoint.maybeLeverageInvocation({
+            context: args.context,
+            invocation
         });
     }
 

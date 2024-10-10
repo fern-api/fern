@@ -88,6 +88,16 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         );
     }
 
+    public maybeLeverageInvocation({
+        invocation,
+        context
+    }: {
+        invocation: ts.Expression;
+        context: SdkContext;
+    }): undefined {
+        return undefined;
+    }
+
     public getOverloads(): EndpointSignature[] {
         return [];
     }
