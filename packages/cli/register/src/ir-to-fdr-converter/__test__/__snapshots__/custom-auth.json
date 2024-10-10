@@ -15,7 +15,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -52,7 +55,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
@@ -67,6 +71,7 @@
                 }
               },
               "statusCode": 401,
+              "name": "UnauthorizedRequest",
               "examples": []
             }
           ],
@@ -112,7 +117,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
@@ -127,10 +133,12 @@
                 }
               },
               "statusCode": 401,
+              "name": "UnauthorizedRequest",
               "examples": []
             },
             {
               "statusCode": 400,
+              "name": "BadRequest",
               "examples": []
             }
           ],
