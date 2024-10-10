@@ -44,7 +44,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -182,6 +185,7 @@
                 }
               },
               "statusCode": 404,
+              "name": "MovieDoesNotExistError",
               "examples": []
             }
           ],

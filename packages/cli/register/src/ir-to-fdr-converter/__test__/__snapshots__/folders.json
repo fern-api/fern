@@ -226,6 +226,7 @@
                 }
               },
               "statusCode": 404,
+              "name": "NotFoundError",
               "examples": []
             }
           ],
