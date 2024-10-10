@@ -3684,8 +3684,6 @@ importers:
 
   packages/cli/cli/dist/dev: {}
 
-  packages/cli/cli/dist/local: {}
-
   packages/cli/cli/dist/prod: {}
 
   packages/cli/configuration:

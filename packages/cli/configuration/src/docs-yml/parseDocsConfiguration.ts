@@ -244,7 +244,7 @@ async function convertCssConfig(
 
 function isRemoteJsConfig(
     config: RawDocs.JsRemoteConfig | RawDocs.JsFileConfigSettings
-): config is WithoutQuestionMarks<RawDocs.JsRemoteConfig> {
+): config is RawDocs.JsRemoteConfig {
     return Object.hasOwn(config, "url");
 }
 
@@ -258,7 +258,7 @@ async function convertJsConfig(
     js: RawDocs.JsConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): Promise<JavascriptConfig> {
-    const remote: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.JsRemoteConfig>[] = [];
+    const remote: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[] = [];
     const files: AbsoluteJsFileConfig[] = [];
     if (js == null) {
         return { files: [] };
@@ -273,7 +273,7 @@ async function convertJsConfig(
             });
         } else if (isRemoteJsConfig(config)) {
             remote.push({
-                ...config,
+                strategy: config.strategy,
                 url: CjsFdrSdk.Url(config.url)
             });
         } else if (isFileJsConfig(config)) {
@@ -879,7 +879,7 @@ function isTabbedNavigationConfig(
 
 function convertNavbarLinks(
     navbarLinks: RawDocs.NavbarLink[] | undefined
-): WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.NavbarLink>[] | undefined {
+): CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined {
     return navbarLinks?.map((navbarLink): WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.NavbarLink> => {
         if (navbarLink.type === "github") {
             return { type: "github", url: CjsFdrSdk.Url(navbarLink.value) };

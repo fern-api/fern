@@ -1,7 +1,6 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { Audiences } from "../commons";
-import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { DocsInstance, ExperimentalConfig, PlaygroundSettings, VersionAvailability } from "./schemas";
 import { AnnouncementConfig } from "./schemas/sdk/api/resources/docs/types/AnnouncementConfig";
 
@@ -15,12 +14,12 @@ export interface ParsedDocsConfiguration {
     /* navigation */
     landingPage: DocsNavigationItem.Page | undefined;
     navigation: DocsNavigationConfiguration;
-    navbarLinks: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.NavbarLink>[] | undefined;
-    footerLinks: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.FooterLink>[] | undefined;
+    navbarLinks: CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined;
+    footerLinks: CjsFdrSdk.docs.v1.commons.FooterLink[] | undefined;
 
     /* seo */
     metadata: ParsedMetadataConfig | undefined;
-    redirects: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.RedirectConfig>[] | undefined;
+    redirects: CjsFdrSdk.docs.v1.commons.RedirectConfig[] | undefined;
 
     /* branding */
     logo: Logo | undefined;
@@ -28,16 +27,16 @@ export interface ParsedDocsConfiguration {
     backgroundImage: BackgroundImage | undefined;
     colors: CjsFdrSdk.docs.v1.write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
-    layout: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.DocsLayoutConfig> | undefined;
+    layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
     announcement: AnnouncementConfig | undefined;
 
     /* integrations */
-    integrations: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.IntegrationsConfig> | undefined;
+    integrations: CjsFdrSdk.docs.v1.commons.IntegrationsConfig | undefined;
 
     /* scripts */
-    css: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.CssConfig> | undefined;
+    css: CjsFdrSdk.docs.v1.commons.CssConfig | undefined;
     js: JavascriptConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
@@ -49,7 +48,7 @@ export interface AbsoluteJsFileConfig {
 }
 
 export interface JavascriptConfig {
-    remote?: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.JsRemoteConfig>[];
+    remote?: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[];
     files: AbsoluteJsFileConfig[];
 }
 
@@ -59,10 +58,7 @@ export interface DocsColorsConfiguration {
 }
 
 export interface ParsedMetadataConfig
-    extends Omit<
-        WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.MetadataConfig>,
-        "og:image" | "og:logo" | "twitter:image"
-    > {
+    extends Omit<CjsFdrSdk.docs.v1.commons.MetadataConfig, "og:image" | "og:logo" | "twitter:image"> {
     "og:image": FilepathOrUrl | undefined;
     "og:logo": FilepathOrUrl | undefined;
     "twitter:image": FilepathOrUrl | undefined;

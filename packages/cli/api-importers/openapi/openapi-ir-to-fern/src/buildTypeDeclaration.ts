@@ -210,7 +210,6 @@ export function buildObjectTypeDeclaration({
     if (extendedSchemas.length > 0) {
         objectTypeDeclaration.extends = extendedSchemas;
     }
-    // TODO(rohin)
     if (schema.additionalProperties) {
         objectTypeDeclaration["extra-properties"] = true;
     }

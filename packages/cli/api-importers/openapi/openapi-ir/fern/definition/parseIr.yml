@@ -86,7 +86,7 @@ types:
       schema: SchemaWithExample
       contentType: optional<string>
       fullExamples: optional<list<NamedFullExample>>
-      additionalProperties: ObjectExtraPropertyWithExample
+      additionalProperties: boolean
 
   ResponseWithExample:
     union:
@@ -244,7 +244,7 @@ types:
       properties: list<ObjectPropertyWithExample>
       allOfPropertyConflicts: list<finalIr.AllOfPropertyConflict>
       fullExamples: optional<list<NamedFullExample>>
-      additionalProperties: ObjectExtraPropertyWithExample
+      additionalProperties: boolean
 
   ObjectPropertyWithExample:
     extends:
@@ -265,20 +265,6 @@ types:
         type: string
         docs: |
           A unique name for the property.
-
-  ObjectExtraPropertyWithExample:
-    union:
-      - boolean
-      - ObjectExtraPropertyShapeWithExample
-    discriminated: false
-
-  ObjectExtraPropertyShapeWithExample:
-    extends:
-      - commons.WithAvailability
-    properties:
-      schema: SchemaWithExample
-      readonly: optional<boolean>
-      audiences: list<string>
 
   OneOfSchemaWithExample:
     union:
