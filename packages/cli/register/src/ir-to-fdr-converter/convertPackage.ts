@@ -401,8 +401,10 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                     shape: {
                         type: "reference",
                         value: convertTypeReference(reference.requestBodyType)
-                    },
-                    description: reference.docs ?? undefined
+                    }
+                    // This is commented out because the docs exist on the type reference itself.
+                    // This was leading to duplicates in docs, so commenting out for now.
+                    // description: reference.docs ?? undefined
                 };
             },
             fileUpload: (fileUpload) => ({
