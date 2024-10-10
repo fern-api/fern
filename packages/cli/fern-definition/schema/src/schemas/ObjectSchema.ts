@@ -10,13 +10,13 @@ export const ObjectSchema = z.union([
         extensions: z.optional(z.record(z.string(), z.any())),
         extends: ObjectExtendsSchema,
         properties: z.optional(z.record(ObjectPropertySchema)),
-        ["extra-properties"]: z.optional(z.union([z.boolean(), TypeReferenceDeclarationSchema]))
+        ["extra-properties"]: z.optional(z.boolean())
     }),
     BaseTypeDeclarationSchema.extend({
         extensions: z.optional(z.record(z.string(), z.any())),
         extends: z.optional(ObjectExtendsSchema),
         properties: z.record(ObjectPropertySchema),
-        ["extra-properties"]: z.optional(z.union([z.boolean(), TypeReferenceDeclarationSchema]))
+        ["extra-properties"]: z.optional(z.boolean())
     })
 ]);
 
