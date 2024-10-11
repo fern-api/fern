@@ -41,10 +41,9 @@ export class Playlist {
      * @example
      *     await client.playlist.createPlaylist(1, {
      *         datetime: "2024-01-15T09:30:00Z",
-     *         optionalDatetime: "2024-01-15T09:30:00Z",
      *         body: {
-     *             name: "string",
-     *             problems: [SeedTrace.ProblemId("string")]
+     *             name: "name",
+     *             problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")]
      *         }
      *     })
      */
@@ -115,11 +114,9 @@ export class Playlist {
      *
      * @example
      *     await client.playlist.getPlaylists(1, {
-     *         limit: 1,
-     *         otherField: "string",
-     *         multiLineDocs: "string",
-     *         optionalMultipleField: "string",
-     *         multipleField: "string"
+     *         otherField: "otherField",
+     *         multiLineDocs: "multiLineDocs",
+     *         multipleField: "multipleField"
      *     })
      */
     public async getPlaylists(
@@ -202,7 +199,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.playlist.getPlaylist(1, SeedTrace.PlaylistId("string"))
+     *     await client.playlist.getPlaylist(1, SeedTrace.PlaylistId("playlistId"))
      */
     public async getPlaylist(
         serviceParam: number,
@@ -283,10 +280,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.playlist.updatePlaylist(1, SeedTrace.PlaylistId("string"), {
-     *         name: "string",
-     *         problems: [SeedTrace.ProblemId("string")]
-     *     })
+     *     await client.playlist.updatePlaylist(1, SeedTrace.PlaylistId("playlistId"), undefined)
      */
     public async updatePlaylist(
         serviceParam: number,
@@ -372,7 +366,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.playlist.deletePlaylist(1, SeedTrace.PlaylistId("string"))
+     *     await client.playlist.deletePlaylist(1, SeedTrace.PlaylistId("playlist_id"))
      */
     public async deletePlaylist(
         serviceParam: number,

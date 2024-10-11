@@ -35,7 +35,7 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.getUser("string")
+     *     await client.user.getUser("userId")
      */
     public async getUser(userId: string, requestOptions?: User.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -90,8 +90,8 @@ export class User {
      *
      * @example
      *     await client.user.createUser({
-     *         name: "string",
-     *         age: 1
+     *         name: "name",
+     *         age: undefined
      *     })
      */
     public async createUser(

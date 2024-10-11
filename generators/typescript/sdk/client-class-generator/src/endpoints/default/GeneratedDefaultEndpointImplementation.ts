@@ -175,6 +175,114 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         );
     }
 
+    public maybeLeverageInvocation({
+        invocation,
+        context
+    }: {
+        invocation: ts.Expression;
+        context: SdkContext;
+    }): ts.Node[] | undefined {
+        const paginationInfo = this.response.getPaginationInfo(context);
+        if (paginationInfo == null) {
+            return undefined;
+        }
+
+        const responseVariableName = "response";
+        const pageVariableName = "page";
+        const itemVaribaleName = "item";
+        return [
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier(responseVariableName),
+                            undefined,
+                            undefined,
+                            invocation
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            ),
+            ts.factory.createForOfStatement(
+                ts.factory.createToken(ts.SyntaxKind.AwaitKeyword),
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier(itemVaribaleName),
+                            undefined,
+                            undefined,
+                            undefined
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                ),
+                ts.factory.createIdentifier(responseVariableName),
+                ts.factory.createBlock(
+                    [
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("console"),
+                                    ts.factory.createIdentifier("log")
+                                ),
+                                undefined,
+                                [ts.factory.createIdentifier(itemVaribaleName)]
+                            )
+                        )
+                    ],
+                    true
+                )
+            ),
+            // Not ideal, but not seeing another way to write a comment.
+            ts.factory.createIdentifier("// Or you can manually iterate page-by-page"),
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier(pageVariableName),
+                            undefined,
+                            undefined,
+                            invocation
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            ),
+            ts.factory.createWhileStatement(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier(pageVariableName),
+                        ts.factory.createIdentifier("hasNextPage")
+                    ),
+                    undefined,
+                    []
+                ),
+                ts.factory.createBlock(
+                    [
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createIdentifier(pageVariableName),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                ts.factory.createCallExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createIdentifier(pageVariableName),
+                                        ts.factory.createIdentifier("getNextPage")
+                                    ),
+                                    undefined,
+                                    []
+                                )
+                            )
+                        )
+                    ],
+                    true
+                )
+            )
+        ];
+    }
+
     public getStatements(context: SdkContext): ts.Statement[] {
         const body = [
             ...this.request.getBuildRequestStatements(context),

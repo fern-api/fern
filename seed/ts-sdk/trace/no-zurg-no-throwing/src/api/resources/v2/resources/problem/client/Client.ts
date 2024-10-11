@@ -137,7 +137,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.v2.problem.getLatestProblem("string")
+     *     await client.v2.problem.getLatestProblem("problemId")
      */
     public async getLatestProblem(
         problemId: SeedTrace.ProblemId,
@@ -189,7 +189,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.v2.problem.getProblemVersion("string", 1)
+     *     await client.v2.problem.getProblemVersion("problemId", 1)
      */
     public async getProblemVersion(
         problemId: SeedTrace.ProblemId,

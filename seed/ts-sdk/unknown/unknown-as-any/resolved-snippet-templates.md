@@ -16,7 +16,7 @@ import { SeedUnknownAsAnyClient } from "@fern/unknown";
 
 const client = new SeedUnknownAsAnyClient({ environment: "YOUR_BASE_URL" });
 await client.unknown.postObject({
-  unknown: { boolVal: true, strVal: "string" },
+  unknown: { key: "value" },
 });
  
 ```                        

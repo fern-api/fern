@@ -293,41 +293,37 @@ await client.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84
 <dd>
 
 ```typescript
-await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), "string", {
+await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), "testCaseId", {
     result: {
         result: {
             expectedResult: SeedTrace.VariableValue.integerValue(1),
-            actualResult: SeedTrace.ActualResult.value(
-                SeedTrace.VariableValue.integerValue({
-                    key: "value",
-                })
-            ),
+            actualResult: SeedTrace.ActualResult.value(SeedTrace.VariableValue.integerValue(1)),
             passed: true,
         },
-        stdout: "string",
+        stdout: "stdout",
     },
     traceResponses: [
         {
             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             lineNumber: 1,
-            returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-            expressionLocation: {
-                start: 1,
-                offset: 1,
-            },
+            returnValue: undefined,
+            expressionLocation: undefined,
             stack: {
                 numStackFrames: 1,
-                topStackFrame: {
-                    methodName: "string",
-                    lineNumber: 1,
-                    scopes: [
-                        {
-                            variables: {},
-                        },
-                    ],
-                },
+                topStackFrame: undefined,
             },
-            stdout: "string",
+            stdout: undefined,
+        },
+        {
+            submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            lineNumber: 1,
+            returnValue: undefined,
+            expressionLocation: undefined,
+            stack: {
+                numStackFrames: 1,
+                topStackFrame: undefined,
+            },
+            stdout: undefined,
         },
     ],
 });
@@ -396,33 +392,37 @@ await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf
 ```typescript
 await client.admin.storeTracedTestCaseV2(
     SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    SeedTrace.TestCaseId("string"),
+    SeedTrace.TestCaseId("testCaseId"),
     [
         {
             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             lineNumber: 1,
             file: {
-                filename: "string",
-                directory: "string",
+                filename: "filename",
+                directory: "directory",
             },
-            returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-            expressionLocation: {
-                start: 1,
-                offset: 1,
-            },
+            returnValue: undefined,
+            expressionLocation: undefined,
             stack: {
                 numStackFrames: 1,
-                topStackFrame: {
-                    methodName: "string",
-                    lineNumber: 1,
-                    scopes: [
-                        {
-                            variables: {},
-                        },
-                    ],
-                },
+                topStackFrame: undefined,
             },
-            stdout: "string",
+            stdout: undefined,
+        },
+        {
+            submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            lineNumber: 1,
+            file: {
+                filename: "filename",
+                directory: "directory",
+            },
+            returnValue: undefined,
+            expressionLocation: undefined,
+            stack: {
+                numStackFrames: 1,
+                topStackFrame: undefined,
+            },
+            stdout: undefined,
         },
     ]
 );
@@ -491,40 +491,32 @@ await client.admin.storeTracedTestCaseV2(
 ```typescript
 await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
     workspaceRunDetails: {
-        exceptionV2: SeedTrace.ExceptionV2.generic({
-            exceptionType: "string",
-            exceptionMessage: "string",
-            exceptionStacktrace: "string",
-        }),
-        exception: {
-            exceptionType: "string",
-            exceptionMessage: "string",
-            exceptionStacktrace: "string",
-        },
-        stdout: "string",
+        exceptionV2: undefined,
+        exception: undefined,
+        stdout: "stdout",
     },
     traceResponses: [
         {
             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             lineNumber: 1,
-            returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-            expressionLocation: {
-                start: 1,
-                offset: 1,
-            },
+            returnValue: undefined,
+            expressionLocation: undefined,
             stack: {
                 numStackFrames: 1,
-                topStackFrame: {
-                    methodName: "string",
-                    lineNumber: 1,
-                    scopes: [
-                        {
-                            variables: {},
-                        },
-                    ],
-                },
+                topStackFrame: undefined,
             },
-            stdout: "string",
+            stdout: undefined,
+        },
+        {
+            submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            lineNumber: 1,
+            returnValue: undefined,
+            expressionLocation: undefined,
+            stack: {
+                numStackFrames: 1,
+                topStackFrame: undefined,
+            },
+            stdout: undefined,
         },
     ],
 });
@@ -588,27 +580,31 @@ await client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-
         submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         lineNumber: 1,
         file: {
-            filename: "string",
-            directory: "string",
+            filename: "filename",
+            directory: "directory",
         },
-        returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-        expressionLocation: {
-            start: 1,
-            offset: 1,
-        },
+        returnValue: undefined,
+        expressionLocation: undefined,
         stack: {
             numStackFrames: 1,
-            topStackFrame: {
-                methodName: "string",
-                lineNumber: 1,
-                scopes: [
-                    {
-                        variables: {},
-                    },
-                ],
-            },
+            topStackFrame: undefined,
         },
-        stdout: "string",
+        stdout: undefined,
+    },
+    {
+        submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        lineNumber: 1,
+        file: {
+            filename: "filename",
+            directory: "directory",
+        },
+        returnValue: undefined,
+        expressionLocation: undefined,
+        stack: {
+            numStackFrames: 1,
+            topStackFrame: undefined,
+        },
+        stdout: undefined,
     },
 ]);
 ```
@@ -708,7 +704,7 @@ await client.homepage.getHomepageProblems();
 <dd>
 
 ```typescript
-await client.homepage.setHomepageProblems([SeedTrace.ProblemId("string")]);
+await client.homepage.setHomepageProblems([SeedTrace.ProblemId("string"), SeedTrace.ProblemId("string")]);
 ```
 
 </dd>
@@ -759,7 +755,7 @@ await client.homepage.setHomepageProblems([SeedTrace.ProblemId("string")]);
 
 ```typescript
 await client.migration.getAttemptedMigrations({
-    adminKeyHeader: "string",
+    adminKeyHeader: "admin-key-header",
 });
 ```
 
@@ -827,10 +823,9 @@ Create a new playlist
 ```typescript
 await client.playlist.createPlaylist(1, {
     datetime: "2024-01-15T09:30:00Z",
-    optionalDatetime: "2024-01-15T09:30:00Z",
     body: {
-        name: "string",
-        problems: [SeedTrace.ProblemId("string")],
+        name: "name",
+        problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
     },
 });
 ```
@@ -904,11 +899,9 @@ Returns the user's playlists
 
 ```typescript
 await client.playlist.getPlaylists(1, {
-    limit: 1,
-    otherField: "string",
-    multiLineDocs: "string",
-    optionalMultipleField: "string",
-    multipleField: "string",
+    otherField: "otherField",
+    multiLineDocs: "multiLineDocs",
+    multipleField: "multipleField",
 });
 ```
 
@@ -980,7 +973,7 @@ Returns a playlist
 <dd>
 
 ```typescript
-await client.playlist.getPlaylist(1, SeedTrace.PlaylistId("string"));
+await client.playlist.getPlaylist(1, SeedTrace.PlaylistId("playlistId"));
 ```
 
 </dd>
@@ -1051,10 +1044,7 @@ Updates a playlist
 <dd>
 
 ```typescript
-await client.playlist.updatePlaylist(1, SeedTrace.PlaylistId("string"), {
-    name: "string",
-    problems: [SeedTrace.ProblemId("string")],
-});
+await client.playlist.updatePlaylist(1, SeedTrace.PlaylistId("playlistId"), undefined);
 ```
 
 </dd>
@@ -1133,7 +1123,7 @@ Deletes a playlist
 <dd>
 
 ```typescript
-await client.playlist.deletePlaylist(1, SeedTrace.PlaylistId("string"));
+await client.playlist.deletePlaylist(1, SeedTrace.PlaylistId("playlist_id"));
 ```
 
 </dd>
@@ -1207,20 +1197,24 @@ Creates a problem
 
 ```typescript
 await client.problem.createProblem({
-    problemName: "string",
+    problemName: "problemName",
     problemDescription: {
-        boards: [SeedTrace.ProblemDescriptionBoard.html("string")],
+        boards: [SeedTrace.ProblemDescriptionBoard.html("boards"), SeedTrace.ProblemDescriptionBoard.html("boards")],
     },
     files: {
         ["JAVA"]: {
             solutionFile: {
-                filename: "string",
-                contents: "string",
+                filename: "filename",
+                contents: "contents",
             },
             readOnlyFiles: [
                 {
-                    filename: "string",
-                    contents: "string",
+                    filename: "filename",
+                    contents: "contents",
+                },
+                {
+                    filename: "filename",
+                    contents: "contents",
                 },
             ],
         },
@@ -1228,20 +1222,31 @@ await client.problem.createProblem({
     inputParams: [
         {
             variableType: SeedTrace.VariableType.integerType(),
-            name: "string",
+            name: "name",
+        },
+        {
+            variableType: SeedTrace.VariableType.integerType(),
+            name: "name",
         },
     ],
     outputType: SeedTrace.VariableType.integerType(),
     testcases: [
         {
             testCase: {
-                id: "string",
-                params: [SeedTrace.VariableValue.integerValue(1)],
+                id: "id",
+                params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)],
+            },
+            expectedResult: SeedTrace.VariableValue.integerValue(1),
+        },
+        {
+            testCase: {
+                id: "id",
+                params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)],
             },
             expectedResult: SeedTrace.VariableValue.integerValue(1),
         },
     ],
-    methodName: "string",
+    methodName: "methodName",
 });
 ```
 
@@ -1305,21 +1310,25 @@ Updates a problem
 <dd>
 
 ```typescript
-await client.problem.updateProblem(SeedTrace.ProblemId("string"), {
-    problemName: "string",
+await client.problem.updateProblem(SeedTrace.ProblemId("problemId"), {
+    problemName: "problemName",
     problemDescription: {
-        boards: [SeedTrace.ProblemDescriptionBoard.html("string")],
+        boards: [SeedTrace.ProblemDescriptionBoard.html("boards"), SeedTrace.ProblemDescriptionBoard.html("boards")],
     },
     files: {
         ["JAVA"]: {
             solutionFile: {
-                filename: "string",
-                contents: "string",
+                filename: "filename",
+                contents: "contents",
             },
             readOnlyFiles: [
                 {
-                    filename: "string",
-                    contents: "string",
+                    filename: "filename",
+                    contents: "contents",
+                },
+                {
+                    filename: "filename",
+                    contents: "contents",
                 },
             ],
         },
@@ -1327,20 +1336,31 @@ await client.problem.updateProblem(SeedTrace.ProblemId("string"), {
     inputParams: [
         {
             variableType: SeedTrace.VariableType.integerType(),
-            name: "string",
+            name: "name",
+        },
+        {
+            variableType: SeedTrace.VariableType.integerType(),
+            name: "name",
         },
     ],
     outputType: SeedTrace.VariableType.integerType(),
     testcases: [
         {
             testCase: {
-                id: "string",
-                params: [SeedTrace.VariableValue.integerValue(1)],
+                id: "id",
+                params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)],
+            },
+            expectedResult: SeedTrace.VariableValue.integerValue(1),
+        },
+        {
+            testCase: {
+                id: "id",
+                params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)],
             },
             expectedResult: SeedTrace.VariableValue.integerValue(1),
         },
     ],
-    methodName: "string",
+    methodName: "methodName",
 });
 ```
 
@@ -1412,7 +1432,7 @@ Soft deletes a problem
 <dd>
 
 ```typescript
-await client.problem.deleteProblem(SeedTrace.ProblemId("string"));
+await client.problem.deleteProblem(SeedTrace.ProblemId("problemId"));
 ```
 
 </dd>
@@ -1479,11 +1499,15 @@ await client.problem.getDefaultStarterFiles({
     inputParams: [
         {
             variableType: SeedTrace.VariableType.integerType(),
-            name: "string",
+            name: "name",
+        },
+        {
+            variableType: SeedTrace.VariableType.integerType(),
+            name: "name",
         },
     ],
     outputType: SeedTrace.VariableType.integerType(),
-    methodName: "string",
+    methodName: "methodName",
 });
 ```
 
@@ -1612,7 +1636,7 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```typescript
-await client.submission.getExecutionSession("string");
+await client.submission.getExecutionSession("sessionId");
 ```
 
 </dd>
@@ -1675,7 +1699,7 @@ Stops execution session.
 <dd>
 
 ```typescript
-await client.submission.stopExecutionSession("string");
+await client.submission.stopExecutionSession("sessionId");
 ```
 
 </dd>
@@ -1988,7 +2012,7 @@ Returns latest version of a problem
 <dd>
 
 ```typescript
-await client.v2.problem.getLatestProblem(SeedTrace.ProblemId("string"));
+await client.v2.problem.getLatestProblem(SeedTrace.ProblemId("problemId"));
 ```
 
 </dd>
@@ -2051,7 +2075,7 @@ Returns requested version of a problem
 <dd>
 
 ```typescript
-await client.v2.problem.getProblemVersion(SeedTrace.ProblemId("string"), 1);
+await client.v2.problem.getProblemVersion(SeedTrace.ProblemId("problemId"), 1);
 ```
 
 </dd>
@@ -2234,7 +2258,7 @@ Returns latest version of a problem
 <dd>
 
 ```typescript
-await client.v2.v3.problem.getLatestProblem(SeedTrace.ProblemId("string"));
+await client.v2.v3.problem.getLatestProblem(SeedTrace.ProblemId("problemId"));
 ```
 
 </dd>
@@ -2297,7 +2321,7 @@ Returns requested version of a problem
 <dd>
 
 ```typescript
-await client.v2.v3.problem.getProblemVersion(SeedTrace.ProblemId("string"), 1);
+await client.v2.v3.problem.getProblemVersion(SeedTrace.ProblemId("problemId"), 1);
 ```
 
 </dd>

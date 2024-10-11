@@ -20,13 +20,12 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedAudiencesEnvironment, SeedAudiencesClient } from "@fern/audiences";
+import { SeedAudiencesEnvironment, SeedAudiencesClient, SeedAudiences } from "@fern/audiences";
 
 const client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });
 await client.foo.find({
-    optionalString: "string",
-    publicProperty: "string",
-    privateProperty: 1,
+    publicProperty: undefined,
+    privateProperty: undefined,
 });
 ```
 

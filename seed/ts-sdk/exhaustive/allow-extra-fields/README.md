@@ -23,7 +23,7 @@ Instantiate and use the client with the following:
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.endpoints.container.getAndReturnListOfPrimitives(["string"]);
+await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
 ```
 
 ## Request And Response Types

@@ -31,7 +31,7 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```typescript
-await client.user.getUser("string");
+await client.user.getUser("userId");
 ```
 
 </dd>
@@ -99,8 +99,8 @@ This endpoint is used to create a new user.
 
 ```typescript
 await client.user.createUser({
-    name: "string",
-    age: 1,
+    name: "name",
+    age: undefined,
 });
 ```
 
