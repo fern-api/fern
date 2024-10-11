@@ -25,6 +25,7 @@ export class ApiReferenceNodeConverter {
     #children: FernNavigation.V1.ApiPackageChild[] = [];
     #overviewPageId: FernNavigation.V1.PageId | undefined;
     #slug: FernNavigation.V1.SlugGenerator;
+    #idgen: NodeIdGenerator;
     private disableEndpointPairs;
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
@@ -33,14 +34,15 @@ export class ApiReferenceNodeConverter {
         private workspace: FernWorkspace,
         private docsWorkspace: DocsWorkspace,
         private taskContext: TaskContext,
-        private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>
+        private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
+        idgen?: NodeIdGenerator
     ) {
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api, taskContext);
 
         // we are assuming that the apiDefinitionId is unique.
-        const idgen = NodeIdGenerator.init(this.apiDefinitionId);
+        this.#idgen = idgen ?? NodeIdGenerator.init();
 
         this.#overviewPageId =
             this.apiSection.overviewAbsolutePath != null
@@ -64,8 +66,7 @@ export class ApiReferenceNodeConverter {
             this.#children = this.#convertApiReferenceLayoutItems(
                 this.apiSection.navigation,
                 this.#holder.api.rootPackage,
-                this.#slug,
-                idgen
+                this.#slug
             );
         }
 
@@ -78,9 +79,8 @@ export class ApiReferenceNodeConverter {
 
     public get(): FernNavigation.V1.ApiReferenceNode {
         const pointsTo = FernNavigation.V1.followRedirects(this.#children);
-        const idgen = NodeIdGenerator.init(this.apiDefinitionId);
         return {
-            id: idgen.get(),
+            id: this.#idgen.get(this.apiDefinitionId),
             type: "apiReference",
             title: this.apiSection.title,
             apiDefinitionId: this.apiDefinitionId,
@@ -95,8 +95,8 @@ export class ApiReferenceNodeConverter {
                 this.markdownFilesToFullSlugs,
                 this.workspace.changelog?.files.map((file) => file.absoluteFilepath),
                 this.docsWorkspace,
-                idgen
-            ).convert({
+                this.#idgen
+            ).toChangelogNode({
                 parentSlug: this.#slug,
                 audiences: { type: "all" }
             }),
@@ -115,8 +115,7 @@ export class ApiReferenceNodeConverter {
     #convertApiReferenceLayoutItems(
         navigation: docsYml.ParsedApiReferenceLayoutItem[],
         apiDefinitionPackage: APIV1Read.ApiDefinitionPackage | undefined,
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        idgen: NodeIdGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator
     ): FernNavigation.V1.ApiPackageChild[] {
         apiDefinitionPackage = this.#holder.resolveSubpackage(apiDefinitionPackage);
         const apiDefinitionPackageId =
@@ -125,45 +124,49 @@ export class ApiReferenceNodeConverter {
             .map((item) =>
                 visitDiscriminatedUnion(item)._visit<FernNavigation.V1.ApiPackageChild | undefined>({
                     link: (link) => ({
-                        id: idgen.append(`link:${link.url}`).get(),
+                        id: this.#idgen.get(link.url),
                         type: "link",
                         title: link.text,
                         icon: link.icon,
                         url: FernNavigation.Url(link.url)
                     }),
-                    page: (page) => {
-                        const pageId = FernNavigation.V1.PageId(this.toRelativeFilepath(page.absolutePath));
-                        const pageSlug = parentSlug.apply({
-                            fullSlug: this.markdownFilesToFullSlugs.get(page.absolutePath)?.split("/"),
-                            urlSlug: page.slug ?? kebabCase(page.title)
-                        });
-                        return {
-                            id: idgen.append(`page:${pageId}`).get(),
-                            type: "page",
-                            pageId,
-                            title: page.title,
-                            slug: pageSlug.get(),
-                            icon: page.icon,
-                            hidden: page.hidden,
-                            noindex: page.noindex,
-                            authed: undefined,
-                            audience: withAudience(page.audiences)
-                        };
-                    },
-                    package: (pkg) => this.#convertPackage(pkg, parentSlug, idgen),
-                    section: (section) => this.#convertSection(section, parentSlug, idgen),
+                    page: (page) => this.#toPageNode(page, parentSlug),
+                    package: (pkg) => this.#convertPackage(pkg, parentSlug),
+                    section: (section) => this.#convertSection(section, parentSlug),
                     item: ({ value: unknownIdentifier }): FernNavigation.V1.ApiPackageChild | undefined =>
-                        this.#convertUnknownIdentifier(unknownIdentifier, apiDefinitionPackageId, parentSlug, idgen),
-                    endpoint: (endpoint) => this.#convertEndpoint(endpoint, apiDefinitionPackageId, parentSlug, idgen)
+                        this.#convertUnknownIdentifier(unknownIdentifier, apiDefinitionPackageId, parentSlug),
+                    endpoint: (endpoint) => this.#convertEndpoint(endpoint, apiDefinitionPackageId, parentSlug)
                 })
             )
             .filter(isNonNullish);
     }
 
+    #toPageNode(
+        page: docsYml.DocsNavigationItem.Page,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): FernNavigation.V1.PageNode {
+        const pageId = FernNavigation.V1.PageId(this.toRelativeFilepath(page.absolutePath));
+        const pageSlug = parentSlug.apply({
+            fullSlug: this.markdownFilesToFullSlugs.get(page.absolutePath)?.split("/"),
+            urlSlug: page.slug ?? kebabCase(page.title)
+        });
+        return {
+            id: this.#idgen.get(pageId),
+            type: "page",
+            pageId,
+            title: page.title,
+            slug: pageSlug.get(),
+            icon: page.icon,
+            hidden: page.hidden,
+            noindex: page.noindex,
+            authed: undefined,
+            audience: withAudience(page.audiences)
+        };
+    }
+
     #convertPackage(
         pkg: docsYml.ParsedApiReferenceLayoutItem.Package,
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        idgen: NodeIdGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator
     ): FernNavigation.V1.ApiPackageNode {
         const overviewPageId =
             pkg.overviewAbsolutePath != null
@@ -177,7 +180,7 @@ export class ApiReferenceNodeConverter {
 
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
-            const subpackageNodeId = idgen.append(subpackageId);
+            const subpackageNodeId = this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${subpackageId}`);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
                 this.taskContext.logger.error(
@@ -186,7 +189,7 @@ export class ApiReferenceNodeConverter {
             }
 
             this.#visitedSubpackages.add(subpackageId);
-            this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), [subpackageId]);
+            this.#nodeIdToSubpackageId.set(subpackageNodeId, [subpackageId]);
             const urlSlug =
                 pkg.slug ??
                 (isSubpackage(subpackage)
@@ -197,14 +200,9 @@ export class ApiReferenceNodeConverter {
                 skipUrlSlug: pkg.skipUrlSlug,
                 urlSlug
             });
-            const convertedItems = this.#convertApiReferenceLayoutItems(
-                pkg.contents,
-                subpackage,
-                slug,
-                subpackageNodeId
-            );
+            const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, subpackage, slug);
             return {
-                id: subpackageNodeId.get(),
+                id: subpackageNodeId,
                 type: "apiPackage",
                 children: convertedItems,
                 title:
@@ -234,9 +232,9 @@ export class ApiReferenceNodeConverter {
                 skipUrlSlug: pkg.skipUrlSlug,
                 urlSlug
             });
-            const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, undefined, slug, idgen);
+            const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, undefined, slug);
             return {
-                id: idgen.append(kebabCase(pkg.package)).get(),
+                id: this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${kebabCase(pkg.package)}`),
                 type: "apiPackage",
                 children: convertedItems,
                 title: pkg.title ?? pkg.package,
@@ -257,8 +255,7 @@ export class ApiReferenceNodeConverter {
 
     #convertSection(
         section: docsYml.ParsedApiReferenceLayoutItem.Section,
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        idgen: NodeIdGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator
     ): FernNavigation.V1.ApiPackageNode {
         const overviewPageId =
             section.overviewAbsolutePath != null
@@ -270,7 +267,7 @@ export class ApiReferenceNodeConverter {
                 ? this.markdownFilesToFullSlugs.get(section.overviewAbsolutePath)
                 : undefined;
 
-        const nodeId = idgen.append(`section:${kebabCase(section.title)}`);
+        const nodeId = this.#idgen.get(overviewPageId ?? maybeFullSlug ?? parentSlug.get());
 
         const subpackageIds = section.referencedSubpackages
             .map((locator) => {
@@ -285,7 +282,7 @@ export class ApiReferenceNodeConverter {
             })
             .filter(isNonNullish);
 
-        this.#nodeIdToSubpackageId.set(nodeId.get(), subpackageIds);
+        this.#nodeIdToSubpackageId.set(nodeId, subpackageIds);
         subpackageIds.forEach((subpackageId) => {
             if (this.#visitedSubpackages.has(subpackageId)) {
                 this.taskContext.logger.error(
@@ -301,9 +298,9 @@ export class ApiReferenceNodeConverter {
             skipUrlSlug: section.skipUrlSlug,
             urlSlug
         });
-        const convertedItems = this.#convertApiReferenceLayoutItems(section.contents, undefined, slug, idgen);
+        const convertedItems = this.#convertApiReferenceLayoutItems(section.contents, undefined, slug);
         return {
-            id: nodeId.get(),
+            id: nodeId,
             type: "apiPackage",
             children: convertedItems,
             title: section.title,
@@ -324,8 +321,7 @@ export class ApiReferenceNodeConverter {
     #convertUnknownIdentifier(
         unknownIdentifier: string,
         apiDefinitionPackageId: string | undefined,
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        idgen: NodeIdGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator
     ): FernNavigation.V1.ApiPackageChild | undefined {
         unknownIdentifier = unknownIdentifier.trim();
         // unknownIdentifier could either be a package, endpoint, websocket, or webhook.
@@ -333,7 +329,7 @@ export class ApiReferenceNodeConverter {
         const subpackage = this.#holder.getSubpackageByIdOrLocator(unknownIdentifier);
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
-            const subpackageNodeId = idgen.append(subpackageId);
+            const subpackageNodeId = this.#idgen.get(`${this.apiDefinitionId}:${subpackageId}`);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
                 this.taskContext.logger.error(
@@ -342,11 +338,11 @@ export class ApiReferenceNodeConverter {
             }
 
             this.#visitedSubpackages.add(subpackageId);
-            this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), [subpackageId]);
+            this.#nodeIdToSubpackageId.set(subpackageNodeId, [subpackageId]);
             const urlSlug = isSubpackage(subpackage) ? subpackage.urlSlug : "";
             const slug = parentSlug.apply({ urlSlug });
             return {
-                id: subpackageNodeId.get(),
+                id: subpackageNodeId,
                 type: "apiPackage",
                 children: [],
                 title: isSubpackage(subpackage)
@@ -380,16 +376,14 @@ export class ApiReferenceNodeConverter {
                 audiences: { type: "all" }
             },
             apiDefinitionPackageId,
-            parentSlug,
-            idgen
+            parentSlug
         );
     }
 
     #convertEndpoint(
         endpointItem: docsYml.ParsedApiReferenceLayoutItem.Endpoint,
         apiDefinitionPackageIdRaw: string | undefined,
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        idgen: NodeIdGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator
     ): FernNavigation.V1.ApiPackageChild | undefined {
         const endpoint =
             (apiDefinitionPackageIdRaw != null
@@ -409,7 +403,7 @@ export class ApiReferenceNodeConverter {
             const endpointSlug =
                 endpointItem.slug != null ? parentSlug.append(endpointItem.slug) : parentSlug.apply(endpoint);
             return {
-                id: idgen.append(endpoint.id).get(),
+                id: this.#idgen.get(`${this.apiDefinitionId}:${endpointId}`),
                 type: "endpoint",
                 method: endpoint.method,
                 endpointId,
@@ -443,7 +437,7 @@ export class ApiReferenceNodeConverter {
             }
             this.#visitedWebSockets.add(webSocketId);
             return {
-                id: idgen.append(webSocket.id).get(),
+                id: this.#idgen.get(`${this.apiDefinitionId}:${webSocketId}`),
                 type: "webSocket",
                 webSocketId,
                 title: endpointItem.title ?? webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
@@ -478,7 +472,7 @@ export class ApiReferenceNodeConverter {
             }
             this.#visitedWebhooks.add(webhookId);
             return {
-                id: idgen.append(webhook.id).get(),
+                id: this.#idgen.get(`${this.apiDefinitionId}:${webhookId}`),
                 type: "webhook",
                 webhookId,
                 method: webhook.method,

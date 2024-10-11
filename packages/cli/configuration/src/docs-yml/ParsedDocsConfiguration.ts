@@ -141,6 +141,7 @@ export interface VersionInfo {
     version: string;
     availability: VersionAvailability | undefined;
     slug: string | undefined;
+    audiences: Audiences;
 }
 
 export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation | VersionedDocsNavigation;
