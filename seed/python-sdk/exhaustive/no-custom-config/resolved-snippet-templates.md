@@ -350,7 +350,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.primitive.get_and_return_datetime(
-	request="SGVsbG8gd29ybGQh"
+	request="2024-01-15T09:30:00Z"
 )
  
 ```                        

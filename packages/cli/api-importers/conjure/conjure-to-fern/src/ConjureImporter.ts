@@ -166,12 +166,12 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                                     if (endpoint.request == null) {
                                         endpoint.request = { "query-parameters": { [arg]: argDeclaration.type } };
                                     } else if (
-                                        typeof endpoint.request != "string" &&
+                                        typeof endpoint.request !== "string" &&
                                         endpoint.request?.["query-parameters"] == null
                                     ) {
                                         endpoint.request["query-parameters"] = { [arg]: argDeclaration.type };
                                     } else if (
-                                        typeof endpoint.request != "string" &&
+                                        typeof endpoint.request !== "string" &&
                                         endpoint.request?.["query-parameters"] != null
                                     ) {
                                         endpoint.request["query-parameters"][arg] = argDeclaration.type;

@@ -843,7 +843,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"updateTime\": \"SGVsbG8gd29ybGQh\",\n    \"updateInfo\": {\n        \"type\": \"running\",\n        \"value\": \"QUEUEING_SUBMISSION\"\n    }\n}",
+              "raw": "{\n    \"updateTime\": \"2024-01-15T09:30:00Z\",\n    \"updateInfo\": {\n        \"type\": \"running\",\n        \"value\": \"QUEUEING_SUBMISSION\"\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -888,7 +888,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"updateTime\": \"SGVsbG8gd29ybGQh\",\n    \"updateInfo\": {\n        \"type\": \"running\",\n        \"value\": \"QUEUEING_SUBMISSION\"\n    }\n}",
+                  "raw": "{\n    \"updateTime\": \"2024-01-15T09:30:00Z\",\n    \"updateInfo\": {\n        \"type\": \"running\",\n        \"value\": \"QUEUEING_SUBMISSION\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1031,7 +1031,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"updateTime\": \"SGVsbG8gd29ybGQh\",\n    \"updateInfo\": {\n        \"type\": \"running\",\n        \"value\": \"QUEUEING_SUBMISSION\"\n    }\n}",
+              "raw": "{\n    \"updateTime\": \"2024-01-15T09:30:00Z\",\n    \"updateInfo\": {\n        \"type\": \"running\",\n        \"value\": \"QUEUEING_SUBMISSION\"\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1076,7 +1076,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"updateTime\": \"SGVsbG8gd29ybGQh\",\n    \"updateInfo\": {\n        \"type\": \"running\",\n        \"value\": \"QUEUEING_SUBMISSION\"\n    }\n}",
+                  "raw": "{\n    \"updateTime\": \"2024-01-15T09:30:00Z\",\n    \"updateInfo\": {\n        \"type\": \"running\",\n        \"value\": \"QUEUEING_SUBMISSION\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1745,7 +1745,7 @@
           "request": {
             "description": "Create a new playlist",
             "url": {
-              "raw": "{{baseUrl}}/v2/playlist/:serviceParam/create?datetime=SGVsbG8gd29ybGQh",
+              "raw": "{{baseUrl}}/v2/playlist/:serviceParam/create?datetime=2024-01-15T09%3A30%3A00Z",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1759,7 +1759,7 @@
                 {
                   "key": "datetime",
                   "description": null,
-                  "value": "SGVsbG8gd29ybGQh"
+                  "value": "2024-01-15T09:30:00Z"
                 }
               ],
               "variable": [
@@ -1797,7 +1797,7 @@
               "originalRequest": {
                 "description": "Create a new playlist",
                 "url": {
-                  "raw": "{{baseUrl}}/v2/playlist/:serviceParam/create?datetime=SGVsbG8gd29ybGQh",
+                  "raw": "{{baseUrl}}/v2/playlist/:serviceParam/create?datetime=2024-01-15T09%3A30%3A00Z",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -1811,7 +1811,7 @@
                     {
                       "key": "datetime",
                       "description": null,
-                      "value": "SGVsbG8gd29ybGQh"
+                      "value": "2024-01-15T09:30:00Z"
                     }
                   ],
                   "variable": [
