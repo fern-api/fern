@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
@@ -38,9 +38,13 @@ export class ScriptRunner {
     private scripts: RunningScriptConfig[] = [];
     private lock = new Semaphore(1);
 
-    constructor(private readonly workspace: GeneratorWorkspace, private readonly skipScripts: boolean) {
+    constructor(
+        private readonly workspace: GeneratorWorkspace,
+        private readonly skipScripts: boolean,
+        private readonly context: TaskContext
+    ) {
         if (!skipScripts) {
-            this.startContainersFn = this.startContainers();
+            this.startContainersFn = this.startContainers(context);
         }
     }
 
@@ -153,10 +157,24 @@ export class ScriptRunner {
         }
     }
 
-    private async startContainers(): Promise<void> {
+    private async buildFernCli(context: TaskContext): Promise<AbsoluteFilePath> {
+        await loggingExeca(context.logger, "pnpm", ["fern-dev:build"]);
+        return join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../../../packages/cli/cli/dist/dev"));
+    }
+
+    private async startContainers(context: TaskContext): Promise<void> {
+        const absoluteFilePathToFernCli = await this.buildFernCli(context);
+        const cliVolumeBind = `${absoluteFilePathToFernCli}:/fern`;
         // Start running a docker container for each script instance
         for (const script of this.workspace.workspaceConfig.scripts ?? []) {
-            const startSeedCommand = await loggingExeca(undefined, "docker", ["run", "-dit", script.docker, "/bin/sh"]);
+            const startSeedCommand = await loggingExeca(undefined, "docker", [
+                "run",
+                "-dit",
+                "-v",
+                cliVolumeBind,
+                script.docker,
+                "/bin/sh"
+            ]);
             const containerId = startSeedCommand.stdout;
             this.scripts.push({ ...script, containerId });
         }

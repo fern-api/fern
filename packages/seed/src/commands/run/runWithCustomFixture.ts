@@ -49,7 +49,7 @@ export async function runWithCustomFixture({
         taskContextFactory,
         skipScripts: true,
         keepDocker: true,
-        scriptRunner: new ScriptRunner(workspace, false)
+        scriptRunner: new ScriptRunner(workspace, false, taskContext)
     });
 
     const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
