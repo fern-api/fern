@@ -1,4 +1,10 @@
-export * as dynamic from "./dynamic";
-export * from "./dynamic/types";
+export * as commons from "./commons";
+export * from "./commons/types";
+export * as endpoints from "./endpoints";
+export * from "./endpoints/types";
 export * as ir from "./ir";
 export * from "./ir/types";
+export * as snippets from "./snippets";
+export * from "./snippets/types";
+export * as types from "./types";
+export * from "./types/types";

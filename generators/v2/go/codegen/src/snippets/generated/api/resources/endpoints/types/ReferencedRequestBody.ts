@@ -4,7 +4,7 @@
 
 import * as FernSnippets from "../../../index";
 
-export interface ReferencedRequest {
-    pathParameters: FernSnippets.NamedParameter[];
-    body: FernSnippets.Type;
+export interface ReferencedRequestBody {
+    bodyKey: FernSnippets.Name;
+    type: FernSnippets.ReferencedRequestBodyType;
 }

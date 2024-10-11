@@ -12,6 +12,7 @@ import * as FernSnippets from "../../../index";
  *
  * TODO: Add auth and global headers.
  */
-export interface IntermediateRepresentation {
+export interface DynamicIntermediateRepresentation {
+    types: Record<FernSnippets.TypeId, FernSnippets.NamedType>;
     endpoints: Record<FernSnippets.EndpointId, FernSnippets.Endpoint>;
 }

@@ -11,7 +11,7 @@ types:
     docs: |
       The user-facing request type used to generate a dynamic snippet.
     properties:
-      endpointID: string
+      endpointID: string # TODO: Refactor as endpoints.EndpointLocation
       pathParameters: optional<Values>
       queryParameters: optional<Values>
       headers: optional<Values>

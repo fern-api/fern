@@ -1,0 +1,89 @@
+imports:
+  commons: ./commons.yml
+types:
+  NamedParameter:
+    properties:
+      name: commons.NameAndWireValue
+      type: TypeReference
+
+  NamedType:
+    docs: |
+      Represents the type of a parameter that can be used to generate a dynamic type.
+    union:
+      alias: AliasType
+      enum: EnumType
+      object: ObjectType
+      discriminatedUnion: DiscriminatedUnionType
+      undiscriminatedUnion: UndiscriminatedUnionType
+
+  TypeReference:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      list: TypeReference
+      literal: LiteralType
+      map: MapType
+      named: commons.TypeId
+      optional: TypeReference
+      primitive: PrimitiveType
+      set: TypeReference
+      unknown: {}
+  
+  AliasType:
+    properties:
+      declaration: commons.Declaration
+      typeReference: TypeReference
+
+  EnumType:
+    properties:
+      declaration: commons.Declaration
+      values: list<commons.NameAndWireValue>
+
+  MapType:
+    properties:
+      key: TypeReference
+      value: TypeReference
+
+  ObjectType:
+    properties:
+      declaration: commons.Declaration
+      properties: list<NamedParameter>
+
+  DiscriminatedUnionType:
+    properties:
+      declaration: commons.Declaration
+      discriminant: commons.NameAndWireValue
+      types:
+        docs: |
+          Map from the discriminant value (e.g. "user") to the type (e.g. User).
+        type: map<string, TypeReference>
+
+  UndiscriminatedUnionType:
+    properties:
+      declaration: commons.Declaration
+      types:
+        docs: |
+          The dynamic type will be rendered with the first type that matches.
+        type: list<TypeReference>
+
+  LiteralType:
+    union:
+      boolean: boolean
+      string: string
+
+  PrimitiveType:
+    enum:
+      - INTEGER
+      - LONG
+      - UINT
+      - UINT_64
+      - FLOAT
+      - DOUBLE
+      - BOOLEAN
+      - STRING
+      - DATE
+      - DATE_TIME
+      - UUID
+      - BASE_64
+      - BIG_INTEGER

@@ -8,5 +8,5 @@ export interface DiscriminatedUnionType {
     declaration: FernSnippets.Declaration;
     discriminant: FernSnippets.NameAndWireValue;
     /** Map from the discriminant value (e.g. "user") to the type (e.g. User). */
-    types: Record<string, FernSnippets.Type>;
+    types: Record<string, FernSnippets.TypeReference>;
 }

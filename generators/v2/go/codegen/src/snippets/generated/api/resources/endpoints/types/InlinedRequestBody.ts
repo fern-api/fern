@@ -6,7 +6,8 @@ import * as FernSnippets from "../../../index";
 
 export type InlinedRequestBody =
     | FernSnippets.InlinedRequestBody.Properties
-    | FernSnippets.InlinedRequestBody.Referenced;
+    | FernSnippets.InlinedRequestBody.Referenced
+    | FernSnippets.InlinedRequestBody.FileUpload;
 
 export declare namespace InlinedRequestBody {
     interface Properties {
@@ -16,5 +17,9 @@ export declare namespace InlinedRequestBody {
 
     interface Referenced extends FernSnippets.ReferencedRequestBody {
         bodyType: "referenced";
+    }
+
+    interface FileUpload extends FernSnippets.FileUploadRequestBody {
+        bodyType: "fileUpload";
     }
 }

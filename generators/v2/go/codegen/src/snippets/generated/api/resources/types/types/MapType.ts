@@ -4,7 +4,7 @@
 
 import * as FernSnippets from "../../../index";
 
-export interface NamedParameter {
-    name: FernSnippets.NameAndWireValue;
-    type: FernSnippets.Type;
+export interface MapType {
+    key: FernSnippets.TypeReference;
+    value: FernSnippets.TypeReference;
 }

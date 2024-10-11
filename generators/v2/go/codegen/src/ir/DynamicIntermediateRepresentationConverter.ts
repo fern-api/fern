@@ -1,34 +1,29 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
+    AliasTypeDeclaration,
     ContainerType,
     EnumTypeDeclaration,
     FernFilepath,
     HttpEndpoint,
+    HttpRequestBody,
     IntermediateRepresentation,
     Literal,
     Name,
+    NameAndWireValue,
     NamedType,
     ObjectTypeDeclaration,
     PathParameter,
     PrimitiveType,
+    SdkRequestBodyType,
+    SdkRequestWrapper,
     TypeDeclaration,
     TypeId,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import {
-    Declaration,
-    Endpoint,
-    EndpointId,
-    InlinedRequest,
-    IntermediateRepresentation as Dynamic,
-    LiteralType,
-    NamedParameter,
-    ReferencedRequest,
-    Request,
-    Type
-} from "../snippets/generated/api";
+import { FernSnippets } from "../snippets/generated";
+import { NamedParameter } from "../snippets/generated/api";
 
 interface EndpointWithFilepath extends HttpEndpoint {
     fernFilepath: FernFilepath;
@@ -43,38 +38,150 @@ export declare namespace DynamicIntermediateRepresentationConverter {
 export class DynamicIntermediateRepresentationConverter {
     constructor(private readonly ir: IntermediateRepresentation) {}
 
-    public convert(): Dynamic {
+    public convert(): FernSnippets.DynamicIntermediateRepresentation {
         return {
+            types: this.convertNamedTypes(),
             endpoints: this.convertEndpoints()
         };
     }
 
-    private convertEndpoints(): Record<EndpointId, Endpoint> {
+    private convertNamedTypes(): Record<TypeId, FernSnippets.NamedType> {
+        return Object.fromEntries(
+            Object.entries(this.ir.types).map(([typeId, typeDeclaration]) => [
+                typeId,
+                this.convertTypeDeclaration(typeDeclaration)
+            ])
+        );
+    }
+
+    private convertEndpoints(): Record<FernSnippets.EndpointId, FernSnippets.Endpoint> {
         const endpoints = this.getAllHttpEndpoints();
         return Object.fromEntries(endpoints.map((endpoint) => [endpoint.id, this.convertEndpoint(endpoint)]));
     }
 
-    private convertEndpoint(endpoint: EndpointWithFilepath): Endpoint {
+    private convertEndpoint(endpoint: EndpointWithFilepath): FernSnippets.Endpoint {
         return {
             declaration: this.convertDeclaration({ name: endpoint.name, fernFilepath: endpoint.fernFilepath }),
             request: this.convertRequest({ endpoint })
         };
     }
 
-    private convertRequest({ endpoint }: { endpoint: EndpointWithFilepath }): Request {
+    private convertRequest({ endpoint }: { endpoint: EndpointWithFilepath }): FernSnippets.Request {
         const pathParameters = this.convertPathParameters({ pathParameters: endpoint.allPathParameters });
-        throw new Error("Not implemented");
+        if (endpoint.sdkRequest == null && endpoint.requestBody == null) {
+            return {
+                type: "body",
+                pathParameters
+            };
+        }
+        if (endpoint.sdkRequest == null) {
+            throw new Error(`Internal error; endpoint "${endpoint.id}" has a request body but no SDK request`);
+        }
+        switch (endpoint.sdkRequest.shape.type) {
+            case "justRequestBody":
+                return {
+                    type: "body",
+                    pathParameters,
+                    body: this.convertReferencedRequestBodyType({ body: endpoint.sdkRequest.shape.value })
+                };
+            case "wrapper":
+                return this.convertInlinedRequest({
+                    fernFilepath: endpoint.fernFilepath,
+                    wrapper: endpoint.sdkRequest.shape,
+                    pathParameters,
+                    queryParameters: this.convertWireValueParameters({ wireValueParameters: endpoint.queryParameters }),
+                    headers: this.convertWireValueParameters({ wireValueParameters: endpoint.headers }),
+                    body: endpoint.requestBody
+                });
+            default:
+                assertNever(endpoint.sdkRequest.shape);
+        }
     }
 
-    private convertInlinedRequest({ endpoint }: { endpoint: EndpointWithFilepath }): InlinedRequest {
-        throw new Error("Not implemented");
+    private convertReferencedRequestBodyType({
+        body
+    }: {
+        body: SdkRequestBodyType;
+    }): FernSnippets.ReferencedRequestBodyType {
+        switch (body.type) {
+            case "bytes":
+                return { type: "bytes" };
+            case "typeReference":
+                return { type: "type", value: this.convertTypeReference(body.requestBodyType) };
+            default:
+                assertNever(body);
+        }
     }
 
-    private convertReferencedRequest({ endpoint }: { endpoint: EndpointWithFilepath }): ReferencedRequest {
-        throw new Error("Not implemented");
+    private convertInlinedRequest({
+        fernFilepath,
+        wrapper,
+        pathParameters,
+        queryParameters,
+        headers,
+        body
+    }: {
+        fernFilepath: FernFilepath;
+        wrapper: SdkRequestWrapper;
+        pathParameters: NamedParameter[];
+        queryParameters: NamedParameter[];
+        headers: NamedParameter[];
+        body: HttpRequestBody | undefined;
+    }): FernSnippets.Request {
+        return {
+            type: "inlined",
+            declaration: this.convertDeclaration({ name: wrapper.wrapperName, fernFilepath }),
+            pathParameters,
+            queryParameters,
+            headers,
+            body: body != null ? this.convertInlinedRequestBody({ wrapper, body }) : undefined
+        };
     }
 
-    private convertPathParameters({ pathParameters }: { pathParameters: PathParameter[] }): NamedParameter[] {
+    private convertInlinedRequestBody({
+        wrapper,
+        body
+    }: {
+        wrapper: SdkRequestWrapper;
+        body: HttpRequestBody;
+    }): FernSnippets.InlinedRequestBody {
+        switch (body.type) {
+            case "inlinedRequestBody": {
+                const properties = [...(body.extendedProperties ?? []), ...body.properties];
+                return {
+                    bodyType: "properties",
+                    value: properties.map((property) => ({
+                        name: property.name,
+                        type: this.convertTypeReference(property.valueType)
+                    }))
+                };
+            }
+            case "reference":
+                return {
+                    bodyType: "referenced",
+                    bodyKey: wrapper.bodyKey,
+                    type: { type: "type", value: this.convertTypeReference(body.requestBodyType) }
+                };
+            case "bytes":
+                return {
+                    bodyType: "referenced",
+                    bodyKey: wrapper.bodyKey,
+                    type: { type: "bytes" }
+                };
+            case "fileUpload":
+                return {
+                    bodyType: "fileUpload"
+                };
+            default:
+                assertNever(body);
+        }
+    }
+
+    private convertPathParameters({
+        pathParameters
+    }: {
+        pathParameters: PathParameter[];
+    }): FernSnippets.NamedParameter[] {
         return pathParameters.map((pathParameter) => ({
             name: {
                 name: pathParameter.name,
@@ -84,14 +191,21 @@ export class DynamicIntermediateRepresentationConverter {
         }));
     }
 
-    private convertDeclaration({ name, fernFilepath }: { name: Name; fernFilepath: FernFilepath }): Declaration {
-        return {
-            name,
-            fernFilepath
-        };
+    private convertWireValueParameters({
+        wireValueParameters
+    }: {
+        wireValueParameters: { name: NameAndWireValue; valueType: TypeReference }[];
+    }): FernSnippets.NamedParameter[] {
+        return wireValueParameters.map((parameter) => ({
+            name: {
+                name: parameter.name.name,
+                wireValue: parameter.name.wireValue
+            },
+            type: this.convertTypeReference(parameter.valueType)
+        }));
     }
 
-    private convertTypeReference(typeReference: TypeReference): Type {
+    private convertTypeReference(typeReference: TypeReference): FernSnippets.TypeReference {
         switch (typeReference.type) {
             case "container":
                 return this.convertContainerType(typeReference.container);
@@ -106,32 +220,32 @@ export class DynamicIntermediateRepresentationConverter {
         }
     }
 
-    private convertContainerType(container: ContainerType): Type {
+    private convertContainerType(container: ContainerType): FernSnippets.TypeReference {
         switch (container.type) {
             case "list":
                 return {
-                    type: "list",
+                    _type: "list",
                     value: this.convertTypeReference(container.list)
                 };
             case "map":
                 return {
-                    type: "map",
+                    _type: "map",
                     key: this.convertTypeReference(container.keyType),
                     value: this.convertTypeReference(container.valueType)
                 };
             case "optional":
                 return {
-                    type: "optional",
+                    _type: "optional",
                     value: this.convertTypeReference(container.optional)
                 };
             case "set":
                 return {
-                    type: "set",
+                    _type: "set",
                     value: this.convertTypeReference(container.set)
                 };
             case "literal":
                 return {
-                    type: "literal",
+                    _type: "literal",
                     value: this.convertLiteral(container.literal)
                 };
             default:
@@ -139,16 +253,18 @@ export class DynamicIntermediateRepresentationConverter {
         }
     }
 
-    private convertNamedType(named: NamedType): Type {
-        const typeDeclaration = this.resolveTypeDeclarationOrThrow(named.typeId);
-        return this.convertTypeDeclaration(typeDeclaration);
+    private convertNamedType(named: NamedType): FernSnippets.TypeReference {
+        return {
+            _type: "named",
+            value: named.typeId
+        };
     }
 
-    private convertTypeDeclaration(typeDeclaration: TypeDeclaration): Type {
+    private convertTypeDeclaration(typeDeclaration: TypeDeclaration): FernSnippets.NamedType {
         const declaration = this.convertDeclaration(typeDeclaration.name);
         switch (typeDeclaration.shape.type) {
             case "alias":
-                return this.convertTypeReference(typeDeclaration.shape.aliasOf);
+                return this.convertAlias({ declaration, alias: typeDeclaration.shape });
             case "enum":
                 return this.convertEnum({ declaration, enum_: typeDeclaration.shape });
             case "object":
@@ -162,7 +278,27 @@ export class DynamicIntermediateRepresentationConverter {
         }
     }
 
-    private convertEnum({ declaration, enum_ }: { declaration: Declaration; enum_: EnumTypeDeclaration }): Type {
+    private convertAlias({
+        declaration,
+        alias
+    }: {
+        declaration: FernSnippets.Declaration;
+        alias: AliasTypeDeclaration;
+    }): FernSnippets.NamedType {
+        return {
+            type: "alias",
+            declaration,
+            typeReference: this.convertTypeReference(alias.aliasOf)
+        };
+    }
+
+    private convertEnum({
+        declaration,
+        enum_
+    }: {
+        declaration: FernSnippets.Declaration;
+        enum_: EnumTypeDeclaration;
+    }): FernSnippets.NamedType {
         return {
             type: "enum",
             declaration,
@@ -170,7 +306,13 @@ export class DynamicIntermediateRepresentationConverter {
         };
     }
 
-    private convertObject({ declaration, object }: { declaration: Declaration; object: ObjectTypeDeclaration }): Type {
+    private convertObject({
+        declaration,
+        object
+    }: {
+        declaration: FernSnippets.Declaration;
+        object: ObjectTypeDeclaration;
+    }): FernSnippets.NamedType {
         const properties = [...(object.extendedProperties ?? []), ...object.properties];
         return {
             type: "object",
@@ -186,10 +328,10 @@ export class DynamicIntermediateRepresentationConverter {
         declaration,
         union
     }: {
-        declaration: Declaration;
+        declaration: FernSnippets.Declaration;
         union: UnionTypeDeclaration;
-    }): Type {
-        // TODO: Handle extended properties.
+    }): FernSnippets.NamedType {
+        // TODO: Convert types and include base + extended properties.
         return {
             type: "discriminatedUnion",
             declaration,
@@ -202,9 +344,9 @@ export class DynamicIntermediateRepresentationConverter {
         declaration,
         union
     }: {
-        declaration: Declaration;
+        declaration: FernSnippets.Declaration;
         union: UndiscriminatedUnionTypeDeclaration;
-    }): Type {
+    }): FernSnippets.NamedType {
         return {
             type: "undiscriminatedUnion",
             declaration,
@@ -212,31 +354,42 @@ export class DynamicIntermediateRepresentationConverter {
         };
     }
 
-    private convertLiteral(literal: Literal): LiteralType {
+    private convertLiteral(literal: Literal): FernSnippets.LiteralType {
         switch (literal.type) {
             case "boolean":
-                return LiteralType.Boolean;
+                return {
+                    type: "boolean",
+                    value: literal.boolean
+                };
             case "string":
-                return LiteralType.String;
+                return {
+                    type: "string",
+                    value: literal.string
+                };
             default:
                 assertNever(literal);
         }
     }
 
-    private convertPrimitiveType(primitive: PrimitiveType): Type {
-        return { type: "primitive", value: primitive.v1 };
+    private convertPrimitiveType(primitive: PrimitiveType): FernSnippets.TypeReference {
+        return { _type: "primitive", value: primitive.v1 };
     }
 
-    private convertUnknownType(): Type {
-        return { type: "unknown" };
+    private convertUnknownType(): FernSnippets.TypeReference {
+        return { _type: "unknown" };
     }
 
-    private resolveTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
-        const typeDeclaration = this.ir.types[typeId];
-        if (typeDeclaration == null) {
-            throw new Error(`Type declaration not found for type id "${typeId}"`);
-        }
-        return typeDeclaration;
+    private convertDeclaration({
+        name,
+        fernFilepath
+    }: {
+        name: Name;
+        fernFilepath: FernFilepath;
+    }): FernSnippets.Declaration {
+        return {
+            name,
+            fernFilepath
+        };
     }
 
     private getAllHttpEndpoints(): EndpointWithFilepath[] {

@@ -1,0 +1,70 @@
+imports:
+  commons: ./commons.yml
+  types: ./types.yml
+types:
+  EndpointLocation:
+    docs: |
+      Represents the endpoint location (e.g. "POST /users").
+    properties:
+      method: EndpointMethod
+      path: string
+
+  EndpointMethod:
+    enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+
+  Endpoint:
+    properties:
+      declaration: commons.Declaration
+      request: Request
+
+  Request:
+    docs: |
+      Reperesents the request parameters required to call a specific endpoiont.
+    union:
+      body: BodyRequest
+      inlined: InlinedRequest
+
+  BodyRequest:
+    properties:
+      pathParameters: list<types.NamedParameter>
+      body: optional<ReferencedRequestBodyType>
+ 
+  InlinedRequest:
+    properties:
+      declaration: commons.Declaration
+      pathParameters: list<types.NamedParameter>
+      queryParameters: list<types.NamedParameter>
+      headers: list<types.NamedParameter>
+      body: optional<InlinedRequestBody>
+
+  InlinedRequestBody:
+    discriminant: bodyType
+    union:
+      properties: list<types.NamedParameter>
+      referenced: ReferencedRequestBody
+      fileUpload: FileUploadRequestBody
+  
+  ReferencedRequestBody:
+    properties:
+      bodyKey: commons.Name
+      type: ReferencedRequestBodyType
+
+  ReferencedRequestBodyType:
+    union:
+      bytes: BytesRequestBody
+      type: types.TypeReference
+
+  BytesRequestBody:
+    docs: |
+      TODO: Implement me!
+    properties: {}
+
+  FileUploadRequestBody:
+    docs: |
+      TODO: Implement me!
+    properties: {}
