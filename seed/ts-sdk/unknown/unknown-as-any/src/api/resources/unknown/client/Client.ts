@@ -92,8 +92,7 @@ export class Unknown {
      * @example
      *     await client.unknown.postObject({
      *         unknown: {
-     *             "boolVal": true,
-     *             "strVal": "string"
+     *             "key": "value"
      *         }
      *     })
      */

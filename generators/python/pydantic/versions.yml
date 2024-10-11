@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 1.4.7
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The snippet writer now correctly handles base64 strings.
+
 - version: 1.4.7-rc1
   irVersion: 53
   changelogEntry:

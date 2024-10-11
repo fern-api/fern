@@ -26,11 +26,7 @@ import { SeedAudiencesClient } from "@fern/audiences";
 const client = new SeedAudiencesClient({
   environment: SeedAudiencesEnvironment.EnvironmentA,
 });
-await client.foo.find({
-  optionalString: "string",
-  publicProperty: "string",
-  privateProperty: 1,
-});
+undefined;
  
 ```                        
 

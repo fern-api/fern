@@ -82,7 +82,7 @@ export class Homepage {
      * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.homepage.setHomepageProblems(["string"])
+     *     await client.homepage.setHomepageProblems(["string", "string"])
      */
     public async setHomepageProblems(
         request: SeedTrace.ProblemId[],

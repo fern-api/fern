@@ -33,7 +33,7 @@ export class Params {
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.params.getWithPath("string")
+     *     await client.endpoints.params.getWithPath("param")
      */
     public async getWithPath(
         param: string,
@@ -86,7 +86,7 @@ export class Params {
      *
      * @example
      *     await client.endpoints.params.getWithQuery({
-     *         query: "string",
+     *         query: "query",
      *         number: 1
      *     })
      */
@@ -138,7 +138,7 @@ export class Params {
      *
      * @example
      *     await client.endpoints.params.getWithAllowMultipleQuery({
-     *         query: "string",
+     *         query: "query",
      *         numer: 1
      *     })
      */
@@ -200,8 +200,8 @@ export class Params {
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.params.getWithPathAndQuery("string", {
-     *         query: "string"
+     *     await client.endpoints.params.getWithPathAndQuery("param", {
+     *         query: "query"
      *     })
      */
     public async getWithPathAndQuery(
@@ -255,7 +255,7 @@ export class Params {
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.params.modifyWithPath("string", "string")
+     *     await client.endpoints.params.modifyWithPath("param", "string")
      */
     public async modifyWithPath(
         param: string,

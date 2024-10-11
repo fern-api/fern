@@ -32,7 +32,7 @@ export class Union {
      *
      * @example
      *     await client.endpoints.union.getAndReturnUnion(Fiddle.types.Animal.dog({
-     *         name: "string",
+     *         name: "name",
      *         likesToWoof: true
      *     }))
      */

@@ -30,8 +30,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static REQUEST_AND_RESPONSE_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId = "REQUEST_AND_RESPONSE_TYPES";
     private static RUNTIME_COMPATIBILITY_FEATURE_ID: FernGeneratorCli.FeatureId = "RUNTIME_COMPATIBILITY";
+    private static STREAMING_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING";
+    private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
 
     private readonly context: SdkContext;
+    private readonly isPaginationEnabled: boolean;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
@@ -49,6 +52,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }) {
         super({ endpointSnippets });
         this.context = context;
+        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
         this.defaultEndpointId =
@@ -69,6 +74,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.ABORTING_REQUESTS_FEATURE_ID] = this.buildAbortSignalSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         snippets[ReadmeSnippetBuilder.RUNTIME_COMPATIBILITY_FEATURE_ID] = this.buildRuntimeCompatibilitySnippets();
+        snippets[ReadmeSnippetBuilder.STREAMING_FEATURE_ID] = this.buildStreamingSnippets();
+
+        if (this.isPaginationEnabled) {
+            snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
+        }
 
         const requestAndResponseTypesSnippets = this.buildRequestAndResponseTypesSnippets();
         if (requestAndResponseTypesSnippets != null) {
@@ -78,12 +88,24 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return snippets;
     }
 
-    private buildUsageSnippets(): string[] {
-        const usageEndpointIds = this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Usage);
+    private buildSnippetsForFeature(featureId: FernGeneratorCli.feature.FeatureId): string[] {
+        const usageEndpointIds = this.getEndpointIdsForFeature(featureId);
         if (usageEndpointIds != null) {
             return usageEndpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId));
         }
         return [this.getSnippetForEndpointId(this.defaultEndpointId)];
+    }
+
+    private buildStreamingSnippets(): string[] {
+        return this.buildSnippetsForFeature(FernGeneratorCli.StructuredFeatureId.Streaming);
+    }
+
+    private buildPaginationSnippets(): string[] {
+        return this.buildSnippetsForFeature(FernGeneratorCli.StructuredFeatureId.Pagination);
+    }
+
+    private buildUsageSnippets(): string[] {
+        return this.buildSnippetsForFeature(FernGeneratorCli.StructuredFeatureId.Usage);
     }
 
     private buildExceptionHandlingSnippets(): string[] {
@@ -120,7 +142,7 @@ try {
         return [
             this.writeCode(
                 code`
-import { ${this.context.namespaceExport} } from "${this.rootPackageName}"; 
+import { ${this.context.namespaceExport} } from "${this.rootPackageName}";
 
 const request: ${requestTypeName} = {
     ...

@@ -12,7 +12,7 @@
   "namedDefinitionFiles": {
     "Admin/__package__.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
-      "rawContents": "types:\n  StoreTracedTestCaseRequest:\n    properties:\n      result: submission.TestCaseResultWithStdout\n      traceResponses: list<submission.TraceResponse>\n  StoreTracedWorkspaceRequest:\n    properties:\n      workspaceRunDetails: submission.WorkspaceRunDetails\n      traceResponses: list<submission.TraceResponse>\nimports:\n  submission: ../ExecutionSesssionManagement/__package__.yml\n  problemV2: ../ProblemInfoServicV2/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    updateTestSubmissionStatus:\n      auth: true\n      path: /store-test-submission-status/{submissionId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n    sendTestSubmissionUpdate:\n      auth: true\n      path: /store-test-submission-status-v2/{submissionId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n    updateWorkspaceSubmissionStatus:\n      auth: true\n      path: /store-workspace-submission-status/{submissionId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n    sendWorkspaceSubmissionUpdate:\n      auth: true\n      path: /store-workspace-submission-status-v2/{submissionId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n    storeTracedTestCase:\n      auth: true\n      path: /store-test-trace/submission/{submissionId}/testCase/{testCaseId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n        testCaseId: string\n    storeTracedTestCaseV2:\n      auth: true\n      path: /store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n        testCaseId: problemV2.TestCaseId\n    storeTracedWorkspace:\n      auth: true\n      path: /store-workspace-trace/submission/{submissionId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n    storeTracedWorkspaceV2:\n      auth: true\n      path: /store-workspace-trace-v2/submission/{submissionId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n",
+      "rawContents": "types:\n  StoreTracedTestCaseRequest:\n    properties:\n      result: submission.TestCaseResultWithStdout\n      traceResponses: list<submission.TraceResponse>\n  StoreTracedWorkspaceRequest:\n    properties:\n      workspaceRunDetails: submission.WorkspaceRunDetails\n      traceResponses: list<submission.TraceResponse>\nimports:\n  submission: ../ExecutionSesssionManagement/__package__.yml\n  problemV2: ../ProblemInfoServicV2/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    updateTestSubmissionStatus:\n      auth: true\n      path: /store-test-submission-status/{submissionId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n      request:\n        body:\n          type: submission.TestSubmissionStatus\n    sendTestSubmissionUpdate:\n      auth: true\n      path: /store-test-submission-status-v2/{submissionId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n      request:\n        body:\n          type: submission.TestSubmissionUpdate\n    updateWorkspaceSubmissionStatus:\n      auth: true\n      path: /store-workspace-submission-status/{submissionId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n      request:\n        body:\n          type: submission.WorkspaceSubmissionStatus\n    sendWorkspaceSubmissionUpdate:\n      auth: true\n      path: /store-workspace-submission-status-v2/{submissionId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n      request:\n        body:\n          type: submission.WorkspaceSubmissionUpdate\n    storeTracedTestCase:\n      auth: true\n      path: /store-test-trace/submission/{submissionId}/testCase/{testCaseId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n        testCaseId: string\n      request:\n        body:\n          type: StoreTracedTestCaseRequest\n    storeTracedTestCaseV2:\n      auth: true\n      path: /store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n        testCaseId: problemV2.TestCaseId\n      request:\n        body:\n          type: list<submission.TraceResponseV2>\n    storeTracedWorkspace:\n      auth: true\n      path: /store-workspace-trace/submission/{submissionId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n      request:\n        body:\n          type: StoreTracedWorkspaceRequest\n    storeTracedWorkspaceV2:\n      auth: true\n      path: /store-workspace-trace-v2/submission/{submissionId}\n      method: POST\n      path-parameters:\n        submissionId: submission.SubmissionId\n      request:\n        body:\n          type: list<submission.TraceResponseV2>\n",
       "contents": {
         "types": {
           "StoreTracedTestCaseRequest": {
@@ -42,6 +42,11 @@
               "method": "POST",
               "path-parameters": {
                 "submissionId": "submission.SubmissionId"
+              },
+              "request": {
+                "body": {
+                  "type": "submission.TestSubmissionStatus"
+                }
               }
             },
             "sendTestSubmissionUpdate": {
@@ -50,6 +55,11 @@
               "method": "POST",
               "path-parameters": {
                 "submissionId": "submission.SubmissionId"
+              },
+              "request": {
+                "body": {
+                  "type": "submission.TestSubmissionUpdate"
+                }
               }
             },
             "updateWorkspaceSubmissionStatus": {
@@ -58,6 +68,11 @@
               "method": "POST",
               "path-parameters": {
                 "submissionId": "submission.SubmissionId"
+              },
+              "request": {
+                "body": {
+                  "type": "submission.WorkspaceSubmissionStatus"
+                }
               }
             },
             "sendWorkspaceSubmissionUpdate": {
@@ -66,6 +81,11 @@
               "method": "POST",
               "path-parameters": {
                 "submissionId": "submission.SubmissionId"
+              },
+              "request": {
+                "body": {
+                  "type": "submission.WorkspaceSubmissionUpdate"
+                }
               }
             },
             "storeTracedTestCase": {
@@ -75,6 +95,11 @@
               "path-parameters": {
                 "submissionId": "submission.SubmissionId",
                 "testCaseId": "string"
+              },
+              "request": {
+                "body": {
+                  "type": "StoreTracedTestCaseRequest"
+                }
               }
             },
             "storeTracedTestCaseV2": {
@@ -84,6 +109,11 @@
               "path-parameters": {
                 "submissionId": "submission.SubmissionId",
                 "testCaseId": "problemV2.TestCaseId"
+              },
+              "request": {
+                "body": {
+                  "type": "list<submission.TraceResponseV2>"
+                }
               }
             },
             "storeTracedWorkspace": {
@@ -92,6 +122,11 @@
               "method": "POST",
               "path-parameters": {
                 "submissionId": "submission.SubmissionId"
+              },
+              "request": {
+                "body": {
+                  "type": "StoreTracedWorkspaceRequest"
+                }
               }
             },
             "storeTracedWorkspaceV2": {
@@ -100,6 +135,11 @@
               "method": "POST",
               "path-parameters": {
                 "submissionId": "submission.SubmissionId"
+              },
+              "request": {
+                "body": {
+                  "type": "list<submission.TraceResponseV2>"
+                }
               }
             }
           }
@@ -788,7 +828,7 @@
     },
     "PlaylistCrud/__package__.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
-      "rawContents": "types:\n  PlaylistId:\n    type: string\n  Playlist:\n    properties:\n      playlistId: PlaylistId\n      name: string\n      problems: list<commons.ProblemId>\n      ownerId: commons.UserId\n  CreatePlaylistRequest:\n    properties:\n      name: string\n      problems: list<commons.ProblemId>\n  UpdatePlaylistRequest:\n    properties:\n      name: string\n      problems: list<commons.ProblemId>\nimports:\n  commons: ../commons/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    createPlaylist:\n      auth: true\n      path: /create\n      method: POST\n      response: Playlist\n    getPlaylists:\n      auth: true\n      path: /all\n      method: GET\n      response: list<Playlist>\n    getPlaylist:\n      auth: true\n      path: /{playlistId}\n      method: GET\n      response: Playlist\n      path-parameters:\n        playlistId: PlaylistId\n    updatePlaylist:\n      auth: true\n      path: /{playlistId}\n      method: PUT\n      response: Playlist\n      path-parameters:\n        playlistId: PlaylistId\n    deletePlaylist:\n      auth: true\n      path: /{playlistId}\n      method: DELETE\n      path-parameters:\n        playlistId: PlaylistId\n",
+      "rawContents": "types:\n  PlaylistId:\n    type: string\n  Playlist:\n    properties:\n      playlistId: PlaylistId\n      name: string\n      problems: list<commons.ProblemId>\n      ownerId: commons.UserId\n  CreatePlaylistRequest:\n    properties:\n      name: string\n      problems: list<commons.ProblemId>\n  UpdatePlaylistRequest:\n    properties:\n      name: string\n      problems: list<commons.ProblemId>\nimports:\n  commons: ../commons/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    createPlaylist:\n      auth: true\n      path: /create\n      method: POST\n      response: Playlist\n      request:\n        body:\n          type: CreatePlaylistRequest\n    getPlaylists:\n      auth: true\n      path: /all\n      method: GET\n      response: list<Playlist>\n    getPlaylist:\n      auth: true\n      path: /{playlistId}\n      method: GET\n      response: Playlist\n      path-parameters:\n        playlistId: PlaylistId\n    updatePlaylist:\n      auth: true\n      path: /{playlistId}\n      method: PUT\n      response: Playlist\n      path-parameters:\n        playlistId: PlaylistId\n      request:\n        body:\n          type: UpdatePlaylistRequest\n    deletePlaylist:\n      auth: true\n      path: /{playlistId}\n      method: DELETE\n      path-parameters:\n        playlistId: PlaylistId\n",
       "contents": {
         "types": {
           "PlaylistId": {
@@ -826,7 +866,12 @@
               "auth": true,
               "path": "/create",
               "method": "POST",
-              "response": "Playlist"
+              "response": "Playlist",
+              "request": {
+                "body": {
+                  "type": "CreatePlaylistRequest"
+                }
+              }
             },
             "getPlaylists": {
               "auth": true,
@@ -850,6 +895,11 @@
               "response": "Playlist",
               "path-parameters": {
                 "playlistId": "PlaylistId"
+              },
+              "request": {
+                "body": {
+                  "type": "UpdatePlaylistRequest"
+                }
               }
             },
             "deletePlaylist": {
@@ -866,7 +916,7 @@
     },
     "PlaylistCrudServiceV2/__package__.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
-      "rawContents": "imports:\n  commons: ../commons/__package__.yml\n  playlist: ../PlaylistCrud/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    createPlaylist:\n      auth: true\n      path: /create\n      method: POST\n      response: playlist.Playlist\n    getPlaylists:\n      auth: true\n      path: /all\n      method: GET\n      response: list<playlist.Playlist>\n    getPlaylist:\n      auth: true\n      path: /{playlistId}\n      method: GET\n      response: playlist.Playlist\n      path-parameters:\n        playlistId: playlist.PlaylistId\n    updatePlaylist:\n      auth: true\n      path: /{playlistId}\n      method: PUT\n      response: playlist.Playlist\n      path-parameters:\n        playlistId: playlist.PlaylistId\n    deletePlaylist:\n      auth: true\n      path: /{playlistId}\n      method: DELETE\n      path-parameters:\n        playlistId: playlist.PlaylistId\n",
+      "rawContents": "imports:\n  commons: ../commons/__package__.yml\n  playlist: ../PlaylistCrud/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    createPlaylist:\n      auth: true\n      path: /create\n      method: POST\n      response: playlist.Playlist\n      request:\n        body:\n          type: playlist.CreatePlaylistRequest\n    getPlaylists:\n      auth: true\n      path: /all\n      method: GET\n      response: list<playlist.Playlist>\n    getPlaylist:\n      auth: true\n      path: /{playlistId}\n      method: GET\n      response: playlist.Playlist\n      path-parameters:\n        playlistId: playlist.PlaylistId\n    updatePlaylist:\n      auth: true\n      path: /{playlistId}\n      method: PUT\n      response: playlist.Playlist\n      path-parameters:\n        playlistId: playlist.PlaylistId\n      request:\n        body:\n          type: playlist.UpdatePlaylistRequest\n    deletePlaylist:\n      auth: true\n      path: /{playlistId}\n      method: DELETE\n      path-parameters:\n        playlistId: playlist.PlaylistId\n",
       "contents": {
         "imports": {
           "commons": "../commons/__package__.yml",
@@ -880,7 +930,12 @@
               "auth": true,
               "path": "/create",
               "method": "POST",
-              "response": "playlist.Playlist"
+              "response": "playlist.Playlist",
+              "request": {
+                "body": {
+                  "type": "playlist.CreatePlaylistRequest"
+                }
+              }
             },
             "getPlaylists": {
               "auth": true,
@@ -904,6 +959,11 @@
               "response": "playlist.Playlist",
               "path-parameters": {
                 "playlistId": "playlist.PlaylistId"
+              },
+              "request": {
+                "body": {
+                  "type": "playlist.UpdatePlaylistRequest"
+                }
               }
             },
             "deletePlaylist": {
@@ -920,7 +980,7 @@
     },
     "ProblemCrud/__package__.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
-      "rawContents": "types:\n  ProblemInfo:\n    properties:\n      problemId: commons.ProblemId\n      problemDescription: ProblemDescription\n      problemName: string\n      problemVersion: integer\n      files: map<commons.Language, ProblemFiles>\n      inputParams: list<VariableTypeAndName>\n      outputType: commons.VariableType\n      testcases: list<commons.TestCaseWithExpectedResult>\n      methodName: string\n      supportsCustomTestCases: boolean\n  ProblemDescription:\n    properties:\n      boards: list<ProblemDescriptionBoard>\n  ProblemDescriptionBoard:\n    union:\n      html: string\n      variable: commons.VariableValue\n      testCaseId: string\n  ProblemFiles:\n    properties:\n      solutionFile: commons.FileInfo\n      readOnlyFiles: list<commons.FileInfo>\n  VariableTypeAndName:\n    properties:\n      variableType: commons.VariableType\n      name: string\n  CreateProblemRequest:\n    properties:\n      problemName: string\n      problemDescription: ProblemDescription\n      files: map<commons.Language, ProblemFiles>\n      inputParams: list<VariableTypeAndName>\n      outputType: commons.VariableType\n      testcases: list<commons.TestCaseWithExpectedResult>\n      methodName: string\n  CreateProblemResponse:\n    union:\n      success: commons.ProblemId\n      error: CreateProblemError\n  CreateProblemError:\n    union:\n      generic: GenericCreateProblemError\n  GenericCreateProblemError:\n    properties:\n      message: string\n      type: string\n      stacktrace: string\n  UpdateProblemResponse:\n    properties:\n      problemVersion: integer\n  GetDefaultStarterFilesRequest:\n    properties:\n      inputParams: list<VariableTypeAndName>\n      outputType: commons.VariableType\n      methodName: string\n  GetDefaultStarterFilesResponse:\n    properties:\n      files: map<commons.Language, ProblemFiles>\nimports:\n  commons: ../commons/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    createProblem:\n      auth: true\n      path: /create\n      method: POST\n      response: CreateProblemResponse\n    updateProblem:\n      auth: true\n      path: /update/{problemId}\n      method: POST\n      response: UpdateProblemResponse\n      path-parameters:\n        problemId: commons.ProblemId\n    deleteProblem:\n      auth: true\n      path: /delete/{problemId}\n      method: DELETE\n      path-parameters:\n        problemId: commons.ProblemId\n    getDefaultStarterFiles:\n      auth: true\n      path: /default-starter-files\n      method: POST\n      response: GetDefaultStarterFilesResponse\n",
+      "rawContents": "types:\n  ProblemInfo:\n    properties:\n      problemId: commons.ProblemId\n      problemDescription: ProblemDescription\n      problemName: string\n      problemVersion: integer\n      files: map<commons.Language, ProblemFiles>\n      inputParams: list<VariableTypeAndName>\n      outputType: commons.VariableType\n      testcases: list<commons.TestCaseWithExpectedResult>\n      methodName: string\n      supportsCustomTestCases: boolean\n  ProblemDescription:\n    properties:\n      boards: list<ProblemDescriptionBoard>\n  ProblemDescriptionBoard:\n    union:\n      html: string\n      variable: commons.VariableValue\n      testCaseId: string\n  ProblemFiles:\n    properties:\n      solutionFile: commons.FileInfo\n      readOnlyFiles: list<commons.FileInfo>\n  VariableTypeAndName:\n    properties:\n      variableType: commons.VariableType\n      name: string\n  CreateProblemRequest:\n    properties:\n      problemName: string\n      problemDescription: ProblemDescription\n      files: map<commons.Language, ProblemFiles>\n      inputParams: list<VariableTypeAndName>\n      outputType: commons.VariableType\n      testcases: list<commons.TestCaseWithExpectedResult>\n      methodName: string\n  CreateProblemResponse:\n    union:\n      success: commons.ProblemId\n      error: CreateProblemError\n  CreateProblemError:\n    union:\n      generic: GenericCreateProblemError\n  GenericCreateProblemError:\n    properties:\n      message: string\n      type: string\n      stacktrace: string\n  UpdateProblemResponse:\n    properties:\n      problemVersion: integer\n  GetDefaultStarterFilesRequest:\n    properties:\n      inputParams: list<VariableTypeAndName>\n      outputType: commons.VariableType\n      methodName: string\n  GetDefaultStarterFilesResponse:\n    properties:\n      files: map<commons.Language, ProblemFiles>\nimports:\n  commons: ../commons/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    createProblem:\n      auth: true\n      path: /create\n      method: POST\n      response: CreateProblemResponse\n      request:\n        body:\n          type: CreateProblemRequest\n    updateProblem:\n      auth: true\n      path: /update/{problemId}\n      method: POST\n      response: UpdateProblemResponse\n      path-parameters:\n        problemId: commons.ProblemId\n      request:\n        body:\n          type: CreateProblemRequest\n    deleteProblem:\n      auth: true\n      path: /delete/{problemId}\n      method: DELETE\n      path-parameters:\n        problemId: commons.ProblemId\n    getDefaultStarterFiles:\n      auth: true\n      path: /default-starter-files\n      method: POST\n      response: GetDefaultStarterFilesResponse\n      request:\n        body:\n          type: GetDefaultStarterFilesRequest\n",
       "contents": {
         "types": {
           "ProblemInfo": {
@@ -1019,7 +1079,12 @@
               "auth": true,
               "path": "/create",
               "method": "POST",
-              "response": "CreateProblemResponse"
+              "response": "CreateProblemResponse",
+              "request": {
+                "body": {
+                  "type": "CreateProblemRequest"
+                }
+              }
             },
             "updateProblem": {
               "auth": true,
@@ -1028,6 +1093,11 @@
               "response": "UpdateProblemResponse",
               "path-parameters": {
                 "problemId": "commons.ProblemId"
+              },
+              "request": {
+                "body": {
+                  "type": "CreateProblemRequest"
+                }
               }
             },
             "deleteProblem": {
@@ -1042,7 +1112,12 @@
               "auth": true,
               "path": "/default-starter-files",
               "method": "POST",
-              "response": "GetDefaultStarterFilesResponse"
+              "response": "GetDefaultStarterFilesResponse",
+              "request": {
+                "body": {
+                  "type": "GetDefaultStarterFilesRequest"
+                }
+              }
             }
           }
         }
@@ -1050,7 +1125,7 @@
     },
     "ProblemCrudServiceV2/__package__.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
-      "rawContents": "types:\n  TestCaseTemplateId:\n    type: string\n  TestCaseId:\n    type: string\n  ParameterId:\n    type: string\n  ProblemInfoV2:\n    properties:\n      problemId: commons.ProblemId\n      problemDescription: problem.ProblemDescription\n      problemName: string\n      problemVersion: integer\n      supportedLanguages: set<commons.Language>\n      customFiles: CustomFiles\n      generatedFiles: GeneratedFiles\n      customTestCaseTemplates: list<TestCaseTemplate>\n      testcases: list<TestCaseV2>\n      isPublic: boolean\n  LightweightProblemInfoV2:\n    properties:\n      problemId: commons.ProblemId\n      problemName: string\n      problemVersion: integer\n      variableTypes: set<commons.VariableType>\n  CreateProblemRequestV2:\n    properties:\n      problemName: string\n      problemDescription: problem.ProblemDescription\n      customFiles: CustomFiles\n      customTestCaseTemplates: list<TestCaseTemplate>\n      testcases: list<TestCaseV2>\n      supportedLanguages: set<commons.Language>\n      isPublic: boolean\n  TestCaseV2:\n    properties:\n      metadata: TestCaseMetadata\n      implementation: TestCaseImplementationReference\n      arguments: map<ParameterId, commons.VariableValue>\n      expects: optional<TestCaseExpects>\n  TestCaseExpects:\n    properties:\n      expectedStdout: optional<string>\n  TestCaseImplementationReference:\n    union:\n      templateId: TestCaseTemplateId\n      implementation: TestCaseImplementation\n  BasicTestCaseTemplate:\n    properties:\n      templateId: TestCaseTemplateId\n      name: string\n      description: TestCaseImplementationDescription\n      expectedValueParameterId: ParameterId\n  TestCaseTemplate:\n    properties:\n      templateId: TestCaseTemplateId\n      name: string\n      implementation: TestCaseImplementation\n  TestCaseImplementation:\n    properties:\n      description: TestCaseImplementationDescription\n      function: TestCaseFunction\n  TestCaseFunction:\n    union:\n      withActualResult: TestCaseWithActualResultImplementation\n      custom: VoidFunctionDefinition\n  TestCaseWithActualResultImplementation:\n    properties:\n      getActualResult: NonVoidFunctionDefinition\n      assertCorrectnessCheck: AssertCorrectnessCheck\n  VoidFunctionDefinition:\n    properties:\n      parameters: list<Parameter>\n      code: FunctionImplementationForMultipleLanguages\n  Parameter:\n    properties:\n      parameterId: ParameterId\n      name: string\n      variableType: commons.VariableType\n  NonVoidFunctionDefinition:\n    properties:\n      signature: NonVoidFunctionSignature\n      code: FunctionImplementationForMultipleLanguages\n  VoidFunctionSignature:\n    properties:\n      parameters: list<Parameter>\n  NonVoidFunctionSignature:\n    properties:\n      parameters: list<Parameter>\n      returnType: commons.VariableType\n  VoidFunctionSignatureThatTakesActualResult:\n    properties:\n      parameters: list<Parameter>\n      actualResultType: commons.VariableType\n  AssertCorrectnessCheck:\n    union:\n      deepEquality: DeepEqualityCorrectnessCheck\n      custom: VoidFunctionDefinitionThatTakesActualResult\n  DeepEqualityCorrectnessCheck:\n    properties:\n      expectedValueParameterId: ParameterId\n  VoidFunctionDefinitionThatTakesActualResult:\n    properties:\n      additionalParameters: list<Parameter>\n      code: FunctionImplementationForMultipleLanguages\n  TestCaseImplementationDescription:\n    properties:\n      boards: list<TestCaseImplementationDescriptionBoard>\n  TestCaseImplementationDescriptionBoard:\n    union:\n      html: string\n      paramId: ParameterId\n  TestCaseMetadata:\n    properties:\n      id: TestCaseId\n      name: string\n      hidden: boolean\n  FunctionImplementationForMultipleLanguages:\n    properties:\n      codeByLanguage: map<commons.Language, FunctionImplementation>\n  FunctionImplementation:\n    properties:\n      impl: string;\n      imports: optional<string>;\n  GeneratedFiles:\n    properties:\n      generatedTestCaseFiles: map<commons.Language, Files>\n      generatedTemplateFiles: map<commons.Language, Files>\n      other: map<commons.Language, Files>\n  CustomFiles:\n    union:\n      basic: BasicCustomFiles\n      custom: map<commons.Language, Files>\n  BasicCustomFiles:\n    properties:\n      methodName: string\n      signature: NonVoidFunctionSignature\n      additionalFiles: map<commons.Language, Files>\n      basicTestCaseTemplate: BasicTestCaseTemplate\n  Files:\n    properties:\n      files: list<FileInfoV2>\n  FileInfoV2:\n    properties:\n      filename: string\n      directory: string\n      contents: string\n      editable: boolean\n  DefaultProvidedFile:\n    properties:\n      file: FileInfoV2\n      relatedTypes: list<commons.VariableType>\n  GetBasicSolutionFileRequest:\n    properties:\n      methodName: string\n      signature: NonVoidFunctionSignature\n  GetBasicSolutionFileResponse:\n    properties:\n      solutionFileByLanguage: map<commons.Language, FileInfoV2>\n  GetFunctionSignatureRequest:\n    properties:\n      functionSignature: FunctionSignature\n  FunctionSignature:\n    union:\n      void: VoidFunctionSignature\n      nonVoid: NonVoidFunctionSignature\n      voidThatTakesActualResult:\n        type: VoidFunctionSignatureThatTakesActualResult\n        docs: >-\n          Useful when specifying custom grading for a testcase where\n          actualResult is defined.\n  GetFunctionSignatureResponse:\n    properties:\n      functionByLanguage: map<commons.Language, string>\n  GetDefaultProvidedFilesResponse:\n    properties:\n      filesByLanguage: map<commons.Language, list<DefaultProvidedFile>>\n  GetGeneratedTestCaseFileRequest:\n    properties:\n      template: optional<TestCaseTemplate>\n      testCase: TestCaseV2\n  GetGeneratedTestCaseTemplateFileRequest:\n    properties:\n      template: TestCaseTemplate\nimports:\n  commons: ../commons/__package__.yml\n  problem: ../ProblemInfo/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    createProblem:\n      auth: true\n      path: /create\n      method: POST\n      response: problem.CreateProblemResponse\n    updateProblem:\n      auth: true\n      path: /update/{problemId}\n      method: POST\n      response: problem.UpdateProblemResponse\n      path-parameters:\n        problemId: commons.ProblemId\n    deleteProblem:\n      auth: true\n      path: /delete/{problemId}\n      method: DELETE\n      path-parameters:\n        problemId: commons.ProblemId\n    getFunctionSignature:\n      auth: true\n      path: /function-signature\n      method: POST\n      response: GetFunctionSignatureResponse\n    getBasicSolutionFile:\n      auth: true\n      path: /basic-solution-file\n      method: POST\n      response: GetBasicSolutionFileResponse\n    getDefaultDirectoryForProblemFiles:\n      auth: true\n      path: /default-problem-files-directory\n      method: GET\n      response: map<commons.Language, string>\n    getGeneratedTestCaseFile:\n      auth: true\n      path: /generated-test-case-file\n      method: POST\n      response: map<commons.Language, FileInfoV2>\n    getGeneratedTestCaseTemplateFile:\n      auth: true\n      path: /generated-test-case-template-file\n      method: POST\n      response: map<commons.Language, FileInfoV2>\n",
+      "rawContents": "types:\n  TestCaseTemplateId:\n    type: string\n  TestCaseId:\n    type: string\n  ParameterId:\n    type: string\n  ProblemInfoV2:\n    properties:\n      problemId: commons.ProblemId\n      problemDescription: problem.ProblemDescription\n      problemName: string\n      problemVersion: integer\n      supportedLanguages: set<commons.Language>\n      customFiles: CustomFiles\n      generatedFiles: GeneratedFiles\n      customTestCaseTemplates: list<TestCaseTemplate>\n      testcases: list<TestCaseV2>\n      isPublic: boolean\n  LightweightProblemInfoV2:\n    properties:\n      problemId: commons.ProblemId\n      problemName: string\n      problemVersion: integer\n      variableTypes: set<commons.VariableType>\n  CreateProblemRequestV2:\n    properties:\n      problemName: string\n      problemDescription: problem.ProblemDescription\n      customFiles: CustomFiles\n      customTestCaseTemplates: list<TestCaseTemplate>\n      testcases: list<TestCaseV2>\n      supportedLanguages: set<commons.Language>\n      isPublic: boolean\n  TestCaseV2:\n    properties:\n      metadata: TestCaseMetadata\n      implementation: TestCaseImplementationReference\n      arguments: map<ParameterId, commons.VariableValue>\n      expects: optional<TestCaseExpects>\n  TestCaseExpects:\n    properties:\n      expectedStdout: optional<string>\n  TestCaseImplementationReference:\n    union:\n      templateId: TestCaseTemplateId\n      implementation: TestCaseImplementation\n  BasicTestCaseTemplate:\n    properties:\n      templateId: TestCaseTemplateId\n      name: string\n      description: TestCaseImplementationDescription\n      expectedValueParameterId: ParameterId\n  TestCaseTemplate:\n    properties:\n      templateId: TestCaseTemplateId\n      name: string\n      implementation: TestCaseImplementation\n  TestCaseImplementation:\n    properties:\n      description: TestCaseImplementationDescription\n      function: TestCaseFunction\n  TestCaseFunction:\n    union:\n      withActualResult: TestCaseWithActualResultImplementation\n      custom: VoidFunctionDefinition\n  TestCaseWithActualResultImplementation:\n    properties:\n      getActualResult: NonVoidFunctionDefinition\n      assertCorrectnessCheck: AssertCorrectnessCheck\n  VoidFunctionDefinition:\n    properties:\n      parameters: list<Parameter>\n      code: FunctionImplementationForMultipleLanguages\n  Parameter:\n    properties:\n      parameterId: ParameterId\n      name: string\n      variableType: commons.VariableType\n  NonVoidFunctionDefinition:\n    properties:\n      signature: NonVoidFunctionSignature\n      code: FunctionImplementationForMultipleLanguages\n  VoidFunctionSignature:\n    properties:\n      parameters: list<Parameter>\n  NonVoidFunctionSignature:\n    properties:\n      parameters: list<Parameter>\n      returnType: commons.VariableType\n  VoidFunctionSignatureThatTakesActualResult:\n    properties:\n      parameters: list<Parameter>\n      actualResultType: commons.VariableType\n  AssertCorrectnessCheck:\n    union:\n      deepEquality: DeepEqualityCorrectnessCheck\n      custom: VoidFunctionDefinitionThatTakesActualResult\n  DeepEqualityCorrectnessCheck:\n    properties:\n      expectedValueParameterId: ParameterId\n  VoidFunctionDefinitionThatTakesActualResult:\n    properties:\n      additionalParameters: list<Parameter>\n      code: FunctionImplementationForMultipleLanguages\n  TestCaseImplementationDescription:\n    properties:\n      boards: list<TestCaseImplementationDescriptionBoard>\n  TestCaseImplementationDescriptionBoard:\n    union:\n      html: string\n      paramId: ParameterId\n  TestCaseMetadata:\n    properties:\n      id: TestCaseId\n      name: string\n      hidden: boolean\n  FunctionImplementationForMultipleLanguages:\n    properties:\n      codeByLanguage: map<commons.Language, FunctionImplementation>\n  FunctionImplementation:\n    properties:\n      impl: string;\n      imports: optional<string>;\n  GeneratedFiles:\n    properties:\n      generatedTestCaseFiles: map<commons.Language, Files>\n      generatedTemplateFiles: map<commons.Language, Files>\n      other: map<commons.Language, Files>\n  CustomFiles:\n    union:\n      basic: BasicCustomFiles\n      custom: map<commons.Language, Files>\n  BasicCustomFiles:\n    properties:\n      methodName: string\n      signature: NonVoidFunctionSignature\n      additionalFiles: map<commons.Language, Files>\n      basicTestCaseTemplate: BasicTestCaseTemplate\n  Files:\n    properties:\n      files: list<FileInfoV2>\n  FileInfoV2:\n    properties:\n      filename: string\n      directory: string\n      contents: string\n      editable: boolean\n  DefaultProvidedFile:\n    properties:\n      file: FileInfoV2\n      relatedTypes: list<commons.VariableType>\n  GetBasicSolutionFileRequest:\n    properties:\n      methodName: string\n      signature: NonVoidFunctionSignature\n  GetBasicSolutionFileResponse:\n    properties:\n      solutionFileByLanguage: map<commons.Language, FileInfoV2>\n  GetFunctionSignatureRequest:\n    properties:\n      functionSignature: FunctionSignature\n  FunctionSignature:\n    union:\n      void: VoidFunctionSignature\n      nonVoid: NonVoidFunctionSignature\n      voidThatTakesActualResult:\n        type: VoidFunctionSignatureThatTakesActualResult\n        docs: >-\n          Useful when specifying custom grading for a testcase where\n          actualResult is defined.\n  GetFunctionSignatureResponse:\n    properties:\n      functionByLanguage: map<commons.Language, string>\n  GetDefaultProvidedFilesResponse:\n    properties:\n      filesByLanguage: map<commons.Language, list<DefaultProvidedFile>>\n  GetGeneratedTestCaseFileRequest:\n    properties:\n      template: optional<TestCaseTemplate>\n      testCase: TestCaseV2\n  GetGeneratedTestCaseTemplateFileRequest:\n    properties:\n      template: TestCaseTemplate\nimports:\n  commons: ../commons/__package__.yml\n  problem: ../ProblemInfo/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    createProblem:\n      auth: true\n      path: /create\n      method: POST\n      response: problem.CreateProblemResponse\n      request:\n        body:\n          type: CreateProblemRequestV2\n    updateProblem:\n      auth: true\n      path: /update/{problemId}\n      method: POST\n      response: problem.UpdateProblemResponse\n      path-parameters:\n        problemId: commons.ProblemId\n      request:\n        body:\n          type: CreateProblemRequestV2\n    deleteProblem:\n      auth: true\n      path: /delete/{problemId}\n      method: DELETE\n      path-parameters:\n        problemId: commons.ProblemId\n    getFunctionSignature:\n      auth: true\n      path: /function-signature\n      method: POST\n      response: GetFunctionSignatureResponse\n      request:\n        body:\n          type: GetFunctionSignatureRequest\n    getBasicSolutionFile:\n      auth: true\n      path: /basic-solution-file\n      method: POST\n      response: GetBasicSolutionFileResponse\n      request:\n        body:\n          type: GetBasicSolutionFileRequest\n    getDefaultDirectoryForProblemFiles:\n      auth: true\n      path: /default-problem-files-directory\n      method: GET\n      response: map<commons.Language, string>\n    getGeneratedTestCaseFile:\n      auth: true\n      path: /generated-test-case-file\n      method: POST\n      response: map<commons.Language, FileInfoV2>\n      request:\n        body:\n          type: GetGeneratedTestCaseFileRequest\n    getGeneratedTestCaseTemplateFile:\n      auth: true\n      path: /generated-test-case-template-file\n      method: POST\n      response: map<commons.Language, FileInfoV2>\n      request:\n        body:\n          type: GetGeneratedTestCaseTemplateFileRequest\n",
       "contents": {
         "types": {
           "TestCaseTemplateId": {
@@ -1329,7 +1404,12 @@
               "auth": true,
               "path": "/create",
               "method": "POST",
-              "response": "problem.CreateProblemResponse"
+              "response": "problem.CreateProblemResponse",
+              "request": {
+                "body": {
+                  "type": "CreateProblemRequestV2"
+                }
+              }
             },
             "updateProblem": {
               "auth": true,
@@ -1338,6 +1418,11 @@
               "response": "problem.UpdateProblemResponse",
               "path-parameters": {
                 "problemId": "commons.ProblemId"
+              },
+              "request": {
+                "body": {
+                  "type": "CreateProblemRequestV2"
+                }
               }
             },
             "deleteProblem": {
@@ -1352,13 +1437,23 @@
               "auth": true,
               "path": "/function-signature",
               "method": "POST",
-              "response": "GetFunctionSignatureResponse"
+              "response": "GetFunctionSignatureResponse",
+              "request": {
+                "body": {
+                  "type": "GetFunctionSignatureRequest"
+                }
+              }
             },
             "getBasicSolutionFile": {
               "auth": true,
               "path": "/basic-solution-file",
               "method": "POST",
-              "response": "GetBasicSolutionFileResponse"
+              "response": "GetBasicSolutionFileResponse",
+              "request": {
+                "body": {
+                  "type": "GetBasicSolutionFileRequest"
+                }
+              }
             },
             "getDefaultDirectoryForProblemFiles": {
               "auth": true,
@@ -1370,13 +1465,23 @@
               "auth": true,
               "path": "/generated-test-case-file",
               "method": "POST",
-              "response": "map<commons.Language, FileInfoV2>"
+              "response": "map<commons.Language, FileInfoV2>",
+              "request": {
+                "body": {
+                  "type": "GetGeneratedTestCaseFileRequest"
+                }
+              }
             },
             "getGeneratedTestCaseTemplateFile": {
               "auth": true,
               "path": "/generated-test-case-template-file",
               "method": "POST",
-              "response": "map<commons.Language, FileInfoV2>"
+              "response": "map<commons.Language, FileInfoV2>",
+              "request": {
+                "body": {
+                  "type": "GetGeneratedTestCaseTemplateFileRequest"
+                }
+              }
             }
           }
         }
@@ -1384,7 +1489,7 @@
     },
     "ProblemInfo/__package__.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
-      "rawContents": "types:\n  ProblemInfo:\n    properties:\n      problemId: commons.ProblemId\n      problemDescription: ProblemDescription\n      problemName: string\n      problemVersion: integer\n      files: map<commons.Language, ProblemFiles>\n      inputParams: list<VariableTypeAndName>\n      outputType: commons.VariableType\n      testcases: list<commons.TestCaseWithExpectedResult>\n      methodName: string\n      supportsCustomTestCases: boolean\n  ProblemDescription:\n    properties:\n      boards: list<ProblemDescriptionBoard>\n  ProblemDescriptionBoard:\n    union:\n      html: string\n      variable: commons.VariableValue\n      testCaseId: string\n  ProblemFiles:\n    properties:\n      solutionFile: commons.FileInfo\n      readOnlyFiles: list<commons.FileInfo>\n  VariableTypeAndName:\n    properties:\n      variableType: commons.VariableType\n      name: string\n  CreateProblemRequest:\n    properties:\n      problemName: string\n      problemDescription: ProblemDescription\n      files: map<commons.Language, ProblemFiles>\n      inputParams: list<VariableTypeAndName>\n      outputType: commons.VariableType\n      testcases: list<commons.TestCaseWithExpectedResult>\n      methodName: string\n  CreateProblemResponse:\n    union:\n      success: commons.ProblemId\n      error: CreateProblemError\n  CreateProblemError:\n    union:\n      generic: GenericCreateProblemError\n  GenericCreateProblemError:\n    properties:\n      message: string\n      type: string\n      stacktrace: string\n  UpdateProblemResponse:\n    properties:\n      problemVersion: integer\n  GetDefaultStarterFilesRequest:\n    properties:\n      inputParams: list<VariableTypeAndName>\n      outputType: commons.VariableType\n      methodName: string\n  GetDefaultStarterFilesResponse:\n    properties:\n      files: map<commons.Language, ProblemFiles>\nimports:\n  commons: ../commons/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    getProblems:\n      auth: true\n      path: /problem-info\n      method: GET\n      response: list<ProblemInfo>\n    getLatestProblem:\n      auth: true\n      path: /problem-info/{problemId}\n      method: GET\n      response: ProblemInfo\n      path-parameters:\n        problemId: commons.ProblemId\n    getProblemVersion:\n      auth: true\n      path: /problem-info/{problemId}/version/{problemVersion}\n      method: GET\n      response: ProblemInfo\n      path-parameters:\n        problemId: commons.ProblemId\n        problemVersion: integer\n    getExpectedResult:\n      auth: true\n      path: /expected-result/{problemId}\n      method: POST\n      response: commons.TestCaseWithExpectedResult\n      path-parameters:\n        problemId: commons.ProblemId\n",
+      "rawContents": "types:\n  ProblemInfo:\n    properties:\n      problemId: commons.ProblemId\n      problemDescription: ProblemDescription\n      problemName: string\n      problemVersion: integer\n      files: map<commons.Language, ProblemFiles>\n      inputParams: list<VariableTypeAndName>\n      outputType: commons.VariableType\n      testcases: list<commons.TestCaseWithExpectedResult>\n      methodName: string\n      supportsCustomTestCases: boolean\n  ProblemDescription:\n    properties:\n      boards: list<ProblemDescriptionBoard>\n  ProblemDescriptionBoard:\n    union:\n      html: string\n      variable: commons.VariableValue\n      testCaseId: string\n  ProblemFiles:\n    properties:\n      solutionFile: commons.FileInfo\n      readOnlyFiles: list<commons.FileInfo>\n  VariableTypeAndName:\n    properties:\n      variableType: commons.VariableType\n      name: string\n  CreateProblemRequest:\n    properties:\n      problemName: string\n      problemDescription: ProblemDescription\n      files: map<commons.Language, ProblemFiles>\n      inputParams: list<VariableTypeAndName>\n      outputType: commons.VariableType\n      testcases: list<commons.TestCaseWithExpectedResult>\n      methodName: string\n  CreateProblemResponse:\n    union:\n      success: commons.ProblemId\n      error: CreateProblemError\n  CreateProblemError:\n    union:\n      generic: GenericCreateProblemError\n  GenericCreateProblemError:\n    properties:\n      message: string\n      type: string\n      stacktrace: string\n  UpdateProblemResponse:\n    properties:\n      problemVersion: integer\n  GetDefaultStarterFilesRequest:\n    properties:\n      inputParams: list<VariableTypeAndName>\n      outputType: commons.VariableType\n      methodName: string\n  GetDefaultStarterFilesResponse:\n    properties:\n      files: map<commons.Language, ProblemFiles>\nimports:\n  commons: ../commons/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    getProblems:\n      auth: true\n      path: /problem-info\n      method: GET\n      response: list<ProblemInfo>\n    getLatestProblem:\n      auth: true\n      path: /problem-info/{problemId}\n      method: GET\n      response: ProblemInfo\n      path-parameters:\n        problemId: commons.ProblemId\n    getProblemVersion:\n      auth: true\n      path: /problem-info/{problemId}/version/{problemVersion}\n      method: GET\n      response: ProblemInfo\n      path-parameters:\n        problemId: commons.ProblemId\n        problemVersion: integer\n    getExpectedResult:\n      auth: true\n      path: /expected-result/{problemId}\n      method: POST\n      response: commons.TestCaseWithExpectedResult\n      path-parameters:\n        problemId: commons.ProblemId\n      request:\n        body:\n          type: commons.TestCase\n",
       "contents": {
         "types": {
           "ProblemInfo": {
@@ -1511,6 +1616,11 @@
               "response": "commons.TestCaseWithExpectedResult",
               "path-parameters": {
                 "problemId": "commons.ProblemId"
+              },
+              "request": {
+                "body": {
+                  "type": "commons.TestCase"
+                }
               }
             }
           }
@@ -1831,7 +1941,7 @@
     },
     "SubmissionInfo/__package__.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
-      "rawContents": "types:\n  SubmissionId:\n    type: string\n  ShareId:\n    type: string\n  SubmissionRequest:\n    union:\n      initializeProblemRequest: InitializeProblemRequest\n      initializeWorkspaceRequest: commons.EmptyObject\n      submitV2: SubmitRequestV2\n      workspaceSubmit: WorkspaceSubmitRequest\n      stop: StopRequest\n  InitializeProblemRequest:\n    properties:\n      problemId: commons.ProblemId\n      problemVersion: optional<integer>\n  SubmitRequestV2:\n    properties:\n      submissionId: SubmissionId\n      language: commons.Language\n      submissionFiles: list<SubmissionFileInfo>\n      problemId: commons.ProblemId\n      problemVersion: optional<integer>\n      userId: optional<string>\n  WorkspaceSubmitRequest:\n    properties:\n      submissionId: SubmissionId\n      language: commons.Language\n      submissionFiles: list<SubmissionFileInfo>\n      userId: optional<string>\n  SubmissionFileInfo:\n    properties:\n      directory: string\n      filename: string\n      contents: string\n  SubmissionTypeEnum:\n    enum:\n      - TEST\n  StopRequest:\n    properties:\n      submissionId: SubmissionId\n  SubmissionResponse:\n    union:\n      serverInitialized: commons.EmptyObject\n      problemInitialized: commons.ProblemId\n      workspaceInitialized: commons.EmptyObject\n      serverErrored: ExceptionInfo\n      codeExecutionUpdate: CodeExecutionUpdate\n      terminated: TerminatedResponse\n  CodeExecutionUpdate:\n    union:\n      buildingExecutor:\n        type: BuildingExecutorResponse\n        docs: >-\n          Statuses if an executor for the session isn't ready (Before\n          RunningResponse).\n      running:\n        type: RunningResponse\n        docs: Sent once a test submission is executing.\n      errored:\n        type: ErroredResponse\n        docs: Sent if a submission cannot be run (i.e. Compile Error).\n      stopped:\n        type: StoppedResponse\n        docs: Sent if a submission is stopped.\n      graded:\n        type: GradedResponse\n        docs: Graded testcases without trace information.\n      gradedV2:\n        type: GradedResponseV2\n        docs: Graded submission for v2 problems.\n      workspaceRan:\n        type: WorkspaceRanResponse\n        docs: Workspace run without trace information.\n      recording:\n        type: RecordingResponseNotification\n        docs: Gives progress about what is being recorded.\n      recorded:\n        type: RecordedResponseNotification\n        docs: Graded testcases with trace information.\n      invalidRequest:\n        type: InvalidRequestResponse\n        docs: Sent if an invalid request is sent for a submission.\n      finished:\n        type: FinishedResponse\n        docs: Sent once a submission is graded and fully recorded.\n  BuildingExecutorResponse:\n    properties:\n      submissionId: SubmissionId\n      status: ExecutionSessionStatus\n  RunningResponse:\n    properties:\n      submissionId: SubmissionId\n      state: RunningSubmissionState\n  RunningSubmissionState:\n    enum:\n      - QUEUEING_SUBMISSION\n      - KILLING_HISTORICAL_SUBMISSIONS\n      - WRITING_SUBMISSION_TO_FILE\n      - COMPILING_SUBMISSION\n      - RUNNING_SUBMISSION\n  ErroredResponse:\n    properties:\n      submissionId: SubmissionId\n      errorInfo: ErrorInfo\n  ErrorInfo:\n    union:\n      compileError: CompileError\n      runtimeError:\n        type: RuntimeError\n        docs: >\n          If the submission cannot be executed and throws a runtime error before\n          getting to any of the testcases.\n      internalError:\n        type: InternalError\n        docs: |\n          If the trace backend encounters an unexpected error.\n  CompileError:\n    properties:\n      message: string\n  RuntimeError:\n    properties:\n      message: string\n  InternalError:\n    properties:\n      exceptionInfo: ExceptionInfo\n  StoppedResponse:\n    properties:\n      submissionId: SubmissionId\n  WorkspaceRanResponse:\n    properties:\n      submissionId: SubmissionId\n      runDetails: WorkspaceRunDetails\n  WorkspaceRunDetails:\n    properties:\n      exceptionV2: optional<ExceptionV2>\n      exception: optional<ExceptionInfo>\n      stdout: string\n  GradedResponse:\n    properties:\n      submissionId: SubmissionId\n      testCases: map<string, TestCaseResultWithStdout>\n  GradedResponseV2:\n    properties:\n      submissionId: SubmissionId\n      testCases: map<problemV2.TestCaseId, TestCaseGrade>\n  TestCaseGrade:\n    union:\n      hidden: TestCaseHiddenGrade\n      nonHidden: TestCaseNonHiddenGrade\n  TestCaseHiddenGrade:\n    properties:\n      passed: boolean\n  TestCaseNonHiddenGrade:\n    properties:\n      passed: boolean\n      actualResult: optional<commons.VariableValue>\n      exception: optional<ExceptionV2>\n      stdout: string\n  RecordedResponseNotification:\n    properties:\n      submissionId: SubmissionId\n      traceResponsesSize: integer\n      testCaseId: optional<string>\n  RecordingResponseNotification:\n    properties:\n      submissionId: SubmissionId\n      testCaseId: optional<string>\n      lineNumber: integer\n      lightweightStackInfo: LightweightStackframeInformation\n      tracedFile: optional<TracedFile>\n  LightweightStackframeInformation:\n    properties:\n      numStackFrames: integer\n      topStackFrameMethodName: string\n  TestCaseResultWithStdout:\n    properties:\n      result: TestCaseResult\n      stdout: string\n  TestCaseResult:\n    properties:\n      expectedResult: commons.VariableValue\n      actualResult: ActualResult\n      passed: boolean\n  ActualResult:\n    union:\n      value: commons.VariableValue\n      exception: ExceptionInfo\n      exceptionV2: ExceptionV2\n  ExceptionV2:\n    union:\n      generic: ExceptionInfo\n      timeout: commons.EmptyObject\n  ExceptionInfo:\n    properties:\n      exceptionType: string\n      exceptionMessage: string\n      exceptionStacktrace: string\n  InvalidRequestResponse:\n    properties:\n      request: SubmissionRequest\n      cause: InvalidRequestCause\n  InvalidRequestCause:\n    union:\n      submissionIdNotFound:\n        type: SubmissionIdNotFound\n        docs: The submission request references a submission id that doesn't exist.\n      customTestCasesUnsupported:\n        type: CustomTestCasesUnsupported\n      unexpectedLanguage:\n        type: UnexpectedLanguageError\n        docs: The submission request was routed to an incorrect language executor.\n  ExistingSubmissionExecuting:\n    properties:\n      submissionId: SubmissionId\n  SubmissionIdNotFound:\n    properties:\n      missingSubmissionId: SubmissionId\n  CustomTestCasesUnsupported:\n    properties:\n      problemId: commons.ProblemId\n      submissionId: SubmissionId\n  UnexpectedLanguageError:\n    properties:\n      expectedLanguage: commons.Language\n      actualLanguage: commons.Language\n  TerminatedResponse:\n    properties: {}\n  FinishedResponse:\n    properties:\n      submissionId: SubmissionId\n  StdoutResponse:\n    properties:\n      submissionId: SubmissionId\n      stdout: string\n  StderrResponse:\n    properties:\n      submissionId: SubmissionId\n      stderr: string\n  TraceResponse:\n    properties:\n      submissionId: SubmissionId\n      lineNumber: integer\n      returnValue: optional<commons.DebugVariableValue>\n      expressionLocation: optional<ExpressionLocation>\n      stack: StackInformation\n      stdout: optional<string>\n  TraceResponseV2:\n    properties:\n      submissionId: SubmissionId\n      lineNumber: integer\n      file: TracedFile\n      returnValue: optional<commons.DebugVariableValue>\n      expressionLocation: optional<ExpressionLocation>\n      stack: StackInformation\n      stdout: optional<string>\n  TracedFile:\n    properties:\n      filename: string\n      directory: string\n  ExpressionLocation:\n    properties:\n      start: integer\n      offset: integer\n  StackInformation:\n    properties:\n      numStackFrames: integer\n      topStackFrame: optional<StackFrame>\n  StackFrame:\n    properties:\n      methodName: string\n      lineNumber: integer\n      scopes: list<Scope>\n  Scope:\n    properties:\n      variables: map<string, commons.DebugVariableValue>\n  ExecutionSessionResponse:\n    properties:\n      sessionId: string\n      executionSessionUrl: optional<string>\n      language: commons.Language\n      status: ExecutionSessionStatus\n  ExecutionSessionStatus:\n    enum:\n      - CREATING_CONTAINER\n      - PROVISIONING_CONTAINER\n      - PENDING_CONTAINER\n      - RUNNING_CONTAINER\n      - LIVE_CONTAINER\n      - FAILED_TO_LAUNCH\n  SubmissionStateV2:\n    properties:\n      timeSubmitted: datetime\n      language: commons.Language\n      submissionFiles: list<SubmissionFileInfo>\n      submissionStatus: SubmissionStatusV2\n  SubmissionStatusV2:\n    union:\n      test: TestSubmissionStatusV2\n      workspace: WorkspaceSubmissionStatusV2\n  TestSubmissionStatusV2:\n    properties:\n      updates: list<TestSubmissionUpdate>\n      problemId: commons.ProblemId\n      problemVersion: integer\n      problemInfo: problemV2.ProblemInfoV2\n  WorkspaceSubmissionStatusV2:\n    properties:\n      updates: list<WorkspaceSubmissionUpdate>\n  TestSubmissionUpdate:\n    properties:\n      updateTime: datetime\n      updateInfo: TestSubmissionUpdateInfo\n  TestSubmissionUpdateInfo:\n    union:\n      running: RunningSubmissionState\n      stopped: commons.EmptyObject\n      errored: ErrorInfo\n      gradedTestCase: GradedTestCaseUpdate\n      recordedTestCase: RecordedTestCaseUpdate\n      finished: commons.EmptyObject\n  WorkspaceSubmissionUpdate:\n    properties:\n      updateTime: datetime\n      updateInfo: WorkspaceSubmissionUpdateInfo\n  WorkspaceSubmissionUpdateInfo:\n    union:\n      running: RunningSubmissionState\n      ran: WorkspaceRunDetails\n      stopped: commons.EmptyObject\n      traced: commons.EmptyObject\n      tracedV2: WorkspaceTracedUpdate\n      errored: ErrorInfo\n      finished: commons.EmptyObject\n  GradedTestCaseUpdate:\n    properties:\n      testCaseId: problemV2.TestCaseId\n      grade: TestCaseGrade\n  RecordedTestCaseUpdate:\n    properties:\n      testCaseId: problemV2.TestCaseId\n      traceResponsesSize: integer\n  WorkspaceTracedUpdate:\n    properties:\n      traceResponsesSize: integer\n  SubmissionState:\n    properties:\n      timeSubmitted: optional<datetime>\n      submission: string\n      language: commons.Language\n      submissionTypeState: SubmissionTypeState\n  SubmissionTypeState:\n    union:\n      test: TestSubmissionState\n      workspace: WorkspaceSubmissionState\n  WorkspaceSubmissionState:\n    properties:\n      status: WorkspaceSubmissionStatus\n  WorkspaceSubmissionStatus:\n    union:\n      stopped: commons.EmptyObject\n      errored: ErrorInfo\n      running: RunningSubmissionState\n      ran: WorkspaceRunDetails\n      traced: WorkspaceRunDetails\n  TestSubmissionState:\n    properties:\n      problemId: commons.ProblemId\n      defaultTestCases: list<commons.TestCase>\n      customTestCases: list<commons.TestCase>\n      status: TestSubmissionStatus\n  TestSubmissionStatus:\n    union:\n      stopped: commons.EmptyObject\n      errored: ErrorInfo\n      running: RunningSubmissionState\n      testCaseIdToState: map<string, SubmissionStatusForTestCase>\n  SubmissionStatusForTestCase:\n    union:\n      graded: TestCaseResultWithStdout\n      gradedV2: TestCaseGrade\n      traced: TracedTestCase\n  TracedTestCase:\n    properties:\n      result: TestCaseResultWithStdout\n      traceResponsesSize: integer\n  TraceResponsesPage:\n    properties:\n      offset:\n        type: optional<integer>\n        docs: |\n          If present, use this to load subseqent pages.\n          The offset is the id of the next trace response to load.\n      traceResponses: list<TraceResponse>\n  TraceResponsesPageV2:\n    properties:\n      offset:\n        type: optional<integer>\n        docs: |\n          If present, use this to load subseqent pages.\n          The offset is the id of the next trace response to load.\n      traceResponses: list<TraceResponseV2>\n  GetTraceResponsesPageRequest:\n    properties:\n      offset:\n        type: optional<integer>\n  WorkspaceStarterFilesResponse:\n    properties:\n      files: map<commons.Language, WorkspaceFiles>\n  WorkspaceStarterFilesResponseV2:\n    properties:\n      filesByLanguage: map<commons.Language, problemV2.Files>\n  WorkspaceFiles:\n    properties:\n      mainFile: commons.FileInfo\n      readOnlyFiles: list<commons.FileInfo>\n  ExecutionSessionsState:\n    properties:\n      states: map<string, ExecutionSessionState>\n      numWarmingInstances: optional<integer>\n      warmingSessionIds: list<string>\n  ExecutionSessionState:\n    properties:\n      lastTimeContacted: optional<string>\n      sessionId: string\n      isWarmInstance: boolean\n      awsTaskId: optional<string>\n      language: commons.Language\n      status: ExecutionSessionStatus\nimports:\n  commons: ../commons/__package__.yml\n  problemV2: ../ProblemInfoServicV2/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    getSubmissionState:\n      auth: true\n      path: /{submissionId}\n      method: GET\n      response: SubmissionState\n      path-parameters:\n        submissionId: SubmissionId\n    getSubmissionStateV2:\n      auth: true\n      path: /v2/{submissionId}\n      method: GET\n      response: SubmissionStateV2\n      path-parameters:\n        submissionId: SubmissionId\n    getTraceResponsesPage:\n      auth: true\n      path: /trace-respose/{submissionId}/testCase/{testCaseId}\n      method: POST\n      response: TraceResponsesPage\n      path-parameters:\n        submissionId: SubmissionId\n        testCaseId: string\n    getTraceResponsesV2Page:\n      auth: true\n      path: /trace-response-v2/{submissionId}/testCase/{testCaseId}\n      method: POST\n      response: TraceResponsesPageV2\n      path-parameters:\n        submissionId: SubmissionId\n        testCaseId: problemV2.TestCaseId\n    getTraceResponsesPageForWorkspace:\n      auth: true\n      path: /workspace-trace-response/{submissionId}\n      method: POST\n      response: TraceResponsesPage\n      path-parameters:\n        submissionId: SubmissionId\n    getTraceResponsesV2PageForWorkspace:\n      auth: true\n      path: /workspace-trace-response-v2/{submissionId}\n      method: POST\n      response: TraceResponsesPageV2\n      path-parameters:\n        submissionId: SubmissionId\n",
+      "rawContents": "types:\n  SubmissionId:\n    type: string\n  ShareId:\n    type: string\n  SubmissionRequest:\n    union:\n      initializeProblemRequest: InitializeProblemRequest\n      initializeWorkspaceRequest: commons.EmptyObject\n      submitV2: SubmitRequestV2\n      workspaceSubmit: WorkspaceSubmitRequest\n      stop: StopRequest\n  InitializeProblemRequest:\n    properties:\n      problemId: commons.ProblemId\n      problemVersion: optional<integer>\n  SubmitRequestV2:\n    properties:\n      submissionId: SubmissionId\n      language: commons.Language\n      submissionFiles: list<SubmissionFileInfo>\n      problemId: commons.ProblemId\n      problemVersion: optional<integer>\n      userId: optional<string>\n  WorkspaceSubmitRequest:\n    properties:\n      submissionId: SubmissionId\n      language: commons.Language\n      submissionFiles: list<SubmissionFileInfo>\n      userId: optional<string>\n  SubmissionFileInfo:\n    properties:\n      directory: string\n      filename: string\n      contents: string\n  SubmissionTypeEnum:\n    enum:\n      - TEST\n  StopRequest:\n    properties:\n      submissionId: SubmissionId\n  SubmissionResponse:\n    union:\n      serverInitialized: commons.EmptyObject\n      problemInitialized: commons.ProblemId\n      workspaceInitialized: commons.EmptyObject\n      serverErrored: ExceptionInfo\n      codeExecutionUpdate: CodeExecutionUpdate\n      terminated: TerminatedResponse\n  CodeExecutionUpdate:\n    union:\n      buildingExecutor:\n        type: BuildingExecutorResponse\n        docs: >-\n          Statuses if an executor for the session isn't ready (Before\n          RunningResponse).\n      running:\n        type: RunningResponse\n        docs: Sent once a test submission is executing.\n      errored:\n        type: ErroredResponse\n        docs: Sent if a submission cannot be run (i.e. Compile Error).\n      stopped:\n        type: StoppedResponse\n        docs: Sent if a submission is stopped.\n      graded:\n        type: GradedResponse\n        docs: Graded testcases without trace information.\n      gradedV2:\n        type: GradedResponseV2\n        docs: Graded submission for v2 problems.\n      workspaceRan:\n        type: WorkspaceRanResponse\n        docs: Workspace run without trace information.\n      recording:\n        type: RecordingResponseNotification\n        docs: Gives progress about what is being recorded.\n      recorded:\n        type: RecordedResponseNotification\n        docs: Graded testcases with trace information.\n      invalidRequest:\n        type: InvalidRequestResponse\n        docs: Sent if an invalid request is sent for a submission.\n      finished:\n        type: FinishedResponse\n        docs: Sent once a submission is graded and fully recorded.\n  BuildingExecutorResponse:\n    properties:\n      submissionId: SubmissionId\n      status: ExecutionSessionStatus\n  RunningResponse:\n    properties:\n      submissionId: SubmissionId\n      state: RunningSubmissionState\n  RunningSubmissionState:\n    enum:\n      - QUEUEING_SUBMISSION\n      - KILLING_HISTORICAL_SUBMISSIONS\n      - WRITING_SUBMISSION_TO_FILE\n      - COMPILING_SUBMISSION\n      - RUNNING_SUBMISSION\n  ErroredResponse:\n    properties:\n      submissionId: SubmissionId\n      errorInfo: ErrorInfo\n  ErrorInfo:\n    union:\n      compileError: CompileError\n      runtimeError:\n        type: RuntimeError\n        docs: >\n          If the submission cannot be executed and throws a runtime error before\n          getting to any of the testcases.\n      internalError:\n        type: InternalError\n        docs: |\n          If the trace backend encounters an unexpected error.\n  CompileError:\n    properties:\n      message: string\n  RuntimeError:\n    properties:\n      message: string\n  InternalError:\n    properties:\n      exceptionInfo: ExceptionInfo\n  StoppedResponse:\n    properties:\n      submissionId: SubmissionId\n  WorkspaceRanResponse:\n    properties:\n      submissionId: SubmissionId\n      runDetails: WorkspaceRunDetails\n  WorkspaceRunDetails:\n    properties:\n      exceptionV2: optional<ExceptionV2>\n      exception: optional<ExceptionInfo>\n      stdout: string\n  GradedResponse:\n    properties:\n      submissionId: SubmissionId\n      testCases: map<string, TestCaseResultWithStdout>\n  GradedResponseV2:\n    properties:\n      submissionId: SubmissionId\n      testCases: map<problemV2.TestCaseId, TestCaseGrade>\n  TestCaseGrade:\n    union:\n      hidden: TestCaseHiddenGrade\n      nonHidden: TestCaseNonHiddenGrade\n  TestCaseHiddenGrade:\n    properties:\n      passed: boolean\n  TestCaseNonHiddenGrade:\n    properties:\n      passed: boolean\n      actualResult: optional<commons.VariableValue>\n      exception: optional<ExceptionV2>\n      stdout: string\n  RecordedResponseNotification:\n    properties:\n      submissionId: SubmissionId\n      traceResponsesSize: integer\n      testCaseId: optional<string>\n  RecordingResponseNotification:\n    properties:\n      submissionId: SubmissionId\n      testCaseId: optional<string>\n      lineNumber: integer\n      lightweightStackInfo: LightweightStackframeInformation\n      tracedFile: optional<TracedFile>\n  LightweightStackframeInformation:\n    properties:\n      numStackFrames: integer\n      topStackFrameMethodName: string\n  TestCaseResultWithStdout:\n    properties:\n      result: TestCaseResult\n      stdout: string\n  TestCaseResult:\n    properties:\n      expectedResult: commons.VariableValue\n      actualResult: ActualResult\n      passed: boolean\n  ActualResult:\n    union:\n      value: commons.VariableValue\n      exception: ExceptionInfo\n      exceptionV2: ExceptionV2\n  ExceptionV2:\n    union:\n      generic: ExceptionInfo\n      timeout: commons.EmptyObject\n  ExceptionInfo:\n    properties:\n      exceptionType: string\n      exceptionMessage: string\n      exceptionStacktrace: string\n  InvalidRequestResponse:\n    properties:\n      request: SubmissionRequest\n      cause: InvalidRequestCause\n  InvalidRequestCause:\n    union:\n      submissionIdNotFound:\n        type: SubmissionIdNotFound\n        docs: The submission request references a submission id that doesn't exist.\n      customTestCasesUnsupported:\n        type: CustomTestCasesUnsupported\n      unexpectedLanguage:\n        type: UnexpectedLanguageError\n        docs: The submission request was routed to an incorrect language executor.\n  ExistingSubmissionExecuting:\n    properties:\n      submissionId: SubmissionId\n  SubmissionIdNotFound:\n    properties:\n      missingSubmissionId: SubmissionId\n  CustomTestCasesUnsupported:\n    properties:\n      problemId: commons.ProblemId\n      submissionId: SubmissionId\n  UnexpectedLanguageError:\n    properties:\n      expectedLanguage: commons.Language\n      actualLanguage: commons.Language\n  TerminatedResponse:\n    properties: {}\n  FinishedResponse:\n    properties:\n      submissionId: SubmissionId\n  StdoutResponse:\n    properties:\n      submissionId: SubmissionId\n      stdout: string\n  StderrResponse:\n    properties:\n      submissionId: SubmissionId\n      stderr: string\n  TraceResponse:\n    properties:\n      submissionId: SubmissionId\n      lineNumber: integer\n      returnValue: optional<commons.DebugVariableValue>\n      expressionLocation: optional<ExpressionLocation>\n      stack: StackInformation\n      stdout: optional<string>\n  TraceResponseV2:\n    properties:\n      submissionId: SubmissionId\n      lineNumber: integer\n      file: TracedFile\n      returnValue: optional<commons.DebugVariableValue>\n      expressionLocation: optional<ExpressionLocation>\n      stack: StackInformation\n      stdout: optional<string>\n  TracedFile:\n    properties:\n      filename: string\n      directory: string\n  ExpressionLocation:\n    properties:\n      start: integer\n      offset: integer\n  StackInformation:\n    properties:\n      numStackFrames: integer\n      topStackFrame: optional<StackFrame>\n  StackFrame:\n    properties:\n      methodName: string\n      lineNumber: integer\n      scopes: list<Scope>\n  Scope:\n    properties:\n      variables: map<string, commons.DebugVariableValue>\n  ExecutionSessionResponse:\n    properties:\n      sessionId: string\n      executionSessionUrl: optional<string>\n      language: commons.Language\n      status: ExecutionSessionStatus\n  ExecutionSessionStatus:\n    enum:\n      - CREATING_CONTAINER\n      - PROVISIONING_CONTAINER\n      - PENDING_CONTAINER\n      - RUNNING_CONTAINER\n      - LIVE_CONTAINER\n      - FAILED_TO_LAUNCH\n  SubmissionStateV2:\n    properties:\n      timeSubmitted: datetime\n      language: commons.Language\n      submissionFiles: list<SubmissionFileInfo>\n      submissionStatus: SubmissionStatusV2\n  SubmissionStatusV2:\n    union:\n      test: TestSubmissionStatusV2\n      workspace: WorkspaceSubmissionStatusV2\n  TestSubmissionStatusV2:\n    properties:\n      updates: list<TestSubmissionUpdate>\n      problemId: commons.ProblemId\n      problemVersion: integer\n      problemInfo: problemV2.ProblemInfoV2\n  WorkspaceSubmissionStatusV2:\n    properties:\n      updates: list<WorkspaceSubmissionUpdate>\n  TestSubmissionUpdate:\n    properties:\n      updateTime: datetime\n      updateInfo: TestSubmissionUpdateInfo\n  TestSubmissionUpdateInfo:\n    union:\n      running: RunningSubmissionState\n      stopped: commons.EmptyObject\n      errored: ErrorInfo\n      gradedTestCase: GradedTestCaseUpdate\n      recordedTestCase: RecordedTestCaseUpdate\n      finished: commons.EmptyObject\n  WorkspaceSubmissionUpdate:\n    properties:\n      updateTime: datetime\n      updateInfo: WorkspaceSubmissionUpdateInfo\n  WorkspaceSubmissionUpdateInfo:\n    union:\n      running: RunningSubmissionState\n      ran: WorkspaceRunDetails\n      stopped: commons.EmptyObject\n      traced: commons.EmptyObject\n      tracedV2: WorkspaceTracedUpdate\n      errored: ErrorInfo\n      finished: commons.EmptyObject\n  GradedTestCaseUpdate:\n    properties:\n      testCaseId: problemV2.TestCaseId\n      grade: TestCaseGrade\n  RecordedTestCaseUpdate:\n    properties:\n      testCaseId: problemV2.TestCaseId\n      traceResponsesSize: integer\n  WorkspaceTracedUpdate:\n    properties:\n      traceResponsesSize: integer\n  SubmissionState:\n    properties:\n      timeSubmitted: optional<datetime>\n      submission: string\n      language: commons.Language\n      submissionTypeState: SubmissionTypeState\n  SubmissionTypeState:\n    union:\n      test: TestSubmissionState\n      workspace: WorkspaceSubmissionState\n  WorkspaceSubmissionState:\n    properties:\n      status: WorkspaceSubmissionStatus\n  WorkspaceSubmissionStatus:\n    union:\n      stopped: commons.EmptyObject\n      errored: ErrorInfo\n      running: RunningSubmissionState\n      ran: WorkspaceRunDetails\n      traced: WorkspaceRunDetails\n  TestSubmissionState:\n    properties:\n      problemId: commons.ProblemId\n      defaultTestCases: list<commons.TestCase>\n      customTestCases: list<commons.TestCase>\n      status: TestSubmissionStatus\n  TestSubmissionStatus:\n    union:\n      stopped: commons.EmptyObject\n      errored: ErrorInfo\n      running: RunningSubmissionState\n      testCaseIdToState: map<string, SubmissionStatusForTestCase>\n  SubmissionStatusForTestCase:\n    union:\n      graded: TestCaseResultWithStdout\n      gradedV2: TestCaseGrade\n      traced: TracedTestCase\n  TracedTestCase:\n    properties:\n      result: TestCaseResultWithStdout\n      traceResponsesSize: integer\n  TraceResponsesPage:\n    properties:\n      offset:\n        type: optional<integer>\n        docs: |\n          If present, use this to load subseqent pages.\n          The offset is the id of the next trace response to load.\n      traceResponses: list<TraceResponse>\n  TraceResponsesPageV2:\n    properties:\n      offset:\n        type: optional<integer>\n        docs: |\n          If present, use this to load subseqent pages.\n          The offset is the id of the next trace response to load.\n      traceResponses: list<TraceResponseV2>\n  GetTraceResponsesPageRequest:\n    properties:\n      offset:\n        type: optional<integer>\n  WorkspaceStarterFilesResponse:\n    properties:\n      files: map<commons.Language, WorkspaceFiles>\n  WorkspaceStarterFilesResponseV2:\n    properties:\n      filesByLanguage: map<commons.Language, problemV2.Files>\n  WorkspaceFiles:\n    properties:\n      mainFile: commons.FileInfo\n      readOnlyFiles: list<commons.FileInfo>\n  ExecutionSessionsState:\n    properties:\n      states: map<string, ExecutionSessionState>\n      numWarmingInstances: optional<integer>\n      warmingSessionIds: list<string>\n  ExecutionSessionState:\n    properties:\n      lastTimeContacted: optional<string>\n      sessionId: string\n      isWarmInstance: boolean\n      awsTaskId: optional<string>\n      language: commons.Language\n      status: ExecutionSessionStatus\nimports:\n  commons: ../commons/__package__.yml\n  problemV2: ../ProblemInfoServicV2/__package__.yml\nservice:\n  auth: false\n  base-path: ''\n  endpoints:\n    getSubmissionState:\n      auth: true\n      path: /{submissionId}\n      method: GET\n      response: SubmissionState\n      path-parameters:\n        submissionId: SubmissionId\n    getSubmissionStateV2:\n      auth: true\n      path: /v2/{submissionId}\n      method: GET\n      response: SubmissionStateV2\n      path-parameters:\n        submissionId: SubmissionId\n    getTraceResponsesPage:\n      auth: true\n      path: /trace-respose/{submissionId}/testCase/{testCaseId}\n      method: POST\n      response: TraceResponsesPage\n      path-parameters:\n        submissionId: SubmissionId\n        testCaseId: string\n      request:\n        body:\n          type: GetTraceResponsesPageRequest\n    getTraceResponsesV2Page:\n      auth: true\n      path: /trace-response-v2/{submissionId}/testCase/{testCaseId}\n      method: POST\n      response: TraceResponsesPageV2\n      path-parameters:\n        submissionId: SubmissionId\n        testCaseId: problemV2.TestCaseId\n      request:\n        body:\n          type: GetTraceResponsesPageRequest\n    getTraceResponsesPageForWorkspace:\n      auth: true\n      path: /workspace-trace-response/{submissionId}\n      method: POST\n      response: TraceResponsesPage\n      path-parameters:\n        submissionId: SubmissionId\n      request:\n        body:\n          type: GetTraceResponsesPageRequest\n    getTraceResponsesV2PageForWorkspace:\n      auth: true\n      path: /workspace-trace-response-v2/{submissionId}\n      method: POST\n      response: TraceResponsesPageV2\n      path-parameters:\n        submissionId: SubmissionId\n      request:\n        body:\n          type: GetTraceResponsesPageRequest\n",
       "contents": {
         "types": {
           "SubmissionId": {
@@ -2466,6 +2576,11 @@
               "path-parameters": {
                 "submissionId": "SubmissionId",
                 "testCaseId": "string"
+              },
+              "request": {
+                "body": {
+                  "type": "GetTraceResponsesPageRequest"
+                }
               }
             },
             "getTraceResponsesV2Page": {
@@ -2476,6 +2591,11 @@
               "path-parameters": {
                 "submissionId": "SubmissionId",
                 "testCaseId": "problemV2.TestCaseId"
+              },
+              "request": {
+                "body": {
+                  "type": "GetTraceResponsesPageRequest"
+                }
               }
             },
             "getTraceResponsesPageForWorkspace": {
@@ -2485,6 +2605,11 @@
               "response": "TraceResponsesPage",
               "path-parameters": {
                 "submissionId": "SubmissionId"
+              },
+              "request": {
+                "body": {
+                  "type": "GetTraceResponsesPageRequest"
+                }
               }
             },
             "getTraceResponsesV2PageForWorkspace": {
@@ -2494,6 +2619,11 @@
               "response": "TraceResponsesPageV2",
               "path-parameters": {
                 "submissionId": "SubmissionId"
+              },
+              "request": {
+                "body": {
+                  "type": "GetTraceResponsesPageRequest"
+                }
               }
             }
           }

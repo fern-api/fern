@@ -34,7 +34,7 @@ export class Metadata {
      *
      * @example
      *     await client.user.events.metadata.getMetadata({
-     *         id: "string"
+     *         id: "id"
      *     })
      */
     public async getMetadata(

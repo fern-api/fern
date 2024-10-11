@@ -6,5 +6,5 @@ import * as FernConjure from "../../../index";
 
 export interface ConjureArgumentWithParamType extends FernConjure.WithDocs {
     paramType: FernConjure.ConjureParamType;
-    type: FernConjure.ConjureTypeReference;
+    type: string;
 }

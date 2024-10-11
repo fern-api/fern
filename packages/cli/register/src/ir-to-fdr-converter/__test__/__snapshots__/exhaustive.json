@@ -2840,16 +2840,16 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": "SGVsbG8gd29ybGQh",
+              "requestBody": "2024-01-15T09:30:00Z",
               "requestBodyV3": {
                 "type": "json",
-                "value": "SGVsbG8gd29ybGQh"
+                "value": "2024-01-15T09:30:00Z"
               },
               "responseStatusCode": 200,
-              "responseBody": "SGVsbG8gd29ybGQh",
+              "responseBody": "2024-01-15T09:30:00Z",
               "responseBodyV3": {
                 "type": "json",
-                "value": "SGVsbG8gd29ybGQh"
+                "value": "2024-01-15T09:30:00Z"
               },
               "codeSamples": []
             }

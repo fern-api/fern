@@ -314,7 +314,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", {
+     *     await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "testCaseId", {
      *         result: {
      *             result: {
      *                 expectedResult: {
@@ -325,37 +325,33 @@ export class Admin {
      *                     type: "value",
      *                     value: {
      *                         type: "integerValue",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
+     *                         value: 1
      *                     }
      *                 },
      *                 passed: true
      *             },
-     *             stdout: "string"
+     *             stdout: "stdout"
      *         },
      *         traceResponses: [{
      *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *                 lineNumber: 1,
-     *                 returnValue: {
-     *                     type: "integerValue",
-     *                     value: 1
-     *                 },
-     *                 expressionLocation: {
-     *                     start: 1,
-     *                     offset: 1
-     *                 },
+     *                 returnValue: undefined,
+     *                 expressionLocation: undefined,
      *                 stack: {
      *                     numStackFrames: 1,
-     *                     topStackFrame: {
-     *                         methodName: "string",
-     *                         lineNumber: 1,
-     *                         scopes: [{
-     *                                 variables: {}
-     *                             }]
-     *                     }
+     *                     topStackFrame: undefined
      *                 },
-     *                 stdout: "string"
+     *                 stdout: undefined
+     *             }, {
+     *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *                 lineNumber: 1,
+     *                 returnValue: undefined,
+     *                 expressionLocation: undefined,
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: undefined
+     *                 },
+     *                 stdout: undefined
      *             }]
      *     })
      */
@@ -426,32 +422,34 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", [{
+     *     await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "testCaseId", [{
      *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             lineNumber: 1,
      *             file: {
-     *                 filename: "string",
-     *                 directory: "string"
+     *                 filename: "filename",
+     *                 directory: "directory"
      *             },
-     *             returnValue: {
-     *                 type: "integerValue",
-     *                 value: 1
-     *             },
-     *             expressionLocation: {
-     *                 start: 1,
-     *                 offset: 1
-     *             },
+     *             returnValue: undefined,
+     *             expressionLocation: undefined,
      *             stack: {
      *                 numStackFrames: 1,
-     *                 topStackFrame: {
-     *                     methodName: "string",
-     *                     lineNumber: 1,
-     *                     scopes: [{
-     *                             variables: {}
-     *                         }]
-     *                 }
+     *                 topStackFrame: undefined
      *             },
-     *             stdout: "string"
+     *             stdout: undefined
+     *         }, {
+     *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             lineNumber: 1,
+     *             file: {
+     *                 filename: "filename",
+     *                 directory: "directory"
+     *             },
+     *             returnValue: undefined,
+     *             expressionLocation: undefined,
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: undefined
+     *             },
+     *             stdout: undefined
      *         }])
      */
     public async storeTracedTestCaseV2(
@@ -522,41 +520,30 @@ export class Admin {
      * @example
      *     await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
      *         workspaceRunDetails: {
-     *             exceptionV2: {
-     *                 type: "generic",
-     *                 exceptionType: "string",
-     *                 exceptionMessage: "string",
-     *                 exceptionStacktrace: "string"
-     *             },
-     *             exception: {
-     *                 exceptionType: "string",
-     *                 exceptionMessage: "string",
-     *                 exceptionStacktrace: "string"
-     *             },
-     *             stdout: "string"
+     *             exceptionV2: undefined,
+     *             exception: undefined,
+     *             stdout: "stdout"
      *         },
      *         traceResponses: [{
      *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *                 lineNumber: 1,
-     *                 returnValue: {
-     *                     type: "integerValue",
-     *                     value: 1
-     *                 },
-     *                 expressionLocation: {
-     *                     start: 1,
-     *                     offset: 1
-     *                 },
+     *                 returnValue: undefined,
+     *                 expressionLocation: undefined,
      *                 stack: {
      *                     numStackFrames: 1,
-     *                     topStackFrame: {
-     *                         methodName: "string",
-     *                         lineNumber: 1,
-     *                         scopes: [{
-     *                                 variables: {}
-     *                             }]
-     *                     }
+     *                     topStackFrame: undefined
      *                 },
-     *                 stdout: "string"
+     *                 stdout: undefined
+     *             }, {
+     *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *                 lineNumber: 1,
+     *                 returnValue: undefined,
+     *                 expressionLocation: undefined,
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: undefined
+     *                 },
+     *                 stdout: undefined
      *             }]
      *     })
      */
@@ -627,28 +614,30 @@ export class Admin {
      *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             lineNumber: 1,
      *             file: {
-     *                 filename: "string",
-     *                 directory: "string"
+     *                 filename: "filename",
+     *                 directory: "directory"
      *             },
-     *             returnValue: {
-     *                 type: "integerValue",
-     *                 value: 1
-     *             },
-     *             expressionLocation: {
-     *                 start: 1,
-     *                 offset: 1
-     *             },
+     *             returnValue: undefined,
+     *             expressionLocation: undefined,
      *             stack: {
      *                 numStackFrames: 1,
-     *                 topStackFrame: {
-     *                     methodName: "string",
-     *                     lineNumber: 1,
-     *                     scopes: [{
-     *                             variables: {}
-     *                         }]
-     *                 }
+     *                 topStackFrame: undefined
      *             },
-     *             stdout: "string"
+     *             stdout: undefined
+     *         }, {
+     *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             lineNumber: 1,
+     *             file: {
+     *                 filename: "filename",
+     *                 directory: "directory"
+     *             },
+     *             returnValue: undefined,
+     *             expressionLocation: undefined,
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: undefined
+     *             },
+     *             stdout: undefined
      *         }])
      */
     public async storeTracedWorkspaceV2(

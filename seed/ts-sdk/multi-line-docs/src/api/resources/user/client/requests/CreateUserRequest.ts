@@ -5,8 +5,8 @@
 /**
  * @example
  *     {
- *         name: "string",
- *         age: 1
+ *         name: "name",
+ *         age: undefined
  *     }
  */
 export interface CreateUserRequest {
