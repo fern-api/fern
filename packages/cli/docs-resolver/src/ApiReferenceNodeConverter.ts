@@ -12,6 +12,7 @@ import { NodeIdGenerator } from "./NodeIdGenerator";
 import { isSubpackage } from "./utils/isSubpackage";
 import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { withAudience } from "./utils/withAudience";
 
 export class ApiReferenceNodeConverter {
     apiDefinitionId: FernNavigation.V1.ApiDefinitionId;
@@ -96,13 +97,16 @@ export class ApiReferenceNodeConverter {
                 this.docsWorkspace,
                 idgen
             ).convert({
-                parentSlug: this.#slug
+                parentSlug: this.#slug,
+                audiences: { type: "all" }
             }),
             children: this.#children,
             availability: undefined,
             pointsTo,
             noindex: undefined,
-            playground: this.#convertPlaygroundSettings(this.apiSection.playground)
+            playground: this.#convertPlaygroundSettings(this.apiSection.playground),
+            authed: undefined,
+            audience: withAudience(this.apiSection.audiences)
         };
     }
 
@@ -141,7 +145,9 @@ export class ApiReferenceNodeConverter {
                             slug: pageSlug.get(),
                             icon: page.icon,
                             hidden: page.hidden,
-                            noindex: page.noindex
+                            noindex: page.noindex,
+                            authed: undefined,
+                            audience: withAudience(page.audiences)
                         };
                     },
                     package: (pkg) => this.#convertPackage(pkg, parentSlug, idgen),
@@ -214,7 +220,9 @@ export class ApiReferenceNodeConverter {
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
-                playground: this.#convertPlaygroundSettings(pkg.playground)
+                playground: this.#convertPlaygroundSettings(pkg.playground),
+                authed: undefined,
+                audience: withAudience(pkg.audiences)
             };
         } else {
             this.taskContext.logger.warn(
@@ -240,7 +248,9 @@ export class ApiReferenceNodeConverter {
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
-                playground: this.#convertPlaygroundSettings(pkg.playground)
+                playground: this.#convertPlaygroundSettings(pkg.playground),
+                authed: undefined,
+                audience: withAudience(pkg.audiences)
             };
         }
     }
@@ -305,7 +315,9 @@ export class ApiReferenceNodeConverter {
             apiDefinitionId: this.apiDefinitionId,
             pointsTo: undefined,
             noindex: undefined,
-            playground: this.#convertPlaygroundSettings(section.playground)
+            playground: this.#convertPlaygroundSettings(section.playground),
+            authed: undefined,
+            audience: withAudience(section.audiences)
         };
     }
 
@@ -348,7 +360,10 @@ export class ApiReferenceNodeConverter {
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
-                playground: undefined
+                playground: undefined,
+                authed: undefined,
+                // is this right?
+                audience: undefined
             };
         }
 
@@ -361,7 +376,8 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 slug: undefined,
                 hidden: undefined,
-                playground: undefined
+                playground: undefined,
+                audiences: { type: "all" }
             },
             apiDefinitionPackageId,
             parentSlug,
@@ -404,7 +420,9 @@ export class ApiReferenceNodeConverter {
                 slug: endpointSlug.get(),
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
-                playground: this.#convertPlaygroundSettings(endpointItem.playground)
+                playground: this.#convertPlaygroundSettings(endpointItem.playground),
+                authed: undefined,
+                audience: withAudience(endpointItem.audiences)
             };
         }
 
@@ -437,7 +455,9 @@ export class ApiReferenceNodeConverter {
                 hidden: endpointItem.hidden,
                 apiDefinitionId: this.apiDefinitionId,
                 availability: FernNavigation.V1.convertAvailability(webSocket.availability),
-                playground: this.#convertPlaygroundSettings(endpointItem.playground)
+                playground: this.#convertPlaygroundSettings(endpointItem.playground),
+                authed: undefined,
+                audience: withAudience(endpointItem.audiences)
             };
         }
 
@@ -470,7 +490,9 @@ export class ApiReferenceNodeConverter {
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: undefined
+                availability: undefined,
+                authed: undefined,
+                audience: withAudience(endpointItem.audiences)
             };
         }
 
@@ -543,7 +565,9 @@ export class ApiReferenceNodeConverter {
                 slug: endpointSlug.get(),
                 icon: undefined,
                 hidden: undefined,
-                playground: undefined
+                playground: undefined,
+                authed: undefined,
+                audience: undefined
             });
         });
 
@@ -565,7 +589,9 @@ export class ApiReferenceNodeConverter {
                 hidden: undefined,
                 apiDefinitionId: this.apiDefinitionId,
                 availability: FernNavigation.V1.convertAvailability(webSocket.availability),
-                playground: undefined
+                playground: undefined,
+                authed: undefined,
+                audience: undefined
             });
         });
 
@@ -587,7 +613,9 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: undefined,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: undefined
+                availability: undefined,
+                authed: undefined,
+                audience: undefined
             });
         });
 
@@ -620,7 +648,9 @@ export class ApiReferenceNodeConverter {
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: FernNavigation.V1.followRedirects(subpackageChildren),
                     noindex: undefined,
-                    playground: undefined
+                    playground: undefined,
+                    authed: undefined,
+                    audience: undefined
                 });
             }
         });

@@ -14,4 +14,5 @@ export interface SectionConfiguration {
     icon?: string;
     hidden?: boolean;
     skipSlug?: boolean;
+    audience?: FernDocsConfig.Audience;
 }

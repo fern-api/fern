@@ -1,3 +1,4 @@
+import { Audiences } from "@fern-api/configuration";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
@@ -6,6 +7,7 @@ import utc from "dayjs/plugin/utc";
 import { kebabCase, last } from "lodash-es";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle";
+import { withAudience } from "./utils/withAudience";
 
 dayjs.extend(utc);
 
@@ -17,6 +19,7 @@ interface ConvertOptions {
     icon?: string;
     hidden?: boolean;
     slug?: string;
+    audiences: Audiences;
     // skipUrlSlug?: boolean;
 }
 
@@ -90,7 +93,9 @@ export class ChangelogNodeConverter {
                 hidden: undefined,
                 date: item.date.toISOString(),
                 pageId: item.pageId,
-                noindex: undefined
+                noindex: undefined,
+                authed: undefined,
+                audience: undefined
             };
         });
 
@@ -107,7 +112,9 @@ export class ChangelogNodeConverter {
             children: changelogYears,
             overviewPageId:
                 overviewPagePath != null ? FernNavigation.PageId(this.toRelativeFilepath(overviewPagePath)) : undefined,
-            noindex: undefined
+            noindex: undefined,
+            authed: undefined,
+            audience: withAudience(opts.audiences)
         };
     }
 
@@ -133,7 +140,9 @@ export class ChangelogNodeConverter {
                     slug,
                     icon: undefined,
                     hidden: undefined,
-                    children: this.groupByMonth(entries, parentSlug)
+                    children: this.groupByMonth(entries, parentSlug),
+                    authed: undefined,
+                    audience: undefined
                 };
             }),
             "year",
@@ -163,7 +172,9 @@ export class ChangelogNodeConverter {
                     slug: parentSlug.append(month.toString()).get(),
                     icon: undefined,
                     hidden: undefined,
-                    children: entries
+                    children: entries,
+                    authed: undefined,
+                    audience: undefined
                 };
             }),
             "month",

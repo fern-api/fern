@@ -24,6 +24,7 @@ import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
+import { withAudience } from "./utils/withAudience";
 import { wrapWithHttps } from "./wrapWithHttps";
 
 dayjs.extend(utc);
@@ -242,12 +243,13 @@ export class DocsDefinitionResolver {
 
     private async convertDocsConfiguration(): Promise<DocsV1Write.DocsConfig> {
         const convertedNavigation = await this.convertNavigationConfig();
-        const config: WithoutQuestionMarks<DocsV1Write.DocsConfig> = {
+        const config: DocsV1Write.DocsConfig = {
             title: this.parsedDocsConfig.title,
             logoHeight: this.parsedDocsConfig.logo?.height,
             logoHref: this.parsedDocsConfig.logo?.href ? DocsV1Write.Url(this.parsedDocsConfig.logo?.href) : undefined,
             favicon: this.getFileId(this.parsedDocsConfig.favicon),
             navigation: convertedNavigation,
+            root: undefined,
             colorsV3: this.convertColorConfigImageReferences(),
             navbarLinks: this.parsedDocsConfig.navbarLinks?.map((navbarLink) => ({
                 ...navbarLink,
@@ -459,7 +461,8 @@ export class DocsDefinitionResolver {
                     title: item.title,
                     hidden: item.hidden,
                     slug: item.slug,
-                    icon: item.icon
+                    icon: item.icon,
+                    audiences: item.audiences
                 });
 
                 const relativeFilePath = this.toRelativeFilepath(item.changelog[0]);
@@ -474,7 +477,9 @@ export class DocsDefinitionResolver {
                         icon: item.icon,
                         hidden: item.hidden,
                         overviewPageId: relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined,
-                        noindex: false
+                        noindex: false,
+                        authed: false,
+                        audience: undefined
                     }
                 };
             }
@@ -552,7 +557,8 @@ export class DocsDefinitionResolver {
                         title: tab.title,
                         icon: tab.icon,
                         hidden: tab.hidden,
-                        slug: tab.slug
+                        slug: tab.slug,
+                        audiences: tab.audiences
                     });
                     const relativeFilePath = this.toRelativeFilepath(tab.child.changelog[0]);
                     return {
@@ -566,7 +572,9 @@ export class DocsDefinitionResolver {
                             icon: tab.icon,
                             hidden: tab.hidden,
                             overviewPageId: relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined,
-                            noindex: false
+                            noindex: false,
+                            authed: false,
+                            audience: undefined
                         }
                     };
                 }

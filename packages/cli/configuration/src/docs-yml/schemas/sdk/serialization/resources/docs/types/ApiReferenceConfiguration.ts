@@ -27,6 +27,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
     flattened: core.serialization.boolean().optional(),
     paginated: core.serialization.boolean().optional(),
     playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
+    audience: core.serialization.lazy(async () => (await import("../../..")).Audience).optional(),
 });
 
 export declare namespace ApiReferenceConfiguration {
@@ -46,5 +47,6 @@ export declare namespace ApiReferenceConfiguration {
         flattened?: boolean | null;
         paginated?: boolean | null;
         playground?: serializers.PlaygroundSettings.Raw | null;
+        audience?: serializers.Audience.Raw | null;
     }
 }

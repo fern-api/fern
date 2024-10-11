@@ -18,6 +18,7 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
     icon: core.serialization.string().optional(),
     hidden: core.serialization.boolean().optional(),
     skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+    audience: core.serialization.lazy(async () => (await import("../../..")).Audience).optional(),
 });
 
 export declare namespace SectionConfiguration {
@@ -30,5 +31,6 @@ export declare namespace SectionConfiguration {
         icon?: string | null;
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
+        audience?: serializers.Audience.Raw | null;
     }
 }

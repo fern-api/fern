@@ -20,6 +20,7 @@ export const ApiReferencePackageConfigurationWithOptions: core.serialization.Obj
     hidden: core.serialization.boolean().optional(),
     skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
     playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
+    audience: core.serialization.lazy(async () => (await import("../../..")).Audience).optional(),
 });
 
 export declare namespace ApiReferencePackageConfigurationWithOptions {
@@ -32,5 +33,6 @@ export declare namespace ApiReferencePackageConfigurationWithOptions {
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
         playground?: serializers.PlaygroundSettings.Raw | null;
+        audience?: serializers.Audience.Raw | null;
     }
 }

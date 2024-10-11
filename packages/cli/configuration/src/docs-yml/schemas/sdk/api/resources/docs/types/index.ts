@@ -30,6 +30,8 @@ export * from "./SearchbarPlacement";
 export * from "./TabsPlacement";
 export * from "./ContentAlignment";
 export * from "./HeaderPosition";
+export * from "./AudienceId";
+export * from "./Audience";
 export * from "./FontConfig";
 export * from "./FontWeight";
 export * from "./FontStyle";

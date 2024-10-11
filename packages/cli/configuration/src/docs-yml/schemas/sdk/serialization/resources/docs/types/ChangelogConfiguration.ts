@@ -15,6 +15,7 @@ export const ChangelogConfiguration: core.serialization.ObjectSchema<
     slug: core.serialization.string().optional(),
     icon: core.serialization.string().optional(),
     hidden: core.serialization.boolean().optional(),
+    audience: core.serialization.lazy(async () => (await import("../../..")).Audience).optional(),
 });
 
 export declare namespace ChangelogConfiguration {
@@ -24,5 +25,6 @@ export declare namespace ChangelogConfiguration {
         slug?: string | null;
         icon?: string | null;
         hidden?: boolean | null;
+        audience?: serializers.Audience.Raw | null;
     }
 }
