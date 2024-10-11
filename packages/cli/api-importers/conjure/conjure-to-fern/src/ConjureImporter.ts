@@ -37,6 +37,23 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
             }
         }
 
+        if (environmentOverrides != null) {
+            for (const [environment, environmentDeclaration] of Object.entries(
+                environmentOverrides.environments ?? {}
+            )) {
+                this.fernDefinitionBuilder.addEnvironment({
+                    name: environment,
+                    schema: environmentDeclaration
+                });
+            }
+            if (environmentOverrides["default-environment"] != null) {
+                this.fernDefinitionBuilder.setDefaultEnvironment(environmentOverrides["default-environment"]);
+            }
+            if (environmentOverrides["default-url"] != null) {
+                this.fernDefinitionBuilder.setDefaultUrl(environmentOverrides["default-url"]);
+            }
+        }
+
         await visitAllConjureDefinitionFiles(absolutePathToConjureFolder, (absoluteFilepath, filepath, definition) => {
             for (const [serviceName, _] of Object.entries(definition.services ?? {})) {
                 const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: "Service" });
@@ -132,6 +149,44 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
 
                     if (Object.entries(pathParameters).length > 0) {
                         endpoint["path-parameters"] = pathParameters;
+                    }
+
+                    for (const [arg, argDeclaration] of Object.entries(endpointDeclaration.args ?? {})) {
+                        if (pathParameters[arg] != null) {
+                            continue;
+                        }
+                        if (typeof argDeclaration === "string") {
+                            endpoint.request = { body: { type: argDeclaration } };
+                        } else {
+                            switch (argDeclaration.paramType) {
+                                case "body":
+                                    endpoint.request = { body: { type: argDeclaration.type } };
+                                    break;
+                                case "query": {
+                                    if (endpoint.request == null) {
+                                        endpoint.request = { "query-parameters": { [arg]: argDeclaration.type } };
+                                    } else if (
+                                        typeof endpoint.request != "string" &&
+                                        endpoint.request?.["query-parameters"] == null
+                                    ) {
+                                        endpoint.request["query-parameters"] = { [arg]: argDeclaration.type };
+                                    } else if (
+                                        typeof endpoint.request != "string" &&
+                                        endpoint.request?.["query-parameters"] != null
+                                    ) {
+                                        endpoint.request["query-parameters"][arg] = argDeclaration.type;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (
+                        endpoint.request != null &&
+                        typeof endpoint.request !== "string" &&
+                        endpoint.request?.["query-parameters"] != null
+                    ) {
+                        endpoint.request.name = `${endpointName}Request`;
                     }
 
                     this.fernDefinitionBuilder.addEndpoint(fernFilePath, {
