@@ -83,6 +83,11 @@ private registries for you at `npm.buildwithfern.com`, `pypi.buildwithfern.com`,
 `maven.buildwithfern.com`, etc. To use an internal registry, simply specify the
 `url` field in your `generators.yml`:
 
+<Warning>
+  If you are using a private registry, then your package name must have `fern` postfixed to it. 
+  For example, `@imdb-fern/sdk`, `imdb-fern`, and `com.imdb.fern:imdb-java`. 
+</Warning>
+
 <CodeBlocks>
   <CodeBlock title="TypeScript">
   ```yaml {5}
@@ -90,10 +95,10 @@ private registries for you at `npm.buildwithfern.com`, `pypi.buildwithfern.com`,
       ts-sdk: 
         - name: fernapi/fern-typescript-node-sdk
           version: 0.13.0
-          url: npm.buildwithfern.com
           config: 
             namespaceExport: Imdb
           output: 
+            url: npm.buildwithfern.com
             location: npm
             package-name: "@imdb-fern/sdk"
   ```
@@ -104,10 +109,10 @@ private registries for you at `npm.buildwithfern.com`, `pypi.buildwithfern.com`,
       ts-sdk: 
         - name: fernapi/fern-python-sdk
           version: 1.0.0
-          url: pypi.buildwithfern.com
           config: 
             client_class_name: Imdb
           output: 
+            url: pypi.buildwithfern.com
             location: pypi
             package-name: "imdb-fern"
   ```
@@ -118,10 +123,10 @@ private registries for you at `npm.buildwithfern.com`, `pypi.buildwithfern.com`,
       ts-sdk: 
         - name: fernapi/fern-java-sdk
           version: 0.12.0
-          url: maven.buildwithfern.com
           config: 
             client-class-name: Imdb
           output: 
+            url: maven.buildwithfern.com
             location: maven
             coordinate: com.imdb.fern:imdb-java
   ```
