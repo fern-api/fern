@@ -45,6 +45,17 @@ A `channel` is defined by the following fields:
       subscribe:
         origin: server
         body: SubscribeEvent
+    examples: 
+      - query-parameters: 
+          model_id: "123"
+        messages: 
+          - type: publish
+            body:
+              text: "Hello, world."
+          - type: subscribe
+            body: 
+              id: "23823049"
+              message: "Hello there, how are you?"
   types:
     PublishEvent:
       docs: The input from the user to send through the WebSocket. 
