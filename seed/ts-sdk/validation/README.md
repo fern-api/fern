@@ -20,13 +20,13 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedValidationClient } from "@fern/validation";
+import { SeedValidationClient, SeedValidation } from "@fern/validation";
 
 const client = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
 await client.create({
     decimal: 1.1,
     even: 1,
-    name: "string",
+    name: "name",
     shape: "SQUARE",
 });
 ```

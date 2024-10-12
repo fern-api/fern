@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedMixedFileDirectory;
 
 var client = new SeedMixedFileDirectoryClient();
-await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "string" });
+await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
 ```
 
 ## Exception Handling

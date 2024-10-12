@@ -1,27 +1,4 @@
 {
-    "endpoints": [
-        {
-            "id": {
-                "path": "/",
-                "method": "POST",
-                "identifierOverride": "endpoint_service.downloadFile"
-            },
-            "snippet": {
-                "client": "require \"fern_file_download\"\n\nfile_download = SeedFileDownloadClient::Client.new(base_url: \"https://api.example.com\")\nfile_download.service.download_file",
-                "type": "ruby"
-            }
-        },
-        {
-            "id": {
-                "path": "/",
-                "method": "POST",
-                "identifierOverride": "endpoint_service.downloadFile"
-            },
-            "snippet": {
-                "client": "require \"fern_file_download\"\n\nfile_download = SeedFileDownloadClient::Client.new(base_url: \"https://api.example.com\")\nfile_download.service.download_file",
-                "type": "ruby"
-            }
-        }
-    ],
+    "endpoints": [],
     "types": {}
 }

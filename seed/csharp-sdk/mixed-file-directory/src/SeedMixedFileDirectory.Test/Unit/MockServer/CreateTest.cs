@@ -17,18 +17,23 @@ public class CreateTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "name": "string"
+              "name": "name"
             }
             """;
 
         const string mockResponse = """
             {
-              "id": "string",
-              "name": "string",
+              "id": "id",
+              "name": "name",
               "users": [
                 {
-                  "id": "string",
-                  "name": "string",
+                  "id": "id",
+                  "name": "name",
+                  "age": 1
+                },
+                {
+                  "id": "id",
+                  "name": "name",
                   "age": 1
                 }
               ]
@@ -51,7 +56,7 @@ public class CreateTest : BaseMockServerTest
             );
 
         var response = await Client.Organization.CreateAsync(
-            new CreateOrganizationRequest { Name = "string" },
+            new CreateOrganizationRequest { Name = "name" },
             RequestOptions
         );
         JToken

@@ -23,8 +23,6 @@ class RequestOptions(typing.TypedDict, total=False):
         - additional_query_parameters: typing.Dict[str, typing.Any]. A dictionary containing additional parameters to spread into the request's query parameters dict
 
         - additional_body_parameters: typing.Dict[str, typing.Any]. A dictionary containing additional parameters to spread into the request's body parameters dict
-
-        - chunk_size: int. The size, in bytes, to process each chunk of data being streamed back within the response. This equates to leveraging `chunk_size` within `requests` or `httpx`, and is only leveraged for file downloads.
     """
 
     timeout_in_seconds: NotRequired[int]
@@ -32,4 +30,3 @@ class RequestOptions(typing.TypedDict, total=False):
     additional_headers: NotRequired[typing.Dict[str, typing.Any]]
     additional_query_parameters: NotRequired[typing.Dict[str, typing.Any]]
     additional_body_parameters: NotRequired[typing.Dict[str, typing.Any]]
-    chunk_size: NotRequired[int]

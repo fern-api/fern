@@ -27,7 +27,7 @@ Add a movie to the database
 <dd>
 
 ```csharp
-await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "string", Rating = 1.1 });
+await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
 ```
 </dd>
 </dl>
@@ -67,7 +67,7 @@ await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "string", Ra
 <dd>
 
 ```csharp
-await client.Imdb.GetMovieAsync("string");
+await client.Imdb.GetMovieAsync("movieId");
 ```
 </dd>
 </dl>

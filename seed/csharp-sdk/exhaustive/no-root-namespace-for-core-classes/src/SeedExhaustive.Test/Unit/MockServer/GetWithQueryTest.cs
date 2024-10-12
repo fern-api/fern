@@ -16,7 +16,7 @@ public class GetWithQueryTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/params")
-                    .WithParam("query", "string")
+                    .WithParam("query", "query")
                     .WithParam("number", "1")
                     .UsingGet()
             )
@@ -25,7 +25,7 @@ public class GetWithQueryTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.Endpoints.Params.GetWithQueryAsync(
-                    new GetWithQuery { Query = "string", Number = 1 },
+                    new GetWithQuery { Query = "query", Number = 1 },
                     RequestOptions
                 )
         );

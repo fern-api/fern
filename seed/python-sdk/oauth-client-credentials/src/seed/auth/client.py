@@ -51,9 +51,8 @@ class AuthClient:
             client_secret="YOUR_CLIENT_SECRET",
         )
         client.auth.get_token_with_client_credentials(
-            client_id="string",
-            client_secret="string",
-            scope="string",
+            client_id="client_id",
+            client_secret="client_secret",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -120,10 +119,9 @@ class AuthClient:
             client_secret="YOUR_CLIENT_SECRET",
         )
         client.auth.refresh_token(
-            client_id="string",
-            client_secret="string",
-            refresh_token="string",
-            scope="string",
+            client_id="client_id",
+            client_secret="client_secret",
+            refresh_token="refresh_token",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -198,9 +196,8 @@ class AsyncAuthClient:
 
         async def main() -> None:
             await client.auth.get_token_with_client_credentials(
-                client_id="string",
-                client_secret="string",
-                scope="string",
+                client_id="client_id",
+                client_secret="client_secret",
             )
 
 
@@ -275,10 +272,9 @@ class AsyncAuthClient:
 
         async def main() -> None:
             await client.auth.refresh_token(
-                client_id="string",
-                client_secret="string",
-                refresh_token="string",
-                scope="string",
+                client_id="client_id",
+                client_secret="client_secret",
+                refresh_token="refresh_token",
             )
 
 

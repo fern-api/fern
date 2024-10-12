@@ -5,107 +5,79 @@ from seed import AsyncSeedTrace
 import typing
 import datetime
 from .utilities import validate_response
-from seed.playlist import UpdatePlaylistRequest
 
 
 async def test_create_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response: typing.Any = {
-        "playlist_id": "string",
-        "owner-id": "string",
-        "name": "string",
-        "problems": ["string"],
-    }
-    expected_types: typing.Any = {"playlist_id": None, "owner-id": None, "name": None, "problems": ("list", {0: None})}
+    expected_response: typing.Any = {"playlist_id": "playlist_id", "owner-id": "owner-id"}
+    expected_types: typing.Any = {"playlist_id": None, "owner-id": None}
     response = client.playlist.create_playlist(
         service_param=1,
         datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
-        optional_datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
-        name="string",
-        problems=["string"],
+        name="name",
+        problems=["problems", "problems"],
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.playlist.create_playlist(
         service_param=1,
         datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
-        optional_datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
-        name="string",
-        problems=["string"],
+        name="name",
+        problems=["problems", "problems"],
     )
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_playlists(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = [
-        {"playlist_id": "string", "owner-id": "string", "name": "string", "problems": ["string"]}
+        {"playlist_id": "playlist_id", "owner-id": "owner-id"},
+        {"playlist_id": "playlist_id", "owner-id": "owner-id"},
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
-        {0: {"playlist_id": None, "owner-id": None, "name": None, "problems": ("list", {0: None})}},
+        {0: {"playlist_id": None, "owner-id": None}, 1: {"playlist_id": None, "owner-id": None}},
     )
     response = client.playlist.get_playlists(
-        service_param=1,
-        limit=1,
-        other_field="string",
-        multi_line_docs="string",
-        optional_multiple_field="string",
-        multiple_field="string",
+        service_param=1, other_field="otherField", multi_line_docs="multiLineDocs", multiple_field="multipleField"
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.playlist.get_playlists(
-        service_param=1,
-        limit=1,
-        other_field="string",
-        multi_line_docs="string",
-        optional_multiple_field="string",
-        multiple_field="string",
+        service_param=1, other_field="otherField", multi_line_docs="multiLineDocs", multiple_field="multipleField"
     )
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response: typing.Any = {
-        "playlist_id": "string",
-        "owner-id": "string",
-        "name": "string",
-        "problems": ["string"],
-    }
-    expected_types: typing.Any = {"playlist_id": None, "owner-id": None, "name": None, "problems": ("list", {0: None})}
-    response = client.playlist.get_playlist(service_param=1, playlist_id="string")
+    expected_response: typing.Any = {"playlist_id": "playlist_id", "owner-id": "owner-id"}
+    expected_types: typing.Any = {"playlist_id": None, "owner-id": None}
+    response = client.playlist.get_playlist(service_param=1, playlist_id="playlistId")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.playlist.get_playlist(service_param=1, playlist_id="string")
+    async_response = await async_client.playlist.get_playlist(service_param=1, playlist_id="playlistId")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_update_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response: typing.Any = {
-        "playlist_id": "string",
-        "owner-id": "string",
-        "name": "string",
-        "problems": ["string"],
-    }
-    expected_types: typing.Any = {"playlist_id": None, "owner-id": None, "name": None, "problems": ("list", {0: None})}
-    response = client.playlist.update_playlist(
-        service_param=1, playlist_id="string", request=UpdatePlaylistRequest(name="string", problems=["string"])
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.playlist.update_playlist(service_param=1, playlist_id="playlistId")  # type: ignore[func-returns-value]
+        is None
     )
-    validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.playlist.update_playlist(
-        service_param=1, playlist_id="string", request=UpdatePlaylistRequest(name="string", problems=["string"])
+    assert (
+        await async_client.playlist.update_playlist(service_param=1, playlist_id="playlistId")  # type: ignore[func-returns-value]
+        is None
     )
-    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.playlist.delete_playlist(service_param=1, playlist_id="string")  # type: ignore[func-returns-value]
+        client.playlist.delete_playlist(service_param=1, playlist_id="playlist_id")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.playlist.delete_playlist(service_param=1, playlist_id="string")  # type: ignore[func-returns-value]
+        await async_client.playlist.delete_playlist(service_param=1, playlist_id="playlist_id")  # type: ignore[func-returns-value]
         is None
     )

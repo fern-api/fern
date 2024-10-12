@@ -92,6 +92,63 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         );
     }
 
+    public maybeLeverageInvocation({
+        invocation,
+        context
+    }: {
+        invocation: ts.Expression;
+        context: SdkContext;
+    }): ts.Node[] {
+        const responseVariableName = "response";
+        const itemVaribaleName = "item";
+        return [
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier(responseVariableName),
+                            undefined,
+                            undefined,
+                            invocation
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            ),
+            ts.factory.createForOfStatement(
+                ts.factory.createToken(ts.SyntaxKind.AwaitKeyword),
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier(itemVaribaleName),
+                            undefined,
+                            undefined,
+                            undefined
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                ),
+                ts.factory.createIdentifier(responseVariableName),
+                ts.factory.createBlock(
+                    [
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("console"),
+                                    ts.factory.createIdentifier("log")
+                                ),
+                                undefined,
+                                [ts.factory.createIdentifier(itemVaribaleName)]
+                            )
+                        )
+                    ],
+                    true
+                )
+            )
+        ];
+    }
+
     public getOverloads(): EndpointSignature[] {
         return [];
     }

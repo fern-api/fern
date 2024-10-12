@@ -8,14 +8,18 @@ async def test_get_with_custom_header(client: SeedExhaustive, async_client: Asyn
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
         client.req_with_headers.get_with_custom_header(
-            x_test_service_header="string", x_test_endpoint_header="string", request="string"
+            x_test_service_header="X-TEST-SERVICE-HEADER",
+            x_test_endpoint_header="X-TEST-ENDPOINT-HEADER",
+            request="string",
         )  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
         await async_client.req_with_headers.get_with_custom_header(
-            x_test_service_header="string", x_test_endpoint_header="string", request="string"
+            x_test_service_header="X-TEST-SERVICE-HEADER",
+            x_test_endpoint_header="X-TEST-ENDPOINT-HEADER",
+            request="string",
         )  # type: ignore[func-returns-value]
         is None
     )

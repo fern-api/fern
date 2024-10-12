@@ -66,7 +66,9 @@ GET request with custom api key
 <dd>
 
 ```csharp
-await client.Service.GetWithHeaderAsync(new HeaderAuthRequest { XEndpointHeader = "string" });
+await client.Service.GetWithHeaderAsync(
+    new HeaderAuthRequest { XEndpointHeader = "X-Endpoint-Header" }
+);
 ```
 </dd>
 </dl>

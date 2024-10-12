@@ -28,7 +28,7 @@ Add a movie to the database
 
 ```typescript
 await client.imdb.createMovie({
-    title: "string",
+    title: "title",
     rating: 1.1
 });
 
@@ -79,7 +79,7 @@ await client.imdb.createMovie({
 <dd>
 
 ```typescript
-await client.imdb.getMovie("string");
+await client.imdb.getMovie("movieId");
 
 ```
 </dd>

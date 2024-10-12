@@ -11,12 +11,17 @@ import * as SeedTrace from "../../../../index";
  *                 variableType: {
  *                     type: "integerType"
  *                 },
- *                 name: "string"
+ *                 name: "name"
+ *             }, {
+ *                 variableType: {
+ *                     type: "integerType"
+ *                 },
+ *                 name: "name"
  *             }],
  *         outputType: {
  *             type: "integerType"
  *         },
- *         methodName: "string"
+ *         methodName: "methodName"
  *     }
  */
 export interface GetDefaultStarterFilesRequest {

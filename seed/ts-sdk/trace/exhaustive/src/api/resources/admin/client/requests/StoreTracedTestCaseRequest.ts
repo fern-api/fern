@@ -10,32 +10,31 @@ import * as SeedTrace from "../../../../index";
  *         result: {
  *             result: {
  *                 expectedResult: SeedTrace.VariableValue.integerValue(1),
- *                 actualResult: SeedTrace.ActualResult.value(SeedTrace.VariableValue.integerValue({
- *                     "key": "value"
- *                 })),
+ *                 actualResult: SeedTrace.ActualResult.value(SeedTrace.VariableValue.integerValue(1)),
  *                 passed: true
  *             },
- *             stdout: "string"
+ *             stdout: "stdout"
  *         },
  *         traceResponses: [{
  *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
  *                 lineNumber: 1,
- *                 returnValue: SeedTrace.DebugVariableValue.integerValue(1),
- *                 expressionLocation: {
- *                     start: 1,
- *                     offset: 1
- *                 },
+ *                 returnValue: undefined,
+ *                 expressionLocation: undefined,
  *                 stack: {
  *                     numStackFrames: 1,
- *                     topStackFrame: {
- *                         methodName: "string",
- *                         lineNumber: 1,
- *                         scopes: [{
- *                                 variables: {}
- *                             }]
- *                     }
+ *                     topStackFrame: undefined
  *                 },
- *                 stdout: "string"
+ *                 stdout: undefined
+ *             }, {
+ *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+ *                 lineNumber: 1,
+ *                 returnValue: undefined,
+ *                 expressionLocation: undefined,
+ *                 stack: {
+ *                     numStackFrames: 1,
+ *                     topStackFrame: undefined
+ *                 },
+ *                 stdout: undefined
  *             }]
  *     }
  */

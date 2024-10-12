@@ -34,7 +34,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_inlined:SomeAliasedLiteral": {
@@ -63,7 +66,10 @@
               "value": "type_inlined:ANestedLiteral"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_inlined:ANestedLiteral": {
@@ -82,7 +88,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_reference:SendRequest": {
@@ -144,7 +153,10 @@
               "value": "type_reference:ContainerObject"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_reference:ContainerObject": {
@@ -163,7 +175,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_reference:NestedObjectWithLiterals": {
@@ -201,7 +216,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_reference:SomeLiteral": {

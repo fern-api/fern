@@ -67,8 +67,7 @@ await client.unknown.post({
 ```typescript
 await client.unknown.postObject({
     unknown: {
-        boolVal: true,
-        strVal: "string",
+        key: "value",
     },
 });
 ```

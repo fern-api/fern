@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         size: "string"
+ *         size: "size"
  *     }
  */
 export interface BootInstanceRequest {

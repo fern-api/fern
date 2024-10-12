@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = \"string\", Rating = 1.1 });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = \"title\", Rating = 1.1 });\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Imdb.GetMovieAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Imdb.GetMovieAsync(\"movieId\");\n"
             }
         }
     ]

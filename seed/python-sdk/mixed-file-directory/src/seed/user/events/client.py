@@ -42,9 +42,7 @@ class EventsClient:
         client = SeedMixedFileDirectory(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.user.events.list_events(
-            limit=1,
-        )
+        client.user.events.list_events()
         """
         _response = self._client_wrapper.httpx_client.request(
             "users/events/",
@@ -104,9 +102,7 @@ class AsyncEventsClient:
 
 
         async def main() -> None:
-            await client.user.events.list_events(
-                limit=1,
-            )
+            await client.user.events.list_events()
 
 
         asyncio.run(main())

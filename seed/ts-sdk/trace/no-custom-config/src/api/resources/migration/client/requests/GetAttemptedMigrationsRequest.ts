@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         adminKeyHeader: "string"
+ *         adminKeyHeader: "admin-key-header"
  *     }
  */
 export interface GetAttemptedMigrationsRequest {

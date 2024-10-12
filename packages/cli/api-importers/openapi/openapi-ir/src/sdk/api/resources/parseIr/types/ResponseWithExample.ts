@@ -35,7 +35,7 @@ export declare namespace ResponseWithExample {
         type: "streamingText";
     }
 
-    interface StreamingJson extends FernOpenapiIr.JsonResponse, _Utils {
+    interface StreamingJson extends FernOpenapiIr.JsonResponseWithExample, _Utils {
         type: "streamingJson";
     }
 
@@ -49,7 +49,7 @@ export declare namespace ResponseWithExample {
         text: (value: FernOpenapiIr.TextResponse) => _Result;
         streamingSse: (value: FernOpenapiIr.JsonResponse) => _Result;
         streamingText: (value: FernOpenapiIr.TextResponse) => _Result;
-        streamingJson: (value: FernOpenapiIr.JsonResponse) => _Result;
+        streamingJson: (value: FernOpenapiIr.JsonResponseWithExample) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -59,7 +59,7 @@ export const ResponseWithExample = {
         return {
             ...value,
             type: "file",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.File_,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
@@ -72,7 +72,7 @@ export const ResponseWithExample = {
         return {
             ...value,
             type: "json",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.Json,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
@@ -85,7 +85,7 @@ export const ResponseWithExample = {
         return {
             ...value,
             type: "text",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.Text,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
@@ -98,7 +98,7 @@ export const ResponseWithExample = {
         return {
             ...value,
             type: "streamingSse",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.StreamingSse,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
@@ -111,7 +111,7 @@ export const ResponseWithExample = {
         return {
             ...value,
             type: "streamingText",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.StreamingText,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
@@ -120,11 +120,11 @@ export const ResponseWithExample = {
         };
     },
 
-    streamingJson: (value: FernOpenapiIr.JsonResponse): FernOpenapiIr.ResponseWithExample.StreamingJson => {
+    streamingJson: (value: FernOpenapiIr.JsonResponseWithExample): FernOpenapiIr.ResponseWithExample.StreamingJson => {
         return {
             ...value,
             type: "streamingJson",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.StreamingJson,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {

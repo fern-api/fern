@@ -7,8 +7,7 @@ import * as SeedAliasExtends from "../../index";
 /**
  * @example
  *     {
- *         child: "string",
- *         parent: "string"
+ *         child: "child"
  *     }
  */
 export interface InlinedChildRequest extends SeedAliasExtends.AliasType {

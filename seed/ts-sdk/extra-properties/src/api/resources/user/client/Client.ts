@@ -32,7 +32,7 @@ export class User {
      *
      * @example
      *     await client.user.createUser({
-     *         name: "string"
+     *         name: "name"
      *     })
      */
     public async createUser(

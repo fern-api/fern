@@ -37,7 +37,7 @@ export class Migration {
      *
      * @example
      *     await client.migration.getAttemptedMigrations({
-     *         adminKeyHeader: "string"
+     *         adminKeyHeader: "admin-key-header"
      *     })
      */
     public async getAttemptedMigrations(

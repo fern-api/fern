@@ -26,7 +26,7 @@ client = SeedMultiUrlEnvironment(
     token="YOUR_TOKEN",
 )
 client.ec_2.boot_instance(
-    size="string",
+    size="size",
 )
 ```
 
@@ -46,7 +46,7 @@ client = AsyncSeedMultiUrlEnvironment(
 
 async def main() -> None:
     await client.ec_2.boot_instance(
-        size="string",
+        size="size",
     )
 
 

@@ -1,4 +1,32 @@
 - changelogEntry:
+    - summary: | 
+        Numerous fixes to the Conjure API Importer such as reading in request bodies and query parameters. 
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc3
+
+- changelogEntry:
+    - summary: | 
+        The CLI now generates endpoint examples for undiscriminated unions that are recusive. 
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc2
+
+- changelogEntry:
+    - summary: | 
+        The OpenAPI importer now generates streaming examples based on OpenAPI examples. 
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc1
+
+- changelogEntry:
+    - summary: | 
+        The Docs now support rendering `additionalProperties` in the API Playground so that users can send out arbitrary key,value pairs. 
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc0
+
+- changelogEntry:
     - summary: Several improvements to the conjure importer. 
       type: fix
   irVersion: 53

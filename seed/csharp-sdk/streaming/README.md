@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedStreaming;
 
 var client = new SeedStreamingClient();
-await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
+await client.Dummy.GenerateAsync(new Generateequest { Stream = false, NumEvents = 5 });
 ```
 
 ## Exception Handling
@@ -31,7 +31,7 @@ will be thrown.
 using SeedStreaming;
 
 try {
-    var response = await client.Dummy.GenerateStreamAsync(...);
+    var response = await client.Dummy.GenerateAsync(...);
 } catch (SeedStreamingApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -55,7 +55,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Dummy.GenerateStreamAsync(
+var response = await client.Dummy.GenerateAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -68,7 +68,7 @@ var response = await client.Dummy.GenerateStreamAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Dummy.GenerateStreamAsync(
+var response = await client.Dummy.GenerateAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s

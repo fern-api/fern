@@ -38,7 +38,7 @@ class MigrationClient:
             token="YOUR_TOKEN",
         )
         client.migration.get_attempted_migrations(
-            admin_key_header="string",
+            admin_key_header="admin-key-header",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -97,7 +97,7 @@ class AsyncMigrationClient:
 
         async def main() -> None:
             await client.migration.get_attempted_migrations(
-                admin_key_header="string",
+                admin_key_header="admin-key-header",
             )
 
 

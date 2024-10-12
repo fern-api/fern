@@ -171,61 +171,64 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "count": {
-                "value": {
-                  "value": 123,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "next": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?page=4",
-                  "type": "string"
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=4",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "previous": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?page=2",
-                  "type": "string"
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=2",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "results": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "hidden": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "hidden": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -304,30 +307,33 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "hidden": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
               },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "hidden": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -587,156 +593,159 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "count": {
-                "value": {
-                  "value": 123,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "next": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?page=4",
-                  "type": "string"
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=4",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "previous": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?page=2",
-                  "type": "string"
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=2",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "results": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "added_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "updated_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                        "updated_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "date": {
-                        "value": {
-                          "value": "date",
-                          "type": "string"
+                        "date": {
+                          "value": {
+                            "value": "date",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "time": {
-                        "value": {
-                          "value": "time",
-                          "type": "string"
+                        "time": {
+                          "value": {
+                            "value": "time",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "start_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                        "start_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "group": {
-                        "value": {
-                          "value": "group",
-                          "type": "string"
+                        "group": {
+                          "value": {
+                            "value": "group",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "room": {
-                        "value": {
-                          "value": "room",
-                          "type": "string"
+                        "room": {
+                          "value": {
+                            "value": "room",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "photos": {
-                        "value": [
-                          {
-                            "properties": {
-                              "photo": {
-                                "value": {
-                                  "value": "photo",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      },
-                      "extra_fields": {
-                        "value": [
-                          {
-                            "properties": {
-                              "key": {
-                                "value": {
-                                  "value": "key",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                        "photos": {
+                          "value": [
+                            {
+                              "properties": {
+                                "photo": {
+                                  "value": {
+                                    "value": "photo",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
                               },
-                              "present": {
-                                "value": {
-                                  "value": true,
-                                  "type": "boolean"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      },
-                      "complete": {
-                        "properties": {
-                          "completed_at": {
-                            "value": {
-                              "value": "2024-01-15T09:30:00Z",
-                              "type": "datetime"
-                            },
-                            "type": "primitive"
-                          }
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
                         },
-                        "type": "object"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "extra_fields": {
+                          "value": [
+                            {
+                              "properties": {
+                                "key": {
+                                  "value": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "present": {
+                                  "value": {
+                                    "value": true,
+                                    "type": "boolean"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "complete": {
+                          "properties": {
+                            "completed_at": {
+                              "value": {
+                                "value": "2024-01-15T09:30:00Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -901,202 +910,205 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "added_at": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "added_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "updated_at": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "updated_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "date": {
-                "value": {
-                  "value": "date",
-                  "type": "string"
+                "date": {
+                  "value": {
+                    "value": "date",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "time": {
-                "value": {
-                  "value": "time",
-                  "type": "string"
+                "time": {
+                  "value": {
+                    "value": "time",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "start_at": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "start_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "group": {
-                "value": {
-                  "value": "group",
-                  "type": "string"
+                "group": {
+                  "value": {
+                    "value": "group",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "room": {
-                "value": {
-                  "value": "room",
-                  "type": "string"
+                "room": {
+                  "value": {
+                    "value": "room",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "photos": {
-                "value": [
-                  {
-                    "properties": {
-                      "added_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                "photos": {
+                  "value": [
+                    {
+                      "properties": {
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "photo": {
+                          "value": {
+                            "value": "photo",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "processed_image": {
+                          "value": {
+                            "value": "processed_image",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "ready": {
+                          "value": {
+                            "value": "ready",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "photo": {
-                        "value": {
-                          "value": "photo",
-                          "type": "string"
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "extra_fields": {
+                  "value": [
+                    {
+                      "properties": {
+                        "key": {
+                          "value": {
+                            "value": "key",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "processed_image": {
-                        "value": {
-                          "value": "processed_image",
-                          "type": "string"
+                        "label": {
+                          "value": {
+                            "value": "label",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "ready": {
                         "value": {
-                          "value": "ready",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "extra_fields": {
-                "value": [
-                  {
-                    "properties": {
-                      "key": {
-                        "value": {
-                          "value": "key",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "label": {
-                        "value": {
-                          "value": "label",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "value": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "present": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "complete": {
-                "properties": {
-                  "completed_at": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
-                    },
-                    "type": "primitive"
-                  },
-                  "did_win": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "hints": {
-                    "value": {
-                      "value": 1,
-                      "type": "int"
-                    },
-                    "type": "primitive"
-                  },
-                  "score": {
-                    "value": {
-                      "value": 1,
-                      "type": "int"
-                    },
-                    "type": "primitive"
-                  },
-                  "completion_time": {
-                    "value": {
-                      "value": 1,
-                      "type": "int"
-                    },
-                    "type": "primitive"
-                  }
+                        "present": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              }
+                "complete": {
+                  "properties": {
+                    "completed_at": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "did_win": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "hints": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "score": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "completion_time": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1314,221 +1326,224 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "count": {
-                "value": {
-                  "value": 123,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "next": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?page=4",
-                  "type": "string"
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=4",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "previous": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?page=2",
-                  "type": "string"
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=2",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "results": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "added_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "updated_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                        "updated_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "is_event": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
+                        "is_event": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "date": {
-                        "value": {
-                          "value": "date",
-                          "type": "string"
+                        "date": {
+                          "value": {
+                            "value": "date",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "time": {
-                        "value": {
-                          "value": "time",
-                          "type": "string"
+                        "time": {
+                          "value": {
+                            "value": "time",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "start_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                        "start_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "games": {
-                        "value": [
-                          {
-                            "properties": {
-                              "date": {
-                                "value": {
-                                  "value": "date",
-                                  "type": "string"
+                        "games": {
+                          "value": [
+                            {
+                              "properties": {
+                                "date": {
+                                  "value": {
+                                    "value": "date",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "time": {
-                                "value": {
-                                  "value": "time",
-                                  "type": "string"
+                                "time": {
+                                  "value": {
+                                    "value": "time",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "extra_fields": {
-                                "value": [
-                                  {
-                                    "properties": {
-                                      "key": {
-                                        "value": {
-                                          "value": "key",
-                                          "type": "string"
+                                "extra_fields": {
+                                  "value": [
+                                    {
+                                      "properties": {
+                                        "key": {
+                                          "value": {
+                                            "value": "key",
+                                            "type": "string"
+                                          },
+                                          "type": "primitive"
                                         },
-                                        "type": "primitive"
+                                        "present": {
+                                          "value": {
+                                            "value": true,
+                                            "type": "boolean"
+                                          },
+                                          "type": "primitive"
+                                        }
                                       },
-                                      "present": {
-                                        "value": {
-                                          "value": true,
-                                          "type": "boolean"
-                                        },
-                                        "type": "primitive"
-                                      }
-                                    },
-                                    "type": "object"
-                                  }
-                                ],
-                                "type": "array"
-                              },
-                              "complete": {
-                                "properties": {
-                                  "completed_at": {
-                                    "value": {
-                                      "value": "2024-01-15T09:30:00Z",
-                                      "type": "datetime"
-                                    },
-                                    "type": "primitive"
-                                  }
+                                      "type": "object"
+                                    }
+                                  ],
+                                  "type": "array"
                                 },
-                                "type": "object"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      },
-                      "players": {
-                        "value": [
-                          {
-                            "properties": {
-                              "email": {
-                                "value": {
-                                  "value": "email",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "phone": {
-                                "value": {
-                                  "value": "phone",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "extra_fields": {
-                                "value": [
-                                  {
-                                    "properties": {
-                                      "key": {
-                                        "value": {
-                                          "value": "key",
-                                          "type": "string"
-                                        },
-                                        "type": "primitive"
+                                "complete": {
+                                  "properties": {
+                                    "completed_at": {
+                                      "value": {
+                                        "value": "2024-01-15T09:30:00Z",
+                                        "type": "datetime"
                                       },
-                                      "present": {
-                                        "value": {
-                                          "value": true,
-                                          "type": "boolean"
-                                        },
-                                        "type": "primitive"
-                                      }
-                                    },
-                                    "type": "object"
-                                  }
-                                ],
-                                "type": "array"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      },
-                      "photos": {
-                        "value": [
-                          {
-                            "properties": {
-                              "photo": {
-                                "value": {
-                                  "value": "photo",
-                                  "type": "string"
+                                      "type": "primitive"
+                                    }
+                                  },
+                                  "type": "object"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "players": {
+                          "value": [
+                            {
+                              "properties": {
+                                "email": {
+                                  "value": {
+                                    "value": "email",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                                "phone": {
+                                  "value": {
+                                    "value": "phone",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "extra_fields": {
+                                  "value": [
+                                    {
+                                      "properties": {
+                                        "key": {
+                                          "value": {
+                                            "value": "key",
+                                            "type": "string"
+                                          },
+                                          "type": "primitive"
+                                        },
+                                        "present": {
+                                          "value": {
+                                            "value": true,
+                                            "type": "boolean"
+                                          },
+                                          "type": "primitive"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  ],
+                                  "type": "array"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "photos": {
+                          "value": [
+                            {
+                              "properties": {
+                                "photo": {
+                                  "value": {
+                                    "value": "photo",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1651,302 +1666,305 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "added_at": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "added_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "updated_at": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "updated_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "is_event": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
+                "is_event": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "date": {
-                "value": {
-                  "value": "date",
-                  "type": "string"
+                "date": {
+                  "value": {
+                    "value": "date",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "time": {
-                "value": {
-                  "value": "time",
-                  "type": "string"
+                "time": {
+                  "value": {
+                    "value": "time",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "start_at": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "start_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "games": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                "games": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "added_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "updated_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                        "updated_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "date": {
-                        "value": {
-                          "value": "date",
-                          "type": "string"
+                        "date": {
+                          "value": {
+                            "value": "date",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "time": {
-                        "value": {
-                          "value": "time",
-                          "type": "string"
+                        "time": {
+                          "value": {
+                            "value": "time",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "start_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                        "start_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "room": {
-                        "value": {
-                          "value": "room",
-                          "type": "string"
+                        "room": {
+                          "value": {
+                            "value": "room",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "extra_fields": {
-                        "value": [
-                          {
-                            "properties": {
-                              "key": {
-                                "value": {
-                                  "value": "key",
-                                  "type": "string"
+                        "extra_fields": {
+                          "value": [
+                            {
+                              "properties": {
+                                "key": {
+                                  "value": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
+                                "present": {
+                                  "value": {
+                                    "value": true,
+                                    "type": "boolean"
+                                  },
+                                  "type": "primitive"
+                                }
                               },
-                              "present": {
-                                "value": {
-                                  "value": true,
-                                  "type": "boolean"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      },
-                      "complete": {
-                        "properties": {
-                          "completed_at": {
-                            "value": {
-                              "value": "2024-01-15T09:30:00Z",
-                              "type": "datetime"
-                            },
-                            "type": "primitive"
-                          }
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
                         },
-                        "type": "object"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "players": {
-                "value": [
-                  {
-                    "properties": {
-                      "added_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "updated_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "player": {
-                        "value": {
-                          "value": "player",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "first_name": {
-                        "value": {
-                          "value": "first_name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "last_name": {
-                        "value": {
-                          "value": "last_name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "email": {
-                        "value": {
-                          "value": "email",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "phone": {
-                        "value": {
-                          "value": "phone",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "extra_fields": {
-                        "value": [
-                          {
-                            "properties": {
-                              "key": {
-                                "value": {
-                                  "value": "key",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                        "complete": {
+                          "properties": {
+                            "completed_at": {
+                              "value": {
+                                "value": "2024-01-15T09:30:00Z",
+                                "type": "datetime"
                               },
-                              "present": {
-                                "value": {
-                                  "value": true,
-                                  "type": "boolean"
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "players": {
+                  "value": [
+                    {
+                      "properties": {
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "updated_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "player": {
+                          "value": {
+                            "value": "player",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "first_name": {
+                          "value": {
+                            "value": "first_name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "last_name": {
+                          "value": {
+                            "value": "last_name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "email": {
+                          "value": {
+                            "value": "email",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "phone": {
+                          "value": {
+                            "value": "phone",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "extra_fields": {
+                          "value": [
+                            {
+                              "properties": {
+                                "key": {
+                                  "value": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      },
-                      "signature": {
-                        "value": {
-                          "value": "signature",
-                          "type": "string"
+                                "present": {
+                                  "value": {
+                                    "value": true,
+                                    "type": "boolean"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
+                        "signature": {
+                          "value": {
+                            "value": "signature",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "photos": {
+                  "value": [
+                    {
+                      "properties": {
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "game": {
+                          "value": {
+                            "value": "game",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "photo": {
+                          "value": {
+                            "value": "photo",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "processed_image": {
+                          "value": {
+                            "value": "processed_image",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "ready": {
+                          "value": {
+                            "value": "ready",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
               },
-              "photos": {
-                "value": [
-                  {
-                    "properties": {
-                      "added_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "game": {
-                        "value": {
-                          "value": "game",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "photo": {
-                        "value": {
-                          "value": "photo",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "processed_image": {
-                        "value": {
-                          "value": "processed_image",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "ready": {
-                        "value": {
-                          "value": "ready",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2122,120 +2140,123 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "count": {
-                "value": {
-                  "value": 123,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "next": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?page=4",
-                  "type": "string"
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=4",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "previous": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?page=2",
-                  "type": "string"
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=2",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "results": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "added_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "updated_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+                        "updated_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "first_name": {
-                        "value": {
-                          "value": "first_name",
-                          "type": "string"
+                        "first_name": {
+                          "value": {
+                            "value": "first_name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "last_name": {
-                        "value": {
-                          "value": "last_name",
-                          "type": "string"
+                        "last_name": {
+                          "value": {
+                            "value": "last_name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "email": {
-                        "value": {
-                          "value": "email",
-                          "type": "string"
+                        "email": {
+                          "value": {
+                            "value": "email",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "phone": {
-                        "value": {
-                          "value": "phone",
-                          "type": "string"
+                        "phone": {
+                          "value": {
+                            "value": "phone",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "extra_fields": {
-                        "value": [
-                          {
-                            "properties": {
-                              "key": {
-                                "value": {
-                                  "value": "key",
-                                  "type": "string"
+                        "extra_fields": {
+                          "value": [
+                            {
+                              "properties": {
+                                "key": {
+                                  "value": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
+                                "present": {
+                                  "value": {
+                                    "value": true,
+                                    "type": "boolean"
+                                  },
+                                  "type": "primitive"
+                                }
                               },
-                              "present": {
-                                "value": {
-                                  "value": true,
-                                  "type": "boolean"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      },
-                      "marketing_email_allowed": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "marketing_email_allowed": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2314,117 +2335,120 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "added_at": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "added_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "updated_at": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "updated_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "first_name": {
-                "value": {
-                  "value": "first_name",
-                  "type": "string"
+                "first_name": {
+                  "value": {
+                    "value": "first_name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "last_name": {
-                "value": {
-                  "value": "last_name",
-                  "type": "string"
+                "last_name": {
+                  "value": {
+                    "value": "last_name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "email": {
-                "value": {
-                  "value": "email",
-                  "type": "string"
+                "email": {
+                  "value": {
+                    "value": "email",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "phone": {
-                "value": {
-                  "value": "phone",
-                  "type": "string"
+                "phone": {
+                  "value": {
+                    "value": "phone",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "extra_fields": {
-                "value": [
-                  {
-                    "properties": {
-                      "key": {
-                        "value": {
-                          "value": "key",
-                          "type": "string"
+                "extra_fields": {
+                  "value": [
+                    {
+                      "properties": {
+                        "key": {
+                          "value": {
+                            "value": "key",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "label": {
-                        "value": {
-                          "value": "label",
-                          "type": "string"
+                        "label": {
+                          "value": {
+                            "value": "label",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "value": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                        "value": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "present": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "marketing_email_allowed": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
+                        "present": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "primitive"
-              }
+                "marketing_email_allowed": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2600,61 +2624,64 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "count": {
-                "value": {
-                  "value": 123,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "next": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?page=4",
-                  "type": "string"
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=4",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "previous": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?page=2",
-                  "type": "string"
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=2",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "results": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "hidden": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "hidden": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2733,30 +2760,33 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "hidden": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
               },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "hidden": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2932,78 +2962,81 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "count": {
-                "value": {
-                  "value": 123,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "next": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?page=4",
-                  "type": "string"
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=4",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "previous": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?page=2",
-                  "type": "string"
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=2",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "original_image": {
+                          "value": {
+                            "value": "original_image",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "processed": {
+                          "value": [
+                            {
+                              "properties": {
+                                "photo": {
+                                  "value": {
+                                    "value": "photo",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
               },
-              "results": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "added_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "original_image": {
-                        "value": {
-                          "value": "original_image",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "processed": {
-                        "value": [
-                          {
-                            "properties": {
-                              "photo": {
-                                "value": {
-                                  "value": "photo",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3082,82 +3115,85 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "added_at": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "added_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "original_image": {
-                "value": {
-                  "value": "original_image",
-                  "type": "string"
+                "original_image": {
+                  "value": {
+                    "value": "original_image",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "processed": {
+                  "value": [
+                    {
+                      "properties": {
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "game": {
+                          "value": {
+                            "value": "game",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "group": {
+                          "value": {
+                            "value": "group",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "photo": {
+                          "value": {
+                            "value": "photo",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "processed_image": {
+                          "value": {
+                            "value": "processed_image",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "ready": {
+                          "value": {
+                            "value": "ready",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
               },
-              "processed": {
-                "value": [
-                  {
-                    "properties": {
-                      "added_at": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "game": {
-                        "value": {
-                          "value": "game",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "group": {
-                        "value": {
-                          "value": "group",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "photo": {
-                        "value": {
-                          "value": "photo",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "processed_image": {
-                        "value": {
-                          "value": "processed_image",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "ready": {
-                        "value": {
-                          "value": "ready",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

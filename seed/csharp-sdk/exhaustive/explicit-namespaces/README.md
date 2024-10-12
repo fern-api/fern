@@ -19,7 +19,9 @@ Instantiate and use the client with the following:
 using SeedExhaustive;
 
 var client = new SeedExhaustiveClient("TOKEN");
-await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(new List<string>() { "string" });
+await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
+    new List<string>() { "string", "string" }
+);
 ```
 
 ## Exception Handling

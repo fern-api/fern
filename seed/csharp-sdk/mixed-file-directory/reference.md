@@ -27,7 +27,7 @@ Create a new organization.
 <dd>
 
 ```csharp
-await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "string" });
+await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
 ```
 </dd>
 </dl>
@@ -82,7 +82,7 @@ List all users.
 <dd>
 
 ```csharp
-await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
+await client.User.ListAsync(new ListUsersRequest());
 ```
 </dd>
 </dl>
@@ -137,7 +137,7 @@ List all user events.
 <dd>
 
 ```csharp
-await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
+await client.User.Events.ListEventsAsync(new ListUserEventsRequest());
 ```
 </dd>
 </dl>
@@ -192,7 +192,7 @@ Get event metadata.
 <dd>
 
 ```csharp
-await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = "string" });
+await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = "id" });
 ```
 </dd>
 </dl>

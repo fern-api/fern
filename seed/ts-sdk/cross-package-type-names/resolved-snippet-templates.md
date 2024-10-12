@@ -26,11 +26,7 @@ import { SeedCrossPackageTypeNamesClient } from "@fern/cross-package-type-names"
 const client = new SeedCrossPackageTypeNamesClient({
   environment: "YOUR_BASE_URL",
 });
-await client.foo.find({
-  optionalString: "string",
-  publicProperty: "string",
-  privateProperty: 1,
-});
+undefined;
  
 ```                        
 

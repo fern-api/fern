@@ -18,12 +18,12 @@ public class GetPlaylistsTest : BaseMockServerTest
         const string mockResponse = """
             [
               {
-                "playlist_id": "string",
-                "owner-id": "string",
-                "name": "string",
-                "problems": [
-                  "string"
-                ]
+                "playlist_id": "playlist_id",
+                "owner-id": "owner-id"
+              },
+              {
+                "playlist_id": "playlist_id",
+                "owner-id": "owner-id"
               }
             ]
             """;
@@ -33,11 +33,9 @@ public class GetPlaylistsTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/v2/playlist/1/all")
-                    .WithParam("limit", "1")
-                    .WithParam("otherField", "string")
-                    .WithParam("multiLineDocs", "string")
-                    .WithParam("optionalMultipleField", "string")
-                    .WithParam("multipleField", "string")
+                    .WithParam("otherField", "otherField")
+                    .WithParam("multiLineDocs", "multiLineDocs")
+                    .WithParam("multipleField", "multipleField")
                     .UsingGet()
             )
             .RespondWith(
@@ -51,11 +49,9 @@ public class GetPlaylistsTest : BaseMockServerTest
             1,
             new GetPlaylistsRequest
             {
-                Limit = 1,
-                OtherField = "string",
-                MultiLineDocs = "string",
-                OptionalMultipleField = ["string"],
-                MultipleField = ["string"],
+                OtherField = "otherField",
+                MultiLineDocs = "multiLineDocs",
+                MultipleField = ["multipleField"],
             },
             RequestOptions
         );

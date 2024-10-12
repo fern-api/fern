@@ -7,9 +7,8 @@ import * as SeedCrossPackageTypeNames from "../../../../index";
 /**
  * @example
  *     {
- *         optionalString: "string",
- *         publicProperty: "string",
- *         privateProperty: 1
+ *         publicProperty: undefined,
+ *         privateProperty: undefined
  *     }
  */
 export interface FindRequest {

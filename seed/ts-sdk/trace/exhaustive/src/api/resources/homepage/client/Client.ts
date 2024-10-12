@@ -89,7 +89,7 @@ export class Homepage {
      * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.homepage.setHomepageProblems([SeedTrace.ProblemId("string")])
+     *     await client.homepage.setHomepageProblems([SeedTrace.ProblemId("string"), SeedTrace.ProblemId("string")])
      */
     public async setHomepageProblems(
         request: SeedTrace.ProblemId[],

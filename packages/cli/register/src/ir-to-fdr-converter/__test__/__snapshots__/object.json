@@ -39,7 +39,8 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           },
@@ -48,7 +49,8 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "long"
+                "type": "long",
+                "default": 0
               }
             }
           },
@@ -57,7 +59,8 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "datetime"
+                "type": "datetime",
+                "default": "1970-01-01T00:00:00.000Z"
               }
             }
           },
@@ -66,7 +69,8 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "date"
+                "type": "date",
+                "default": "1970-01-01T00:00:00.000Z"
               }
             }
           },
@@ -84,7 +88,8 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "base64"
+                "type": "base64",
+                "default": "0"
               }
             }
           },
@@ -125,7 +130,8 @@
               "valueType": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
@@ -137,7 +143,8 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "long"
+                  "type": "long",
+                  "default": 0
                 }
               }
             }
@@ -239,7 +246,10 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "double"
+                "type": "double",
+                "minimum": 2.2250738585072014e-308,
+                "maximum": 1.7976931348623157e+308,
+                "default": 0
               }
             }
           },
@@ -248,11 +258,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "bigInteger"
+                "type": "bigInteger",
+                "default": "0"
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_:Name": {
@@ -279,7 +293,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },

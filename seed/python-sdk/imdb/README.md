@@ -27,7 +27,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 client.imdb.create_movie(
-    title="string",
+    title="title",
     rating=1.1,
 )
 ```
@@ -49,7 +49,7 @@ client = AsyncSeedApi(
 
 async def main() -> None:
     await client.imdb.create_movie(
-        title="string",
+        title="title",
         rating=1.1,
     )
 

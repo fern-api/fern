@@ -16,7 +16,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_:UserModel": {
@@ -68,7 +71,10 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "double"
+                  "type": "double",
+                  "minimum": 2.2250738585072014e-308,
+                  "maximum": 1.7976931348623157e+308,
+                  "default": 0
                 }
               }
             }
@@ -83,7 +89,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_:Metadata": {
@@ -148,7 +157,8 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               }
             }
           }
@@ -234,7 +244,10 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "double"
+                          "type": "double",
+                          "minimum": 2.2250738585072014e-308,
+                          "maximum": 1.7976931348623157e+308,
+                          "default": 0
                         }
                       }
                     }

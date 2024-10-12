@@ -14,43 +14,22 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
         const string requestJson = """
             {
               "workspaceRunDetails": {
-                "exceptionV2": {
-                  "type": "generic",
-                  "exceptionType": "string",
-                  "exceptionMessage": "string",
-                  "exceptionStacktrace": "string"
-                },
-                "exception": {
-                  "exceptionType": "string",
-                  "exceptionMessage": "string",
-                  "exceptionStacktrace": "string"
-                },
-                "stdout": "string"
+                "stdout": "stdout"
               },
               "traceResponses": [
                 {
                   "submissionId": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   "lineNumber": 1,
-                  "returnValue": {
-                    "type": "integerValue"
-                  },
-                  "expressionLocation": {
-                    "start": 1,
-                    "offset": 1
-                  },
                   "stack": {
-                    "numStackFrames": 1,
-                    "topStackFrame": {
-                      "methodName": "string",
-                      "lineNumber": 1,
-                      "scopes": [
-                        {
-                          "variables": {}
-                        }
-                      ]
-                    }
-                  },
-                  "stdout": "string"
+                    "numStackFrames": 1
+                  }
+                },
+                {
+                  "submissionId": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "lineNumber": 1,
+                  "stack": {
+                    "numStackFrames": 1
+                  }
                 }
               ]
             }
@@ -76,19 +55,9 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                     {
                         WorkspaceRunDetails = new WorkspaceRunDetails
                         {
-                            ExceptionV2 = new ExceptionInfo
-                            {
-                                ExceptionType = "string",
-                                ExceptionMessage = "string",
-                                ExceptionStacktrace = "string",
-                            },
-                            Exception = new ExceptionInfo
-                            {
-                                ExceptionType = "string",
-                                ExceptionMessage = "string",
-                                ExceptionStacktrace = "string",
-                            },
-                            Stdout = "string",
+                            ExceptionV2 = null,
+                            Exception = null,
+                            Stdout = "stdout",
                         },
                         TraceResponses = new List<TraceResponse>()
                         {
@@ -96,29 +65,27 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                             {
                                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                                 LineNumber = 1,
-                                ReturnValue = 1,
-                                ExpressionLocation = new ExpressionLocation
-                                {
-                                    Start = 1,
-                                    Offset = 1,
-                                },
+                                ReturnValue = null,
+                                ExpressionLocation = null,
                                 Stack = new StackInformation
                                 {
                                     NumStackFrames = 1,
-                                    TopStackFrame = new StackFrame
-                                    {
-                                        MethodName = "string",
-                                        LineNumber = 1,
-                                        Scopes = new List<Scope>()
-                                        {
-                                            new Scope
-                                            {
-                                                Variables = new Dictionary<string, object>() { },
-                                            },
-                                        },
-                                    },
+                                    TopStackFrame = null,
                                 },
-                                Stdout = "string",
+                                Stdout = null,
+                            },
+                            new TraceResponse
+                            {
+                                SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                                LineNumber = 1,
+                                ReturnValue = null,
+                                ExpressionLocation = null,
+                                Stack = new StackInformation
+                                {
+                                    NumStackFrames = 1,
+                                    TopStackFrame = null,
+                                },
+                                Stdout = null,
                             },
                         },
                     },

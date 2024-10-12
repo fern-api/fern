@@ -66,7 +66,16 @@ describe("fdr", async () => {
                 context
             });
 
-            const fdr = convertIrToFdrApi({ ir, snippetsConfig: {} });
+            const fdr = convertIrToFdrApi({
+                ir,
+                snippetsConfig: {
+                    typescriptSdk: undefined,
+                    pythonSdk: undefined,
+                    javaSdk: undefined,
+                    rubySdk: undefined,
+                    goSdk: undefined
+                }
+            });
 
             it(workspace.workspaceName ?? "", () => {
                 expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(

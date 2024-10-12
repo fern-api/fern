@@ -66,7 +66,7 @@ public partial class SubmissionClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Submission.GetExecutionSessionAsync("string");
+    /// await client.Submission.GetExecutionSessionAsync("sessionId");
     /// </code>
     /// </example>
     public async Task<ExecutionSessionResponse?> GetExecutionSessionAsync(
@@ -110,7 +110,7 @@ public partial class SubmissionClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Submission.StopExecutionSessionAsync("string");
+    /// await client.Submission.StopExecutionSessionAsync("sessionId");
     /// </code>
     /// </example>
     public async Task StopExecutionSessionAsync(

@@ -20,84 +20,6 @@
       "item": [
         {
           "_type": "endpoint",
-          "name": "Generate Stream",
-          "request": {
-            "description": null,
-            "url": {
-              "raw": "{{baseUrl}}/generate-stream",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "generate-stream"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "type": "text",
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"stream\": true,\n    \"num_events\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "name": "Success",
-              "status": "OK",
-              "code": 200,
-              "originalRequest": {
-                "description": null,
-                "url": {
-                  "raw": "{{baseUrl}}/generate-stream",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "generate-stream"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "auth": null,
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"stream\": true,\n    \"num_events\": 1\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "description": null,
-              "body": "[\n    {\n        \"id\": \"string\",\n        \"name\": \"string\"\n    },\n    {\n        \"id\": \"string\",\n        \"name\": \"string\"\n    }\n]",
-              "_postman_previewlanguage": "json"
-            }
-          ]
-        },
-        {
-          "_type": "endpoint",
           "name": "Generate",
           "request": {
             "description": null,
@@ -200,7 +122,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
+                  "raw": "{\n    \"stream\": false,\n    \"num_events\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -209,7 +131,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+              "body": "{\n    \"id\": \"id\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]

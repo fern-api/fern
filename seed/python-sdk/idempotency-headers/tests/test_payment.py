@@ -7,11 +7,11 @@ from seed import AsyncSeedIdempotencyHeaders
 async def test_delete(client: SeedIdempotencyHeaders, async_client: AsyncSeedIdempotencyHeaders) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.payment.delete(payment_id="string")  # type: ignore[func-returns-value]
+        client.payment.delete(payment_id="paymentId")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.payment.delete(payment_id="string")  # type: ignore[func-returns-value]
+        await async_client.payment.delete(payment_id="paymentId")  # type: ignore[func-returns-value]
         is None
     )

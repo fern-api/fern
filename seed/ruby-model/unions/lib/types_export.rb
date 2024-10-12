@@ -1,0 +1,18 @@
+# frozen_string_literal: true
+
+require_relative "seed_unions_client/types/types/union"
+require_relative "seed_unions_client/types/types/union_with_discriminant"
+require_relative "seed_unions_client/types/types/union_with_primitive"
+require_relative "seed_unions_client/types/types/union_without_key"
+require_relative "seed_unions_client/types/types/union_with_unknown"
+require_relative "seed_unions_client/types/types/union_with_literal"
+require_relative "seed_unions_client/types/types/union_with_base_properties"
+require_relative "seed_unions_client/types/types/union_with_time"
+require_relative "seed_unions_client/types/types/union_with_optional_time"
+require_relative "seed_unions_client/types/types/union_with_single_element"
+require_relative "seed_unions_client/types/types/foo"
+require_relative "seed_unions_client/types/types/bar"
+require_relative "seed_unions_client/union/types/get_shape_request"
+require_relative "seed_unions_client/union/types/shape"
+require_relative "seed_unions_client/union/types/circle"
+require_relative "seed_unions_client/union/types/square"

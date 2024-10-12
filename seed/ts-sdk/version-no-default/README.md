@@ -20,10 +20,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedVersionClient } from "@fern/version-no-default";
+import { SeedVersionClient, SeedVersion } from "@fern/version-no-default";
 
 const client = new SeedVersionClient({ environment: "YOUR_BASE_URL", xApiVersion: "1.0.0" });
-await client.user.getUser("string");
+await client.user.getUser("userId");
 ```
 
 ## Exception Handling
