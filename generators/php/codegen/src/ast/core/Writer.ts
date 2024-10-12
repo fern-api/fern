@@ -1,5 +1,6 @@
 import { AbstractWriter } from "@fern-api/generator-commons";
 import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema";
+import { classReference } from "../../php";
 import { ClassReference } from "../ClassReference";
 import { GLOBAL_NAMESPACE } from "./Constant";
 
@@ -13,6 +14,8 @@ export declare namespace Writer {
         rootNamespace: string;
         /* Custom generator config */
         customConfig: BasePhpCustomConfigSchema;
+        /* Import statements */
+        references: Record<Namespace, ClassReference>;
     }
 }
 
@@ -23,26 +26,35 @@ export class Writer extends AbstractWriter {
     public rootNamespace: string;
     /* Custom generator config */
     public customConfig: BasePhpCustomConfigSchema;
-
     /* Import statements */
-    private references: Record<Namespace, ClassReference[]> = {};
+    public readonly references: Record<Namespace, ClassReference> = {};
+    public readonly namesWithConflicts = new Set<string>();
 
-    constructor({ namespace, rootNamespace, customConfig }: Writer.Args) {
+    constructor({ namespace, rootNamespace, customConfig, references }: Writer.Args) {
         super();
         this.namespace = namespace;
         this.rootNamespace = rootNamespace;
         this.customConfig = customConfig;
+        this.references = references;
+        this.namesWithConflicts = this.setConflictingNames(references);
     }
 
-    public addReference(reference: ClassReference): void {
-        if (reference.namespace == null) {
-            return;
-        }
-        const namespace =
-            reference.namespace === GLOBAL_NAMESPACE ? reference.name : `${reference.namespace}\\${reference.name}`;
-        const references = (this.references[namespace] ??= []);
-        references.push(reference);
+    private setConflictingNames(references: Record<Namespace, ClassReference>): Set<string> {
+        const seenNames = new Set<string>();
+        return new Set(
+            Object.values(references)
+                .filter((reference) => {
+                    if (seenNames.has(reference.name)) {
+                        return true;
+                    }
+                    seenNames.add(reference.name);
+                    return false;
+                })
+                .map((classReference) => classReference.name)
+        );
     }
+
+    public addReference(reference: ClassReference): void {}
 
     public toString(): string {
         const namespace = `namespace ${this.namespace};`;
@@ -57,24 +69,26 @@ ${this.buffer}`;
         return namespace + "\n\n" + this.buffer;
     }
 
+    public requiresInlineFullQualification(classReference: ClassReference) {
+        return this.namesWithConflicts.has(classReference.name);
+    }
+
     private stringifyImports(): string {
-        const referenceKeys = Object.keys(this.references);
-        if (referenceKeys.length === 0) {
+        const classReferences = Object.values(this.references).filter(
+            (classReference) =>
+                classReference.namespace !== this.namespace && !this.requiresInlineFullQualification(classReference)
+        );
+        if (classReferences.length === 0) {
             return "";
         }
-        let result = referenceKeys
-            // Filter out the current namespace.
-            .filter((reference) => {
-                // Remove the type name to get just the namespace
-                const referenceNamespace = reference.substring(0, reference.lastIndexOf("\\"));
-                return referenceNamespace !== this.namespace;
-            })
-            .map((ref) => `use ${ref};`)
-            .join("\n");
-
+        let result = classReferences.map((classReference) => `use ${this.toImportString(classReference)};`).join("\n");
         if (result.length > 0) {
             result += "\n";
         }
         return result;
+    }
+
+    public toImportString(reference: ClassReference): string {
+        return reference.namespace === GLOBAL_NAMESPACE ? reference.name : `${reference.namespace}\\${reference.name}`;
     }
 }

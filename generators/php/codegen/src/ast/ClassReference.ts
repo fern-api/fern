@@ -1,5 +1,6 @@
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { writeArguments } from "./utils/writeArguments";
 
 export declare namespace ClassReference {
     interface Args {
@@ -22,6 +23,10 @@ export class ClassReference extends AstNode {
 
     public write(writer: Writer): void {
         writer.addReference(this);
-        writer.write(`${this.name}`);
+        if (writer.requiresInlineFullQualification(this)) {
+            writer.write(`\\${writer.toImportString(this)}`);
+        } else {
+            writer.write(`${this.name}`);
+        }
     }
 }
