@@ -3,6 +3,8 @@ title: WebSockets in the Fern Definition
 description: Learn how to define WebSockets in the Fern Definition
 ---
 
+WebSockets enables a user to create a connection with a server, over which bidirectional communication can be sent. 
+
 In Fern, you can specify WebSockets in your API definition. The WebSockets will be included in both the generated SDKs and the API documentation. 
 
 ## WebSocket definition
@@ -62,7 +64,17 @@ A `channel` is defined by the following fields:
   ```
 </CodeBlock>
 
-## WebSocket playground
+## WebSocket API Reference
+
+### WebSocket Reference
+
+Fern renders a unique reference page for WebSockets. The **Handshake** section outlines the protocol for connecting with the server, while the **Send** and **Receive** sections outline the message schemas that can be sent between the client and server. 
+
+<Frame caption="Cartesia's WebSocket Reference page">
+<img src="./wss-reference.png" alt="The WebSocket Reference" />
+</Frame>
+
+### WebSocket playground
 
 <Warning title='Pro Feature'>
   This feature is only available on paid plans. Please schedule a [demo](https://buildwithfern.com/contact) 
