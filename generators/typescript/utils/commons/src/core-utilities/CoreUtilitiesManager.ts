@@ -8,7 +8,7 @@ import {
     RelativeFilePath
 } from "@fern-api/fs-utils";
 import { cp, mkdir, rm, writeFile } from "fs/promises";
-import glob from "glob-promise";
+import { glob } from "glob";
 import path from "path";
 import { SourceFile } from "ts-morph";
 import { DependencyManager } from "../dependency-manager/DependencyManager";
