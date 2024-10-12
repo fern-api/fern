@@ -7,6 +7,7 @@ const FERN_DIRECTORY = "fern";
 
 export async function getAllRootApiYamlFiles(context: TaskContext): Promise<AbsoluteFilePath[]> {
     const fernDirectory = await getFernDirectory();
+    const alphasort = (a: string, b: string) => a.localeCompare(b, "en");
     if (fernDirectory == null) {
         return context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
     }
@@ -14,7 +15,7 @@ export async function getAllRootApiYamlFiles(context: TaskContext): Promise<Abso
         cwd: fernDirectory,
         absolute: true
     });
-    return filepaths.map(AbsoluteFilePath.of);
+    return filepaths.sort(alphasort).map(AbsoluteFilePath.of);
 }
 
 async function getFernDirectory(): Promise<AbsoluteFilePath | undefined> {

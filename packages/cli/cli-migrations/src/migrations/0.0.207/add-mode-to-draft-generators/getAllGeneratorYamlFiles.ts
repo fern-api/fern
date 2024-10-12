@@ -7,6 +7,7 @@ const FERN_DIRECTORY = "fern";
 
 export async function getAllGeneratorYamlFiles(context: TaskContext): Promise<AbsoluteFilePath[]> {
     const fernDirectory = await getFernDirectory();
+    const alphasort = (a: string, b: string) => a.localeCompare(b, "en");
     if (fernDirectory == null) {
         context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
     }
