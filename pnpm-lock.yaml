@@ -3153,9 +3153,6 @@ importers:
 
   packages/cli/api-importers/openapi/openapi-ir-parser:
     dependencies:
-      '@apidevtools/swagger-parser':
-        specifier: ^10.1.0
-        version: 10.1.0(openapi-types@12.1.3)
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../../commons/core-utils
@@ -3675,6 +3672,10 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/cli/dist/dev: {}
+
+  packages/cli/cli/dist/prod: {}
 
   packages/cli/configuration:
     dependencies:
@@ -5996,7 +5997,7 @@ importers:
         version: 3.14.1(zod@3.23.8)
 
   packages/seed:
-    dependencies:
+    devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../cli/workspace-commons
@@ -6039,40 +6040,6 @@ importers:
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
-      '@types/pretty-ms':
-        specifier: ^5.0.1
-        version: 5.0.1
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-      console-table-printer:
-        specifier: ^2.12.0
-        version: 2.12.0
-      find-up:
-        specifier: ^6.3.0
-        version: 6.3.0
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      moment:
-        specifier: ^2.30.1
-        version: 2.30.1
-      pretty-ms:
-        specifier: ^9.0.0
-        version: 9.0.0
-      semver:
-        specifier: ^7.6.2
-        version: 7.6.2
-      tmp-promise:
-        specifier: ^3.0.3
-        version: 3.0.3
-      yargs:
-        specifier: ^17.4.1
-        version: 17.7.2
-    devDependencies:
       '@types/find-up':
         specifier: ^4.0.0
         version: 4.0.0
@@ -6085,6 +6052,9 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
+      '@types/pretty-ms':
+        specifier: ^5.0.1
+        version: 5.0.1
       '@types/semver':
         specifier: ^7.5.8
         version: 7.5.8
@@ -6094,6 +6064,12 @@ importers:
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+      console-table-printer:
+        specifier: ^2.12.0
+        version: 2.12.0
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -6106,21 +6082,48 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      find-up:
+        specifier: ^6.3.0
+        version: 6.3.0
       globals:
         specifier: link:@types/vitest/globals
         version: link:@types/vitest/globals
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      moment:
+        specifier: ^2.30.1
+        version: 2.30.1
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
+      pretty-ms:
+        specifier: ^9.0.0
+        version: 9.0.0
+      semver:
+        specifier: ^7.6.2
+        version: 7.6.2
+      tmp-promise:
+        specifier: ^3.0.3
+        version: 3.0.3
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      yargs:
+        specifier: ^17.4.1
+        version: 17.7.2
 
 packages:
 
@@ -6139,21 +6142,6 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
-
-  '@apidevtools/json-schema-ref-parser@9.0.6':
-    resolution: {integrity: sha512-M3YgsLjI0lZxvrpeGVk9Ap032W6TPQkH6pRAZz81Ac3WUNF79VQooAFnp8umjvVzUmD93NkogxEwbSce7qMsUg==}
-
-  '@apidevtools/openapi-schemas@2.1.0':
-    resolution: {integrity: sha512-Zc1AlqrJlX3SlpupFGpiLi2EbteyP7fXmUOGup6/DnkRgjP9bgMM/ag+n91rsv0U1Gpz0H3VILA/o3bW7Ua6BQ==}
-    engines: {node: '>=10'}
-
-  '@apidevtools/swagger-methods@3.0.2':
-    resolution: {integrity: sha512-QAkD5kK2b1WfjDS/UQn/qQkbwF31uqRjPTrsCs5ZG9BQGAkjwvqGFjjPqAuzac/IYzpPtRzjCP1WrTuAIjMrXg==}
-
-  '@apidevtools/swagger-parser@10.1.0':
-    resolution: {integrity: sha512-9Kt7EuS/7WbMAUv2gSziqjvxwDbFSg3Xeyfuj5laUODX8o/k/CpsAKiQ8W7/R88eXFTMbJYg6+7uAmOWNKmwnw==}
-    peerDependencies:
-      openapi-types: '>=7'
 
   '@babel/code-frame@7.24.7':
     resolution: {integrity: sha512-BcYH1CVJBO9tvyIZ2jVeXgSIMvGZ2FDRvDdOIVQyuklNKSsx+eppDEBq/g47Ayw+RqNFE+URvOShmf+f/qwAlA==}
@@ -7482,9 +7470,6 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@jsdevtools/ono@7.1.3':
-    resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
-
   '@ljharb/through@2.3.13':
     resolution: {integrity: sha512-/gKJun8NNiWGZJkGzI/Ragc53cOdcLNdzjLaIa+GEjguQs0ulsurx8WN0jijdK9yPqDvziX995sMRLyLt1uZMQ==}
     engines: {node: '>= 0.4'}
@@ -8208,14 +8193,6 @@ packages:
   aggregate-error@3.1.0:
     resolution: {integrity: sha512-4I7Td01quW/RpocfNayFdFVk1qSuoh0E7JrbRJ16nH01HhKFQ88INq9Sd+nd72zqRySlr9BmDA8xlEJ6vJMrYA==}
     engines: {node: '>=8'}
-
-  ajv-draft-04@1.0.0:
-    resolution: {integrity: sha512-mv00Te6nmYbRp5DCwclxtt7yV/joXJPGS7nM+97GdxvuttCOfgI3K4U25zboyeX0O+myI8ERluxQe5wljMmVIw==}
-    peerDependencies:
-      ajv: ^8.5.0
-    peerDependenciesMeta:
-      ajv:
-        optional: true
 
   ajv-keywords@3.5.2:
     resolution: {integrity: sha512-5p6WTN0DdTGVQk6VjcEju19IgaHudalcfabD7yhDGeA6bcQnmL+CpveLJq/3hvfwd1aof6L386Ougkx6RfyMIQ==}
@@ -13063,27 +13040,6 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@apidevtools/json-schema-ref-parser@9.0.6':
-    dependencies:
-      '@jsdevtools/ono': 7.1.3
-      call-me-maybe: 1.0.2
-      js-yaml: 3.14.1
-
-  '@apidevtools/openapi-schemas@2.1.0': {}
-
-  '@apidevtools/swagger-methods@3.0.2': {}
-
-  '@apidevtools/swagger-parser@10.1.0(openapi-types@12.1.3)':
-    dependencies:
-      '@apidevtools/json-schema-ref-parser': 9.0.6
-      '@apidevtools/openapi-schemas': 2.1.0
-      '@apidevtools/swagger-methods': 3.0.2
-      '@jsdevtools/ono': 7.1.3
-      ajv: 8.12.0
-      ajv-draft-04: 1.0.0(ajv@8.12.0)
-      call-me-maybe: 1.0.2
-      openapi-types: 12.1.3
-
   '@babel/code-frame@7.24.7':
     dependencies:
       '@babel/highlight': 7.24.7
@@ -14558,8 +14514,6 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@jsdevtools/ono@7.1.3': {}
-
   '@ljharb/through@2.3.13':
     dependencies:
       call-bind: 1.0.7
@@ -15447,10 +15401,6 @@ snapshots:
     dependencies:
       clean-stack: 2.2.0
       indent-string: 4.0.0
-
-  ajv-draft-04@1.0.0(ajv@8.12.0):
-    optionalDependencies:
-      ajv: 8.12.0
 
   ajv-keywords@3.5.2(ajv@6.12.6):
     dependencies:
