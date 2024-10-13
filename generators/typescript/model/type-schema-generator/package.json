@@ -32,7 +32,7 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/union-schema-generator": "workspace:*",
-    "ts-morph": "^15.1.0"
+    "ts-morph": "^24.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
