@@ -3369,7 +3369,7 @@ importers:
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/cli:
-    dependencies:
+    devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../workspace-commons
@@ -3475,64 +3475,15 @@ importers:
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
-      '@types/get-port':
-        specifier: ^4.2.0
-        version: 4.2.0
-      ansi-escapes:
-        specifier: ^5.0.0
-        version: 5.0.0
-      axios:
-        specifier: ^0.28.0
-        version: 0.28.0
-      boxen:
-        specifier: ^7.1.1
-        version: 7.1.1
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-      get-port:
-        specifier: ^7.1.0
-        version: 7.1.0
-      immer:
-        specifier: ^9.0.15
-        version: 9.0.15
-      is-ci:
-        specifier: ^3.0.1
-        version: 3.0.1
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      latest-version:
-        specifier: ^9.0.0
-        version: 9.0.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      ora:
-        specifier: ^7.0.1
-        version: 7.0.1
-      tar:
-        specifier: ^7.4.3
-        version: 7.4.3
-      tmp-promise:
-        specifier: ^3.0.3
-        version: 3.0.3
-      validate-npm-package-name:
-        specifier: ^5.0.1
-        version: 5.0.1
-      yaml:
-        specifier: 2.3.3
-        version: 2.3.3
-      yargs:
-        specifier: ^17.4.1
-        version: 17.7.2
-    devDependencies:
       '@types/axios':
         specifier: ^0.14.0
         version: 0.14.0
       '@types/boxen':
         specifier: ^3.0.1
         version: 3.0.1
+      '@types/get-port':
+        specifier: ^4.2.0
+        version: 4.2.0
       '@types/is-ci':
         specifier: ^3.0.4
         version: 3.0.4
@@ -3560,30 +3511,81 @@ importers:
       '@types/yargs':
         specifier: ^17.0.28
         version: 17.0.28
+      ansi-escapes:
+        specifier: ^5.0.0
+        version: 5.0.0
+      axios:
+        specifier: ^0.28.0
+        version: 0.28.0
+      boxen:
+        specifier: ^7.1.1
+        version: 7.1.1
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
-      env-cmd:
-        specifier: toddbluhm/env-cmd
-        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
+      dotenv-cli:
+        specifier: ^6.0.0
+        version: 6.0.0
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      get-port:
+        specifier: ^7.1.0
+        version: 7.1.0
+      immer:
+        specifier: ^9.0.15
+        version: 9.0.15
+      is-ci:
+        specifier: ^3.0.1
+        version: 3.0.1
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
+      latest-version:
+        specifier: ^9.0.0
+        version: 9.0.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      ora:
+        specifier: ^7.0.1
+        version: 7.0.1
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
+      tar:
+        specifier: ^7.4.3
+        version: 7.4.3
+      tmp-promise:
+        specifier: ^3.0.3
+        version: 3.0.3
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      validate-npm-package-name:
+        specifier: ^5.0.1
+        version: 5.0.1
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      yaml:
+        specifier: 2.3.3
+        version: 2.3.3
+      yargs:
+        specifier: ^17.4.1
+        version: 17.7.2
 
   packages/cli/cli-migrations:
     dependencies:
@@ -9026,6 +9028,18 @@ packages:
     resolution: {integrity: sha512-A2is4PLG+eeSfoTMA95/s4pvAoSo2mKtiM5jlHkAVewmiO8ISFTFKZjH7UAM1Atli/OT/7JHOrJRJiMKUZKYBw==}
     engines: {node: '>=12'}
     deprecated: Use your platform's native DOMException instead
+
+  dotenv-cli@6.0.0:
+    resolution: {integrity: sha512-qXlCOi3UMDhCWFKe0yq5sg3X+pJAz+RQDiFN38AMSbUrnY3uZshSfDJUAge951OS7J9gwLZGfsBlWRSOYz/TRg==}
+    hasBin: true
+
+  dotenv-expand@8.0.3:
+    resolution: {integrity: sha512-SErOMvge0ZUyWd5B0NXMQlDkN+8r+HhVUsxgOO7IoPDOdDRD2JjExpN6y3KnFR66jsJMwSn1pqIivhU5rcJiNg==}
+    engines: {node: '>=12'}
+
+  dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+    engines: {node: '>=12'}
 
   dprint-node@1.0.8:
     resolution: {integrity: sha512-iVKnUtYfGrYcW1ZAlfR/F59cUVL8QIhWoBJoSjkkdua/dkWIgjZfiLMeTjiB06X0ZLkQ0M2C1VbUj/CxkIf1zg==}
@@ -16306,6 +16320,17 @@ snapshots:
   domexception@4.0.0:
     dependencies:
       webidl-conversions: 7.0.0
+
+  dotenv-cli@6.0.0:
+    dependencies:
+      cross-spawn: 7.0.3
+      dotenv: 16.4.5
+      dotenv-expand: 8.0.3
+      minimist: 1.2.6
+
+  dotenv-expand@8.0.3: {}
+
+  dotenv@16.4.5: {}
 
   dprint-node@1.0.8:
     dependencies:
