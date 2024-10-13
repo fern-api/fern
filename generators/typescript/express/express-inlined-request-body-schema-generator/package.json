@@ -27,11 +27,11 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/ir-sdk": "53.8.0",
+    "@fern-fern/ir-sdk": "53.13.0",
     "@fern-typescript/abstract-schema-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
-    "ts-morph": "^15.1.0"
+    "ts-morph": "^24.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
@@ -41,6 +41,6 @@
     "vitest": "^2.0.5",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
-    "typescript": "4.6.4"
+    "typescript": "5.6.3"
   }
 }

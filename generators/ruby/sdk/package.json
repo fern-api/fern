@@ -39,8 +39,8 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/ruby-codegen": "workspace:*",
     "@fern-api/ruby-generator-cli": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.898",
-    "@fern-fern/ir-sdk": "^39",
+    "@fern-fern/generator-exec-sdk": "^0.0.941",
+    "@fern-fern/ir-sdk": "^53",
     "@types/jest": "^29.5.12",
     "@types/node": "^18.7.18",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
@@ -50,7 +50,7 @@
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "tsup": "^8.0.2",
-    "typescript": "4.6.4",
+    "typescript": "5.6.3",
     "vitest": "^2.0.5",
     "zod": "^3.22.3"
   }
