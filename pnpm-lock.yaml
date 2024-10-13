@@ -3509,8 +3509,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       axios:
-        specifier: ^0.28.0
-        version: 0.28.0
+        specifier: ^1.7.7
+        version: 1.7.7
       boxen:
         specifier: ^7.1.1
         version: 7.1.1
@@ -4787,8 +4787,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584
       axios:
-        specifier: ^0.28.0
-        version: 0.28.0
+        specifier: ^1.7.7
+        version: 1.7.7
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -4893,8 +4893,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       axios:
-        specifier: ^0.28.0
-        version: 0.28.0
+        specifier: ^1.7.7
+        version: 1.7.7
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -4996,8 +4996,8 @@ importers:
         specifier: ^9.0.8
         version: 9.0.8
       axios:
-        specifier: ^0.28.0
-        version: 0.28.0
+        specifier: ^1.7.7
+        version: 1.7.7
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -5112,8 +5112,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       axios:
-        specifier: ^0.28.0
-        version: 0.28.0
+        specifier: ^1.7.7
+        version: 1.7.7
       boxen:
         specifier: ^7.1.1
         version: 7.1.1
@@ -8460,8 +8460,8 @@ packages:
   axios@0.27.2:
     resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
 
-  axios@0.28.0:
-    resolution: {integrity: sha512-Tu7NYoGY4Yoc7I+Npf9HhUMtEEpV7ZiLH9yndTCoNhcpBH0kwcvFbzYN9/u5QKI5A6uefjsNNWaz5olJVYS62Q==}
+  axios@1.7.7:
+    resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
 
   babel-jest@29.7.0:
     resolution: {integrity: sha512-BrvGY3xZSwEcCzKvKsCi2GgHqDqsYkOP4/by5xCgIwGXQxIEh+8ew3gmrE1y7XRR6LHZIj6yLYnUi/mm2KXKBg==}
@@ -14756,7 +14756,7 @@ snapshots:
 
   '@types/axios@0.14.0':
     dependencies:
-      axios: 0.28.0
+      axios: 1.7.7
     transitivePeerDependencies:
       - debug
 
@@ -15644,7 +15644,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  axios@0.28.0:
+  axios@1.7.7:
     dependencies:
       follow-redirects: 1.15.6
       form-data: 4.0.0
