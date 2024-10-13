@@ -101,7 +101,7 @@
     "ora": "^7.0.1",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
-    "tar": "^7.4.3",
+    "tar": "^6.2.1",
     "tmp-promise": "^3.0.3",
     "tsup": "^8.0.2",
     "typescript": "4.6.4",
