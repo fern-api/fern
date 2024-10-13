@@ -22,9 +22,9 @@ async function main() {
             POSTHOG_API_KEY: process.env.POSTHOG_API_KEY,
             DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",
             DOCS_PREVIEW_BUCKET: 'https://prod-local-preview-bundle2.s3.amazonaws.com/',
-            CLI_NAME: JSON.stringify("fern"),
-            CLI_VERSION: JSON.stringify(packageJson.version),
-            CLI_PACKAGE_NAME: JSON.stringify("fern-api"),
+            CLI_NAME: "fern",
+            CLI_VERSION: packageJson.version,
+            CLI_PACKAGE_NAME: "fern-api",
         },
     });     
     
