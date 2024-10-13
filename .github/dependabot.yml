@@ -28,13 +28,18 @@ updates:
     groups:
       production-dependencies:
         dependency-type: "production"
+        exclude-patterns:
+          - "eslint*"
+          - "typescript"
+          - "prettier"
+          - "@fern*"
       development-dependencies:
         dependency-type: "development"
         exclude-patterns:
           - "eslint*"
           - "typescript"
           - "prettier"
-          - "@fern"
+          - "@fern*"
       eslint:
         patterns:
           - "eslint*"
