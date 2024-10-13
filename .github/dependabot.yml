@@ -7,7 +7,9 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directories:
+      - "packages"
       - "packages/**/*"
+      - "generators"
       - "generators/**/*"
     schedule:
       interval: "weekly"
@@ -17,10 +19,22 @@ updates:
       development-dependencies:
         dependency-type: "development"
         exclude-patterns:
-        - "eslint*"
+          - "eslint*"
+          - "typescript"
+          - "prettier"
+          - "@fern"
       eslint:
         patterns:
-        - "eslint*"
+          - "eslint*"
+      typescript:
+        patterns:
+          - "typescript*"
+      prettier: 
+        patterns:
+          - "prettier*" 
+      fern: 
+        patterns:
+          - "@fern*"                            
   - package-ecosystem: "gomod"
     directory: "/generators/go"
     schedule:
