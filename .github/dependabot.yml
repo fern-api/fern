@@ -7,8 +7,8 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directories:
-      - "packages/**"
-      - "generators/**"
+      - "packages/**/*"
+      - "generators/**/*"
     schedule:
       interval: "weekly"
     groups:
