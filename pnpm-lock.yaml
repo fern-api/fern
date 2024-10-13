@@ -3520,9 +3520,6 @@ importers:
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
-      dotenv-cli:
-        specifier: ^6.0.0
-        version: 6.0.0
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -9013,18 +9010,6 @@ packages:
     resolution: {integrity: sha512-A2is4PLG+eeSfoTMA95/s4pvAoSo2mKtiM5jlHkAVewmiO8ISFTFKZjH7UAM1Atli/OT/7JHOrJRJiMKUZKYBw==}
     engines: {node: '>=12'}
     deprecated: Use your platform's native DOMException instead
-
-  dotenv-cli@6.0.0:
-    resolution: {integrity: sha512-qXlCOi3UMDhCWFKe0yq5sg3X+pJAz+RQDiFN38AMSbUrnY3uZshSfDJUAge951OS7J9gwLZGfsBlWRSOYz/TRg==}
-    hasBin: true
-
-  dotenv-expand@8.0.3:
-    resolution: {integrity: sha512-SErOMvge0ZUyWd5B0NXMQlDkN+8r+HhVUsxgOO7IoPDOdDRD2JjExpN6y3KnFR66jsJMwSn1pqIivhU5rcJiNg==}
-    engines: {node: '>=12'}
-
-  dotenv@16.4.5:
-    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
-    engines: {node: '>=12'}
 
   dprint-node@1.0.8:
     resolution: {integrity: sha512-iVKnUtYfGrYcW1ZAlfR/F59cUVL8QIhWoBJoSjkkdua/dkWIgjZfiLMeTjiB06X0ZLkQ0M2C1VbUj/CxkIf1zg==}
@@ -16297,17 +16282,6 @@ snapshots:
   domexception@4.0.0:
     dependencies:
       webidl-conversions: 7.0.0
-
-  dotenv-cli@6.0.0:
-    dependencies:
-      cross-spawn: 7.0.3
-      dotenv: 16.4.5
-      dotenv-expand: 8.0.3
-      minimist: 1.2.6
-
-  dotenv-expand@8.0.3: {}
-
-  dotenv@16.4.5: {}
 
   dprint-node@1.0.8:
     dependencies:
