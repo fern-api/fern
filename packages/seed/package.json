@@ -15,9 +15,6 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "sideEffects": false,
-  "bin": {
-    "seed": "./dist/bundle.cjs"
-  },
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -30,9 +27,7 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "build": "tsup ./src/cli.ts --format cjs",
-    "dist:cli": "pnpm compile && node build.cjs && cp -R ../../test-definitions/fern dist",
-    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish --access public",
+    "dist:cli": "tsup ./src/cli.ts --format cjs && cp -R ../../test-definitions/fern dist",
     "generate": "fern generate --local"
   },
   "dependencies": {},

@@ -36,7 +36,7 @@
     "root-package:check": "pnpm fern-script check-root-package",
     "root-package:fix": "pnpm root-package:check --fix",
     "seed": "node packages/seed/dist/bundle.cjs",
-    "seed:local": "pnpm --filter @fern-api/seed-cli dist:cli && node packages/seed/dist/bundle.cjs",
+    "seed:local": "pnpm --filter @fern-api/seed-cli dist:cli && node packages/seed/dist/cli.cjs",
     "ir:generate": "pnpm --filter @fern-api/ir-sdk generate",
     "openapi-ir:generate": "pnpm --filter @fern-api/openapi-ir generate",
     "conjure-sdk:generate": "pnpm --filter @fern-api/conjure-sdk generate",

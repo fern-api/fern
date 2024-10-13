@@ -258,7 +258,7 @@ importers:
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/csharp/model:
-    dependencies:
+    devDependencies:
       '@fern-api/csharp-codegen':
         specifier: workspace:*
         version: link:../codegen
@@ -271,10 +271,6 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^53.7.0
         version: 53.7.2
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -287,9 +283,6 @@ importers:
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
-      env-cmd:
-        specifier: toddbluhm/env-cmd
-        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -302,15 +295,21 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
 
   generators/csharp/sdk:
-    dependencies:
+    devDependencies:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
@@ -338,16 +337,6 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^53.7.0
         version: 53.7.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -363,30 +352,39 @@ importers:
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
-      env-cmd:
-        specifier: toddbluhm/env-cmd
-        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
 
   generators/openapi:
-    dependencies:
+    devDependencies:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../packages/commons/core-utils
@@ -399,19 +397,6 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: 53.9.0
         version: 53.9.0
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      openapi-types:
-        specifier: ^12.1.3
-        version: 12.1.3
-      url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
-    devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -430,24 +415,36 @@ importers:
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
-      env-cmd:
-        specifier: toddbluhm/env-cmd
-        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -530,9 +527,6 @@ importers:
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
-      env-cmd:
-        specifier: toddbluhm/env-cmd
-        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -596,9 +590,6 @@ importers:
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
-      env-cmd:
-        specifier: toddbluhm/env-cmd
-        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -628,7 +619,7 @@ importers:
         version: 3.22.4
 
   generators/postman:
-    dependencies:
+    devDependencies:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../packages/commons/core-utils
@@ -644,22 +635,12 @@ importers:
       '@fern-fern/postman-sdk':
         specifier: 0.1.1
         version: 0.1.1
-      '@types/lodash':
-        specifier: ^4.17.4
-        version: 4.17.4
-      endent:
-        specifier: ^2.1.0
-        version: 2.1.0
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
+      '@types/lodash':
+        specifier: ^4.17.4
+        version: 4.17.4
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
@@ -669,6 +650,9 @@ importers:
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
+      endent:
+        specifier: ^2.1.0
+        version: 2.1.0
       env-cmd:
         specifier: toddbluhm/env-cmd
         version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
@@ -678,18 +662,27 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
 
   generators/ruby/cli:
     dependencies:
@@ -787,7 +780,7 @@ importers:
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/ruby/model:
-    dependencies:
+    devDependencies:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -809,10 +802,6 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -843,15 +832,21 @@ importers:
       ts-loader:
         specifier: ^9.3.1
         version: 9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.15.7))
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
 
   generators/ruby/sdk:
-    dependencies:
+    devDependencies:
       '@fern-api/fern-ruby-model':
         specifier: workspace:*
         version: link:../model
@@ -876,10 +871,6 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -892,9 +883,6 @@ importers:
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
-      env-cmd:
-        specifier: toddbluhm/env-cmd
-        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -907,12 +895,18 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
 
   generators/swift/codegen:
     dependencies:
@@ -938,9 +932,6 @@ importers:
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
-      env-cmd:
-        specifier: toddbluhm/env-cmd
-        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
