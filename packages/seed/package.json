@@ -65,7 +65,6 @@
     "@types/yargs": "^17.0.28",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
-    "env-cmd": "toddbluhm/env-cmd",
     "esbuild": "^0.15.7",
     "eslint": "^8.56.0",
     "globals": "link:@types/vitest/globals",

@@ -43,7 +43,6 @@
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
     "endent": "^2.1.0",
-    "env-cmd": "toddbluhm/env-cmd",
     "esbuild": "^0.15.7",
     "eslint": "^8.56.0",
     "lodash": "^4.17.21",
