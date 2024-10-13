@@ -158,8 +158,8 @@ export class ScriptRunner {
     }
 
     private async buildFernCli(context: TaskContext): Promise<AbsoluteFilePath> {
-        await loggingExeca(context.logger, "pnpm", ["fern-dev:build"]);
-        return join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../../../packages/cli/cli/dist/dev"));
+        await loggingExeca(context.logger, "pnpm", ["fern:build"]);
+        return join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../../../packages/cli/cli/dist/prod"));
     }
 
     private async startContainers(context: TaskContext): Promise<void> {
