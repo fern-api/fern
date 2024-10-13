@@ -8,9 +8,9 @@ updates:
   - package-ecosystem: "npm"
     directories:
       - "packages"
-      - "packages/**/*"
+      - "packages/**"
       - "generators"
-      - "generators/**/*"
+      - "generators/**"
     schedule:
       interval: "weekly"
     groups:
