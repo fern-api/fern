@@ -199,8 +199,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -251,8 +251,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -297,10 +297,10 @@ importers:
         version: 2.7.1
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -369,10 +369,10 @@ importers:
         version: 2.7.1
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -438,10 +438,10 @@ importers:
         version: 2.7.1
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -495,8 +495,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -541,10 +541,10 @@ importers:
         version: 2.7.1
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -607,10 +607,10 @@ importers:
         version: 2.7.1
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -670,10 +670,10 @@ importers:
         version: 2.7.1
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -721,8 +721,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -770,8 +770,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -825,13 +825,13 @@ importers:
         version: 2.7.1
       ts-loader:
         specifier: ^9.3.1
-        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.24.0))
+        version: 9.5.1(typescript@5.6.3)(webpack@5.94.0(esbuild@0.24.0))
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -891,10 +891,10 @@ importers:
         version: 2.7.1
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -939,8 +939,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -975,8 +975,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1033,13 +1033,13 @@ importers:
         version: 2.7.1
       ts-loader:
         specifier: ^9.3.1
-        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0)
+        version: 9.5.1(typescript@5.6.3)(webpack@5.94.0)
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1087,8 +1087,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1130,8 +1130,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1176,8 +1176,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1213,8 +1213,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1256,8 +1256,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1305,8 +1305,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1348,8 +1348,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1433,8 +1433,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1473,8 +1473,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1516,8 +1516,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1556,8 +1556,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1599,8 +1599,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1645,8 +1645,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1688,8 +1688,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1731,8 +1731,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1868,13 +1868,13 @@ importers:
         version: 2.7.1
       ts-loader:
         specifier: ^9.3.1
-        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0)
+        version: 9.5.1(typescript@5.6.3)(webpack@5.94.0)
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1925,8 +1925,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -1971,8 +1971,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2011,8 +2011,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2133,7 +2133,7 @@ importers:
         version: link:@types/vitest/globals
       jest-specific-snapshot:
         specifier: ^8.0.0
-        version: 8.0.0(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))
+        version: 8.0.0(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3)))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -2141,8 +2141,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2181,8 +2181,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2224,8 +2224,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2276,8 +2276,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2319,8 +2319,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2365,8 +2365,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2408,8 +2408,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2445,8 +2445,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2494,8 +2494,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2531,8 +2531,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2585,8 +2585,8 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -2674,8 +2674,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2953,8 +2953,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -2996,8 +2996,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -3356,8 +3356,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -3561,10 +3561,10 @@ importers:
         version: 3.0.3
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       validate-npm-package-name:
         specifier: ^5.0.1
         version: 5.0.1
@@ -3651,11 +3651,13 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/cli/dist/dev: {}
 
   packages/cli/configuration:
     dependencies:
@@ -3730,8 +3732,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -3776,8 +3778,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -3828,8 +3830,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -3886,8 +3888,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -3899,7 +3901,7 @@ importers:
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
         specifier: 0.115.0-3cf21db72
-        version: 0.115.0-3cf21db72(lodash-es@4.17.21)(typescript@4.6.4)
+        version: 0.115.0-3cf21db72(lodash-es@4.17.21)(typescript@5.6.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -3983,8 +3985,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -4002,7 +4004,7 @@ importers:
         version: link:../docs-markdown-utils
       '@fern-api/fdr-sdk':
         specifier: 0.115.0-3cf21db72
-        version: 0.115.0-3cf21db72(lodash-es@4.17.21)(typescript@4.6.4)
+        version: 0.115.0-3cf21db72(lodash-es@4.17.21)(typescript@5.6.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4059,8 +4061,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -4132,8 +4134,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -4939,8 +4941,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5057,8 +5059,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5091,8 +5093,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5158,8 +5160,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5216,8 +5218,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5262,8 +5264,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5308,8 +5310,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5375,8 +5377,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5406,8 +5408,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5437,8 +5439,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5489,8 +5491,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5562,8 +5564,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5656,8 +5658,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5714,8 +5716,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5760,8 +5762,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5791,8 +5793,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5828,8 +5830,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5871,8 +5873,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5898,8 +5900,8 @@ importers:
         specifier: ^2.7.1
         version: 2.7.1
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -5959,13 +5961,13 @@ importers:
         version: 2.7.1
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@types/node@18.7.18)(typescript@4.6.4)
+        version: 10.9.2(@types/node@18.7.18)(typescript@5.6.3)
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -6091,10 +6093,10 @@ importers:
         version: 3.0.3
       tsup:
         specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -12652,6 +12654,11 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
 
+  typescript@5.6.3:
+    resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   ua-parser-js@1.0.37:
     resolution: {integrity: sha512-bhTyI94tZofjo+Dn8SN6Zv8nBDvyXTymAdM3LDI/0IboIUwTu1rEhW7v2TfiVsoYWgkQ4kOVqnI8APUFbIQIFQ==}
 
@@ -14319,7 +14326,7 @@ snapshots:
 
   '@exodus/schemasafe@1.0.0': {}
 
-  '@fern-api/fdr-sdk@0.115.0-3cf21db72(lodash-es@4.17.21)(typescript@4.6.4)':
+  '@fern-api/fdr-sdk@0.115.0-3cf21db72(lodash-es@4.17.21)(typescript@5.6.3)':
     dependencies:
       '@fern-api/ui-core-utils': 0.115.0-3cf21db72
       '@ungap/structured-clone': 1.2.0
@@ -14333,7 +14340,7 @@ snapshots:
       qs: 6.12.0
       tinycolor2: 1.6.0
       title: 3.5.3
-      ts-essentials: 10.0.1(typescript@4.6.4)
+      ts-essentials: 10.0.1(typescript@5.6.3)
       url-join: 5.0.0
     transitivePeerDependencies:
       - encoding
@@ -14639,6 +14646,41 @@ snapshots:
       graceful-fs: 4.2.11
       jest-changed-files: 29.7.0
       jest-config: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      jest-haste-map: 29.7.0
+      jest-message-util: 29.7.0
+      jest-regex-util: 29.6.3
+      jest-resolve: 29.7.0
+      jest-resolve-dependencies: 29.7.0
+      jest-runner: 29.7.0
+      jest-runtime: 29.7.0
+      jest-snapshot: 29.7.0
+      jest-util: 29.7.0
+      jest-validate: 29.7.0
+      jest-watcher: 29.7.0
+      micromatch: 4.0.5
+      pretty-format: 29.7.0
+      slash: 3.0.0
+      strip-ansi: 6.0.1
+    transitivePeerDependencies:
+      - babel-plugin-macros
+      - supports-color
+      - ts-node
+
+  '@jest/core@29.7.0(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))':
+    dependencies:
+      '@jest/console': 29.7.0
+      '@jest/reporters': 29.7.0
+      '@jest/test-result': 29.7.0
+      '@jest/transform': 29.7.0
+      '@jest/types': 29.6.3
+      '@types/node': 18.7.18
+      ansi-escapes: 4.3.2
+      chalk: 4.1.2
+      ci-info: 3.3.2
+      exit: 0.1.2
+      graceful-fs: 4.2.11
+      jest-changed-files: 29.7.0
+      jest-config: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))
       jest-haste-map: 29.7.0
       jest-message-util: 29.7.0
       jest-regex-util: 29.6.3
@@ -16353,6 +16395,21 @@ snapshots:
       - supports-color
       - ts-node
 
+  create-jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3)):
+    dependencies:
+      '@jest/types': 29.6.3
+      chalk: 4.1.2
+      exit: 0.1.2
+      graceful-fs: 4.2.11
+      jest-config: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))
+      jest-util: 29.7.0
+      prompts: 2.4.2
+    transitivePeerDependencies:
+      - '@types/node'
+      - babel-plugin-macros
+      - supports-color
+      - ts-node
+
   create-require@1.1.1: {}
 
   cross-fetch@3.1.8:
@@ -18055,6 +18112,25 @@ snapshots:
       - supports-color
       - ts-node
 
+  jest-cli@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3)):
+    dependencies:
+      '@jest/core': 29.7.0(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))
+      '@jest/test-result': 29.7.0
+      '@jest/types': 29.6.3
+      chalk: 4.1.2
+      create-jest: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))
+      exit: 0.1.2
+      import-local: 3.2.0
+      jest-config: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))
+      jest-util: 29.7.0
+      jest-validate: 29.7.0
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - '@types/node'
+      - babel-plugin-macros
+      - supports-color
+      - ts-node
+
   jest-config@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)):
     dependencies:
       '@babel/core': 7.25.2
@@ -18082,6 +18158,37 @@ snapshots:
     optionalDependencies:
       '@types/node': 18.7.18
       ts-node: 10.9.2(@types/node@18.7.18)(typescript@4.6.4)
+    transitivePeerDependencies:
+      - babel-plugin-macros
+      - supports-color
+
+  jest-config@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3)):
+    dependencies:
+      '@babel/core': 7.25.2
+      '@jest/test-sequencer': 29.7.0
+      '@jest/types': 29.6.3
+      babel-jest: 29.7.0(@babel/core@7.25.2)
+      chalk: 4.1.2
+      ci-info: 3.3.2
+      deepmerge: 4.2.2
+      glob: 7.2.3
+      graceful-fs: 4.2.11
+      jest-circus: 29.7.0
+      jest-environment-node: 29.7.0
+      jest-get-type: 29.6.3
+      jest-regex-util: 29.6.3
+      jest-resolve: 29.7.0
+      jest-runner: 29.7.0
+      jest-util: 29.7.0
+      jest-validate: 29.7.0
+      micromatch: 4.0.5
+      parse-json: 5.2.0
+      pretty-format: 29.7.0
+      slash: 3.0.0
+      strip-json-comments: 3.1.1
+    optionalDependencies:
+      '@types/node': 18.7.18
+      ts-node: 10.9.2(@types/node@18.7.18)(typescript@5.6.3)
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
@@ -18287,9 +18394,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  jest-specific-snapshot@8.0.0(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))):
+  jest-specific-snapshot@8.0.0(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))):
     dependencies:
-      jest: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      jest: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))
       jest-snapshot: 29.7.0
     transitivePeerDependencies:
       - supports-color
@@ -18342,6 +18449,18 @@ snapshots:
       '@jest/types': 29.6.3
       import-local: 3.2.0
       jest-cli: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+    transitivePeerDependencies:
+      - '@types/node'
+      - babel-plugin-macros
+      - supports-color
+      - ts-node
+
+  jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3)):
+    dependencies:
+      '@jest/core': 29.7.0(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))
+      '@jest/types': 29.6.3
+      import-local: 3.2.0
+      jest-cli: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -19650,6 +19769,14 @@ snapshots:
       postcss: 8.4.38
       ts-node: 10.9.2(@types/node@18.7.18)(typescript@4.6.4)
 
+  postcss-load-config@4.0.1(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3)):
+    dependencies:
+      lilconfig: 2.1.0
+      yaml: 2.3.3
+    optionalDependencies:
+      postcss: 8.4.38
+      ts-node: 10.9.2(@types/node@18.7.18)(typescript@5.6.3)
+
   postcss-media-query-parser@0.2.3: {}
 
   postcss-nested@6.0.1(postcss@8.4.38):
@@ -20855,9 +20982,9 @@ snapshots:
     dependencies:
       typescript: 4.6.4
 
-  ts-essentials@10.0.1(typescript@4.6.4):
+  ts-essentials@10.0.1(typescript@5.6.3):
     optionalDependencies:
-      typescript: 4.6.4
+      typescript: 5.6.3
 
   ts-interface-checker@0.1.13: {}
 
@@ -20880,16 +21007,6 @@ snapshots:
       '@jest/types': 29.6.3
       babel-jest: 29.7.0(@babel/core@7.25.2)
 
-  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.24.0)):
-    dependencies:
-      chalk: 4.1.2
-      enhanced-resolve: 5.15.0
-      micromatch: 4.0.5
-      semver: 7.6.2
-      source-map: 0.7.4
-      typescript: 4.6.4
-      webpack: 5.94.0(esbuild@0.24.0)
-
   ts-loader@9.5.1(typescript@4.6.4)(webpack@5.94.0):
     dependencies:
       chalk: 4.1.2
@@ -20898,6 +21015,26 @@ snapshots:
       semver: 7.6.2
       source-map: 0.7.4
       typescript: 4.6.4
+      webpack: 5.94.0
+
+  ts-loader@9.5.1(typescript@5.6.3)(webpack@5.94.0(esbuild@0.24.0)):
+    dependencies:
+      chalk: 4.1.2
+      enhanced-resolve: 5.15.0
+      micromatch: 4.0.5
+      semver: 7.6.2
+      source-map: 0.7.4
+      typescript: 5.6.3
+      webpack: 5.94.0(esbuild@0.24.0)
+
+  ts-loader@9.5.1(typescript@5.6.3)(webpack@5.94.0):
+    dependencies:
+      chalk: 4.1.2
+      enhanced-resolve: 5.15.0
+      micromatch: 4.0.5
+      semver: 7.6.2
+      source-map: 0.7.4
+      typescript: 5.6.3
       webpack: 5.94.0
 
   ts-morph@15.1.0:
@@ -20923,6 +21060,24 @@ snapshots:
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
+  ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3):
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      '@tsconfig/node10': 1.0.8
+      '@tsconfig/node12': 1.0.9
+      '@tsconfig/node14': 1.0.1
+      '@tsconfig/node16': 1.0.2
+      '@types/node': 18.7.18
+      acorn: 8.11.3
+      acorn-walk: 8.3.2
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.2
+      make-error: 1.3.6
+      typescript: 5.6.3
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
+
   ts-poet@6.7.0:
     dependencies:
       dprint-node: 1.0.8
@@ -20945,7 +21100,7 @@ snapshots:
 
   tslib@2.6.2: {}
 
-  tsup@8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4):
+  tsup@8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))(typescript@5.6.3):
     dependencies:
       bundle-require: 4.0.2(esbuild@0.19.12)
       cac: 6.7.14
@@ -20955,7 +21110,7 @@ snapshots:
       execa: 5.1.1
       globby: 11.1.0
       joycon: 3.1.1
-      postcss-load-config: 4.0.1(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      postcss-load-config: 4.0.1(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@5.6.3))
       resolve-from: 5.0.0
       rollup: 4.14.1
       source-map: 0.8.0-beta.0
@@ -20963,7 +21118,7 @@ snapshots:
       tree-kill: 1.2.2
     optionalDependencies:
       postcss: 8.4.38
-      typescript: 4.6.4
+      typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -21035,6 +21190,8 @@ snapshots:
   typedarray@0.0.6: {}
 
   typescript@4.6.4: {}
+
+  typescript@5.6.3: {}
 
   ua-parser-js@1.0.37: {}
 
