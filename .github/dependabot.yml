@@ -11,6 +11,16 @@ updates:
       - "generators/**"
     schedule:
       interval: "weekly"
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
+        exclude-patterns:
+        - "eslint*"
+      eslint:
+        patterns:
+        - "eslint*"
   - package-ecosystem: "gomod"
     directory: "/generators/go"
     schedule:
