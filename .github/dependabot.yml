@@ -8,9 +8,21 @@ updates:
   - package-ecosystem: "npm"
     directories:
       - "packages"
-      - "packages/**"
+      - "packages/commons"
+      - "packages/cli"
+      - "packages/cli/api-importers"
+      - "packages/cli/docs-importers"
+      - "packages/cli/yaml"
       - "generators"
-      - "generators/**"
+      - "generators/csharp"
+      - "generators/php"
+      - "generators/ruby"
+      - "generators/swift"
+      - "generators/typescript"
+      - "generators/typescript/express"
+      - "generators/typescript/model"
+      - "generators/typescript/sdk"
+      - "generators/typescript/utils"
     schedule:
       interval: "weekly"
     groups:
