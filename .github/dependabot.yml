@@ -6,7 +6,9 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/"
+    directories:
+      - "packages/**"
+      - "generators/**"
     schedule:
       interval: "weekly"
   - package-ecosystem: "gomod"
