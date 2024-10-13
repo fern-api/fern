@@ -35,7 +35,7 @@
     "check-docs-release-blockers": "pnpm fern-script check-docs-release-blockers",
     "root-package:check": "pnpm fern-script check-root-package",
     "root-package:fix": "pnpm root-package:check --fix",
-    "seed": "node packages/seed/dist/bundle.cjs",
+    "seed": "node packages/seed/dist/cli.cjs",
     "seed:local": "pnpm --filter @fern-api/seed-cli dist:cli && node packages/seed/dist/cli.cjs",
     "ir:generate": "pnpm --filter @fern-api/ir-sdk generate",
     "openapi-ir:generate": "pnpm --filter @fern-api/openapi-ir generate",
