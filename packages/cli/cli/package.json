@@ -16,9 +16,9 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "bin": {
-    "fern:dev": "./dist/dev/bundle.cjs",
-    "fern:local": "./dist/local/bundle.cjs",
-    "fern:prod": "./dist/prod/bundle.cjs"
+    "fern:dev": "./dist/cli.cjs",
+    "fern:local": "./dist/cli.cjs",
+    "fern:prod": "./dist/cli.cjs"
   },
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
@@ -31,12 +31,9 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "env:dev": "dotenv -e .env.dev",
-    "env:local": "dotenv -e .env.local",
-    "env:prod": "dotenv -e .env.prod",
-    "dist:cli:dev": "pnpm compile &&  pnpm env:dev tsup ./src/cli.ts --format cjs",
-    "dist:cli:local": "pnpm compile &&  pnpm env:local tsup ./src/cli.ts --format cjs",
-    "dist:cli:prod": "pnpm compile &&  pnpm env:prod tsup ./src/cli.ts --format cjs",
+    "dist:cli:dev": "pnpm compile && node build.dev.cjs",
+    "dist:cli:local": "pnpm compile && node build.local.cjs",
+    "dist:cli:prod": "pnpm compile && node build.prod.cjs",
     "publish:cli:dev": "pnpm dist:cli:dev && cd dist/dev && npm publish",
     "publish:cli:prod": "pnpm dist:cli:prod && cd dist/prod && npm publish"
   },
