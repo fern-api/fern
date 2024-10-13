@@ -28,12 +28,6 @@ describe("class", () => {
                 rootNamespace: "",
                 customConfig: {}
             })
-        ).toEqual(`\
-namespace Automotive;
-
-public class Car(string make,string model)
-{
-}
-`);
+        ).toMatchSnapshot();
     });
 });
