@@ -598,7 +598,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                   "jsonExample": {
                     "access_token": "access_token",
                     "expires_in": 1,
-                    "refresh_token": undefined,
+                    "refresh_token": "refresh_token",
                   },
                   "shape": {
                     "shape": {
@@ -892,10 +892,21 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                             "typeId": "type_auth:TokenResponse",
                           },
                           "value": {
-                            "jsonExample": undefined,
+                            "jsonExample": "refresh_token",
                             "shape": {
                               "container": {
-                                "optional": null,
+                                "optional": {
+                                  "jsonExample": "refresh_token",
+                                  "shape": {
+                                    "primitive": {
+                                      "string": {
+                                        "original": "refresh_token",
+                                      },
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
                                 "type": "optional",
                               },
                               "type": "container",
@@ -1596,7 +1607,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                   "jsonExample": {
                     "access_token": "access_token",
                     "expires_in": 1,
-                    "refresh_token": undefined,
+                    "refresh_token": "refresh_token",
                   },
                   "shape": {
                     "shape": {
@@ -1890,10 +1901,21 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                             "typeId": "type_auth:TokenResponse",
                           },
                           "value": {
-                            "jsonExample": undefined,
+                            "jsonExample": "refresh_token",
                             "shape": {
                               "container": {
-                                "optional": null,
+                                "optional": {
+                                  "jsonExample": "refresh_token",
+                                  "shape": {
+                                    "primitive": {
+                                      "string": {
+                                        "original": "refresh_token",
+                                      },
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
                                 "type": "optional",
                               },
                               "type": "container",

@@ -7,8 +7,26 @@ from .utilities import validate_response
 
 
 async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
-    expected_response: typing.Any = {"resource_type": "Account", "name": "name"}
-    expected_types: typing.Any = {"resource_type": None, "name": None, "patient": None, "practitioner": None}
+    expected_response: typing.Any = {
+        "resource_type": "Account",
+        "name": "name",
+        "patient": {
+            "resource_type": "Patient",
+            "name": "name",
+            "scripts": [{"resource_type": "Script", "name": "name"}, {"resource_type": "Script", "name": "name"}],
+        },
+        "practitioner": {"resource_type": "Practitioner", "name": "name"},
+    }
+    expected_types: typing.Any = {
+        "resource_type": None,
+        "name": None,
+        "patient": {
+            "resource_type": None,
+            "name": None,
+            "scripts": ("list", {0: {"resource_type": None, "name": None}, 1: {"resource_type": None, "name": None}}),
+        },
+        "practitioner": {"resource_type": None, "name": None},
+    }
     response = client.get_account(account_id="account_id")
     validate_response(response, expected_response, expected_types)
 
