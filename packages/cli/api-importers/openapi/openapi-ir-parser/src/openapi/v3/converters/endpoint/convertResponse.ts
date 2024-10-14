@@ -157,14 +157,18 @@ function convertResolvedResponse({
                         FernOpenAPIExtension.RESPONSE_PROPERTY
                     ),
                     fullExamples: textEventStreamObject.examples,
-                    schema: convertSchema(
-                        textEventStreamObject.schema,
-                        false,
+                    schema: convertSchema({
+                        schema: textEventStreamObject.schema,
+                        wrapAsNullable: false,
                         context,
-                        responseBreadcrumbs,
+                        breadcrumbs: responseBreadcrumbs,
                         source,
-                        namespace
-                    ),
+                        namespace,
+                        referencedAsRequest: false,
+                        propertiesToExclude: new Set(),
+                        fallback: undefined,
+                        originalName: undefined
+                    }),
                     source
                 });
             case "sse":
@@ -172,14 +176,18 @@ function convertResolvedResponse({
                     description: resolvedResponse.description,
                     responseProperty: undefined,
                     schema: convertSchemaWithExampleToSchema(
-                        convertSchema(
-                            textEventStreamObject.schema,
-                            false,
+                        convertSchema({
+                            schema: textEventStreamObject.schema,
+                            wrapAsNullable: false,
                             context,
-                            responseBreadcrumbs,
+                            breadcrumbs: responseBreadcrumbs,
                             source,
-                            namespace
-                        )
+                            namespace,
+                            referencedAsRequest: false,
+                            propertiesToExclude: new Set(),
+                            fallback: undefined,
+                            originalName: undefined
+                        })
                     ),
                     source
                 });
@@ -195,14 +203,18 @@ function convertResolvedResponse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         fullExamples: jsonMediaObject.examples,
-                        schema: convertSchema(
-                            jsonMediaObject.schema,
-                            false,
+                        schema: convertSchema({
+                            schema: jsonMediaObject.schema,
+                            wrapAsNullable: false,
                             context,
-                            responseBreadcrumbs,
+                            breadcrumbs: responseBreadcrumbs,
                             source,
-                            namespace
-                        ),
+                            namespace,
+                            referencedAsRequest: false,
+                            propertiesToExclude: new Set(),
+                            fallback: undefined,
+                            originalName: undefined
+                        }),
                         source
                     });
                 case "sse":
@@ -210,14 +222,18 @@ function convertResolvedResponse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         schema: convertSchemaWithExampleToSchema(
-                            convertSchema(
-                                jsonMediaObject.schema,
-                                false,
+                            convertSchema({
+                                schema: jsonMediaObject.schema,
+                                wrapAsNullable: false,
                                 context,
-                                responseBreadcrumbs,
+                                breadcrumbs: responseBreadcrumbs,
                                 source,
-                                namespace
-                            )
+                                namespace,
+                                referencedAsRequest: false,
+                                propertiesToExclude: new Set(),
+                                fallback: undefined,
+                                originalName: undefined
+                            })
                         ),
                         source
                     });
@@ -225,7 +241,18 @@ function convertResolvedResponse({
         }
         return ResponseWithExample.json({
             description: resolvedResponse.description,
-            schema: convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs, source, namespace),
+            schema: convertSchema({
+                schema: jsonMediaObject.schema,
+                wrapAsNullable: false,
+                context,
+                breadcrumbs: responseBreadcrumbs,
+                source,
+                namespace,
+                referencedAsRequest: false,
+                propertiesToExclude: new Set(),
+                fallback: undefined,
+                originalName: undefined
+            }),
             responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
             fullExamples: jsonMediaObject.examples,
             source
@@ -300,7 +327,18 @@ function markErrorSchemas({
             generatedName: errorName,
             originalName: undefined,
             description: resolvedResponse.description,
-            schema: convertSchema(mediaObject?.schema ?? {}, false, context, [errorName, "Body"], source, namespace),
+            schema: convertSchema({
+                schema: mediaObject?.schema ?? {},
+                wrapAsNullable: false,
+                context,
+                breadcrumbs: [errorName, "Body"],
+                source,
+                namespace,
+                referencedAsRequest: false,
+                propertiesToExclude: new Set(),
+                fallback: undefined,
+                originalName: undefined
+            }),
             fullExamples: mediaObject?.examples,
             source
         };

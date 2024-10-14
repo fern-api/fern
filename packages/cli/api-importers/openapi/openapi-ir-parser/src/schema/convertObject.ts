@@ -32,6 +32,7 @@ interface ReferencedAllOfInfo {
 export function convertObject({
     nameOverride,
     generatedName,
+    originalName,
     title,
     breadcrumbs,
     properties,
@@ -52,6 +53,7 @@ export function convertObject({
     nameOverride: string | undefined;
     generatedName: string;
     title: string | undefined;
+    originalName: string | undefined;
     breadcrumbs: string[];
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
     description: string | undefined;
@@ -87,14 +89,17 @@ export function convertObject({
                     const resolvedOneOfSchema = isReferenceObject(oneOfSchema)
                         ? context.resolveSchemaReference(oneOfSchema)
                         : oneOfSchema;
-                    const convertedOneOfSchema = convertSchema(
-                        resolvedOneOfSchema,
-                        false,
-                        context.DUMMY,
+                    const convertedOneOfSchema = convertSchema({
+                        schema: resolvedOneOfSchema,
+                        wrapAsNullable: false,
+                        context: context.DUMMY,
                         breadcrumbs,
                         source,
-                        namespace
-                    );
+                        namespace,
+                        referencedAsRequest: false,
+                        propertiesToExclude: new Set(),
+                        originalName
+                    });
                     if (convertedOneOfSchema.type === "object") {
                         inlinedParentProperties.push(
                             ...convertedOneOfSchema.properties.map((property) => {
@@ -133,7 +138,17 @@ export function convertObject({
             });
             context.markSchemaAsReferencedByNonRequest(schemaId);
         } else {
-            const allOfSchema = convertSchema(allOfElement, false, context, breadcrumbs, source, namespace);
+            const allOfSchema = convertSchema({
+                schema: allOfElement,
+                wrapAsNullable: false,
+                context,
+                breadcrumbs,
+                source,
+                namespace,
+                referencedAsRequest: false,
+                propertiesToExclude: new Set(),
+                originalName
+            });
             if (allOfSchema.type === "object") {
                 inlinedParentProperties.push(...allOfSchema.properties);
             }
@@ -183,8 +198,19 @@ export function convertObject({
             );
             const propertyBreadcrumbs = [...breadcrumbs, propertyName];
             const generatedName = getGeneratedPropertyName(propertyBreadcrumbs);
+            const schemaProps = {
+                schema: propertySchema,
+                wrapAsNullable: false,
+                context,
+                breadcrumbs: propertyBreadcrumbs,
+                source,
+                namespace,
+                originalName: isReference ? undefined : propertyName,
+                referencedAsRequest: false,
+                propertiesToExclude: new Set<string>()
+            };
             const schema = isRequired
-                ? convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace)
+                ? convertSchema(schemaProps)
                 : SchemaWithExample.optional({
                       nameOverride,
                       generatedName,
@@ -192,7 +218,7 @@ export function convertObject({
                       title,
                       description: undefined,
                       availability,
-                      value: convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace),
+                      value: convertSchema(schemaProps),
                       groupName
                   });
 
@@ -242,6 +268,7 @@ export function convertObject({
         generatedName,
         title,
         wrapAsNullable,
+        originalName,
         properties: convertedProperties.filter((objectProperty) => {
             return !propertiesToExclude.has(objectProperty.key);
         }),
@@ -259,6 +286,7 @@ export function convertObject({
 export function wrapObject({
     nameOverride,
     generatedName,
+    originalName,
     title,
     wrapAsNullable,
     properties,
@@ -273,6 +301,7 @@ export function wrapObject({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    originalName: string | undefined;
     title: string | undefined;
     wrapAsNullable: boolean;
     properties: ObjectPropertyWithExample[];
@@ -289,14 +318,14 @@ export function wrapObject({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
-            originalName: undefined,
+            originalName,
             title,
             value: SchemaWithExample.object({
                 description,
                 properties,
                 nameOverride,
                 generatedName,
-                originalName: undefined,
+                originalName,
                 title,
                 allOf,
                 allOfPropertyConflicts,
@@ -316,7 +345,7 @@ export function wrapObject({
         properties,
         nameOverride,
         generatedName,
-        originalName: undefined,
+        originalName,
         title,
         allOf,
         allOfPropertyConflicts,
@@ -352,14 +381,17 @@ function getAllProperties({
         };
     }
     for (const [propertyName, propertySchema] of Object.entries(resolvedSchema.properties ?? {})) {
-        const convertedPropertySchema = convertSchema(
-            propertySchema,
-            false,
+        const convertedPropertySchema = convertSchema({
+            schema: propertySchema,
+            wrapAsNullable: false,
             context,
-            [...resolvedBreadCrumbs, propertyName],
+            breadcrumbs: [...resolvedBreadCrumbs, propertyName],
             source,
-            namespace
-        );
+            namespace,
+            originalName: propertyName,
+            referencedAsRequest: false,
+            propertiesToExclude: new Set()
+        });
         properties[propertyName] = convertedPropertySchema;
     }
     return properties;

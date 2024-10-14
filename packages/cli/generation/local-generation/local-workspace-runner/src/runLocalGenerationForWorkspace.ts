@@ -32,10 +32,7 @@ export async function runLocalGenerationForWorkspace({
                 } else {
                     const fernWorkspace = await workspace.toFernWorkspace(
                         { context },
-                        {
-                            ...workspace.generatorsConfiguration?.apiWideSettings,
-                            ...getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
-                        }
+                        getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
                     );
 
                     await writeFilesToDiskAndRunGenerator({

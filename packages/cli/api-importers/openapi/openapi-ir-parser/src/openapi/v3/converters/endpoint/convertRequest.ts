@@ -91,14 +91,18 @@ export function convertRequest({
                   id: undefined,
                   schema: multipartSchema
               };
-        const convertedMultipartSchema = convertSchema(
-            resolvedMultipartSchema.schema,
-            false,
+        const convertedMultipartSchema = convertSchema({
+            schema: resolvedMultipartSchema.schema,
+            wrapAsNullable: false,
             context,
-            requestBreadcrumbs,
+            breadcrumbs: requestBreadcrumbs,
             source,
-            namespace
-        );
+            namespace,
+            referencedAsRequest: true,
+            propertiesToExclude: new Set(),
+            fallback: undefined,
+            originalName: undefined
+        });
         const properties: MultipartRequestProperty[] = [];
         if (convertedMultipartSchema.type === "object") {
             for (const property of convertedMultipartSchema.properties) {
@@ -190,15 +194,18 @@ export function convertRequest({
     if (jsonMediaObject == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(
-        jsonMediaObject.schema,
-        false,
+    const requestSchema = convertSchema({
+        schema: jsonMediaObject.schema,
+        wrapAsNullable: false,
         context,
-        requestBreadcrumbs,
+        breadcrumbs: requestBreadcrumbs,
         source,
         namespace,
-        true
-    );
+        referencedAsRequest: true,
+        propertiesToExclude: new Set(),
+        fallback: undefined,
+        originalName: undefined
+    });
     return RequestWithExample.json({
         description: undefined,
         schema: requestSchema,

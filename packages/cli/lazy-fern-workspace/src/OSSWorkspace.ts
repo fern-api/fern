@@ -99,10 +99,6 @@ export declare namespace OSSWorkspace {
          * Whether or not to cooerce enums to undiscriminated union literals.
          */
         cooerceEnumsToLiterals?: boolean;
-        /*
-         * Whether or not to inline types.
-         */
-        shouldInlineTypes?: boolean;
     }
 }
 
@@ -164,7 +160,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             taskContext: context,
             ir: openApiIr,
             enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,
-            shouldInlineTypes: settings?.shouldInlineTypes ?? false,
+            shouldInlineTypes: this.generatorsConfiguration?.apiWideSettings?.shouldInlineTypes ?? false,
             detectGlobalHeaders: settings?.detectGlobalHeaders ?? true
         });
 

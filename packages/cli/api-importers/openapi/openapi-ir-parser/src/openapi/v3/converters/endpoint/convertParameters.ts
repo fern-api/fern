@@ -63,20 +63,21 @@ export function convertParameters({
 
         let schema =
             resolvedParameter.schema != null
-                ? convertSchema(
-                      resolvedParameter.schema,
-                      !isRequired,
+                ? convertSchema({
+                      schema: resolvedParameter.schema,
+                      wrapAsNullable: !isRequired,
                       context,
-                      parameterBreadcrumbs,
+                      breadcrumbs: parameterBreadcrumbs,
                       source,
-                      context.namespace,
-                      false,
-                      new Set(),
-                      getExamplesString({
+                      namespace: context.namespace,
+                      originalName: undefined,
+                      referencedAsRequest: false,
+                      propertiesToExclude: new Set(),
+                      fallback: getExamplesString({
                           schema: resolvedParameter,
                           logger: context.logger
                       })
-                  )
+                  })
                 : isRequired
                 ? SchemaWithExample.primitive({
                       nameOverride: undefined,

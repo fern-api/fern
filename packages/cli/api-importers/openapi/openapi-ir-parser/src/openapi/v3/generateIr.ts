@@ -157,19 +157,40 @@ export function generateIr({
                     if (ERROR_NAMES.has(key)) {
                         return [
                             key,
-                            convertSchema(
+                            convertSchema({
                                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                { ...schema, "x-fern-type-name": `${key}Body` } as any as OpenAPIV3.SchemaObject,
-                                false,
+                                schema: {
+                                    ...schema,
+                                    "x-fern-type-name": `${key}Body`
+                                } as any as OpenAPIV3.SchemaObject,
+                                wrapAsNullable: false,
                                 context,
-                                [key],
+                                breadcrumbs: [key],
                                 source,
-                                namespace
-                            )
+                                namespace,
+                                referencedAsRequest: false,
+                                propertiesToExclude: new Set(),
+                                fallback: undefined,
+                                originalName: undefined
+                            })
                         ];
                     }
                 }
-                return [key, convertSchema(schema, false, context, [key], source, namespace)];
+                return [
+                    key,
+                    convertSchema({
+                        schema,
+                        wrapAsNullable: false,
+                        context,
+                        breadcrumbs: [key],
+                        source,
+                        namespace,
+                        referencedAsRequest: false,
+                        propertiesToExclude: new Set(),
+                        fallback: undefined,
+                        originalName: undefined
+                    })
+                ];
             })
             .filter((entry) => entry.length > 0)
     );
@@ -432,7 +453,7 @@ function maybeAddBackDiscriminantsFromSchemas(
                         schema: SchemaWithExample.literal({
                             nameOverride: undefined,
                             generatedName: getGeneratedTypeName([schema.generatedName, discriminantValue]),
-                            originalName: undefined,
+                            originalName: getGeneratedTypeName([property.key, discriminantValue]),
                             title: undefined,
                             value: LiteralSchemaValue.string(discriminantValue),
                             groupName: undefined,

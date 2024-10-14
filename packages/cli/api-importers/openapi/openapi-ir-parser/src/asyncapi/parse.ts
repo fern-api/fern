@@ -72,7 +72,17 @@ export function parseAsyncAPI({
     let parsedChannel: WebsocketChannel | undefined = undefined;
 
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        const convertedSchema = convertSchema(schema, false, context, [schemaId], source, namespace);
+        const convertedSchema = convertSchema({
+            schema,
+            wrapAsNullable: false,
+            context,
+            breadcrumbs: [schemaId],
+            source,
+            namespace,
+            originalName: undefined,
+            referencedAsRequest: false,
+            propertiesToExclude: new Set()
+        });
         schemas[schemaId] = convertedSchema;
     }
 
@@ -93,7 +103,17 @@ export function parseAsyncAPI({
                     parameterNameOverride: undefined,
                     schema:
                         parameter.schema != null
-                            ? convertSchema(parameter.schema, false, context, breadcrumbs, source, namespace)
+                            ? convertSchema({
+                                  schema: parameter.schema,
+                                  wrapAsNullable: false,
+                                  context,
+                                  breadcrumbs,
+                                  source,
+                                  namespace,
+                                  originalName: undefined,
+                                  referencedAsRequest: false,
+                                  propertiesToExclude: new Set()
+                              })
                             : SchemaWithExample.primitive({
                                   schema: PrimitiveSchemaValueWithExample.string({
                                       default: undefined,
@@ -125,14 +145,17 @@ export function parseAsyncAPI({
                 const resolvedHeader = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
                 headers.push({
                     name,
-                    schema: convertSchema(
-                        resolvedHeader,
-                        !required.includes(name),
+                    schema: convertSchema({
+                        schema: resolvedHeader,
+                        wrapAsNullable: !required.includes(name),
                         context,
                         breadcrumbs,
                         source,
-                        namespace
-                    ),
+                        namespace,
+                        originalName: undefined,
+                        referencedAsRequest: false,
+                        propertiesToExclude: new Set()
+                    }),
                     description: resolvedHeader.description,
                     parameterNameOverride: undefined,
                     env: undefined,
@@ -151,14 +174,17 @@ export function parseAsyncAPI({
                     : schema;
                 queryParameters.push({
                     name,
-                    schema: convertSchema(
-                        resolvedQueryParameter,
-                        !required.includes(name),
+                    schema: convertSchema({
+                        schema: resolvedQueryParameter,
+                        wrapAsNullable: !required.includes(name),
                         context,
                         breadcrumbs,
                         source,
-                        namespace
-                    ),
+                        namespace,
+                        originalName: undefined,
+                        referencedAsRequest: false,
+                        propertiesToExclude: new Set()
+                    }),
                     description: resolvedQueryParameter.description,
                     parameterNameOverride: undefined,
                     availability: convertAvailability(resolvedQueryParameter),
@@ -324,7 +350,8 @@ function convertMessageToSchema({
             encoding: undefined,
             source,
             namespace: context.namespace,
-            subtypePrefixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
+            subtypePrefixOverrides: asyncApiOptions.naming === "v2" ? prefixes : [],
+            originalName: undefined
         });
     }
     return undefined;

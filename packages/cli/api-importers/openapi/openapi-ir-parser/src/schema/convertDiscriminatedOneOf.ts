@@ -15,6 +15,7 @@ import { isReferenceObject } from "./utils/isReferenceObject";
 export function convertDiscriminatedOneOf({
     nameOverride,
     generatedName,
+    originalName,
     title,
     breadcrumbs,
     properties,
@@ -31,6 +32,7 @@ export function convertDiscriminatedOneOf({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    originalName: string | undefined;
     title: string | undefined;
     breadcrumbs: string[];
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
@@ -75,14 +77,17 @@ export function convertDiscriminatedOneOf({
         })
         .map(([propertyName, propertySchema]) => {
             const isRequired = required != null && required.includes(propertyName);
-            const schema = convertSchema(
-                propertySchema,
-                !isRequired,
+            const schema = convertSchema({
+                schema: propertySchema,
+                wrapAsNullable: !isRequired,
                 context,
-                [...breadcrumbs, propertyName],
+                breadcrumbs: [...breadcrumbs, propertyName],
                 source,
-                namespace
-            );
+                namespace,
+                originalName,
+                referencedAsRequest: false,
+                propertiesToExclude: new Set()
+            });
             return {
                 key: propertyName,
                 schema
@@ -91,6 +96,7 @@ export function convertDiscriminatedOneOf({
     return wrapDiscriminantedOneOf({
         nameOverride,
         generatedName,
+        originalName,
         title,
         wrapAsNullable,
         properties: convertedProperties,
@@ -106,6 +112,7 @@ export function convertDiscriminatedOneOf({
 export function convertDiscriminatedOneOfWithVariants({
     nameOverride,
     generatedName,
+    originalName,
     title,
     breadcrumbs,
     properties,
@@ -123,6 +130,7 @@ export function convertDiscriminatedOneOfWithVariants({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    originalName: string | undefined;
     title: string | undefined;
     breadcrumbs: string[];
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
@@ -153,16 +161,18 @@ export function convertDiscriminatedOneOfWithVariants({
                 context.markReferencedByDiscriminatedUnion(schema, discriminant, 1);
                 return [discriminantValue, subtypeReference];
             } else {
-                const variantSchema = convertSchemaObject(
+                const variantSchema = convertSchemaObject({
                     schema,
-                    false,
+                    wrapAsNullable: false,
                     context,
-                    [...breadcrumbs, discriminantValue],
+                    breadcrumbs: [...breadcrumbs, discriminantValue],
                     encoding,
                     source,
                     namespace,
-                    new Set([discriminant])
-                );
+                    originalName,
+                    referencedAsRequest: false,
+                    propertiesToExclude: new Set([discriminant])
+                });
                 return [discriminantValue, variantSchema];
             }
         })
@@ -173,14 +183,17 @@ export function convertDiscriminatedOneOfWithVariants({
         })
         .map(([propertyName, propertySchema]) => {
             const isRequired = required != null && required.includes(propertyName);
-            const schema = convertSchema(
-                propertySchema,
-                !isRequired,
+            const schema = convertSchema({
+                schema: propertySchema,
+                wrapAsNullable: !isRequired,
                 context,
-                [...breadcrumbs, propertyName],
+                breadcrumbs: [...breadcrumbs, propertyName],
                 source,
-                namespace
-            );
+                namespace,
+                originalName,
+                referencedAsRequest: false,
+                propertiesToExclude: new Set([discriminant])
+            });
             return {
                 key: propertyName,
                 schema
@@ -189,6 +202,7 @@ export function convertDiscriminatedOneOfWithVariants({
     return wrapDiscriminantedOneOf({
         nameOverride,
         generatedName,
+        originalName,
         title,
         wrapAsNullable,
         properties: convertedProperties,
@@ -204,6 +218,7 @@ export function convertDiscriminatedOneOfWithVariants({
 export function wrapDiscriminantedOneOf({
     nameOverride,
     generatedName,
+    originalName,
     title,
     wrapAsNullable,
     properties,
@@ -216,6 +231,7 @@ export function wrapDiscriminantedOneOf({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    originalName: string | undefined;
     title: string | undefined;
     wrapAsNullable: boolean;
     properties: CommonPropertyWithExample[];
@@ -230,7 +246,7 @@ export function wrapDiscriminantedOneOf({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
-            originalName: undefined,
+            originalName,
             title,
             value: SchemaWithExample.oneOf(
                 OneOfSchemaWithExample.discriminated({
@@ -239,7 +255,7 @@ export function wrapDiscriminantedOneOf({
                     discriminantProperty: discriminant,
                     nameOverride,
                     generatedName,
-                    originalName: undefined,
+                    originalName,
                     title,
                     schemas: subtypes,
                     commonProperties: properties,
@@ -260,7 +276,7 @@ export function wrapDiscriminantedOneOf({
             discriminantProperty: discriminant,
             nameOverride,
             generatedName,
-            originalName: undefined,
+            originalName,
             title,
             schemas: subtypes,
             commonProperties: properties,

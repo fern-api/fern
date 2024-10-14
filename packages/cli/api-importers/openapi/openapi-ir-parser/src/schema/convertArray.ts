@@ -6,6 +6,7 @@ import { SchemaParserContext } from "./SchemaParserContext";
 export function convertArray({
     nameOverride,
     generatedName,
+    originalName,
     title,
     breadcrumbs,
     item,
@@ -20,6 +21,7 @@ export function convertArray({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    originalName: string | undefined;
     title: string | undefined;
     breadcrumbs: string[];
     item: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
@@ -37,17 +39,28 @@ export function convertArray({
             ? SchemaWithExample.unknown({
                   nameOverride,
                   generatedName,
-                  originalName: undefined,
+                  originalName,
                   title,
                   description: undefined,
                   availability: undefined,
                   example: undefined,
                   groupName
               })
-            : convertSchema(item, false, context, [...breadcrumbs, "Item"], source, namespace);
+            : convertSchema({
+                  schema: item,
+                  wrapAsNullable: false,
+                  context,
+                  breadcrumbs: [...breadcrumbs, "Item"],
+                  source,
+                  namespace,
+                  originalName,
+                  referencedAsRequest: false,
+                  propertiesToExclude: new Set()
+              });
     return wrapArray({
         nameOverride,
         generatedName,
+        originalName,
         title,
         groupName,
         itemSchema,
@@ -61,6 +74,7 @@ export function convertArray({
 export function wrapArray({
     nameOverride,
     generatedName,
+    originalName,
     title,
     itemSchema,
     wrapAsNullable,
@@ -71,6 +85,7 @@ export function wrapArray({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    originalName: string | undefined;
     title: string | undefined;
     itemSchema: SchemaWithExample;
     wrapAsNullable: boolean;
@@ -83,12 +98,12 @@ export function wrapArray({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
-            originalName: undefined,
+            originalName,
             title,
             value: SchemaWithExample.array({
                 nameOverride,
                 generatedName,
-                originalName: undefined,
+                originalName,
                 title,
                 value: itemSchema,
                 description,
@@ -104,7 +119,7 @@ export function wrapArray({
     return SchemaWithExample.array({
         nameOverride,
         generatedName,
-        originalName: undefined,
+        originalName,
         title,
         value: itemSchema,
         description,
