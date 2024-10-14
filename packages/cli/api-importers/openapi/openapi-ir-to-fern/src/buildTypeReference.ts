@@ -595,7 +595,9 @@ export function buildEnumTypeReference({
     const name = schema.nameOverride ?? schema.generatedName;
     context.builder.addType(declarationFile, {
         name,
-        schema: enumTypeDeclaration.schema
+        schema: enumTypeDeclaration.schema,
+        shouldTryToInlineType: true,
+        maybeOriginalName: schema.originalName
     });
     const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null && schema.default == null && schema.title == null) {
@@ -639,7 +641,9 @@ export function buildObjectTypeReference({
     const name = schema.nameOverride ?? schema.generatedName;
     context.builder.addType(declarationFile, {
         name,
-        schema: objectTypeDeclaration.schema
+        schema: objectTypeDeclaration.schema,
+        shouldTryToInlineType: true,
+        maybeOriginalName: schema.originalName
     });
     const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null && schema.title == null) {
@@ -674,7 +678,9 @@ export function buildOneOfTypeReference({
     const name = schema.nameOverride ?? schema.generatedName;
     context.builder.addType(declarationFile, {
         name,
-        schema: unionTypeDeclaration.schema
+        schema: unionTypeDeclaration.schema,
+        shouldTryToInlineType: true,
+        maybeOriginalName: schema.originalName
     });
     const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null && schema.title == null) {

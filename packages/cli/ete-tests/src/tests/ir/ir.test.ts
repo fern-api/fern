@@ -53,6 +53,9 @@ const FIXTURES: Fixture[] = [
     },
     {
         name: "response-property"
+    },
+    {
+        name: "api-wide-settings"
     }
 ];
 

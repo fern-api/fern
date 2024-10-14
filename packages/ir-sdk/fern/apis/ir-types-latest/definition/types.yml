@@ -171,6 +171,7 @@ types:
       fernFilepath: commons.FernFilepath
       name: commons.Name
       default: optional<NamedTypeDefault>
+      originalName: optional<commons.Name>
       inline: optional<boolean>
 
   NamedTypeDefault:

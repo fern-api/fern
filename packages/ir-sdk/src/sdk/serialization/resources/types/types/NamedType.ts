@@ -16,6 +16,7 @@ export const NamedType: core.serialization.ObjectSchema<serializers.NamedType.Ra
         fernFilepath: FernFilepath,
         name: Name,
         default: NamedTypeDefault.optional(),
+        originalName: Name.optional(),
         inline: core.serialization.boolean().optional(),
     });
 
@@ -25,6 +26,7 @@ export declare namespace NamedType {
         fernFilepath: FernFilepath.Raw;
         name: Name.Raw;
         default?: NamedTypeDefault.Raw | null;
+        originalName?: Name.Raw | null;
         inline?: boolean | null;
     }
 }

@@ -98,6 +98,7 @@ function getQueryParameterTypeReference({
                     schema: Schema.optional({
                         nameOverride: schema.nameOverride,
                         generatedName: schema.generatedName,
+                        originalName: schema.originalName,
                         title: schema.title,
                         value: resolvedSchema.value,
                         description: schema.description ?? resolvedSchema.description,
@@ -112,7 +113,7 @@ function getQueryParameterTypeReference({
                 allowMultiple: true
             };
         } else if (resolvedSchema.type === "oneOf" && resolvedSchema.value.type === "undisciminated") {
-            // Try to generated enum from literal values
+            // Try to generate enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
             for (const [_, schema] of Object.entries(resolvedSchema.value.schemas)) {
                 if (schema.type === "literal" && schema.value.type === "string") {
@@ -130,7 +131,9 @@ function getQueryParameterTypeReference({
             if (potentialEnumValues.length > 0) {
                 context.builder.addType(fileContainingReference, {
                     name: schema.generatedName,
-                    schema: { enum: potentialEnumValues }
+                    schema: { enum: potentialEnumValues },
+                    shouldTryToInlineType: false,
+                    maybeOriginalName: undefined
                 });
                 return {
                     value: schema.generatedName,
@@ -150,6 +153,7 @@ function getQueryParameterTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
+                                originalName: schema.originalName,
                                 title: schema.title,
                                 value: secondSchema,
                                 description: schema.description,
@@ -173,6 +177,7 @@ function getQueryParameterTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
+                                originalName: schema.originalName,
                                 title: schema.title,
                                 value: firstSchema,
                                 description: schema.description,
@@ -213,6 +218,7 @@ function getQueryParameterTypeReference({
                         schema: Schema.optional({
                             nameOverride: schema.nameOverride,
                             generatedName: schema.generatedName,
+                            originalName: schema.originalName,
                             title: schema.title,
                             value: resolvedSchema.value,
                             description: schema.description ?? resolvedSchema.description,
@@ -234,6 +240,7 @@ function getQueryParameterTypeReference({
                     schema: Schema.optional({
                         nameOverride: schema.nameOverride,
                         generatedName: schema.generatedName,
+                        originalName: schema.originalName,
                         title: schema.title,
                         value: schema.value.value,
                         description: schema.description,
@@ -265,7 +272,9 @@ function getQueryParameterTypeReference({
             if (potentialEnumValues.length > 0) {
                 context.builder.addType(fileContainingReference, {
                     name: schema.generatedName,
-                    schema: { enum: potentialEnumValues }
+                    schema: { enum: potentialEnumValues },
+                    shouldTryToInlineType: true,
+                    maybeOriginalName: schema.originalName
                 });
                 return {
                     value: `optional<${schema.value.value.generatedName}>`,
@@ -285,6 +294,7 @@ function getQueryParameterTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
+                                originalName: schema.originalName,
                                 title: schema.title,
                                 value: secondSchema,
                                 description: schema.description,
@@ -308,6 +318,7 @@ function getQueryParameterTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
+                                originalName: schema.originalName,
                                 title: schema.title,
                                 value: firstSchema,
                                 description: schema.description,
@@ -329,6 +340,7 @@ function getQueryParameterTypeReference({
                     schema: Schema.optional({
                         nameOverride: schema.nameOverride,
                         generatedName: schema.generatedName,
+                        originalName: schema.originalName,
                         title: schema.title,
                         value: oneOfSchema,
                         description: undefined,
@@ -360,6 +372,7 @@ function getQueryParameterTypeReference({
                 schema: Schema.optional({
                     nameOverride: schema.nameOverride,
                     generatedName: schema.generatedName,
+                    originalName: schema.originalName,
                     title: schema.title,
                     value: schema.value,
                     description: schema.description,

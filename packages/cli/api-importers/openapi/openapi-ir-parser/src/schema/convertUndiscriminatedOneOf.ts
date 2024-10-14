@@ -31,6 +31,7 @@ export type UndiscriminatedOneOfPrefix = UndiscriminatedOneOfPrefixName | Undisc
 export function convertUndiscriminatedOneOf({
     nameOverride,
     generatedName,
+    originalName,
     title,
     breadcrumbs,
     description,
@@ -46,6 +47,7 @@ export function convertUndiscriminatedOneOf({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    originalName: string | undefined;
     title: string | undefined;
     breadcrumbs: string[];
     description: string | undefined;
@@ -67,6 +69,7 @@ export function convertUndiscriminatedOneOf({
                 return SchemaWithExample.literal({
                     nameOverride: undefined,
                     generatedName: getGeneratedTypeName([generatedName, enumValue]),
+                    originalName: originalName != null ? getGeneratedTypeName([originalName, enumValue]) : undefined,
                     title: undefined,
                     value: LiteralSchemaValue.string(enumValue),
                     groupName: undefined,
@@ -83,7 +86,17 @@ export function convertUndiscriminatedOneOf({
             }
         }
         return [
-            convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source, namespace)
+            convertSchema({
+                schema,
+                wrapAsNullable: false,
+                context,
+                breadcrumbs: [...breadcrumbs, subtypePrefix ?? `${index}`],
+                source,
+                namespace,
+                originalName,
+                referencedAsRequest: false,
+                propertiesToExclude: new Set()
+            })
         ];
     });
 
@@ -122,6 +135,7 @@ export function convertUndiscriminatedOneOf({
         return convertEnum({
             nameOverride,
             generatedName,
+            originalName,
             title,
             wrapAsNullable,
             description,
@@ -143,6 +157,7 @@ export function convertUndiscriminatedOneOf({
     return wrapUndiscriminantedOneOf({
         nameOverride,
         generatedName,
+        originalName,
         title,
         wrapAsNullable,
         description,
@@ -157,6 +172,7 @@ export function convertUndiscriminatedOneOf({
 export function convertUndiscriminatedOneOfWithDiscriminant({
     nameOverride,
     generatedName,
+    originalName,
     title,
     description,
     availability,
@@ -170,6 +186,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    originalName: string | undefined;
     title: string | undefined;
     description: string | undefined;
     availability: Availability | undefined;
@@ -201,6 +218,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             subtypeReference.properties = {
                 [discriminator.propertyName]: SchemaWithExample.literal({
                     nameOverride: undefined,
+                    originalName:
+                        originalName != null ? getGeneratedTypeName([originalName, discriminantValue]) : undefined,
                     generatedName: getGeneratedTypeName([generatedName, discriminantValue]),
                     title: undefined,
                     value: LiteralSchemaValue.string(discriminantValue),
@@ -252,6 +271,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         return convertEnum({
             nameOverride,
             generatedName,
+            originalName,
             title,
             wrapAsNullable,
             description,
@@ -273,6 +293,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     return wrapUndiscriminantedOneOf({
         nameOverride,
         generatedName,
+        originalName,
         title,
         wrapAsNullable,
         description,
@@ -346,6 +367,7 @@ function getUniqueSubTypeNames({
 export function wrapUndiscriminantedOneOf({
     nameOverride,
     generatedName,
+    originalName,
     title,
     wrapAsNullable,
     description,
@@ -359,6 +381,7 @@ export function wrapUndiscriminantedOneOf({
     nameOverride: string | undefined;
     generatedName: string;
     title: string | undefined;
+    originalName: string | undefined;
     description: string | undefined;
     availability: Availability | undefined;
     subtypes: SchemaWithExample[];
@@ -370,9 +393,11 @@ export function wrapUndiscriminantedOneOf({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            originalName,
             title,
             value: SchemaWithExample.oneOf(
                 OneOfSchemaWithExample.undisciminated({
+                    originalName,
                     description,
                     availability,
                     nameOverride,
@@ -395,6 +420,7 @@ export function wrapUndiscriminantedOneOf({
             availability,
             nameOverride,
             generatedName,
+            originalName,
             title,
             schemas: subtypes,
             groupName,

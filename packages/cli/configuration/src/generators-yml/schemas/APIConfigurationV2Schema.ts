@@ -59,9 +59,16 @@ export const AsyncAPIOrOpenAPISpecSchema = z.union([OpenAPISpecSchema, AsyncAPIS
 
 export type AsyncAPIOrOpenAPISpecSchema = z.infer<typeof AsyncAPIOrOpenAPISpecSchema>;
 
+export const APIWideSettingsSchema = z.object({
+    "inline-types": z.optional(z.boolean())
+});
+
+export type APIWideSettingsSchema = z.infer<typeof APIWideSettingsSchema>;
+
 export const APIConfigurationV2Schema = z
     .object({
         auth: z.optional(RawSchemas.ApiAuthSchema),
+        settings: z.optional(APIWideSettingsSchema),
         // You can't union Conjure specs with OpenAPI and AsyncAPI (drastically inreases complexity)
         specs: z.union([z.array(AsyncAPIOrOpenAPISpecSchema), ConjureSchema])
     })

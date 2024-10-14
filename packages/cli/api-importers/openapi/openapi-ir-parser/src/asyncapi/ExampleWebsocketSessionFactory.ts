@@ -107,14 +107,17 @@ export class ExampleWebsocketSessionFactory {
                     ? context.resolveSchemaReference(messageSchema.payload)
                     : messageSchema.payload;
                 const example = this.exampleTypeFactory.buildExample({
-                    schema: convertSchema(
-                        resolvedSchema,
-                        false,
+                    schema: convertSchema({
+                        schema: resolvedSchema,
+                        wrapAsNullable: false,
                         context,
-                        [messageExample.messageId],
+                        breadcrumbs: [messageExample.messageId],
                         source,
-                        namespace
-                    ),
+                        namespace,
+                        originalName: undefined,
+                        referencedAsRequest: false,
+                        propertiesToExclude: new Set()
+                    }),
                     exampleId: undefined,
                     example: messageExample.value,
                     options: {

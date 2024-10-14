@@ -13,5 +13,6 @@ export interface NamedType {
     fernFilepath: FernIr.FernFilepath;
     name: FernIr.Name;
     default: FernIr.NamedTypeDefault | undefined;
+    originalName: FernIr.Name | undefined;
     inline: boolean | undefined;
 }

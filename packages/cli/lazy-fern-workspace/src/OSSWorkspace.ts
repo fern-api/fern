@@ -160,6 +160,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             taskContext: context,
             ir: openApiIr,
             enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,
+            shouldInlineTypes: this.generatorsConfiguration?.apiWideSettings?.shouldInlineTypes ?? false,
             detectGlobalHeaders: settings?.detectGlobalHeaders ?? true
         });
 

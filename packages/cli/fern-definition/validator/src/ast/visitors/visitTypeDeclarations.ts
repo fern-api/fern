@@ -72,7 +72,9 @@ export async function visitTypeDeclaration({
                     examples: visitExamples,
                     validation: noop,
                     encoding: noop,
-                    source: noop
+                    source: noop,
+                    inline: noop,
+                    originalName: noop
                 });
             }
         },
@@ -123,7 +125,9 @@ export async function visitTypeDeclaration({
                 audiences: noop,
                 encoding: noop,
                 source: noop,
-                examples: visitExamples
+                examples: visitExamples,
+                inline: noop,
+                originalName: noop
             });
         },
         discriminatedUnion: async (union) => {
@@ -167,7 +171,9 @@ export async function visitTypeDeclaration({
                 audiences: noop,
                 encoding: noop,
                 source: noop,
-                examples: visitExamples
+                examples: visitExamples,
+                inline: noop,
+                originalName: noop
             });
         },
         undiscriminatedUnion: async (union) => {
@@ -192,7 +198,9 @@ export async function visitTypeDeclaration({
                 audiences: noop,
                 encoding: noop,
                 source: noop,
-                examples: visitExamples
+                examples: visitExamples,
+                inline: noop,
+                originalName: noop
             });
         },
         enum: async (_enum) => {
@@ -220,7 +228,9 @@ export async function visitTypeDeclaration({
                 default: noop,
                 encoding: noop,
                 source: noop,
-                examples: visitExamples
+                examples: visitExamples,
+                inline: noop,
+                originalName: noop
             });
         }
     });

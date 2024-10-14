@@ -10,6 +10,7 @@ import { ReadmeSchema } from "./schemas/ReadmeSchema";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
+    apiWideSettings: APIWideSettings | undefined;
     defaultGroup: string | undefined;
     reviewers: Reviewers | undefined;
     groups: GeneratorGroup[];
@@ -44,6 +45,10 @@ export interface ConjureAPIDefinition
         RawSchemas.WithHeadersSchema {
     type: "conjure";
     pathToConjureDefinition: string;
+}
+
+export interface APIWideSettings {
+    shouldInlineTypes: boolean | undefined;
 }
 
 export interface APIDefinitionSettings {

@@ -15,6 +15,7 @@ import { isReferenceObject } from "./utils/isReferenceObject";
 export function convertAdditionalProperties({
     nameOverride,
     generatedName,
+    originalName,
     title,
     breadcrumbs,
     additionalProperties,
@@ -30,6 +31,7 @@ export function convertAdditionalProperties({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    originalName: string | undefined;
     title: string | undefined;
     breadcrumbs: string[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
@@ -47,6 +49,7 @@ export function convertAdditionalProperties({
         return wrapMap({
             nameOverride,
             generatedName,
+            originalName,
             title,
             wrapAsNullable,
             description,
@@ -54,6 +57,7 @@ export function convertAdditionalProperties({
             keySchema: {
                 nameOverride: undefined,
                 generatedName: `${generatedName}Key`,
+                originalName: originalName !== null ? `${originalName}Key` : undefined,
                 title: undefined,
                 description: undefined,
                 availability: undefined,
@@ -69,6 +73,7 @@ export function convertAdditionalProperties({
             },
             valueSchema: SchemaWithExample.unknown({
                 nameOverride: undefined,
+                originalName: originalName !== null ? `${originalName}Value` : undefined,
                 generatedName: `${generatedName}Value`,
                 title: undefined,
                 description: undefined,
@@ -88,9 +93,11 @@ export function convertAdditionalProperties({
         wrapAsNullable,
         description,
         availability,
+        originalName,
         keySchema: {
             nameOverride: undefined,
             generatedName: `${generatedName}Key`,
+            originalName: originalName !== null ? `${originalName}Key` : undefined,
             title: undefined,
             description: undefined,
             availability: undefined,
@@ -104,14 +111,17 @@ export function convertAdditionalProperties({
             }),
             groupName: undefined
         },
-        valueSchema: convertSchema(
-            additionalProperties,
-            context.options.optionalAdditionalProperties ? wrapAsNullable : false,
+        valueSchema: convertSchema({
+            schema: additionalProperties,
+            wrapAsNullable: context.options.optionalAdditionalProperties ? wrapAsNullable : false,
             context,
-            [...breadcrumbs, "Value"],
+            breadcrumbs: [...breadcrumbs, "Value"],
             source,
-            namespace
-        ),
+            namespace,
+            originalName,
+            referencedAsRequest: false,
+            propertiesToExclude: new Set()
+        }),
         groupName,
         example,
         encoding
@@ -121,6 +131,7 @@ export function convertAdditionalProperties({
 export function wrapMap({
     nameOverride,
     generatedName,
+    originalName,
     title,
     keySchema,
     valueSchema,
@@ -133,6 +144,7 @@ export function wrapMap({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    originalName: string | undefined;
     title: string | undefined;
     keySchema: PrimitiveSchemaWithExample;
     valueSchema: SchemaWithExample;
@@ -146,10 +158,12 @@ export function wrapMap({
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             nameOverride,
+            originalName,
             generatedName,
             title,
             value: SchemaWithExample.map({
                 nameOverride,
+                originalName,
                 generatedName,
                 title,
                 description,
@@ -167,6 +181,7 @@ export function wrapMap({
     }
     return SchemaWithExample.map({
         nameOverride,
+        originalName,
         generatedName,
         title,
         description,

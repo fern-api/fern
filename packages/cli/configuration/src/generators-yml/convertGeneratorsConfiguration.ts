@@ -7,13 +7,18 @@ import path from "path";
 import {
     APIDefinition,
     APIDefinitionLocation,
+    APIWideSettings,
     GenerationLanguage,
     GeneratorGroup,
     GeneratorInvocation,
     GeneratorsConfiguration
 } from "./GeneratorsConfiguration";
 import { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
-import { APIConfigurationSchemaInternal, APIConfigurationV2Schema } from "./schemas/APIConfigurationSchema";
+import {
+    APIConfigurationSchemaInternal,
+    APIConfigurationV2Schema,
+    APIDefinitionSettingsSchema
+} from "./schemas/APIConfigurationSchema";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
@@ -45,9 +50,11 @@ export async function convertGeneratorsConfiguration({
     const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata);
     const readme = rawGeneratorsConfiguration.readme;
     const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
+    const parsedApiWideSettings = await parseAPIWideSettingsConfiguration(rawGeneratorsConfiguration);
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,
+        apiWideSettings: parsedApiWideSettings,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
         reviewers: rawGeneratorsConfiguration.reviewers,
@@ -373,6 +380,19 @@ async function parseAPIConfiguration(
     };
 }
 
+async function parseAPIWideSettingsConfiguration(
+    rawGeneratorsConfiguration: GeneratorsConfigurationSchema
+): Promise<APIWideSettings | undefined> {
+    const apiConfiguration = rawGeneratorsConfiguration.api;
+
+    if (apiConfiguration != null && isApiConfigurationV2Schema(apiConfiguration)) {
+        return {
+            shouldInlineTypes: apiConfiguration.settings?.["inline-types"]
+        };
+    }
+    return undefined;
+}
+
 async function convertGroup({
     absolutePathToGeneratorsConfiguration,
     groupName,
@@ -454,7 +474,7 @@ async function convertGenerator({
         irVersionOverride: generator["ir-version"] ?? undefined,
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
-        settings: generator.api?.settings ?? undefined
+        settings: generator.api?.settings
     };
 }
 

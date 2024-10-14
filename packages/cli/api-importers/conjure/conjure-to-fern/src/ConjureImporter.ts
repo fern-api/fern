@@ -16,7 +16,7 @@ export declare namespace ConjureImporter {
 }
 
 export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args> {
-    private fernDefinitionBuilder = new FernDefinitionBuilderImpl(false);
+    private fernDefinitionBuilder = new FernDefinitionBuilderImpl(false, false);
     private conjureFilepathToFernFilepath: Record<RelativeFilePath, RelativeFilePath> = {};
 
     public async import({
@@ -215,7 +215,9 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         schema: {
                             type: value.alias,
                             docs: value.docs
-                        }
+                        },
+                        shouldTryToInlineType: false,
+                        maybeOriginalName: undefined
                     });
                 },
                 object: (value) => {
@@ -223,7 +225,9 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         name: typeName,
                         schema: {
                             properties: value.fields
-                        }
+                        },
+                        shouldTryToInlineType: false,
+                        maybeOriginalName: undefined
                     });
                 },
                 enum: (value) => {
@@ -231,13 +235,17 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         name: typeName,
                         schema: {
                             enum: value.values
-                        }
+                        },
+                        shouldTryToInlineType: false,
+                        maybeOriginalName: undefined
                     });
                 },
                 union: (value) => {
                     this.fernDefinitionBuilder.addType(fernFilePath, {
                         name: typeName,
-                        schema: value
+                        schema: value,
+                        shouldTryToInlineType: false,
+                        maybeOriginalName: undefined
                     });
                 }
             });
