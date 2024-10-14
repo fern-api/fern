@@ -16,11 +16,11 @@ public class GetAndReturnDatetimeTest : BaseMockServerTest
     public async Task MockServerTest()
     {
         const string requestJson = """
-            "SGVsbG8gd29ybGQh"
+            "2024-01-15T09:30:00.000Z"
             """;
 
         const string mockResponse = """
-            "SGVsbG8gd29ybGQh"
+            "2024-01-15T09:30:00.000Z"
             """;
 
         Server
