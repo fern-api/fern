@@ -106,6 +106,7 @@ export function parseAsyncAPI({
                                   description: undefined,
                                   availability: undefined,
                                   generatedName: "",
+                                  originalName: "",
                                   title: undefined,
                                   groupName: undefined,
                                   nameOverride: undefined

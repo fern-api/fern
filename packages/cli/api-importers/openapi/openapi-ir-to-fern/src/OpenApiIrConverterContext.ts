@@ -16,6 +16,11 @@ export interface OpenApiIrConverterContextOpts {
     enableUniqueErrorsPerEndpoint: boolean;
 
     /**
+     * If true, the converter will inline types.
+     */
+    shouldInlineTypes: boolean;
+
+    /**
      * If true, the converter will detect frequently headers and add extract them as global headers within
      * the IR. This is primarily used for generating SDKs, but disabled for docs as it allows the documentation
      */
@@ -48,13 +53,14 @@ export class OpenApiIrConverterContext {
         detectGlobalHeaders,
         environmentOverrides,
         globalHeaderOverrides,
-        authOverrides
+        authOverrides,
+        shouldInlineTypes
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.ir = ir;
         this.enableUniqueErrorsPerEndpoint = enableUniqueErrorsPerEndpoint;
-        this.builder = new FernDefinitionBuilderImpl(enableUniqueErrorsPerEndpoint);
+        this.builder = new FernDefinitionBuilderImpl(enableUniqueErrorsPerEndpoint, shouldInlineTypes);
         if (ir.title != null) {
             this.builder.setDisplayName({ displayName: ir.title });
         }

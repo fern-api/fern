@@ -37,6 +37,7 @@ export function convertArray({
             ? SchemaWithExample.unknown({
                   nameOverride,
                   generatedName,
+                  originalName: undefined,
                   title,
                   description: undefined,
                   availability: undefined,
@@ -82,10 +83,12 @@ export function wrapArray({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            originalName: undefined,
             title,
             value: SchemaWithExample.array({
                 nameOverride,
                 generatedName,
+                originalName: undefined,
                 title,
                 value: itemSchema,
                 description,
@@ -101,6 +104,7 @@ export function wrapArray({
     return SchemaWithExample.array({
         nameOverride,
         generatedName,
+        originalName: undefined,
         title,
         value: itemSchema,
         description,

@@ -230,6 +230,7 @@ export function wrapDiscriminantedOneOf({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            originalName: undefined,
             title,
             value: SchemaWithExample.oneOf(
                 OneOfSchemaWithExample.discriminated({
@@ -238,6 +239,7 @@ export function wrapDiscriminantedOneOf({
                     discriminantProperty: discriminant,
                     nameOverride,
                     generatedName,
+                    originalName: undefined,
                     title,
                     schemas: subtypes,
                     commonProperties: properties,
@@ -258,6 +260,7 @@ export function wrapDiscriminantedOneOf({
             discriminantProperty: discriminant,
             nameOverride,
             generatedName,
+            originalName: undefined,
             title,
             schemas: subtypes,
             commonProperties: properties,

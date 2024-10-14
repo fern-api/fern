@@ -66,6 +66,7 @@ export function convertUndiscriminatedOneOf({
             return schema.enum.map((enumValue) => {
                 return SchemaWithExample.literal({
                     nameOverride: undefined,
+                    originalName: undefined,
                     generatedName: getGeneratedTypeName([generatedName, enumValue]),
                     title: undefined,
                     value: LiteralSchemaValue.string(enumValue),
@@ -201,6 +202,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             subtypeReference.properties = {
                 [discriminator.propertyName]: SchemaWithExample.literal({
                     nameOverride: undefined,
+                    originalName: undefined,
                     generatedName: getGeneratedTypeName([generatedName, discriminantValue]),
                     title: undefined,
                     value: LiteralSchemaValue.string(discriminantValue),
@@ -370,9 +372,11 @@ export function wrapUndiscriminantedOneOf({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            originalName: undefined,
             title,
             value: SchemaWithExample.oneOf(
                 OneOfSchemaWithExample.undisciminated({
+                    originalName: undefined,
                     description,
                     availability,
                     nameOverride,
@@ -395,6 +399,7 @@ export function wrapUndiscriminantedOneOf({
             availability,
             nameOverride,
             generatedName,
+            originalName: undefined,
             title,
             schemas: subtypes,
             groupName,

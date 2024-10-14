@@ -68,6 +68,7 @@ export function getSchemaFromFernType({
                     case "BASE_64":
                         return SchemaWithExample.primitive({
                             nameOverride,
+                            originalName: undefined,
                             generatedName,
                             title,
                             description,
@@ -80,6 +81,7 @@ export function getSchemaFromFernType({
                     case "BOOLEAN":
                         return SchemaWithExample.primitive({
                             nameOverride,
+                            originalName: undefined,
                             generatedName,
                             title,
                             description,
@@ -93,6 +95,7 @@ export function getSchemaFromFernType({
                     case "DATE":
                         return SchemaWithExample.primitive({
                             nameOverride,
+                            originalName: undefined,
                             generatedName,
                             title,
                             description,
@@ -105,6 +108,7 @@ export function getSchemaFromFernType({
                     case "DATE_TIME":
                         return SchemaWithExample.primitive({
                             nameOverride,
+                            originalName: undefined,
                             generatedName,
                             title,
                             description,
@@ -117,6 +121,7 @@ export function getSchemaFromFernType({
                     case "FLOAT":
                         return SchemaWithExample.primitive({
                             nameOverride,
+                            originalName: undefined,
                             generatedName,
                             title,
                             description,
@@ -129,6 +134,7 @@ export function getSchemaFromFernType({
                     case "DOUBLE":
                         return SchemaWithExample.primitive({
                             nameOverride,
+                            originalName: undefined,
                             generatedName,
                             title,
                             description,
@@ -147,6 +153,7 @@ export function getSchemaFromFernType({
                     case "UINT":
                         return SchemaWithExample.primitive({
                             nameOverride,
+                            originalName: undefined,
                             generatedName,
                             title,
                             description,
@@ -160,6 +167,7 @@ export function getSchemaFromFernType({
                     case "INTEGER":
                         return SchemaWithExample.primitive({
                             nameOverride,
+                            originalName: undefined,
                             generatedName,
                             title,
                             description,
@@ -178,6 +186,7 @@ export function getSchemaFromFernType({
                     case "UINT_64":
                         return SchemaWithExample.primitive({
                             nameOverride,
+                            originalName: undefined,
                             generatedName,
                             title,
                             description,
@@ -191,6 +200,7 @@ export function getSchemaFromFernType({
                     case "LONG":
                         return SchemaWithExample.primitive({
                             nameOverride,
+                            originalName: undefined,
                             generatedName,
                             title,
                             description,
@@ -206,6 +216,7 @@ export function getSchemaFromFernType({
                     case "BIG_INTEGER":
                         return SchemaWithExample.primitive({
                             nameOverride,
+                            originalName: undefined,
                             generatedName,
                             title,
                             description,
@@ -227,6 +238,7 @@ export function getSchemaFromFernType({
             unknown: () => {
                 return SchemaWithExample.unknown({
                     nameOverride,
+                    originalName: undefined,
                     generatedName,
                     title,
                     example: undefined,
@@ -239,6 +251,7 @@ export function getSchemaFromFernType({
                 keyType?.type === "primitive" && valueType != null
                     ? SchemaWithExample.map({
                           nameOverride,
+                          originalName: undefined,
                           generatedName,
                           title,
                           key: keyType,
@@ -254,6 +267,7 @@ export function getSchemaFromFernType({
                 itemType != null
                     ? SchemaWithExample.array({
                           nameOverride,
+                          originalName: undefined,
                           generatedName,
                           title,
                           value: itemType,
@@ -267,6 +281,7 @@ export function getSchemaFromFernType({
                 itemType != null
                     ? SchemaWithExample.optional({
                           nameOverride,
+                          originalName: undefined,
                           generatedName,
                           title,
                           value: itemType,
@@ -279,6 +294,7 @@ export function getSchemaFromFernType({
                 itemType != null
                     ? SchemaWithExample.array({
                           nameOverride,
+                          originalName: undefined,
                           generatedName,
                           title,
                           value: itemType,
@@ -291,6 +307,7 @@ export function getSchemaFromFernType({
             literal: (literal) =>
                 SchemaWithExample.literal({
                     nameOverride,
+                    originalName: undefined,
                     generatedName,
                     title,
                     value: literal._visit<LiteralSchemaValue>({

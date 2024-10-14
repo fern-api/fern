@@ -104,6 +104,7 @@ export function convertObject({
                                         schema: SchemaWithExample.optional({
                                             nameOverride: undefined,
                                             generatedName: "",
+                                            originalName: undefined,
                                             title: undefined,
                                             value: property.schema,
                                             description: undefined,
@@ -173,7 +174,8 @@ export function convertObject({
             const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
             const availability = convertAvailability(propertySchema);
 
-            const readonly = isReferenceObject(propertySchema) ? false : propertySchema.readOnly;
+            const isReference = isReferenceObject(propertySchema);
+            const readonly = isReference ? false : propertySchema.readOnly;
 
             const propertyNameOverride = getExtension<string | undefined>(
                 propertySchema,
@@ -186,6 +188,7 @@ export function convertObject({
                 : SchemaWithExample.optional({
                       nameOverride,
                       generatedName,
+                      originalName: isReference ? undefined : propertyName,
                       title,
                       description: undefined,
                       availability,
@@ -286,12 +289,14 @@ export function wrapObject({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            originalName: undefined,
             title,
             value: SchemaWithExample.object({
                 description,
                 properties,
                 nameOverride,
                 generatedName,
+                originalName: undefined,
                 title,
                 allOf,
                 allOfPropertyConflicts,
@@ -311,6 +316,7 @@ export function wrapObject({
         properties,
         nameOverride,
         generatedName,
+        originalName: undefined,
         title,
         allOf,
         allOfPropertyConflicts,

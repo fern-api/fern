@@ -52,7 +52,20 @@ export interface FernDefinitionBuilder {
         alias?: string;
     }): string | undefined;
 
-    addType(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.TypeDeclarationSchema }): void;
+    addType(
+        file: RelativeFilePath,
+        {
+            name,
+            schema,
+            shouldTryToInlineType,
+            maybeOriginalName
+        }: {
+            name: string;
+            schema: RawSchemas.TypeDeclarationSchema;
+            shouldTryToInlineType: boolean;
+            maybeOriginalName: string | undefined;
+        }
+    ): void;
 
     addError(
         file: RelativeFilePath,
@@ -91,6 +104,8 @@ export interface FernDefinitionBuilder {
     build(): FernDefinition;
 
     readonly enableUniqueErrorsPerEndpoint: boolean;
+
+    readonly shouldInlineTypes: boolean;
 }
 
 export interface FernDefinition {
@@ -105,7 +120,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private basePath: string | undefined = undefined;
 
-    public constructor(public readonly enableUniqueErrorsPerEndpoint: boolean) {
+    public constructor(
+        public readonly enableUniqueErrorsPerEndpoint: boolean,
+        public readonly shouldInlineTypes: boolean
+    ) {
         this.root = new FernDefinitionDirectory();
         this.rootApiFile = {
             name: "api",
@@ -276,13 +294,26 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public addType(
         file: RelativeFilePath,
-        { name, schema }: { name: string; schema: RawSchemas.TypeDeclarationSchema }
+        {
+            name,
+            schema,
+            shouldTryToInlineType,
+            maybeOriginalName
+        }: {
+            name: string;
+            schema: RawSchemas.TypeDeclarationSchema;
+            shouldTryToInlineType: boolean;
+            maybeOriginalName: string | undefined;
+        }
     ): void {
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.types == null) {
             fernFile.types = {};
         }
-        fernFile.types[name] = schema;
+        fernFile.types[name] =
+            typeof schema === "string"
+                ? schema
+                : { ...schema, originalName: maybeOriginalName, inline: shouldTryToInlineType };
     }
 
     public addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void {

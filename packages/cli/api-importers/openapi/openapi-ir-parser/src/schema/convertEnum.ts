@@ -107,10 +107,12 @@ export function wrapEnum({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            originalName: undefined,
             title,
             value: SchemaWithExample.enum({
                 nameOverride,
                 generatedName,
+                originalName: undefined,
                 title,
                 values,
                 description,
@@ -128,6 +130,7 @@ export function wrapEnum({
     return SchemaWithExample.enum({
         nameOverride,
         generatedName,
+        originalName: undefined,
         title,
         values,
         description,

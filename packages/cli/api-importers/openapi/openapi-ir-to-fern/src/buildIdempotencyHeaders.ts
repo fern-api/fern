@@ -19,6 +19,7 @@ export function buildIdempotencyHeaders(context: OpenApiIrConverterContext): voi
                     Schema.primitive({
                         description: undefined,
                         availability: undefined,
+                        originalName: undefined,
                         generatedName: "",
                         title: undefined,
                         groupName: undefined,

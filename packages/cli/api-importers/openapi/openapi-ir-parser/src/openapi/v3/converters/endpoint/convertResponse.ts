@@ -298,6 +298,7 @@ function markErrorSchemas({
             statusCode: parsedStatusCode,
             nameOverride: undefined,
             generatedName: errorName,
+            originalName: undefined,
             description: resolvedResponse.description,
             schema: convertSchema(mediaObject?.schema ?? {}, false, context, [errorName, "Body"], source, namespace),
             fullExamples: mediaObject?.examples,

@@ -54,6 +54,7 @@ export function convertAdditionalProperties({
             keySchema: {
                 nameOverride: undefined,
                 generatedName: `${generatedName}Key`,
+                originalName: undefined,
                 title: undefined,
                 description: undefined,
                 availability: undefined,
@@ -69,6 +70,7 @@ export function convertAdditionalProperties({
             },
             valueSchema: SchemaWithExample.unknown({
                 nameOverride: undefined,
+                originalName: undefined,
                 generatedName: `${generatedName}Value`,
                 title: undefined,
                 description: undefined,
@@ -91,6 +93,7 @@ export function convertAdditionalProperties({
         keySchema: {
             nameOverride: undefined,
             generatedName: `${generatedName}Key`,
+            originalName: undefined,
             title: undefined,
             description: undefined,
             availability: undefined,
@@ -146,10 +149,12 @@ export function wrapMap({
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             nameOverride,
+            originalName: undefined,
             generatedName,
             title,
             value: SchemaWithExample.map({
                 nameOverride,
+                originalName: undefined,
                 generatedName,
                 title,
                 description,
@@ -167,6 +172,7 @@ export function wrapMap({
     }
     return SchemaWithExample.map({
         nameOverride,
+        originalName: undefined,
         generatedName,
         title,
         description,

@@ -2,7 +2,7 @@ import { DeclaredErrorName, DeclaredServiceName, DeclaredTypeName, FernFilepath,
 import { ResolvedEndpoint } from "./resolvers/ResolvedEndpoint";
 
 export const IdGenerator = {
-    generateTypeId: (typeName: Omit<DeclaredTypeName, "typeId">): FernIr.commons.TypeId => {
+    generateTypeId: (typeName: Omit<DeclaredTypeName, "typeId" | "originalName">): FernIr.commons.TypeId => {
         const joinedFernFilePath = stringifyFernFilepath(typeName.fernFilepath);
         return `type_${joinedFernFilePath}:${typeName.name.originalName}`;
     },

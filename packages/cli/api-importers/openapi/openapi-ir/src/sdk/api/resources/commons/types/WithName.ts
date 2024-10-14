@@ -3,6 +3,7 @@
  */
 
 export interface WithName {
+    originalName: string | undefined;
     /** Read from `x-fern-type-name`. */
     nameOverride: string | undefined;
     /**

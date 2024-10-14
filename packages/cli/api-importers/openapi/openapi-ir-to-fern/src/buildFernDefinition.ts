@@ -51,7 +51,9 @@ function addSchemas({
 
         context.builder.addType(declarationFile, {
             name: typeDeclaration.name ?? id,
-            schema: typeDeclaration.schema
+            schema: typeDeclaration.schema,
+            shouldTryToInlineType: false,
+            maybeOriginalName: undefined
         });
     }
 }

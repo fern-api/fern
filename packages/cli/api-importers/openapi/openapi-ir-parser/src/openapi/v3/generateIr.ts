@@ -299,6 +299,7 @@ export function generateIr({
 
                 return {
                     generatedName: error.generatedName,
+                    originalName: error.originalName,
                     nameOverride: error.nameOverride,
                     schema: convertSchemaWithExampleToSchema(error.schema),
                     description: error.description,
@@ -431,6 +432,7 @@ function maybeAddBackDiscriminantsFromSchemas(
                         schema: SchemaWithExample.literal({
                             nameOverride: undefined,
                             generatedName: getGeneratedTypeName([schema.generatedName, discriminantValue]),
+                            originalName: undefined,
                             title: undefined,
                             value: LiteralSchemaValue.string(discriminantValue),
                             groupName: undefined,

@@ -1,4 +1,24 @@
 - changelogEntry:
+    - summary: |
+        Exposes an API setting to inline types defined within your OpenAPI specification.
+        This is useful if you want to inline a type that is defined in your OpenAPI specification. This means that the type will not be exported from the SDK itself.
+
+        ```yml
+        api:
+          settings:
+            inline-types: true
+          specs:
+            - openapi: ./openapi.yml
+        ```
+
+        When specified, SDK generators will now inline the types into the generated SDK, this definition changes depending on the language, but in Typescript, for example,
+        inlined types will be defined within the same file as their parent object and not be exported from the module. Thus these objects are not available to end users.
+
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc5
+
+- changelogEntry:
     - summary: Introduce additional fields to the IR to support inline type generation.
       type: internal
   irVersion: 53

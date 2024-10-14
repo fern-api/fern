@@ -119,6 +119,7 @@ export function convertReferenceObject(
         return SchemaWithExample.nullable({
             title: undefined,
             nameOverride: undefined,
+            originalName: undefined,
             generatedName: getGeneratedTypeName(breadcrumbs),
             value: referenceSchema,
             description: undefined,
@@ -268,6 +269,7 @@ export function convertSchemaObject(
             return SchemaWithExample.nullable({
                 nameOverride,
                 generatedName,
+                originalName: undefined,
                 title,
                 value: convertSchemaObject(
                     {
@@ -292,6 +294,7 @@ export function convertSchemaObject(
             return SchemaWithExample.nullable({
                 nameOverride,
                 generatedName,
+                originalName: undefined,
                 title,
                 value: convertSchemaObject(
                     {
@@ -448,6 +451,7 @@ export function convertSchemaObject(
             return SchemaWithExample.unknown({
                 nameOverride,
                 generatedName,
+                originalName: undefined,
                 title,
                 description,
                 availability,
@@ -867,6 +871,7 @@ export function convertSchemaObject(
             wrapAsNullable,
             keySchema: {
                 nameOverride: undefined,
+                originalName: undefined,
                 generatedName: `${generatedName}Key`,
                 title: undefined,
                 description: undefined,
@@ -883,6 +888,7 @@ export function convertSchemaObject(
             },
             valueSchema: SchemaWithExample.unknown({
                 nameOverride: undefined,
+                originalName: undefined,
                 generatedName: `${generatedName}Value`,
                 title: undefined,
                 description: undefined,
@@ -901,6 +907,7 @@ export function convertSchemaObject(
         return SchemaWithExample.unknown({
             nameOverride,
             generatedName,
+            originalName: undefined,
             title,
             description,
             availability,
@@ -942,6 +949,7 @@ export function convertToReferencedSchema(
         generatedName,
         nameOverride,
         title: undefined,
+        originalName: undefined,
         schema: schemaId,
         description: description ?? undefined,
         availability,
@@ -982,6 +990,7 @@ function maybeInjectDescriptionOrGroupName(
         return SchemaWithExample.optional({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
+            originalName: undefined,
             title: schema.title,
             value: schema.value,
             description,
@@ -992,6 +1001,7 @@ function maybeInjectDescriptionOrGroupName(
         return SchemaWithExample.nullable({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
+            originalName: undefined,
             title: schema.title,
             value: schema.value,
             description,
@@ -1046,10 +1056,12 @@ export function wrapLiteral({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            originalName: undefined,
             title,
             value: SchemaWithExample.literal({
                 nameOverride,
                 generatedName,
+                originalName: undefined,
                 title,
                 value: literal,
                 description,
@@ -1064,6 +1076,7 @@ export function wrapLiteral({
     return SchemaWithExample.literal({
         nameOverride,
         generatedName,
+        originalName: undefined,
         title,
         value: literal,
         groupName,
@@ -1096,10 +1109,12 @@ export function wrapPrimitive({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            originalName: undefined,
             title,
             value: SchemaWithExample.primitive({
                 nameOverride,
                 generatedName,
+                originalName: undefined,
                 title,
                 schema: primitive,
                 description,
@@ -1114,6 +1129,7 @@ export function wrapPrimitive({
     return SchemaWithExample.primitive({
         nameOverride,
         generatedName,
+        originalName: undefined,
         title,
         schema: primitive,
         description,
