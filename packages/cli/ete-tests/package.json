@@ -35,7 +35,7 @@
     "@fern-typescript/fetcher": "workspace:*",
     "execa": "^5.1.1",
     "js-yaml": "^4.1.0",
-    "node-fetch": "2.7.0",
+    "node-fetch": "3.3.2",
     "strip-ansi": "^7.1.0",
     "tmp-promise": "^3.0.3"
   },
