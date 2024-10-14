@@ -42,7 +42,7 @@
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "diff": "^5.2.0",
-    "eslint": "^8.56.0",
+    "eslint": "^9.12.0",
     "globals": "link:@types/vitest/globals",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
