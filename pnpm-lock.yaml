@@ -683,34 +683,16 @@ importers:
 
   generators/pythonv2/codegen:
     dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-commons':
         specifier: workspace:*
         version: link:../../commons
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^53.7.0
         version: 53.9.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      zod:
-        specifier: ^3.22.3
-        version: 3.23.8
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
