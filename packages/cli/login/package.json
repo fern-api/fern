@@ -43,7 +43,7 @@
     "@types/boxen": "^3.0.1",
     "@types/inquirer": "^9.0.7",
     "@types/jest": "^29.5.12",
-    "@types/node": "^18.7.18",
+    "@types/node": "^22.7.5",
     "@types/qs": "6.9.15",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
