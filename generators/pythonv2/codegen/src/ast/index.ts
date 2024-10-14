@@ -1,0 +1,1 @@
+export { Class } from "./Class";
