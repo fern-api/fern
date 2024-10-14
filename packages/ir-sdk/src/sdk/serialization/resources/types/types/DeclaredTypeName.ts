@@ -16,6 +16,7 @@ export const DeclaredTypeName: core.serialization.ObjectSchema<
     typeId: TypeId,
     fernFilepath: FernFilepath,
     name: Name,
+    originalName: Name.optional(),
 });
 
 export declare namespace DeclaredTypeName {
@@ -23,5 +24,6 @@ export declare namespace DeclaredTypeName {
         typeId: TypeId.Raw;
         fernFilepath: FernFilepath.Raw;
         name: Name.Raw;
+        originalName?: Name.Raw | null;
     }
 }

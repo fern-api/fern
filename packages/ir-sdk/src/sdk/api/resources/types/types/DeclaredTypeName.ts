@@ -8,4 +8,5 @@ export interface DeclaredTypeName {
     typeId: FernIr.TypeId;
     fernFilepath: FernIr.FernFilepath;
     name: FernIr.Name;
+    originalName: FernIr.Name | undefined;
 }
