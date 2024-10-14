@@ -311,7 +311,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             fernFile.types = {};
         }
         fernFile.types[name] =
-            typeof schema === "string"
+            typeof schema === "string" || !this.shouldInlineTypes
                 ? schema
                 : { ...schema, originalName: maybeOriginalName, inline: shouldTryToInlineType };
     }

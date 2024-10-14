@@ -2,6 +2,7 @@
     - summary: |
         Exposes an API setting to inline types defined within your OpenAPI specification.
         This is useful if you want to inline a type that is defined in your OpenAPI specification. This means that the type will not be exported from the SDK itself.
+        With this, you can now preserve the original name of the type as it is in the OpenAPI specification, without fear of naming collisions.
 
         ```yml
         api:
