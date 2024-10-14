@@ -58,7 +58,7 @@
     "@types/jest": "^29.5.12",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "^18.7.18",
+    "@types/node": "^22.7.5",
     "@types/object-hash": "^3.0.6",
     "@types/tar": "^6.1.11",
     "depcheck": "^1.4.6",

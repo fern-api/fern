@@ -35,7 +35,7 @@
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
-    "@types/node": "^18.7.18",
+    "@types/node": "^22.7.5",
     "depcheck": "^1.4.6",
     "globals": "link:@types/vitest/globals",
     "organize-imports-cli": "^0.10.0",
