@@ -1,0 +1,85 @@
+imports: 
+  commons: commons.yml
+
+types: 
+  
+  ExampleType: 
+    extends: 
+      - commons.WithName
+      - commons.WithDocs
+    properties: 
+      value: unknown
+  
+  ExampleEndpointCall: 
+    properties: 
+      id: optional<string>
+      path-parameters: optional<map<string, ExampleTypeReference>>
+      query-parameters: optional<map<string, ExampleTypeReference>>
+      headers: optional<map<string, ExampleTypeReference>>
+      request: optional<ExampleTypeReference>
+      response: optional<ExampleResponseSchema>
+      code-samples: optional<list<ExampleCodeSampleSchema>>
+
+  ExampleResponseSchema:  
+    discriminated: false
+    union: 
+      - ExampleBodyResponseSchema
+      - type: ExampleStreamResponseSchema
+        docs: JSON Streams
+      - type: ExampleSseResponseSchema
+        docs: Server-Sent Event streams
+  
+  ExampleBodyResponseSchema: 
+    properties: 
+      error: optional<string>
+      body: optional<ExampleTypeReference>
+  
+  ExampleStreamResponseSchema: 
+    properties: 
+      stream: list<ExampleTypeReference>
+  
+  ExampleSseResponseSchema: 
+    properties: 
+      stream: list<ExampleSseEvent>
+
+  ExampleSseEvent: 
+    properties: 
+      event: optional<string>
+      data: optional<ExampleTypeReference>
+  
+  ExampleTypeReference: unknown
+
+  ExampleCodeSampleSchema: 
+    discriminated: false
+    union: 
+      - ExampleCodeSampleSchemaSdk
+      - ExampleCodeSampleSchemaLanguage
+  
+  ExampleCodeSampleSchemaSdk: 
+    extends: 
+      - commons.WithDocs
+      - commons.WithName  
+    properties: 
+      sdk: SdkLanguage
+      code: string
+  
+  SdkLanguage: 
+    enum: 
+     - curl
+     - python
+     - javascript
+     - typescript
+     - go
+     - ruby
+     - csharp
+     - java
+  
+  ExampleCodeSampleSchemaLanguage: 
+    extends: 
+      - commons.WithDocs
+      - commons.WithName
+    properties: 
+      language: string
+      code: string
+      install: optional<string>
+

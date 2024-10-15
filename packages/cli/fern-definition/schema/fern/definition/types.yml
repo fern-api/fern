@@ -1,0 +1,139 @@
+imports: 
+  commons: commons.yml
+  encoding: encoding.yml
+  validation: validation.yml
+
+types: 
+  TypeDeclarationSchema: 
+    discriminated: false
+    union: 
+      - string
+      - ObjectSchema
+      - EnumSchema
+      - DiscriminatedUnionSchema
+      - UndiscriminatedUnionSchema
+      - AliasSchema
+  
+  InlinedTypeDeclarationContainer: 
+    properties: 
+      type: InlinedTypeDeclaration
+  
+  InlinedTypeDeclaration: 
+    discriminated: false
+    union: 
+      - ObjectSchema
+      - EnumSchema
+      - DiscriminatedUnionSchema
+      - UndiscriminatedUnionSchema
+  
+  TypeReferenceSchema: 
+    discriminated: false
+    union: 
+      - string
+      - TypeReferenceDetailed
+
+  TypeReferenceDetailed:
+    extends: 
+      - commons.WithDocs
+      - commons.WithName
+      - commons.WithAvailability
+      - commons.WithAudiences
+    properties: 
+      type: string
+      default: optional<unknown>
+      encoding: optional<encoding.EncodingSchema>
+      validation: optional<validation.ValidationSchema>
+  
+  BaseTypeDeclaration: 
+    extends: 
+      - commons.WithDocs
+      - commons.WithAvailability
+      - commons.WithDisplayName
+      - commons.WithAudiences
+  
+  ### Aliases #### 
+
+  AliasSchema: 
+    extends: BaseTypeDeclaration
+    properties: 
+      type: string
+  
+  #### Objects ####
+
+  ObjectSchema: 
+    extends: BaseTypeDeclaration
+    properties: 
+      extends: optional<ObjectExtendsSchema>
+      properties: optional<map<string, TypeReferenceSchema>>
+  
+  ObjectPropertySchema: TypeReferenceSchema
+  
+  ObjectExtendsSchema: 
+    discriminated: false
+    union: 
+      - string
+      - list<string>
+
+  # ObjectPropertyDeclaration:
+  #   discriminated: false 
+  #   union: 
+  #     - TypeReference
+  #     - InlinedTypeDeclaration
+  
+  #### Enums ####
+  
+  EnumSchema: 
+    extends: BaseTypeDeclaration
+    properties: 
+      enum: list<EnumVaue>
+  
+  EnumVaue:
+    discriminated: false
+    union: 
+      - string
+      - EnumValueDetailed
+  
+  EnumValueDetailed: 
+    extends: 
+      - commons.WithDocs
+      - commons.WithName
+    properties: 
+      value: string
+      casing: optional<CasingOverrides>
+  
+  CasingOverrides: 
+    properties: 
+      camel: optional<string>
+      snake: optional<string>
+      pascal: optional<string>
+      screaming-snake: optional<string>
+
+  #### Discriminated Union ####
+
+  UnionTypeReference: 
+    discriminated: false
+    union: 
+      - string
+      - UnionVariantTypeReference
+
+  UnionVariantTypeReference: 
+    extends: 
+      - commons.WithDocs
+      - commons.WithName
+      - commons.WithAvailability
+    properties: 
+      type: string    
+  
+  DiscriminatedUnionSchema: 
+    properties: 
+      extends: BaseTypeDeclaration
+      base-properties: optional<map<string, TypeReferenceSchema>>
+      union: optional<map<string, UnionTypeReference>>
+
+#### Undiscriminated Union ####
+
+  UndiscriminatedUnionSchema: 
+    properties: 
+      discriminated: literal<false>
+      extends: BaseTypeDeclaration
+      union: optional<list<UnionTypeReference>>
