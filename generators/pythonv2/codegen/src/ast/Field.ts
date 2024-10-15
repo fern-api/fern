@@ -2,7 +2,7 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Annotation } from "./Annotation";
 
-export declare namespace Field {
+export namespace Field {
     interface Args {
         /* The name of the field */
         name: string;

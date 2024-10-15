@@ -24,7 +24,12 @@ export class Class extends AstNode {
         writer.newLine();
 
         writer.indent();
-        this.writeFields({ writer });
+        if (this.fields.length === 0) {
+            writer.write("pass");
+            writer.newLine();
+        } else {
+            this.writeFields({ writer });
+        }
         writer.dedent();
     }
 
