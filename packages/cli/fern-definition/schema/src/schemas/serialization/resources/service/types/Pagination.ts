@@ -5,11 +5,11 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { PaginationScheme } from "../../pagination/types/PaginationScheme";
+import { PaginationSchema } from "../../pagination/types/PaginationSchema";
 
 export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, FernDefinition.Pagination> =
-    core.serialization.undiscriminatedUnion([PaginationScheme, core.serialization.boolean()]);
+    core.serialization.undiscriminatedUnion([PaginationSchema, core.serialization.boolean()]);
 
 export declare namespace Pagination {
-    type Raw = PaginationScheme.Raw | boolean;
+    type Raw = PaginationSchema.Raw | boolean;
 }

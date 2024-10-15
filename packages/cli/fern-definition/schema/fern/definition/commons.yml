@@ -1,3 +1,6 @@
+imports: 
+  availability: availability.yml
+
 types: 
   WithDocs: 
     properties: 
@@ -9,7 +12,7 @@ types:
   
   WithAvailability: 
     properties: 
-      availability: optional<Availability>
+      availability: optional<availability.AvailabilityUnionSchema>
   
   WithDisplayName: 
     properties: 
@@ -18,13 +21,9 @@ types:
   WithAudiences: 
     properties: 
       audiences: optional<list<string>>
-
-  Availability: 
-    enum: 
-      - value: in-development
-        name: InDevelopment
-      - value: pre-release
-        name: PreRelease
-      - deprecated
-      - value: generally-available
-        name: GenerallyAvailable
+  
+  DeclarationSchema: 
+    extends: 
+      - WithDocs
+      - WithAvailability
+      - WithAudiences

@@ -2,9 +2,9 @@ imports:
   commons: commons.yml
 
 types: 
-  WithAuth: 
+  WithAuthSchema: 
     properties: 
-      auth: ApiAuthSchema
+      auth: optional<ApiAuthSchema>
       auth-schemes: optional<map<string, AuthSchemeDeclarationSchema>>
 
   ApiAuthSchema: 
@@ -51,6 +51,7 @@ types:
     extends: 
       - WithEnvironmentVariable
       - commons.WithName
+      - commons.WithDocs
     properties: 
       header: string
       type: 
@@ -59,17 +60,23 @@ types:
       prefix: optional<string>
 
   BasicAuthSchemeSchema:  
+    extends: 
+      - commons.WithDocs
     properties: 
       scheme: literal<"basic">
       username: optional<AuthVariable>
       password: optional<AuthVariable>
   
   BearerAuthSchemeSchema: 
+    extends: 
+      - commons.WithDocs
     properties: 
       scheme: literal<"bearer">
       token: optional<AuthVariable>
 
   OAuthSchemeSchema: 
+    extends: 
+      - commons.WithDocs
     properties: 
       scheme: literal<"oauth">
       type: literal<"client-credentials">

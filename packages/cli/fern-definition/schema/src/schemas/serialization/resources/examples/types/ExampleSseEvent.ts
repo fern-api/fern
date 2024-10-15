@@ -5,19 +5,19 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { ExampleTypeReference } from "./ExampleTypeReference";
+import { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
 
 export const ExampleSseEvent: core.serialization.ObjectSchema<
     serializers.ExampleSseEvent.Raw,
     FernDefinition.ExampleSseEvent
 > = core.serialization.object({
     event: core.serialization.string().optional(),
-    data: ExampleTypeReference.optional(),
+    data: ExampleTypeReferenceSchema.optional(),
 });
 
 export declare namespace ExampleSseEvent {
     interface Raw {
         event?: string | null;
-        data?: (ExampleTypeReference.Raw | undefined) | null;
+        data?: (ExampleTypeReferenceSchema.Raw | undefined) | null;
     }
 }

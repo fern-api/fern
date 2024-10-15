@@ -6,7 +6,7 @@ import * as FernDefinition from "../../../index";
 
 export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, FernDefinition.WithAudiences {
     method?: FernDefinition.HttpMethodSchema;
-    "base-path"?: string;
+    "base-path": string;
     path: string;
     url?: string;
     "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
@@ -16,7 +16,7 @@ export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, Fern
     request?: FernDefinition.HttpRequest;
     response?: FernDefinition.HttpResponseSchema;
     "response-stream"?: FernDefinition.HttpResponseStreamSchema;
-    errors?: FernDefinition.ResponseError[];
-    examples?: FernDefinition.ExampleEndpointCall[];
+    errors?: FernDefinition.ResponseErrorsSchema;
+    examples?: FernDefinition.ExampleEndpointCallSchema[];
     pagination?: FernDefinition.Pagination;
 }

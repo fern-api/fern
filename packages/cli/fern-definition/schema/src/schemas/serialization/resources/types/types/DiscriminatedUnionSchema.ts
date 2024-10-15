@@ -5,25 +5,28 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { UnionDiscriminant } from "./UnionDiscriminant";
 import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 import { TypeReferenceSchema } from "./TypeReferenceSchema";
-import { UnionTypeReference } from "./UnionTypeReference";
+import { SingleUnionTypeSchema } from "./SingleUnionTypeSchema";
 
 export const DiscriminatedUnionSchema: core.serialization.ObjectSchema<
     serializers.DiscriminatedUnionSchema.Raw,
     FernDefinition.DiscriminatedUnionSchema
-> = core.serialization.object({
-    discriminant: core.serialization.string().optional(),
-    extends: BaseTypeDeclarationSchema,
-    "base-properties": core.serialization.record(core.serialization.string(), TypeReferenceSchema).optional(),
-    union: core.serialization.record(core.serialization.string(), UnionTypeReference).optional(),
-});
+> = core.serialization
+    .object({
+        discriminant: UnionDiscriminant.optional(),
+        extends: BaseTypeDeclarationSchema,
+        "base-properties": core.serialization.record(core.serialization.string(), TypeReferenceSchema).optional(),
+        union: core.serialization.record(core.serialization.string(), SingleUnionTypeSchema).optional(),
+    })
+    .extend(BaseTypeDeclarationSchema);
 
 export declare namespace DiscriminatedUnionSchema {
-    interface Raw {
-        discriminant?: string | null;
+    interface Raw extends BaseTypeDeclarationSchema.Raw {
+        discriminant?: UnionDiscriminant.Raw | null;
         extends: BaseTypeDeclarationSchema.Raw;
         "base-properties"?: Record<string, TypeReferenceSchema.Raw> | null;
-        union?: Record<string, UnionTypeReference.Raw> | null;
+        union?: Record<string, SingleUnionTypeSchema.Raw> | null;
     }
 }

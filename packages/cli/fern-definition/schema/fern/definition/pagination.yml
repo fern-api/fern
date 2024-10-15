@@ -1,11 +1,11 @@
 types: 
-  PaginationScheme: 
+  PaginationSchema: 
     discriminated: false
     union: 
-      - CursorPagination
-      - OffsetPagination
+      - CursorPaginationSchema
+      - OffsetPaginationSchema
 
-  CursorPagination:
+  CursorPaginationSchema:
     properties:  
       cursor: 
         type: string
@@ -17,7 +17,7 @@ types:
         type: string
         docs: The path to the response property for the page elements.
   
-  OffsetPagination: 
+  OffsetPaginationSchema: 
     properties: 
       offset: 
         type: string

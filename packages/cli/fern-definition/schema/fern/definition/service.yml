@@ -8,7 +8,7 @@ imports:
 
 types: 
   
-  HttpService: 
+  HttpServiceSchema: 
     extends: 
       - commons.WithDisplayName
       - commons.WithAudiences
@@ -39,7 +39,7 @@ types:
       - commons.WithAudiences
     properties: 
       method: optional<HttpMethodSchema>
-      base-path: optional<string>
+      base-path: string
       path: string
       url: optional<string>
       path-parameters: optional<map<string, HttpPathParameterSchema>>
@@ -49,8 +49,8 @@ types:
       request: optional<HttpRequest>
       response: optional<HttpResponseSchema>
       response-stream: optional<HttpResponseStreamSchema>
-      errors: optional<list<ResponseError>>
-      examples: optional<list<examples.ExampleEndpointCall>>
+      errors: optional<ResponseErrorsSchema>
+      examples: optional<list<examples.ExampleEndpointCallSchema>>
       pagination: optional<Pagination>
   
   HttpMethodSchema: 
@@ -87,10 +87,10 @@ types:
     discriminated: false
     union: 
       - string
-      - HttpReferencedRequestBody
+      - HttpReferencedRequestBodySchema
       - HttpInlineRequestBodySchema
   
-  HttpReferencedRequestBody: 
+  HttpReferencedRequestBodySchema: 
     extends: 
       - commons.WithDocs
     properties:
@@ -158,8 +158,11 @@ types:
   Pagination: 
     discriminated: false
     union: 
-      - pagination.PaginationScheme
+      - pagination.PaginationSchema
       - boolean
+  
+  ResponseErrorsSchema: 
+    type: list<ResponseError>
 
   ResponseError: 
     discriminated: false

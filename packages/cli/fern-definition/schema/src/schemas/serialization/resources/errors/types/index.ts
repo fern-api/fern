@@ -1,1 +1,1 @@
-export * from "./ErrorDeclaration";
+export * from "./ErrorDeclarationSchema";

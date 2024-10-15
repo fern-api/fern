@@ -3,11 +3,11 @@ imports:
   types: types.yml
 
 types: 
-  VersionDeclaration: 
+  VersionDeclarationSchema: 
     properties: 
       default: optional<string>
       values: list<VersionValue>
-      header: VersionHeader
+      header: VersionDeclarationHeaderSchema
   
   VersionValue: 
     discriminated: false
@@ -22,13 +22,13 @@ types:
     properties: 
       value: string
   
-  VersionHeader: 
+  VersionDeclarationHeaderSchema: 
     discriminated: false
     union: 
       - string
-      - VersionHeaderDetailed
+      - VersionDeclarationHeaderObjectSchema
   
-  VersionHeaderDetailed: 
+  VersionDeclarationHeaderObjectSchema: 
     properties: 
       name: 
         type: optional<string> 

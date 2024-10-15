@@ -71,6 +71,7 @@ types:
     properties: 
       extends: optional<ObjectExtendsSchema>
       properties: optional<map<string, TypeReferenceSchema>>
+      extra-properties: optional<boolean>
   
   ObjectPropertySchema: TypeReferenceSchema
   
@@ -91,6 +92,7 @@ types:
   EnumSchema: 
     extends: BaseTypeDeclarationSchema
     properties: 
+      default: optional<string>
       enum: list<EnumVaue>
   
   EnumVaue:
@@ -116,31 +118,71 @@ types:
 
   #### Discriminated Union ####
 
-  UnionTypeReference: 
+  SingleUnionTypeSchema: 
     discriminated: false
     union: 
       - string
-      - UnionVariantTypeReference
+      - SingleUnionTypeDetailedSchema
 
-  UnionVariantTypeReference: 
+  SingleUnionTypeDetailedSchema: 
     extends: 
       - commons.WithDocs
       - commons.WithName
       - commons.WithAvailability
     properties: 
-      type: string    
+      type: optional<string>
+      key: optional<SingleUnionTypeKey>
+    
+  SingleUnionTypeKey: 
+    discriminated: false
+    union: 
+      - string
+      - SingleUnionTypeKeySchema
+
+  SingleUnionTypeKeySchema: 
+    extends: 
+      - commons.WithName
+    properties: 
+      value: string
   
   DiscriminatedUnionSchema: 
+    extends: BaseTypeDeclarationSchema
     properties: 
-      discriminant: optional<string>
+      discriminant: optional<UnionDiscriminant>
       extends: BaseTypeDeclarationSchema
       base-properties: optional<map<string, TypeReferenceSchema>>
-      union: optional<map<string, UnionTypeReference>>
+      union: optional<map<string, SingleUnionTypeSchema>>
+  
+  UnionDiscriminant: 
+    discriminated: false
+    union: 
+      - string
+      - UnionDiscriminantSchema
+  
+  UnionDiscriminantSchema: 
+    extends: 
+      - commons.WithName
+    properties: 
+      value: string
 
 #### Undiscriminated Union ####
 
   UndiscriminatedUnionSchema: 
+    extends: BaseTypeDeclarationSchema
     properties: 
       discriminated: literal<false>
       extends: BaseTypeDeclarationSchema
-      union: optional<list<UnionTypeReference>>
+      union: optional<list<SingleUndiscriminatedUnionTypeSchema>>
+  
+  SingleUndiscriminatedUnionTypeSchema: 
+    discriminated: false
+    union: 
+      - string
+      - SingleUndiscriminatedUnionTypeDetailedSchema
+  
+  SingleUndiscriminatedUnionTypeDetailedSchema:
+    extends: 
+      - commons.WithDocs
+      - commons.WithDisplayName
+    properties:   
+      type: string

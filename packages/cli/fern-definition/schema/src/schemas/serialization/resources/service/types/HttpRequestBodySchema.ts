@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { HttpReferencedRequestBody } from "./HttpReferencedRequestBody";
+import { HttpReferencedRequestBodySchema } from "./HttpReferencedRequestBodySchema";
 import { HttpInlineRequestBodySchema } from "./HttpInlineRequestBodySchema";
 
 export const HttpRequestBodySchema: core.serialization.Schema<
@@ -13,10 +13,10 @@ export const HttpRequestBodySchema: core.serialization.Schema<
     FernDefinition.HttpRequestBodySchema
 > = core.serialization.undiscriminatedUnion([
     core.serialization.string(),
-    HttpReferencedRequestBody,
+    HttpReferencedRequestBodySchema,
     HttpInlineRequestBodySchema,
 ]);
 
 export declare namespace HttpRequestBodySchema {
-    type Raw = string | HttpReferencedRequestBody.Raw | HttpInlineRequestBodySchema.Raw;
+    type Raw = string | HttpReferencedRequestBodySchema.Raw | HttpInlineRequestBodySchema.Raw;
 }

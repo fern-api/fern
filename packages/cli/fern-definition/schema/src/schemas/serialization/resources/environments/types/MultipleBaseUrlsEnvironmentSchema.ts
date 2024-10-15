@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithAudiences } from "../../commons/types/WithAudiences";
+import { WithDocs } from "../../commons/types/WithDocs";
 
 export const MultipleBaseUrlsEnvironmentSchema: core.serialization.ObjectSchema<
     serializers.MultipleBaseUrlsEnvironmentSchema.Raw,
@@ -14,10 +15,11 @@ export const MultipleBaseUrlsEnvironmentSchema: core.serialization.ObjectSchema<
     .object({
         urls: core.serialization.record(core.serialization.string(), core.serialization.string()),
     })
-    .extend(WithAudiences);
+    .extend(WithAudiences)
+    .extend(WithDocs);
 
 export declare namespace MultipleBaseUrlsEnvironmentSchema {
-    interface Raw extends WithAudiences.Raw {
+    interface Raw extends WithAudiences.Raw, WithDocs.Raw {
         urls: Record<string, string>;
     }
 }

@@ -7,23 +7,26 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { OAuthGetTokenEndpoint } from "./OAuthGetTokenEndpoint";
 import { OAuthRefreshTokenEndpoint } from "./OAuthRefreshTokenEndpoint";
+import { WithDocs } from "../../commons/types/WithDocs";
 
 export const OAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.OAuthSchemeSchema.Raw,
     FernDefinition.OAuthSchemeSchema
-> = core.serialization.object({
-    scheme: core.serialization.stringLiteral("oauth"),
-    type: core.serialization.stringLiteral("client-credentials"),
-    scopes: core.serialization.list(core.serialization.string()).optional(),
-    "client-id-env": core.serialization.string().optional(),
-    "client-secret-env": core.serialization.string().optional(),
-    "token-prefix": core.serialization.string().optional(),
-    "get-token": OAuthGetTokenEndpoint,
-    "refresh-token": OAuthRefreshTokenEndpoint.optional(),
-});
+> = core.serialization
+    .object({
+        scheme: core.serialization.stringLiteral("oauth"),
+        type: core.serialization.stringLiteral("client-credentials"),
+        scopes: core.serialization.list(core.serialization.string()).optional(),
+        "client-id-env": core.serialization.string().optional(),
+        "client-secret-env": core.serialization.string().optional(),
+        "token-prefix": core.serialization.string().optional(),
+        "get-token": OAuthGetTokenEndpoint,
+        "refresh-token": OAuthRefreshTokenEndpoint.optional(),
+    })
+    .extend(WithDocs);
 
 export declare namespace OAuthSchemeSchema {
-    interface Raw {
+    interface Raw extends WithDocs.Raw {
         scheme: "oauth";
         type: "client-credentials";
         scopes?: string[] | null;

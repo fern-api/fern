@@ -6,5 +6,5 @@ import * as FernDefinition from "../../../index";
 
 export interface ExampleSseEvent {
     event?: string;
-    data?: FernDefinition.ExampleTypeReference | undefined;
+    data?: FernDefinition.ExampleTypeReferenceSchema | undefined;
 }

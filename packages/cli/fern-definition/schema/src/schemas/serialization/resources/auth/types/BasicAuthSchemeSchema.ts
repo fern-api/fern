@@ -6,18 +6,21 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { AuthVariable } from "./AuthVariable";
+import { WithDocs } from "../../commons/types/WithDocs";
 
 export const BasicAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.BasicAuthSchemeSchema.Raw,
     FernDefinition.BasicAuthSchemeSchema
-> = core.serialization.object({
-    scheme: core.serialization.stringLiteral("basic"),
-    username: AuthVariable.optional(),
-    password: AuthVariable.optional(),
-});
+> = core.serialization
+    .object({
+        scheme: core.serialization.stringLiteral("basic"),
+        username: AuthVariable.optional(),
+        password: AuthVariable.optional(),
+    })
+    .extend(WithDocs);
 
 export declare namespace BasicAuthSchemeSchema {
-    interface Raw {
+    interface Raw extends WithDocs.Raw {
         scheme: "basic";
         username?: AuthVariable.Raw | null;
         password?: AuthVariable.Raw | null;

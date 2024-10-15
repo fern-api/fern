@@ -2,7 +2,7 @@ imports:
   commons: commons.yml
 
 types: 
-  WithEnvironments: 
+  WithEnvironmentsSchema: 
     properties: 
       default-url: optional<string>
       default-environment: optional<string>
@@ -18,11 +18,13 @@ types:
   SingleBaseUrlEnvironmentSchema: 
     extends: 
       - commons.WithAudiences
+      - commons.WithDocs
     properties: 
       url: string
   
   MultipleBaseUrlsEnvironmentSchema: 
     extends: 
       - commons.WithAudiences
+      - commons.WithDocs
     properties: 
       urls: map<string, string>

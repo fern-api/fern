@@ -7,6 +7,8 @@ import * as FernDefinition from "../../../index";
 export interface DefinitionFileSchema extends FernDefinition.WithDocs {
     imports?: Record<string, string>;
     types?: Record<string, FernDefinition.TypeDeclarationSchema>;
-    service?: FernDefinition.HttpService;
-    errors?: Record<string, FernDefinition.ErrorDeclaration>;
+    service?: FernDefinition.HttpServiceSchema;
+    errors?: Record<string, FernDefinition.ErrorDeclarationSchema>;
+    webhooks?: Record<string, FernDefinition.WebhookSchema>;
+    channel?: FernDefinition.WebSocketChannelSchema;
 }

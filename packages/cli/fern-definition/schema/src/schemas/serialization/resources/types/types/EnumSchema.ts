@@ -11,12 +11,14 @@ import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.Raw, FernDefinition.EnumSchema> =
     core.serialization
         .object({
+            default: core.serialization.string().optional(),
             enum: core.serialization.list(EnumVaue),
         })
         .extend(BaseTypeDeclarationSchema);
 
 export declare namespace EnumSchema {
     interface Raw extends BaseTypeDeclarationSchema.Raw {
+        default?: string | null;
         enum: EnumVaue.Raw[];
     }
 }
