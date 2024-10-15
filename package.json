@@ -42,6 +42,7 @@
     "conjure-sdk:generate": "pnpm --filter @fern-api/conjure-sdk generate",
     "seed-config:generate": "pnpm --filter @fern-api/seed-cli generate",
     "docs-config:generate": "pnpm --filter @fern-api/configuration generate",
+    "fern-definition:generate": "pnpm --filter @fern-api/fern-definition-schema generate",
     "prepare": "husky"
   },
   "devDependencies": {
