@@ -166,6 +166,75 @@ js:
 ```
 </CodeBlock>
 
+### Example
+
+Let's say you want to change the default text that appears within the search bar of your docs site. First, we'll inspect `inspect elements` within Chrome Developer Tools to identify that the attribute we want to change is `.bg-search-dialog .form-input`. Then we can write a file, in this case called `search-dialog-text.js` to control the default text in the search bar.
+
+<CodeBlock title="fern/docs/assets/search-dialog-text.js">
+```js
+// check for the search bar and change the placeholder text
+ function changeSearch() {
+   var searchInput = document.querySelector('.bg-search-dialog .form-input');
+   if (searchInput) {
+     searchInput.setAttribute("placeholder", "Search documentation...");
+   }
+ }
+
+ // wait for the page to change 
+ function observePageChanges() {
+   const targetNode = document.body;
+
+   const config = { childList: true, subtree: true }; 
+
+   const callback = function(mutationsList, _observer) {
+       for (let mutation of mutationsList) {
+           // if the page changes, change the search placeholder
+           if (mutation.type === 'childList') {
+               observer.disconnect();
+               changeSearch();
+           }
+       }
+   };
+
+   const observer = new MutationObserver(callback);
+
+   observer.observe(targetNode, config);
+   setTimeout(() => {
+     observer.disconnect();
+   }, 5000);
+ }
+
+ // wait for a click event on the search placeholder, or for a / keypress
+ // then wait for the searchbar to appear 
+ document.addEventListener("click", function(event) {
+   console.log(event.target)
+   if (
+       event.target.classList.contains('search-placeholder') || 
+       event.target.classList.contains('fern-search-bar') || 
+       event.target.classList.contains('size-icon-md') ||
+       event.target.classList.contains('keyboard-shortcut-hint') ||
+       event.target.innerHTML === 'Search...') {
+     observePageChanges();
+   }
+ });
+ document.addEventListener("keydown", function(event) {
+   if (event.key === '/') {
+     observePageChanges();
+   }
+ }); 
+```
+</CodeBlock>
+
+Then we'll add this file to our `docs.yml`:
+
+<CodeBlock title="docs.yml">
+```yaml
+js:
+    - path: ./docs/assets/search-dialog-text.js
+        strategy: afterInteractive
+```
+</CodeBlock>
+
 ## Custom components
 
 You can use custom CSS and JS to replace Fern's default UI components with your own. The `header` and `footer` 
