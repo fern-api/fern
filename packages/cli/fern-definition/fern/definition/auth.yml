@@ -1,0 +1,143 @@
+imports: 
+  commons: commons.yml
+
+types: 
+  WithAuth: 
+    properties: 
+      auth: Auth
+      auth-schemes: optional<map<string, AuthScheme>>
+
+  Auth: 
+    discriminated: false
+    union: 
+      - string
+      - AuthSchemeReference
+      - AnyAuth
+  
+  AuthSchemeReference: 
+    extends: 
+      - commons.WithDocs
+    properties: 
+      scheme: string
+  
+  AnyAuth: 
+    properties: 
+      any: list<AnyAuthItem>
+  
+  AnyAuthItem: 
+    discriminated: false
+    union: 
+      - string
+      - AuthSchemeReference
+  
+  AuthScheme: 
+    discriminated: false
+    union: 
+      - OAuthScheme
+      - HeaderAuthScheme
+      - BasicAuthScheme
+      - BearerAuthScheme
+  
+  WithEnvironmentVariable: 
+    properties: 
+      env: optional<string>
+  
+  AuthVariable: 
+    extends: 
+      - WithEnvironmentVariable
+      - commons.WithName
+  
+  HeaderAuthScheme: 
+    extends: 
+      - WithEnvironmentVariable
+      - commons.WithName
+    properties: 
+      header: string
+      type: 
+        type: optional<string> 
+        docs: Defaults to string
+      prefix: optional<string>
+
+  BasicAuthScheme:  
+    properties: 
+      scheme: literal<"basic">
+      username: optional<AuthVariable>
+      password: optional<AuthVariable>
+  
+  BearerAuthScheme: 
+    properties: 
+      scheme: literal<"bearer">
+      token: optional<AuthVariable>
+
+  OAuthScheme: 
+    properties: 
+      scheme: literal<"oauth">
+      type: literal<"client-credentials">
+      scopes: optional<list<string>>
+      client-id-env: optional<string>
+      client-secret-env: optional<string>
+      token-prefix: optional<string>
+      get-token: OAuthGetTokenEndpoint
+      refresh-token: optional<OAuthRefreshTokenEndpoint>
+  
+  OAuthGetTokenEndpoint: 
+    properties: 
+      endpoint: 
+        type: string
+        docs: "The endpoint to get the access token, such as 'auth.get_token"
+      request-properties:
+        type: optional<OAuthGetTokenRequestProperties>
+      response-properties: 
+        type: optional<OAuthGetTokenResponseProperties>
+  
+  OAuthGetTokenRequestProperties: 
+    properties: 
+      client-id:
+        type: optional<string>
+        docs: The property name for the client ID.
+      client-secret: 
+        type: optional<string>
+        docs: The property name for the client secret.
+      scopes: 
+        type: optional<string>
+        docs: The property name for the scopes.
+  
+  OAuthGetTokenResponseProperties: 
+    properties: 
+      access-token: 
+        type: optional<string>
+        docs: The property name for the access token.
+      expires-in: 
+        type: optional<string>
+        docs: The property name for the expires in property.
+      refresh-token:
+        type: optional<string> 
+        docs: The property name for the refresh token
+
+  OAuthRefreshTokenEndpoint: 
+    properties: 
+      endpoint: 
+        type: string
+        docs: "The endpoint to refresh the access token, such as 'auth.refresh_token"
+      request-properties:
+        type: optional<OAuthRefreshTokenRequestProperties>
+      response-properties: 
+        type: optional<OAuthRefreshTokenResponseProperties>
+
+  OAuthRefreshTokenRequestProperties: 
+    properties: 
+      refresh-token: 
+        type: string
+        docs: The property name for the refresh token.
+  
+  OAuthRefreshTokenResponseProperties: 
+    properties: 
+      access-token: 
+        type: optional<string>
+        docs: The property name for the access token.
+      expires-in: 
+        type: optional<string> 
+        docs: The property name for the expires in property.
+      refresh-token: 
+        type: optional<string>
+        docs: The property name for the refresh token.

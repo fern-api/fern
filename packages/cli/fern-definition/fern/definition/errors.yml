@@ -1,0 +1,13 @@
+imports: 
+  commons: commons.yml
+  types: types.yml
+  examples: examples.yml
+
+types: 
+  ErrorDeclaration: 
+    extends: 
+      - commons.WithDocs
+    properties: 
+      status-code: integer
+      type: optional<string>
+      examples: optional<list<examples.ExampleType>>

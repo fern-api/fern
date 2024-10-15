@@ -1,0 +1,30 @@
+types: 
+  WithDocs: 
+    properties: 
+      docs: optional<string>
+  
+  WithName: 
+    properties: 
+      name: optional<string>
+  
+  WithAvailability: 
+    properties: 
+      availability: optional<Availability>
+  
+  WithDisplayName: 
+    properties: 
+      display-name: optional<string>
+  
+  WithAudiences: 
+    properties: 
+      audiences: optional<list<string>>
+
+  Availability: 
+    enum: 
+      - value: in-development
+        name: InDevelopment
+      - value: pre-release
+        name: PreRelease
+      - deprecated
+      - value: generally-available
+        name: GenerallyAvailable

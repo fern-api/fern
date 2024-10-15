@@ -1,0 +1,101 @@
+imports: 
+  commons: commons.yml
+  types: types.yml
+  errors: errors.yml
+  service: service.yml
+  pagination: pagination.yml
+  versioning: versioning.yml
+  environments: environments.yml
+  auth: auth.yml
+
+types: 
+
+  ## Fern definition file ## 
+  FernFile: 
+    extends: 
+      - commons.WithDocs
+    properties: 
+      imports: optional<map<string, string>>
+      types: optional<map<string, types.TypeDeclaration>>
+      service: optional<service.HttpService>
+      errors: optional<map<string, errors.ErrorDeclaration>>
+
+  ## Package marker file ## 
+  PackageMarkerFile: 
+    properties: 
+      navigation: 
+        availability: deprecated
+        type: optional<Navigation>
+      export: optional<Export>
+  
+  Navigation: 
+    discriminated: false
+    union:  
+      - string
+      - list<string>
+  
+  Export: 
+    discriminated: false
+    union: 
+      - string
+      - ExportDetailed
+  
+  ExportDetailed: 
+    properties: 
+      dependency: string
+      url: optional<string>
+  
+  ## Root api.yml file ## 
+  WithHeaders: 
+    properties: 
+      headers: 
+        type: optional<map<string, service.HttpHeader>>
+        docs: Global Headers for the entire API
+
+  RootApiFile: 
+    extends: 
+      - commons.WithDocs
+      - commons.WithDisplayName
+      - environments.WithEnvironments
+      - auth.WithAuth
+      - WithHeaders
+    properties: 
+      name: string
+      imports: optional<map<string, string>>
+      error-discrimination: optional<ErrorDiscrimination>
+      audiences: optional<list<string>>
+      errors: optional<list<string>>
+      base-path: optional<string>
+      path-parameters: optional<map<string, service.HttpPathParameter>>
+      idempotency-headers: optional<map<string, service.HttpHeader>>
+      variables: optional<map<string, VariableDeclaration>>
+      pagination: optional<pagination.PaginationScheme>
+      version: optional<versioning.VersionDeclaration> 
+      
+  
+  ErrorDiscrimination: 
+    discriminated: false
+    union: 
+      - PropertyBasedErrorDiscrimination
+      - StatusCodeBasedErrorDiscrimination
+
+  PropertyBasedErrorDiscrimination: 
+    properties: 
+      strategy: literal<"property">
+      property-name: string
+  
+  StatusCodeBasedErrorDiscrimination: 
+    properties: 
+      strategy: literal<"status-code">
+  
+  VariableDeclaration: 
+    discriminated: false
+    union: 
+      - string
+      - VariableDeclarationDetailed
+  
+  VariableDeclarationDetailed: 
+    extends: 
+      - commons.WithDocs
+    properties: 
+      type: string
