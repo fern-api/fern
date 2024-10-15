@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { TypeReferenceDetailed } from "../../types/types/TypeReferenceDetailed";
+import { TypeReferenceDeclarationWithName } from "../../types/types/TypeReferenceDeclarationWithName";
 
 export const QueryParameterTypeReferenceDetailed: core.serialization.ObjectSchema<
     serializers.QueryParameterTypeReferenceDetailed.Raw,
@@ -14,10 +14,10 @@ export const QueryParameterTypeReferenceDetailed: core.serialization.ObjectSchem
     .object({
         "allow-multiple": core.serialization.boolean().optional(),
     })
-    .extend(TypeReferenceDetailed);
+    .extend(TypeReferenceDeclarationWithName);
 
 export declare namespace QueryParameterTypeReferenceDetailed {
-    interface Raw extends TypeReferenceDetailed.Raw {
+    interface Raw extends TypeReferenceDeclarationWithName.Raw {
         "allow-multiple"?: boolean | null;
     }
 }

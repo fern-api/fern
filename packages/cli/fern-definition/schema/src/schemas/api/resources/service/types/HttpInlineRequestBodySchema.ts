@@ -7,5 +7,5 @@ import * as FernDefinition from "../../../index";
 export interface HttpInlineRequestBodySchema {
     extends?: FernDefinition.ObjectExtendsSchema;
     "extra-properties"?: boolean;
-    properties?: FernDefinition.HttpInlineRequestBodyProperty;
+    properties?: Record<string, FernDefinition.HttpInlineRequestBodyPropertySchema>;
 }

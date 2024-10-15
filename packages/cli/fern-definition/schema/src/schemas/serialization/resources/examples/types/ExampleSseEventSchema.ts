@@ -7,17 +7,17 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
 
-export const ExampleSseEvent: core.serialization.ObjectSchema<
-    serializers.ExampleSseEvent.Raw,
-    FernDefinition.ExampleSseEvent
+export const ExampleSseEventSchema: core.serialization.ObjectSchema<
+    serializers.ExampleSseEventSchema.Raw,
+    FernDefinition.ExampleSseEventSchema
 > = core.serialization.object({
-    event: core.serialization.string().optional(),
+    event: core.serialization.string(),
     data: ExampleTypeReferenceSchema.optional(),
 });
 
-export declare namespace ExampleSseEvent {
+export declare namespace ExampleSseEventSchema {
     interface Raw {
-        event?: string | null;
+        event: string;
         data?: (ExampleTypeReferenceSchema.Raw | undefined) | null;
     }
 }

@@ -1,6 +1,6 @@
 export { EXAMPLE_REFERENCE_PREFIX, YAML_SCHEMA_VERSION } from "./constants";
 export { type NodePath, type NodePathItem } from "./NodePath";
-export * as RawSchemas from "./schemas/api";
+export * as RawSchemas from "./schemas";
 export * from "./utils/generics";
 export * from "./utils/auth";
 export { getRequestBody } from "./utils/getRequestBody";

@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface QueryParameterTypeReferenceDetailed extends FernDefinition.TypeReferenceDetailed {
+export interface QueryParameterTypeReferenceDetailed extends FernDefinition.TypeReferenceDeclarationWithName {
     "allow-multiple"?: boolean;
 }

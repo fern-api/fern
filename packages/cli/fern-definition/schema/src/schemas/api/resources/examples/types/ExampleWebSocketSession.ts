@@ -8,5 +8,5 @@ export interface ExampleWebSocketSession extends FernDefinition.WithName, FernDe
     "path-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
     "query-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
     headers?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
-    message: FernDefinition.ExampleWebSocketMessage[];
+    messages: FernDefinition.ExampleWebSocketMessage[];
 }

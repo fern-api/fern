@@ -56,17 +56,17 @@ function handleWorkspaceParserFailureForFile({
             }
             break;
         case WorkspaceLoaderFailureType.STRUCTURE_VALIDATION:
-            for (const issue of failure.error.issues) {
-                for (const { title, subtitle } of parseIssue(issue)) {
-                    logger.error(
-                        formatLog({
-                            title,
-                            subtitle,
-                            breadcrumbs: [relativeFilepath, ...issue.path]
-                        })
-                    );
-                }
-            }
+            // for (const issue of failure.error.issues) {
+            //     for (const { title, subtitle } of parseIssue(issue)) {
+            //         logger.error(
+            //             formatLog({
+            //                 title,
+            //                 subtitle,
+            //                 breadcrumbs: [relativeFilepath, ...issue.path]
+            //             })
+            //         );
+            //     }
+            // }
             break;
         case WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY:
             logger.error("Failed to load dependency: " + failure.dependencyName);

@@ -59,11 +59,16 @@ export const AsyncAPIOrOpenAPISpecSchema = z.union([OpenAPISpecSchema, AsyncAPIS
 
 export type AsyncAPIOrOpenAPISpecSchema = z.infer<typeof AsyncAPIOrOpenAPISpecSchema>;
 
-export const APIConfigurationV2Schema = z
-    .object({
-        auth: z.optional(RawSchemas.ApiAuthSchema),
-        // You can't union Conjure specs with OpenAPI and AsyncAPI (drastically inreases complexity)
-        specs: z.union([z.array(AsyncAPIOrOpenAPISpecSchema), ConjureSchema])
-    })
-    .extend(RawSchemas.WithHeadersSchema.shape)
-    .extend(RawSchemas.WithEnvironmentsSchema.shape);
+export const APIConfigurationV2Schema = z.object({
+    auth: z.custom<RawSchemas.ApiAuthSchema>((val) => RawSchemas.serialization.ApiAuthSchema.parseOrThrow(val)),
+    // You can't union Conjure specs with OpenAPI and AsyncAPI (drastically inreases complexity)
+    specs: z.union([z.array(AsyncAPIOrOpenAPISpecSchema), ConjureSchema]),
+
+    headers: z.custom<Record<string, RawSchemas.HttpHeaderSchema>>((val) =>
+        RawSchemas.serialization.WithHeadersSchema.parseOrThrow({ headers: val })
+    )
+
+    // environments: z.custom<Record<string, RawSchemas.WithEnvironmentsSchema>>((val) =>
+    //     RawSchemas.serialization.WithHeadersSchema.parseOrThrow({ headers: val })
+    // )
+});

@@ -5,8 +5,8 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { WithDisplayName } from "../../commons/types/WithDisplayName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const VariableReferenceSchema: core.serialization.ObjectSchema<
     serializers.VariableReferenceSchema.Raw,
@@ -15,11 +15,11 @@ export const VariableReferenceSchema: core.serialization.ObjectSchema<
     .object({
         variable: core.serialization.string(),
     })
-    .extend(WithDisplayName)
-    .extend(WithAvailability);
+    .extend(WithAvailability)
+    .extend(WithDocsSchema);
 
 export declare namespace VariableReferenceSchema {
-    interface Raw extends WithDisplayName.Raw, WithAvailability.Raw {
+    interface Raw extends WithAvailability.Raw, WithDocsSchema.Raw {
         variable: string;
     }
 }

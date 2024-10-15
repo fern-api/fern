@@ -4,7 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface ExampleSseEvent {
-    event?: string;
-    data?: FernDefinition.ExampleTypeReferenceSchema | undefined;
-}
+export interface DeclarationWithoutDocsSchema extends FernDefinition.WithAvailability, FernDefinition.WithAudiences {}

@@ -9,6 +9,7 @@ import { SingleUnionTypeKey } from "./SingleUnionTypeKey";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithName } from "../../commons/types/WithName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
+import { WithDisplayName } from "../../commons/types/WithDisplayName";
 
 export const SingleUnionTypeDetailedSchema: core.serialization.ObjectSchema<
     serializers.SingleUnionTypeDetailedSchema.Raw,
@@ -20,10 +21,11 @@ export const SingleUnionTypeDetailedSchema: core.serialization.ObjectSchema<
     })
     .extend(WithDocsSchema)
     .extend(WithName)
-    .extend(WithAvailability);
+    .extend(WithAvailability)
+    .extend(WithDisplayName);
 
 export declare namespace SingleUnionTypeDetailedSchema {
-    interface Raw extends WithDocsSchema.Raw, WithName.Raw, WithAvailability.Raw {
+    interface Raw extends WithDocsSchema.Raw, WithName.Raw, WithAvailability.Raw, WithDisplayName.Raw {
         type?: string | null;
         key?: SingleUnionTypeKey.Raw | null;
     }

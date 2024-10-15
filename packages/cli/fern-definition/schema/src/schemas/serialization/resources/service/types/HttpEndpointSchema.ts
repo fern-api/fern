@@ -14,7 +14,7 @@ import { ResponseErrorsSchema } from "./ResponseErrorsSchema";
 import { ExampleEndpointCallSchema } from "../../examples/types/ExampleEndpointCallSchema";
 import { Pagination } from "./Pagination";
 import { WithDisplayName } from "../../commons/types/WithDisplayName";
-import { WithAudiences } from "../../commons/types/WithAudiences";
+import { DeclarationSchema } from "../../commons/types/DeclarationSchema";
 import { ResponseError } from "./ResponseError";
 
 export const HttpEndpointSchema: core.serialization.ObjectSchema<
@@ -23,7 +23,7 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         method: HttpMethodSchema.optional(),
-        "base-path": core.serialization.string(),
+        "base-path": core.serialization.string().optional(),
         path: core.serialization.string(),
         url: core.serialization.string().optional(),
         "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
@@ -38,12 +38,12 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
         pagination: Pagination.optional(),
     })
     .extend(WithDisplayName)
-    .extend(WithAudiences);
+    .extend(DeclarationSchema);
 
 export declare namespace HttpEndpointSchema {
-    interface Raw extends WithDisplayName.Raw, WithAudiences.Raw {
+    interface Raw extends WithDisplayName.Raw, DeclarationSchema.Raw {
         method?: HttpMethodSchema.Raw | null;
-        "base-path": string;
+        "base-path"?: string | null;
         path: string;
         url?: string | null;
         "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;

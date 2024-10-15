@@ -5,19 +5,13 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { TypeReferenceDetailed } from "../../types/types/TypeReferenceDetailed";
+import { TypeReferenceDeclarationWithEnvOverride } from "./TypeReferenceDeclarationWithEnvOverride";
 
-export const HttpHeaderSchema: core.serialization.ObjectSchema<
+export const HttpHeaderSchema: core.serialization.Schema<
     serializers.HttpHeaderSchema.Raw,
     FernDefinition.HttpHeaderSchema
-> = core.serialization
-    .object({
-        env: core.serialization.string().optional(),
-    })
-    .extend(TypeReferenceDetailed);
+> = TypeReferenceDeclarationWithEnvOverride;
 
 export declare namespace HttpHeaderSchema {
-    interface Raw extends TypeReferenceDetailed.Raw {
-        env?: string | null;
-    }
+    type Raw = TypeReferenceDeclarationWithEnvOverride.Raw;
 }

@@ -10,7 +10,6 @@ import { EncodingSchema } from "../../encoding/types/EncodingSchema";
 import { SourceSchema } from "../../source/types/SourceSchema";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithAvailability } from "../../commons/types/WithAvailability";
-import { WithDisplayName } from "../../commons/types/WithDisplayName";
 import { WithAudiences } from "../../commons/types/WithAudiences";
 
 export const BaseTypeDeclarationSchema: core.serialization.ObjectSchema<
@@ -18,18 +17,17 @@ export const BaseTypeDeclarationSchema: core.serialization.ObjectSchema<
     FernDefinition.BaseTypeDeclarationSchema
 > = core.serialization
     .object({
-        examples: ExampleTypeSchema.optional(),
+        examples: core.serialization.list(ExampleTypeSchema).optional(),
         encoding: EncodingSchema.optional(),
         source: SourceSchema.optional(),
     })
     .extend(WithDocsSchema)
     .extend(WithAvailability)
-    .extend(WithDisplayName)
     .extend(WithAudiences);
 
 export declare namespace BaseTypeDeclarationSchema {
-    interface Raw extends WithDocsSchema.Raw, WithAvailability.Raw, WithDisplayName.Raw, WithAudiences.Raw {
-        examples?: ExampleTypeSchema.Raw | null;
+    interface Raw extends WithDocsSchema.Raw, WithAvailability.Raw, WithAudiences.Raw {
+        examples?: ExampleTypeSchema.Raw[] | null;
         encoding?: EncodingSchema.Raw | null;
         source?: SourceSchema.Raw | null;
     }

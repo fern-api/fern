@@ -4,13 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface TypeReferenceDetailed
-    extends FernDefinition.WithDocsSchema,
-        FernDefinition.WithName,
-        FernDefinition.WithAvailability,
-        FernDefinition.WithAudiences {
-    type: string;
-    default?: unknown;
-    encoding?: FernDefinition.EncodingSchema;
-    validation?: FernDefinition.ValidationSchema;
-}
+export interface TypeReferenceDetailed extends FernDefinition.BaseTypeReferenceSchema {}

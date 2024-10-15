@@ -20,12 +20,14 @@ types:
       path-parameters: optional<map<string, ExampleTypeReferenceSchema>>
       query-parameters: optional<map<string, ExampleTypeReferenceSchema>>
       headers: optional<map<string, ExampleTypeReferenceSchema>>
-      message: list<ExampleWebSocketMessage>
+      messages: list<ExampleWebSocketMessage>
   
   ExampleWebSocketMessage: 
     properties: 
       type: string
       body: unknown
+
+  ExampleEndpointCallArraySchema: list<ExampleEndpointCallSchema>
   
   ExampleEndpointCallSchema:
     extends: 
@@ -68,11 +70,11 @@ types:
   
   ExampleSseResponseSchema: 
     properties: 
-      stream: list<ExampleSseEvent>
+      stream: list<ExampleSseEventSchema>
 
-  ExampleSseEvent: 
+  ExampleSseEventSchema: 
     properties: 
-      event: optional<string>
+      event: string
       data: optional<ExampleTypeReferenceSchema>
   
   ExampleTypeReferenceSchema: unknown

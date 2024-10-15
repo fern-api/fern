@@ -5,33 +5,13 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { EncodingSchema } from "../../encoding/types/EncodingSchema";
-import { ValidationSchema } from "../../validation/types/ValidationSchema";
-import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
-import { WithName } from "../../commons/types/WithName";
-import { WithAvailability } from "../../commons/types/WithAvailability";
-import { WithAudiences } from "../../commons/types/WithAudiences";
+import { BaseTypeReferenceSchema } from "./BaseTypeReferenceSchema";
 
 export const TypeReferenceDetailed: core.serialization.ObjectSchema<
     serializers.TypeReferenceDetailed.Raw,
     FernDefinition.TypeReferenceDetailed
-> = core.serialization
-    .object({
-        type: core.serialization.string(),
-        default: core.serialization.unknown().optional(),
-        encoding: EncodingSchema.optional(),
-        validation: ValidationSchema.optional(),
-    })
-    .extend(WithDocsSchema)
-    .extend(WithName)
-    .extend(WithAvailability)
-    .extend(WithAudiences);
+> = core.serialization.object({}).extend(BaseTypeReferenceSchema);
 
 export declare namespace TypeReferenceDetailed {
-    interface Raw extends WithDocsSchema.Raw, WithName.Raw, WithAvailability.Raw, WithAudiences.Raw {
-        type: string;
-        default?: unknown | null;
-        encoding?: EncodingSchema.Raw | null;
-        validation?: ValidationSchema.Raw | null;
-    }
+    interface Raw extends BaseTypeReferenceSchema.Raw {}
 }

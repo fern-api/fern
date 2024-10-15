@@ -42,8 +42,6 @@ function removeSdkAlias(sdk: RawSchemas.SupportedSdkLanguageSchema): SupportedSd
             return "go";
         case "dotnet":
             return "csharp";
-        case "c#":
-            return "csharp";
         case "jvm":
             return "java";
         default:

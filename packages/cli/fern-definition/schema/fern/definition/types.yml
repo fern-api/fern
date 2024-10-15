@@ -33,27 +33,39 @@ types:
     union: 
       - string
       - TypeReferenceDetailed
-
-  TypeReferenceDetailed:
+  
+  BaseTypeReferenceSchema: 
     extends: 
       - commons.WithDocsSchema
-      - commons.WithName
       - commons.WithAvailability
-      - commons.WithAudiences
     properties: 
       type: string
       default: optional<unknown>
       encoding: optional<encoding.EncodingSchema>
       validation: optional<validation.ValidationSchema>
+
+  TypeReferenceDetailed:
+    extends: BaseTypeReferenceSchema
+
+  TypeReferenceDeclarationWithNameSchema: 
+    discriminated: false
+    union: 
+      - string
+      - TypeReferenceDeclarationWithName
+  
+  TypeReferenceDeclarationWithName:
+    extends: 
+      - BaseTypeReferenceSchema
+      - commons.WithName
+      - commons.WithAudiences
   
   BaseTypeDeclarationSchema: 
     extends: 
       - commons.WithDocsSchema
       - commons.WithAvailability
-      - commons.WithDisplayName
       - commons.WithAudiences
     properties: 
-      examples: optional<examples.ExampleTypeSchema>
+      examples: optional<list<examples.ExampleTypeSchema>>
       encoding: optional<encoding.EncodingSchema>
       source: optional<source.SourceSchema>
   
@@ -63,6 +75,7 @@ types:
     extends: BaseTypeDeclarationSchema
     properties: 
       type: string
+      validation: optional<validation.ValidationSchema>
   
   #### Objects ####
 
@@ -70,10 +83,10 @@ types:
     extends: BaseTypeDeclarationSchema
     properties: 
       extends: optional<ObjectExtendsSchema>
-      properties: optional<map<string, TypeReferenceSchema>>
+      properties: optional<map<string, ObjectPropertySchema>>
       extra-properties: optional<boolean>
   
-  ObjectPropertySchema: TypeReferenceSchema
+  ObjectPropertySchema: TypeReferenceDeclarationWithNameSchema
   
   ObjectExtendsSchema: 
     discriminated: false
@@ -129,6 +142,7 @@ types:
       - commons.WithDocsSchema
       - commons.WithName
       - commons.WithAvailability
+      - commons.WithDisplayName
     properties: 
       type: optional<string>
       key: optional<SingleUnionTypeKey>
@@ -149,7 +163,7 @@ types:
     extends: BaseTypeDeclarationSchema
     properties: 
       discriminant: optional<UnionDiscriminant>
-      extends: BaseTypeDeclarationSchema
+      extends: optional<ObjectExtendsSchema>
       base-properties: optional<map<string, TypeReferenceSchema>>
       union: map<string, SingleUnionTypeSchema>
   
@@ -171,7 +185,6 @@ types:
     extends: BaseTypeDeclarationSchema
     properties: 
       discriminated: literal<false>
-      extends: BaseTypeDeclarationSchema
       union: list<SingleUndiscriminatedUnionTypeSchema>
   
   SingleUndiscriminatedUnionTypeSchema: 
