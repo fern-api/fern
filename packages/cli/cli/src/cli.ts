@@ -826,7 +826,7 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
         ],
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
-                command: "fern generate-overrides"
+                command: "fern write-overrides"
             });
             await writeOverridesForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -834,7 +834,9 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     defaultToAllApiWorkspaces: true
                 }),
                 includeModels: !(argv.excludeModels as boolean),
-                cliContext
+                cliContext,
+                // TODO: make this a CLI option
+                withAI: true
             });
         }
     );
