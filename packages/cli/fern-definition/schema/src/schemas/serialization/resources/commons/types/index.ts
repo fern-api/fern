@@ -1,4 +1,4 @@
-export * from "./WithDocs";
+export * from "./WithDocsSchema";
 export * from "./WithName";
 export * from "./WithAvailability";
 export * from "./WithDisplayName";

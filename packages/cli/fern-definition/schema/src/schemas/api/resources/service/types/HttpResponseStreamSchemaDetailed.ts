@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface HttpResponseStreamSchemaDetailed {
+export interface HttpResponseStreamSchemaDetailed extends FernDefinition.WithDocsSchema {
     type: string;
     format?: FernDefinition.StreamFormat;
     terminator?: string;

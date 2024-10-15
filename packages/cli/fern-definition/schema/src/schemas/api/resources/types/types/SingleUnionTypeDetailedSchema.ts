@@ -5,7 +5,7 @@
 import * as FernDefinition from "../../../index";
 
 export interface SingleUnionTypeDetailedSchema
-    extends FernDefinition.WithDocs,
+    extends FernDefinition.WithDocsSchema,
         FernDefinition.WithName,
         FernDefinition.WithAvailability {
     type?: string;

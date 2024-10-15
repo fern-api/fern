@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { AuthVariable } from "./AuthVariable";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const BearerAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.BearerAuthSchemeSchema.Raw,
@@ -16,10 +16,10 @@ export const BearerAuthSchemeSchema: core.serialization.ObjectSchema<
         scheme: core.serialization.stringLiteral("bearer"),
         token: AuthVariable.optional(),
     })
-    .extend(WithDocs);
+    .extend(WithDocsSchema);
 
 export declare namespace BearerAuthSchemeSchema {
-    interface Raw extends WithDocs.Raw {
+    interface Raw extends WithDocsSchema.Raw {
         scheme: "bearer";
         token?: AuthVariable.Raw | null;
     }

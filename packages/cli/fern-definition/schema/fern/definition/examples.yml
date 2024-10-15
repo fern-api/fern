@@ -6,16 +6,16 @@ types:
   ExampleTypeSchema: 
     extends: 
       - commons.WithName
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
-      value: unknown
+      value: ExampleTypeValueSchema
   
   ExampleTypeValueSchema: unknown
   
   ExampleWebSocketSession: 
     extends: 
       - commons.WithName
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       path-parameters: optional<map<string, ExampleTypeReferenceSchema>>
       query-parameters: optional<map<string, ExampleTypeReferenceSchema>>
@@ -30,7 +30,7 @@ types:
   ExampleEndpointCallSchema:
     extends: 
       - commons.WithName
-      - commons.WithDocs     
+      - commons.WithDocsSchema     
     properties: 
       id: optional<string>
       path-parameters: optional<map<string, ExampleTypeReferenceSchema>>
@@ -43,7 +43,7 @@ types:
   ExampleWebhookCallSchema: 
     extends: 
       - commons.WithName
-      - commons.WithDocs      
+      - commons.WithDocsSchema      
     properties: 
       id: optional<string>
       payload: ExampleTypeReferenceSchema
@@ -85,26 +85,33 @@ types:
   
   ExampleCodeSampleSchemaSdk: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
       - commons.WithName  
     properties: 
-      sdk: SdkLanguage
+      sdk: SupportedSdkLanguageSchema
       code: string
   
-  SdkLanguage: 
-    enum: 
-     - curl
-     - python
-     - javascript
-     - typescript
-     - go
-     - ruby
-     - csharp
-     - java
+  SupportedSdkLanguageSchema: 
+    enum:
+      - curl
+      - python
+      - javascript
+      - typescript
+      - go
+      - ruby
+      - csharp
+      - java
+      - js
+      - node
+      - ts
+      - nodets
+      - golang
+      - dotnet
+      - jvm
   
   ExampleCodeSampleSchemaLanguage: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
       - commons.WithName
     properties: 
       language: string

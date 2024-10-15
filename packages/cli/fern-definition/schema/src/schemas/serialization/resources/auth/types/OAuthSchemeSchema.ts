@@ -7,7 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { OAuthGetTokenEndpoint } from "./OAuthGetTokenEndpoint";
 import { OAuthRefreshTokenEndpoint } from "./OAuthRefreshTokenEndpoint";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const OAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.OAuthSchemeSchema.Raw,
@@ -23,10 +23,10 @@ export const OAuthSchemeSchema: core.serialization.ObjectSchema<
         "get-token": OAuthGetTokenEndpoint,
         "refresh-token": OAuthRefreshTokenEndpoint.optional(),
     })
-    .extend(WithDocs);
+    .extend(WithDocsSchema);
 
 export declare namespace OAuthSchemeSchema {
-    interface Raw extends WithDocs.Raw {
+    interface Raw extends WithDocsSchema.Raw {
         scheme: "oauth";
         type: "client-credentials";
         scopes?: string[] | null;

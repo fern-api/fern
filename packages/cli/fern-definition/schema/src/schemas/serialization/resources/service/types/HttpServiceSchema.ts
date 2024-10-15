@@ -9,8 +9,7 @@ import { TypeReferenceSchema } from "../../types/types/TypeReferenceSchema";
 import { ServiceTransport } from "./ServiceTransport";
 import { SourceSchema } from "../../source/types/SourceSchema";
 import { HttpEndpointSchema } from "./HttpEndpointSchema";
-import { WithDisplayName } from "../../commons/types/WithDisplayName";
-import { WithAudiences } from "../../commons/types/WithAudiences";
+import { DeclarationSchema } from "../../commons/types/DeclarationSchema";
 
 export const HttpServiceSchema: core.serialization.ObjectSchema<
     serializers.HttpServiceSchema.Raw,
@@ -19,7 +18,7 @@ export const HttpServiceSchema: core.serialization.ObjectSchema<
     .object({
         auth: core.serialization.boolean(),
         url: core.serialization.string().optional(),
-        "base-path": core.serialization.string().optional(),
+        "base-path": core.serialization.string(),
         "path-parameters": core.serialization
             .record(core.serialization.string(), core.serialization.string())
             .optional(),
@@ -27,21 +26,20 @@ export const HttpServiceSchema: core.serialization.ObjectSchema<
         headers: core.serialization.record(core.serialization.string(), TypeReferenceSchema).optional(),
         transport: ServiceTransport.optional(),
         source: SourceSchema.optional(),
-        endpoints: core.serialization.record(core.serialization.string(), HttpEndpointSchema).optional(),
+        endpoints: core.serialization.record(core.serialization.string(), HttpEndpointSchema),
     })
-    .extend(WithDisplayName)
-    .extend(WithAudiences);
+    .extend(DeclarationSchema);
 
 export declare namespace HttpServiceSchema {
-    interface Raw extends WithDisplayName.Raw, WithAudiences.Raw {
+    interface Raw extends DeclarationSchema.Raw {
         auth: boolean;
         url?: string | null;
-        "base-path"?: string | null;
+        "base-path": string;
         "path-parameters"?: Record<string, string> | null;
         idempotent?: boolean | null;
         headers?: Record<string, TypeReferenceSchema.Raw> | null;
         transport?: ServiceTransport.Raw | null;
         source?: SourceSchema.Raw | null;
-        endpoints?: Record<string, HttpEndpointSchema.Raw> | null;
+        endpoints: Record<string, HttpEndpointSchema.Raw>;
     }
 }

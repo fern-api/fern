@@ -5,22 +5,22 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { OAuthGetTokenRequestProperties } from "./OAuthGetTokenRequestProperties";
-import { OAuthGetTokenResponseProperties } from "./OAuthGetTokenResponseProperties";
+import { OAuthAccessTokenRequestPropertiesSchema } from "./OAuthAccessTokenRequestPropertiesSchema";
+import { OAuthAccessTokenResponsePropertiesSchema } from "./OAuthAccessTokenResponsePropertiesSchema";
 
 export const OAuthGetTokenEndpoint: core.serialization.ObjectSchema<
     serializers.OAuthGetTokenEndpoint.Raw,
     FernDefinition.OAuthGetTokenEndpoint
 > = core.serialization.object({
     endpoint: core.serialization.string(),
-    "request-properties": OAuthGetTokenRequestProperties.optional(),
-    "response-properties": OAuthGetTokenResponseProperties.optional(),
+    "request-properties": OAuthAccessTokenRequestPropertiesSchema.optional(),
+    "response-properties": OAuthAccessTokenResponsePropertiesSchema.optional(),
 });
 
 export declare namespace OAuthGetTokenEndpoint {
     interface Raw {
         endpoint: string;
-        "request-properties"?: OAuthGetTokenRequestProperties.Raw | null;
-        "response-properties"?: OAuthGetTokenResponseProperties.Raw | null;
+        "request-properties"?: OAuthAccessTokenRequestPropertiesSchema.Raw | null;
+        "response-properties"?: OAuthAccessTokenResponsePropertiesSchema.Raw | null;
     }
 }

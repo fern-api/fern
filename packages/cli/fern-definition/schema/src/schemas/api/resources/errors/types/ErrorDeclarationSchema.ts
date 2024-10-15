@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface ErrorDeclarationSchema extends FernDefinition.WithDocs {
+export interface ErrorDeclarationSchema extends FernDefinition.WithDocsSchema {
     "status-code": number;
     type?: string;
     examples?: FernDefinition.ExampleTypeSchema[];

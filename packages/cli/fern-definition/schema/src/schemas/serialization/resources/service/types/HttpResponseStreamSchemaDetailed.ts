@@ -6,18 +6,21 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { StreamFormat } from "./StreamFormat";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const HttpResponseStreamSchemaDetailed: core.serialization.ObjectSchema<
     serializers.HttpResponseStreamSchemaDetailed.Raw,
     FernDefinition.HttpResponseStreamSchemaDetailed
-> = core.serialization.object({
-    type: core.serialization.string(),
-    format: StreamFormat.optional(),
-    terminator: core.serialization.string().optional(),
-});
+> = core.serialization
+    .object({
+        type: core.serialization.string(),
+        format: StreamFormat.optional(),
+        terminator: core.serialization.string().optional(),
+    })
+    .extend(WithDocsSchema);
 
 export declare namespace HttpResponseStreamSchemaDetailed {
-    interface Raw {
+    interface Raw extends WithDocsSchema.Raw {
         type: string;
         format?: StreamFormat.Raw | null;
         terminator?: string | null;

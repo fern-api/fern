@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface ExampleTypeSchema extends FernDefinition.WithName, FernDefinition.WithDocs {
-    value?: unknown;
+export interface ExampleTypeSchema extends FernDefinition.WithName, FernDefinition.WithDocsSchema {
+    value?: FernDefinition.ExampleTypeValueSchema;
 }

@@ -5,8 +5,8 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { SdkLanguage } from "./SdkLanguage";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { SupportedSdkLanguageSchema } from "./SupportedSdkLanguageSchema";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithName } from "../../commons/types/WithName";
 
 export const ExampleCodeSampleSchemaSdk: core.serialization.ObjectSchema<
@@ -14,15 +14,15 @@ export const ExampleCodeSampleSchemaSdk: core.serialization.ObjectSchema<
     FernDefinition.ExampleCodeSampleSchemaSdk
 > = core.serialization
     .object({
-        sdk: SdkLanguage,
+        sdk: SupportedSdkLanguageSchema,
         code: core.serialization.string(),
     })
-    .extend(WithDocs)
+    .extend(WithDocsSchema)
     .extend(WithName);
 
 export declare namespace ExampleCodeSampleSchemaSdk {
-    interface Raw extends WithDocs.Raw, WithName.Raw {
-        sdk: SdkLanguage.Raw;
+    interface Raw extends WithDocsSchema.Raw, WithName.Raw {
+        sdk: SupportedSdkLanguageSchema.Raw;
         code: string;
     }
 }

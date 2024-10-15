@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface ExampleEndpointCallSchema extends FernDefinition.WithName, FernDefinition.WithDocs {
+export interface ExampleEndpointCallSchema extends FernDefinition.WithName, FernDefinition.WithDocsSchema {
     id?: string;
     "path-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
     "query-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;

@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const AuthSchemeReferenceSchema: core.serialization.ObjectSchema<
     serializers.AuthSchemeReferenceSchema.Raw,
@@ -14,10 +14,10 @@ export const AuthSchemeReferenceSchema: core.serialization.ObjectSchema<
     .object({
         scheme: core.serialization.string(),
     })
-    .extend(WithDocs);
+    .extend(WithDocsSchema);
 
 export declare namespace AuthSchemeReferenceSchema {
-    interface Raw extends WithDocs.Raw {
+    interface Raw extends WithDocsSchema.Raw {
         scheme: string;
     }
 }

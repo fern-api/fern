@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface ExampleWebSocketSession extends FernDefinition.WithName, FernDefinition.WithDocs {
+export interface ExampleWebSocketSession extends FernDefinition.WithName, FernDefinition.WithDocsSchema {
     "path-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
     "query-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
     headers?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;

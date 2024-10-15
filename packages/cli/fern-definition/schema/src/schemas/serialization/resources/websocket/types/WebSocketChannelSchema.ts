@@ -10,22 +10,27 @@ import { HttpPathParameterSchema } from "../../service/types/HttpPathParameterSc
 import { HttpQueryParameterSchema } from "../../service/types/HttpQueryParameterSchema";
 import { WebSocketChannelMessageSchema } from "./WebSocketChannelMessageSchema";
 import { ExampleWebSocketSession } from "../../examples/types/ExampleWebSocketSession";
+import { DeclarationSchema } from "../../commons/types/DeclarationSchema";
+import { WithDisplayName } from "../../commons/types/WithDisplayName";
 
 export const WebSocketChannelSchema: core.serialization.ObjectSchema<
     serializers.WebSocketChannelSchema.Raw,
     FernDefinition.WebSocketChannelSchema
-> = core.serialization.object({
-    auth: core.serialization.boolean(),
-    path: core.serialization.string(),
-    headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
-    "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
-    "query-parameters": core.serialization.record(core.serialization.string(), HttpQueryParameterSchema).optional(),
-    messages: core.serialization.record(core.serialization.string(), WebSocketChannelMessageSchema).optional(),
-    examples: core.serialization.list(ExampleWebSocketSession).optional(),
-});
+> = core.serialization
+    .object({
+        auth: core.serialization.boolean(),
+        path: core.serialization.string(),
+        headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
+        "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
+        "query-parameters": core.serialization.record(core.serialization.string(), HttpQueryParameterSchema).optional(),
+        messages: core.serialization.record(core.serialization.string(), WebSocketChannelMessageSchema).optional(),
+        examples: core.serialization.list(ExampleWebSocketSession).optional(),
+    })
+    .extend(DeclarationSchema)
+    .extend(WithDisplayName);
 
 export declare namespace WebSocketChannelSchema {
-    interface Raw {
+    interface Raw extends DeclarationSchema.Raw, WithDisplayName.Raw {
         auth: boolean;
         path: string;
         headers?: Record<string, HttpHeaderSchema.Raw> | null;

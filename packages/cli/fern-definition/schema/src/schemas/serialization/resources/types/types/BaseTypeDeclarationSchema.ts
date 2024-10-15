@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 import { ExampleTypeSchema } from "../../examples/types/ExampleTypeSchema";
 import { EncodingSchema } from "../../encoding/types/EncodingSchema";
 import { SourceSchema } from "../../source/types/SourceSchema";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithDisplayName } from "../../commons/types/WithDisplayName";
 import { WithAudiences } from "../../commons/types/WithAudiences";
@@ -22,13 +22,13 @@ export const BaseTypeDeclarationSchema: core.serialization.ObjectSchema<
         encoding: EncodingSchema.optional(),
         source: SourceSchema.optional(),
     })
-    .extend(WithDocs)
+    .extend(WithDocsSchema)
     .extend(WithAvailability)
     .extend(WithDisplayName)
     .extend(WithAudiences);
 
 export declare namespace BaseTypeDeclarationSchema {
-    interface Raw extends WithDocs.Raw, WithAvailability.Raw, WithDisplayName.Raw, WithAudiences.Raw {
+    interface Raw extends WithDocsSchema.Raw, WithAvailability.Raw, WithDisplayName.Raw, WithAudiences.Raw {
         examples?: ExampleTypeSchema.Raw | null;
         encoding?: EncodingSchema.Raw | null;
         source?: SourceSchema.Raw | null;

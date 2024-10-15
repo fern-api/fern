@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface WebSocketChannelSchema {
+export interface WebSocketChannelSchema extends FernDefinition.DeclarationSchema, FernDefinition.WithDisplayName {
     auth: boolean;
     path: string;
     headers?: Record<string, FernDefinition.HttpHeaderSchema>;

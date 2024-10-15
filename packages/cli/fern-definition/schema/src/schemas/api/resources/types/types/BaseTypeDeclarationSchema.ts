@@ -5,7 +5,7 @@
 import * as FernDefinition from "../../../index";
 
 export interface BaseTypeDeclarationSchema
-    extends FernDefinition.WithDocs,
+    extends FernDefinition.WithDocsSchema,
         FernDefinition.WithAvailability,
         FernDefinition.WithDisplayName,
         FernDefinition.WithAudiences {

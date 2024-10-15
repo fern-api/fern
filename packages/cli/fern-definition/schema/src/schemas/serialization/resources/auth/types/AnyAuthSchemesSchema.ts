@@ -6,16 +6,19 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { AnyAuthItem } from "./AnyAuthItem";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const AnyAuthSchemesSchema: core.serialization.ObjectSchema<
     serializers.AnyAuthSchemesSchema.Raw,
     FernDefinition.AnyAuthSchemesSchema
-> = core.serialization.object({
-    any: core.serialization.list(AnyAuthItem),
-});
+> = core.serialization
+    .object({
+        any: core.serialization.list(AnyAuthItem),
+    })
+    .extend(WithDocsSchema);
 
 export declare namespace AnyAuthSchemesSchema {
-    interface Raw {
+    interface Raw extends WithDocsSchema.Raw {
         any: AnyAuthItem.Raw[];
     }
 }

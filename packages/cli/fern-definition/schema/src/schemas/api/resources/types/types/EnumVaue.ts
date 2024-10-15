@@ -4,4 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export type EnumVaue = string | FernDefinition.EnumValueDetailed;
+export type EnumVaue = string | FernDefinition.EnumValueSchema;

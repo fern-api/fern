@@ -5,7 +5,7 @@
 import * as FernDefinition from "../../../index";
 
 export interface RootApiFileSchema
-    extends FernDefinition.WithDocs,
+    extends FernDefinition.WithDocsSchema,
         FernDefinition.WithDisplayName,
         FernDefinition.WithEnvironmentsSchema,
         FernDefinition.WithAuthSchema,

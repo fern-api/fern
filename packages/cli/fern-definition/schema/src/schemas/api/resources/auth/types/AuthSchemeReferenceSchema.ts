@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface AuthSchemeReferenceSchema extends FernDefinition.WithDocs {
+export interface AuthSchemeReferenceSchema extends FernDefinition.WithDocsSchema {
     scheme: string;
 }

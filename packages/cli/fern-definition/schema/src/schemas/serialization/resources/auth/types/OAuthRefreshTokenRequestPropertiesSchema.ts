@@ -6,14 +6,14 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const OAuthRefreshTokenRequestProperties: core.serialization.ObjectSchema<
-    serializers.OAuthRefreshTokenRequestProperties.Raw,
-    FernDefinition.OAuthRefreshTokenRequestProperties
+export const OAuthRefreshTokenRequestPropertiesSchema: core.serialization.ObjectSchema<
+    serializers.OAuthRefreshTokenRequestPropertiesSchema.Raw,
+    FernDefinition.OAuthRefreshTokenRequestPropertiesSchema
 > = core.serialization.object({
     "refresh-token": core.serialization.string(),
 });
 
-export declare namespace OAuthRefreshTokenRequestProperties {
+export declare namespace OAuthRefreshTokenRequestPropertiesSchema {
     interface Raw {
         "refresh-token": string;
     }

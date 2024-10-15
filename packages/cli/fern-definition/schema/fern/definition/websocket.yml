@@ -6,6 +6,9 @@ imports:
 
 types: 
   WebSocketChannelSchema: 
+    extends: 
+      - commons.DeclarationSchema
+      - commons.WithDisplayName
     properties: 
       auth: boolean
       path: string
@@ -37,7 +40,7 @@ types:
   
   WebSocketChannelReferencedMessageSchema:
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
        type: string
   

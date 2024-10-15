@@ -10,18 +10,18 @@ types:
   
   HttpServiceSchema: 
     extends: 
+      - commons.DeclarationSchema
       - commons.WithDisplayName
-      - commons.WithAudiences
     properties: 
       auth: boolean
       url: optional<string>
-      base-path: optional<string>
+      base-path: string
       path-parameters: optional<map<string, string>>
       idempotent: optional<boolean>
       headers: optional<map<string, types.TypeReferenceSchema>>
       transport: optional<ServiceTransport> 
       source: optional<source.SourceSchema>
-      endpoints: optional<map<string, HttpEndpointSchema>>
+      endpoints: map<string, HttpEndpointSchema>
 
   ServiceTransport: 
     properties: 
@@ -70,7 +70,7 @@ types:
   HttpRequestSchema:
     extends: 
       - commons.WithName
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       content-type: optional<string>
       query-parameters: optional<map<string, HttpQueryParameterSchema>>
@@ -92,7 +92,7 @@ types:
   
   HttpReferencedRequestBodySchema: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties:
       type: string
 
@@ -139,6 +139,8 @@ types:
       - HttpResponseStreamSchemaDetailed
   
   HttpResponseStreamSchemaDetailed: 
+    extends: 
+      - commons.WithDocsSchema
     properties: 
       type: string
       format: optional<StreamFormat>
@@ -168,10 +170,10 @@ types:
     discriminated: false
     union: 
       - string
-      - ResponseErrorWithDocs
+      - ResponseErrorWithDocsSchema
   
-  ResponseErrorWithDocs: 
+  ResponseErrorWithDocsSchema: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       error: string

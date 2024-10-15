@@ -6,7 +6,7 @@ imports:
 types: 
   ErrorDeclarationSchema: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       status-code: integer
       type: optional<string>

@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithAudiences } from "../../commons/types/WithAudiences";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const SingleBaseUrlEnvironmentSchema: core.serialization.ObjectSchema<
     serializers.SingleBaseUrlEnvironmentSchema.Raw,
@@ -16,10 +16,10 @@ export const SingleBaseUrlEnvironmentSchema: core.serialization.ObjectSchema<
         url: core.serialization.string(),
     })
     .extend(WithAudiences)
-    .extend(WithDocs);
+    .extend(WithDocsSchema);
 
 export declare namespace SingleBaseUrlEnvironmentSchema {
-    interface Raw extends WithAudiences.Raw, WithDocs.Raw {
+    interface Raw extends WithAudiences.Raw, WithDocsSchema.Raw {
         url: string;
     }
 }

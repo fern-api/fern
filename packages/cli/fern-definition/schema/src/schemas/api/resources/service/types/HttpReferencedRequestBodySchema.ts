@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface HttpReferencedRequestBodySchema extends FernDefinition.WithDocs {
+export interface HttpReferencedRequestBodySchema extends FernDefinition.WithDocsSchema {
     type: string;
 }

@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithName } from "../../commons/types/WithName";
 
 export const ExampleCodeSampleSchemaLanguage: core.serialization.ObjectSchema<
@@ -17,11 +17,11 @@ export const ExampleCodeSampleSchemaLanguage: core.serialization.ObjectSchema<
         code: core.serialization.string(),
         install: core.serialization.string().optional(),
     })
-    .extend(WithDocs)
+    .extend(WithDocsSchema)
     .extend(WithName);
 
 export declare namespace ExampleCodeSampleSchemaLanguage {
-    interface Raw extends WithDocs.Raw, WithName.Raw {
+    interface Raw extends WithDocsSchema.Raw, WithName.Raw {
         language: string;
         code: string;
         install?: string | null;

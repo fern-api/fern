@@ -7,7 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { EncodingSchema } from "../../encoding/types/EncodingSchema";
 import { ValidationSchema } from "../../validation/types/ValidationSchema";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithName } from "../../commons/types/WithName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithAudiences } from "../../commons/types/WithAudiences";
@@ -22,13 +22,13 @@ export const TypeReferenceDetailed: core.serialization.ObjectSchema<
         encoding: EncodingSchema.optional(),
         validation: ValidationSchema.optional(),
     })
-    .extend(WithDocs)
+    .extend(WithDocsSchema)
     .extend(WithName)
     .extend(WithAvailability)
     .extend(WithAudiences);
 
 export declare namespace TypeReferenceDetailed {
-    interface Raw extends WithDocs.Raw, WithName.Raw, WithAvailability.Raw, WithAudiences.Raw {
+    interface Raw extends WithDocsSchema.Raw, WithName.Raw, WithAvailability.Raw, WithAudiences.Raw {
         type: string;
         default?: unknown | null;
         encoding?: EncodingSchema.Raw | null;

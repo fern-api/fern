@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface DefinitionFileSchema extends FernDefinition.WithDocs {
+export interface DefinitionFileSchema extends FernDefinition.WithDocsSchema {
     imports?: Record<string, string>;
     types?: Record<string, FernDefinition.TypeDeclarationSchema>;
     service?: FernDefinition.HttpServiceSchema;

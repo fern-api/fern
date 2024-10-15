@@ -9,7 +9,8 @@ types:
     extends: 
       - commons.WithAvailability
       - commons.WithAudiences
-      - commons.WithDocs
+      - commons.WithDocsSchema
+      - commons.WithDisplayName
     properties: 
       method: WebhookMethodSchema
       headers: optional<map<string, services.HttpHeaderSchema>>
@@ -30,7 +31,7 @@ types:
   
   WebhookReferencedPayloadSchema: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       type: string
   

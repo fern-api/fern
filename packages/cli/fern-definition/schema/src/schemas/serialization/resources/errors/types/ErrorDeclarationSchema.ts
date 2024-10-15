@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { ExampleTypeSchema } from "../../examples/types/ExampleTypeSchema";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const ErrorDeclarationSchema: core.serialization.ObjectSchema<
     serializers.ErrorDeclarationSchema.Raw,
@@ -17,10 +17,10 @@ export const ErrorDeclarationSchema: core.serialization.ObjectSchema<
         type: core.serialization.string().optional(),
         examples: core.serialization.list(ExampleTypeSchema).optional(),
     })
-    .extend(WithDocs);
+    .extend(WithDocsSchema);
 
 export declare namespace ErrorDeclarationSchema {
-    interface Raw extends WithDocs.Raw {
+    interface Raw extends WithDocsSchema.Raw {
         "status-code": number;
         type?: string | null;
         examples?: ExampleTypeSchema.Raw[] | null;

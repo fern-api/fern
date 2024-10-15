@@ -9,7 +9,7 @@ import { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
 import { ExampleResponseSchema } from "./ExampleResponseSchema";
 import { ExampleCodeSampleSchema } from "./ExampleCodeSampleSchema";
 import { WithName } from "../../commons/types/WithName";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const ExampleEndpointCallSchema: core.serialization.ObjectSchema<
     serializers.ExampleEndpointCallSchema.Raw,
@@ -29,10 +29,10 @@ export const ExampleEndpointCallSchema: core.serialization.ObjectSchema<
         "code-samples": core.serialization.list(ExampleCodeSampleSchema).optional(),
     })
     .extend(WithName)
-    .extend(WithDocs);
+    .extend(WithDocsSchema);
 
 export declare namespace ExampleEndpointCallSchema {
-    interface Raw extends WithName.Raw, WithDocs.Raw {
+    interface Raw extends WithName.Raw, WithDocsSchema.Raw {
         id?: string | null;
         "path-parameters"?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
         "query-parameters"?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;

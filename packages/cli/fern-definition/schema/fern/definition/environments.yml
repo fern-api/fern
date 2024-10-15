@@ -18,13 +18,13 @@ types:
   SingleBaseUrlEnvironmentSchema: 
     extends: 
       - commons.WithAudiences
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       url: string
   
   MultipleBaseUrlsEnvironmentSchema: 
     extends: 
       - commons.WithAudiences
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       urls: map<string, string>

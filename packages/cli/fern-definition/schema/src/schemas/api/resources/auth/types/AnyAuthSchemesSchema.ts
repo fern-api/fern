@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface AnyAuthSchemesSchema {
+export interface AnyAuthSchemesSchema extends FernDefinition.WithDocsSchema {
     any: FernDefinition.AnyAuthItem[];
 }

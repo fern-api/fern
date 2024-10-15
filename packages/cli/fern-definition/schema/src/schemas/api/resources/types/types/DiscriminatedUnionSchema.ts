@@ -8,5 +8,5 @@ export interface DiscriminatedUnionSchema extends FernDefinition.BaseTypeDeclara
     discriminant?: FernDefinition.UnionDiscriminant;
     extends: FernDefinition.BaseTypeDeclarationSchema;
     "base-properties"?: Record<string, FernDefinition.TypeReferenceSchema>;
-    union?: Record<string, FernDefinition.SingleUnionTypeSchema>;
+    union: Record<string, FernDefinition.SingleUnionTypeSchema>;
 }

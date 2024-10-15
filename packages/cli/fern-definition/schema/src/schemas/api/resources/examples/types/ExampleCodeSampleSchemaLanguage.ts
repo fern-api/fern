@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface ExampleCodeSampleSchemaLanguage extends FernDefinition.WithDocs, FernDefinition.WithName {
+export interface ExampleCodeSampleSchemaLanguage extends FernDefinition.WithDocsSchema, FernDefinition.WithName {
     language: string;
     code: string;
     install?: string;

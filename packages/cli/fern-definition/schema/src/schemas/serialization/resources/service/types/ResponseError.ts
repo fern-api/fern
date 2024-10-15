@@ -5,11 +5,11 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { ResponseErrorWithDocs } from "./ResponseErrorWithDocs";
+import { ResponseErrorWithDocsSchema } from "./ResponseErrorWithDocsSchema";
 
 export const ResponseError: core.serialization.Schema<serializers.ResponseError.Raw, FernDefinition.ResponseError> =
-    core.serialization.undiscriminatedUnion([core.serialization.string(), ResponseErrorWithDocs]);
+    core.serialization.undiscriminatedUnion([core.serialization.string(), ResponseErrorWithDocsSchema]);
 
 export declare namespace ResponseError {
-    type Raw = string | ResponseErrorWithDocs.Raw;
+    type Raw = string | ResponseErrorWithDocsSchema.Raw;
 }
