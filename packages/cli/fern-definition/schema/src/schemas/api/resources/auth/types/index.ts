@@ -1,4 +1,4 @@
-export * from "./WithAuth";
+export * from "./WithAuthSchema";
 export * from "./ApiAuthSchema";
 export * from "./AuthSchemeReferenceSchema";
 export * from "./AnyAuthSchemesSchema";

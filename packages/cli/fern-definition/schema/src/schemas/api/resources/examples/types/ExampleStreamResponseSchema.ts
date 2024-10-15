@@ -5,5 +5,5 @@
 import * as FernDefinition from "../../../index";
 
 export interface ExampleStreamResponseSchema {
-    stream: (FernDefinition.ExampleTypeReference | undefined)[];
+    stream: (FernDefinition.ExampleTypeReferenceSchema | undefined)[];
 }

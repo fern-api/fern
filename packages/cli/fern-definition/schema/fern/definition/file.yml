@@ -8,6 +8,8 @@ imports:
   environments: environments.yml
   auth: auth.yml
   variables: variables.yml
+  webhooks: webhooks.yml
+  websocket: websocket.yml
 
 types: 
 
@@ -18,8 +20,11 @@ types:
     properties: 
       imports: optional<map<string, string>>
       types: optional<map<string, types.TypeDeclarationSchema>>
-      service: optional<service.HttpService>
-      errors: optional<map<string, errors.ErrorDeclaration>>
+      service: optional<service.HttpServiceSchema>
+      errors: optional<map<string, errors.ErrorDeclarationSchema>>
+      webhooks: optional<map<string, webhooks.WebhookSchema>>
+      channel: optional<websocket.WebSocketChannelSchema>
+
 
   ## Package marker file ## 
   PackageMarkerFileSchema: 
@@ -48,7 +53,7 @@ types:
       url: optional<string>
   
   ## Root api.yml file ## 
-  WithHeaders: 
+  WithHeadersSchema: 
     properties: 
       headers: 
         type: optional<map<string, service.HttpHeaderSchema>>
@@ -58,24 +63,24 @@ types:
     extends: 
       - commons.WithDocs
       - commons.WithDisplayName
-      - environments.WithEnvironments
-      - auth.WithAuth
-      - WithHeaders
+      - environments.WithEnvironmentsSchema
+      - auth.WithAuthSchema
+      - WithHeadersSchema
     properties: 
       name: string
       imports: optional<map<string, string>>
-      error-discrimination: optional<ErrorDiscrimination>
+      error-discrimination: optional<ErrorDiscriminationSchema>
       audiences: optional<list<string>>
       errors: optional<list<string>>
       base-path: optional<string>
       path-parameters: optional<map<string, service.HttpPathParameterSchema>>
       idempotency-headers: optional<map<string, service.HttpHeaderSchema>>
       variables: optional<map<string, variables.VariableDeclarationSchema>>
-      pagination: optional<pagination.PaginationScheme>
-      version: optional<versioning.VersionDeclaration> 
+      pagination: optional<pagination.PaginationSchema>
+      version: optional<versioning.VersionDeclarationSchema> 
       
   
-  ErrorDiscrimination: 
+  ErrorDiscriminationSchema: 
     discriminated: false
     union: 
       - PropertyBasedErrorDiscrimination

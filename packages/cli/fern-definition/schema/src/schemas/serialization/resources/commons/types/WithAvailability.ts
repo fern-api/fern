@@ -5,17 +5,17 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { Availability } from "./Availability";
+import { AvailabilityUnionSchema } from "../../availability/types/AvailabilityUnionSchema";
 
 export const WithAvailability: core.serialization.ObjectSchema<
     serializers.WithAvailability.Raw,
     FernDefinition.WithAvailability
 > = core.serialization.object({
-    availability: Availability.optional(),
+    availability: AvailabilityUnionSchema.optional(),
 });
 
 export declare namespace WithAvailability {
     interface Raw {
-        availability?: Availability.Raw | null;
+        availability?: AvailabilityUnionSchema.Raw | null;
     }
 }

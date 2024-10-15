@@ -6,5 +6,5 @@ import * as FernDefinition from "../../../index";
 
 export type HttpRequestBodySchema =
     | string
-    | FernDefinition.HttpReferencedRequestBody
+    | FernDefinition.HttpReferencedRequestBodySchema
     | FernDefinition.HttpInlineRequestBodySchema;

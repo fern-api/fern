@@ -6,5 +6,5 @@ import * as FernDefinition from "../../../index";
 
 export interface ExampleBodyResponseSchema {
     error?: string;
-    body?: FernDefinition.ExampleTypeReference | undefined;
+    body?: FernDefinition.ExampleTypeReferenceSchema | undefined;
 }

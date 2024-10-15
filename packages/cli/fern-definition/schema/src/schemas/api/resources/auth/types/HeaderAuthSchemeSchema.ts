@@ -4,7 +4,10 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface HeaderAuthSchemeSchema extends FernDefinition.WithEnvironmentVariable, FernDefinition.WithName {
+export interface HeaderAuthSchemeSchema
+    extends FernDefinition.WithEnvironmentVariable,
+        FernDefinition.WithName,
+        FernDefinition.WithDocs {
     header: string;
     /** Defaults to string */
     type?: string;

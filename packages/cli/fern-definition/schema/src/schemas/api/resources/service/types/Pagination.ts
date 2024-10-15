@@ -4,4 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export type Pagination = FernDefinition.PaginationScheme | boolean;
+export type Pagination = FernDefinition.PaginationSchema | boolean;

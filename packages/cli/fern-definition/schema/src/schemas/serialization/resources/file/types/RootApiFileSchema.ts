@@ -5,17 +5,17 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { ErrorDiscrimination } from "./ErrorDiscrimination";
+import { ErrorDiscriminationSchema } from "./ErrorDiscriminationSchema";
 import { HttpPathParameterSchema } from "../../service/types/HttpPathParameterSchema";
 import { HttpHeaderSchema } from "../../service/types/HttpHeaderSchema";
 import { VariableDeclarationSchema } from "../../variables/types/VariableDeclarationSchema";
-import { PaginationScheme } from "../../pagination/types/PaginationScheme";
-import { VersionDeclaration } from "../../versioning/types/VersionDeclaration";
+import { PaginationSchema } from "../../pagination/types/PaginationSchema";
+import { VersionDeclarationSchema } from "../../versioning/types/VersionDeclarationSchema";
 import { WithDocs } from "../../commons/types/WithDocs";
 import { WithDisplayName } from "../../commons/types/WithDisplayName";
-import { WithEnvironments } from "../../environments/types/WithEnvironments";
-import { WithAuth } from "../../auth/types/WithAuth";
-import { WithHeaders } from "./WithHeaders";
+import { WithEnvironmentsSchema } from "../../environments/types/WithEnvironmentsSchema";
+import { WithAuthSchema } from "../../auth/types/WithAuthSchema";
+import { WithHeadersSchema } from "./WithHeadersSchema";
 
 export const RootApiFileSchema: core.serialization.ObjectSchema<
     serializers.RootApiFileSchema.Raw,
@@ -24,34 +24,39 @@ export const RootApiFileSchema: core.serialization.ObjectSchema<
     .object({
         name: core.serialization.string(),
         imports: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
-        "error-discrimination": ErrorDiscrimination.optional(),
+        "error-discrimination": ErrorDiscriminationSchema.optional(),
         audiences: core.serialization.list(core.serialization.string()).optional(),
         errors: core.serialization.list(core.serialization.string()).optional(),
         "base-path": core.serialization.string().optional(),
         "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
         "idempotency-headers": core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
         variables: core.serialization.record(core.serialization.string(), VariableDeclarationSchema).optional(),
-        pagination: PaginationScheme.optional(),
-        version: VersionDeclaration.optional(),
+        pagination: PaginationSchema.optional(),
+        version: VersionDeclarationSchema.optional(),
     })
     .extend(WithDocs)
     .extend(WithDisplayName)
-    .extend(WithEnvironments)
-    .extend(WithAuth)
-    .extend(WithHeaders);
+    .extend(WithEnvironmentsSchema)
+    .extend(WithAuthSchema)
+    .extend(WithHeadersSchema);
 
 export declare namespace RootApiFileSchema {
-    interface Raw extends WithDocs.Raw, WithDisplayName.Raw, WithEnvironments.Raw, WithAuth.Raw, WithHeaders.Raw {
+    interface Raw
+        extends WithDocs.Raw,
+            WithDisplayName.Raw,
+            WithEnvironmentsSchema.Raw,
+            WithAuthSchema.Raw,
+            WithHeadersSchema.Raw {
         name: string;
         imports?: Record<string, string> | null;
-        "error-discrimination"?: ErrorDiscrimination.Raw | null;
+        "error-discrimination"?: ErrorDiscriminationSchema.Raw | null;
         audiences?: string[] | null;
         errors?: string[] | null;
         "base-path"?: string | null;
         "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
         "idempotency-headers"?: Record<string, HttpHeaderSchema.Raw> | null;
         variables?: Record<string, VariableDeclarationSchema.Raw> | null;
-        pagination?: PaginationScheme.Raw | null;
-        version?: VersionDeclaration.Raw | null;
+        pagination?: PaginationSchema.Raw | null;
+        version?: VersionDeclarationSchema.Raw | null;
     }
 }

@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface MultipleBaseUrlsEnvironmentSchema extends FernDefinition.WithAudiences {
+export interface MultipleBaseUrlsEnvironmentSchema extends FernDefinition.WithAudiences, FernDefinition.WithDocs {
     urls: Record<string, string>;
 }

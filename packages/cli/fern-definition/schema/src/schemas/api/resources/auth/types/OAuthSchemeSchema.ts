@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface OAuthSchemeSchema {
+export interface OAuthSchemeSchema extends FernDefinition.WithDocs {
     scheme: "oauth";
     type: "client-credentials";
     scopes?: string[];

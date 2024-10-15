@@ -1,0 +1,41 @@
+imports: 
+  commons: commons.yml
+  services: service.yml
+  types: types.yml
+  examples: examples.yml
+
+types: 
+  WebhookSchema: 
+    extends: 
+      - commons.WithAvailability
+      - commons.WithAudiences
+      - commons.WithDocs
+    properties: 
+      method: WebhookMethodSchema
+      headers: optional<map<string, services.HttpHeaderSchema>>
+      payload: WebhookPayloadSchema
+      examples: optional<list<examples.ExampleWebhookCallSchema>>
+  
+  WebhookMethodSchema: 
+    enum: 
+      - POST
+      - GET
+  
+  WebhookPayloadSchema: 
+    discriminated: false
+    union: 
+      - string
+      - WebhookReferencedPayloadSchema
+      - WebhookInlinedPayloadSchema
+  
+  WebhookReferencedPayloadSchema: 
+    extends: 
+      - commons.WithDocs
+    properties: 
+      type: string
+  
+  WebhookInlinedPayloadSchema: 
+    properties: 
+      name: string
+      extends: optional<types.ObjectExtendsSchema>
+      properties: optional<map<string, types.ObjectPropertySchema>>

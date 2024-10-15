@@ -6,8 +6,10 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { TypeDeclarationSchema } from "../../types/types/TypeDeclarationSchema";
-import { HttpService } from "../../service/types/HttpService";
-import { ErrorDeclaration } from "../../errors/types/ErrorDeclaration";
+import { HttpServiceSchema } from "../../service/types/HttpServiceSchema";
+import { ErrorDeclarationSchema } from "../../errors/types/ErrorDeclarationSchema";
+import { WebhookSchema } from "../../webhooks/types/WebhookSchema";
+import { WebSocketChannelSchema } from "../../websocket/types/WebSocketChannelSchema";
 import { WithDocs } from "../../commons/types/WithDocs";
 
 export const DefinitionFileSchema: core.serialization.ObjectSchema<
@@ -17,8 +19,10 @@ export const DefinitionFileSchema: core.serialization.ObjectSchema<
     .object({
         imports: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
         types: core.serialization.record(core.serialization.string(), TypeDeclarationSchema).optional(),
-        service: HttpService.optional(),
-        errors: core.serialization.record(core.serialization.string(), ErrorDeclaration).optional(),
+        service: HttpServiceSchema.optional(),
+        errors: core.serialization.record(core.serialization.string(), ErrorDeclarationSchema).optional(),
+        webhooks: core.serialization.record(core.serialization.string(), WebhookSchema).optional(),
+        channel: WebSocketChannelSchema.optional(),
     })
     .extend(WithDocs);
 
@@ -26,7 +30,9 @@ export declare namespace DefinitionFileSchema {
     interface Raw extends WithDocs.Raw {
         imports?: Record<string, string> | null;
         types?: Record<string, TypeDeclarationSchema.Raw> | null;
-        service?: HttpService.Raw | null;
-        errors?: Record<string, ErrorDeclaration.Raw> | null;
+        service?: HttpServiceSchema.Raw | null;
+        errors?: Record<string, ErrorDeclarationSchema.Raw> | null;
+        webhooks?: Record<string, WebhookSchema.Raw> | null;
+        channel?: WebSocketChannelSchema.Raw | null;
     }
 }

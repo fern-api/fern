@@ -1,3 +1,3 @@
-export * from "./PaginationScheme";
-export * from "./CursorPagination";
-export * from "./OffsetPagination";
+export * from "./PaginationSchema";
+export * from "./CursorPaginationSchema";
+export * from "./OffsetPaginationSchema";

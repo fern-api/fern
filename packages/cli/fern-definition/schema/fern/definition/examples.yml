@@ -10,15 +10,43 @@ types:
     properties: 
       value: unknown
   
-  ExampleEndpointCall: 
+  ExampleTypeValueSchema: unknown
+  
+  ExampleWebSocketSession: 
+    extends: 
+      - commons.WithName
+      - commons.WithDocs
+    properties: 
+      path-parameters: optional<map<string, ExampleTypeReferenceSchema>>
+      query-parameters: optional<map<string, ExampleTypeReferenceSchema>>
+      headers: optional<map<string, ExampleTypeReferenceSchema>>
+      message: list<ExampleWebSocketMessage>
+  
+  ExampleWebSocketMessage: 
+    properties: 
+      type: string
+      body: unknown
+  
+  ExampleEndpointCallSchema:
+    extends: 
+      - commons.WithName
+      - commons.WithDocs     
     properties: 
       id: optional<string>
-      path-parameters: optional<map<string, ExampleTypeReference>>
-      query-parameters: optional<map<string, ExampleTypeReference>>
-      headers: optional<map<string, ExampleTypeReference>>
-      request: optional<ExampleTypeReference>
+      path-parameters: optional<map<string, ExampleTypeReferenceSchema>>
+      query-parameters: optional<map<string, ExampleTypeReferenceSchema>>
+      headers: optional<map<string, ExampleTypeReferenceSchema>>
+      request: optional<ExampleTypeReferenceSchema>
       response: optional<ExampleResponseSchema>
       code-samples: optional<list<ExampleCodeSampleSchema>>
+  
+  ExampleWebhookCallSchema: 
+    extends: 
+      - commons.WithName
+      - commons.WithDocs      
+    properties: 
+      id: optional<string>
+      payload: ExampleTypeReferenceSchema
 
   ExampleResponseSchema:  
     discriminated: false
@@ -32,11 +60,11 @@ types:
   ExampleBodyResponseSchema: 
     properties: 
       error: optional<string>
-      body: optional<ExampleTypeReference>
+      body: optional<ExampleTypeReferenceSchema>
   
   ExampleStreamResponseSchema: 
     properties: 
-      stream: list<ExampleTypeReference>
+      stream: list<ExampleTypeReferenceSchema>
   
   ExampleSseResponseSchema: 
     properties: 
@@ -45,9 +73,9 @@ types:
   ExampleSseEvent: 
     properties: 
       event: optional<string>
-      data: optional<ExampleTypeReference>
+      data: optional<ExampleTypeReferenceSchema>
   
-  ExampleTypeReference: unknown
+  ExampleTypeReferenceSchema: unknown
 
   ExampleCodeSampleSchema: 
     discriminated: false

@@ -5,5 +5,5 @@
 import * as FernDefinition from "../../../index";
 
 export interface WithAvailability {
-    availability?: FernDefinition.Availability;
+    availability?: FernDefinition.AvailabilityUnionSchema;
 }

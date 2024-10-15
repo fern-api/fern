@@ -7,6 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithEnvironmentVariable } from "./WithEnvironmentVariable";
 import { WithName } from "../../commons/types/WithName";
+import { WithDocs } from "../../commons/types/WithDocs";
 
 export const HeaderAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.HeaderAuthSchemeSchema.Raw,
@@ -18,10 +19,11 @@ export const HeaderAuthSchemeSchema: core.serialization.ObjectSchema<
         prefix: core.serialization.string().optional(),
     })
     .extend(WithEnvironmentVariable)
-    .extend(WithName);
+    .extend(WithName)
+    .extend(WithDocs);
 
 export declare namespace HeaderAuthSchemeSchema {
-    interface Raw extends WithEnvironmentVariable.Raw, WithName.Raw {
+    interface Raw extends WithEnvironmentVariable.Raw, WithName.Raw, WithDocs.Raw {
         header: string;
         type?: string | null;
         prefix?: string | null;

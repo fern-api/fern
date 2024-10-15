@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface BearerAuthSchemeSchema {
+export interface BearerAuthSchemeSchema extends FernDefinition.WithDocs {
     scheme: "bearer";
     token?: FernDefinition.AuthVariable;
 }

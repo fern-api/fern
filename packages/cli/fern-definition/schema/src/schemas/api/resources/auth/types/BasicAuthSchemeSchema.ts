@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface BasicAuthSchemeSchema {
+export interface BasicAuthSchemeSchema extends FernDefinition.WithDocs {
     scheme: "basic";
     username?: FernDefinition.AuthVariable;
     password?: FernDefinition.AuthVariable;

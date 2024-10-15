@@ -7,18 +7,18 @@ import * as FernDefinition from "../../../index";
 export interface RootApiFileSchema
     extends FernDefinition.WithDocs,
         FernDefinition.WithDisplayName,
-        FernDefinition.WithEnvironments,
-        FernDefinition.WithAuth,
-        FernDefinition.WithHeaders {
+        FernDefinition.WithEnvironmentsSchema,
+        FernDefinition.WithAuthSchema,
+        FernDefinition.WithHeadersSchema {
     name: string;
     imports?: Record<string, string>;
-    "error-discrimination"?: FernDefinition.ErrorDiscrimination;
+    "error-discrimination"?: FernDefinition.ErrorDiscriminationSchema;
     audiences?: string[];
     errors?: string[];
     "base-path"?: string;
     "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
     "idempotency-headers"?: Record<string, FernDefinition.HttpHeaderSchema>;
     variables?: Record<string, FernDefinition.VariableDeclarationSchema>;
-    pagination?: FernDefinition.PaginationScheme;
-    version?: FernDefinition.VersionDeclaration;
+    pagination?: FernDefinition.PaginationSchema;
+    version?: FernDefinition.VersionDeclarationSchema;
 }

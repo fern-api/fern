@@ -4,7 +4,7 @@ imports:
   examples: examples.yml
 
 types: 
-  ErrorDeclaration: 
+  ErrorDeclarationSchema: 
     extends: 
       - commons.WithDocs
     properties: 
