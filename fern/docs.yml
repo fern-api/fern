@@ -317,7 +317,7 @@ navigation:
             path: ./pages/docs/getting-started/project-structure.mdx
             icon: fa-regular fa-map
           - page: Publish your Docs
-            path: ./pages/docs/getting-started/publish-your-docs.mdx
+            path: ./pages/docs/getting-started/publishing-your-docs.mdx
             icon: fa-regular fa-upload
 
       - section: Building Your Docs
