@@ -12,11 +12,11 @@ describe("class", () => {
         const clazz = python.class_({
             name: "Car"
         });
-        clazz.addField(python.field({ name: "color", type: python.annotation({ type: "str" }), initializer: "'red'" }));
+        clazz.addField(python.field({ name: "color", type: python.Type.str(), initializer: "'red'" }));
         clazz.addField(
             python.field({
                 name: "partNameById",
-                type: python.annotation({ type: python.Type.dict(python.Type.int(), python.Type.str()) }),
+                type: python.Type.dict(python.Type.int(), python.Type.str()),
                 initializer: "{}"
             })
         );

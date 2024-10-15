@@ -2,6 +2,7 @@
 
 exports[`class > basic 1`] = `
 "class Car:
+    pass
 "
 `;
 
