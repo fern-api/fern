@@ -21,9 +21,25 @@ export class Class extends AstNode {
 
     public write(writer: Writer): void {
         writer.write(`class ${this.name}:`);
+        writer.newLine();
+
+        writer.indent();
+        this.writeVariables({ writer });
+        writer.dedent();
     }
 
     public addVariable(variable: Variable): void {
         this.variables.push(variable);
+    }
+
+    private writeVariables({ writer }: { writer: Writer }): void {
+        this.variables.forEach((variable, index) => {
+            variable.write(writer);
+            writer.writeNewLineIfLastLineNot();
+
+            if (index < this.variables.length - 1) {
+                writer.newLine();
+            }
+        });
     }
 }
