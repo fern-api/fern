@@ -33,6 +33,7 @@ ${this.buffer}`;
 
     private stringifyImports(): string {
         return Object.entries(this.references)
+            .filter(([modulePath]) => modulePath !== "")
             .map(([modulePath, references]) => {
                 const uniqueClassNames = Array.from(new Set(references.map((r) => r.getName())));
                 return `from ${modulePath} import ${uniqueClassNames.join(", ")}`;

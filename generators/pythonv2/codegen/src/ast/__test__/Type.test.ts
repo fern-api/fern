@@ -1,3 +1,5 @@
+import { python } from "../..";
+import { ClassReference } from "../ClassReference";
 import { Type } from "../Type";
 import { Writer } from "../core/Writer";
 
@@ -83,6 +85,17 @@ describe("Type", () => {
     it("writes any type", () => {
         const anyType = Type.any();
         anyType.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
+
+    it("writes reference type", () => {
+        const referenceType = Type.reference(
+            python.classReference({
+                name: "MyClass",
+                modulePath: []
+            })
+        );
+        referenceType.write(writer);
         expect(writer.toString()).toMatchSnapshot();
     });
 });

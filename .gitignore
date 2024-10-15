@@ -56,6 +56,7 @@ packages/**/generated
 .vercel
 
 **/.idea/*
+vitest.workspace.ts
 
 .python-version
 

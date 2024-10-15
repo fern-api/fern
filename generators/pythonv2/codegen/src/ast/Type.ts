@@ -2,8 +2,23 @@ import { assertNever } from "@fern-api/core-utils";
 import { python } from "..";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { ClassReference } from "./ClassReference";
 
-type InternalType = Int | Float | Bool | Str | Bytes | List | Set | Tuple | Dict | None | Optional | Union | Any;
+type InternalType =
+    | Int
+    | Float
+    | Bool
+    | Str
+    | Bytes
+    | List
+    | Set
+    | Tuple
+    | Dict
+    | None
+    | Optional
+    | Union
+    | Any
+    | Reference;
 
 interface Int {
     type: "int";
@@ -64,6 +79,11 @@ interface Any {
     type: "any";
 }
 
+interface Reference {
+    type: "reference";
+    value: ClassReference;
+}
+
 export class Type extends AstNode {
     private internalType: InternalType;
 
@@ -122,6 +142,10 @@ export class Type extends AstNode {
 
     public static any(): Type {
         return new Type({ type: "any" });
+    }
+
+    public static reference(value: ClassReference): Type {
+        return new Type({ type: "reference", value });
     }
 
     public write(writer: Writer): void {
@@ -195,6 +219,9 @@ export class Type extends AstNode {
             case "any":
                 writer.addReference(python.classReference({ name: "Any", modulePath: ["typing"] }));
                 writer.write("Any");
+                break;
+            case "reference":
+                writer.addReference(this.internalType.value);
                 break;
             default:
                 assertNever(this.internalType);

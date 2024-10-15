@@ -36,6 +36,10 @@ export class ClassReference extends AstNode {
         return this.name;
     }
 
+    public getModulePath(): string[] {
+        return this.modulePath;
+    }
+
     public getFullyQualifiedModulePath(): string {
         return this.modulePath.join(".");
     }

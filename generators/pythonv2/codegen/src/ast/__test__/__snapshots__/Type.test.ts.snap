@@ -34,6 +34,8 @@ exports[`Type > writes optional type 1`] = `
 Optional[str]"
 `;
 
+exports[`Type > writes reference type 1`] = `""`;
+
 exports[`Type > writes set type 1`] = `
 "from typing import Set
     
