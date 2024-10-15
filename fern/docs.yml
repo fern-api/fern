@@ -132,9 +132,18 @@ navigation:
           - page: Types
             icon: fa-regular fa-shapes
             path: ./pages/api-definition/fern-definition/types.mdx
-          - page: Endpoints
+          - section: Endpoints
             icon: fa-regular fa-plug
             path: ./pages/api-definition/fern-definition/endpoints.mdx
+            contents: 
+              - page: HTTP JSON Endpoints
+                icon: fa-regular fa-display-code
+                path: ./pages/api-definition/fern-definition/endpoints/rest.mdx
+                slug: http
+              - page: Multipart Form Uploads
+                icon: fa-regular fa-file
+                path: ./pages/api-definition/fern-definition/endpoints/multipart.mdx
+                slug: multipart
           - page: Webhooks
             icon: fa-regular fa-webhook
             path: ./pages/api-definition/fern-definition/webhooks.mdx
