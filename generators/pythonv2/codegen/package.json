@@ -27,6 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
     "@fern-fern/ir-sdk": "^53.7.0"
   },

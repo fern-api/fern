@@ -1,0 +1,57 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Type > writes any type 1`] = `
+"from typing import Any
+    
+Any"
+`;
+
+exports[`Type > writes boolean type 1`] = `"bool"`;
+
+exports[`Type > writes bytes type 1`] = `"bytes"`;
+
+exports[`Type > writes dict type 1`] = `
+"from typing import Dict
+    
+Dict[str, int]"
+`;
+
+exports[`Type > writes float type 1`] = `"float"`;
+
+exports[`Type > writes int type 1`] = `"int"`;
+
+exports[`Type > writes list type 1`] = `
+"from typing import List
+    
+List[int]"
+`;
+
+exports[`Type > writes none type 1`] = `"None"`;
+
+exports[`Type > writes optional type 1`] = `
+"from typing import Optional
+    
+Optional[str]"
+`;
+
+exports[`Type > writes reference type 1`] = `""`;
+
+exports[`Type > writes set type 1`] = `
+"from typing import Set
+    
+Set[str]"
+`;
+
+exports[`Type > writes string type 1`] = `"str"`;
+
+exports[`Type > writes tuple type 1`] = `
+"from typing import Tuple
+    
+Tuple[int, str]"
+`;
+
+exports[`Type > writes union type 1`] = `
+"from typing import Union
+    
+Union[int, str]"
+`;

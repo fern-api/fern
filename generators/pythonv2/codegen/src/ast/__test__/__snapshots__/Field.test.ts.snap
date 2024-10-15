@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Field > writes a field with a complex type 1`] = `
+"from typing import List
+    
+my_list: List[int] = []"
+`;
+
+exports[`Field > writes a field with a dictionary type 1`] = `
+"from typing import Dict, Any
+    
+config: Dict[str, Any]"
+`;
+
+exports[`Field > writes a field with a name and type 1`] = `"my_field: str"`;
+
+exports[`Field > writes a field with a name and value but no type 1`] = `"my_field = 'default_value'"`;
+
+exports[`Field > writes a field with a name, type, and value 1`] = `"my_int: int = 42"`;
+
+exports[`Field > writes a field with a tuple type 1`] = `
+"from typing import Tuple
+    
+coordinates: Tuple[float, float]"
+`;
+
+exports[`Field > writes a field with a union type 1`] = `
+"from typing import Union
+    
+id: Union[int, str]"
+`;
+
+exports[`Field > writes a field with an optional type 1`] = `
+"from typing import Optional
+    
+maybe_string: Optional[str]"
+`;
