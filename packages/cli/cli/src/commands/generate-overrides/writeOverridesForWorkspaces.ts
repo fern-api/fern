@@ -8,20 +8,27 @@ import { getAllOpenAPISpecs, OSSWorkspace } from "@fern-api/lazy-fern-workspace"
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { CliContext } from "../../cli-context/CliContext";
+import { black } from "./black";
 
 export async function writeOverridesForWorkspaces({
     project,
     includeModels,
-    cliContext
+    cliContext,
+    withAI
 }: {
     project: Project;
     includeModels: boolean;
     cliContext: CliContext;
+    withAI: boolean;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace instanceof OSSWorkspace) {
+                    if (withAI) {
+                        context.logger.info("Generating overrides using OpenAI");
+                        await black({ workspace, context });
+                    }
                     await writeDefinitionForOpenAPIWorkspace({
                         workspace,
                         context,
