@@ -3,6 +3,10 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
+import {
+    isNonInlinedTypeReference,
+    isStringTypeReference
+} from "../../utils/isNonInlinedTypeReferenceSchema";
 
 export async function convertObjectTypeDeclaration({
     object,
@@ -26,16 +30,23 @@ export async function getObjectPropertiesFromRawObjectSchema(
     if (object.properties == null) {
         return [];
     }
-    return await Promise.all(
-        Object.entries(object.properties).map(async ([propertyKey, propertyDefinition]) => ({
-            ...(await convertDeclaration(propertyDefinition)),
-            name: file.casingsGenerator.generateNameAndWireValue({
-                wireValue: propertyKey,
-                name: getPropertyName({ propertyKey, property: propertyDefinition }).name
-            }),
-            valueType: file.parseTypeReference(propertyDefinition)
-        }))
-    );
+
+    const properties: ObjectProperty[] = [];
+    for (const [propertyKey, propertyDefinition] of Object.entries(object.properties)) {
+        if (isNonInlinedTypeReference(propertyDefinition) || isStringTypeReference(propertyDefinition)) {
+            properties.push({
+                ...(await convertDeclaration(propertyDefinition)),
+                name: file.casingsGenerator.generateNameAndWireValue({
+                    wireValue: propertyKey,
+                    name: getPropertyName({ propertyKey, property: propertyDefinition }).name
+                }),
+                valueType: file.parseTypeReference(propertyDefinition)
+            });
+        }
+        // TODO: handle inlined case
+    }
+
+    return properties;
 }
 
 export function getExtensionsAsList(extensions: string | string[] | undefined): string[] {

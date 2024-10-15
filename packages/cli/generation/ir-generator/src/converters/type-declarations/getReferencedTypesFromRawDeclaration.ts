@@ -10,6 +10,8 @@ import {
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
+import { isNonNullish } from "@fern-api/core-utils";
+import { isNonInlinedTypeReference, isStringTypeReference } from "../../utils/isNonInlinedTypeReferenceSchema";
 
 interface SeenTypeNames {
     addTypeName: (typeName: DeclaredTypeName) => void;
@@ -25,9 +27,14 @@ function getObjectRawTypeReferences(objectDeclaration: RawSchemas.ObjectSchema):
     }
     if (objectDeclaration.properties != null) {
         types.push(
-            ...Object.values(objectDeclaration.properties).map((property) =>
-                typeof property === "string" ? property : property.type
-            )
+            ...Object.values(objectDeclaration.properties)
+                .map((property) => {
+                    if (isNonInlinedTypeReference(property) || isStringTypeReference(property)) {
+                        return typeof property === "string" ? property : property.type;
+                    }
+                    return undefined;
+                })
+                .filter(isNonNullish) // TODO: remove this filter
         );
     }
     return types;

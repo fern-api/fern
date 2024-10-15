@@ -102,7 +102,19 @@ export const ValidGenericRule: Rule = {
                         },
                         object: (objectValue) => {
                             Object.entries(objectValue?.properties ?? {}).forEach(([key, value]) => {
-                                if (isGeneric(typeof value === "string" ? value : value.type)) {
+                                if (typeof value === "string") {
+                                    if (nodePath) {
+                                        (propertyBasedErrors.object ??= []).push({
+                                            key,
+                                            nodePath
+                                        });
+                                    } else {
+                                        errors.push({
+                                            severity: "error",
+                                            message: `Cannot reference generic ${value} from object property ${key}`
+                                        });
+                                    }
+                                } else if (typeof value.type === "string") {
                                     if (nodePath) {
                                         (propertyBasedErrors.object ??= []).push({
                                             key,

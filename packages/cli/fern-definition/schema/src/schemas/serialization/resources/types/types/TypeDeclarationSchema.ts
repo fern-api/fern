@@ -5,7 +5,6 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { ObjectSchema } from "./ObjectSchema";
 import { EnumSchema } from "./EnumSchema";
 import { DiscriminatedUnionSchema } from "./DiscriminatedUnionSchema";
 import { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
@@ -16,7 +15,7 @@ export const TypeDeclarationSchema: core.serialization.Schema<
     FernDefinition.TypeDeclarationSchema
 > = core.serialization.undiscriminatedUnion([
     core.serialization.string(),
-    ObjectSchema,
+    core.serialization.lazyObject(() => serializers.ObjectSchema),
     EnumSchema,
     DiscriminatedUnionSchema,
     UndiscriminatedUnionSchema,
@@ -26,7 +25,7 @@ export const TypeDeclarationSchema: core.serialization.Schema<
 export declare namespace TypeDeclarationSchema {
     type Raw =
         | string
-        | ObjectSchema.Raw
+        | serializers.ObjectSchema.Raw
         | EnumSchema.Raw
         | DiscriminatedUnionSchema.Raw
         | UndiscriminatedUnionSchema.Raw

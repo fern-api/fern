@@ -7,6 +7,7 @@ import {
     getObjectPropertyFromObjectSchema,
     getObjectPropertyFromResolvedType
 } from "./getObjectPropertyFromResolvedType";
+import { isNonInlinedTypeReference, isStringTypeReference } from "../../utils/isNonInlinedTypeReferenceSchema";
 
 export async function getNestedObjectPropertyFromResolvedType({
     typeResolver,
@@ -135,7 +136,11 @@ async function getAllPropertiesForRawObjectSchema({
 
     if (objectSchema.properties != null) {
         Object.entries(objectSchema.properties).map(([propertyKey, propertyType]) => {
-            properties[propertyKey] = typeof propertyType === "string" ? propertyType : propertyType.type;
+            if (isNonInlinedTypeReference(propertyType) || isStringTypeReference(propertyType)) {
+                properties[propertyKey] = typeof propertyType === "string" ? propertyType : propertyType.type;
+            } else {
+                // handle else case
+            }
         });
     }
 

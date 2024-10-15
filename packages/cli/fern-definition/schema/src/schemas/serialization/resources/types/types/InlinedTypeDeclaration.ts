@@ -5,7 +5,6 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { ObjectSchema } from "./ObjectSchema";
 import { EnumSchema } from "./EnumSchema";
 import { DiscriminatedUnionSchema } from "./DiscriminatedUnionSchema";
 import { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
@@ -14,12 +13,16 @@ export const InlinedTypeDeclaration: core.serialization.Schema<
     serializers.InlinedTypeDeclaration.Raw,
     FernDefinition.InlinedTypeDeclaration
 > = core.serialization.undiscriminatedUnion([
-    ObjectSchema,
+    core.serialization.lazyObject(() => serializers.ObjectSchema),
     EnumSchema,
     DiscriminatedUnionSchema,
     UndiscriminatedUnionSchema,
 ]);
 
 export declare namespace InlinedTypeDeclaration {
-    type Raw = ObjectSchema.Raw | EnumSchema.Raw | DiscriminatedUnionSchema.Raw | UndiscriminatedUnionSchema.Raw;
+    type Raw =
+        | serializers.ObjectSchema.Raw
+        | EnumSchema.Raw
+        | DiscriminatedUnionSchema.Raw
+        | UndiscriminatedUnionSchema.Raw;
 }

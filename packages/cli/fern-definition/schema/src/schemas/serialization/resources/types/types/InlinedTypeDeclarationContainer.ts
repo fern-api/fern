@@ -5,17 +5,16 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { InlinedTypeDeclaration } from "./InlinedTypeDeclaration";
 
 export const InlinedTypeDeclarationContainer: core.serialization.ObjectSchema<
     serializers.InlinedTypeDeclarationContainer.Raw,
     FernDefinition.InlinedTypeDeclarationContainer
 > = core.serialization.object({
-    type: InlinedTypeDeclaration,
+    type: core.serialization.lazy(() => serializers.InlinedTypeDeclaration),
 });
 
 export declare namespace InlinedTypeDeclarationContainer {
     interface Raw {
-        type: InlinedTypeDeclaration.Raw;
+        type: serializers.InlinedTypeDeclaration.Raw;
     }
 }

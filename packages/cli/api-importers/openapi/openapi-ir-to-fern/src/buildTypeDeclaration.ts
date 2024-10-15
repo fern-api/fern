@@ -31,7 +31,6 @@ import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
-import { noop } from "lodash-es";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
@@ -497,7 +496,7 @@ export function buildOneOfTypeDeclaration({
 }): ConvertedTypeDeclaration {
     const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined;
     if (schema.type === "discriminated") {
-        const baseProperties: Record<string, RawSchemas.ObjectPropertySchema> = {};
+        const baseProperties: Record<string, RawSchemas.TypeReferenceDeclarationWithNameSchema> = {};
         for (const property of schema.commonProperties) {
             baseProperties[property.key] = buildTypeReference({
                 schema: property.schema,

@@ -49,4 +49,3 @@ types:
       name: string
       extends: optional<types.ObjectExtendsSchema>
       properties: optional<map<string, types.ObjectPropertySchema>> 
-    
