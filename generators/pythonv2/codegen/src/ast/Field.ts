@@ -7,7 +7,7 @@ export declare namespace Field {
         /* The name of the field */
         name: string;
         /* The type annotation of the field */
-        type?: Annotation;
+        type: Annotation;
         /* The initializer for the field */
         initializer?: string;
     }
@@ -15,7 +15,7 @@ export declare namespace Field {
 
 export class Field extends AstNode {
     public readonly name: string;
-    public readonly type: Annotation | undefined;
+    public readonly type: Annotation;
     public readonly initializer: string | undefined;
 
     constructor({ name, type, initializer }: Field.Args) {
@@ -27,9 +27,7 @@ export class Field extends AstNode {
 
     public write(writer: Writer): void {
         writer.write(this.name);
-        if (this.type) {
-            this.type.write(writer);
-        }
+        this.type.write(writer);
         if (this.initializer != null) {
             writer.write(` = ${this.initializer}`);
         }
