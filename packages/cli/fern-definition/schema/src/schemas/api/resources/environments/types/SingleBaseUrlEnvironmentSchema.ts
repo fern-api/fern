@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface SingleBaseUrlEnvironmentSchema extends FernDefinition.WithAudiences, FernDefinition.WithDocs {
+export interface SingleBaseUrlEnvironmentSchema extends FernDefinition.WithAudiences, FernDefinition.WithDocsSchema {
     url: string;
 }

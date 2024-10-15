@@ -6,9 +6,9 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const CasingOverrides: core.serialization.ObjectSchema<
-    serializers.CasingOverrides.Raw,
-    FernDefinition.CasingOverrides
+export const CasingOverridesSchema: core.serialization.ObjectSchema<
+    serializers.CasingOverridesSchema.Raw,
+    FernDefinition.CasingOverridesSchema
 > = core.serialization.object({
     camel: core.serialization.string().optional(),
     snake: core.serialization.string().optional(),
@@ -16,7 +16,7 @@ export const CasingOverrides: core.serialization.ObjectSchema<
     "screaming-snake": core.serialization.string().optional(),
 });
 
-export declare namespace CasingOverrides {
+export declare namespace CasingOverridesSchema {
     interface Raw {
         camel?: string | null;
         snake?: string | null;

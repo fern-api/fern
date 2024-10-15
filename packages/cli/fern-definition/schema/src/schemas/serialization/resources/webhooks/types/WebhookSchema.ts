@@ -11,7 +11,8 @@ import { WebhookPayloadSchema } from "./WebhookPayloadSchema";
 import { ExampleWebhookCallSchema } from "../../examples/types/ExampleWebhookCallSchema";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithAudiences } from "../../commons/types/WithAudiences";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
+import { WithDisplayName } from "../../commons/types/WithDisplayName";
 
 export const WebhookSchema: core.serialization.ObjectSchema<
     serializers.WebhookSchema.Raw,
@@ -25,10 +26,11 @@ export const WebhookSchema: core.serialization.ObjectSchema<
     })
     .extend(WithAvailability)
     .extend(WithAudiences)
-    .extend(WithDocs);
+    .extend(WithDocsSchema)
+    .extend(WithDisplayName);
 
 export declare namespace WebhookSchema {
-    interface Raw extends WithAvailability.Raw, WithAudiences.Raw, WithDocs.Raw {
+    interface Raw extends WithAvailability.Raw, WithAudiences.Raw, WithDocsSchema.Raw, WithDisplayName.Raw {
         method: WebhookMethodSchema.Raw;
         headers?: Record<string, HttpHeaderSchema.Raw> | null;
         payload: WebhookPayloadSchema.Raw;

@@ -4,14 +4,14 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface HttpServiceSchema extends FernDefinition.WithDisplayName, FernDefinition.WithAudiences {
+export interface HttpServiceSchema extends FernDefinition.DeclarationSchema {
     auth: boolean;
     url?: string;
-    "base-path"?: string;
+    "base-path": string;
     "path-parameters"?: Record<string, string>;
     idempotent?: boolean;
     headers?: Record<string, FernDefinition.TypeReferenceSchema>;
     transport?: FernDefinition.ServiceTransport;
     source?: FernDefinition.SourceSchema;
-    endpoints?: Record<string, FernDefinition.HttpEndpointSchema>;
+    endpoints: Record<string, FernDefinition.HttpEndpointSchema>;
 }

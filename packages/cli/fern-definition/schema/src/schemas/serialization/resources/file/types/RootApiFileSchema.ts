@@ -11,7 +11,7 @@ import { HttpHeaderSchema } from "../../service/types/HttpHeaderSchema";
 import { VariableDeclarationSchema } from "../../variables/types/VariableDeclarationSchema";
 import { PaginationSchema } from "../../pagination/types/PaginationSchema";
 import { VersionDeclarationSchema } from "../../versioning/types/VersionDeclarationSchema";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithDisplayName } from "../../commons/types/WithDisplayName";
 import { WithEnvironmentsSchema } from "../../environments/types/WithEnvironmentsSchema";
 import { WithAuthSchema } from "../../auth/types/WithAuthSchema";
@@ -34,7 +34,7 @@ export const RootApiFileSchema: core.serialization.ObjectSchema<
         pagination: PaginationSchema.optional(),
         version: VersionDeclarationSchema.optional(),
     })
-    .extend(WithDocs)
+    .extend(WithDocsSchema)
     .extend(WithDisplayName)
     .extend(WithEnvironmentsSchema)
     .extend(WithAuthSchema)
@@ -42,7 +42,7 @@ export const RootApiFileSchema: core.serialization.ObjectSchema<
 
 export declare namespace RootApiFileSchema {
     interface Raw
-        extends WithDocs.Raw,
+        extends WithDocsSchema.Raw,
             WithDisplayName.Raw,
             WithEnvironmentsSchema.Raw,
             WithAuthSchema.Raw,

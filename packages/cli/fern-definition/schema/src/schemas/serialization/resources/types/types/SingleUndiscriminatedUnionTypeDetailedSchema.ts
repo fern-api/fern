@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithDisplayName } from "../../commons/types/WithDisplayName";
 
 export const SingleUndiscriminatedUnionTypeDetailedSchema: core.serialization.ObjectSchema<
@@ -15,11 +15,11 @@ export const SingleUndiscriminatedUnionTypeDetailedSchema: core.serialization.Ob
     .object({
         type: core.serialization.string(),
     })
-    .extend(WithDocs)
+    .extend(WithDocsSchema)
     .extend(WithDisplayName);
 
 export declare namespace SingleUndiscriminatedUnionTypeDetailedSchema {
-    interface Raw extends WithDocs.Raw, WithDisplayName.Raw {
+    interface Raw extends WithDocsSchema.Raw, WithDisplayName.Raw {
         type: string;
     }
 }

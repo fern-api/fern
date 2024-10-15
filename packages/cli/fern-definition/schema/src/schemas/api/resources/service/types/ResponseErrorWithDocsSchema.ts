@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface ResponseErrorWithDocs extends FernDefinition.WithDocs {
+export interface ResponseErrorWithDocsSchema extends FernDefinition.WithDocsSchema {
     error: string;
 }

@@ -16,11 +16,13 @@ types:
   
   AuthSchemeReferenceSchema: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       scheme: string
   
   AnyAuthSchemesSchema: 
+    extends: 
+      - commons.WithDocsSchema
     properties: 
       any: list<AnyAuthItem>
   
@@ -51,7 +53,7 @@ types:
     extends: 
       - WithEnvironmentVariable
       - commons.WithName
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       header: string
       type: 
@@ -61,7 +63,7 @@ types:
 
   BasicAuthSchemeSchema:  
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       scheme: literal<"basic">
       username: optional<AuthVariable>
@@ -69,14 +71,14 @@ types:
   
   BearerAuthSchemeSchema: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       scheme: literal<"bearer">
       token: optional<AuthVariable>
 
   OAuthSchemeSchema: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       scheme: literal<"oauth">
       type: literal<"client-credentials">
@@ -93,11 +95,11 @@ types:
         type: string
         docs: "The endpoint to get the access token, such as 'auth.get_token"
       request-properties:
-        type: optional<OAuthGetTokenRequestProperties>
+        type: optional<OAuthAccessTokenRequestPropertiesSchema>
       response-properties: 
-        type: optional<OAuthGetTokenResponseProperties>
+        type: optional<OAuthAccessTokenResponsePropertiesSchema>
   
-  OAuthGetTokenRequestProperties: 
+  OAuthAccessTokenRequestPropertiesSchema: 
     properties: 
       client-id:
         type: optional<string>
@@ -109,7 +111,7 @@ types:
         type: optional<string>
         docs: The property name for the scopes.
   
-  OAuthGetTokenResponseProperties: 
+  OAuthAccessTokenResponsePropertiesSchema: 
     properties: 
       access-token: 
         type: optional<string>
@@ -127,17 +129,17 @@ types:
         type: string
         docs: "The endpoint to refresh the access token, such as 'auth.refresh_token"
       request-properties:
-        type: optional<OAuthRefreshTokenRequestProperties>
+        type: optional<OAuthRefreshTokenRequestPropertiesSchema>
       response-properties: 
-        type: optional<OAuthRefreshTokenResponseProperties>
+        type: optional<OAuthRefreshTokenResponsePropertiesSchema>
 
-  OAuthRefreshTokenRequestProperties: 
+  OAuthRefreshTokenRequestPropertiesSchema: 
     properties: 
       refresh-token: 
         type: string
         docs: The property name for the refresh token.
   
-  OAuthRefreshTokenResponseProperties: 
+  OAuthRefreshTokenResponsePropertiesSchema: 
     properties: 
       access-token: 
         type: optional<string>

@@ -16,7 +16,7 @@ types:
   ## Fern definition file ## 
   DefinitionFileSchema: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       imports: optional<map<string, string>>
       types: optional<map<string, types.TypeDeclarationSchema>>
@@ -61,7 +61,7 @@ types:
 
   RootApiFileSchema: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
       - commons.WithDisplayName
       - environments.WithEnvironmentsSchema
       - auth.WithAuthSchema

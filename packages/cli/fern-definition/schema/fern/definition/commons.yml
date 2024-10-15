@@ -2,7 +2,7 @@ imports:
   availability: availability.yml
 
 types: 
-  WithDocs: 
+  WithDocsSchema: 
     properties: 
       docs: optional<string>
   
@@ -24,6 +24,6 @@ types:
   
   DeclarationSchema: 
     extends: 
-      - WithDocs
+      - WithDocsSchema
       - WithAvailability
       - WithAudiences

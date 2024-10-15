@@ -5,15 +5,15 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { WithDocs } from "./WithDocs";
+import { WithDocsSchema } from "./WithDocsSchema";
 import { WithAvailability } from "./WithAvailability";
 import { WithAudiences } from "./WithAudiences";
 
 export const DeclarationSchema: core.serialization.ObjectSchema<
     serializers.DeclarationSchema.Raw,
     FernDefinition.DeclarationSchema
-> = core.serialization.object({}).extend(WithDocs).extend(WithAvailability).extend(WithAudiences);
+> = core.serialization.object({}).extend(WithDocsSchema).extend(WithAvailability).extend(WithAudiences);
 
 export declare namespace DeclarationSchema {
-    interface Raw extends WithDocs.Raw, WithAvailability.Raw, WithAudiences.Raw {}
+    interface Raw extends WithDocsSchema.Raw, WithAvailability.Raw, WithAudiences.Raw {}
 }

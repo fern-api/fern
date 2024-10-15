@@ -7,6 +7,6 @@ import * as FernDefinition from "../../../index";
 export interface OAuthGetTokenEndpoint {
     /** The endpoint to get the access token, such as 'auth.get_token */
     endpoint: string;
-    "request-properties"?: FernDefinition.OAuthGetTokenRequestProperties;
-    "response-properties"?: FernDefinition.OAuthGetTokenResponseProperties;
+    "request-properties"?: FernDefinition.OAuthAccessTokenRequestPropertiesSchema;
+    "response-properties"?: FernDefinition.OAuthAccessTokenResponsePropertiesSchema;
 }

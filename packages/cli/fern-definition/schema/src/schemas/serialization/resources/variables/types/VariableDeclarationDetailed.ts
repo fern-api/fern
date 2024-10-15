@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const VariableDeclarationDetailed: core.serialization.ObjectSchema<
     serializers.VariableDeclarationDetailed.Raw,
@@ -14,10 +14,10 @@ export const VariableDeclarationDetailed: core.serialization.ObjectSchema<
     .object({
         type: core.serialization.string(),
     })
-    .extend(WithDocs);
+    .extend(WithDocsSchema);
 
 export declare namespace VariableDeclarationDetailed {
-    interface Raw extends WithDocs.Raw {
+    interface Raw extends WithDocsSchema.Raw {
         type: string;
     }
 }

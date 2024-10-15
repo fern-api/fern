@@ -5,21 +5,22 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { ExampleTypeValueSchema } from "./ExampleTypeValueSchema";
 import { WithName } from "../../commons/types/WithName";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const ExampleTypeSchema: core.serialization.ObjectSchema<
     serializers.ExampleTypeSchema.Raw,
     FernDefinition.ExampleTypeSchema
 > = core.serialization
     .object({
-        value: core.serialization.unknown(),
+        value: ExampleTypeValueSchema,
     })
     .extend(WithName)
-    .extend(WithDocs);
+    .extend(WithDocsSchema);
 
 export declare namespace ExampleTypeSchema {
-    interface Raw extends WithName.Raw, WithDocs.Raw {
-        value?: unknown;
+    interface Raw extends WithName.Raw, WithDocsSchema.Raw {
+        value?: ExampleTypeValueSchema.Raw;
     }
 }

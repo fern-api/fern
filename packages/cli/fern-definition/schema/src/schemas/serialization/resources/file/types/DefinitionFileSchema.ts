@@ -10,7 +10,7 @@ import { HttpServiceSchema } from "../../service/types/HttpServiceSchema";
 import { ErrorDeclarationSchema } from "../../errors/types/ErrorDeclarationSchema";
 import { WebhookSchema } from "../../webhooks/types/WebhookSchema";
 import { WebSocketChannelSchema } from "../../websocket/types/WebSocketChannelSchema";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const DefinitionFileSchema: core.serialization.ObjectSchema<
     serializers.DefinitionFileSchema.Raw,
@@ -24,10 +24,10 @@ export const DefinitionFileSchema: core.serialization.ObjectSchema<
         webhooks: core.serialization.record(core.serialization.string(), WebhookSchema).optional(),
         channel: WebSocketChannelSchema.optional(),
     })
-    .extend(WithDocs);
+    .extend(WithDocsSchema);
 
 export declare namespace DefinitionFileSchema {
-    interface Raw extends WithDocs.Raw {
+    interface Raw extends WithDocsSchema.Raw {
         imports?: Record<string, string> | null;
         types?: Record<string, TypeDeclarationSchema.Raw> | null;
         service?: HttpServiceSchema.Raw | null;

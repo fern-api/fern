@@ -6,16 +6,16 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const OAuthRefreshTokenResponseProperties: core.serialization.ObjectSchema<
-    serializers.OAuthRefreshTokenResponseProperties.Raw,
-    FernDefinition.OAuthRefreshTokenResponseProperties
+export const OAuthAccessTokenResponsePropertiesSchema: core.serialization.ObjectSchema<
+    serializers.OAuthAccessTokenResponsePropertiesSchema.Raw,
+    FernDefinition.OAuthAccessTokenResponsePropertiesSchema
 > = core.serialization.object({
     "access-token": core.serialization.string().optional(),
     "expires-in": core.serialization.string().optional(),
     "refresh-token": core.serialization.string().optional(),
 });
 
-export declare namespace OAuthRefreshTokenResponseProperties {
+export declare namespace OAuthAccessTokenResponsePropertiesSchema {
     interface Raw {
         "access-token"?: string | null;
         "expires-in"?: string | null;

@@ -7,7 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
 import { WithName } from "../../commons/types/WithName";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const ExampleWebhookCallSchema: core.serialization.ObjectSchema<
     serializers.ExampleWebhookCallSchema.Raw,
@@ -18,10 +18,10 @@ export const ExampleWebhookCallSchema: core.serialization.ObjectSchema<
         payload: ExampleTypeReferenceSchema,
     })
     .extend(WithName)
-    .extend(WithDocs);
+    .extend(WithDocsSchema);
 
 export declare namespace ExampleWebhookCallSchema {
-    interface Raw extends WithName.Raw, WithDocs.Raw {
+    interface Raw extends WithName.Raw, WithDocsSchema.Raw {
         id?: string | null;
         payload?: ExampleTypeReferenceSchema.Raw;
     }

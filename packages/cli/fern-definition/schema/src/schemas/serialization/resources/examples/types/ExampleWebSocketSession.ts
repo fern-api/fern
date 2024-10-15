@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 import { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
 import { ExampleWebSocketMessage } from "./ExampleWebSocketMessage";
 import { WithName } from "../../commons/types/WithName";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const ExampleWebSocketSession: core.serialization.ObjectSchema<
     serializers.ExampleWebSocketSession.Raw,
@@ -25,10 +25,10 @@ export const ExampleWebSocketSession: core.serialization.ObjectSchema<
         message: core.serialization.list(ExampleWebSocketMessage),
     })
     .extend(WithName)
-    .extend(WithDocs);
+    .extend(WithDocsSchema);
 
 export declare namespace ExampleWebSocketSession {
-    interface Raw extends WithName.Raw, WithDocs.Raw {
+    interface Raw extends WithName.Raw, WithDocsSchema.Raw {
         "path-parameters"?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
         "query-parameters"?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
         headers?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;

@@ -5,21 +5,24 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { CasingOverridesSchema } from "./CasingOverridesSchema";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithName } from "../../commons/types/WithName";
 
-export const VersionValueDetailed: core.serialization.ObjectSchema<
-    serializers.VersionValueDetailed.Raw,
-    FernDefinition.VersionValueDetailed
+export const EnumValueSchema: core.serialization.ObjectSchema<
+    serializers.EnumValueSchema.Raw,
+    FernDefinition.EnumValueSchema
 > = core.serialization
     .object({
         value: core.serialization.string(),
+        casing: CasingOverridesSchema.optional(),
     })
     .extend(WithDocsSchema)
     .extend(WithName);
 
-export declare namespace VersionValueDetailed {
+export declare namespace EnumValueSchema {
     interface Raw extends WithDocsSchema.Raw, WithName.Raw {
         value: string;
+        casing?: CasingOverridesSchema.Raw | null;
     }
 }

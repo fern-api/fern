@@ -21,4 +21,4 @@ export * from "./HttpPathParameterSchema";
 export * from "./Pagination";
 export * from "./ResponseErrorsSchema";
 export * from "./ResponseError";
-export * from "./ResponseErrorWithDocs";
+export * from "./ResponseErrorWithDocsSchema";

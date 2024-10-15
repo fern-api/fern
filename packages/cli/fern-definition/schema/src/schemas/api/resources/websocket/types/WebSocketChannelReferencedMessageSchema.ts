@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface WebSocketChannelReferencedMessageSchema extends FernDefinition.WithDocs {
+export interface WebSocketChannelReferencedMessageSchema extends FernDefinition.WithDocsSchema {
     type: string;
 }

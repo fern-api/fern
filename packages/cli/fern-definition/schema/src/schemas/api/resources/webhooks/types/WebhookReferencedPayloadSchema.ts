@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface WebhookReferencedPayloadSchema extends FernDefinition.WithDocs {
+export interface WebhookReferencedPayloadSchema extends FernDefinition.WithDocsSchema {
     type: string;
 }

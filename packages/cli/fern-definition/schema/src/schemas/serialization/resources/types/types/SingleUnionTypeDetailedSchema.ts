@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { SingleUnionTypeKey } from "./SingleUnionTypeKey";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithName } from "../../commons/types/WithName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 
@@ -18,12 +18,12 @@ export const SingleUnionTypeDetailedSchema: core.serialization.ObjectSchema<
         type: core.serialization.string().optional(),
         key: SingleUnionTypeKey.optional(),
     })
-    .extend(WithDocs)
+    .extend(WithDocsSchema)
     .extend(WithName)
     .extend(WithAvailability);
 
 export declare namespace SingleUnionTypeDetailedSchema {
-    interface Raw extends WithDocs.Raw, WithName.Raw, WithAvailability.Raw {
+    interface Raw extends WithDocsSchema.Raw, WithName.Raw, WithAvailability.Raw {
         type?: string | null;
         key?: SingleUnionTypeKey.Raw | null;
     }

@@ -36,7 +36,7 @@ types:
 
   TypeReferenceDetailed:
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
       - commons.WithName
       - commons.WithAvailability
       - commons.WithAudiences
@@ -48,7 +48,7 @@ types:
   
   BaseTypeDeclarationSchema: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
       - commons.WithAvailability
       - commons.WithDisplayName
       - commons.WithAudiences
@@ -99,17 +99,17 @@ types:
     discriminated: false
     union: 
       - string
-      - EnumValueDetailed
+      - EnumValueSchema
   
-  EnumValueDetailed: 
+  EnumValueSchema: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
       - commons.WithName
     properties: 
       value: string
-      casing: optional<CasingOverrides>
+      casing: optional<CasingOverridesSchema>
   
-  CasingOverrides: 
+  CasingOverridesSchema: 
     properties: 
       camel: optional<string>
       snake: optional<string>
@@ -126,7 +126,7 @@ types:
 
   SingleUnionTypeDetailedSchema: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
       - commons.WithName
       - commons.WithAvailability
     properties: 
@@ -151,7 +151,7 @@ types:
       discriminant: optional<UnionDiscriminant>
       extends: BaseTypeDeclarationSchema
       base-properties: optional<map<string, TypeReferenceSchema>>
-      union: optional<map<string, SingleUnionTypeSchema>>
+      union: map<string, SingleUnionTypeSchema>
   
   UnionDiscriminant: 
     discriminated: false
@@ -172,7 +172,7 @@ types:
     properties: 
       discriminated: literal<false>
       extends: BaseTypeDeclarationSchema
-      union: optional<list<SingleUndiscriminatedUnionTypeSchema>>
+      union: list<SingleUndiscriminatedUnionTypeSchema>
   
   SingleUndiscriminatedUnionTypeSchema: 
     discriminated: false
@@ -182,7 +182,7 @@ types:
   
   SingleUndiscriminatedUnionTypeDetailedSchema:
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
       - commons.WithDisplayName
     properties:   
       type: string

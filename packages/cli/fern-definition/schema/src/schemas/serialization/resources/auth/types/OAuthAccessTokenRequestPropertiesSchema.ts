@@ -6,16 +6,16 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const OAuthGetTokenRequestProperties: core.serialization.ObjectSchema<
-    serializers.OAuthGetTokenRequestProperties.Raw,
-    FernDefinition.OAuthGetTokenRequestProperties
+export const OAuthAccessTokenRequestPropertiesSchema: core.serialization.ObjectSchema<
+    serializers.OAuthAccessTokenRequestPropertiesSchema.Raw,
+    FernDefinition.OAuthAccessTokenRequestPropertiesSchema
 > = core.serialization.object({
     "client-id": core.serialization.string().optional(),
     "client-secret": core.serialization.string().optional(),
     scopes: core.serialization.string().optional(),
 });
 
-export declare namespace OAuthGetTokenRequestProperties {
+export declare namespace OAuthAccessTokenRequestPropertiesSchema {
     interface Raw {
         "client-id"?: string | null;
         "client-secret"?: string | null;

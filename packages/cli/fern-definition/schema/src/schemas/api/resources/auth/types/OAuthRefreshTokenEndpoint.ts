@@ -7,6 +7,6 @@ import * as FernDefinition from "../../../index";
 export interface OAuthRefreshTokenEndpoint {
     /** The endpoint to refresh the access token, such as 'auth.refresh_token */
     endpoint: string;
-    "request-properties"?: FernDefinition.OAuthRefreshTokenRequestProperties;
-    "response-properties"?: FernDefinition.OAuthRefreshTokenResponseProperties;
+    "request-properties"?: FernDefinition.OAuthRefreshTokenRequestPropertiesSchema;
+    "response-properties"?: FernDefinition.OAuthRefreshTokenResponsePropertiesSchema;
 }

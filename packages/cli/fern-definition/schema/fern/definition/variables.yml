@@ -10,7 +10,7 @@ types:
   
   VariableDeclarationDetailed: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
     properties: 
       type: string
   

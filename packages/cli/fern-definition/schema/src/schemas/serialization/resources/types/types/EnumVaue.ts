@@ -5,11 +5,11 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { EnumValueDetailed } from "./EnumValueDetailed";
+import { EnumValueSchema } from "./EnumValueSchema";
 
 export const EnumVaue: core.serialization.Schema<serializers.EnumVaue.Raw, FernDefinition.EnumVaue> =
-    core.serialization.undiscriminatedUnion([core.serialization.string(), EnumValueDetailed]);
+    core.serialization.undiscriminatedUnion([core.serialization.string(), EnumValueSchema]);
 
 export declare namespace EnumVaue {
-    type Raw = string | EnumValueDetailed.Raw;
+    type Raw = string | EnumValueSchema.Raw;
 }

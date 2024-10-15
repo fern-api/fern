@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface VersionValueDetailed extends FernDefinition.WithDocs, FernDefinition.WithName {
+export interface VersionValueDetailed extends FernDefinition.WithDocsSchema, FernDefinition.WithName {
     value: string;
 }

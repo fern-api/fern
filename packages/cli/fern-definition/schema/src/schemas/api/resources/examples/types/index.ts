@@ -12,5 +12,5 @@ export * from "./ExampleSseEvent";
 export * from "./ExampleTypeReferenceSchema";
 export * from "./ExampleCodeSampleSchema";
 export * from "./ExampleCodeSampleSchemaSdk";
-export * from "./SdkLanguage";
+export * from "./SupportedSdkLanguageSchema";
 export * from "./ExampleCodeSampleSchemaLanguage";

@@ -4,4 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export type ResponseError = string | FernDefinition.ResponseErrorWithDocs;
+export type ResponseError = string | FernDefinition.ResponseErrorWithDocsSchema;

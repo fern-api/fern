@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface ExampleCodeSampleSchemaSdk extends FernDefinition.WithDocs, FernDefinition.WithName {
-    sdk: FernDefinition.SdkLanguage;
+export interface ExampleCodeSampleSchemaSdk extends FernDefinition.WithDocsSchema, FernDefinition.WithName {
+    sdk: FernDefinition.SupportedSdkLanguageSchema;
     code: string;
 }

@@ -6,12 +6,14 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const WithDocs: core.serialization.ObjectSchema<serializers.WithDocs.Raw, FernDefinition.WithDocs> =
-    core.serialization.object({
-        docs: core.serialization.string().optional(),
-    });
+export const WithDocsSchema: core.serialization.ObjectSchema<
+    serializers.WithDocsSchema.Raw,
+    FernDefinition.WithDocsSchema
+> = core.serialization.object({
+    docs: core.serialization.string().optional(),
+});
 
-export declare namespace WithDocs {
+export declare namespace WithDocsSchema {
     interface Raw {
         docs?: string | null;
     }

@@ -7,17 +7,17 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
-export const WebSocketChannelReferencedMessageSchema: core.serialization.ObjectSchema<
-    serializers.WebSocketChannelReferencedMessageSchema.Raw,
-    FernDefinition.WebSocketChannelReferencedMessageSchema
+export const ResponseErrorWithDocsSchema: core.serialization.ObjectSchema<
+    serializers.ResponseErrorWithDocsSchema.Raw,
+    FernDefinition.ResponseErrorWithDocsSchema
 > = core.serialization
     .object({
-        type: core.serialization.string(),
+        error: core.serialization.string(),
     })
     .extend(WithDocsSchema);
 
-export declare namespace WebSocketChannelReferencedMessageSchema {
+export declare namespace ResponseErrorWithDocsSchema {
     interface Raw extends WithDocsSchema.Raw {
-        type: string;
+        error: string;
     }
 }

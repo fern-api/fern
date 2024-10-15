@@ -17,7 +17,7 @@ types:
   
   VersionValueDetailed: 
     extends: 
-      - commons.WithDocs
+      - commons.WithDocsSchema
       - commons.WithName
     properties: 
       value: string
