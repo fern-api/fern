@@ -31,5 +31,23 @@ describe("ClassReference", () => {
             });
             expect(classRef.toString()).toBe("DeepClass");
         });
+
+        it("handles class with one generic type", () => {
+            const classRef = python.classReference({
+                name: "GenericClass",
+                modulePath: ["module"],
+                genericTypes: [python.Type.str()]
+            });
+            expect(classRef.toString()).toBe("GenericClass[str]");
+        });
+
+        it("handles class with two generic types", () => {
+            const classRef = python.classReference({
+                name: "DoubleGenericClass",
+                modulePath: ["module"],
+                genericTypes: [python.Type.str(), python.Type.int()]
+            });
+            expect(classRef.toString()).toBe("DoubleGenericClass[str, int]");
+        });
     });
 });

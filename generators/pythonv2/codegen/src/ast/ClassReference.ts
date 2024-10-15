@@ -1,5 +1,6 @@
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Type } from "./Type";
 
 export declare namespace ClassReference {
     interface Args {
@@ -11,25 +12,36 @@ export declare namespace ClassReference {
             - "foo.bar.baz" -> ["foo", "bar", "baz"]
         */
         modulePath?: string[];
+        /* The generic types of the class reference */
+        genericTypes?: Type[];
     }
 }
 
 export class ClassReference extends AstNode {
     private name: string;
     private modulePath: string[];
+    private genericTypes: Type[];
 
-    constructor({ name, modulePath }: ClassReference.Args) {
+    constructor({ name, modulePath, genericTypes }: ClassReference.Args) {
         super();
         this.name = name;
         this.modulePath = modulePath ?? [];
-    }
-
-    public static create(name: string, modulePath: string[]): ClassReference {
-        return new ClassReference({ name, modulePath });
+        this.genericTypes = genericTypes ?? [];
     }
 
     public write(writer: Writer): void {
         writer.write(this.name);
+
+        if (this.genericTypes.length > 0) {
+            writer.write("[");
+            this.genericTypes.forEach((genericType, index) => {
+                if (index > 0) {
+                    writer.write(", ");
+                }
+                genericType.write(writer);
+            });
+            writer.write("]");
+        }
     }
 
     public getName(): string {
