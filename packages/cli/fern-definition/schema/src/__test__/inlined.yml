@@ -1,0 +1,10 @@
+types: 
+  Person: 
+    properties: 
+      name: 
+        type: string
+      info: 
+        type: 
+          properties: 
+            b: string
+            a: string

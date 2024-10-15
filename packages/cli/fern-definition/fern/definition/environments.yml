@@ -1,0 +1,28 @@
+imports: 
+  commons: commons.yml
+
+types: 
+  WithEnvironments: 
+    properties: 
+      default-url: optional<string>
+      default-environment: optional<string>
+      environments: optional<map<string, Environment>>
+
+  Environment: 
+    discriminated: false
+    union: 
+      - string
+      - SingleBaseUrlEnvironment
+      - MultiBaseUrlEnvironment
+  
+  SingleBaseUrlEnvironment: 
+    extends: 
+      - commons.WithAudiences
+    properties: 
+      url: string
+  
+  MultiBaseUrlEnvironment: 
+    extends: 
+      - commons.WithAudiences
+    properties: 
+      urls: map<string, string>

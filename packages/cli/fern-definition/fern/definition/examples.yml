@@ -1,0 +1,85 @@
+imports: 
+  commons: commons.yml
+
+types: 
+  
+  ExampleType: 
+    extends: 
+      - commons.WithName
+      - commons.WithDocs
+    properties: 
+      value: unknown
+  
+  ExampleEndpointCall: 
+    properties: 
+      id: optional<string>
+      path-parameters: optional<map<string, ExampleTypeReference>>
+      query-parameters: optional<map<string, ExampleTypeReference>>
+      headers: optional<map<string, ExampleTypeReference>>
+      request: optional<ExampleTypeReference>
+      response: optional<ExampleResponse>
+      code-samples: optional<list<ExampleCodeSample>>
+
+  ExampleResponse:  
+    discriminated: false
+    union: 
+      - ExampleResponseBody
+      - type: ExampleStreamResponse
+        docs: JSON Streams
+      - type: ExampleSseStreamResponse
+        docs: Server-Sent Event streams
+  
+  ExampleResponseBody: 
+    properties: 
+      error: optional<string>
+      body: optional<ExampleTypeReference>
+  
+  ExampleStreamResponse: 
+    properties: 
+      stream: list<ExampleTypeReference>
+  
+  ExampleSseStreamResponse: 
+    properties: 
+      stream: list<ExampleSseEvent>
+
+  ExampleSseEvent: 
+    properties: 
+      event: optional<string>
+      data: optional<ExampleTypeReference>
+  
+  ExampleTypeReference: unknown
+
+  ExampleCodeSample: 
+    discriminated: false
+    union: 
+      - ExampleSdkSample
+      - ExampleGenericCodeSample
+  
+  ExampleSdkSample: 
+    extends: 
+      - commons.WithDocs
+      - commons.WithName  
+    properties: 
+      sdk: SdkLanguage
+      code: string
+  
+  SdkLanguage: 
+    enum: 
+     - curl
+     - python
+     - javascript
+     - typescript
+     - go
+     - ruby
+     - csharp
+     - java
+  
+  ExampleGenericCodeSample: 
+    extends: 
+      - commons.WithDocs
+      - commons.WithName
+    properties: 
+      language: string
+      code: string
+      install: optional<string>
+

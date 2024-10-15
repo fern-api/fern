@@ -1,0 +1,33 @@
+types: 
+  PaginationScheme: 
+    discriminated: false
+    union: 
+      - CursorPagination
+      - OffsetPagination
+
+  CursorPagination:
+    properties:  
+      cursor: 
+        type: string
+        docs: The path to the request property for the cursor.
+      next_cursor: 
+        type: string
+        docs: The path to the response property for the next cursor.
+      results: 
+        type: string
+        docs: The path to the response property for the page elements.
+  
+  OffsetPagination: 
+    properties: 
+      offset: 
+        type: string
+        docs: The path to the request property for the page offset.
+      results: 
+        type: string
+        docs: The path to the response property for the page elements.
+      step: 
+        type: optional<string> 
+        docs: The path to the request property for the page step.
+      has-next-page: 
+        type: optional<string> 
+        docs: The path to the response property indicating next page presence.
