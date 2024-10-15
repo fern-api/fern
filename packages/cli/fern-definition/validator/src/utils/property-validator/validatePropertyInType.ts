@@ -1,5 +1,5 @@
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
+import { getNonInlineableTypeReference, isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { RuleViolation } from "../../Rule";
 
 export declare namespace ValidatePropertyInType {
@@ -76,7 +76,13 @@ export function getAllPropertiesForRawObjectSchema({
 
     if (objectSchema.properties != null) {
         Object.entries(objectSchema.properties).map(([propertyKey, propertyType]) => {
-            properties[propertyKey] = typeof propertyType === "string" ? propertyType : propertyType.type;
+            const nonInlinedTypeReference = getNonInlineableTypeReference(propertyType);
+            if (nonInlinedTypeReference != null) {
+                properties[propertyKey] =
+                    typeof nonInlinedTypeReference === "string"
+                        ? nonInlinedTypeReference
+                        : nonInlinedTypeReference.type;
+            } // TODO handle else case
         });
     }
 

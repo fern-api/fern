@@ -104,10 +104,12 @@ export async function visitTypeDeclaration({
                                 docs: createDocsVisitor(visitor, nodePathForProperty),
                                 availability: noop,
                                 type: async (type) => {
-                                    await visitTypeReference(type, [...nodePathForProperty, "type"], {
-                                        _default: property.default,
-                                        validation: property.validation
-                                    });
+                                    if (typeof type === "string") {
+                                        await visitTypeReference(type, [...nodePathForProperty, "type"], {
+                                            _default: property.default,
+                                            validation: property.validation
+                                        });
+                                    } // TOOD: handle else case
                                 },
                                 audiences: noop,
                                 encoding: noop,

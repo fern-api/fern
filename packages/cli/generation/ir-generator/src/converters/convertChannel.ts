@@ -30,6 +30,7 @@ import {
     getOriginalTypeDeclarationForPropertyFromExtensions
 } from "./type-declarations/convertExampleType";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
+import { isNonInlinedTypeReference, isStringTypeReference } from "../utils/isNonInlinedTypeReferenceSchema";
 
 export async function convertChannel({
     channel,
@@ -217,7 +218,11 @@ function convertExampleWebSocketMessageBody({
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
     for (const [wireKey, propertyExample] of Object.entries(example)) {
         const inlinedRequestPropertyDeclaration = message.body.properties?.[wireKey];
-        if (inlinedRequestPropertyDeclaration != null) {
+        if (
+            inlinedRequestPropertyDeclaration != null &&
+            (isNonInlinedTypeReference(inlinedRequestPropertyDeclaration) ||
+                isStringTypeReference(inlinedRequestPropertyDeclaration))
+        ) {
             exampleProperties.push({
                 name: file.casingsGenerator.generateNameAndWireValue({
                     name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name,
@@ -247,26 +252,35 @@ function convertExampleWebSocketMessageBody({
             if (originalTypeDeclaration == null) {
                 throw new Error("Could not find original type declaration for property: " + wireKey);
             }
-            exampleProperties.push({
-                name: file.casingsGenerator.generateNameAndWireValue({
-                    name: getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType })
-                        .name,
-                    wireValue: wireKey
-                }),
-                value: convertTypeReferenceExample({
-                    example: propertyExample,
-                    rawTypeBeingExemplified:
-                        typeof originalTypeDeclaration.rawPropertyType === "string"
-                            ? originalTypeDeclaration.rawPropertyType
-                            : originalTypeDeclaration.rawPropertyType.type,
-                    typeResolver,
-                    exampleResolver,
-                    fileContainingRawTypeReference: originalTypeDeclaration.file,
-                    fileContainingExample: file,
-                    workspace
-                }),
-                originalTypeDeclaration: originalTypeDeclaration.typeName
-            });
+            if (
+                isNonInlinedTypeReference(originalTypeDeclaration?.rawPropertyType) ||
+                isStringTypeReference(originalTypeDeclaration.rawPropertyType)
+            ) {
+                exampleProperties.push({
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        name: getPropertyName({
+                            propertyKey: wireKey,
+                            property: originalTypeDeclaration.rawPropertyType
+                        }).name,
+                        wireValue: wireKey
+                    }),
+                    value: convertTypeReferenceExample({
+                        example: propertyExample,
+                        rawTypeBeingExemplified:
+                            typeof originalTypeDeclaration.rawPropertyType === "string"
+                                ? originalTypeDeclaration.rawPropertyType
+                                : originalTypeDeclaration.rawPropertyType.type,
+                        typeResolver,
+                        exampleResolver,
+                        fileContainingRawTypeReference: originalTypeDeclaration.file,
+                        fileContainingExample: file,
+                        workspace
+                    }),
+                    originalTypeDeclaration: originalTypeDeclaration.typeName
+                });
+            } else {
+                // TODO: handle else case
+            }
         }
     }
 

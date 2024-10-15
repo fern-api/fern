@@ -4,4 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export type ObjectPropertySchema = FernDefinition.InlineableTypeReferenceDeclarationWithNameSchema;
+export type InlineableTypeReference = string | FernDefinition.InlinedTypeDeclaration;

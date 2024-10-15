@@ -5,13 +5,12 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { TypeReferenceDeclarationWithNameSchema } from "./TypeReferenceDeclarationWithNameSchema";
 
 export const ObjectPropertySchema: core.serialization.Schema<
     serializers.ObjectPropertySchema.Raw,
     FernDefinition.ObjectPropertySchema
-> = TypeReferenceDeclarationWithNameSchema;
+> = core.serialization.lazy(() => serializers.InlineableTypeReferenceDeclarationWithNameSchema);
 
 export declare namespace ObjectPropertySchema {
-    type Raw = TypeReferenceDeclarationWithNameSchema.Raw;
+    type Raw = serializers.InlineableTypeReferenceDeclarationWithNameSchema.Raw;
 }

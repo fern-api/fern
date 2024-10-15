@@ -34,6 +34,34 @@ types:
       - string
       - TypeReferenceDetailed
   
+  InlineableTypeReferenceDeclarationWithNameSchema: 
+    discriminated: false
+    union: 
+      - string
+      - InlineableTypeReferenceDeclarationWithName
+  
+  InlineableTypeReferenceDeclarationWithName:
+    extends: 
+      - BaseInlineableTypeReferenceSchema
+      - commons.WithName
+      - commons.WithAudiences
+  
+  BaseInlineableTypeReferenceSchema: 
+    extends: 
+      - commons.WithDocsSchema
+      - commons.WithAvailability
+    properties: 
+      type: InlineableTypeReference
+      default: optional<unknown>
+      encoding: optional<encoding.EncodingSchema>
+      validation: optional<validation.ValidationSchema>
+  
+  InlineableTypeReference: 
+    discriminated: false
+    union:
+      - string
+      - InlinedTypeDeclaration
+  
   BaseTypeReferenceSchema: 
     extends: 
       - commons.WithDocsSchema
@@ -86,7 +114,7 @@ types:
       properties: optional<map<string, ObjectPropertySchema>>
       extra-properties: optional<boolean>
   
-  ObjectPropertySchema: TypeReferenceDeclarationWithNameSchema
+  ObjectPropertySchema: InlineableTypeReferenceDeclarationWithNameSchema
   
   ObjectExtendsSchema: 
     discriminated: false

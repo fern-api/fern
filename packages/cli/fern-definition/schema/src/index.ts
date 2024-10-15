@@ -44,3 +44,4 @@ export {
 } from "./utils/visitRawTypeDeclaration";
 export { FernContainerRegex, visitRawTypeReference } from "./utils/visitRawTypeReference";
 export { HttpEndpointReferenceParser } from "./utils/HttpEndpointReferenceParser";
+export { getNonInlineableTypeReference } from "./utils/getNonInlineableTypeReference";
