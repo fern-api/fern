@@ -5,7 +5,7 @@ exports[`class > basic 1`] = `
 "
 `;
 
-exports[`class > variables with annotation and initializer 1`] = `
+exports[`class > fields with annotation and initializer 1`] = `
 "class Car:
     color: str = 'red'
 "

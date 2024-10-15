@@ -1,6 +1,6 @@
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Variable } from "./Variable";
+import { Field } from "./Field";
 
 export declare namespace Class {
     interface Args {
@@ -12,7 +12,7 @@ export declare namespace Class {
 export class Class extends AstNode {
     public readonly name: string;
 
-    private variables: Variable[] = [];
+    private fields: Field[] = [];
 
     constructor({ name }: Class.Args) {
         super();
@@ -24,20 +24,20 @@ export class Class extends AstNode {
         writer.newLine();
 
         writer.indent();
-        this.writeVariables({ writer });
+        this.writeFields({ writer });
         writer.dedent();
     }
 
-    public addVariable(variable: Variable): void {
-        this.variables.push(variable);
+    public addField(field: Field): void {
+        this.fields.push(field);
     }
 
-    private writeVariables({ writer }: { writer: Writer }): void {
-        this.variables.forEach((variable, index) => {
-            variable.write(writer);
+    private writeFields({ writer }: { writer: Writer }): void {
+        this.fields.forEach((field, index) => {
+            field.write(writer);
             writer.writeNewLineIfLastLineNot();
 
-            if (index < this.variables.length - 1) {
+            if (index < this.fields.length - 1) {
                 writer.newLine();
             }
         });

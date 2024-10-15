@@ -2,23 +2,23 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Annotation } from "./Annotation";
 
-export declare namespace Variable {
+export declare namespace Field {
     interface Args {
-        /* The name of the variable */
+        /* The name of the field */
         name: string;
-        /* The type annotation of the variable */
+        /* The type annotation of the field */
         type?: Annotation;
-        /* The initializer for the variable */
+        /* The initializer for the field */
         initializer?: string;
     }
 }
 
-export class Variable extends AstNode {
+export class Field extends AstNode {
     public readonly name: string;
     public readonly type: Annotation | undefined;
     public readonly initializer: string | undefined;
 
-    constructor({ name, type, initializer }: Variable.Args) {
+    constructor({ name, type, initializer }: Field.Args) {
         super();
         this.name = name;
         this.type = type;
