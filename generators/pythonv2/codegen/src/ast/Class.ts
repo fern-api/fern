@@ -1,5 +1,6 @@
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Variable } from "./Variable";
 
 export declare namespace Class {
     interface Args {
@@ -11,6 +12,8 @@ export declare namespace Class {
 export class Class extends AstNode {
     public readonly name: string;
 
+    private variables: Variable[] = [];
+
     constructor({ name }: Class.Args) {
         super();
         this.name = name;
@@ -18,5 +21,9 @@ export class Class extends AstNode {
 
     public write(writer: Writer): void {
         writer.write(`class ${this.name}:`);
+    }
+
+    public addVariable(variable: Variable): void {
+        this.variables.push(variable);
     }
 }
