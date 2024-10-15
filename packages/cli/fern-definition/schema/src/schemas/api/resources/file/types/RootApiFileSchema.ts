@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface RootApiFile
+export interface RootApiFileSchema
     extends FernDefinition.WithDocs,
         FernDefinition.WithDisplayName,
         FernDefinition.WithEnvironments,
@@ -17,8 +17,8 @@ export interface RootApiFile
     errors?: string[];
     "base-path"?: string;
     "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
-    "idempotency-headers"?: Record<string, FernDefinition.HttpHeader>;
-    variables?: Record<string, FernDefinition.VariableDeclaration>;
+    "idempotency-headers"?: Record<string, FernDefinition.HttpHeaderSchema>;
+    variables?: Record<string, FernDefinition.VariableDeclarationSchema>;
     pagination?: FernDefinition.PaginationScheme;
     version?: FernDefinition.VersionDeclaration;
 }

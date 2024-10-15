@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface ObjectSchema extends FernDefinition.BaseTypeDeclaration {
+export interface ObjectSchema extends FernDefinition.BaseTypeDeclarationSchema {
     extends?: FernDefinition.ObjectExtendsSchema;
     properties?: Record<string, FernDefinition.TypeReferenceSchema>;
 }

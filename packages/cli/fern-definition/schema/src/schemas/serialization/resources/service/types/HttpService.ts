@@ -10,6 +10,7 @@ import { ServiceTransport } from "./ServiceTransport";
 import { SourceSchema } from "../../source/types/SourceSchema";
 import { HttpEndpointSchema } from "./HttpEndpointSchema";
 import { WithDisplayName } from "../../commons/types/WithDisplayName";
+import { WithAudiences } from "../../commons/types/WithAudiences";
 
 export const HttpService: core.serialization.ObjectSchema<serializers.HttpService.Raw, FernDefinition.HttpService> =
     core.serialization
@@ -26,10 +27,11 @@ export const HttpService: core.serialization.ObjectSchema<serializers.HttpServic
             source: SourceSchema.optional(),
             endpoints: core.serialization.record(core.serialization.string(), HttpEndpointSchema).optional(),
         })
-        .extend(WithDisplayName);
+        .extend(WithDisplayName)
+        .extend(WithAudiences);
 
 export declare namespace HttpService {
-    interface Raw extends WithDisplayName.Raw {
+    interface Raw extends WithDisplayName.Raw, WithAudiences.Raw {
         auth: boolean;
         url?: string | null;
         "base-path"?: string | null;

@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
-import { HttpHeader } from "./HttpHeader";
+import { HttpHeaderSchema } from "./HttpHeaderSchema";
 import { HttpRequestBodySchema } from "./HttpRequestBodySchema";
 import { WithName } from "../../commons/types/WithName";
 import { WithDocs } from "../../commons/types/WithDocs";
@@ -18,7 +18,7 @@ export const HttpRequestSchema: core.serialization.ObjectSchema<
     .object({
         "content-type": core.serialization.string().optional(),
         "query-parameters": core.serialization.record(core.serialization.string(), HttpQueryParameterSchema).optional(),
-        headers: core.serialization.record(core.serialization.string(), HttpHeader).optional(),
+        headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
         body: HttpRequestBodySchema.optional(),
     })
     .extend(WithName)
@@ -28,7 +28,7 @@ export declare namespace HttpRequestSchema {
     interface Raw extends WithName.Raw, WithDocs.Raw {
         "content-type"?: string | null;
         "query-parameters"?: Record<string, HttpQueryParameterSchema.Raw> | null;
-        headers?: Record<string, HttpHeader.Raw> | null;
+        headers?: Record<string, HttpHeaderSchema.Raw> | null;
         body?: HttpRequestBodySchema.Raw | null;
     }
 }

@@ -14,6 +14,7 @@ import { ResponseError } from "./ResponseError";
 import { ExampleEndpointCall } from "../../examples/types/ExampleEndpointCall";
 import { Pagination } from "./Pagination";
 import { WithDisplayName } from "../../commons/types/WithDisplayName";
+import { WithAudiences } from "../../commons/types/WithAudiences";
 
 export const HttpEndpointSchema: core.serialization.ObjectSchema<
     serializers.HttpEndpointSchema.Raw,
@@ -35,10 +36,11 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
         examples: core.serialization.list(ExampleEndpointCall).optional(),
         pagination: Pagination.optional(),
     })
-    .extend(WithDisplayName);
+    .extend(WithDisplayName)
+    .extend(WithAudiences);
 
 export declare namespace HttpEndpointSchema {
-    interface Raw extends WithDisplayName.Raw {
+    interface Raw extends WithDisplayName.Raw, WithAudiences.Raw {
         method?: HttpMethodSchema.Raw | null;
         "base-path"?: string | null;
         path: string;

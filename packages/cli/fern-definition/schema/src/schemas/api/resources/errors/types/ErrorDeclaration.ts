@@ -7,5 +7,5 @@ import * as FernDefinition from "../../../index";
 export interface ErrorDeclaration extends FernDefinition.WithDocs {
     "status-code": number;
     type?: string;
-    examples?: FernDefinition.ExampleType[];
+    examples?: FernDefinition.ExampleTypeSchema[];
 }

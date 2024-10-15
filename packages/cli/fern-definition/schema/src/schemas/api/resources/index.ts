@@ -24,5 +24,7 @@ export * as types from "./types";
 export * from "./types/types";
 export * as validation from "./validation";
 export * from "./validation/types";
+export * as variables from "./variables";
+export * from "./variables/types";
 export * as versioning from "./versioning";
 export * from "./versioning/types";

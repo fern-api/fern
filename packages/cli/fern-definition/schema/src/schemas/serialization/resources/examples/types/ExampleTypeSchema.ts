@@ -8,15 +8,17 @@ import * as core from "../../../../core";
 import { WithName } from "../../commons/types/WithName";
 import { WithDocs } from "../../commons/types/WithDocs";
 
-export const ExampleType: core.serialization.ObjectSchema<serializers.ExampleType.Raw, FernDefinition.ExampleType> =
-    core.serialization
-        .object({
-            value: core.serialization.unknown(),
-        })
-        .extend(WithName)
-        .extend(WithDocs);
+export const ExampleTypeSchema: core.serialization.ObjectSchema<
+    serializers.ExampleTypeSchema.Raw,
+    FernDefinition.ExampleTypeSchema
+> = core.serialization
+    .object({
+        value: core.serialization.unknown(),
+    })
+    .extend(WithName)
+    .extend(WithDocs);
 
-export declare namespace ExampleType {
+export declare namespace ExampleTypeSchema {
     interface Raw extends WithName.Raw, WithDocs.Raw {
         value?: unknown;
     }

@@ -4,6 +4,7 @@ export * as RawSchemas from "./schemas/api";
 export * from "./utils/generics";
 export * from "./utils/auth";
 export { getRequestBody } from "./utils/getRequestBody";
+export { type DefinitionFileSchema, type RootApiFileSchema, type PackageMarkerFileSchema } from "./schemas";
 export { isInlineRequestBody } from "./utils/isInlineRequestBody";
 export { isRawProtobufSourceSchema } from "./utils/isRawProtobufSourceSchema";
 export { isRawTextType } from "./utils/isRawTextType";

@@ -10,4 +10,4 @@ types:
     properties: 
       status-code: integer
       type: optional<string>
-      examples: optional<list<examples.ExampleType>>
+      examples: optional<list<examples.ExampleTypeSchema>>
