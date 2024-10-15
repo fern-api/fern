@@ -5,8 +5,8 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { OAuthGetTokenEndpoint } from "./OAuthGetTokenEndpoint";
-import { OAuthRefreshTokenEndpoint } from "./OAuthRefreshTokenEndpoint";
+import { OAuthGetTokenEndpointSchema } from "./OAuthGetTokenEndpointSchema";
+import { OAuthRefreshTokenEndpointSchema } from "./OAuthRefreshTokenEndpointSchema";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const OAuthSchemeSchema: core.serialization.ObjectSchema<
@@ -20,8 +20,8 @@ export const OAuthSchemeSchema: core.serialization.ObjectSchema<
         "client-id-env": core.serialization.string().optional(),
         "client-secret-env": core.serialization.string().optional(),
         "token-prefix": core.serialization.string().optional(),
-        "get-token": OAuthGetTokenEndpoint,
-        "refresh-token": OAuthRefreshTokenEndpoint.optional(),
+        "get-token": OAuthGetTokenEndpointSchema,
+        "refresh-token": OAuthRefreshTokenEndpointSchema.optional(),
     })
     .extend(WithDocsSchema);
 
@@ -33,7 +33,7 @@ export declare namespace OAuthSchemeSchema {
         "client-id-env"?: string | null;
         "client-secret-env"?: string | null;
         "token-prefix"?: string | null;
-        "get-token": OAuthGetTokenEndpoint.Raw;
-        "refresh-token"?: OAuthRefreshTokenEndpoint.Raw | null;
+        "get-token": OAuthGetTokenEndpointSchema.Raw;
+        "refresh-token"?: OAuthRefreshTokenEndpointSchema.Raw | null;
     }
 }

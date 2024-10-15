@@ -4,9 +4,9 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, FernDefinition.WithAudiences {
+export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, FernDefinition.DeclarationSchema {
     method?: FernDefinition.HttpMethodSchema;
-    "base-path": string;
+    "base-path"?: string;
     path: string;
     url?: string;
     "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;

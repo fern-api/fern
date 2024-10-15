@@ -4,4 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export type ObjectPropertySchema = FernDefinition.TypeReferenceSchema;
+export type ObjectPropertySchema = FernDefinition.TypeReferenceDeclarationWithNameSchema;

@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { ObjectExtendsSchema } from "../../types/types/ObjectExtendsSchema";
-import { HttpInlineRequestBodyProperty } from "./HttpInlineRequestBodyProperty";
+import { HttpInlineRequestBodyPropertySchema } from "./HttpInlineRequestBodyPropertySchema";
 
 export const HttpInlineRequestBodySchema: core.serialization.ObjectSchema<
     serializers.HttpInlineRequestBodySchema.Raw,
@@ -14,13 +14,13 @@ export const HttpInlineRequestBodySchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     extends: ObjectExtendsSchema.optional(),
     "extra-properties": core.serialization.boolean().optional(),
-    properties: HttpInlineRequestBodyProperty.optional(),
+    properties: core.serialization.record(core.serialization.string(), HttpInlineRequestBodyPropertySchema).optional(),
 });
 
 export declare namespace HttpInlineRequestBodySchema {
     interface Raw {
         extends?: ObjectExtendsSchema.Raw | null;
         "extra-properties"?: boolean | null;
-        properties?: HttpInlineRequestBodyProperty.Raw | null;
+        properties?: Record<string, HttpInlineRequestBodyPropertySchema.Raw> | null;
     }
 }

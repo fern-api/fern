@@ -5,18 +5,21 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const HttpResponseSchemaDetailed: core.serialization.ObjectSchema<
     serializers.HttpResponseSchemaDetailed.Raw,
     FernDefinition.HttpResponseSchemaDetailed
-> = core.serialization.object({
-    type: core.serialization.string(),
-    property: core.serialization.string().optional(),
-    "status-code": core.serialization.number().optional(),
-});
+> = core.serialization
+    .object({
+        type: core.serialization.string(),
+        property: core.serialization.string().optional(),
+        "status-code": core.serialization.number().optional(),
+    })
+    .extend(WithDocsSchema);
 
 export declare namespace HttpResponseSchemaDetailed {
-    interface Raw {
+    interface Raw extends WithDocsSchema.Raw {
         type: string;
         property?: string | null;
         "status-code"?: number | null;

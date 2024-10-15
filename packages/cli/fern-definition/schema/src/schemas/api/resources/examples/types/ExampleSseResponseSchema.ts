@@ -5,5 +5,5 @@
 import * as FernDefinition from "../../../index";
 
 export interface ExampleSseResponseSchema {
-    stream: FernDefinition.ExampleSseEvent[];
+    stream: FernDefinition.ExampleSseEventSchema[];
 }

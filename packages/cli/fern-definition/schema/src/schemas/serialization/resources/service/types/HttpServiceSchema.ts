@@ -9,7 +9,8 @@ import { TypeReferenceSchema } from "../../types/types/TypeReferenceSchema";
 import { ServiceTransport } from "./ServiceTransport";
 import { SourceSchema } from "../../source/types/SourceSchema";
 import { HttpEndpointSchema } from "./HttpEndpointSchema";
-import { DeclarationSchema } from "../../commons/types/DeclarationSchema";
+import { DeclarationWithoutDocsSchema } from "../../commons/types/DeclarationWithoutDocsSchema";
+import { WithDisplayName } from "../../commons/types/WithDisplayName";
 
 export const HttpServiceSchema: core.serialization.ObjectSchema<
     serializers.HttpServiceSchema.Raw,
@@ -28,10 +29,11 @@ export const HttpServiceSchema: core.serialization.ObjectSchema<
         source: SourceSchema.optional(),
         endpoints: core.serialization.record(core.serialization.string(), HttpEndpointSchema),
     })
-    .extend(DeclarationSchema);
+    .extend(DeclarationWithoutDocsSchema)
+    .extend(WithDisplayName);
 
 export declare namespace HttpServiceSchema {
-    interface Raw extends DeclarationSchema.Raw {
+    interface Raw extends DeclarationWithoutDocsSchema.Raw, WithDisplayName.Raw {
         auth: boolean;
         url?: string | null;
         "base-path": string;

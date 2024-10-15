@@ -86,10 +86,10 @@ types:
       client-id-env: optional<string>
       client-secret-env: optional<string>
       token-prefix: optional<string>
-      get-token: OAuthGetTokenEndpoint
-      refresh-token: optional<OAuthRefreshTokenEndpoint>
+      get-token: OAuthGetTokenEndpointSchema
+      refresh-token: optional<OAuthRefreshTokenEndpointSchema>
   
-  OAuthGetTokenEndpoint: 
+  OAuthGetTokenEndpointSchema: 
     properties: 
       endpoint: 
         type: string
@@ -123,7 +123,7 @@ types:
         type: optional<string> 
         docs: The property name for the refresh token
 
-  OAuthRefreshTokenEndpoint: 
+  OAuthRefreshTokenEndpointSchema: 
     properties: 
       endpoint: 
         type: string

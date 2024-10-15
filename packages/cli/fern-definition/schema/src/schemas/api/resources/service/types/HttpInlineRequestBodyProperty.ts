@@ -4,6 +4,10 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface HttpInlineRequestBodyProperty extends FernDefinition.TypeReferenceDetailed {
+export interface HttpInlineRequestBodyProperty
+    extends FernDefinition.WithDocsSchema,
+        FernDefinition.WithName,
+        FernDefinition.WithAudiences,
+        FernDefinition.BaseTypeReferenceSchema {
     "content-type"?: string;
 }

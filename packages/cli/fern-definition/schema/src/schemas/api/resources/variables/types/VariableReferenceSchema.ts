@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface VariableReferenceSchema extends FernDefinition.WithDisplayName, FernDefinition.WithAvailability {
+export interface VariableReferenceSchema extends FernDefinition.WithAvailability, FernDefinition.WithDocsSchema {
     variable: string;
 }

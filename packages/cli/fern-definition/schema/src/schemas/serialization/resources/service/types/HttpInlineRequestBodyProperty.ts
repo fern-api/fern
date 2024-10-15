@@ -5,7 +5,10 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { TypeReferenceDetailed } from "../../types/types/TypeReferenceDetailed";
+import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
+import { WithName } from "../../commons/types/WithName";
+import { WithAudiences } from "../../commons/types/WithAudiences";
+import { BaseTypeReferenceSchema } from "../../types/types/BaseTypeReferenceSchema";
 
 export const HttpInlineRequestBodyProperty: core.serialization.ObjectSchema<
     serializers.HttpInlineRequestBodyProperty.Raw,
@@ -14,10 +17,13 @@ export const HttpInlineRequestBodyProperty: core.serialization.ObjectSchema<
     .object({
         "content-type": core.serialization.string().optional(),
     })
-    .extend(TypeReferenceDetailed);
+    .extend(WithDocsSchema)
+    .extend(WithName)
+    .extend(WithAudiences)
+    .extend(BaseTypeReferenceSchema);
 
 export declare namespace HttpInlineRequestBodyProperty {
-    interface Raw extends TypeReferenceDetailed.Raw {
+    interface Raw extends WithDocsSchema.Raw, WithName.Raw, WithAudiences.Raw, BaseTypeReferenceSchema.Raw {
         "content-type"?: string | null;
     }
 }

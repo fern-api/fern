@@ -10,7 +10,7 @@ types:
   
   HttpServiceSchema: 
     extends: 
-      - commons.DeclarationSchema
+      - commons.DeclarationWithoutDocsSchema
       - commons.WithDisplayName
     properties: 
       auth: boolean
@@ -36,10 +36,10 @@ types:
   HttpEndpointSchema:   
     extends: 
       - commons.WithDisplayName
-      - commons.WithAudiences
+      - commons.DeclarationSchema
     properties: 
       method: optional<HttpMethodSchema>
-      base-path: string
+      base-path: optional<string>
       path: string
       url: optional<string>
       path-parameters: optional<map<string, HttpPathParameterSchema>>
@@ -77,11 +77,18 @@ types:
       headers: optional<map<string, HttpHeaderSchema>>
       body: optional<HttpRequestBodySchema>
   
-  HttpHeaderSchema: 
-    extends: 
-      - types.TypeReferenceDetailed
+  TypeReferenceDeclarationWithEnvOverride:
+    discriminated: false
+    union: 
+      - string
+      - TypeReferenceDeclarationWithEnvOverrideSchema
+
+  TypeReferenceDeclarationWithEnvOverrideSchema: 
+    extends: types.TypeReferenceDeclarationWithName
     properties: 
       env: optional<string>
+
+  HttpHeaderSchema: TypeReferenceDeclarationWithEnvOverride
   
   HttpRequestBodySchema: 
     discriminated: false
@@ -100,11 +107,20 @@ types:
     properties: 
       extends: optional<types.ObjectExtendsSchema>
       extra-properties: optional<boolean>
-      properties: optional<HttpInlineRequestBodyProperty>
+      properties: optional<map<string, HttpInlineRequestBodyPropertySchema>>
+  
+  HttpInlineRequestBodyPropertySchema: 
+    discriminated: false
+    union: 
+      - string
+      - HttpInlineRequestBodyProperty
 
   HttpInlineRequestBodyProperty: 
     extends: 
-      - types.TypeReferenceDetailed
+      - commons.WithDocsSchema
+      - commons.WithName
+      - commons.WithAudiences
+      - types.BaseTypeReferenceSchema
     properties: 
       content-type: optional<string>
   
@@ -116,7 +132,7 @@ types:
   
   QueryParameterTypeReferenceDetailed: 
     extends: 
-      - types.TypeReferenceDetailed
+      - types.TypeReferenceDeclarationWithName
     properties: 
       allow-multiple: optional<boolean>
   
@@ -127,6 +143,8 @@ types:
       - HttpResponseSchemaDetailed
   
   HttpResponseSchemaDetailed: 
+    extends: 
+      - commons.WithDocsSchema
     properties: 
       type: string
       property: optional<string>

@@ -16,7 +16,7 @@ types:
   
   VariableReferenceSchema: 
     extends: 
-      - commons.WithDisplayName
       - commons.WithAvailability
+      - commons.WithDocsSchema
     properties: 
       variable: string

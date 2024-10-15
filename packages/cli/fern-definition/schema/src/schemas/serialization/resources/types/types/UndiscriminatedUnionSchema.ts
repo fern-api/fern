@@ -5,8 +5,8 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 import { SingleUndiscriminatedUnionTypeSchema } from "./SingleUndiscriminatedUnionTypeSchema";
+import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 
 export const UndiscriminatedUnionSchema: core.serialization.ObjectSchema<
     serializers.UndiscriminatedUnionSchema.Raw,
@@ -14,7 +14,6 @@ export const UndiscriminatedUnionSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         discriminated: core.serialization.booleanLiteral(false),
-        extends: BaseTypeDeclarationSchema,
         union: core.serialization.list(SingleUndiscriminatedUnionTypeSchema),
     })
     .extend(BaseTypeDeclarationSchema);
@@ -22,7 +21,6 @@ export const UndiscriminatedUnionSchema: core.serialization.ObjectSchema<
 export declare namespace UndiscriminatedUnionSchema {
     interface Raw extends BaseTypeDeclarationSchema.Raw {
         discriminated: false;
-        extends: BaseTypeDeclarationSchema.Raw;
         union: SingleUndiscriminatedUnionTypeSchema.Raw[];
     }
 }

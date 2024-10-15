@@ -8,16 +8,16 @@ import * as core from "../../../../core";
 import { OAuthRefreshTokenRequestPropertiesSchema } from "./OAuthRefreshTokenRequestPropertiesSchema";
 import { OAuthRefreshTokenResponsePropertiesSchema } from "./OAuthRefreshTokenResponsePropertiesSchema";
 
-export const OAuthRefreshTokenEndpoint: core.serialization.ObjectSchema<
-    serializers.OAuthRefreshTokenEndpoint.Raw,
-    FernDefinition.OAuthRefreshTokenEndpoint
+export const OAuthRefreshTokenEndpointSchema: core.serialization.ObjectSchema<
+    serializers.OAuthRefreshTokenEndpointSchema.Raw,
+    FernDefinition.OAuthRefreshTokenEndpointSchema
 > = core.serialization.object({
     endpoint: core.serialization.string(),
     "request-properties": OAuthRefreshTokenRequestPropertiesSchema.optional(),
     "response-properties": OAuthRefreshTokenResponsePropertiesSchema.optional(),
 });
 
-export declare namespace OAuthRefreshTokenEndpoint {
+export declare namespace OAuthRefreshTokenEndpointSchema {
     interface Raw {
         endpoint: string;
         "request-properties"?: OAuthRefreshTokenRequestPropertiesSchema.Raw | null;

@@ -27,3 +27,13 @@ types:
       - WithDocsSchema
       - WithAvailability
       - WithAudiences
+  
+  DeclarationWithoutDocsSchema: 
+    extends: 
+      - WithAvailability
+      - WithAudiences
+  
+  DeclarationWithNameSchema: 
+    extends: 
+      - DeclarationSchema
+      - WithName

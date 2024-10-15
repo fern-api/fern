@@ -6,14 +6,14 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { ObjectExtendsSchema } from "./ObjectExtendsSchema";
-import { TypeReferenceSchema } from "./TypeReferenceSchema";
+import { ObjectPropertySchema } from "./ObjectPropertySchema";
 import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 
 export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSchema.Raw, FernDefinition.ObjectSchema> =
     core.serialization
         .object({
             extends: ObjectExtendsSchema.optional(),
-            properties: core.serialization.record(core.serialization.string(), TypeReferenceSchema).optional(),
+            properties: core.serialization.record(core.serialization.string(), ObjectPropertySchema).optional(),
             "extra-properties": core.serialization.boolean().optional(),
         })
         .extend(BaseTypeDeclarationSchema);
@@ -21,7 +21,7 @@ export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSch
 export declare namespace ObjectSchema {
     interface Raw extends BaseTypeDeclarationSchema.Raw {
         extends?: ObjectExtendsSchema.Raw | null;
-        properties?: Record<string, TypeReferenceSchema.Raw> | null;
+        properties?: Record<string, ObjectPropertySchema.Raw> | null;
         "extra-properties"?: boolean | null;
     }
 }
