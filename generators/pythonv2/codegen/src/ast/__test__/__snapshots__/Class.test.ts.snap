@@ -6,7 +6,10 @@ exports[`class > basic 1`] = `
 `;
 
 exports[`class > fields with annotation and initializer 1`] = `
-"class Car:
+"from typing import Dict
+    
+class Car:
     color: str = 'red'
+    partNameById: Dict[int, str] = {}
 "
 `;

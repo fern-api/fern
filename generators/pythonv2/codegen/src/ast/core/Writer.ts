@@ -13,8 +13,10 @@ export class Writer extends AbstractWriter {
     public toString(): string {
         const imports = this.stringifyImports();
         if (imports.length > 0) {
-            this.write(imports);
-            this.write("\n");
+            return `\
+${imports}
+    
+${this.buffer}`;
         }
 
         return this.buffer;

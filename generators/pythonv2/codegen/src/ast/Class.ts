@@ -36,10 +36,6 @@ export class Class extends AstNode {
         this.fields.forEach((field, index) => {
             field.write(writer);
             writer.writeNewLineIfLastLineNot();
-
-            if (index < this.fields.length - 1) {
-                writer.newLine();
-            }
         });
     }
 }
