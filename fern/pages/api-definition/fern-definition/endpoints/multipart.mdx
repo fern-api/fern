@@ -1,0 +1,24 @@
+---
+title: Multipart File Upload
+---
+
+Endpoints in Fern are defined underneath the `endpoints` key. If your endpoint request includes file uploads, you can use the `file` type to indicate the request is of a `multiform` content type. The example below demonstrates an endpoint which includes a file in the request body. 
+
+<CodeBlock title="document.yml">
+```yaml {12}
+service:
+  base-path: /documents
+  auth: false
+  endpoints:
+    uploadDocument:
+      path: /upload
+      method: POST
+      request:
+        name: UploadDocumentRequest
+        body:
+          properties:
+            file: file
+```
+</CodeBlock>
+
+Within a given multipart request, a string parameter with `format:binary` will represent an arbitrary file.
