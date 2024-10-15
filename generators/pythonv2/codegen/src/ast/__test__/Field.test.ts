@@ -27,6 +27,15 @@ describe("Field", () => {
         expect(writer.toString()).toMatchSnapshot();
     });
 
+    it("writes a field with a name and value but no type", () => {
+        const field = python.field({
+            name: "my_field",
+            initializer: "'default_value'"
+        });
+        field.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
+
     it("writes a field with a complex type", () => {
         const field = python.field({
             name: "my_list",
