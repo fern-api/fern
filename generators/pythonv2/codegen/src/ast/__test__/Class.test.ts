@@ -22,4 +22,36 @@ describe("class", () => {
         );
         expect(clazz.toString()).toMatchSnapshot();
     });
+
+    it("inherits from one parent class", async () => {
+        const clazz = python.class_({
+            name: "ElectricCar",
+            parentClassReferences: [python.classReference({ name: "Car" })]
+        });
+        expect(clazz.toString()).toMatchSnapshot();
+    });
+
+    it("inherits from two parent classes", async () => {
+        const clazz = python.class_({
+            name: "HybridCar",
+            parentClassReferences: [
+                python.classReference({ name: "ElectricCar" }),
+                python.classReference({ name: "GasCar" })
+            ]
+        });
+        expect(clazz.toString()).toMatchSnapshot();
+    });
+
+    it("inherits from a parent class imported from another module", async () => {
+        const clazz = python.class_({
+            name: "SportsCar",
+            parentClassReferences: [
+                python.classReference({
+                    name: "Vehicle",
+                    modulePath: ["vehicles", "base"]
+                })
+            ]
+        });
+        expect(clazz.toString()).toMatchSnapshot();
+    });
 });

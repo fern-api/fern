@@ -10,7 +10,7 @@ export declare namespace ClassReference {
             - "foo.bar" -> ["foo", "bar"]
             - "foo.bar.baz" -> ["foo", "bar", "baz"]
         */
-        modulePath: string[];
+        modulePath?: string[];
     }
 }
 
@@ -21,7 +21,7 @@ export class ClassReference extends AstNode {
     constructor({ name, modulePath }: ClassReference.Args) {
         super();
         this.name = name;
-        this.modulePath = modulePath;
+        this.modulePath = modulePath ?? [];
     }
 
     public static create(name: string, modulePath: string[]): ClassReference {
