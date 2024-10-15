@@ -3,7 +3,7 @@ export * from "./InlinedTypeDeclarationContainer";
 export * from "./InlinedTypeDeclaration";
 export * from "./TypeReferenceSchema";
 export * from "./TypeReferenceDetailed";
-export * from "./BaseTypeDeclaration";
+export * from "./BaseTypeDeclarationSchema";
 export * from "./AliasSchema";
 export * from "./ObjectSchema";
 export * from "./ObjectPropertySchema";

@@ -2,6 +2,8 @@ imports:
   commons: commons.yml
   encoding: encoding.yml
   validation: validation.yml
+  examples: examples.yml
+  source: source.yml
 
 types: 
   TypeDeclarationSchema: 
@@ -44,24 +46,28 @@ types:
       encoding: optional<encoding.EncodingSchema>
       validation: optional<validation.ValidationSchema>
   
-  BaseTypeDeclaration: 
+  BaseTypeDeclarationSchema: 
     extends: 
       - commons.WithDocs
       - commons.WithAvailability
       - commons.WithDisplayName
       - commons.WithAudiences
+    properties: 
+      examples: optional<examples.ExampleTypeSchema>
+      encoding: optional<encoding.EncodingSchema>
+      source: optional<source.SourceSchema>
   
   ### Aliases #### 
 
   AliasSchema: 
-    extends: BaseTypeDeclaration
+    extends: BaseTypeDeclarationSchema
     properties: 
       type: string
   
   #### Objects ####
 
   ObjectSchema: 
-    extends: BaseTypeDeclaration
+    extends: BaseTypeDeclarationSchema
     properties: 
       extends: optional<ObjectExtendsSchema>
       properties: optional<map<string, TypeReferenceSchema>>
@@ -83,7 +89,7 @@ types:
   #### Enums ####
   
   EnumSchema: 
-    extends: BaseTypeDeclaration
+    extends: BaseTypeDeclarationSchema
     properties: 
       enum: list<EnumVaue>
   
@@ -126,7 +132,8 @@ types:
   
   DiscriminatedUnionSchema: 
     properties: 
-      extends: BaseTypeDeclaration
+      discriminant: optional<string>
+      extends: BaseTypeDeclarationSchema
       base-properties: optional<map<string, TypeReferenceSchema>>
       union: optional<map<string, UnionTypeReference>>
 
@@ -135,5 +142,5 @@ types:
   UndiscriminatedUnionSchema: 
     properties: 
       discriminated: literal<false>
-      extends: BaseTypeDeclaration
+      extends: BaseTypeDeclarationSchema
       union: optional<list<UnionTypeReference>>

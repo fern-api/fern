@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface HttpEndpointSchema extends FernDefinition.WithDisplayName {
+export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, FernDefinition.WithAudiences {
     method?: FernDefinition.HttpMethodSchema;
     "base-path"?: string;
     path: string;

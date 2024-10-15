@@ -7,7 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { ObjectExtendsSchema } from "./ObjectExtendsSchema";
 import { TypeReferenceSchema } from "./TypeReferenceSchema";
-import { BaseTypeDeclaration } from "./BaseTypeDeclaration";
+import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 
 export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSchema.Raw, FernDefinition.ObjectSchema> =
     core.serialization
@@ -15,10 +15,10 @@ export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSch
             extends: ObjectExtendsSchema.optional(),
             properties: core.serialization.record(core.serialization.string(), TypeReferenceSchema).optional(),
         })
-        .extend(BaseTypeDeclaration);
+        .extend(BaseTypeDeclarationSchema);
 
 export declare namespace ObjectSchema {
-    interface Raw extends BaseTypeDeclaration.Raw {
+    interface Raw extends BaseTypeDeclarationSchema.Raw {
         extends?: ObjectExtendsSchema.Raw | null;
         properties?: Record<string, TypeReferenceSchema.Raw> | null;
     }

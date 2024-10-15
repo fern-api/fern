@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface HttpHeader extends FernDefinition.TypeReferenceDetailed {
+export interface HttpHeaderSchema extends FernDefinition.TypeReferenceDetailed {
     env?: string;
 }

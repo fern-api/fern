@@ -7,11 +7,11 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { VariableDeclarationDetailed } from "./VariableDeclarationDetailed";
 
-export const VariableDeclaration: core.serialization.Schema<
-    serializers.VariableDeclaration.Raw,
-    FernDefinition.VariableDeclaration
+export const VariableDeclarationSchema: core.serialization.Schema<
+    serializers.VariableDeclarationSchema.Raw,
+    FernDefinition.VariableDeclarationSchema
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), VariableDeclarationDetailed]);
 
-export declare namespace VariableDeclaration {
+export declare namespace VariableDeclarationSchema {
     type Raw = string | VariableDeclarationDetailed.Raw;
 }

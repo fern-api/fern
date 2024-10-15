@@ -7,11 +7,12 @@ imports:
   versioning: versioning.yml
   environments: environments.yml
   auth: auth.yml
+  variables: variables.yml
 
 types: 
 
   ## Fern definition file ## 
-  FernFile: 
+  DefinitionFileSchema: 
     extends: 
       - commons.WithDocs
     properties: 
@@ -21,7 +22,8 @@ types:
       errors: optional<map<string, errors.ErrorDeclaration>>
 
   ## Package marker file ## 
-  PackageMarkerFile: 
+  PackageMarkerFileSchema: 
+    extends: DefinitionFileSchema
     properties: 
       navigation: 
         availability: deprecated
@@ -49,10 +51,10 @@ types:
   WithHeaders: 
     properties: 
       headers: 
-        type: optional<map<string, service.HttpHeader>>
+        type: optional<map<string, service.HttpHeaderSchema>>
         docs: Global Headers for the entire API
 
-  RootApiFile: 
+  RootApiFileSchema: 
     extends: 
       - commons.WithDocs
       - commons.WithDisplayName
@@ -67,8 +69,8 @@ types:
       errors: optional<list<string>>
       base-path: optional<string>
       path-parameters: optional<map<string, service.HttpPathParameterSchema>>
-      idempotency-headers: optional<map<string, service.HttpHeader>>
-      variables: optional<map<string, VariableDeclaration>>
+      idempotency-headers: optional<map<string, service.HttpHeaderSchema>>
+      variables: optional<map<string, variables.VariableDeclarationSchema>>
       pagination: optional<pagination.PaginationScheme>
       version: optional<versioning.VersionDeclaration> 
       
@@ -88,14 +90,3 @@ types:
     properties: 
       strategy: literal<"status-code">
   
-  VariableDeclaration: 
-    discriminated: false
-    union: 
-      - string
-      - VariableDeclarationDetailed
-  
-  VariableDeclarationDetailed: 
-    extends: 
-      - commons.WithDocs
-    properties: 
-      type: string

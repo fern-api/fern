@@ -7,6 +7,6 @@ import * as FernDefinition from "../../../index";
 export interface HttpRequestSchema extends FernDefinition.WithName, FernDefinition.WithDocs {
     "content-type"?: string;
     "query-parameters"?: Record<string, FernDefinition.HttpQueryParameterSchema>;
-    headers?: Record<string, FernDefinition.HttpHeader>;
+    headers?: Record<string, FernDefinition.HttpHeaderSchema>;
     body?: FernDefinition.HttpRequestBodySchema;
 }

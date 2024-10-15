@@ -10,17 +10,19 @@ import { HttpService } from "../../service/types/HttpService";
 import { ErrorDeclaration } from "../../errors/types/ErrorDeclaration";
 import { WithDocs } from "../../commons/types/WithDocs";
 
-export const FernFile: core.serialization.ObjectSchema<serializers.FernFile.Raw, FernDefinition.FernFile> =
-    core.serialization
-        .object({
-            imports: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
-            types: core.serialization.record(core.serialization.string(), TypeDeclarationSchema).optional(),
-            service: HttpService.optional(),
-            errors: core.serialization.record(core.serialization.string(), ErrorDeclaration).optional(),
-        })
-        .extend(WithDocs);
+export const DefinitionFileSchema: core.serialization.ObjectSchema<
+    serializers.DefinitionFileSchema.Raw,
+    FernDefinition.DefinitionFileSchema
+> = core.serialization
+    .object({
+        imports: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
+        types: core.serialization.record(core.serialization.string(), TypeDeclarationSchema).optional(),
+        service: HttpService.optional(),
+        errors: core.serialization.record(core.serialization.string(), ErrorDeclaration).optional(),
+    })
+    .extend(WithDocs);
 
-export declare namespace FernFile {
+export declare namespace DefinitionFileSchema {
     interface Raw extends WithDocs.Raw {
         imports?: Record<string, string> | null;
         types?: Record<string, TypeDeclarationSchema.Raw> | null;

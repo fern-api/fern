@@ -4,6 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface EnumSchema extends FernDefinition.BaseTypeDeclaration {
+export interface EnumSchema extends FernDefinition.BaseTypeDeclarationSchema {
     enum: FernDefinition.EnumVaue[];
 }

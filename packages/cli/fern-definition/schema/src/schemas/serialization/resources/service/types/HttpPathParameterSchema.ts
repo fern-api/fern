@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { TypeReferenceSchema } from "../../types/types/TypeReferenceSchema";
-import { VariableReferenceSchema } from "./VariableReferenceSchema";
+import { VariableReferenceSchema } from "../../variables/types/VariableReferenceSchema";
 
 export const HttpPathParameterSchema: core.serialization.Schema<
     serializers.HttpPathParameterSchema.Raw,

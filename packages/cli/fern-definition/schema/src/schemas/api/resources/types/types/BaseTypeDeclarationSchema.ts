@@ -4,8 +4,12 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface BaseTypeDeclaration
+export interface BaseTypeDeclarationSchema
     extends FernDefinition.WithDocs,
         FernDefinition.WithAvailability,
         FernDefinition.WithDisplayName,
-        FernDefinition.WithAudiences {}
+        FernDefinition.WithAudiences {
+    examples?: FernDefinition.ExampleTypeSchema;
+    encoding?: FernDefinition.EncodingSchema;
+    source?: FernDefinition.SourceSchema;
+}

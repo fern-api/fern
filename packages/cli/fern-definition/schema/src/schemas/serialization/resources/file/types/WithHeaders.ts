@@ -5,15 +5,15 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { HttpHeader } from "../../service/types/HttpHeader";
+import { HttpHeaderSchema } from "../../service/types/HttpHeaderSchema";
 
 export const WithHeaders: core.serialization.ObjectSchema<serializers.WithHeaders.Raw, FernDefinition.WithHeaders> =
     core.serialization.object({
-        headers: core.serialization.record(core.serialization.string(), HttpHeader).optional(),
+        headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
     });
 
 export declare namespace WithHeaders {
     interface Raw {
-        headers?: Record<string, HttpHeader.Raw> | null;
+        headers?: Record<string, HttpHeaderSchema.Raw> | null;
     }
 }

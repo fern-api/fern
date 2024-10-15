@@ -6,17 +6,17 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { EnumVaue } from "./EnumVaue";
-import { BaseTypeDeclaration } from "./BaseTypeDeclaration";
+import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 
 export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.Raw, FernDefinition.EnumSchema> =
     core.serialization
         .object({
             enum: core.serialization.list(EnumVaue),
         })
-        .extend(BaseTypeDeclaration);
+        .extend(BaseTypeDeclarationSchema);
 
 export declare namespace EnumSchema {
-    interface Raw extends BaseTypeDeclaration.Raw {
+    interface Raw extends BaseTypeDeclarationSchema.Raw {
         enum: EnumVaue.Raw[];
     }
 }

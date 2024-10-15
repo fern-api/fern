@@ -7,14 +7,16 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { TypeReferenceDetailed } from "../../types/types/TypeReferenceDetailed";
 
-export const HttpHeader: core.serialization.ObjectSchema<serializers.HttpHeader.Raw, FernDefinition.HttpHeader> =
-    core.serialization
-        .object({
-            env: core.serialization.string().optional(),
-        })
-        .extend(TypeReferenceDetailed);
+export const HttpHeaderSchema: core.serialization.ObjectSchema<
+    serializers.HttpHeaderSchema.Raw,
+    FernDefinition.HttpHeaderSchema
+> = core.serialization
+    .object({
+        env: core.serialization.string().optional(),
+    })
+    .extend(TypeReferenceDetailed);
 
-export declare namespace HttpHeader {
+export declare namespace HttpHeaderSchema {
     interface Raw extends TypeReferenceDetailed.Raw {
         env?: string | null;
     }

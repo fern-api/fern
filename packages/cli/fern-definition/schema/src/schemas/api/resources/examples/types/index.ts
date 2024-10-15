@@ -1,4 +1,4 @@
-export * from "./ExampleType";
+export * from "./ExampleTypeSchema";
 export * from "./ExampleEndpointCall";
 export * from "./ExampleResponseSchema";
 export * from "./ExampleBodyResponseSchema";

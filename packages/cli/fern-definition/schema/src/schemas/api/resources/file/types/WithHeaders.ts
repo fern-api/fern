@@ -6,5 +6,5 @@ import * as FernDefinition from "../../../index";
 
 export interface WithHeaders {
     /** Global Headers for the entire API */
-    headers?: Record<string, FernDefinition.HttpHeader>;
+    headers?: Record<string, FernDefinition.HttpHeaderSchema>;
 }

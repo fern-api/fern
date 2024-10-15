@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface PackageMarkerFile {
+export interface PackageMarkerFileSchema extends FernDefinition.DefinitionFileSchema {
     navigation?: FernDefinition.Navigation;
     export?: FernDefinition.Export;
 }

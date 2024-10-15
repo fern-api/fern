@@ -5,17 +5,17 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { BaseTypeDeclaration } from "./BaseTypeDeclaration";
+import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 
 export const AliasSchema: core.serialization.ObjectSchema<serializers.AliasSchema.Raw, FernDefinition.AliasSchema> =
     core.serialization
         .object({
             type: core.serialization.string(),
         })
-        .extend(BaseTypeDeclaration);
+        .extend(BaseTypeDeclarationSchema);
 
 export declare namespace AliasSchema {
-    interface Raw extends BaseTypeDeclaration.Raw {
+    interface Raw extends BaseTypeDeclarationSchema.Raw {
         type: string;
     }
 }

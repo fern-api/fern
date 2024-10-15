@@ -4,4 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export type VariableDeclaration = string | FernDefinition.VariableDeclarationDetailed;
+export interface ExampleTypeSchema extends FernDefinition.WithName, FernDefinition.WithDocs {
+    value?: unknown;
+}
