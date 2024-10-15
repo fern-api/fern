@@ -17,4 +17,5 @@ export interface TabConfig {
      */
     href?: string;
     changelog?: FernDocsConfig.ChangelogFolderRelativePath;
+    audience?: FernDocsConfig.Audience;
 }

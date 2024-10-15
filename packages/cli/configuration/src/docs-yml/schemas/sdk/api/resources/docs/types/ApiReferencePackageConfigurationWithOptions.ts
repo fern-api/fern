@@ -15,4 +15,5 @@ export interface ApiReferencePackageConfigurationWithOptions {
     skipSlug?: boolean;
     /** Settings for the api playground that is applied only to descendants of this api package. */
     playground?: FernDocsConfig.PlaygroundSettings;
+    audience?: FernDocsConfig.Audience;
 }

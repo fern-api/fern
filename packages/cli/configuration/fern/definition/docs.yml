@@ -43,7 +43,7 @@ types:
   SegmentConfig:
     properties:
       write-key: string
-  
+
   FullStoryAnalyticsConfig:
     properties:
       org-id: string
@@ -106,14 +106,14 @@ types:
   # HeapConfig:
   #   properties:
   #     app-id: string
-      
+
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
-      analytics: 
+      analytics:
         type: optional<AnalyticsConfig>
         docs: |
           The `analytics` object allows you to configure analytics for your docs site.
@@ -170,6 +170,7 @@ types:
 
           Tabs with `href` must not have children in the navigation config.
       changelog: optional<ChangelogFolderRelativePath>
+      audience: optional<Audience>
 
   ChangelogFolderRelativePath:
     type: string
@@ -265,6 +266,7 @@ types:
         type: optional<VersionAvailability>
         docs: |
           If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site.
+      audience: optional<Audience>
 
   VersionAvailability:
     enum:
@@ -449,6 +451,14 @@ types:
       - fixed
       - static
 
+  AudienceId: string
+
+  Audience:
+    discriminated: false
+    union:
+      - AudienceId
+      - list<AudienceId>
+
   FontConfig:
     properties:
       name:
@@ -531,6 +541,7 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+      audience: optional<Audience>
 
   ChangelogConfiguration:
     properties:
@@ -539,6 +550,7 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+      audience: optional<Audience>
       # skip-slug: optional<boolean> # skip-slug is not needed for changelog
 
   SectionConfiguration:
@@ -554,6 +566,7 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      audience: optional<Audience>
 
   ApiReferenceConfiguration:
     properties:
@@ -594,6 +607,7 @@ types:
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
+      audience: optional<Audience>
 
   ApiReferenceLayoutItem:
     docs: |
@@ -630,6 +644,7 @@ types:
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
+      audience: optional<Audience>
 
   ApiReferencePackageConfiguration:
     discriminated: false
@@ -652,6 +667,7 @@ types:
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that is applied only to descendants of this api package.
+      audience: optional<Audience>
 
   ApiReferenceEndpointConfiguration:
     properties:
@@ -663,6 +679,7 @@ types:
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affect this endpoint specifically.
+      audience: optional<Audience>
 
   LinkConfiguration:
     properties:
@@ -984,4 +1001,3 @@ types:
       message:
         type: string
         docs: The message to display in the announcement bar. Markdown is supported.
-

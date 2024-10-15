@@ -17,6 +17,7 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
         changelog: core.serialization
             .lazy(async () => (await import("../../..")).ChangelogFolderRelativePath)
             .optional(),
+        audience: core.serialization.lazy(async () => (await import("../../..")).Audience).optional(),
     });
 
 export declare namespace TabConfig {
@@ -28,5 +29,6 @@ export declare namespace TabConfig {
         hidden?: boolean | null;
         href?: string | null;
         changelog?: serializers.ChangelogFolderRelativePath.Raw | null;
+        audience?: serializers.Audience.Raw | null;
     }
 }

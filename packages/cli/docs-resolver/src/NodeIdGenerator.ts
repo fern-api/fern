@@ -1,26 +1,16 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
 export class NodeIdGenerator {
-    public static init(id: string): NodeIdGenerator {
-        return new NodeIdGenerator(id, new Set([id]));
+    public static init(): NodeIdGenerator {
+        return new NodeIdGenerator();
     }
-    private constructor(private id: string, private ids: Set<string>) {}
+    private constructor() {}
 
-    public get(): FernNavigation.V1.NodeId {
-        return FernNavigation.V1.NodeId(this.id);
-    }
+    #ids = new Map<string, number>();
 
-    public append(part: string): NodeIdGenerator {
-        let id = `${this.id}.${part}`;
-        if (this.ids.has(id)) {
-            let i = 1;
-            while (this.ids.has(`${id}-${i}`)) {
-                i++;
-            }
-            id = `${id}-${i}`;
-        }
-
-        this.ids.add(id);
-        return new NodeIdGenerator(id, this.ids);
+    public get(id: string): FernNavigation.V1.NodeId {
+        const count = this.#ids.get(id) ?? 0;
+        this.#ids.set(id, count + 1);
+        return FernNavigation.V1.NodeId(count === 0 ? id : `${id}-${count}`);
     }
 }

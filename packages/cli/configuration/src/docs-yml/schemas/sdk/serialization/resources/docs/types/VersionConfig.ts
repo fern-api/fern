@@ -14,6 +14,7 @@ export const VersionConfig: core.serialization.ObjectSchema<
     path: core.serialization.string(),
     slug: core.serialization.string().optional(),
     availability: core.serialization.lazy(async () => (await import("../../..")).VersionAvailability).optional(),
+    audience: core.serialization.lazy(async () => (await import("../../..")).Audience).optional(),
 });
 
 export declare namespace VersionConfig {
@@ -22,5 +23,6 @@ export declare namespace VersionConfig {
         path: string;
         slug?: string | null;
         availability?: serializers.VersionAvailability.Raw | null;
+        audience?: serializers.Audience.Raw | null;
     }
 }

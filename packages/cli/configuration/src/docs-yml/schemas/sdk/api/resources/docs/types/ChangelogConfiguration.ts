@@ -10,4 +10,5 @@ export interface ChangelogConfiguration {
     slug?: string;
     icon?: string;
     hidden?: boolean;
+    audience?: FernDocsConfig.Audience;
 }

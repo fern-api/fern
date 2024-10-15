@@ -12,4 +12,5 @@ export interface ApiReferenceEndpointConfiguration {
     hidden?: boolean;
     /** Settings for the api playground that affect this endpoint specifically. */
     playground?: FernDocsConfig.PlaygroundSettings;
+    audience?: FernDocsConfig.Audience;
 }

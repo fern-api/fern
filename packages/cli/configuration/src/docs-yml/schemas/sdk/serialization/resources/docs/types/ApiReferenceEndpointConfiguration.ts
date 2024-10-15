@@ -16,6 +16,7 @@ export const ApiReferenceEndpointConfiguration: core.serialization.ObjectSchema<
     icon: core.serialization.string().optional(),
     hidden: core.serialization.boolean().optional(),
     playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
+    audience: core.serialization.lazy(async () => (await import("../../..")).Audience).optional(),
 });
 
 export declare namespace ApiReferenceEndpointConfiguration {
@@ -26,5 +27,6 @@ export declare namespace ApiReferenceEndpointConfiguration {
         icon?: string | null;
         hidden?: boolean | null;
         playground?: serializers.PlaygroundSettings.Raw | null;
+        audience?: serializers.Audience.Raw | null;
     }
 }
