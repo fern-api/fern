@@ -23,7 +23,7 @@ ${this.buffer}`;
     }
 
     public addReference(reference: ClassReference): void {
-        const modulePath = reference.getFullQualifiedModulePath();
+        const modulePath = reference.getFullyQualifiedModulePath();
         this.references[modulePath] = (this.references[modulePath] ?? []).concat(reference);
     }
 
@@ -34,7 +34,8 @@ ${this.buffer}`;
     private stringifyImports(): string {
         return Object.entries(this.references)
             .map(([modulePath, references]) => {
-                return `from ${modulePath} import ${references.map((r) => r.getName()).join(", ")}`;
+                const uniqueClassNames = Array.from(new Set(references.map((r) => r.getName())));
+                return `from ${modulePath} import ${uniqueClassNames.join(", ")}`;
             })
             .join("\n");
     }

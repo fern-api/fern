@@ -142,19 +142,19 @@ export class Type extends AstNode {
                 writer.write("bytes");
                 break;
             case "list":
-                writer.addReference(python.classReference("List", ["typing"]));
+                writer.addReference(python.classReference({ name: "List", modulePath: ["typing"] }));
                 writer.write("List[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "set":
-                writer.addReference(python.classReference("Set", ["typing"]));
+                writer.addReference(python.classReference({ name: "Set", modulePath: ["typing"] }));
                 writer.write("Set[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "tuple":
-                writer.addReference(python.classReference("Tuple", ["typing"]));
+                writer.addReference(python.classReference({ name: "Tuple", modulePath: ["typing"] }));
                 writer.write("Tuple[");
                 this.internalType.values.forEach((value, index) => {
                     if (index > 0) {
@@ -165,7 +165,7 @@ export class Type extends AstNode {
                 writer.write("]");
                 break;
             case "dict":
-                writer.addReference(python.classReference("Dict", ["typing"]));
+                writer.addReference(python.classReference({ name: "Dict", modulePath: ["typing"] }));
                 writer.write("Dict[");
                 this.internalType.keyType.write(writer);
                 writer.write(", ");
@@ -176,13 +176,13 @@ export class Type extends AstNode {
                 writer.write("None");
                 break;
             case "optional":
-                writer.addReference(python.classReference("Optional", ["typing"]));
+                writer.addReference(python.classReference({ name: "Optional", modulePath: ["typing"] }));
                 writer.write("Optional[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "union":
-                writer.addReference(python.classReference("Union", ["typing"]));
+                writer.addReference(python.classReference({ name: "Union", modulePath: ["typing"] }));
                 writer.write("Union[");
                 this.internalType.values.forEach((value, index) => {
                     if (index > 0) {
@@ -193,7 +193,7 @@ export class Type extends AstNode {
                 writer.write("]");
                 break;
             case "any":
-                writer.addReference(python.classReference("Any", ["typing"]));
+                writer.addReference(python.classReference({ name: "Any", modulePath: ["typing"] }));
                 writer.write("Any");
                 break;
             default:

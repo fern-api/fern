@@ -1,13 +1,31 @@
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
+export declare namespace ClassReference {
+    interface Args {
+        /* The name of the Python class reference */
+        name: string;
+        /* The module path of the Python class reference
+            For example:
+            - "foo.bar" -> ["foo", "bar"]
+            - "foo.bar.baz" -> ["foo", "bar", "baz"]
+        */
+        modulePath: string[];
+    }
+}
+
 export class ClassReference extends AstNode {
-    constructor(private readonly name: string, private readonly modulePath: string[]) {
+    private name: string;
+    private modulePath: string[];
+
+    constructor({ name, modulePath }: ClassReference.Args) {
         super();
+        this.name = name;
+        this.modulePath = modulePath;
     }
 
     public static create(name: string, modulePath: string[]): ClassReference {
-        return new ClassReference(name, modulePath);
+        return new ClassReference({ name, modulePath });
     }
 
     public write(writer: Writer): void {
@@ -18,11 +36,11 @@ export class ClassReference extends AstNode {
         return this.name;
     }
 
-    public getFullQualifiedModulePath(): string {
+    public getFullyQualifiedModulePath(): string {
         return this.modulePath.join(".");
     }
 
     public getFullyQualifiedName(): string {
-        return [this.getFullQualifiedModulePath(), this.name].join(".");
+        return [this.getFullyQualifiedModulePath(), this.name].join(".");
     }
 }
