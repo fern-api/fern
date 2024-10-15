@@ -24,14 +24,6 @@ interface Bytes {
     type: "bytes";
 }
 
-interface Date {
-    type: "date";
-}
-
-interface DateTime {
-    type: "datetime";
-}
-
 interface List {
     type: "list";
     value: Type;
@@ -97,14 +89,6 @@ export class Type extends AstNode {
 
     public static bytes(): Type {
         return new Type({ type: "bytes" });
-    }
-
-    public static date(): Type {
-        return new Type({ type: "date" });
-    }
-
-    public static datetime(): Type {
-        return new Type({ type: "datetime" });
     }
 
     public static list(value: Type): Type {
