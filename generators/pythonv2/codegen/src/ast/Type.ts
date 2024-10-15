@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { python } from "..";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -141,16 +142,19 @@ export class Type extends AstNode {
                 writer.write("bytes");
                 break;
             case "list":
+                writer.addReference(python.classReference("List", ["typing"]));
                 writer.write("List[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "set":
+                writer.addReference(python.classReference("Set", ["typing"]));
                 writer.write("Set[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "tuple":
+                writer.addReference(python.classReference("Tuple", ["typing"]));
                 writer.write("Tuple[");
                 this.internalType.values.forEach((value, index) => {
                     if (index > 0) {
@@ -161,6 +165,7 @@ export class Type extends AstNode {
                 writer.write("]");
                 break;
             case "dict":
+                writer.addReference(python.classReference("Dict", ["typing"]));
                 writer.write("Dict[");
                 this.internalType.keyType.write(writer);
                 writer.write(", ");
@@ -171,11 +176,13 @@ export class Type extends AstNode {
                 writer.write("None");
                 break;
             case "optional":
+                writer.addReference(python.classReference("Optional", ["typing"]));
                 writer.write("Optional[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "union":
+                writer.addReference(python.classReference("Union", ["typing"]));
                 writer.write("Union[");
                 this.internalType.values.forEach((value, index) => {
                     if (index > 0) {
@@ -186,6 +193,7 @@ export class Type extends AstNode {
                 writer.write("]");
                 break;
             case "any":
+                writer.addReference(python.classReference("Any", ["typing"]));
                 writer.write("Any");
                 break;
             default:
