@@ -12,6 +12,7 @@
 
 [![Slack](https://img.shields.io/badge/slack-pink.svg)](https://join.slack.com/t/fern-community/shared_invite/zt-2dpftfmif-MuAegl8AfP_PK8s2tx350Q)
 [![Documentation](https://img.shields.io/badge/Read%20our%20Documentation-black?logo=book)](https://buildwithfern.com/learn/home?utm_source=fern-api/fern/readme-read-our-documentation)
+[![](https://img.shields.io/badge/Gurubase-Ask%20Fern%20Guru-006BFF)](https://gurubase.io/g/fern)
 
 </div>
 
