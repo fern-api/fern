@@ -5,7 +5,7 @@
 import * as FernDefinition from "../../../index";
 
 export type InlinedTypeDeclaration =
-    | FernDefinition.ObjectSchema
-    | FernDefinition.EnumSchema
-    | FernDefinition.DiscriminatedUnionSchema
-    | FernDefinition.UndiscriminatedUnionSchema;
+    | FernDefinition.InlinedObjectSchema
+    | FernDefinition.InlinedEnumSchema
+    | FernDefinition.InlinedDiscriminatedUnionSchema
+    | FernDefinition.InlinedUndiscriminatedUnionSchema;

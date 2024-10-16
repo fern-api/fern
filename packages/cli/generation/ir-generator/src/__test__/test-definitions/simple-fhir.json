@@ -58,6 +58,7 @@
                 },
                 "typeId": "type_:Memo"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -212,6 +213,7 @@
                 },
                 "typeId": "type_:BaseResource"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -422,6 +424,7 @@
                 },
                 "typeId": "type_:ResourceList"
             },
+            "inline": false,
             "shape": {
                 "_type": "undiscriminatedUnion",
                 "members": [
@@ -606,6 +609,7 @@
                 },
                 "typeId": "type_:Account"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [
@@ -1042,6 +1046,7 @@
                 },
                 "typeId": "type_:Patient"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [
@@ -1416,6 +1421,7 @@
                 },
                 "typeId": "type_:Practitioner"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [
@@ -1728,6 +1734,7 @@
                 },
                 "typeId": "type_:Script"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [

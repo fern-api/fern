@@ -121,6 +121,7 @@
                 },
                 "typeId": "type_imdb:MovieId"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -223,6 +224,7 @@
                 },
                 "typeId": "type_imdb:Movie"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

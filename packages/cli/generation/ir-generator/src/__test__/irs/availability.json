@@ -96,6 +96,7 @@
                 },
                 "typeId": "type_service:Object"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

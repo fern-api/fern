@@ -153,6 +153,10 @@ export function visitRawTypeReference<R>({
         });
     }
 
+    if (type === "list") {
+        return visitor.unknown(); // Should be refactored into its own thing
+    }
+
     const listMatch = type.match(FernContainerRegex.LIST);
     if (listMatch?.[1] != null) {
         return visitor.list(listMatch[1]);

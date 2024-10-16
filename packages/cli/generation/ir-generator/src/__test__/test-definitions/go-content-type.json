@@ -121,6 +121,7 @@
                 },
                 "typeId": "type_imdb:CreateMovieRequest"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

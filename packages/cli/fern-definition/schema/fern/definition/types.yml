@@ -19,11 +19,31 @@ types:
   InlinedTypeDeclaration: 
     discriminated: false
     union: 
-      - ObjectSchema
-      - EnumSchema
-      - DiscriminatedUnionSchema
-      - UndiscriminatedUnionSchema
+      - InlinedObjectSchema
+      - InlinedEnumSchema
+      - InlinedDiscriminatedUnionSchema
+      - InlinedUndiscriminatedUnionSchema
   
+  InlinedObjectSchema: 
+    extends: ObjectSchema
+    properties:   
+      name: string
+
+  InlinedEnumSchema: 
+    extends: EnumSchema
+    properties:   
+      name: string
+  
+  InlinedDiscriminatedUnionSchema: 
+    extends: DiscriminatedUnionSchema
+    properties:   
+      name: string  
+
+  InlinedUndiscriminatedUnionSchema: 
+    extends: UndiscriminatedUnionSchema
+    properties:   
+      name: string  
+
   TypeReferenceSchema: 
     discriminated: false
     union: 

@@ -58,6 +58,7 @@
                 },
                 "typeId": "type_:AliasType"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -295,6 +296,7 @@
                 },
                 "typeId": "type_:Parent"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -473,6 +475,7 @@
                 },
                 "typeId": "type_:Child"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [

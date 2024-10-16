@@ -67,7 +67,7 @@ export function recursivelyVisitRawTypeReference<R>({
                 visitor.optional(recursivelyVisitRawTypeReference({ type: valueType, _default, validation, visitor })),
             literal: visitor.literal,
             named: visitor.named,
-            unknown: visitor.unknown
+            unknown: visitor.unknown,
         }
     });
 }

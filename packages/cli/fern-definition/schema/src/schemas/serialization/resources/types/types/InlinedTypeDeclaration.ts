@@ -5,24 +5,24 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { EnumSchema } from "./EnumSchema";
-import { DiscriminatedUnionSchema } from "./DiscriminatedUnionSchema";
-import { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
+import { InlinedEnumSchema } from "./InlinedEnumSchema";
+import { InlinedDiscriminatedUnionSchema } from "./InlinedDiscriminatedUnionSchema";
+import { InlinedUndiscriminatedUnionSchema } from "./InlinedUndiscriminatedUnionSchema";
 
 export const InlinedTypeDeclaration: core.serialization.Schema<
     serializers.InlinedTypeDeclaration.Raw,
     FernDefinition.InlinedTypeDeclaration
 > = core.serialization.undiscriminatedUnion([
-    core.serialization.lazyObject(() => serializers.ObjectSchema),
-    EnumSchema,
-    DiscriminatedUnionSchema,
-    UndiscriminatedUnionSchema,
+    core.serialization.lazyObject(() => serializers.InlinedObjectSchema),
+    InlinedEnumSchema,
+    InlinedDiscriminatedUnionSchema,
+    InlinedUndiscriminatedUnionSchema,
 ]);
 
 export declare namespace InlinedTypeDeclaration {
     type Raw =
-        | serializers.ObjectSchema.Raw
-        | EnumSchema.Raw
-        | DiscriminatedUnionSchema.Raw
-        | UndiscriminatedUnionSchema.Raw;
+        | serializers.InlinedObjectSchema.Raw
+        | InlinedEnumSchema.Raw
+        | InlinedDiscriminatedUnionSchema.Raw
+        | InlinedUndiscriminatedUnionSchema.Raw;
 }

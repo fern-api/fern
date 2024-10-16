@@ -58,6 +58,7 @@
                 },
                 "typeId": "type_:Type"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -3097,6 +3098,7 @@
                 },
                 "typeId": "type_:Name"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

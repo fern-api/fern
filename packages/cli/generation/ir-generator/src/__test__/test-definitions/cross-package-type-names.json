@@ -96,6 +96,7 @@
                 },
                 "typeId": "type_commons:Imported"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -237,6 +238,7 @@
                 },
                 "typeId": "type_folder-a/service:Response"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -503,6 +505,7 @@
                 },
                 "typeId": "type_folder-b/common:Foo"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -768,6 +771,7 @@
                 },
                 "typeId": "type_folder-c/common:Foo"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -925,6 +929,7 @@
                 },
                 "typeId": "type_folder-d/service:Response"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -1152,6 +1157,7 @@
                 },
                 "typeId": "type_foo:ImportingType"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -1333,6 +1339,7 @@
                 },
                 "typeId": "type_foo:OptionalString"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {

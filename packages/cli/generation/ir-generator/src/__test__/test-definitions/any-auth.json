@@ -347,6 +347,7 @@
                 },
                 "typeId": "type_auth:TokenResponse"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -549,6 +550,7 @@
                 },
                 "typeId": "type_user:User"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
