@@ -10,6 +10,7 @@ export declare namespace ClassReference {
             For example:
             - "foo.bar" -> ["foo", "bar"]
             - "foo.bar.baz" -> ["foo", "bar", "baz"]
+            - "..foo.bar" -> ["..","foo", "bar"]
         */
         modulePath?: string[];
         /* The generic types of the class reference */
@@ -25,8 +26,19 @@ export class ClassReference extends AstNode {
     constructor({ name, modulePath, genericTypes }: ClassReference.Args) {
         super();
         this.name = name;
-        this.modulePath = modulePath ?? [];
         this.genericTypes = genericTypes ?? [];
+
+        if (modulePath) {
+            if (modulePath.slice(1).some((part) => part.startsWith("."))) {
+                throw new Error("Only the first item in modulePath may start with a '.'");
+            }
+            if (modulePath[0]?.startsWith(".") && modulePath[0]?.split("").some((char) => char !== ".")) {
+                throw new Error("If the first item in modulePath starts with '.', it must only contain '.' characters");
+            }
+            this.modulePath = modulePath;
+        } else {
+            this.modulePath = [];
+        }
     }
 
     public write(writer: Writer): void {
@@ -53,7 +65,24 @@ export class ClassReference extends AstNode {
     }
 
     public getFullyQualifiedModulePath(): string {
-        return this.modulePath.join(".");
+        if (this.modulePath.length === 0) {
+            return "";
+        }
+
+        let prefix = "";
+        let startIndex = 0;
+
+        // Handle relative imports
+        while (startIndex < this.modulePath.length && this.modulePath[startIndex]?.startsWith(".")) {
+            prefix += this.modulePath[startIndex];
+            startIndex++;
+        }
+
+        // Join the remaining parts of the module path
+        const remainingPath = this.modulePath.slice(startIndex).join(".");
+
+        // Combine the prefix and the remaining path
+        return prefix + (prefix && remainingPath ? "." : "") + remainingPath;
     }
 
     public getFullyQualifiedName(): string {

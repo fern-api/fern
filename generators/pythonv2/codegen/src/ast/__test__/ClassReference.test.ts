@@ -50,4 +50,33 @@ describe("ClassReference", () => {
             expect(classRef.toString()).toBe("DoubleGenericClass[str, int]");
         });
     });
+
+    describe("constructor", () => {
+        it("does not throw an error if only the first item in modulePath starts with a '.'", () => {
+            expect(() => {
+                python.classReference({
+                    name: "ValidClass",
+                    modulePath: [".", "path"]
+                });
+            }).not.toThrow();
+        });
+
+        it("throws an error if an item other than the first in modulePath starts with a '.'", () => {
+            expect(() => {
+                python.classReference({
+                    name: "ErrorClass",
+                    modulePath: ["valid", ".invalid", "path"]
+                });
+            }).toThrow("Only the first item in modulePath may start with a '.'");
+        });
+
+        it("throws an error if the first item starts with a '.' but contains other characters", () => {
+            expect(() => {
+                python.classReference({
+                    name: "ErrorClass",
+                    modulePath: [".invalid_start", "path"]
+                });
+            }).toThrow("If the first item in modulePath starts with '.', it must only contain '.' characters");
+        });
+    });
 });
