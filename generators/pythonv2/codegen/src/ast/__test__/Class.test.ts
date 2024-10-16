@@ -12,12 +12,14 @@ describe("class", () => {
         const clazz = python.class_({
             name: "Car"
         });
-        clazz.addField(python.field({ name: "color", type: python.Type.str(), initializer: "'red'" }));
+        clazz.addField(
+            python.field({ name: "color", type: python.Type.str(), initializer: python.codeBlock("'red'") })
+        );
         clazz.addField(
             python.field({
                 name: "partNameById",
                 type: python.Type.dict(python.Type.int(), python.Type.str()),
-                initializer: "{}"
+                initializer: python.codeBlock("{}")
             })
         );
         expect(clazz.toString()).toMatchSnapshot();

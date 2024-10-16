@@ -4,6 +4,7 @@ import { Type } from "./Type";
 import { CodeBlock } from "./CodeBlock";
 import { ClassReference } from "./ClassReference";
 import { Field } from "./Field";
+import { Parameter } from "./Parameter";
 
 export enum MethodType {
     STATIC,
@@ -15,8 +16,8 @@ export declare namespace Method {
     interface Args {
         /* The name of the method */
         name: string;
-        /* The arguments of the method */
-        arguments_: Field[];
+        /* The parameters of the method */
+        parameters: Parameter[];
         /* The return type of the method */
         return_?: Type;
         /* The body of the method */
@@ -39,17 +40,26 @@ export class Method extends AstNode {
     public readonly docstring: string | undefined;
     public readonly type: MethodType;
     public readonly reference: ClassReference | undefined;
-    private readonly arguments_: Field[];
+    private readonly parameters: Parameter[];
     private readonly decorators: string[];
 
-    constructor({ name, arguments_, return_, body, docstring, type, classReference, decorators }: Method.Args) {
+    constructor({
+        name,
+        parameters,
+        return_,
+        body,
+        docstring,
+        type = MethodType.STATIC,
+        classReference,
+        decorators
+    }: Method.Args) {
         super();
         this.name = name;
-        this.arguments_ = arguments_;
+        this.parameters = parameters;
         this.return = return_;
         this.body = body;
         this.docstring = docstring;
-        this.type = type ?? MethodType.STATIC;
+        this.type = type;
         this.reference = classReference;
         this.decorators = decorators ?? [];
     }
@@ -69,19 +79,19 @@ export class Method extends AstNode {
         writer.write(`def ${this.name}(`);
         if (this.type === MethodType.INSTANCE) {
             writer.write("self");
-            if (this.arguments_.length > 0) {
+            if (this.parameters.length > 0) {
                 writer.write(", ");
             }
         }
         if (this.type === MethodType.CLASS) {
             writer.write("cls");
-            if (this.arguments_.length > 0) {
+            if (this.parameters.length > 0) {
                 writer.write(", ");
             }
         }
-        this.arguments_.forEach((arg, index) => {
-            arg.write(writer);
-            if (index < this.arguments_.length - 1) {
+        this.parameters.forEach((param, index) => {
+            param.write(writer);
+            if (index < this.parameters.length - 1) {
                 writer.write(", ");
             }
         });

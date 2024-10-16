@@ -21,7 +21,7 @@ describe("Field", () => {
         const field = python.field({
             name: "my_int",
             type: python.Type.int(),
-            initializer: "42"
+            initializer: python.codeBlock("42")
         });
         field.write(writer);
         expect(writer.toString()).toMatchSnapshot();
@@ -30,7 +30,7 @@ describe("Field", () => {
     it("writes a field with a name and value but no type", () => {
         const field = python.field({
             name: "my_field",
-            initializer: "'default_value'"
+            initializer: python.codeBlock("'default_value'")
         });
         field.write(writer);
         expect(writer.toString()).toMatchSnapshot();
@@ -40,7 +40,7 @@ describe("Field", () => {
         const field = python.field({
             name: "my_list",
             type: python.Type.list(python.Type.int()),
-            initializer: "[]"
+            initializer: python.codeBlock("[]")
         });
         field.write(writer);
         expect(writer.toString()).toMatchSnapshot();

@@ -6,3 +6,4 @@ export { ClassReference } from "./ClassReference";
 export { CodeBlock } from "./CodeBlock";
 export { AstNode } from "./core/AstNode";
 export { Method } from "./Method";
+export { Parameter } from "./Parameter";
