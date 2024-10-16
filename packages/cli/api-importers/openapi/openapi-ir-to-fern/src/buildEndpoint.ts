@@ -13,7 +13,11 @@ import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertFullExample } from "./utils/convertFullExample";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
-import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import {
+    getDocsFromTypeReference,
+    getTypeFromInlineTypeReference,
+    getTypeFromTypeReference
+} from "./utils/getTypeFromTypeReference";
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
 import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
 
@@ -441,16 +445,12 @@ function getRequest({
                     return true;
                 })
                 .map((property) => {
-                    console.log("context.shouldInline()", context.shouldInline());
-
-                    const ab = buildTypeReference({
+                    const propertyTypeReference = buildTypeReference({
                         schema: property.schema,
                         fileContainingReference: declarationFile,
                         context,
                         namespace
                     });
-
-                    console.log("ab", ab);
 
                     // TODO: clean up conditional logic
                     const name = property.nameOverride ?? property.key;
@@ -461,8 +461,8 @@ function getRequest({
                             return [
                                 property.key,
                                 {
-                                    type: typeof ab === "string" ? ab : ab.type,
-                                    docs: getDocsFromTypeReference(ab),
+                                    type: getTypeFromInlineTypeReference(propertyTypeReference),
+                                    docs: getDocsFromTypeReference(propertyTypeReference),
                                     name: property.nameOverride,
                                     availability
                                 }
@@ -470,17 +470,20 @@ function getRequest({
                         }
                         return [
                             property.key,
-                            {
-                                type: typeof ab === "string" ? ab : ab.type,
-                                docs: getDocsFromTypeReference(ab),
-                                availability
-                            }
+                            availability
+                                ? {
+                                      ...(typeof propertyTypeReference === "string"
+                                          ? { type: propertyTypeReference }
+                                          : propertyTypeReference),
+                                      availability
+                                  }
+                                : propertyTypeReference
                         ];
                     }
 
                     const typeReference: RawSchemas.ObjectPropertySchema = {
-                        type: typeof ab === "string" ? ab : ab.type,
-                        docs: getDocsFromTypeReference(ab)
+                        type: getTypeFromInlineTypeReference(propertyTypeReference),
+                        docs: getDocsFromTypeReference(propertyTypeReference)
                     };
 
                     if (usedNames.has(name)) {
@@ -499,7 +502,6 @@ function getRequest({
                     return [property.key, typeReference];
                 })
         );
-        console.log("properties", properties);
         const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {
             const allOfTypeReference = buildNonInlineableTypeReference({
                 schema: Schema.reference(referencedSchema),

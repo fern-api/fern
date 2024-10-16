@@ -72,7 +72,6 @@ export class OpenApiIrConverterContext {
         this.globalHeaderOverrides = globalHeaderOverrides;
         this.shouldInlineTypes = shouldInlineTypes;
         this.inliningDisabled = false;
-        this.logger.error("shouldInlineTypes", `${shouldInlineTypes}`);
 
         const schemaByStatusCode: Record<number, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {

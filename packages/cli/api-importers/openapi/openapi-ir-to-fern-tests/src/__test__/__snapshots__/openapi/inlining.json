@@ -23,7 +23,19 @@
               "request": {
                 "body": {
                   "properties": {
-                    "name": "optional<unknown>",
+                    "name": {
+                      "type": {
+                        "docs": undefined,
+                        "properties": {
+                          "first": "optional<string>",
+                          "last": "optional<string>",
+                          "middle": "optional<string>",
+                        },
+                        "source": {
+                          "openapi": "../openapi.yml",
+                        },
+                      },
+                    },
                   },
                 },
                 "content-type": "application/json",
@@ -73,7 +85,14 @@
         name: PostPersonsRequest
         body:
           properties:
-            name: optional<unknown>
+            name:
+              type:
+                properties:
+                  first: optional<string>
+                  last: optional<string>
+                  middle: optional<string>
+                source:
+                  openapi: ../openapi.yml
         content-type: application/json
       examples:
         - request: {}
