@@ -3,23 +3,29 @@ import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, GeneratorsConfigurationSchema, upd
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 import { getGeneratorNameOrThrow } from "./getGeneratorName";
 import { getLatestGeneratorVersion } from "./getGeneratorVersions";
+import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
+
+export type GeneratorInvocationOverride = Omit<GeneratorInvocationSchema, "name" | "version">;
 
 export async function addGenerator({
     generatorName,
     generatorsConfiguration,
     groupName = generatorsConfiguration[DEFAULT_GROUP_GENERATORS_CONFIG_KEY],
     context,
-    cliVersion
+    cliVersion,
+    invocationOverride
 }: {
     generatorName: string;
     generatorsConfiguration: GeneratorsConfigurationSchema;
     groupName: string | undefined;
     context: TaskContext;
     cliVersion: string;
+    invocationOverride?: GeneratorInvocationOverride;
 }): Promise<GeneratorsConfigurationSchema> {
     const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
 
-    const invocation = GENERATOR_INVOCATIONS[normalizedGeneratorName];
+    const invocation = invocationOverride ?? GENERATOR_INVOCATIONS[normalizedGeneratorName];
+    const versionFallback = GENERATOR_INVOCATIONS[normalizedGeneratorName]?.version;
 
     return await updateGeneratorGroup({
         generatorsConfiguration,
@@ -39,7 +45,7 @@ export async function addGenerator({
                         generatorName: normalizedGeneratorName,
                         context,
                         channel: undefined
-                    })) ?? invocation.version
+                    })) ?? versionFallback
             });
         }
     });

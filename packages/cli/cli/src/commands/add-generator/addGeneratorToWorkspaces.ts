@@ -1,4 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { GeneratorInvocationOverride } from "@fern-api/configuration/src/generators-yml/addGenerator";
 import { Project } from "@fern-api/project-loader";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
@@ -9,12 +10,14 @@ export async function addGeneratorToWorkspaces({
     project: { apiWorkspaces },
     generatorName,
     groupName,
-    cliContext
+    cliContext,
+    invocation
 }: {
     project: Project;
     generatorName: string;
     groupName: string | undefined;
     cliContext: CliContext;
+    invocation?: GeneratorInvocationOverride;
 }): Promise<void> {
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
@@ -30,7 +33,8 @@ export async function addGeneratorToWorkspaces({
                     generatorsConfiguration,
                     groupName,
                     context,
-                    cliVersion: cliContext.environment.packageVersion
+                    cliVersion: cliContext.environment.packageVersion,
+                    invocationOverride: invocation
                 });
 
                 await writeFile(

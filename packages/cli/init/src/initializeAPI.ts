@@ -17,12 +17,14 @@ export async function initializeAPI({
     organization,
     versionOfCli,
     openApiPath,
-    context
+    context,
+    writeDefaultGeneratorsConfiguration = true
 }: {
     organization: string | undefined;
     versionOfCli: string;
     openApiPath: AbsoluteFilePath | undefined;
     context: TaskContext;
+    writeDefaultGeneratorsConfiguration?: boolean;
 }): Promise<void> {
     const { absolutePathToFernDirectory } = await createFernDirectoryAndWorkspace({
         organization,
@@ -39,10 +41,16 @@ export async function initializeAPI({
             directoryOfWorkspace,
             openAPIFilePath: openApiPath,
             cliVersion: versionOfCli,
-            context
+            context,
+            writeDefaultGeneratorsConfiguration
         });
     } else {
-        await createFernWorkspace({ directoryOfWorkspace, cliVersion: versionOfCli, context });
+        await createFernWorkspace({
+            directoryOfWorkspace,
+            cliVersion: versionOfCli,
+            context,
+            writeDefaultGeneratorsConfiguration
+        });
     }
     context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
 }

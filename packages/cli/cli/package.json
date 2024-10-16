@@ -73,6 +73,8 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
+    "@inquirer/prompts": "^7.0.0",
+    "@octokit/types": "^13.4.1",
     "@types/axios": "^0.14.0",
     "@types/boxen": "^3.0.1",
     "@types/get-port": "^4.2.0",
@@ -94,10 +96,14 @@
     "eslint": "^8.56.0",
     "get-port": "^7.1.0",
     "immer": "^9.0.15",
+    "inquirer-file-selector": "^0.4.0",
+    "inquirer-select-pro": "1.0.0-alpha.7",
     "is-ci": "^3.0.1",
     "js-yaml": "^4.1.0",
     "latest-version": "^9.0.0",
     "lodash-es": "^4.17.21",
+    "octokit": "^4.0.2",
+    "openai": "^4.67.3",
     "ora": "^7.0.1",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
@@ -108,10 +114,8 @@
     "validate-npm-package-name": "^5.0.1",
     "vitest": "^2.0.5",
     "yaml": "^2.4.5",
-    "yargs": "^17.4.1"
-  },
-  "dependencies": {
-    "openai": "^4.67.3",
-    "zod": "^3.22.3"
+    "yargs": "^17.4.1",
+    "zod": "^3.22.3",
+    "simple-git": "^3.27.0"
   }
 }

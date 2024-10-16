@@ -18,19 +18,23 @@ import { SAMPLE_IMDB_API } from "./sampleImdbApi";
 export async function createFernWorkspace({
     directoryOfWorkspace,
     cliVersion,
-    context
+    context,
+    writeDefaultGeneratorsConfiguration
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
     cliVersion: string;
     context: TaskContext;
+    writeDefaultGeneratorsConfiguration: boolean;
 }): Promise<void> {
     if (!(await doesPathExist(directoryOfWorkspace))) {
         await mkdir(directoryOfWorkspace);
     }
+
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
         cliVersion,
-        context
+        context,
+        writeDefaultGeneratorsConfiguration
     });
     const directoryOfDefinition = join(directoryOfWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
     await writeSampleApiDefinition({
@@ -42,12 +46,14 @@ export async function createOpenAPIWorkspace({
     directoryOfWorkspace,
     openAPIFilePath,
     cliVersion,
-    context
+    context,
+    writeDefaultGeneratorsConfiguration
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
     openAPIFilePath: AbsoluteFilePath;
     cliVersion: string;
     context: TaskContext;
+    writeDefaultGeneratorsConfiguration: boolean;
 }): Promise<void> {
     if (!(await doesPathExist(directoryOfWorkspace))) {
         await mkdir(directoryOfWorkspace);
@@ -59,7 +65,8 @@ export async function createOpenAPIWorkspace({
         context,
         apiConfiguration: {
             path: join(RelativeFilePath.of(OPENAPI_DIRECTORY), RelativeFilePath.of(openAPIfilename))
-        }
+        },
+        writeDefaultGeneratorsConfiguration
     });
     const openapiDirectory = join(directoryOfWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     await mkdir(openapiDirectory);
@@ -70,11 +77,13 @@ export async function createOpenAPIWorkspace({
 async function getDefaultGeneratorsConfiguration({
     cliVersion,
     context,
-    apiConfiguration
+    apiConfiguration,
+    writeDefaultGeneratorsConfiguration
 }: {
     cliVersion: string;
     context: TaskContext;
     apiConfiguration?: generatorsYml.APIConfigurationSchema;
+    writeDefaultGeneratorsConfiguration: boolean;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     const defaultGeneratorName = "fernapi/fern-typescript-node-sdk";
     const fallbackInvocation = generatorsYml.GENERATOR_INVOCATIONS[defaultGeneratorName];
@@ -98,13 +107,15 @@ async function getDefaultGeneratorsConfiguration({
         "default-group": DEFAULT_GROUP_NAME,
         groups: {
             [DEFAULT_GROUP_NAME]: {
-                generators: [
-                    {
-                        name: defaultGeneratorName,
-                        ...fallbackInvocation,
-                        version
-                    }
-                ]
+                generators: writeDefaultGeneratorsConfiguration
+                    ? [
+                          {
+                              name: defaultGeneratorName,
+                              ...fallbackInvocation,
+                              version
+                          }
+                      ]
+                    : []
             }
         }
     };
@@ -118,16 +129,25 @@ async function writeGeneratorsConfiguration({
     filepath,
     cliVersion,
     context,
-    apiConfiguration
+    apiConfiguration,
+    writeDefaultGeneratorsConfiguration
 }: {
     filepath: AbsoluteFilePath;
     cliVersion: string;
     context: TaskContext;
     apiConfiguration?: generatorsYml.APIConfigurationSchema;
+    writeDefaultGeneratorsConfiguration: boolean;
 }): Promise<void> {
     await writeFile(
         filepath,
-        yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }))
+        yaml.dump(
+            await getDefaultGeneratorsConfiguration({
+                cliVersion,
+                context,
+                apiConfiguration,
+                writeDefaultGeneratorsConfiguration
+            })
+        )
     );
 }
 
