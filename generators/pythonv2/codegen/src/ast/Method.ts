@@ -64,6 +64,10 @@ export class Method extends AstNode {
         this.decorators = decorators ?? [];
     }
 
+    public getName(): string {
+        return this.name;
+    }
+
     public write(writer: Writer): void {
         // Write decorators
         for (const decorator of this.decorators) {
