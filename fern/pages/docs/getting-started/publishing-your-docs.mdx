@@ -1,0 +1,63 @@
+---
+title: Publishing your docs
+---
+
+When you are ready for your docs to be publicly accessible, you can publish them using the Fern CLI. 
+
+## Usage
+
+```bash
+fern generate --docs
+```
+
+### Example
+
+```bash
+fern generate --docs
+[docs]: Found 0 errors and 1 warnings. Run fern check --warnings to print out the warnings.
+[docs]: ✓ All checks passed
+[docs]: Published docs to https://plantstore.docs.buildwithfern.com
+┌─
+│ ✓  https://plantstore.docs.buildwithfern.com
+└─
+```
+
+### Usage in GitHub Actions
+To automate the publishing process, you can use a GitHub Action workflow to publish your docs when a push is made to the `main` branch. [Be sure to add the `FERN_TOKEN` for your organization to the repository](/learn/cli-api/cli-reference/commands#fern-token). 
+
+```yaml .github/workflows/publish-docs.yml
+name: Publish Docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && contains(github.ref, 'refs/heads/main') && github.run_number > 1 }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Publish Docs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: fern generate --docs
+```
+
+## Hosting 
+
+When you publish your docs, Fern takes care of hosting them for you. To publish your docs to a custom domain, check out our docs [here](/learn/docs/building-your-docs/custom-domain). 
+
+### Self-hosting your docs
+
+<Tip>
+This feature is available on the Enterprise plan. [Contact us](https://buildwithfern.com/contact) to learn more.
+</Tip>
+
+If you need access to your docs offline or would like to host your docs on your own server, Fern offers that option as well. Self-hosted docs have limited access to certain features (including search). 
