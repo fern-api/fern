@@ -59,6 +59,7 @@
                 },
                 "typeId": "type_:NotFound"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -150,6 +151,7 @@
                 },
                 "typeId": "type_:GetExampleResponse"
             },
+            "inline": false,
             "shape": {
                 "_type": "undiscriminatedUnion",
                 "members": [
@@ -298,6 +300,7 @@
                 },
                 "typeId": "type_:Schema1"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -432,6 +435,7 @@
                 },
                 "typeId": "type_:Schema2"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -646,192 +650,7 @@
                         "status-code": null
                     },
                     "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "31a7f125b757ecb88c3de1e90f768cd1d886a61a082744712200711bff86f040",
-                                "name": null,
-                                "url": "/example",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:GetExampleResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": {
-                                                        "originalName": "GetExampleResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "getExampleResponse",
-                                                            "safeName": "getExampleResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "get_example_response",
-                                                            "safeName": "get_example_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "GET_EXAMPLE_RESPONSE",
-                                                            "safeName": "GET_EXAMPLE_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "GetExampleResponse",
-                                                            "safeName": "GetExampleResponse"
-                                                        }
-                                                    }
-                                                },
-                                                "shape": {
-                                                    "type": "undiscriminatedUnion",
-                                                    "index": 0,
-                                                    "singleUnionType": {
-                                                        "shape": {
-                                                            "type": "named",
-                                                            "typeName": {
-                                                                "typeId": "type_:NotFound",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "NotFound",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "notFound",
-                                                                        "safeName": "notFound"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "not_found",
-                                                                        "safeName": "not_found"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NOT_FOUND",
-                                                                        "safeName": "NOT_FOUND"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NotFound",
-                                                                        "safeName": "NotFound"
-                                                                    }
-                                                                }
-                                                            },
-                                                            "shape": {
-                                                                "type": "object",
-                                                                "properties": [
-                                                                    {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "message",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "message",
-                                                                                    "safeName": "message"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "message",
-                                                                                    "safeName": "message"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "MESSAGE",
-                                                                                    "safeName": "MESSAGE"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Message",
-                                                                                    "safeName": "Message"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "message"
-                                                                        },
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "optional",
-                                                                                    "optional": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "message"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "message"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "message"
-                                                                        },
-                                                                        "originalTypeDeclaration": {
-                                                                            "typeId": "type_:NotFound",
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
-                                                                            },
-                                                                            "name": {
-                                                                                "originalName": "NotFound",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "notFound",
-                                                                                    "safeName": "notFound"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "not_found",
-                                                                                    "safeName": "not_found"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "NOT_FOUND",
-                                                                                    "safeName": "NOT_FOUND"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "NotFound",
-                                                                                    "safeName": "NotFound"
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        },
-                                                        "jsonExample": {
-                                                            "message": "message"
-                                                        }
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "message": "message"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {

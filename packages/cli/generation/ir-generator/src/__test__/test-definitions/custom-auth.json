@@ -137,6 +137,7 @@
                 },
                 "typeId": "type_errors:UnauthorizedRequestErrorBody"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

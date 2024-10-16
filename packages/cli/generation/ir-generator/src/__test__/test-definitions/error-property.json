@@ -97,6 +97,7 @@
                 },
                 "typeId": "type_errors:PropertyBasedErrorTestBody"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

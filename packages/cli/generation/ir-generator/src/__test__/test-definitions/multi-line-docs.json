@@ -59,6 +59,7 @@
                 },
                 "typeId": "type_:Operand"
             },
+            "inline": false,
             "shape": {
                 "_type": "enum",
                 "default": null,
@@ -318,6 +319,7 @@
                 },
                 "typeId": "type_user:User"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

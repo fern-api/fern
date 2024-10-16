@@ -36,7 +36,7 @@ import { getInlineableTypeReference } from "@fern-api/fern-definition-schema/src
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
-    schema: RawSchemas.InlineableTypeReferenceSchema;
+    schema: RawSchemas.TypeDeclarationSchema;
 }
 
 export function buildTypeDeclaration({
@@ -234,11 +234,8 @@ export function buildObjectTypeDeclaration({
     }
 
     return {
-        name: undefined,
-        schema: {
-            name: schema.nameOverride ?? schema.generatedName,
-            type: objectTypeDeclaration
-        }
+        name: schema.nameOverride ?? schema.generatedName,
+        schema: objectTypeDeclaration
     };
 }
 
@@ -438,9 +435,7 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
     }
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        schema: {
-            type: uniqueEnumSchema
-        }
+        schema: uniqueEnumSchema
     };
 }
 
@@ -542,15 +537,13 @@ export function buildOneOfTypeDeclaration({
         return {
             name: schema.nameOverride ?? schema.generatedName,
             schema: {
-                type: {
-                    discriminant: schema.discriminantProperty,
-                    "base-properties": baseProperties,
-                    docs: schema.description ?? undefined,
-                    availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
-                    union,
-                    encoding,
-                    source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
-                }
+                discriminant: schema.discriminantProperty,
+                "base-properties": baseProperties,
+                docs: schema.description ?? undefined,
+                availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
+                union,
+                encoding,
+                source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
             }
         };
     }
@@ -569,13 +562,11 @@ export function buildOneOfTypeDeclaration({
     return {
         name: schema.nameOverride ?? schema.generatedName,
         schema: {
-            type: {
-                discriminated: false,
-                docs: schema.description ?? undefined,
-                union,
-                encoding,
-                source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
-            }
+            discriminated: false,
+            docs: schema.description ?? undefined,
+            union,
+            encoding,
+            source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
         }
     };
 }
@@ -631,7 +622,7 @@ function convertPropertyTypeReferenceToTypeDefinition(
 
     if (inlineableTypeReference) {
         return {
-            ...{ type: inlineableTypeReference },
+            ...inlineableTypeReference,
             ...(audiences.length > 0 ? { audiences } : {}),
             ...(name != null ? { name } : {}),
             ...(availability != null ? { availability } : {})

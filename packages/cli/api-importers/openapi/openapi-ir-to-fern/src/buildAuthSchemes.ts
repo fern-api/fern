@@ -152,14 +152,10 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
             if (securityScheme.scopesEnum != null && securityScheme.scopesEnum.values.length > 0) {
                 const enumTypeDeclaration = buildEnumTypeDeclaration(securityScheme.scopesEnum).schema;
 
-                const value = getInlineableTypeReference(enumTypeDeclaration);
-
-                if (value != null && typeof value !== "string") {
-                    context.builder.addType(RelativeFilePath.of("__package__.yml"), {
-                        name: "OauthScope",
-                        schema: value.type
-                    });
-                }
+                context.builder.addType(RelativeFilePath.of("__package__.yml"), {
+                    name: "OauthScope",
+                    schema: enumTypeDeclaration
+                });
             }
         }
     }

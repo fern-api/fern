@@ -137,6 +137,7 @@
                 },
                 "typeId": "type_a/aa:A"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -262,6 +263,7 @@
                 },
                 "typeId": "type_a/aa:B"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -387,6 +389,7 @@
                 },
                 "typeId": "type_a/aa:SubTestType"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -746,6 +749,7 @@
                 },
                 "typeId": "type_b:TestType"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -1103,6 +1107,7 @@
                 },
                 "typeId": "type_tasktest:Task"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

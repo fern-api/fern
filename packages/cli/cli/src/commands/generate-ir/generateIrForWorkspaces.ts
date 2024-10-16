@@ -43,7 +43,7 @@ export async function generateIrForWorkspaces({
                     generationLanguage,
                     keywords,
                     smartCasing,
-                    disableExamples: false,
+                    disableExamples: true,
                     audiences,
                     version,
                     readme

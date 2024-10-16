@@ -97,6 +97,7 @@
                 },
                 "typeId": "type_completions:StreamedCompletion"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

@@ -97,6 +97,7 @@
                 },
                 "typeId": "type_unknown:MyAlias"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -184,6 +185,7 @@
                 },
                 "typeId": "type_unknown:MyObject"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

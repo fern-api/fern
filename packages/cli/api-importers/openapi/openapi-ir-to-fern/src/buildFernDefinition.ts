@@ -42,14 +42,10 @@ function addSchemas({
         const declarationFile = getDeclarationFileForSchema(schema);
         const typeDeclaration = buildTypeDeclaration({ schema, context, declarationFile, namespace, inline: true });
 
-        const value = getInlineableTypeReference(typeDeclaration.schema);
-
-        if (value != null && typeof value !== "string") {
-            context.builder.addType(declarationFile, {
-                name: value.name ?? id,
-                schema: value.type
-            });
-        }
+        context.builder.addType(declarationFile, {
+            name: typeDeclaration.name ?? id,
+            schema: typeDeclaration.schema
+        });
     }
 }
 

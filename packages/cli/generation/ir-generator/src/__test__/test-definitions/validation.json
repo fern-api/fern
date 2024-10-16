@@ -59,6 +59,7 @@
                 },
                 "typeId": "type_:SmallInteger"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -130,6 +131,7 @@
                 },
                 "typeId": "type_:LargeInteger"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -201,6 +203,7 @@
                 },
                 "typeId": "type_:Double"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -272,6 +275,7 @@
                 },
                 "typeId": "type_:Word"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -342,6 +346,7 @@
                 },
                 "typeId": "type_:Sentence"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -412,6 +417,7 @@
                 },
                 "typeId": "type_:Shape"
             },
+            "inline": false,
             "shape": {
                 "_type": "enum",
                 "default": {
@@ -561,6 +567,7 @@
                 },
                 "typeId": "type_:Type"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

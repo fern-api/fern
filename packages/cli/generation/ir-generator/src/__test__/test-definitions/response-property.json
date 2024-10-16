@@ -59,6 +59,7 @@
                 },
                 "typeId": "type_:StringResponse"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -144,6 +145,7 @@
                 },
                 "typeId": "type_:OptionalStringResponse"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -261,6 +263,7 @@
                 },
                 "typeId": "type_:WithMetadata"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -401,6 +404,7 @@
                 },
                 "typeId": "type_service:WithDocs"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -524,6 +528,7 @@
                 },
                 "typeId": "type_service:OptionalWithDocs"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -755,6 +760,7 @@
                 },
                 "typeId": "type_service:Movie"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -915,6 +921,7 @@
                 },
                 "typeId": "type_service:Response"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [

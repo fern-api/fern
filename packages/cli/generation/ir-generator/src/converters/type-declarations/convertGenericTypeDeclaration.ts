@@ -36,14 +36,18 @@ export async function convertGenericTypeDeclaration({
             }
             return [key, maybeReplacedValue];
         });
+
+        const { response } = await getObjectPropertiesFromRawObjectSchema(
+            { properties: Object.fromEntries(newProperties) },
+            file,
+            typeResolver
+        );
+
         return Type.object({
             extends: getExtensionsAsList(resolvedBaseGeneric.declaration.extends).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
-            properties: await getObjectPropertiesFromRawObjectSchema(
-                { properties: Object.fromEntries(newProperties) },
-                file
-            ),
+            properties: response,
             extraProperties: resolvedBaseGeneric.declaration["extra-properties"] ?? false,
             extendedProperties: undefined
         });
