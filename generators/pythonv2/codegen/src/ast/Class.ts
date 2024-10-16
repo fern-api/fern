@@ -8,28 +8,28 @@ export declare namespace Class {
         /* The name of the Python class */
         name: string;
         /* The parent classes that this class inherits from */
-        parentClassReferences?: ClassReference[];
+        extends_?: ClassReference[];
     }
 }
 
 export class Class extends AstNode {
     public readonly name: string;
-    public readonly parentClassReferences: ClassReference[];
+    public readonly extends_: ClassReference[];
 
     private fields: Field[] = [];
 
-    constructor({ name, parentClassReferences }: Class.Args) {
+    constructor({ name, extends_ }: Class.Args) {
         super();
         this.name = name;
-        this.parentClassReferences = parentClassReferences ?? [];
+        this.extends_ = extends_ ?? [];
     }
 
     public write(writer: Writer): void {
         writer.write(`class ${this.name}`);
 
-        if (this.parentClassReferences.length > 0) {
+        if (this.extends_.length > 0) {
             writer.write("(");
-            this.parentClassReferences.forEach((parentClassReference, index) => {
+            this.extends_.forEach((parentClassReference, index) => {
                 if (index > 0) {
                     writer.write(", ");
                 }

@@ -28,8 +28,6 @@ export declare namespace Method {
         type?: MethodType;
         /* The class this method belongs to, if any */
         classReference?: ClassReference;
-        /* Any decorators to add to the method */
-        decorators?: string[];
     }
 }
 
@@ -41,18 +39,8 @@ export class Method extends AstNode {
     public readonly type: MethodType;
     public readonly reference: ClassReference | undefined;
     private readonly parameters: Parameter[];
-    private readonly decorators: string[];
 
-    constructor({
-        name,
-        parameters,
-        return_,
-        body,
-        docstring,
-        type = MethodType.STATIC,
-        classReference,
-        decorators
-    }: Method.Args) {
+    constructor({ name, parameters, return_, body, docstring, type = MethodType.STATIC, classReference }: Method.Args) {
         super();
         this.name = name;
         this.parameters = parameters;
@@ -61,7 +49,6 @@ export class Method extends AstNode {
         this.docstring = docstring;
         this.type = type;
         this.reference = classReference;
-        this.decorators = decorators ?? [];
     }
 
     public getName(): string {
@@ -70,10 +57,6 @@ export class Method extends AstNode {
 
     public write(writer: Writer): void {
         // Write decorators
-        for (const decorator of this.decorators) {
-            writer.write(`@${decorator}`);
-            writer.newLine();
-        }
         if (this.type === MethodType.CLASS) {
             writer.write("@classmethod");
             writer.newLine();

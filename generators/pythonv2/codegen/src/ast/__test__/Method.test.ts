@@ -101,23 +101,5 @@ describe("Method", () => {
             });
             expect(method.toString()).toMatchSnapshot();
         });
-
-        it("should generate a method with a single decorator", () => {
-            const method = python.method({
-                name: "single_decorator",
-                parameters: [],
-                decorators: ["decorator1"]
-            });
-            expect(method.toString()).toMatchSnapshot();
-        });
-
-        it("should generate a method with multiple decorators", () => {
-            const method = python.method({
-                name: "multiple_decorators",
-                parameters: [],
-                decorators: ["decorator1", "decorator2"]
-            });
-            expect(method.toString()).toMatchSnapshot();
-        });
     });
 });
