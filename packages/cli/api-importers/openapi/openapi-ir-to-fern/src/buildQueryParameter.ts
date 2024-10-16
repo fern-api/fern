@@ -3,7 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { QueryParameter, Schema } from "@fern-api/openapi-ir";
 import { generateEnumNameFromValue, VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir-parser";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { buildTypeReference } from "./buildTypeReference";
+import { buildNonInlineableTypeReference, buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
@@ -94,7 +94,7 @@ function getQueryParameterTypeReference({
             return undefined;
         } else if (resolvedSchema.type === "array") {
             return {
-                value: buildTypeReference({
+                value: buildNonInlineableTypeReference({
                     schema: Schema.optional({
                         nameOverride: schema.nameOverride,
                         generatedName: schema.generatedName,
@@ -146,7 +146,7 @@ function getQueryParameterTypeReference({
                     hasSamePrimitiveValueType({ array: firstSchema, primitive: secondSchema })
                 ) {
                     return {
-                        value: buildTypeReference({
+                        value: buildNonInlineableTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
@@ -169,7 +169,7 @@ function getQueryParameterTypeReference({
                     hasSamePrimitiveValueType({ array: firstSchema, primitive: secondSchema })
                 ) {
                     return {
-                        value: buildTypeReference({
+                        value: buildNonInlineableTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
@@ -209,7 +209,7 @@ function getQueryParameterTypeReference({
                 return undefined;
             } else if (resolvedSchema.type === "array") {
                 return {
-                    value: buildTypeReference({
+                    value: buildNonInlineableTypeReference({
                         schema: Schema.optional({
                             nameOverride: schema.nameOverride,
                             generatedName: schema.generatedName,
@@ -230,7 +230,7 @@ function getQueryParameterTypeReference({
         }
         if (schema.value.type === "array") {
             return {
-                value: buildTypeReference({
+                value: buildNonInlineableTypeReference({
                     schema: Schema.optional({
                         nameOverride: schema.nameOverride,
                         generatedName: schema.generatedName,
@@ -281,7 +281,7 @@ function getQueryParameterTypeReference({
                     hasSamePrimitiveValueType({ array: firstSchema, primitive: secondSchema })
                 ) {
                     return {
-                        value: buildTypeReference({
+                        value: buildNonInlineableTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
@@ -304,7 +304,7 @@ function getQueryParameterTypeReference({
                     hasSamePrimitiveValueType({ array: secondSchema, primitive: firstSchema })
                 ) {
                     return {
-                        value: buildTypeReference({
+                        value: buildNonInlineableTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
@@ -344,7 +344,7 @@ function getQueryParameterTypeReference({
             return undefined;
         }
         return {
-            value: buildTypeReference({
+            value: buildNonInlineableTypeReference({
                 schema,
                 context,
                 fileContainingReference,
@@ -356,7 +356,7 @@ function getQueryParameterTypeReference({
 
     if (schema.type === "array") {
         return {
-            value: buildTypeReference({
+            value: buildNonInlineableTypeReference({
                 schema: Schema.optional({
                     nameOverride: schema.nameOverride,
                     generatedName: schema.generatedName,
@@ -374,7 +374,7 @@ function getQueryParameterTypeReference({
         };
     } else {
         return {
-            value: buildTypeReference({
+            value: buildNonInlineableTypeReference({
                 schema,
                 context,
                 fileContainingReference,

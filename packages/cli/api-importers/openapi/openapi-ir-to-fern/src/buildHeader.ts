@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Header } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase } from "lodash-es";
-import { buildTypeReference } from "./buildTypeReference";
+import { buildNonInlineableTypeReference, buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
@@ -18,7 +18,7 @@ export function buildHeader({
     fileContainingReference: RelativeFilePath;
     namespace: string | undefined;
 }): RawSchemas.HttpHeaderSchema {
-    const typeReference = buildTypeReference({
+    const typeReference = buildNonInlineableTypeReference({
         schema: header.schema,
         context,
         fileContainingReference,

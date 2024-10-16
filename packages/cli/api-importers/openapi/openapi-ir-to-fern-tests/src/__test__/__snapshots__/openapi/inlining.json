@@ -1,0 +1,114 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "postPersons": {
+              "auth": false,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/persons",
+              "request": {
+                "body": {
+                  "properties": {
+                    "name": "optional<unknown>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "PostPersonsRequest",
+                "query-parameters": undefined,
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "Person": {
+            "docs": undefined,
+            "properties": {
+              "name": {
+                "type": {
+                  "docs": undefined,
+                  "properties": {
+                    "first": "optional<string>",
+                    "last": "optional<string>",
+                    "middle": "optional<string>",
+                  },
+                  "source": {
+                    "openapi": "../openapi.yml",
+                  },
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    postPersons:
+      path: /persons
+      method: POST
+      auth: false
+      request:
+        name: PostPersonsRequest
+        body:
+          properties:
+            name: optional<unknown>
+        content-type: application/json
+      examples:
+        - request: {}
+  source:
+    openapi: ../openapi.yml
+types:
+  Person:
+    properties:
+      name:
+        type:
+          properties:
+            first: optional<string>
+            last: optional<string>
+            middle: optional<string>
+          source:
+            openapi: ../openapi.yml
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test inlining types",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test inlining types
+",
+  },
+}

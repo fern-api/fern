@@ -92,6 +92,9 @@ importers:
       execa:
         specifier: ^5.1.1
         version: 5.1.1
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
       husky:
         specifier: ^9.1.5
         version: 9.1.5
@@ -101,6 +104,9 @@ importers:
       is-ci:
         specifier: ^3.0.1
         version: 3.0.1
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       jsonc-parser:
         specifier: ~3.3.0
         version: 3.3.0

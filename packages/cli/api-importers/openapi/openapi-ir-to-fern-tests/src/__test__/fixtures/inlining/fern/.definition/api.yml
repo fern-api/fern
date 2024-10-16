@@ -1,0 +1,4 @@
+display-name: Test inlining types
+error-discrimination:
+  strategy: status-code
+name: api

@@ -1,0 +1,32 @@
+types:
+  Person:
+    properties:
+      name:
+        type:
+          properties:
+            first: optional<string>
+            last: optional<string>
+            middle: optional<string>
+          source:
+            openapi: ../openapi.yml
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    postPersons:
+      auth: false
+      examples:
+        - request: {}
+      method: POST
+      path: /persons
+      request:
+        body:
+          properties:
+            name:
+              type: optional<unknown>
+        content-type: application/json
+        name: PostPersonsRequest
+  source:
+    openapi: ../openapi.yml

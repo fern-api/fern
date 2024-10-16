@@ -356,7 +356,11 @@ function convertExampleRequestBody({
             typeof inlinedRequestPropertyDeclaration === "string"
                 ? inlinedRequestPropertyDeclaration
                 : inlinedRequestPropertyDeclaration?.type;
-        if (inlinedRequestPropertyType != null && parseRawFileType(inlinedRequestPropertyType) != null) {
+        if (
+            inlinedRequestPropertyType != null &&
+            typeof inlinedRequestPropertyType === "string" &&
+            parseRawFileType(inlinedRequestPropertyType) != null
+        ) {
             // HACK skip file properties
             continue;
         }

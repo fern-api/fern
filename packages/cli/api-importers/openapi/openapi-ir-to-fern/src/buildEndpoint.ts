@@ -8,7 +8,7 @@ import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefin
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
-import { buildTypeReference } from "./buildTypeReference";
+import { buildNonInlineableTypeReference, buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertFullExample } from "./utils/convertFullExample";
@@ -161,7 +161,7 @@ export function buildEndpoint({
     if (endpoint.response != null) {
         endpoint.response._visit({
             json: (jsonResponse) => {
-                const responseTypeReference = buildTypeReference({
+                const responseTypeReference = buildNonInlineableTypeReference({
                     schema: jsonResponse.schema,
                     context,
                     fileContainingReference: declarationFile,
@@ -176,7 +176,7 @@ export function buildEndpoint({
                 }
             },
             streamingJson: (jsonResponse) => {
-                const responseTypeReference = buildTypeReference({
+                const responseTypeReference = buildNonInlineableTypeReference({
                     schema: jsonResponse.schema,
                     context,
                     fileContainingReference: declarationFile,
@@ -189,7 +189,7 @@ export function buildEndpoint({
                 };
             },
             streamingSse: (jsonResponse) => {
-                const responseTypeReference = buildTypeReference({
+                const responseTypeReference = buildNonInlineableTypeReference({
                     schema: jsonResponse.schema,
                     context,
                     fileContainingReference: declarationFile,
@@ -270,7 +270,7 @@ export function buildEndpoint({
         });
 
         if (httpError.schema != null) {
-            const typeReference = buildTypeReference({
+            const typeReference = buildNonInlineableTypeReference({
                 schema: httpError.schema,
                 context,
                 fileContainingReference: errorDeclarationFile,
@@ -392,7 +392,7 @@ function getRequest({
             resolvedSchema?.type !== "object" ||
             (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
         ) {
-            const requestTypeReference = buildTypeReference({
+            const requestTypeReference = buildNonInlineableTypeReference({
                 schema: request.schema,
                 fileContainingReference: declarationFile,
                 context,
@@ -441,12 +441,16 @@ function getRequest({
                     return true;
                 })
                 .map((property) => {
-                    const propertyTypeReference = buildTypeReference({
+                    console.log("context.shouldInline()", context.shouldInline());
+
+                    const ab = buildTypeReference({
                         schema: property.schema,
                         fileContainingReference: declarationFile,
                         context,
                         namespace
                     });
+
+                    console.log("ab", ab);
 
                     // TODO: clean up conditional logic
                     const name = property.nameOverride ?? property.key;
@@ -457,8 +461,8 @@ function getRequest({
                             return [
                                 property.key,
                                 {
-                                    type: getTypeFromTypeReference(propertyTypeReference),
-                                    docs: getDocsFromTypeReference(propertyTypeReference),
+                                    type: typeof ab === "string" ? ab : ab.type,
+                                    docs: getDocsFromTypeReference(ab),
                                     name: property.nameOverride,
                                     availability
                                 }
@@ -466,20 +470,17 @@ function getRequest({
                         }
                         return [
                             property.key,
-                            availability
-                                ? {
-                                      ...(typeof propertyTypeReference === "string"
-                                          ? { type: propertyTypeReference }
-                                          : propertyTypeReference),
-                                      availability
-                                  }
-                                : propertyTypeReference
+                            {
+                                type: typeof ab === "string" ? ab : ab.type,
+                                docs: getDocsFromTypeReference(ab),
+                                availability
+                            }
                         ];
                     }
 
                     const typeReference: RawSchemas.ObjectPropertySchema = {
-                        type: getTypeFromTypeReference(propertyTypeReference),
-                        docs: getDocsFromTypeReference(propertyTypeReference)
+                        type: typeof ab === "string" ? ab : ab.type,
+                        docs: getDocsFromTypeReference(ab)
                     };
 
                     if (usedNames.has(name)) {
@@ -498,8 +499,9 @@ function getRequest({
                     return [property.key, typeReference];
                 })
         );
+        console.log("properties", properties);
         const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {
-            const allOfTypeReference = buildTypeReference({
+            const allOfTypeReference = buildNonInlineableTypeReference({
                 schema: Schema.reference(referencedSchema),
                 fileContainingReference: declarationFile,
                 context,
@@ -563,12 +565,13 @@ function getRequest({
                     }
                     return [property.key, fileType];
                 } else {
-                    let propertyTypeReference: RawSchemas.HttpInlineRequestBodyPropertySchema = buildTypeReference({
-                        schema: property.schema.value,
-                        fileContainingReference: declarationFile,
-                        context,
-                        namespace
-                    });
+                    let propertyTypeReference: RawSchemas.HttpInlineRequestBodyPropertySchema =
+                        buildNonInlineableTypeReference({
+                            schema: property.schema.value,
+                            fileContainingReference: declarationFile,
+                            context,
+                            namespace
+                        });
                     if (property.contentType != null) {
                         if (typeof propertyTypeReference === "string") {
                             propertyTypeReference = {
