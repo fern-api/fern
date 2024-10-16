@@ -43,7 +43,8 @@
     "seed-config:generate": "pnpm --filter @fern-api/seed-cli generate",
     "docs-config:generate": "pnpm --filter @fern-api/configuration generate",
     "fern-definition:generate": "pnpm --filter @fern-api/fern-definition-schema generate",
-    "prepare": "husky"
+    "prepare": "husky",
+    "vitest": "vitest"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
@@ -67,10 +68,11 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-tailwindcss": "^3.15.1",
     "execa": "^5.1.1",
+    "globals": "link:@types/vitest/globals",
     "husky": "^9.1.5",
     "immer": "^9.0.15",
     "is-ci": "^3.0.1",
-    "vitest": "^2.0.5",
+    "jest": "^29.7.0",
     "jsonc-parser": "~3.3.0",
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
@@ -82,7 +84,8 @@
     "stylelint-config-standard-scss": "^5.0.0",
     "tailwindcss": "^3.3.2",
     "ts-node": "^10.9.2",
-    "typescript": "4.6.4"
+    "typescript": "4.6.4",
+    "vitest": "^2.0.5"
   },
   "resolutions": {
     "@babel/traverse": "7.23.2",

@@ -10,6 +10,7 @@ import { ReadmeSchema } from "./schemas/ReadmeSchema";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
+    apiWideSettings: APIWideSettings | undefined;
     defaultGroup: string | undefined;
     reviewers: Reviewers | undefined;
     groups: GeneratorGroup[];
@@ -17,6 +18,10 @@ export interface GeneratorsConfiguration {
 
     rawConfiguration: GeneratorsConfigurationSchema;
     absolutePathToConfiguration: AbsoluteFilePath;
+}
+
+export interface APIWideSettings {
+    shouldInlineTypes: boolean | undefined;
 }
 
 export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition | ConjureAPIDefinition;

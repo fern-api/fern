@@ -8,6 +8,6 @@ export interface HttpInlineRequestBodyProperty
     extends FernDefinition.WithDocsSchema,
         FernDefinition.WithName,
         FernDefinition.WithAudiences,
-        FernDefinition.BaseTypeReferenceSchema {
+        FernDefinition.BaseInlineableTypeReferenceSchema {
     "content-type"?: string;
 }

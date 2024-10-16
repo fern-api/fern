@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { PathParameter } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { buildTypeReference } from "./buildTypeReference";
+import { buildNonInlineableTypeReference, buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
@@ -17,7 +17,7 @@ export function buildPathParameter({
     fileContainingReference: RelativeFilePath;
     namespace: string | undefined;
 }): RawSchemas.HttpPathParameterSchema {
-    const typeReference = buildTypeReference({
+    const typeReference = buildNonInlineableTypeReference({
         schema: pathParameter.schema,
         context,
         fileContainingReference,

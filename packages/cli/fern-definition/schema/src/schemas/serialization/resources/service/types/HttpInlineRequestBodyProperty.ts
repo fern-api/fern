@@ -8,7 +8,6 @@ import * as core from "../../../../core";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithName } from "../../commons/types/WithName";
 import { WithAudiences } from "../../commons/types/WithAudiences";
-import { BaseTypeReferenceSchema } from "../../types/types/BaseTypeReferenceSchema";
 
 export const HttpInlineRequestBodyProperty: core.serialization.ObjectSchema<
     serializers.HttpInlineRequestBodyProperty.Raw,
@@ -20,10 +19,14 @@ export const HttpInlineRequestBodyProperty: core.serialization.ObjectSchema<
     .extend(WithDocsSchema)
     .extend(WithName)
     .extend(WithAudiences)
-    .extend(BaseTypeReferenceSchema);
+    .extend(core.serialization.lazyObject(() => serializers.BaseInlineableTypeReferenceSchema));
 
 export declare namespace HttpInlineRequestBodyProperty {
-    interface Raw extends WithDocsSchema.Raw, WithName.Raw, WithAudiences.Raw, BaseTypeReferenceSchema.Raw {
+    interface Raw
+        extends WithDocsSchema.Raw,
+            WithName.Raw,
+            WithAudiences.Raw,
+            serializers.BaseInlineableTypeReferenceSchema.Raw {
         "content-type"?: string | null;
     }
 }

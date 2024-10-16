@@ -26,6 +26,11 @@ export interface OpenApiIrConverterContextOpts {
     environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
 
     globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
+
+    /**
+     * If true, the converter will inline types.
+     */
+    shouldInlineTypes: boolean;
 }
 
 export class OpenApiIrConverterContext {
@@ -37,6 +42,8 @@ export class OpenApiIrConverterContext {
     public authOverrides: RawSchemas.WithAuthSchema | undefined;
     public globalHeaderOverrides: RawSchemas.WithHeadersSchema | undefined;
     public detectGlobalHeaders: boolean;
+    private shouldInlineTypes: boolean;
+    private inliningDisabled: boolean;
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
     private unknownSchema: Set<number> = new Set();
@@ -48,7 +55,8 @@ export class OpenApiIrConverterContext {
         detectGlobalHeaders,
         environmentOverrides,
         globalHeaderOverrides,
-        authOverrides
+        authOverrides,
+        shouldInlineTypes
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
@@ -62,6 +70,9 @@ export class OpenApiIrConverterContext {
         this.environmentOverrides = environmentOverrides;
         this.authOverrides = authOverrides;
         this.globalHeaderOverrides = globalHeaderOverrides;
+        this.shouldInlineTypes = shouldInlineTypes;
+        this.inliningDisabled = false;
+        this.logger.error("shouldInlineTypes", `${shouldInlineTypes}`);
 
         const schemaByStatusCode: Record<number, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {
@@ -83,6 +94,18 @@ export class OpenApiIrConverterContext {
                 }
             }
         }
+    }
+
+    public disableInlining(): void {
+        this.inliningDisabled = true;
+    }
+
+    public undisableInlining(): void {
+        this.inliningDisabled = false;
+    }
+
+    public shouldInline(): boolean {
+        return !this.inliningDisabled && this.shouldInlineTypes;
     }
 
     public getSchema(id: SchemaId, namespace: string | undefined): Schema | undefined {

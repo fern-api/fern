@@ -4,7 +4,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
-import { buildTypeReference } from "./buildTypeReference";
+import { buildNonInlineableTypeReference, buildTypeReference } from "./buildTypeReference";
 import { buildWebsocketSessionExample } from "./buildWebsocketSessionExample";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
@@ -90,7 +90,7 @@ export function buildChannel({
             messageId: "subscribe",
             message: {
                 origin: "server",
-                body: buildTypeReference({
+                body: buildNonInlineableTypeReference({
                     schema: channel.subscribe,
                     context,
                     fileContainingReference: declarationFile,
@@ -105,7 +105,7 @@ export function buildChannel({
             messageId: "publish",
             message: {
                 origin: "client",
-                body: buildTypeReference({
+                body: buildNonInlineableTypeReference({
                     schema: channel.publish,
                     context,
                     fileContainingReference: declarationFile,

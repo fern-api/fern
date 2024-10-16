@@ -1,0 +1,250 @@
+{
+  "title": "Test inlining types",
+  "servers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostPersonsRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postPersonsRequestName",
+              "key": "name",
+              "schema": {
+                "generatedName": "postPersonsRequestName",
+                "value": {
+                  "allOf": [],
+                  "properties": [
+                    {
+                      "conflict": {},
+                      "generatedName": "postPersonsRequestNameFirst",
+                      "key": "first",
+                      "schema": {
+                        "generatedName": "postPersonsRequestNameFirst",
+                        "value": {
+                          "schema": {
+                            "type": "string"
+                          },
+                          "generatedName": "PostPersonsRequestNameFirst",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": []
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "postPersonsRequestNameLast",
+                      "key": "last",
+                      "schema": {
+                        "generatedName": "postPersonsRequestNameLast",
+                        "value": {
+                          "schema": {
+                            "type": "string"
+                          },
+                          "generatedName": "PostPersonsRequestNameLast",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": []
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "postPersonsRequestNameMiddle",
+                      "key": "middle",
+                      "schema": {
+                        "generatedName": "postPersonsRequestNameMiddle",
+                        "value": {
+                          "schema": {
+                            "type": "string"
+                          },
+                          "generatedName": "PostPersonsRequestNameMiddle",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": []
+                    }
+                  ],
+                  "allOfPropertyConflicts": [],
+                  "generatedName": "PostPersonsRequestName",
+                  "groupName": [],
+                  "additionalProperties": false,
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "object"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostPersonsRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "server": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/persons",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channel": [],
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Person": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "personName",
+            "key": "name",
+            "schema": {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "personNameFirst",
+                  "key": "first",
+                  "schema": {
+                    "generatedName": "personNameFirst",
+                    "value": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "PersonNameFirst",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "personNameLast",
+                  "key": "last",
+                  "schema": {
+                    "generatedName": "personNameLast",
+                    "value": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "PersonNameLast",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "personNameMiddle",
+                  "key": "middle",
+                  "schema": {
+                    "generatedName": "personNameMiddle",
+                    "value": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "PersonNameMiddle",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "PersonName",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Person",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

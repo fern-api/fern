@@ -8,16 +8,12 @@
       "type": "node",
       "request": "launch",
       "name": "Debug current test file",
-      "runtimeExecutable": "yarn",
+      "runtimeExecutable": "pnpm",
       "runtimeArgs": [
-        "run",
+        "vitest",
         "--inspect-brk",
-        "jest",
-        "--runInBand",
-        "--testPathPattern",
         "${file}",
-        "--coverage",
-        "false"
+        "--no-coverage"
       ],
       "port": 9229,
       "cwd": "${workspaceFolder}",

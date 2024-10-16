@@ -1,0 +1,37 @@
+openapi: 3.1.0
+info:
+  title: Test inlining types
+  version: 1.0.0
+paths:
+  /persons: 
+    post: 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                name: 
+                  properties: 
+                    first: 
+                      type: string
+                    last: 
+                      type: string
+                    middle: 
+                      type: string
+
+components:
+  schemas:
+    Person: 
+      type: object
+      properties: 
+        name: 
+          properties: 
+            first: 
+              type: string
+            last: 
+              type: string
+            middle: 
+              type: string
+      required: 
+        - name

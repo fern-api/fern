@@ -120,7 +120,7 @@ types:
       - commons.WithDocsSchema
       - commons.WithName
       - commons.WithAudiences
-      - types.BaseTypeReferenceSchema
+      - types.BaseInlineableTypeReferenceSchema
     properties: 
       content-type: optional<string>
   

@@ -7,6 +7,7 @@ import path from "path";
 import {
     APIDefinition,
     APIDefinitionLocation,
+    APIWideSettings,
     GenerationLanguage,
     GeneratorGroup,
     GeneratorInvocation,
@@ -45,9 +46,11 @@ export async function convertGeneratorsConfiguration({
     const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata);
     const readme = rawGeneratorsConfiguration.readme;
     const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
+    const parsedApiWideSettings = await parseAPIWideSettingsConfiguration(rawGeneratorsConfiguration);
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,
+        apiWideSettings: parsedApiWideSettings,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
         reviewers: rawGeneratorsConfiguration.reviewers,
@@ -73,6 +76,19 @@ export async function convertGeneratorsConfiguration({
                   }
                 : undefined
     };
+}
+
+async function parseAPIWideSettingsConfiguration(
+    rawGeneratorsConfiguration: GeneratorsConfigurationSchema
+): Promise<APIWideSettings | undefined> {
+    const apiConfiguration = rawGeneratorsConfiguration.api;
+
+    if (apiConfiguration != null && isApiConfigurationV2Schema(apiConfiguration)) {
+        return {
+            shouldInlineTypes: apiConfiguration.settings?.["inline-types"]
+        };
+    }
+    return undefined;
 }
 
 async function parseAPIConfigurationToApiLocations(
@@ -266,24 +282,24 @@ async function parseApiConfigurationV2Schema({
     rawConfiguration: GeneratorsConfigurationSchema;
 }): Promise<APIDefinition> {
     const partialConfig = {
-        "auth-schemes":
-            apiConfiguration.auth != null
-                ? Object.fromEntries(
-                      Object.entries(rawConfiguration["auth-schemes"] ?? {}).filter(([name, _]) => {
-                          if (apiConfiguration.auth == null) {
-                              return false;
-                          }
-                          return visitRawApiAuth(apiConfiguration.auth, {
-                              any: (any) => {
-                                  return any.any.includes(name);
-                              },
-                              single: (single) => {
-                                  return single === name;
-                              }
-                          });
-                      })
-                  )
-                : undefined,
+        "auth-schemes": undefined,
+        // apiConfiguration.auth != null
+        //     ? Object.fromEntries(
+        //           Object.entries(rawConfiguration["auth-schemes"] ?? {}).filter(([name, _]) => {
+        //               if (apiConfiguration.auth == null) {
+        //                   return false;
+        //               }
+        //               return visitRawApiAuth(apiConfiguration.auth, {
+        //                   any: (any) => {
+        //                       return any.any.includes(name);
+        //                   },
+        //                   single: (single) => {
+        //                       return single === name;
+        //                   }
+        //               });
+        //           })
+        //       )
+        //     : undefined,
         ...apiConfiguration
     };
 

@@ -20,6 +20,7 @@ import {
     buildArrayTypeReference,
     buildLiteralTypeReference,
     buildMapTypeReference,
+    buildNonInlineableTypeReference,
     buildOptionalTypeReference,
     buildPrimitiveTypeReference,
     buildReferenceTypeReference,
@@ -87,6 +88,7 @@ export function buildObjectTypeDeclaration({
     declarationFile: RelativeFilePath;
     namespace: string | undefined;
 }): ConvertedTypeDeclaration {
+    context.logger.debug(`Building type declaration inlined=${context.shouldInline()}`);
     const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
     const schemasToInline = new Set<SchemaId>();
     for (const property of schema.properties) {
@@ -146,13 +148,16 @@ export function buildObjectTypeDeclaration({
         if (schemasToInline.has(allOf.schema) || schemasToInline.has(resolvedSchemaId)) {
             continue; // dont extend from schemas that need to be inlined
         }
-        const allOfTypeReference = buildTypeReference({
-            schema: Schema.reference(allOf),
-            context,
-            fileContainingReference: declarationFile,
-            namespace
-        });
-        extendedSchemas.push(getTypeFromTypeReference(allOfTypeReference));
+        extendedSchemas.push(
+            getTypeFromTypeReference(
+                buildNonInlineableTypeReference({
+                    schema: Schema.reference(allOf),
+                    context,
+                    fileContainingReference: declarationFile,
+                    namespace
+                })
+            )
+        );
     }
 
     for (const inlineSchemaId of schemasToInline) {
@@ -174,13 +179,16 @@ export function buildObjectTypeDeclaration({
             if (schemasToInline.has(extendedSchema.schema)) {
                 continue; // dont extend from schemas that need to be inlined
             }
-            const extendedSchemaTypeReference = buildTypeReference({
-                schema: Schema.reference(extendedSchema),
-                context,
-                fileContainingReference: declarationFile,
-                namespace
-            });
-            extendedSchemas.push(getTypeFromTypeReference(extendedSchemaTypeReference));
+            extendedSchemas.push(
+                getTypeFromTypeReference(
+                    buildNonInlineableTypeReference({
+                        schema: Schema.reference(extendedSchema),
+                        context,
+                        fileContainingReference: declarationFile,
+                        namespace
+                    })
+                )
+            );
         }
     }
 
@@ -498,7 +506,7 @@ export function buildOneOfTypeDeclaration({
     if (schema.type === "discriminated") {
         const baseProperties: Record<string, RawSchemas.TypeReferenceDeclarationWithNameSchema> = {};
         for (const property of schema.commonProperties) {
-            baseProperties[property.key] = buildTypeReference({
+            baseProperties[property.key] = buildNonInlineableTypeReference({
                 schema: property.schema,
                 fileContainingReference: declarationFile,
                 context,
@@ -507,7 +515,7 @@ export function buildOneOfTypeDeclaration({
         }
         const union: Record<string, RawSchemas.SingleUnionTypeSchema> = {};
         for (const [discriminantValue, subSchema] of Object.entries(schema.schemas)) {
-            union[discriminantValue] = buildTypeReference({
+            union[discriminantValue] = buildNonInlineableTypeReference({
                 schema: subSchema,
                 context,
                 fileContainingReference: declarationFile,
@@ -531,7 +539,7 @@ export function buildOneOfTypeDeclaration({
     const union: RawSchemas.TypeReferenceSchema[] = [];
     for (const subSchema of schema.schemas) {
         union.push(
-            buildTypeReference({
+            buildNonInlineableTypeReference({
                 schema: subSchema,
                 fileContainingReference: declarationFile,
                 context,
@@ -576,7 +584,7 @@ function getSchemaIdOfResolvedType({
 }
 
 function convertPropertyTypeReferenceToTypeDefinition(
-    typeReference: RawSchemas.TypeReferenceSchema,
+    typeReference: RawSchemas.InlineableTypeReferenceDeclarationWithNameSchema,
     audiences: string[],
     name?: string | undefined,
     availability?: RawSchemas.AvailabilityUnionSchema
