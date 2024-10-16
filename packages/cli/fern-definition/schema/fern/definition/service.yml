@@ -113,14 +113,22 @@ types:
     discriminated: false
     union: 
       - string
-      - HttpInlineRequestBodyProperty
+      - NonInlinedTypeReferenceSchemaWithContentType
+      - InlinedTypeReferenceSchemaWithContentType
+      - InlinedListTypeReferenceSchemaWithContentType
+  
+  NonInlinedTypeReferenceSchemaWithContentType: 
+    extends: types.NonInlinedTypeReferenceSchema
+    properties: 
+      content-type: optional<string>
+  
+  InlinedTypeReferenceSchemaWithContentType: 
+    extends: types.InlinedTypeReferenceSchema
+    properties: 
+      content-type: optional<string>
 
-  HttpInlineRequestBodyProperty: 
-    extends: 
-      - commons.WithDocsSchema
-      - commons.WithName
-      - commons.WithAudiences
-      - types.BaseInlineableTypeReferenceSchema
+  InlinedListTypeReferenceSchemaWithContentType: 
+    extends: types.InlinedListTypeReferenceSchema
     properties: 
       content-type: optional<string>
   

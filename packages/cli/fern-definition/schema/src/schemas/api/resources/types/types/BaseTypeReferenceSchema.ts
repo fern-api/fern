@@ -5,7 +5,6 @@
 import * as FernDefinition from "../../../index";
 
 export interface BaseTypeReferenceSchema extends FernDefinition.WithDocsSchema, FernDefinition.WithAvailability {
-    type: string;
     default?: unknown;
     encoding?: FernDefinition.EncodingSchema;
     validation?: FernDefinition.ValidationSchema;

@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface TypeReferenceDeclarationWithName
+export interface NonInlinedTypeReferenceSchema
     extends FernDefinition.BaseTypeReferenceSchema,
         FernDefinition.WithName,
         FernDefinition.WithAudiences {

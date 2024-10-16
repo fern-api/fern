@@ -1,5 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AliasSchema, DiscriminatedUnionSchema, EnumSchema, ObjectSchema, TypeDeclarationSchema, UndiscriminatedUnionSchema } from "../schemas";
+import {
+    AliasSchema,
+    DiscriminatedUnionSchema,
+    EnumSchema,
+    ObjectSchema,
+    TypeDeclarationSchema,
+    UndiscriminatedUnionSchema
+} from "../schemas";
 
 export interface RawTypeDeclarationVisitor<R> {
     alias: (schema: string | AliasSchema) => R;
@@ -35,7 +42,11 @@ export function isRawAliasDefinition(
     rawTypeDeclaration: TypeDeclarationSchema
 ): rawTypeDeclaration is string | AliasSchema {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return typeof rawTypeDeclaration === "string" || (rawTypeDeclaration as AliasSchema).type != null;
+    return (
+        typeof rawTypeDeclaration === "string" ||
+        ((rawTypeDeclaration as AliasSchema).type != null &&
+            typeof (rawTypeDeclaration as AliasSchema).type === "string")
+    );
 }
 
 export function isRawObjectDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is ObjectSchema {

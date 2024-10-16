@@ -15,7 +15,6 @@ export const BaseTypeReferenceSchema: core.serialization.ObjectSchema<
     FernDefinition.BaseTypeReferenceSchema
 > = core.serialization
     .object({
-        type: core.serialization.string(),
         default: core.serialization.unknown().optional(),
         encoding: EncodingSchema.optional(),
         validation: ValidationSchema.optional(),
@@ -25,7 +24,6 @@ export const BaseTypeReferenceSchema: core.serialization.ObjectSchema<
 
 export declare namespace BaseTypeReferenceSchema {
     interface Raw extends WithDocsSchema.Raw, WithAvailability.Raw {
-        type: string;
         default?: unknown | null;
         encoding?: EncodingSchema.Raw | null;
         validation?: ValidationSchema.Raw | null;

@@ -5,13 +5,13 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { TypeReferenceDetailed } from "./TypeReferenceDetailed";
+import { NonInlinedTypeReferenceSchema } from "./NonInlinedTypeReferenceSchema";
 
 export const TypeReferenceSchema: core.serialization.Schema<
     serializers.TypeReferenceSchema.Raw,
     FernDefinition.TypeReferenceSchema
-> = core.serialization.undiscriminatedUnion([core.serialization.string(), TypeReferenceDetailed]);
+> = core.serialization.undiscriminatedUnion([core.serialization.string(), NonInlinedTypeReferenceSchema]);
 
 export declare namespace TypeReferenceSchema {
-    type Raw = string | TypeReferenceDetailed.Raw;
+    type Raw = string | NonInlinedTypeReferenceSchema.Raw;
 }

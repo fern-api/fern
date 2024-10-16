@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const ObjectPropertySchema: core.serialization.Schema<
     serializers.ObjectPropertySchema.Raw,
     FernDefinition.ObjectPropertySchema
-> = core.serialization.lazy(() => serializers.InlineableTypeReferenceDeclarationWithNameSchema);
+> = core.serialization.lazy(() => serializers.InlineableTypeReferenceSchema);
 
 export declare namespace ObjectPropertySchema {
-    type Raw = serializers.InlineableTypeReferenceDeclarationWithNameSchema.Raw;
+    type Raw = serializers.InlineableTypeReferenceSchema.Raw;
 }

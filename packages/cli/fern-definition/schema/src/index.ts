@@ -8,6 +8,7 @@ export { type DefinitionFileSchema, type RootApiFileSchema, type PackageMarkerFi
 export { isInlineRequestBody } from "./utils/isInlineRequestBody";
 export { isRawProtobufSourceSchema } from "./utils/isRawProtobufSourceSchema";
 export { isRawTextType } from "./utils/isRawTextType";
+export { isInlinedListType } from "./utils/isInlinedListType";
 export { parseBytesRequest, type BytesRequest } from "./utils/parseBytesRequest";
 export { parseFileUploadRequest, type RawFileUploadRequest } from "./utils/parseFileUploadRequest";
 export { parseRawBytesType, type RawBytesType } from "./utils/parseRawBytesType";
