@@ -29,6 +29,9 @@ groups:
           outputSourceFiles: true
         github: 
           repository: "plantstore/plantstore-js"
+        metadata: 
+          package-description: JavaScript library for the Plant Store API Service
+          license: MIT
   python: 
     generators: 
       - name: fernapi/fern-python-sdk
@@ -72,3 +75,18 @@ readme:
   The endpoint you want to use in README code samples. If unspecified, Fern will default to the first POST request.  
 </ParamField>
 
+## Specify Package Metadata
+
+```yaml generators.yml
+metadata: 
+  package-description: Python library for the Plant Store API Service
+  license: MIT
+```
+
+<ParamField path="generator.metadata.packageDescription" type="string" required={false}>
+  The decription you'd like the package manager, such as NPM or PyPI, to include i nthe 
+</ParamField>
+
+<ParamField path="generator.metadata.license" type="License" required={false}>
+  The license you'd like to apply to the code published to GitHub. Options include `MIT` or `Apache` (Apache 2.0). To request a new license, [open a GitHub Issue](https://github.com/fern-api/fern/issues/new?assignees=&labels=&projects=&template=feature-request.md&title=%5BFeature%5D).
+</ParamField>
