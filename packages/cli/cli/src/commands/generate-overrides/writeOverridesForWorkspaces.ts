@@ -28,6 +28,7 @@ export async function writeOverridesForWorkspaces({
                     if (withAI) {
                         context.logger.info("Generating overrides using OpenAI");
                         await black({ workspace, context });
+                        return;
                     }
                     await writeDefinitionForOpenAPIWorkspace({
                         workspace,

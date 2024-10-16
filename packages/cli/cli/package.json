@@ -98,6 +98,7 @@
     "js-yaml": "^4.1.0",
     "latest-version": "^9.0.0",
     "lodash-es": "^4.17.21",
+    "openai": "^4.67.3",
     "ora": "^7.0.1",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
@@ -108,10 +109,7 @@
     "validate-npm-package-name": "^5.0.1",
     "vitest": "^2.0.5",
     "yaml": "^2.4.5",
-    "yargs": "^17.4.1"
-  },
-  "dependencies": {
-    "openai": "^4.67.3",
+    "yargs": "^17.4.1",
     "zod": "^3.22.3"
   }
 }
