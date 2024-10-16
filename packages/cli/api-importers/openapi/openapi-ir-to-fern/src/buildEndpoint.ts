@@ -449,7 +449,8 @@ function getRequest({
                         schema: property.schema,
                         fileContainingReference: declarationFile,
                         context,
-                        namespace
+                        namespace,
+                        inline: true
                     });
 
                     // TODO: clean up conditional logic
@@ -461,9 +462,9 @@ function getRequest({
                             return [
                                 property.key,
                                 {
+                                    name: property.nameOverride,
                                     type: getTypeFromInlineTypeReference(propertyTypeReference),
                                     docs: getDocsFromTypeReference(propertyTypeReference),
-                                    name: property.nameOverride,
                                     availability
                                 }
                             ];
@@ -481,13 +482,17 @@ function getRequest({
                         ];
                     }
 
-                    const typeReference: RawSchemas.ObjectPropertySchema = {
-                        type: getTypeFromInlineTypeReference(propertyTypeReference),
-                        docs: getDocsFromTypeReference(propertyTypeReference)
-                    };
+                    const typeReference: Partial<RawSchemas.ObjectPropertySchema> = {};
 
                     if (usedNames.has(name)) {
                         typeReference.name = property.generatedName;
+                    }
+
+                    typeReference.type = getTypeFromInlineTypeReference(propertyTypeReference);
+
+                    const docs = getDocsFromTypeReference(propertyTypeReference);
+                    if (docs != null) {
+                        typeReference.docs = docs;
                     }
 
                     if (property.audiences.length > 0) {

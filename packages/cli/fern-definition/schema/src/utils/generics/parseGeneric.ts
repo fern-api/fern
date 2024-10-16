@@ -8,6 +8,8 @@ export declare namespace ParseGeneric {
 }
 
 export function parseGeneric(name: string): ParseGeneric.Return | undefined {
+    console.log("parseGeneric name", name);
+
     const genericMatch = name.match(/([\w.]+)<([\w,\s]+)>/);
 
     if (

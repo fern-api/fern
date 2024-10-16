@@ -4,4 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface TypeReferenceDetailed extends FernDefinition.BaseTypeReferenceSchema {}
+export type InlineableTypeReferenceSchema = string | FernDefinition.InlineableTypeReferenceSchemaDetailed;

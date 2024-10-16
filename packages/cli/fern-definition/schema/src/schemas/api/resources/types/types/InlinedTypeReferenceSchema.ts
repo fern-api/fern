@@ -4,9 +4,10 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface TypeReferenceDeclarationWithName
+export interface InlinedTypeReferenceSchema
     extends FernDefinition.BaseTypeReferenceSchema,
         FernDefinition.WithName,
         FernDefinition.WithAudiences {
-    type: string;
+    optional?: boolean;
+    type: FernDefinition.InlinedTypeDeclaration;
 }

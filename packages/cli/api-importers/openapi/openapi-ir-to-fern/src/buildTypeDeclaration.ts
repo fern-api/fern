@@ -15,7 +15,7 @@ import {
     Schema,
     SchemaId
 } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { getNonInlineableTypeReference, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     buildArrayTypeReference,
     buildLiteralTypeReference,
@@ -32,29 +32,32 @@ import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getInlineableTypeReference } from "@fern-api/fern-definition-schema/src/utils/getNonInlineableTypeReference";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
-    schema: RawSchemas.TypeDeclarationSchema;
+    schema: RawSchemas.InlineableTypeReferenceSchema;
 }
 
 export function buildTypeDeclaration({
     schema,
     context,
     declarationFile,
-    namespace
+    namespace,
+    inline
 }: {
     schema: Schema;
     context: OpenApiIrConverterContext;
     /* The file the type declaration will be added to */
     declarationFile: RelativeFilePath;
     namespace: string | undefined;
+    inline: boolean;
 }): ConvertedTypeDeclaration {
     switch (schema.type) {
         case "primitive":
             return buildPrimitiveTypeDeclaration(schema);
         case "array":
-            return buildArrayTypeDeclaration({ schema, context, declarationFile, namespace });
+            return buildArrayTypeDeclaration({ schema, context, declarationFile, namespace, inline });
         case "map":
             return buildMapTypeDeclaration({ schema, context, declarationFile, namespace });
         case "reference":
@@ -63,13 +66,13 @@ export function buildTypeDeclaration({
             return buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName);
         case "optional":
         case "nullable":
-            return buildOptionalTypeDeclaration({ schema, context, declarationFile, namespace });
+            return buildOptionalTypeDeclaration({ schema, context, declarationFile, namespace, inline });
         case "enum":
             return buildEnumTypeDeclaration(schema);
         case "literal":
             return buildLiteralTypeDeclaration(schema, schema.nameOverride, schema.generatedName);
         case "object":
-            return buildObjectTypeDeclaration({ schema, context, declarationFile, namespace });
+            return buildObjectTypeDeclaration({ schema, context, declarationFile, namespace, inline });
         case "oneOf":
             return buildOneOfTypeDeclaration({ schema: schema.value, context, declarationFile, namespace });
         default:
@@ -81,12 +84,14 @@ export function buildObjectTypeDeclaration({
     schema,
     context,
     declarationFile,
-    namespace
+    namespace,
+    inline
 }: {
     schema: ObjectSchema;
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
     namespace: string | undefined;
+    inline: boolean;
 }): ConvertedTypeDeclaration {
     const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
     const schemasToInline = new Set<SchemaId>();
@@ -115,7 +120,8 @@ export function buildObjectTypeDeclaration({
             schema: property.schema,
             context,
             fileContainingReference: declarationFile,
-            namespace
+            namespace,
+            inline
         });
 
         const audiences = property.audiences;
@@ -170,7 +176,8 @@ export function buildObjectTypeDeclaration({
                     schema: propertyToInline.schema,
                     context,
                     fileContainingReference: declarationFile,
-                    namespace
+                    namespace,
+                    inline
                 });
             }
         }
@@ -227,8 +234,11 @@ export function buildObjectTypeDeclaration({
     }
 
     return {
-        name: schema.nameOverride ?? schema.generatedName,
-        schema: objectTypeDeclaration
+        name: undefined,
+        schema: {
+            name: schema.nameOverride ?? schema.generatedName,
+            type: objectTypeDeclaration
+        }
     };
 }
 
@@ -291,12 +301,14 @@ export function buildArrayTypeDeclaration({
     schema,
     context,
     declarationFile,
-    namespace
+    namespace,
+    inline
 }: {
     schema: ArraySchema;
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
     namespace: string | undefined;
+    inline: boolean;
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
@@ -305,7 +317,8 @@ export function buildArrayTypeDeclaration({
             fileContainingReference: declarationFile,
             declarationFile,
             context,
-            namespace
+            namespace,
+            inline
         })
     };
 }
@@ -425,7 +438,9 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
     }
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        schema: uniqueEnumSchema
+        schema: {
+            type: uniqueEnumSchema
+        }
     };
 }
 
@@ -450,12 +465,14 @@ export function buildOptionalTypeDeclaration({
     schema,
     context,
     declarationFile,
-    namespace
+    namespace,
+    inline
 }: {
     schema: OptionalSchema;
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
     namespace: string | undefined;
+    inline: boolean;
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
@@ -464,7 +481,8 @@ export function buildOptionalTypeDeclaration({
             context,
             fileContainingReference: declarationFile,
             declarationFile,
-            namespace
+            namespace,
+            inline
         })
     };
 }
@@ -524,13 +542,15 @@ export function buildOneOfTypeDeclaration({
         return {
             name: schema.nameOverride ?? schema.generatedName,
             schema: {
-                discriminant: schema.discriminantProperty,
-                "base-properties": baseProperties,
-                docs: schema.description ?? undefined,
-                availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
-                union,
-                encoding,
-                source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
+                type: {
+                    discriminant: schema.discriminantProperty,
+                    "base-properties": baseProperties,
+                    docs: schema.description ?? undefined,
+                    availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
+                    union,
+                    encoding,
+                    source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
+                }
             }
         };
     }
@@ -549,11 +569,13 @@ export function buildOneOfTypeDeclaration({
     return {
         name: schema.nameOverride ?? schema.generatedName,
         schema: {
-            discriminated: false,
-            docs: schema.description ?? undefined,
-            union,
-            encoding,
-            source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
+            type: {
+                discriminated: false,
+                docs: schema.description ?? undefined,
+                union,
+                encoding,
+                source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
+            }
         }
     };
 }
@@ -583,19 +605,38 @@ function getSchemaIdOfResolvedType({
 }
 
 function convertPropertyTypeReferenceToTypeDefinition(
-    typeReference: RawSchemas.InlineableTypeReferenceDeclarationWithNameSchema,
+    typeReference: RawSchemas.InlineableTypeReferenceSchema,
     audiences: string[],
     name?: string | undefined,
     availability?: RawSchemas.AvailabilityUnionSchema
 ): RawSchemas.ObjectPropertySchema {
-    if (audiences.length === 0 && name == null && availability == null) {
-        return typeReference;
-    } else {
+    const nonInlineableTypeReference = getNonInlineableTypeReference(typeReference);
+
+    if (nonInlineableTypeReference) {
+        if (audiences.length === 0 && name == null && availability == null) {
+            return nonInlineableTypeReference;
+        } else {
+            return {
+                ...(typeof nonInlineableTypeReference === "string"
+                    ? { type: nonInlineableTypeReference }
+                    : { ...nonInlineableTypeReference }),
+                ...(audiences.length > 0 ? { audiences } : {}),
+                ...(name != null ? { name } : {}),
+                ...(availability != null ? { availability } : {})
+            };
+        }
+    }
+
+    const inlineableTypeReference = getInlineableTypeReference(typeReference);
+
+    if (inlineableTypeReference) {
         return {
-            ...(typeof typeReference === "string" ? { type: typeReference } : { ...typeReference }),
+            ...{ type: inlineableTypeReference },
             ...(audiences.length > 0 ? { audiences } : {}),
             ...(name != null ? { name } : {}),
             ...(availability != null ? { availability } : {})
         };
     }
+
+    throw new Error("");
 }

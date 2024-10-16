@@ -9,19 +9,23 @@ import { BaseTypeReferenceSchema } from "./BaseTypeReferenceSchema";
 import { WithName } from "../../commons/types/WithName";
 import { WithAudiences } from "../../commons/types/WithAudiences";
 
-export const TypeReferenceDeclarationWithName: core.serialization.ObjectSchema<
-    serializers.TypeReferenceDeclarationWithName.Raw,
-    FernDefinition.TypeReferenceDeclarationWithName
+export const InlinedListTypeReferenceSchema: core.serialization.ObjectSchema<
+    serializers.InlinedListTypeReferenceSchema.Raw,
+    FernDefinition.InlinedListTypeReferenceSchema
 > = core.serialization
     .object({
         type: core.serialization.string(),
+        optional: core.serialization.boolean().optional(),
+        value: core.serialization.lazy(() => serializers.InlinedTypeDeclaration),
     })
     .extend(BaseTypeReferenceSchema)
     .extend(WithName)
     .extend(WithAudiences);
 
-export declare namespace TypeReferenceDeclarationWithName {
+export declare namespace InlinedListTypeReferenceSchema {
     interface Raw extends BaseTypeReferenceSchema.Raw, WithName.Raw, WithAudiences.Raw {
         type: string;
+        optional?: boolean | null;
+        value: serializers.InlinedTypeDeclaration.Raw;
     }
 }

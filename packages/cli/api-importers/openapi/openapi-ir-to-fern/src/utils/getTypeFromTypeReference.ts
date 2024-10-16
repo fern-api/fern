@@ -8,15 +8,15 @@ export function getTypeFromTypeReference(typeReference: RawSchemas.TypeReference
 }
 
 export function getTypeFromInlineTypeReference(
-    typeReference: RawSchemas.InlineableTypeReferenceDeclarationWithNameSchema
-): RawSchemas.InlineableTypeReference {
+    typeReference: RawSchemas.InlineableTypeReferenceSchema
+): string | RawSchemas.InlinedTypeDeclaration {
     if (typeof typeReference === "string") {
         return typeReference;
     }
     return typeReference.type;
 }
 
-export function getDocsFromTypeReference(typeReference: RawSchemas.InlineableTypeReference): string | undefined {
+export function getDocsFromTypeReference(typeReference: RawSchemas.InlineableTypeReferenceSchema): string | undefined {
     if (typeof typeReference === "string") {
         return undefined;
     }

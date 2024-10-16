@@ -16,13 +16,6 @@ types:
       - UndiscriminatedUnionSchema
       - AliasSchema
   
-  InlinedTypeDeclarationContainer: 
-    properties: 
-      name: 
-        type: string
-        docs: A unique generated name for the inlined type
-      type: InlinedTypeDeclaration
-  
   InlinedTypeDeclaration: 
     discriminated: false
     union: 
@@ -35,48 +28,56 @@ types:
     discriminated: false
     union: 
       - string
-      - TypeReferenceDetailed
+      - NonInlinedTypeReferenceSchema
   
-  InlineableTypeReferenceDeclarationWithNameSchema: 
+  InlineableTypeReferenceSchema: 
     discriminated: false
     union: 
       - string
-      - InlineableTypeReferenceDeclarationWithName
+      - InlineableTypeReferenceSchemaDetailed
   
-  InlineableTypeReferenceDeclarationWithName:
-    extends: 
-      - BaseInlineableTypeReferenceSchema
-      - commons.WithName
-      - commons.WithAudiences
-  
-  BaseInlineableTypeReferenceSchema: 
-    extends: 
-      - commons.WithDocsSchema
-      - commons.WithAvailability
-    properties: 
-      type: InlineableTypeReference
-      default: optional<unknown>
-      encoding: optional<encoding.EncodingSchema>
-      validation: optional<validation.ValidationSchema>
-  
-  InlineableTypeReference: 
+  InlineableTypeReferenceSchemaDetailed: 
     discriminated: false
-    union:
-      - string
-      - InlinedTypeDeclaration
+    union: 
+      - NonInlinedTypeReferenceSchema
+      - InlinedTypeReferenceSchema
+      - InlinedListTypeReferenceSchema
   
   BaseTypeReferenceSchema: 
     extends: 
       - commons.WithDocsSchema
       - commons.WithAvailability
     properties: 
-      type: string
       default: optional<unknown>
       encoding: optional<encoding.EncodingSchema>
       validation: optional<validation.ValidationSchema>
-
-  TypeReferenceDetailed:
-    extends: BaseTypeReferenceSchema
+  
+  NonInlinedTypeReferenceSchema: 
+    extends: 
+      - BaseTypeReferenceSchema
+      - commons.WithName
+      - commons.WithAudiences
+    properties: 
+      type: string
+  
+  InlinedTypeReferenceSchema: 
+    extends: 
+      - BaseTypeReferenceSchema
+      - commons.WithName
+      - commons.WithAudiences
+    properties: 
+      optional: optional<boolean>
+      type: InlinedTypeDeclaration
+  
+  InlinedListTypeReferenceSchema: 
+    extends: 
+      - BaseTypeReferenceSchema
+      - commons.WithName
+      - commons.WithAudiences
+    properties: 
+      type: string
+      optional: optional<boolean>
+      value: InlinedTypeDeclaration
 
   TypeReferenceDeclarationWithNameSchema: 
     discriminated: false
@@ -89,6 +90,8 @@ types:
       - BaseTypeReferenceSchema
       - commons.WithName
       - commons.WithAudiences
+    properties: 
+      type: string
   
   BaseTypeDeclarationSchema: 
     extends: 
@@ -117,7 +120,7 @@ types:
       properties: optional<map<string, ObjectPropertySchema>>
       extra-properties: optional<boolean>
   
-  ObjectPropertySchema: InlineableTypeReferenceDeclarationWithNameSchema
+  ObjectPropertySchema: InlineableTypeReferenceSchema
   
   ObjectExtendsSchema: 
     discriminated: false

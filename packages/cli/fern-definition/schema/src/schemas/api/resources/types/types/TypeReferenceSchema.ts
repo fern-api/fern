@@ -4,4 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export type TypeReferenceSchema = string | FernDefinition.TypeReferenceDetailed;
+export type TypeReferenceSchema = string | FernDefinition.NonInlinedTypeReferenceSchema;
