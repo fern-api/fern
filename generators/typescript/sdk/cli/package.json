@@ -40,10 +40,12 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/sdk-generator": "workspace:*",
-    "@ts-morph/common": "^0.25.0",
+    "@ts-morph/common": "^0.25.0", 
+    "@types/ioredis": "^5.0.0",
     "@types/jest": "^29.5.12",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
+    "@types/redis": "^4.0.11",
     "@types/tmp": "^0.2.4",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
@@ -55,5 +57,9 @@
     "tsup": "^8.0.2",
     "typescript": "4.6.4",
     "zod": "^3.22.3"
+  },
+  "dependencies": {
+    "ioredis": "^5.4.1",
+    "redis": "^4.7.0"
   }
 }

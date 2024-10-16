@@ -1,0 +1,47 @@
+---
+title: API Playground
+description: Use the API Playground to test your API endpoints and see the responses in real-time.
+---
+
+When you subscribe to a Business or Enterprise plan, you can help your customers deeply understand your APIs with a feature-rich, 
+fully-interactive API Playground. When you have an [API reference defined in your docs](/api-references/generate-api-ref), contact 
+Fern support to enable the API Playground for your account! 
+
+
+Example:
+
+```yml docs.yml
+navigation:
+  - api: API Reference
+```
+
+### API Playground configuration options
+
+| Property         | Value                                                                                                   |
+| ---------------- | ------------------------------------------------------------------------------------------------------- |
+| `api` (required) | Title of the API Reference Section                                                                      |
+| `api-name`       | Name of the API we are referencing, if there are [multiple APIs](#include-more-than-one-api-reference)  |
+| `audiences`      | List of [audiences](/learn/api-definition/fern/audiences) to filter the API Reference for               |
+| `display-errors` | Displays error schemas in the API References                                                            |
+| `snippets`       | Enable [generated SDK code snippets](/learn/cli-api/api-reference/snippets/get) in your API Reference            |
+| `summary`        | Relative path to the Markdown file; the summary is displayed at the top of the API section              |
+| `layout`         | Customize the order that your API endpoints are displayed in the docs site                              |
+| `icon`           | Icon to display next to the API section in the navigation                                               |
+| `slug`           | Customize the slug for the API section (by default, the slug is generated from the API title)           |
+| `skip-slug`      | When `true`, skips the slug generation for the API section                                              |
+| `alphabetized`   | When `true`, organizes all sections and endpoints in alphabetically order                               |
+| `flattened`      | Display all endpoints at the top level (hides the API Reference Section's title)                        |
+| `paginated`      | Display all endpoints on separate pages (by default, endpoints are displayed on one single, long page)  |
+
+More on customizing your API Reference [here](/learn/docs/api-references/customize-api-reference-layout). 
+
+### Include more than one API Reference
+To include multiple, distinct API definitions in your documentation, you can indicate which to include using the `api-name` property. The `api-name` corresponds to the name of the folder where your API definition is housed. 
+
+```yaml title="docs.yml"
+navigation:
+  - api: Plant Store
+    api-name: plant-api
+  - api: Garden
+    api-name: garden-api
+```

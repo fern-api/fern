@@ -45,6 +45,7 @@ RUN  yarn add \
   webpack@5.94.0 \
   # fetch mock jest
   fetch-mock-jest@1.5.1 
+RUN yarn add ioredis@5.4.1 @types/ioredis@5.0.0
 
 COPY generators/typescript/utils/core-utilities/fetcher/src/ /assets/fetcher
 COPY generators/typescript/utils/core-utilities/callback-queue/src/ /assets/callback-queue

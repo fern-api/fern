@@ -56,7 +56,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
         await this.generateGitIgnore();
         await this.generateNpmIgnore();
         await this.generatePrettierRc();
+        // await this.generateBiomeConfig();
         await this.generateTsConfig();
+        await this.generateSwcConfig();
         await this.generatePackageJson();
         if (this.outputJsr) {
             await this.generateJsrJson();
@@ -105,6 +107,47 @@ export class SimpleTypescriptProject extends TypescriptProject {
         );
     }
 
+    private async generateBiomeConfig(): Promise<void> {
+        const biomeConfig = {
+            $schema: "https://biomejs.dev/schemas/1.5.3/schema.json",
+            formatter: {
+                indentStyle: "space",
+                indentWidth: 4,
+                lineWidth: 120
+            },
+            javascript: {
+                formatter: {
+                    quoteStyle: "double"
+                }
+            },
+            linter: {
+                enabled: true,
+                rules: {
+                    recommended: true
+                }
+            },
+            organizeImports: {
+                enabled: true
+            },
+            vcs: {
+                enabled: true,
+                clientKind: "git",
+                useIgnoreFile: true
+            },
+            files: {
+                ignore: ["node_modules", "dist"]
+            }
+        };
+
+        await Promise.all([
+            this.writeFileToVolume(RelativeFilePath.of("biome.json"), JSON.stringify(biomeConfig, null, 2)),
+            this.writeFileToVolume(
+                RelativeFilePath.of(".editorconfig"),
+                "root = true\n\n[*]\nindent_style = space\nindent_size = 4\nend_of_line = lf\ncharset = utf-8\ntrim_trailing_whitespace = true\ninsert_final_newline = true\n"
+            )
+        ]);
+    }
+
     private async generateTsConfig(): Promise<void> {
         const compilerOptions: CompilerOptions = {
             extendedDiagnostics: true,
@@ -132,6 +175,33 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 4
             )
         );
+    }
+
+    private async generateSwcConfig(): Promise<void> {
+        const swcConfig = {
+            $schema: "https://json.schemastore.org/swcrc",
+            jsc: {
+                parser: {
+                    syntax: "typescript",
+                    tsx: false
+                },
+                target: "es2015", // Equivalent to ES6
+                loose: false,
+                externalHelpers: false,
+                keepClassNames: false
+            },
+            module: {
+                type: this.outputEsm ? "es6" : "commonjs",
+                strict: true,
+                strictMode: true,
+                lazy: false,
+                noInterop: false
+            },
+            isModule: true,
+            minify: false
+        };
+
+        await this.writeFileToVolume(RelativeFilePath.of(".swcrc"), JSON.stringify(swcConfig, undefined, 4));
     }
 
     private async generatePackageJson(): Promise<void> {
@@ -168,7 +238,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             main: "./index.js",
             types: "./index.d.ts",
             scripts: {
-                [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
+                [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown --loglevel silent",
                 [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
                 prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`
             }

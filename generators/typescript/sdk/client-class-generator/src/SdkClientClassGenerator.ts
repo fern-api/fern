@@ -89,13 +89,13 @@ export class SdkClientClassGenerator {
         this.omitUndefined = omitUndefined;
     }
 
-    public generateService({
+    public async generateService({
         isRoot,
         packageId,
         serviceClassName,
         importsManager
-    }: SdkClientClassGenerator.generateService.Args): GeneratedSdkClientClass {
-        return new GeneratedSdkClientClassImpl({
+    }: SdkClientClassGenerator.generateService.Args): Promise<GeneratedSdkClientClass> {
+        return (await new GeneratedSdkClientClassImpl()).constructAsync({
             isRoot,
             importsManager,
             intermediateRepresentation: this.intermediateRepresentation,

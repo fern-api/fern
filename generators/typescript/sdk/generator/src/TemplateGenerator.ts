@@ -1181,7 +1181,7 @@ export class TemplateGenerator {
         return endpoint.name.camelCase.unsafeName;
     }
 
-    public generateSnippetTemplate(): FdrSnippetTemplate.VersionedSnippetTemplate | undefined {
+    public async generateSnippetTemplate(): Promise<FdrSnippetTemplate.VersionedSnippetTemplate | undefined> {
         const project = new Project({
             useInMemoryFileSystem: true
         });
@@ -1213,7 +1213,7 @@ export class TemplateGenerator {
         const topLevelFunctionInvocationTemplateInputs = this.generateTopLevelFunctionInvocationSnippetTemplateInput();
 
         // Create the outer function snippet
-        const clientClass = this.clientContext.sdkClientClass.getGeneratedSdkClientClass(this.packageId);
+        const clientClass = await this.clientContext.sdkClientClass.getGeneratedSdkClientClass(this.packageId);
         const endpointClientAccess = clientClass.accessFromRootClient({
             referenceToRootClient: this.clientContext.sdkInstanceReferenceForSnippet
         });

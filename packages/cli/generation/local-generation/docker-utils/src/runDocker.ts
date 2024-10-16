@@ -75,7 +75,13 @@ async function tryRunDocker({
             HostConfig: {
                 Binds: binds
             },
-            User: "root"
+            User: "root",
+            NetworkMode: "redis",
+            NetworkingConfig: {
+                EndpointsConfig: {
+                    redis: {}
+                }
+            }
         }
     );
 

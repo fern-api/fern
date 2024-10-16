@@ -32,10 +32,12 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
+    "ioredis": "^5.4.1",
     "ts-morph": "^15.1.0",
     "ts-poet": "^6.7.0"
   },
   "devDependencies": {
+    "@types/ioredis": "^5.0.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
