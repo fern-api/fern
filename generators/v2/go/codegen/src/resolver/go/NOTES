@@ -1,0 +1,4 @@
+This directory won't actually exist in the final product. This is included here for convenience so that the
+dynamic snippets implementation is configuration-agnostic for now.
+
+See the README.md for more details.
