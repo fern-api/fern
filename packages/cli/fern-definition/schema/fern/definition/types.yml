@@ -18,6 +18,9 @@ types:
   
   InlinedTypeDeclarationContainer: 
     properties: 
+      name: 
+        type: string
+        docs: A unique generated name for the inlined type
       type: InlinedTypeDeclaration
   
   InlinedTypeDeclaration: 

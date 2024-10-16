@@ -5,5 +5,7 @@
 import * as FernDefinition from "../../../index";
 
 export interface InlinedTypeDeclarationContainer {
+    /** A unique generated name for the inlined type */
+    name: string;
     type: FernDefinition.InlinedTypeDeclaration;
 }

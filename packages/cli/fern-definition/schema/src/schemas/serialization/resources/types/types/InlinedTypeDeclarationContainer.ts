@@ -10,11 +10,13 @@ export const InlinedTypeDeclarationContainer: core.serialization.ObjectSchema<
     serializers.InlinedTypeDeclarationContainer.Raw,
     FernDefinition.InlinedTypeDeclarationContainer
 > = core.serialization.object({
+    name: core.serialization.string(),
     type: core.serialization.lazy(() => serializers.InlinedTypeDeclaration),
 });
 
 export declare namespace InlinedTypeDeclarationContainer {
     interface Raw {
+        name: string;
         type: serializers.InlinedTypeDeclaration.Raw;
     }
 }
