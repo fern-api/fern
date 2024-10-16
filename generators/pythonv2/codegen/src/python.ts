@@ -1,4 +1,4 @@
-import { Class, Field, ClassReference, CodeBlock } from "./ast";
+import { Class, Field, ClassReference, CodeBlock, Method } from "./ast";
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
@@ -16,4 +16,8 @@ export function codeBlock(args: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(args);
 }
 
-export { AstNode, Class, Field, Type, Writer, ClassReference, CodeBlock } from "./ast";
+export function method(args: Method.Args): Method {
+    return new Method(args);
+}
+
+export { AstNode, Class, Field, Type, Writer, ClassReference, CodeBlock, Method } from "./ast";
