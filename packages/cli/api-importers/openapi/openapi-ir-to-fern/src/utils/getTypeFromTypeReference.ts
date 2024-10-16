@@ -7,6 +7,15 @@ export function getTypeFromTypeReference(typeReference: RawSchemas.TypeReference
     return typeReference.type;
 }
 
+export function getTypeFromInlineTypeReference(
+    typeReference: RawSchemas.InlineableTypeReferenceDeclarationWithNameSchema
+): RawSchemas.InlineableTypeReference {
+    if (typeof typeReference === "string") {
+        return typeReference;
+    }
+    return typeReference.type;
+}
+
 export function getDocsFromTypeReference(typeReference: RawSchemas.InlineableTypeReference): string | undefined {
     if (typeof typeReference === "string") {
         return undefined;

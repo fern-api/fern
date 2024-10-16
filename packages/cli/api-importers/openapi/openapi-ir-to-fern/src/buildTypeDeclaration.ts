@@ -88,7 +88,6 @@ export function buildObjectTypeDeclaration({
     declarationFile: RelativeFilePath;
     namespace: string | undefined;
 }): ConvertedTypeDeclaration {
-    context.logger.debug(`Building type declaration inlined=${context.shouldInline()}`);
     const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
     const schemasToInline = new Set<SchemaId>();
     for (const property of schema.properties) {
