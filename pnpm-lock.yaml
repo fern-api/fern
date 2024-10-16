@@ -3403,13 +3403,6 @@ importers:
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/cli:
-    dependencies:
-      openai:
-        specifier: ^4.67.3
-        version: 4.67.3(zod@3.23.8)
-      zod:
-        specifier: ^3.22.3
-        version: 3.23.8
     devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
@@ -3591,6 +3584,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      openai:
+        specifier: ^4.67.3
+        version: 4.67.3(zod@3.23.8)
       ora:
         specifier: ^7.0.1
         version: 7.0.1
@@ -3624,6 +3620,9 @@ importers:
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
+      zod:
+        specifier: ^3.22.3
+        version: 3.23.8
 
   packages/cli/cli-migrations:
     dependencies:
