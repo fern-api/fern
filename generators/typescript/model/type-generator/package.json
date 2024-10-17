@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@fern-fern/ir-sdk": "53.14.0",
+    "@fern-api/typescript-codegen": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/union-generator": "workspace:*",

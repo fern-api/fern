@@ -1,5 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { Logger } from "@fern-api/logger";
+import { BaseTypescriptGeneratorContext, BaseTypescriptCustomConfigSchema } from "@fern-api/typescript-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
@@ -150,6 +151,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly inlineFileProperties: boolean;
     public readonly generateOAuthClients: boolean;
     public readonly omitUndefined: boolean;
+    public V2: BaseTypescriptGeneratorContext<BaseTypescriptCustomConfigSchema>;
 
     constructor({
         logger,
@@ -221,6 +223,12 @@ export class SdkContextImpl implements SdkContext {
             dependencyManager,
             importsManager
         });
+        this.V2 = new BaseTypescriptGeneratorContext(
+            this.ir,
+            this.config,
+            { namespaceExport: this.namespaceExport, noSerdeLayer: !this.includeSerdeLayer },
+            this.generatorNotificationService
+        );
         this.coreUtilities = coreUtilitiesManager.getCoreUtilities({
             sourceFile,
             importsManager

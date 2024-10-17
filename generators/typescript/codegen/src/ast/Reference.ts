@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { AstNode } from "./AstNode";
+import { Writer } from "./Writer";
 
 export declare namespace Reference {
     type Args = NamedImport | ModuleImport;

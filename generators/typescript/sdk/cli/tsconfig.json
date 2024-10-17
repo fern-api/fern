@@ -9,6 +9,7 @@
     { "path": "../../utils/abstract-generator-cli" },
     { "path": "../../utils/commons" },
     { "path": "../../utils/contexts" },
+    { "path": "../../codegen" },
     { "path": "../generator" }
   ]
 }

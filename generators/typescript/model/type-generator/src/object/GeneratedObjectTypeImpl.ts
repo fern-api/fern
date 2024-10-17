@@ -1,8 +1,9 @@
 import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { GeneratedObjectType, ModelContext } from "@fern-typescript/contexts";
-import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { ts as TypeScriptAST } from "@fern-api/typescript-codegen";
 
 export class GeneratedObjectTypeImpl<Context extends ModelContext>
     extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
@@ -11,8 +12,43 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
     public readonly type = "object";
 
     public writeToFile(context: Context): void {
+        const file = TypeScriptAST.file();
+
+        const interface_ = TypeScriptAST.interface_({
+            name: this.typeName,
+            export: true,
+            properties: this.shape.properties.map((property) => {
+                // const value = context.V2.tsTypeMapper.convert({ reference: property.valueType });
+
+                // const propertyNode: OptionalKind<PropertySignatureStructure> = {
+                //     name: `"${this.getPropertyKeyFromProperty(property)}"`,
+                //     type: getTextOfTsNode(this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined),
+                //     hasQuestionToken: !this.noOptionalProperties && value.isOptional,
+                //     docs: property.docs != null ? [{ description: property.docs }] : undefined
+                // };
+
+                return {
+                    name: `${this.getPropertyKeyFromProperty(property)}`,
+                    /* The type of the property */
+                    type: context.V2.tsTypeMapper.convert({ reference: property.valueType }),
+                    /* Quesiton mark */
+                    questionMark:
+                        !this.noOptionalProperties &&
+                        property.valueType.type === "container" &&
+                        property.valueType.container.type === "optional"
+                };
+            }),
+            // extends: this.shape.extends.map((extend) => context.V2.tsTypeMapper.convert({ reference: extend.typeId }))
+        });
+
+              // for (const extension of this.shape.extends) {
+        //     interfaceNode.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
+        // }
+
+        file.addInterface(interface_);
+
         context.sourceFile.set({
-            statements: "waddddupppp"
+            statements: file.toStringFormatted()
         });
 
         // const interfaceNode = context.sourceFile.addInterface({

@@ -1,5 +1,5 @@
 import { AbstractAstNode, CodeBlock as CommonCodeBlock } from "@fern-api/generator-commons";
-import { Writer } from "../typescript";
+import { Writer } from "./Writer";
 
 export declare namespace CodeBlock {
     /* Write arbitrary code */

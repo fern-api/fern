@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../utils/commons" },
     { "path": "../../utils/contexts" },
+    { "path": "../../codegen" },
     { "path": "../union-generator" }
   ]
 }
