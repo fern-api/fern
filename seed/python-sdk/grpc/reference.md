@@ -19,10 +19,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 client.user.create_user(
-    username="string",
-    email="string",
-    age=1,
-    weight=1.1,
+    username="username",
 )
 
 ```
@@ -101,11 +98,7 @@ from seed import SeedApi
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
-client.user.get_user(
-    username="string",
-    age=1,
-    weight=1.1,
-)
+client.user.get_user()
 
 ```
 </dd>
