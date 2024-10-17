@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Column": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Column",
@@ -315,6 +316,7 @@
             "docs": null
         },
         "type_:DeleteResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "DeleteResponse",
@@ -394,6 +396,7 @@
             "docs": null
         },
         "type_:DescribeResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "DescribeResponse",
@@ -672,6 +675,7 @@
             "docs": null
         },
         "type_:FetchResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "FetchResponse",
@@ -942,6 +946,7 @@
             "docs": null
         },
         "type_:IndexedData": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "IndexedData",
@@ -1100,6 +1105,7 @@
             "docs": null
         },
         "type_:ListElement": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ListElement",
@@ -1223,6 +1229,7 @@
             "docs": null
         },
         "type_:ListResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ListResponse",
@@ -1542,6 +1549,7 @@
             "docs": null
         },
         "type_:NamespaceSummary": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "NamespaceSummary",
@@ -1661,6 +1669,7 @@
             "docs": null
         },
         "type_:Pagination": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Pagination",
@@ -1784,6 +1793,7 @@
             "docs": null
         },
         "type_:QueryColumn": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "QueryColumn",
@@ -2113,6 +2123,7 @@
             "docs": null
         },
         "type_:QueryResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "QueryResponse",
@@ -2441,6 +2452,7 @@
             "docs": null
         },
         "type_:QueryResult": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "QueryResult",
@@ -2637,6 +2649,7 @@
             "docs": null
         },
         "type_:ScoredColumn": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ScoredColumn",
@@ -2966,6 +2979,7 @@
             "docs": null
         },
         "type_:UpdateResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UpdateResponse",
@@ -3045,6 +3059,7 @@
             "docs": null
         },
         "type_:UploadResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UploadResponse",
@@ -3164,6 +3179,7 @@
             "docs": null
         },
         "type_:Usage": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Usage",
@@ -3283,6 +3299,7 @@
             "docs": null
         },
         "type_:Metadata": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Metadata",
@@ -3410,6 +3427,7 @@
             "docs": null
         },
         "type_:MetadataValue": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "MetadataValue",

@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_unknown:MyAlias": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "MyAlias",
@@ -117,6 +118,7 @@
             "docs": null
         },
         "type_unknown:MyObject": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "MyObject",

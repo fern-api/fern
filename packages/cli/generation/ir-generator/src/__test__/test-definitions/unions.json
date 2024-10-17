@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_types:Union": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Union",
@@ -380,6 +381,7 @@
             "docs": "This is a simple union."
         },
         "type_types:UnionWithDiscriminant": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UnionWithDiscriminant",
@@ -729,6 +731,7 @@
             "docs": null
         },
         "type_types:UnionWithPrimitive": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UnionWithPrimitive",
@@ -961,6 +964,7 @@
             "docs": null
         },
         "type_types:UnionWithoutKey": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UnionWithoutKey",
@@ -1256,6 +1260,7 @@
             "docs": null
         },
         "type_types:UnionWithUnknown": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UnionWithUnknown",
@@ -1487,6 +1492,7 @@
             "docs": null
         },
         "type_types:UnionWithLiteral": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UnionWithLiteral",
@@ -1692,6 +1698,7 @@
             "docs": null
         },
         "type_types:UnionWithBaseProperties": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UnionWithBaseProperties",
@@ -2057,6 +2064,7 @@
             "docs": null
         },
         "type_types:UnionWithTime": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UnionWithTime",
@@ -2344,6 +2352,7 @@
             "docs": null
         },
         "type_types:UnionWithOptionalTime": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UnionWithOptionalTime",
@@ -2580,6 +2589,7 @@
             "docs": null
         },
         "type_types:UnionWithSingleElement": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UnionWithSingleElement",
@@ -2781,6 +2791,7 @@
             "docs": null
         },
         "type_types:Foo": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Foo",
@@ -2903,6 +2914,7 @@
             "docs": null
         },
         "type_types:Bar": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Bar",
@@ -3025,6 +3037,7 @@
             "docs": null
         },
         "type_union:GetShapeRequest": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "GetShapeRequest",
@@ -3147,6 +3160,7 @@
             "docs": null
         },
         "type_union:Shape": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Shape",
@@ -3480,6 +3494,7 @@
             "docs": null
         },
         "type_union:Circle": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Circle",
@@ -3602,6 +3617,7 @@
             "docs": null
         },
         "type_union:Square": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Square",
