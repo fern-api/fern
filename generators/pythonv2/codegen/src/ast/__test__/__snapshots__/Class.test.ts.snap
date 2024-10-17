@@ -6,12 +6,9 @@ exports[`class > basic 1`] = `
 `;
 
 exports[`class > class with a decorator 1`] = `
-"from dataclasses import dataclass
-    
-@dataclass
+"@dataclass
 class MyDataClass:
-    pass
-"
+    pass"
 `;
 
 exports[`class > fields with annotation and initializer 1`] = `
