@@ -18,31 +18,23 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
             name: this.typeName,
             export: true,
             properties: this.shape.properties.map((property) => {
-                // const value = context.V2.tsTypeMapper.convert({ reference: property.valueType });
-
-                // const propertyNode: OptionalKind<PropertySignatureStructure> = {
-                //     name: `"${this.getPropertyKeyFromProperty(property)}"`,
-                //     type: getTextOfTsNode(this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined),
-                //     hasQuestionToken: !this.noOptionalProperties && value.isOptional,
-                //     docs: property.docs != null ? [{ description: property.docs }] : undefined
-                // };
-
                 return {
                     name: `${this.getPropertyKeyFromProperty(property)}`,
-                    /* The type of the property */
                     type: context.V2.tsTypeMapper.convert({ reference: property.valueType }),
-                    /* Quesiton mark */
                     questionMark:
                         !this.noOptionalProperties &&
                         property.valueType.type === "container" &&
                         property.valueType.container.type === "optional"
+                    //     docs: property.docs != null ? [{ description: property.docs }] : undefined
                 };
-            }),
+            })
             // extends: this.shape.extends.map((extend) => context.V2.tsTypeMapper.convert({ reference: extend.typeId }))
         });
 
-              // for (const extension of this.shape.extends) {
-            // interfaceNode.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
+        // maybeAddDocs(interfaceNode, this.getDocs(context));
+
+        // for (const extension of this.shape.extends) {
+        //     interfaceNode.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
         // }
 
         file.addInterface(interface_);
@@ -50,32 +42,6 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
         context.sourceFile.set({
             statements: file.toStringFormatted()
         });
-
-        // const interfaceNode = context.sourceFile.addInterface({
-        //     name: this.typeName,
-        //     properties: [
-        //         ...this.shape.properties.map((property) => {
-        //             const value = context.type.getReferenceToType(property.valueType);
-        //             const propertyNode: OptionalKind<PropertySignatureStructure> = {
-        //                 name: `"${this.getPropertyKeyFromProperty(property)}"`,
-        //                 type: getTextOfTsNode(
-        //                     this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined
-        //                 ),
-        //                 hasQuestionToken: !this.noOptionalProperties && value.isOptional,
-        //                 docs: property.docs != null ? [{ description: property.docs }] : undefined
-        //             };
-
-        //             return propertyNode;
-        //         })
-        //     ],
-        //     isExported: true
-        // });
-
-        // maybeAddDocs(interfaceNode, this.getDocs(context));
-
-        // for (const extension of this.shape.extends) {
-        //     interfaceNode.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
-        // }
     }
 
     public getPropertyKey({ propertyWireKey }: { propertyWireKey: string }): string {
