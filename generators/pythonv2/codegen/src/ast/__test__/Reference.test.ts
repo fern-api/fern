@@ -9,54 +9,61 @@ describe("Reference", () => {
     });
 
     describe("toString", () => {
-        it("returns the fully qualified name", () => {
+        it("returns the fully qualified name", async () => {
             const reference = python.reference({ name: "MyClass", modulePath: ["module", "submodule"] });
-            expect(reference.toString()).toBe("MyClass");
+            reference.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("handles single-level module path", () => {
+        it("handles single-level module path", async () => {
             const reference = python.reference({ name: "SimpleClass", modulePath: ["simple"] });
-            expect(reference.toString()).toBe("SimpleClass");
+            reference.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("handles class without module path", () => {
+        it("handles class without module path", async () => {
             const reference = python.reference({ name: "StandaloneClass", modulePath: [] });
-            expect(reference.toString()).toBe("StandaloneClass");
+            reference.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("handles deeply nested module path", () => {
+        it("handles deeply nested module path", async () => {
             const reference = python.reference({
                 name: "DeepClass",
                 modulePath: ["very", "deep", "nested", "module"]
             });
-            expect(reference.toString()).toBe("DeepClass");
+            reference.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("handles class with one generic type", () => {
+        it("handles class with one generic type", async () => {
             const reference = python.reference({
                 name: "GenericClass",
                 modulePath: ["module"],
                 genericTypes: [python.Type.str()]
             });
-            expect(reference.toString()).toBe("GenericClass[str]");
+            reference.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("handles class with two generic types", () => {
+        it("handles class with two generic types", async () => {
             const reference = python.reference({
                 name: "DoubleGenericClass",
                 modulePath: ["module"],
                 genericTypes: [python.Type.str(), python.Type.int()]
             });
-            expect(reference.toString()).toBe("DoubleGenericClass[str, int]");
+            reference.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("handles class with alias", () => {
+        it("handles class with alias", async () => {
             const reference = python.reference({
                 name: "AliasClass",
                 modulePath: ["module"],
                 alias: "Alias"
             });
-            expect(reference.toString()).toBe("Alias");
+            reference.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
     });
 });

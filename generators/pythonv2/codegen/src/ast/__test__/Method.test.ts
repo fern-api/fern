@@ -2,45 +2,56 @@ import { ClassMethodType } from "../Method";
 import { Type } from "../Type";
 import { CodeBlock } from "../CodeBlock";
 import { python } from "../..";
+import { Writer } from "../core/Writer";
 
 describe("Method", () => {
+    let writer: Writer;
+
+    beforeEach(() => {
+        writer = new Writer();
+    });
+
     describe("toString", () => {
-        it("should generate a static method", () => {
+        it("should generate a static method", async () => {
             const method = python.method({
                 name: "static_method",
                 parameters: [],
                 type: ClassMethodType.STATIC
             });
-            expect(method.toString()).toMatchSnapshot();
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should generate an instance method", () => {
+        it("should generate an instance method", async () => {
             const method = python.method({
                 name: "instance_method",
                 parameters: [],
                 type: ClassMethodType.INSTANCE
             });
-            expect(method.toString()).toMatchSnapshot();
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should generate a class method", () => {
+        it("should generate a class method", async () => {
             const method = python.method({
                 name: "class_method",
                 parameters: [],
                 type: ClassMethodType.CLASS
             });
-            expect(method.toString()).toMatchSnapshot();
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should generate a method with one argument", () => {
+        it("should generate a method with one argument", async () => {
             const method = python.method({
                 name: "one_arg",
                 parameters: [python.parameter({ name: "arg1", type: python.Type.str() })]
             });
-            expect(method.toString()).toMatchSnapshot();
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should generate a method with multiple arguments", () => {
+        it("should generate a method with multiple arguments", async () => {
             const method = python.method({
                 name: "multi_args",
                 parameters: [
@@ -48,61 +59,68 @@ describe("Method", () => {
                     python.parameter({ name: "arg2", type: python.Type.int() })
                 ]
             });
-            expect(method.toString()).toMatchSnapshot();
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should generate a method with a specified return type", () => {
+        it("should generate a method with a specified return type", async () => {
             const method = python.method({
                 name: "with_return",
                 parameters: [],
                 return_: python.Type.bool()
             });
-            expect(method.toString()).toMatchSnapshot();
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should generate a method without a specified return type", () => {
+        it("should generate a method without a specified return type", async () => {
             const method = python.method({
                 name: "without_return",
                 parameters: []
             });
-            expect(method.toString()).toMatchSnapshot();
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should generate a method with a body", () => {
+        it("should generate a method with a body", async () => {
             const method = python.method({
                 name: "with_body",
                 parameters: [],
                 body: python.codeBlock("return True")
             });
-            expect(method.toString()).toMatchSnapshot();
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should generate a method without a body", () => {
+        it("should generate a method without a body", async () => {
             const method = python.method({
                 name: "without_body",
                 parameters: []
             });
-            expect(method.toString()).toMatchSnapshot();
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should generate a method with a docstring", () => {
+        it("should generate a method with a docstring", async () => {
             const method = python.method({
                 name: "with_docstring",
                 parameters: [],
                 docstring: "This is a docstring"
             });
-            expect(method.toString()).toMatchSnapshot();
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should generate a method without a docstring", () => {
+        it("should generate a method without a docstring", async () => {
             const method = python.method({
                 name: "without_docstring",
                 parameters: []
             });
-            expect(method.toString()).toMatchSnapshot();
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should generate a method with a decorator", () => {
+        it("should generate a method with a decorator", async () => {
             const method = python.method({
                 name: "with_decorator",
                 parameters: [],
@@ -112,7 +130,8 @@ describe("Method", () => {
                     })
                 ]
             });
-            expect(method.toString()).toMatchSnapshot();
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
     });
 });
