@@ -1,16 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Decorator > toString > should generate a decorator with a reference 1`] = `
-"from decorators import decorator_with_reference
-    
-@decorator_with_reference
+"@decorator_with_reference
 "
 `;
 
 exports[`Decorator > toString > should generate a decorator with a reference and arguments 1`] = `
-"from decorators import complex_decorator
-    
-@complex_decorator('test', value=True)
+"@complex_decorator('test', value=True)
 "
 `;
 

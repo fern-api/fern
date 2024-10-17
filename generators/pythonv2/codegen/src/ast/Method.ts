@@ -34,6 +34,7 @@ export declare namespace Method {
         decorators?: Decorator[];
     }
 }
+[];
 
 export class Method extends AstNode {
     public readonly name: string;
@@ -41,7 +42,6 @@ export class Method extends AstNode {
     public readonly body: CodeBlock | undefined;
     public readonly docstring: string | undefined;
     public readonly type: ClassMethodType | undefined;
-    public readonly reference: Reference | undefined;
     private readonly parameters: Parameter[];
     private readonly decorators: Decorator[];
 
@@ -53,7 +53,6 @@ export class Method extends AstNode {
         this.body = body;
         this.docstring = docstring;
         this.type = type;
-        this.reference = classReference;
         this.decorators = decorators ?? [];
     }
 

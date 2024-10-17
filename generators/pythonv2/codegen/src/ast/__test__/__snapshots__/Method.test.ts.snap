@@ -13,9 +13,7 @@ exports[`Method > toString > should generate a method with a body 1`] = `
 `;
 
 exports[`Method > toString > should generate a method with a decorator 1`] = `
-"from decorators import decorator_with_reference
-    
-@decorator_with_reference
+"@decorator_with_reference
 def with_decorator():
     pass
 "
