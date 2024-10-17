@@ -24,8 +24,7 @@ yarn add \
   qs@6.11.2 \
   ts-jest@29.1.1 \
   typescript@4.6.4" \
-  url-join@4.0.1 \
-  ioredis@5.4.1 
+  url-join@4.0.1 
 
 cd ..
 /bin/rm -rf $project_name

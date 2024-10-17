@@ -177,33 +177,6 @@ export class SimpleTypescriptProject extends TypescriptProject {
         );
     }
 
-    private async generateSwcConfig(): Promise<void> {
-        const swcConfig = {
-            $schema: "https://json.schemastore.org/swcrc",
-            jsc: {
-                parser: {
-                    syntax: "typescript",
-                    tsx: false
-                },
-                target: "es2015", // Equivalent to ES6
-                loose: false,
-                externalHelpers: false,
-                keepClassNames: false
-            },
-            module: {
-                type: this.outputEsm ? "es6" : "commonjs",
-                strict: true,
-                strictMode: true,
-                lazy: false,
-                noInterop: false
-            },
-            isModule: true,
-            minify: false
-        };
-
-        await this.writeFileToVolume(RelativeFilePath.of(".swcrc"), JSON.stringify(swcConfig, undefined, 4));
-    }
-
     private async generatePackageJson(): Promise<void> {
         let packageJson: IPackageJson = {
             name: this.npmPackage != null ? this.npmPackage.packageName : "test-package"
