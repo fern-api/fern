@@ -23,7 +23,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { askToLogin } from "@fern-api/login";
 import { FernToken, getCurrentUser } from "@fern-api/auth";
 import { initializeAndPushRepository, writeFernConfigRepoAdditions } from "./utils/initv2/fernConfig";
-import { black } from "./commands/generate-overrides/black";
+import { black } from "./commands/generate-overrides/hackweek/black";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { generateWorkspace } from "./commands/generate/generateAPIWorkspace";

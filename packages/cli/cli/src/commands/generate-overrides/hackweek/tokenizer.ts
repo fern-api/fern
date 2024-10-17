@@ -1,11 +1,10 @@
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { encodingForModel, TiktokenModel } from "js-tiktoken";
-import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
-import { parseOpenAPI } from "@fern-api/openapi-ir-parser/src/loadOpenAPI";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import { dirname, join } from "path";
+import { parseApiSpec } from "./parseOpenApi";
+import { OpenAPIV3 } from "openapi-types";
 
 export function tokenize({
     input,
@@ -74,17 +73,16 @@ export function tokenizeIREndpoints({
 }
 
 export async function tokenizeOpenApiSpec({
-    absolutePathToOpenAPI,
+    openApiDocument,
     tokensPerChunk,
     model = "gpt-4o-mini",
     path
 }: {
-    absolutePathToOpenAPI: AbsoluteFilePath;
+    openApiDocument: OpenAPIV3.Document;
     tokensPerChunk: number;
     model?: TiktokenModel;
     path: AbsoluteFilePath;
 }): Promise<{ stringifiedEndpoints: string; numEndpointsInChunk: number }[]> {
-    const openApiDocument = await parseApiSpec(absolutePathToOpenAPI);
     const tokenEncoding = encodingForModel(model);
     const tokens: { stringifiedEndpoints: string; numEndpointsInChunk: number }[] = [];
     let currentChunk: { paths: Record<string, Record<string, unknown>> } = { paths: {} };
@@ -117,27 +115,4 @@ export async function tokenizeOpenApiSpec({
     await writeFile(join(dirname(path), RelativeFilePath.of("spliced-overrides.json")), JSON.stringify(currentChunk));
 
     return tokens;
-}
-
-// This is a little duplicative of what we do in the OAI IR generation, but the OpenAPI IR is just way too large to send.
-async function parseApiSpec(absolutePathToOpenAPI: AbsoluteFilePath): Promise<OpenAPIV3.Document> {
-    const openApiDocument = await parseOpenAPI({
-        absolutePathToOpenAPI
-    });
-
-    if (isOpenApiV3(openApiDocument)) {
-        return openApiDocument;
-    }
-
-    throw new Error("Invalid OpenAPI document");
-}
-
-function isOpenApiV3(openApi: OpenAPI.Document): openApi is OpenAPIV3.Document {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (openApi as OpenAPIV3.Document).openapi != null;
-}
-
-function isOpenApiV2(openApi: OpenAPI.Document): openApi is OpenAPIV2.Document {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (openApi as OpenAPIV2.Document).swagger != null;
 }

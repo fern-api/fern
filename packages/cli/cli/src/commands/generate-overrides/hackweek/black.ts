@@ -7,8 +7,10 @@ import { writeFile } from "fs/promises";
 import { dirname, join } from "path";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import yaml from "js-yaml";
-import { tokenizeOpenApiSpec } from "../../utils/initv2/tokenizer";
 import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
+import { validateOverrides } from "./validateOverrides";
+import { parseApiSpec } from "./parseOpenApi";
+import { tokenizeOpenApiSpec } from "./tokenizer";
 
 export async function black({
     workspace,
@@ -28,8 +30,9 @@ export async function black({
 
         // Ideally we'd us the API spec directly to provide additional context, but to avoid manually parsing the API spec, we just use the IR
         // TODO: Update the prompt examples to use the IR instead of the API spec
+        const openApiDocument = await parseApiSpec(openApiSpec.absoluteFilepath);
         const chunkedAPI = await tokenizeOpenApiSpec({
-            absolutePathToOpenAPI: openApiSpec.absoluteFilepath,
+            openApiDocument,
             // We're using gpt-4o-mini
             tokensPerChunk: 120000,
             path: openApiSpec.absoluteFilepath
@@ -54,11 +57,12 @@ export async function black({
         context.updateProgress(numEndpoints);
         context.finishProgress();
 
+        const sanitizedOverrides = validateOverrides(chunkedOverrides, openApiDocument, "strip");
         // TODO: It'd be nice to stream to a file, but given we probably need to format the YAML, we'll need to do that in memory.
-        if (chunkedOverrides.length > 0) {
+        if (sanitizedOverrides.length > 0) {
             await writeFile(
                 join(dirname(openApiSpec.absoluteFilepath), RelativeFilePath.of("openapi-overrides.yml")),
-                chunkedOverrides
+                sanitizedOverrides
             );
         }
     }
