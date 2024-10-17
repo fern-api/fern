@@ -5738,6 +5738,9 @@ importers:
       ua-parser-js:
         specifier: ^1.0.37
         version: 1.0.37
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
       whatwg-mimetype:
         specifier: ^4.0.0
         version: 4.0.0
@@ -5757,6 +5760,9 @@ importers:
       '@types/ua-parser-js':
         specifier: ^0.7.39
         version: 0.7.39
+      '@types/uuid':
+        specifier: ^9.0.8
+        version: 9.0.8
       '@types/whatwg-mimetype':
         specifier: ^3.0.2
         version: 3.0.2

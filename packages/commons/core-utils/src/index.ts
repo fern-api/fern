@@ -1,6 +1,7 @@
 export { addPrefixToString } from "./addPrefixToString";
 export { assertNever, assertNeverNoThrow } from "./assertNever";
 export { assertVoidNoThrow } from "./assertVoidNoThrow";
+export { AsyncPerformanceObserver } from "./AsyncPerformanceObserver";
 export { delay } from "./delay/delay";
 export { withMinimumTime } from "./delay/withMinimumTime";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty";
