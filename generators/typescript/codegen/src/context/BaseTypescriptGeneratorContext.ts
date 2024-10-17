@@ -1,6 +1,8 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
-import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
+import { DeclaredTypeName, IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
+import { ts } from "..";
+import { Reference } from "../ast";
 import { BaseTypescriptCustomConfigSchema } from "../custom-config/BaseTypescriptCustomConfigSchema";
 import { TypescriptTypeMapper } from "./TypescriptTypeMapper";
 
@@ -36,5 +38,17 @@ export class BaseTypescriptGeneratorContext<
 
     public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
         return this.ir.types[typeId];
+    }
+
+    public getReferenceToNamedType(typeId: TypeId): ts.Reference {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return Reference.module({
+            module: this.getNamespaceExport(),
+            name: [
+                ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName),
+                typeDeclaration.name.name.pascalCase.safeName
+            ],
+            source: `${typeDeclaration.name.fernFilepath.allParts.map(() => "../../../").join("")}`
+        });
     }
 }

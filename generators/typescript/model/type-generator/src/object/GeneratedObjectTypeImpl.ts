@@ -42,7 +42,7 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
         });
 
               // for (const extension of this.shape.extends) {
-        //     interfaceNode.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
+            // interfaceNode.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
         // }
 
         file.addInterface(interface_);
