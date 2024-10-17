@@ -107,47 +107,6 @@ export class SimpleTypescriptProject extends TypescriptProject {
         );
     }
 
-    private async generateBiomeConfig(): Promise<void> {
-        const biomeConfig = {
-            $schema: "https://biomejs.dev/schemas/1.5.3/schema.json",
-            formatter: {
-                indentStyle: "space",
-                indentWidth: 4,
-                lineWidth: 120
-            },
-            javascript: {
-                formatter: {
-                    quoteStyle: "double"
-                }
-            },
-            linter: {
-                enabled: true,
-                rules: {
-                    recommended: true
-                }
-            },
-            organizeImports: {
-                enabled: true
-            },
-            vcs: {
-                enabled: true,
-                clientKind: "git",
-                useIgnoreFile: true
-            },
-            files: {
-                ignore: ["node_modules", "dist"]
-            }
-        };
-
-        await Promise.all([
-            this.writeFileToVolume(RelativeFilePath.of("biome.json"), JSON.stringify(biomeConfig, null, 2)),
-            this.writeFileToVolume(
-                RelativeFilePath.of(".editorconfig"),
-                "root = true\n\n[*]\nindent_style = space\nindent_size = 4\nend_of_line = lf\ncharset = utf-8\ntrim_trailing_whitespace = true\ninsert_final_newline = true\n"
-            )
-        ]);
-    }
-
     private async generateTsConfig(): Promise<void> {
         const compilerOptions: CompilerOptions = {
             extendedDiagnostics: true,
