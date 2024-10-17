@@ -5,7 +5,8 @@
 import * as SeedApi from "../../../";
 
 export interface Movie {
-  id: SeedApi.MovieId;
-  title: string;
-  rating: number;
+    id: SeedApi.MovieId;
+    title: string;
+    /* The rating scale is one to five stars */
+    rating: number;
 }

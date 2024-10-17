@@ -24,18 +24,13 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
                     questionMark:
                         !this.noOptionalProperties &&
                         property.valueType.type === "container" &&
-                        property.valueType.container.type === "optional"
-                    //     docs: property.docs != null ? [{ description: property.docs }] : undefined
+                        property.valueType.container.type === "optional",
+                    docs: property.docs
                 };
-            })
-            // extends: this.shape.extends.map((extend) => context.V2.tsTypeMapper.convert({ reference: extend.typeId }))
+            }),
+            extends: this.shape.extends.map((extend) => context.V2.getReferenceToNamedType(extend.typeId)),
+            docs: this.getDocs(context)
         });
-
-        // maybeAddDocs(interfaceNode, this.getDocs(context));
-
-        // for (const extension of this.shape.extends) {
-        //     interfaceNode.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
-        // }
 
         file.addInterface(interface_);
 
