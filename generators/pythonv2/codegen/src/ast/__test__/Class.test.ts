@@ -28,7 +28,7 @@ describe("class", () => {
     it("inherits from one parent class", async () => {
         const clazz = python.class_({
             name: "ElectricCar",
-            extends_: [python.classReference({ name: "Car" })]
+            extends_: [python.reference({ name: "Car" })]
         });
         expect(clazz.toString()).toMatchSnapshot();
     });
@@ -36,7 +36,7 @@ describe("class", () => {
     it("inherits from two parent classes", async () => {
         const clazz = python.class_({
             name: "HybridCar",
-            extends_: [python.classReference({ name: "ElectricCar" }), python.classReference({ name: "GasCar" })]
+            extends_: [python.reference({ name: "ElectricCar" }), python.reference({ name: "GasCar" })]
         });
         expect(clazz.toString()).toMatchSnapshot();
     });
@@ -45,9 +45,21 @@ describe("class", () => {
         const clazz = python.class_({
             name: "SportsCar",
             extends_: [
-                python.classReference({
+                python.reference({
                     name: "Vehicle",
                     modulePath: ["vehicles", "base"]
+                })
+            ]
+        });
+        expect(clazz.toString()).toMatchSnapshot();
+    });
+
+    it("class with a decorator", () => {
+        const clazz = python.class_({
+            name: "MyDataClass",
+            decorators: [
+                python.decorator({
+                    reference: python.reference({ name: "dataclass", modulePath: ["dataclasses"] })
                 })
             ]
         });

@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:ExampleResponseStatus": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ExampleResponseStatus",
@@ -128,6 +129,7 @@
             "docs": null
         },
         "type_:ExampleResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ExampleResponse",
@@ -342,6 +344,7 @@
             "docs": null
         },
         "type_:GrantTypeEnum": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "GrantTypeEnum",

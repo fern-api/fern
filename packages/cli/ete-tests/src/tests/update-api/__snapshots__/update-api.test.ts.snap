@@ -112,6 +112,9 @@ exports[`fern api update > fern api update 1`] = `
           "200": {
             "description": "OK",
             "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/Cache-Control"
+              },
               "RateLimit": {
                 "$ref": "#/components/headers/RateLimit"
               }
@@ -119,6 +122,7 @@ exports[`fern api update > fern api update 1`] = `
             "content": {
               "application/json": {
                 "schema": {
+                  "type": "object",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -286,6 +290,9 @@ exports[`fern api update > fern api update 1`] = `
           "200": {
             "description": "A list of available train trips",
             "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/Cache-Control"
+              },
               "RateLimit": {
                 "$ref": "#/components/headers/RateLimit"
               }
@@ -419,10 +426,27 @@ exports[`fern api update > fern api update 1`] = `
         "tags": [
           "Bookings"
         ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "example": 1
+          }
+        ],
         "responses": {
           "200": {
             "description": "A list of bookings",
             "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/Cache-Control"
+              },
               "RateLimit": {
                 "$ref": "#/components/headers/RateLimit"
               }
@@ -662,6 +686,9 @@ exports[`fern api update > fern api update 1`] = `
           "200": {
             "description": "The booking details",
             "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/Cache-Control"
+              },
               "RateLimit": {
                 "$ref": "#/components/headers/RateLimit"
               }
@@ -843,6 +870,9 @@ exports[`fern api update > fern api update 1`] = `
           "200": {
             "description": "Payment successful",
             "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/Cache-Control"
+              },
               "RateLimit": {
                 "$ref": "#/components/headers/RateLimit"
               }
@@ -1081,6 +1111,7 @@ exports[`fern api update > fern api update 1`] = `
         }
       },
       "Problem": {
+        "type": "object",
         "xml": {
           "name": "problem",
           "namespace": "urn:ietf:rfc:7807"
@@ -1279,10 +1310,11 @@ exports[`fern api update > fern api update 1`] = `
           "source": {
             "unevaluatedProperties": false,
             "description": "The payment source to take the payment from. This can be a card or a bank account. Some of these properties will be hidden on read to protect PII leaking.",
-            "anyOf": [
+            "oneOf": [
               {
                 "title": "Card",
                 "description": "A card (debit or credit) to take payment from.",
+                "type": "object",
                 "properties": {
                   "object": {
                     "type": "string",
@@ -1429,6 +1461,20 @@ exports[`fern api update > fern api update 1`] = `
       }
     },
     "headers": {
+      "Cache-Control": {
+        "description": "The Cache-Control header communicates directives for caching mechanisms in both requests and responses. \\nIt is used to specify the caching directives in responses to prevent caches from storing sensitive information.\\n",
+        "schema": {
+          "type": "string",
+          "description": "A comma-separated list of directives as defined in [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html).",
+          "examples": [
+            "max-age=3600",
+            "max-age=604800, public",
+            "no-store",
+            "no-cache",
+            "private"
+          ]
+        }
+      },
       "RateLimit": {
         "description": "The RateLimit header communicates quota policies. It contains a \`limit\` to\\nconvey the expiring limit, \`remaining\` to convey the remaining quota units,\\nand \`reset\` to convey the time window reset time.\\n",
         "schema": {

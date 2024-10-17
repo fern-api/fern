@@ -1,0 +1,55 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PythonFile > Add a Method 1`] = `
+"def test_method() -> str:
+    pass
+
+"
+`;
+
+exports[`PythonFile > Add a class with a reference that uses a python standard library reference 1`] = `
+"from itertools import chain
+
+class TestClass:
+    flat_list = list(itertools.chain([[1, 2], [3, 4]]))
+"
+`;
+
+exports[`PythonFile > Add a class with a reference that uses a relative import 1`] = `
+"from ..my_module.level_1 import OtherClass
+from ..my_module.level_1.level_2 import DeepClass
+
+class TestClass(OtherClass):
+    pass
+
+class DeeplyNestedTestClass(DeepClass):
+    pass
+"
+`;
+
+exports[`PythonFile > Add a class with a relative import and alias 1`] = `
+"from ...test_module.test.sibling_dir import SiblingClass
+
+class TestClassWithRelativeAlias(SiblingClass):
+    pass
+"
+`;
+
+exports[`PythonFile > Add a class with an absolute import and alias 1`] = `
+"from external_module.submodule import ExternalClass as AliasedClass
+
+class TestClassWithAlias(ExternalClass):
+    pass
+"
+`;
+
+exports[`PythonFile > Add a class with no references 1`] = `
+"class TestClass:
+    pass
+"
+`;
+
+exports[`PythonFile > Add a code block 1`] = `
+"print('Hello, World!')
+"
+`;

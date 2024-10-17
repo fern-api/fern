@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Id": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Id",
@@ -95,6 +96,7 @@
             "docs": null
         },
         "type_organization:Organization": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Organization",
@@ -376,6 +378,7 @@
             "docs": null
         },
         "type_organization:CreateOrganizationRequest": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "CreateOrganizationRequest",
@@ -498,6 +501,7 @@
             "docs": null
         },
         "type_user:User": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "User",
@@ -715,6 +719,7 @@
             "docs": null
         },
         "type_user/events:Event": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Event",
@@ -934,6 +939,7 @@
             "docs": null
         },
         "type_user/events/metadata:Metadata": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Metadata",

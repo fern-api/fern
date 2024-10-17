@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_union:TypeWithOptionalUnion": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "TypeWithOptionalUnion",
@@ -218,6 +219,7 @@
             "docs": null
         },
         "type_union:MyUnion": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "MyUnion",
@@ -414,6 +416,7 @@
             "docs": "Several different types are accepted."
         },
         "type_union:Metadata": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Metadata",
@@ -1248,6 +1251,7 @@
             "docs": "Undiscriminated unions can act as a map key\nas long as all of their values are valid keys\n(i.e. do they have a valid string representation)."
         },
         "type_union:Key": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Key",
@@ -1416,6 +1420,7 @@
             "docs": null
         },
         "type_union:KeyType": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "KeyType",

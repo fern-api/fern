@@ -76,6 +76,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_errors:UnauthorizedRequestErrorBody": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UnauthorizedRequestErrorBody",

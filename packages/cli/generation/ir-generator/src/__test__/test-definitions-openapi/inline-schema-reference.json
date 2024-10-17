@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:NotFound": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "NotFound",
@@ -121,6 +122,7 @@
             "docs": null
         },
         "type_:GetExampleResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "GetExampleResponse",
@@ -268,6 +270,7 @@
             "docs": null
         },
         "type_:Schema1": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Schema1",
@@ -401,6 +404,7 @@
             "docs": null
         },
         "type_:Schema2": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Schema2",

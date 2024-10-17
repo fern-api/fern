@@ -2,35 +2,33 @@
 
 exports[`class > basic 1`] = `
 "class Car:
-    pass
-"
+    pass"
+`;
+
+exports[`class > class with a decorator 1`] = `
+"@dataclass
+class MyDataClass:
+    pass"
 `;
 
 exports[`class > fields with annotation and initializer 1`] = `
-"from typing import Dict
-    
-class Car:
+"class Car:
     color: str = 'red'
     partNameById: Dict[int, str] = {}
 "
 `;
 
 exports[`class > inherits from a parent class imported from another module 1`] = `
-"from vehicles.base import Vehicle
-    
-class SportsCar(Vehicle):
-    pass
-"
+"class SportsCar(Vehicle):
+    pass"
 `;
 
 exports[`class > inherits from one parent class 1`] = `
 "class ElectricCar(Car):
-    pass
-"
+    pass"
 `;
 
 exports[`class > inherits from two parent classes 1`] = `
 "class HybridCar(ElectricCar, GasCar):
-    pass
-"
+    pass"
 `;

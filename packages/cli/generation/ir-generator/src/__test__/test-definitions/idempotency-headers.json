@@ -133,6 +133,7 @@
     ],
     "types": {
         "type_payment:Currency": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Currency",
