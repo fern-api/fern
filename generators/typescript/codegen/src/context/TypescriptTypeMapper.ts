@@ -95,26 +95,7 @@ export class TypescriptTypeMapper {
     }
 
     private convertNamed({ named }: { named: DeclaredTypeName }): Type {
-        const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
-
-        const reference = ts.Type.reference(
-            ts.Reference.module({
-                name: [typeDeclaration.name.name.pascalCase.safeName],
-                module: this.context.getNamespaceExport(),
-                source: "../../"
-            })
-        );
-
-        switch (typeDeclaration.shape.type) {
-            case "alias":
-            case "enum":
-            case "object":
-            case "union":
-            case "undiscriminatedUnion": {
-                return reference;
-            }
-            default:
-                assertNever(typeDeclaration.shape);
-        }
+        const reference = this.context.getReferenceToNamedType(named.typeId);
+        return ts.Type.reference(reference);
     }
 }
