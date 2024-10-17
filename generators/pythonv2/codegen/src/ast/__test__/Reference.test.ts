@@ -49,5 +49,14 @@ describe("Reference", () => {
             });
             expect(reference.toString()).toBe("DoubleGenericClass[str, int]");
         });
+
+        it("handles class with alias", () => {
+            const reference = python.reference({
+                name: "AliasClass",
+                modulePath: ["module"],
+                alias: "Alias"
+            });
+            expect(reference.toString()).toBe("AliasClass as Alias");
+        });
     });
 });

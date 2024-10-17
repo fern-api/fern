@@ -27,6 +27,22 @@ class DeeplyNestedTestClass(DeepClass):
 "
 `;
 
+exports[`PythonFile > Add a class with a relative import and alias 1`] = `
+"from ...test_module.test.sibling_dir import SiblingClass
+
+class TestClassWithRelativeAlias(SiblingClass as AliasedSibling):
+    pass
+"
+`;
+
+exports[`PythonFile > Add a class with an absolute import and alias 1`] = `
+"from external_module.submodule import ExternalClass as AliasedClass
+
+class TestClassWithAlias(ExternalClass as AliasedClass):
+    pass
+"
+`;
+
 exports[`PythonFile > Add a class with no references 1`] = `
 "class TestClass:
     pass
