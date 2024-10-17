@@ -402,8 +402,10 @@ export class SdkGenerator {
     }
 
     public async generate(): Promise<TypescriptProject> {
+        const running: Promise<any>[] = [];
+
         performance.mark("generateTypeDeclarations");
-        await this.generateTypeDeclarations();
+        running.push(this.generateTypeDeclarations());
         performance.mark("generateTypeDeclarations finished");
         performance.measure(
             "generateTypeDeclarations",
@@ -412,7 +414,7 @@ export class SdkGenerator {
         );
         this.context.logger.debug("Generated types");
         performance.mark("generateErrorDeclarations");
-        await this.generateErrorDeclarations();
+        running.push(this.generateErrorDeclarations());
         performance.mark("generateErrorDeclarations finished");
         performance.measure(
             "generateErrorDeclarations",
@@ -421,7 +423,7 @@ export class SdkGenerator {
         );
         this.context.logger.debug("Generated errors");
         performance.mark("generateServiceDeclarations");
-        await this.generateServiceDeclarations();
+        running.push(this.generateServiceDeclarations());
         performance.mark("generateServiceDeclarations finished");
         performance.measure(
             "generateServiceDeclarations",
@@ -430,7 +432,7 @@ export class SdkGenerator {
         );
         this.context.logger.debug("Generated services");
         performance.mark("generateEnvironments");
-        await this.generateEnvironments();
+        running.push(this.generateEnvironments());
         performance.mark("generateEnvironments finished");
         performance.measure("generateEnvironments", "generateEnvironments", "generateEnvironments finished");
         this.context.logger.debug("Generated environments");
@@ -440,7 +442,7 @@ export class SdkGenerator {
         performance.measure("generateRequestWrappers", "generateRequestWrappers", "generateRequestWrappers finished");
         this.context.logger.debug("Generated request wrappers");
         performance.mark("generateVersion");
-        await this.generateVersion();
+        running.push(this.generateVersion());
         performance.mark("generateVersion finished");
         performance.measure("generateVersion", "generateVersion", "generateVersion finished");
         this.context.logger.debug("Generated version");
@@ -499,6 +501,7 @@ export class SdkGenerator {
             );
             performance.mark("generateInlinedRequestBodySchemas");
             await this.generateInlinedRequestBodySchemas();
+            performance.mark("generateInlinedRequestBodySchemas finished");
             const serializationDirectory = this.rootDirectory.getDirectory(RelativeFilePath.of("src/serialization"));
             if (serializationDirectory != null && serializationDirectory?.getSourceFiles().length > 0) {
                 this.exportsManager.addExportsForDirectories([
@@ -518,6 +521,7 @@ export class SdkGenerator {
             const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
             if (oauthScheme != null && oauthScheme.type === "oauth") {
                 performance.mark("generateOAuthTokenProvider");
+                // TODO visit this
                 await this.generateOAuthTokenProvider(oauthScheme);
                 performance.mark("generateOAuthTokenProvider finished");
                 performance.measure(
@@ -584,12 +588,14 @@ export class SdkGenerator {
                 if (this.FdrClient != null) {
                     this.context.logger.debug("FDR Client found, registering snippet templates.");
                     try {
-                        await this.FdrClient.templates.registerBatch({
-                            orgId: this.config.organization,
-                            apiId: this.config.apiName,
-                            apiDefinitionId: this.intermediateRepresentation.fdrApiDefinitionId ?? uuidv4(),
-                            snippets: this.endpointSnippetTemplates
-                        });
+                        running.push(
+                            this.FdrClient.templates.registerBatch({
+                                orgId: this.config.organization,
+                                apiId: this.config.apiName,
+                                apiDefinitionId: this.intermediateRepresentation.fdrApiDefinitionId ?? uuidv4(),
+                                snippets: this.endpointSnippetTemplates
+                            })
+                        );
                     } catch (e) {
                         this.context.logger.warn("Failed to register snippet templates with FDR, this is OK");
                     }
@@ -615,6 +621,8 @@ export class SdkGenerator {
                 this.context.logger.warn("Failed to generate reference.md, this is OK");
             }
         }
+
+        await Promise.all(running);
 
         return this.config.shouldBundle
             ? new BundledTypescriptProject({
@@ -659,59 +667,75 @@ export class SdkGenerator {
         await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
     }
 
-    private generateTypeDeclarations() {
+    private async generateTypeDeclarations() {
+        const running = [];
         for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
-            this.withSourceFile({
-                filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
-                run: async ({ sourceFile, importsManager }) => {
-                    const context = this.generateSdkContext({ sourceFile, importsManager });
-                    await context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
-                }
-            });
+            running.push(
+                this.withSourceFile({
+                    filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
+                    run: async ({ sourceFile, importsManager }) => {
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        await context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
+                    }
+                })
+            );
         }
+        await Promise.all(running);
     }
 
-    private generateTypeSchemas(): { generated: boolean } {
+    private async generateTypeSchemas(): Promise<{ generated: boolean }> {
         let generated = false;
+        const running = [];
         for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
-            this.withSourceFile({
-                filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
-                run: async ({ sourceFile, importsManager }) => {
-                    if (!generated) {
-                        generated = true;
+            running.push(
+                this.withSourceFile({
+                    filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
+                    run: async ({ sourceFile, importsManager }) => {
+                        if (!generated) {
+                            generated = true;
+                        }
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        await context.typeSchema.getGeneratedTypeSchema(typeDeclaration.name).writeToFile(context);
                     }
-                    const context = this.generateSdkContext({ sourceFile, importsManager });
-                    await context.typeSchema.getGeneratedTypeSchema(typeDeclaration.name).writeToFile(context);
-                }
-            });
+                })
+            );
         }
+        await Promise.all(running);
         return { generated };
     }
 
-    private generateErrorDeclarations() {
+    private async generateErrorDeclarations() {
+        const running = [];
         for (const errorDeclaration of Object.values(this.intermediateRepresentation.errors)) {
-            this.withSourceFile({
-                filepath: this.errorDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
-                run: async ({ sourceFile, importsManager }) => {
-                    const context = this.generateSdkContext({ sourceFile, importsManager });
-                    await context.sdkError.getGeneratedSdkError(errorDeclaration.name)?.writeToFile(context);
-                }
-            });
+            running.push(
+                this.withSourceFile({
+                    filepath: this.errorDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
+                    run: async ({ sourceFile, importsManager }) => {
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        await context.sdkError.getGeneratedSdkError(errorDeclaration.name)?.writeToFile(context);
+                    }
+                })
+            );
         }
+        await Promise.all(running);
     }
 
-    private generateSdkErrorSchemas() {
+    private async generateSdkErrorSchemas() {
+        const running = [];
         for (const errorDeclaration of Object.values(this.intermediateRepresentation.errors)) {
-            this.withSourceFile({
-                filepath: this.sdkErrorSchemaDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
-                run: async ({ sourceFile, importsManager }) => {
-                    const context = this.generateSdkContext({ sourceFile, importsManager });
-                    await context.sdkErrorSchema
-                        .getGeneratedSdkErrorSchema(errorDeclaration.name)
-                        ?.writeToFile(context);
-                }
-            });
+            running.push(
+                this.withSourceFile({
+                    filepath: this.sdkErrorSchemaDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
+                    run: async ({ sourceFile, importsManager }) => {
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        await context.sdkErrorSchema
+                            .getGeneratedSdkErrorSchema(errorDeclaration.name)
+                            ?.writeToFile(context);
+                    }
+                })
+            );
         }
+        await Promise.all(running);
     }
 
     private async generateEndpointErrorUnion() {
@@ -735,96 +759,112 @@ export class SdkGenerator {
 
     private async generateEndpointTypeSchemas(): Promise<{ generated: boolean }> {
         let generated = false;
+        const running: Promise<void>[] = [];
         await this.forEachService(async (service, packageId) => {
             for (const endpoint of service.endpoints) {
-                this.withSourceFile({
-                    filepath: this.sdkEndpointSchemaDeclarationReferencer.getExportedFilepath({
-                        packageId,
-                        endpoint
-                    }),
-                    run: async ({ sourceFile, importsManager }) => {
-                        const context = this.generateSdkContext({ sourceFile, importsManager });
-                        await context.sdkEndpointTypeSchemas
-                            .getGeneratedEndpointTypeSchemas(packageId, endpoint.name)
-                            .writeToFile(context);
-                        if (!generated) {
-                            generated = true;
-                        }
-                    }
-                });
-            }
-        });
-        return { generated };
-    }
-
-    private async generateRequestWrappers() {
-        await this.forEachService(async (service, packageId) => {
-            for (const endpoint of service.endpoints) {
-                if (endpoint.sdkRequest?.shape.type === "wrapper") {
+                running.push(
                     this.withSourceFile({
-                        filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
+                        filepath: this.sdkEndpointSchemaDeclarationReferencer.getExportedFilepath({
                             packageId,
                             endpoint
                         }),
                         run: async ({ sourceFile, importsManager }) => {
                             const context = this.generateSdkContext({ sourceFile, importsManager });
-                            await context.requestWrapper
-                                .getGeneratedRequestWrapper(packageId, endpoint.name)
-                                .writeToFile(context);
-                        },
-                        addExportTypeModifier: true
-                    });
-                }
-            }
-        });
-    }
-
-    private async generateInlinedRequestBodySchemas(): Promise<{ generated: boolean }> {
-        let generated = false;
-        await this.forEachService(async (service, packageId) => {
-            for (const endpoint of service.endpoints) {
-                if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    this.withSourceFile({
-                        filepath: this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedFilepath({
-                            packageId,
-                            endpoint
-                        }),
-                        run: async ({ sourceFile, importsManager }) => {
-                            const context = this.generateSdkContext({ sourceFile, importsManager });
-                            await context.sdkInlinedRequestBodySchema
-                                .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
+                            await context.sdkEndpointTypeSchemas
+                                .getGeneratedEndpointTypeSchemas(packageId, endpoint.name)
                                 .writeToFile(context);
                             if (!generated) {
                                 generated = true;
                             }
                         }
-                    });
+                    })
+                );
+            }
+        });
+        await Promise.all(running);
+        return { generated };
+    }
+
+    private async generateRequestWrappers() {
+        const running: Promise<void>[] = [];
+        await this.forEachService(async (service, packageId) => {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.sdkRequest?.shape.type === "wrapper") {
+                    running.push(
+                        this.withSourceFile({
+                            filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
+                                packageId,
+                                endpoint
+                            }),
+                            run: async ({ sourceFile, importsManager }) => {
+                                const context = this.generateSdkContext({ sourceFile, importsManager });
+                                await context.requestWrapper
+                                    .getGeneratedRequestWrapper(packageId, endpoint.name)
+                                    .writeToFile(context);
+                            },
+                            addExportTypeModifier: true
+                        })
+                    );
                 }
             }
         });
+        await Promise.all(running);
+    }
+
+    private async generateInlinedRequestBodySchemas(): Promise<{ generated: boolean }> {
+        let generated = false;
+        const running: Promise<void>[] = [];
+        await this.forEachService(async (service, packageId) => {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    running.push(
+                        this.withSourceFile({
+                            filepath: this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedFilepath({
+                                packageId,
+                                endpoint
+                            }),
+                            run: async ({ sourceFile, importsManager }) => {
+                                const context = this.generateSdkContext({ sourceFile, importsManager });
+                                await context.sdkInlinedRequestBodySchema
+                                    .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
+                                    .writeToFile(context);
+                                if (!generated) {
+                                    generated = true;
+                                }
+                            }
+                        })
+                    );
+                }
+            }
+        });
+        await Promise.all(running);
         return { generated };
     }
 
     private async generateServiceDeclarations() {
         this.context.logger.debug("Generating service declarations...");
+        const running: Promise<void>[] = [];
         for (const packageId of this.getAllPackageIds()) {
             const package_ = this.packageResolver.resolvePackage(packageId);
             if (!package_.hasEndpointsInTree) {
                 continue;
             }
-            this.withSourceFile({
-                filepath: this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId),
-                run: async ({ sourceFile, importsManager }) => {
-                    const context = this.generateSdkContext({ sourceFile, importsManager });
-                    await (await context.sdkClientClass.getGeneratedSdkClientClass(packageId)).writeToFile(context);
-                }
-            });
+            running.push(
+                this.withSourceFile({
+                    filepath: this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId),
+                    run: async ({ sourceFile, importsManager }) => {
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        await (await context.sdkClientClass.getGeneratedSdkClientClass(packageId)).writeToFile(context);
+                    }
+                })
+            );
         }
+        await Promise.all(running);
     }
 
-    private generateOAuthTokenProvider(oauthScheme: OAuthScheme) {
+    private async generateOAuthTokenProvider(oauthScheme: OAuthScheme) {
         this.context.logger.debug("Generating OAuth token provider...");
-        this.withSourceFile({
+        await this.withSourceFile({
             filepath: this.oauthTokenProviderGenerator.getExportedFilePath(),
             run: ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
@@ -843,25 +883,32 @@ export class SdkGenerator {
 
     private async generateTestFiles() {
         this.context.logger.debug("Generating test files...");
+        const running: Promise<void>[] = [];
         await this.forEachService(async (service, packageId) => {
             if (service.endpoints.length === 0) {
                 return;
             }
 
-            this.withSourceFile({
-                filepath: this.jestTestGenerator.getTestFile(packageId.isRoot ? "" : packageId.subpackageId, service),
-                run: async ({ sourceFile, importsManager }) => {
-                    const context = this.generateSdkContext({ sourceFile, importsManager });
-                    const file = this.jestTestGenerator.buildFile(
-                        this.sdkClientClassDeclarationReferencer.getExportedName(packageId),
-                        service,
-                        await context.sdkClientClass.getGeneratedSdkClientClass(packageId),
-                        context
-                    );
-                    sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
-                }
-            });
+            running.push(
+                this.withSourceFile({
+                    filepath: this.jestTestGenerator.getTestFile(
+                        packageId.isRoot ? "" : packageId.subpackageId,
+                        service
+                    ),
+                    run: async ({ sourceFile, importsManager }) => {
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        const file = this.jestTestGenerator.buildFile(
+                            this.sdkClientClassDeclarationReferencer.getExportedName(packageId),
+                            service,
+                            await context.sdkClientClass.getGeneratedSdkClientClass(packageId),
+                            context
+                        );
+                        sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
+                    }
+                })
+            );
         });
+        await Promise.all(running);
     }
 
     private async generateReadme(): Promise<void> {
@@ -1198,11 +1245,11 @@ export class SdkGenerator {
         return url.startsWith("/") ? url : `/${url}`;
     }
 
-    private generateVersion(): void {
+    private async generateVersion(): Promise<void> {
         if (this.intermediateRepresentation.apiVersion == null) {
             return;
         }
-        this.withSourceFile({
+        await this.withSourceFile({
             filepath: this.versionDeclarationReferencer.getExportedFilepath(),
             run: async ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
@@ -1214,8 +1261,8 @@ export class SdkGenerator {
         });
     }
 
-    private generateEnvironments(): void {
-        this.withSourceFile({
+    private async generateEnvironments(): Promise<void> {
+        await this.withSourceFile({
             filepath: this.environmentsDeclarationReferencer.getExportedFilepath(),
             run: async ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
@@ -1224,8 +1271,8 @@ export class SdkGenerator {
         });
     }
 
-    private generateGenericAPISdkError(): void {
-        this.withSourceFile({
+    private async generateGenericAPISdkError(): Promise<void> {
+        await this.withSourceFile({
             filepath: this.genericAPISdkErrorDeclarationReferencer.getExportedFilepath(),
             run: async ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
@@ -1238,8 +1285,8 @@ export class SdkGenerator {
         });
     }
 
-    private generateTimeoutSdkError(): void {
-        this.withSourceFile({
+    private async generateTimeoutSdkError(): Promise<void> {
+        await this.withSourceFile({
             filepath: this.timeoutSdkErrorDeclarationReferencer.getExportedFilepath(),
             run: async ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
@@ -1330,7 +1377,7 @@ export class SdkGenerator {
             sourceFile: this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite }),
             importsManager: new ImportsManager()
         });
-        this.context.logger.debug(`Generated ${filepathStr}`);
+        // this.context.logger.debug(`Generated ${filepathStr}`);
     }
 
     private getAllPackageIds(): PackageId[] {
