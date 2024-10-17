@@ -1,4 +1,4 @@
-import { MethodType } from "../Method";
+import { ClassMethodType } from "../Method";
 import { Type } from "../Type";
 import { CodeBlock } from "../CodeBlock";
 import { python } from "../..";
@@ -9,7 +9,7 @@ describe("Method", () => {
             const method = python.method({
                 name: "static_method",
                 parameters: [],
-                type: MethodType.STATIC
+                type: ClassMethodType.STATIC
             });
             expect(method.toString()).toMatchSnapshot();
         });
@@ -18,7 +18,7 @@ describe("Method", () => {
             const method = python.method({
                 name: "instance_method",
                 parameters: [],
-                type: MethodType.INSTANCE
+                type: ClassMethodType.INSTANCE
             });
             expect(method.toString()).toMatchSnapshot();
         });
@@ -27,7 +27,7 @@ describe("Method", () => {
             const method = python.method({
                 name: "class_method",
                 parameters: [],
-                type: MethodType.CLASS
+                type: ClassMethodType.CLASS
             });
             expect(method.toString()).toMatchSnapshot();
         });
@@ -98,6 +98,19 @@ describe("Method", () => {
             const method = python.method({
                 name: "without_docstring",
                 parameters: []
+            });
+            expect(method.toString()).toMatchSnapshot();
+        });
+
+        it("should generate a method with a decorator", () => {
+            const method = python.method({
+                name: "with_decorator",
+                parameters: [],
+                decorators: [
+                    python.decorator({
+                        reference: python.reference({ name: "decorator_with_reference", modulePath: ["decorators"] })
+                    })
+                ]
             });
             expect(method.toString()).toMatchSnapshot();
         });

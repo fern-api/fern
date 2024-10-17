@@ -53,4 +53,16 @@ describe("class", () => {
         });
         expect(clazz.toString()).toMatchSnapshot();
     });
+
+    it("class with a decorator", () => {
+        const clazz = python.class_({
+            name: "MyDataClass",
+            decorators: [
+                python.decorator({
+                    reference: python.reference({ name: "dataclass", modulePath: ["dataclasses"] })
+                })
+            ]
+        });
+        expect(clazz.toString()).toMatchSnapshot();
+    });
 });
