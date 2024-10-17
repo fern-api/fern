@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Type": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Type",
@@ -3070,6 +3071,7 @@
             "docs": "Exercises all of the built-in types."
         },
         "type_:Name": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Name",
