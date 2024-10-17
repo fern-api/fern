@@ -95,6 +95,19 @@ export class TypescriptTypeMapper {
     }
 
     private convertNamed({ named }: { named: DeclaredTypeName }): Type {
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+        if (
+            typeDeclaration.inline &&
+            this.context.customConfig.respectInlinedTypes &&
+            this.context.customConfig.noSerdeLayer
+        ) {
+            switch (typeDeclaration.shape.type) {
+                case "enum":
+                    return Type.union(typeDeclaration.shape.values.map((value) => Type.literal(value.name.wireValue)));
+                default:
+                    break;
+            }
+        }
         const reference = this.context.getReferenceToNamedType(named.typeId);
         return ts.Type.reference(reference);
     }

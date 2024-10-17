@@ -125,6 +125,7 @@ export declare namespace SdkGenerator {
         apiName: string;
         packageJson: Record<string, unknown> | undefined;
         useBigInt: boolean;
+        respectInlinedTypes: boolean;
     }
 }
 
@@ -1253,6 +1254,7 @@ export class SdkGenerator {
             logger: this.context.logger,
             version: this.context.version,
             config: this.rawConfig,
+            parsedConfig: this.config,
             ir: this.intermediateRepresentation,
             npmPackage: this.npmPackage,
             isForSnippet: isForSnippet ?? false,

@@ -38,7 +38,9 @@ export const SdkCustomConfigSchema = z.strictObject({
 
     // deprecated
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
-    includeApiReference: z.optional(z.boolean())
+    includeApiReference: z.optional(z.boolean()),
+
+    respectInlinedTypes: z.optional(z.boolean())
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;
