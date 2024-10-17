@@ -56,7 +56,7 @@ describe("Reference", () => {
                 modulePath: ["module"],
                 alias: "Alias"
             });
-            expect(reference.toString()).toBe("AliasClass as Alias");
+            expect(reference.toString()).toBe("AliasClass");
         });
     });
 });
