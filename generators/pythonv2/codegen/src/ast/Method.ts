@@ -2,7 +2,7 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 import { CodeBlock } from "./CodeBlock";
-import { ClassReference } from "./ClassReference";
+import { Reference } from "./Reference";
 import { Field } from "./Field";
 import { Parameter } from "./Parameter";
 
@@ -27,7 +27,7 @@ export declare namespace Method {
         /* The type of the method, defaults to STATIC */
         type?: MethodType;
         /* The class this method belongs to, if any */
-        classReference?: ClassReference;
+        classReference?: Reference;
     }
 }
 
@@ -37,7 +37,7 @@ export class Method extends AstNode {
     public readonly body: CodeBlock | undefined;
     public readonly docstring: string | undefined;
     public readonly type: MethodType;
-    public readonly reference: ClassReference | undefined;
+    public readonly reference: Reference | undefined;
     private readonly parameters: Parameter[];
 
     constructor({ name, parameters, return_, body, docstring, type = MethodType.STATIC, classReference }: Method.Args) {

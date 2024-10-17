@@ -1,7 +1,7 @@
 import { python } from "../..";
 import { Writer } from "../core/Writer";
 
-describe("ClassReference", () => {
+describe("Reference", () => {
     let writer: Writer;
 
     beforeEach(() => {
@@ -10,44 +10,44 @@ describe("ClassReference", () => {
 
     describe("toString", () => {
         it("returns the fully qualified name", () => {
-            const classRef = python.classReference({ name: "MyClass", modulePath: ["module", "submodule"] });
-            expect(classRef.toString()).toBe("MyClass");
+            const reference = python.reference({ name: "MyClass", modulePath: ["module", "submodule"] });
+            expect(reference.toString()).toBe("MyClass");
         });
 
         it("handles single-level module path", () => {
-            const classRef = python.classReference({ name: "SimpleClass", modulePath: ["simple"] });
-            expect(classRef.toString()).toBe("SimpleClass");
+            const reference = python.reference({ name: "SimpleClass", modulePath: ["simple"] });
+            expect(reference.toString()).toBe("SimpleClass");
         });
 
         it("handles class without module path", () => {
-            const classRef = python.classReference({ name: "StandaloneClass", modulePath: [] });
-            expect(classRef.toString()).toBe("StandaloneClass");
+            const reference = python.reference({ name: "StandaloneClass", modulePath: [] });
+            expect(reference.toString()).toBe("StandaloneClass");
         });
 
         it("handles deeply nested module path", () => {
-            const classRef = python.classReference({
+            const reference = python.reference({
                 name: "DeepClass",
                 modulePath: ["very", "deep", "nested", "module"]
             });
-            expect(classRef.toString()).toBe("DeepClass");
+            expect(reference.toString()).toBe("DeepClass");
         });
 
         it("handles class with one generic type", () => {
-            const classRef = python.classReference({
+            const reference = python.reference({
                 name: "GenericClass",
                 modulePath: ["module"],
                 genericTypes: [python.Type.str()]
             });
-            expect(classRef.toString()).toBe("GenericClass[str]");
+            expect(reference.toString()).toBe("GenericClass[str]");
         });
 
         it("handles class with two generic types", () => {
-            const classRef = python.classReference({
+            const reference = python.reference({
                 name: "DoubleGenericClass",
                 modulePath: ["module"],
                 genericTypes: [python.Type.str(), python.Type.int()]
             });
-            expect(classRef.toString()).toBe("DoubleGenericClass[str, int]");
+            expect(reference.toString()).toBe("DoubleGenericClass[str, int]");
         });
     });
 });

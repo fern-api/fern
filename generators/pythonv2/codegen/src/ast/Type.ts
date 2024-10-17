@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { python } from "..";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { ClassReference } from "./ClassReference";
+import { Reference } from "./Reference";
 
 type InternalType =
     | Int
@@ -18,7 +18,7 @@ type InternalType =
     | Optional
     | Union
     | Any
-    | Reference;
+    | ReferenceType;
 
 interface Int {
     type: "int";
@@ -79,9 +79,9 @@ interface Any {
     type: "any";
 }
 
-interface Reference {
+interface ReferenceType {
     type: "reference";
-    value: ClassReference;
+    value: Reference;
 }
 
 export class Type extends AstNode {
@@ -144,7 +144,7 @@ export class Type extends AstNode {
         return new Type({ type: "any" });
     }
 
-    public static reference(value: ClassReference): Type {
+    public static reference(value: Reference): Type {
         return new Type({ type: "reference", value });
     }
 
@@ -166,19 +166,19 @@ export class Type extends AstNode {
                 writer.write("bytes");
                 break;
             case "list":
-                writer.addReference(python.classReference({ name: "List", modulePath: ["typing"] }));
+                writer.addReference(python.reference({ name: "List", modulePath: ["typing"] }));
                 writer.write("List[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "set":
-                writer.addReference(python.classReference({ name: "Set", modulePath: ["typing"] }));
+                writer.addReference(python.reference({ name: "Set", modulePath: ["typing"] }));
                 writer.write("Set[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "tuple":
-                writer.addReference(python.classReference({ name: "Tuple", modulePath: ["typing"] }));
+                writer.addReference(python.reference({ name: "Tuple", modulePath: ["typing"] }));
                 writer.write("Tuple[");
                 this.internalType.values.forEach((value, index) => {
                     if (index > 0) {
@@ -189,7 +189,7 @@ export class Type extends AstNode {
                 writer.write("]");
                 break;
             case "dict":
-                writer.addReference(python.classReference({ name: "Dict", modulePath: ["typing"] }));
+                writer.addReference(python.reference({ name: "Dict", modulePath: ["typing"] }));
                 writer.write("Dict[");
                 this.internalType.keyType.write(writer);
                 writer.write(", ");
@@ -200,13 +200,13 @@ export class Type extends AstNode {
                 writer.write("None");
                 break;
             case "optional":
-                writer.addReference(python.classReference({ name: "Optional", modulePath: ["typing"] }));
+                writer.addReference(python.reference({ name: "Optional", modulePath: ["typing"] }));
                 writer.write("Optional[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "union":
-                writer.addReference(python.classReference({ name: "Union", modulePath: ["typing"] }));
+                writer.addReference(python.reference({ name: "Union", modulePath: ["typing"] }));
                 writer.write("Union[");
                 this.internalType.values.forEach((value, index) => {
                     if (index > 0) {
@@ -217,7 +217,7 @@ export class Type extends AstNode {
                 writer.write("]");
                 break;
             case "any":
-                writer.addReference(python.classReference({ name: "Any", modulePath: ["typing"] }));
+                writer.addReference(python.reference({ name: "Any", modulePath: ["typing"] }));
                 writer.write("Any");
                 break;
             case "reference":

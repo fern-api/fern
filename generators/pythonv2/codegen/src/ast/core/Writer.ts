@@ -1,5 +1,5 @@
 import { AbstractWriter } from "@fern-api/generator-commons";
-import { ClassReference } from "../ClassReference";
+import { Reference } from "../Reference";
 
 /* A dot-separated string representing the module path */
 type ModulePath = string;
@@ -8,7 +8,7 @@ export declare namespace Writer {}
 
 export class Writer extends AbstractWriter {
     /* Import statements */
-    private references: Record<ModulePath, ClassReference[]> = {};
+    private references: Record<ModulePath, Reference[]> = {};
 
     public toString(): string {
         const imports = this.stringifyImports();
@@ -22,7 +22,7 @@ ${this.buffer}`;
         return this.buffer;
     }
 
-    public addReference(reference: ClassReference): void {
+    public addReference(reference: Reference): void {
         const modulePath = reference.getFullyQualifiedModulePath();
         this.references[modulePath] = (this.references[modulePath] ?? []).concat(reference);
     }
