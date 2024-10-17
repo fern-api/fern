@@ -35,6 +35,20 @@ export class Interface extends AstNode {
             writer.write("export ");
         }
         writer.write(` interface ${this.args.name}`);
+        if (this.args.extends != null && this.args.extends.length > 0) {
+            const numBaseInterfaces = this.args.extends.length;
+
+            writer.write(` extends `);
+            this.args.extends.forEach((extend, idx) => {
+                writer.writeNode(extend);
+                if (idx < numBaseInterfaces - 1) {
+                    writer.write(", ");
+                } else {
+                    writer.write(" ");
+                }
+            });
+        }
+
         writer.writeLine("{");
 
         writer.indent();

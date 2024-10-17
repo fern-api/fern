@@ -28,11 +28,12 @@ export declare namespace Reference {
 }
 
 export class Reference extends AstNode {
-    private constructor(private readonly args: Reference.Args) {
+    private constructor(public readonly args: Reference.Args) {
         super();
     }
 
     public write(writer: Writer): void {
+        writer.addReference(this);
         switch (this.args.type) {
             case "module":
                 writer.write([this.args.module, ...this.args.name].join("."));

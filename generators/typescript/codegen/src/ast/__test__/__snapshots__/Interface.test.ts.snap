@@ -11,7 +11,9 @@ exports[`Interface > toString > should generate an exported interface 1`] = `
 `;
 
 exports[`Interface > toString > should generate an interface extending another interface 1`] = `
-" interface ExtendedInterface{
+"import * as Sdk from "../../";
+
+ interface ExtendedInterface extends Sdk.BaseSchema {
     "extendedProp": number;
 }
 "
