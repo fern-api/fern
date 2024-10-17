@@ -45,6 +45,7 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "../declaration-refer
 import { TimeoutSdkErrorDeclarationReferencer } from "../declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "../declaration-referencers/VersionDeclarationReferencer";
+import { SdkGenerator } from "../SdkGenerator";
 import { VersionGenerator } from "../version/VersionGenerator";
 import { EndpointErrorUnionContextImpl } from "./endpoint-error-union/EndpointErrorUnionContextImpl";
 import { EnvironmentsContextImpl } from "./environments/EnvironmentsContextImpl";
@@ -68,6 +69,7 @@ export declare namespace SdkContextImpl {
         version: string | undefined;
         ir: IntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
+        parsedConfig: SdkGenerator.Config;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
         dependencyManager: DependencyManager;
@@ -154,6 +156,7 @@ export class SdkContextImpl implements SdkContext {
     public V2: BaseTypescriptGeneratorContext<BaseTypescriptCustomConfigSchema>;
 
     constructor({
+        parsedConfig,
         logger,
         ir,
         config,
@@ -226,7 +229,11 @@ export class SdkContextImpl implements SdkContext {
         this.V2 = new BaseTypescriptGeneratorContext(
             this.ir,
             this.config,
-            { namespaceExport: this.namespaceExport, noSerdeLayer: !this.includeSerdeLayer },
+            {
+                namespaceExport: this.namespaceExport,
+                noSerdeLayer: !this.includeSerdeLayer,
+                respectInlinedTypes: parsedConfig.respectInlinedTypes
+            },
             this.generatorNotificationService
         );
         this.coreUtilities = coreUtilitiesManager.getCoreUtilities({

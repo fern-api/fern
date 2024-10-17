@@ -9,9 +9,7 @@ export abstract class AstNode extends AbstractAstNode {
     public toString(): string {
         const writer = new Writer();
         this.write(writer);
-        const response = writer.toString();
-        console.log(response); // TODO: comment
-        return response;
+        return writer.toString();
     }
 
     public toStringFormatted(): string {
