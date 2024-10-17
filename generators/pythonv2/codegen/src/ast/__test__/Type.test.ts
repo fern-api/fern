@@ -1,5 +1,5 @@
 import { python } from "../..";
-import { ClassReference } from "../ClassReference";
+import { Reference } from "../Reference";
 import { Type } from "../Type";
 import { Writer } from "../core/Writer";
 
@@ -90,7 +90,7 @@ describe("Type", () => {
 
     it("writes reference type", () => {
         const referenceType = Type.reference(
-            python.classReference({
+            python.reference({
                 name: "MyClass",
                 modulePath: []
             })

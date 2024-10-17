@@ -1,4 +1,4 @@
-import { ClassReference } from "./ClassReference";
+import { Reference } from "./Reference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Field } from "./Field";
@@ -8,13 +8,13 @@ export declare namespace Class {
         /* The name of the Python class */
         name: string;
         /* The parent classes that this class inherits from */
-        extends_?: ClassReference[];
+        extends_?: Reference[];
     }
 }
 
 export class Class extends AstNode {
     public readonly name: string;
-    public readonly extends_: ClassReference[];
+    public readonly extends_: Reference[];
 
     private fields: Field[] = [];
 

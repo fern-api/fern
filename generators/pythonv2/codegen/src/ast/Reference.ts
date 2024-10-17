@@ -2,27 +2,27 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 
-export declare namespace ClassReference {
+export declare namespace Reference {
     interface Args {
-        /* The name of the Python class reference */
+        /* The name of the reference */
         name: string;
-        /* The module path of the Python class reference
+        /* The module path of the reference
             For example:
             - "foo.bar" -> ["foo", "bar"]
             - "foo.bar.baz" -> ["foo", "bar", "baz"]
         */
         modulePath?: string[];
-        /* The generic types of the class reference */
+        /* The generic types of the reference */
         genericTypes?: Type[];
     }
 }
 
-export class ClassReference extends AstNode {
+export class Reference extends AstNode {
     private name: string;
     private modulePath: string[];
     private genericTypes: Type[];
 
-    constructor({ name, modulePath, genericTypes }: ClassReference.Args) {
+    constructor({ name, modulePath, genericTypes }: Reference.Args) {
         super();
         this.name = name;
         this.modulePath = modulePath ?? [];
@@ -46,10 +46,6 @@ export class ClassReference extends AstNode {
 
     public getName(): string {
         return this.name;
-    }
-
-    public getModulePath(): string[] {
-        return this.modulePath;
     }
 
     public getFullyQualifiedModulePath(): string {
