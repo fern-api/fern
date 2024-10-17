@@ -92,11 +92,12 @@ export class PythonFile extends AstNode {
             } else {
                 // Use fully qualified path
                 writer.write(`from ${reference.getFullyQualifiedModulePath()} import ${reference.getName()}`);
-
-                if (reference.getAlias()) {
-                    writer.write(` as ${reference.getAlias()}`);
-                }
             }
+
+            if (reference.getAlias()) {
+                writer.write(` as ${reference.getAlias()}`);
+            }
+
             writer.newLine();
         });
 
