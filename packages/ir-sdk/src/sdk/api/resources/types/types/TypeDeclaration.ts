@@ -16,4 +16,6 @@ export interface TypeDeclaration extends FernIr.Declaration {
     referencedTypes: Set<FernIr.TypeId>;
     encoding: FernIr.Encoding | undefined;
     source: FernIr.Source | undefined;
+    /** Whether the type is inlined. If true, the type is inlined directly in the type declaration, and should not be instantiated globally. */
+    inline: boolean | undefined;
 }

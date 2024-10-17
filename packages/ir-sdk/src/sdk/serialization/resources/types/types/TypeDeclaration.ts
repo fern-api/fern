@@ -23,6 +23,7 @@ export const TypeDeclaration: core.serialization.ObjectSchema<serializers.TypeDe
             referencedTypes: core.serialization.set(TypeId),
             encoding: Encoding.optional(),
             source: Source.optional(),
+            inline: core.serialization.boolean().optional(),
         })
         .extend(Declaration);
 
@@ -35,5 +36,6 @@ export declare namespace TypeDeclaration {
         referencedTypes: TypeId.Raw[];
         encoding?: Encoding.Raw | null;
         source?: Source.Raw | null;
+        inline?: boolean | null;
     }
 }

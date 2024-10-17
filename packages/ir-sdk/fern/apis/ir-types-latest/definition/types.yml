@@ -34,12 +34,17 @@ types:
         type: set<commons.TypeId>
       encoding: optional<Encoding>
       source: optional<Source>
+      inline: 
+        type: optional<boolean>
+        docs: Whether the type is inlined. If true, the type is inlined directly in the type declaration, and should not be instantiated globally.
+
 
   DeclaredTypeName:
     properties:
       typeId: commons.TypeId
       fernFilepath: commons.FernFilepath
       name: commons.Name
+      originalName: optional<commons.Name>
 
   Type:
     discriminant:
