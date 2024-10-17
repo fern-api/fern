@@ -1,7 +1,11 @@
-import { Class, Field, Reference, CodeBlock, Method, Parameter, MethodArgument } from "./ast";
+import { Class, Field, Reference, CodeBlock, Method, Parameter, MethodArgument, Decorator } from "./ast";
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
+}
+
+export function decorator(args: Decorator.Args): Decorator {
+    return new Decorator(args);
 }
 
 export function reference(args: Reference.Args): Reference {
