@@ -12,6 +12,13 @@ exports[`Method > toString > should generate a method with a body 1`] = `
     return True"
 `;
 
+exports[`Method > toString > should generate a method with a decorator 1`] = `
+"@decorator_with_reference
+def with_decorator():
+    pass
+"
+`;
+
 exports[`Method > toString > should generate a method with a docstring 1`] = `
 "def with_docstring():
     """This is a docstring"""
@@ -56,7 +63,8 @@ exports[`Method > toString > should generate a method without a specified return
 `;
 
 exports[`Method > toString > should generate a static method 1`] = `
-"def static_method():
+"@staticmethod
+def static_method():
     pass
 "
 `;

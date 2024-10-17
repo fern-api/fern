@@ -5,6 +5,15 @@ exports[`class > basic 1`] = `
     pass"
 `;
 
+exports[`class > class with a decorator 1`] = `
+"from dataclasses import dataclass
+    
+@dataclass
+class MyDataClass:
+    pass
+"
+`;
+
 exports[`class > fields with annotation and initializer 1`] = `
 "class Car:
     color: str = 'red'

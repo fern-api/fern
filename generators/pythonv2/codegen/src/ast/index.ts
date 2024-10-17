@@ -9,3 +9,4 @@ export { Method } from "./Method";
 export { Parameter } from "./Parameter";
 export { MethodArgument } from "./MethodArgument";
 export { PythonFile } from "./PythonFile";
+export { Decorator } from "./Decorator";
