@@ -558,6 +558,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
                 "total_count": 1,
                 "data": [
                   {
@@ -573,6 +583,16 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
                   "total_count": 1,
                   "data": [
                     {
@@ -657,6 +677,16 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
                 "total_count": 1,
                 "data": [
                   {
@@ -672,6 +702,16 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
                   "total_count": 1,
                   "data": [
                     {
@@ -778,6 +818,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
                 "total_count": 1,
                 "data": [
                   {
@@ -793,6 +843,16 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
                   "total_count": 1,
                   "data": [
                     {
@@ -877,6 +937,16 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
                 "total_count": 1,
                 "data": [
                   {
@@ -892,6 +962,16 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
                   "total_count": 1,
                   "data": [
                     {
@@ -985,6 +1065,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
                 "total_count": 1,
                 "data": [
                   {
@@ -1000,6 +1090,16 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
                   "total_count": 1,
                   "data": [
                     {
@@ -1093,6 +1193,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
                 "total_count": 1,
                 "data": [
                   {
@@ -1108,6 +1218,16 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
                   "total_count": 1,
                   "data": [
                     {
@@ -1307,6 +1427,7 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "cursor": {
+                  "after": "after",
                   "data": [
                     "data",
                     "data"
@@ -1317,6 +1438,7 @@
                 "type": "json",
                 "value": {
                   "cursor": {
+                    "after": "after",
                     "data": [
                       "data",
                       "data"

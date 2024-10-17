@@ -9,8 +9,8 @@ from ..utilities import validate_response
 async def test_get_direct_thread(
     client: SeedCrossPackageTypeNames, async_client: AsyncSeedCrossPackageTypeNames
 ) -> None:
-    expected_response: typing.Any = {}
-    expected_types: typing.Any = {"foo": None}
+    expected_response: typing.Any = {"foo": {"foo": {"bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"}}}
+    expected_types: typing.Any = {"foo": {"foo": {"bar_property": "uuid"}}}
     response = client.folder_d.service.get_direct_thread()
     validate_response(response, expected_response, expected_types)
 

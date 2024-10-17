@@ -27,7 +27,8 @@ public class GetTokenTest : BaseMockServerTest
         const string mockResponse = """
             {
               "access_token": "access_token",
-              "expires_in": 1
+              "expires_in": 1,
+              "refresh_token": "refresh_token"
             }
             """;
 

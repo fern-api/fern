@@ -241,10 +241,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "foo": {
+                  "foo": {
+                    "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                  }
+                }
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "foo": {
+                    "foo": {
+                      "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                    }
+                  }
+                }
               },
               "codeSamples": []
             }

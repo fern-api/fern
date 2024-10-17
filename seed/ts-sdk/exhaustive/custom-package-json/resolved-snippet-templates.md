@@ -417,7 +417,7 @@ import { FiddleClient } from "@fern/exhaustive";
 const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnDatetime(
 	{
-		"SGVsbG8gd29ybGQh"
+		"2024-01-15T09:30:00Z"
 	}
 )
  

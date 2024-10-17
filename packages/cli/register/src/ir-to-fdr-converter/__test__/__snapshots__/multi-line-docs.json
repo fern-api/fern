@@ -210,13 +210,15 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "id": "id",
-                "name": "name"
+                "name": "name",
+                "age": 1
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "id": "id",
-                  "name": "name"
+                  "name": "name",
+                  "age": 1
                 }
               },
               "codeSamples": []

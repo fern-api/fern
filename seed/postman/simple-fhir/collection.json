@@ -84,7 +84,7 @@
             "body": null
           },
           "description": null,
-          "body": "{\n    \"resource_type\": \"Account\",\n    \"name\": \"name\"\n}",
+          "body": "{\n    \"resource_type\": \"Account\",\n    \"name\": \"name\",\n    \"patient\": {\n        \"resource_type\": \"Patient\",\n        \"name\": \"name\",\n        \"scripts\": [\n            {\n                \"resource_type\": \"Script\",\n                \"name\": \"name\"\n            },\n            {\n                \"resource_type\": \"Script\",\n                \"name\": \"name\"\n            }\n        ]\n    },\n    \"practitioner\": {\n        \"resource_type\": \"Practitioner\",\n        \"name\": \"name\"\n    }\n}",
           "_postman_previewlanguage": "json"
         }
       ]

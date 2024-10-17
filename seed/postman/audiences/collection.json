@@ -76,7 +76,7 @@
                     "body": null
                   },
                   "description": null,
-                  "body": "{}",
+                  "body": "{\n    \"foo\": {\n        \"foo\": {\n            \"bar_property\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n        }\n    }\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
