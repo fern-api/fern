@@ -8,7 +8,6 @@ import { getAllOpenAPISpecs, OSSWorkspace } from "@fern-api/lazy-fern-workspace"
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { CliContext } from "../../cli-context/CliContext";
-import { black } from "./black";
 
 export async function writeOverridesForWorkspaces({
     project,
