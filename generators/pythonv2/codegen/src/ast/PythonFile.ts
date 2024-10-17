@@ -67,8 +67,28 @@ export class PythonFile extends AstNode {
             const refModulePath = reference.getModulePath();
             if (refModulePath[0] === this.moduleName) {
                 // Relativize the import
-                const relativePath = refModulePath.slice(1).join(".");
-                writer.write(`from ${relativePath ? "." + relativePath : "."} import ${reference.getName()}`);
+                // Calculate the common prefix length
+                let commonPrefixLength = 0;
+                while (
+                    commonPrefixLength < this.path.length &&
+                    commonPrefixLength < refModulePath.length &&
+                    this.path[commonPrefixLength] === refModulePath[commonPrefixLength]
+                ) {
+                    commonPrefixLength++;
+                }
+
+                // Calculate the number of levels to go up
+                const levelsUp = this.path.length - commonPrefixLength;
+
+                // Build the relative import path
+                let relativePath = ".".repeat(levelsUp);
+                if (levelsUp > 0) {
+                    relativePath += ".";
+                }
+                relativePath += refModulePath.slice(commonPrefixLength).join(".");
+
+                // Write the relative import statement
+                writer.write(`from ${relativePath} import ${reference.getName()}`);
             } else {
                 // Use fully qualified path
                 writer.write(`from ${reference.getFullyQualifiedModulePath()} import ${reference.getName()}`);

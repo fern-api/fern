@@ -48,13 +48,13 @@ describe("PythonFile", () => {
 
     it("Add a class with a reference that uses a relative import", () => {
         const file = python.file({
-            moduleName: "test_module",
-            path: ["test"],
+            moduleName: "my_module",
+            path: ["level_1"],
             name: "test_file"
         });
 
         const relativeRef = python.reference({
-            modulePath: ["test_module", "other_file"],
+            modulePath: ["my_module", "level_1"],
             name: "OtherClass"
         });
         const testClass = python.class_({
@@ -66,7 +66,7 @@ describe("PythonFile", () => {
 
         // Add a class with a deeply nested relative import
         const deeplyNestedRef = python.reference({
-            modulePath: ["test_module", "nested", "very", "deep", "file"],
+            modulePath: ["my_module", "level_1", "level_2"],
             name: "DeepClass"
         });
         const deeplyNestedClass = python.class_({

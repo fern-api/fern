@@ -16,8 +16,8 @@ class TestClass:
 `;
 
 exports[`PythonFile > Add a class with a reference that uses a relative import 1`] = `
-"from .other_file import OtherClass
-from .nested.very.deep.file import DeepClass
+"from ..my_module.level_1 import OtherClass
+from ..my_module.level_1.level_2 import DeepClass
 
 class TestClass(OtherClass):
     pass
