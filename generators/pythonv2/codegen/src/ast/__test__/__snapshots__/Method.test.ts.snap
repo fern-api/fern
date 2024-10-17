@@ -19,13 +19,6 @@ exports[`Method > toString > should generate a method with a docstring 1`] = `
 "
 `;
 
-exports[`Method > toString > should generate a method with a single decorator 1`] = `
-"@decorator1
-def single_decorator():
-    pass
-"
-`;
-
 exports[`Method > toString > should generate a method with a specified return type 1`] = `
 "def with_return() -> bool:
     pass
@@ -34,14 +27,6 @@ exports[`Method > toString > should generate a method with a specified return ty
 
 exports[`Method > toString > should generate a method with multiple arguments 1`] = `
 "def multi_args(arg1: str, arg2: int):
-    pass
-"
-`;
-
-exports[`Method > toString > should generate a method with multiple decorators 1`] = `
-"@decorator1
-@decorator2
-def multiple_decorators():
     pass
 "
 `;
