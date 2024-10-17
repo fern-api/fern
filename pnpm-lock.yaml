@@ -681,7 +681,7 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
 
-  generators/pythonV2/codegen:
+  generators/pythonv2/codegen:
     dependencies:
       '@fern-api/core-utils':
         specifier: workspace:*
@@ -3693,10 +3693,6 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/cli/dist/dev: {}
-
-  packages/cli/cli/dist/prod: {}
 
   packages/cli/configuration:
     dependencies:
