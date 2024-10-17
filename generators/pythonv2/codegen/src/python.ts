@@ -1,4 +1,8 @@
-import { Class, Field, Reference, CodeBlock, Method, Parameter, MethodArgument } from "./ast";
+import { Class, Field, Reference, CodeBlock, Method, Parameter, MethodArgument, PythonFile } from "./ast";
+
+export function file(args: PythonFile.Args): PythonFile {
+    return new PythonFile(args);
+}
 
 export function class_(args: Class.Args): Class {
     return new Class(args);

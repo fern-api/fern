@@ -2,6 +2,7 @@ import { Reference } from "./Reference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Field } from "./Field";
+import { CodeBlock } from "./CodeBlock";
 
 export declare namespace Class {
     interface Args {
@@ -15,8 +16,8 @@ export declare namespace Class {
 export class Class extends AstNode {
     public readonly name: string;
     public readonly extends_: Reference[];
-
     private fields: Field[] = [];
+    private body?: CodeBlock;
 
     constructor({ name, extends_ }: Class.Args) {
         super();
@@ -42,17 +43,27 @@ export class Class extends AstNode {
         writer.newLine();
 
         writer.indent();
-        if (this.fields.length === 0) {
-            writer.write("pass");
-            writer.newLine();
-        } else {
+        let hasContents = false;
+        if (this.fields.length) {
             this.writeFields({ writer });
+            hasContents = true;
+        }
+        if (this.body) {
+            this.body.write(writer);
+            hasContents = true;
+        }
+        if (!hasContents) {
+            writer.write("pass");
         }
         writer.dedent();
     }
 
     public addField(field: Field): void {
         this.fields.push(field);
+    }
+
+    public addBody(body: CodeBlock): void {
+        this.body = body;
     }
 
     private writeFields({ writer }: { writer: Writer }): void {

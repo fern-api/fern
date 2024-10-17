@@ -26,10 +26,9 @@ export declare namespace Method {
         docstring?: string;
         /* The type of the method, defaults to STATIC */
         type?: MethodType;
-        /* The class this method belongs to, if any */
-        classReference?: Reference;
     }
 }
+[];
 
 export class Method extends AstNode {
     public readonly name: string;
@@ -40,7 +39,7 @@ export class Method extends AstNode {
     public readonly reference: Reference | undefined;
     private readonly parameters: Parameter[];
 
-    constructor({ name, parameters, return_, body, docstring, type = MethodType.STATIC, classReference }: Method.Args) {
+    constructor({ name, parameters, return_, body, docstring, type = MethodType.STATIC }: Method.Args) {
         super();
         this.name = name;
         this.parameters = parameters;
@@ -48,7 +47,6 @@ export class Method extends AstNode {
         this.body = body;
         this.docstring = docstring;
         this.type = type;
-        this.reference = classReference;
     }
 
     public getName(): string {
