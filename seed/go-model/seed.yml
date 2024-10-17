@@ -24,7 +24,7 @@ test:
     image: fernapi/fern-go-model:latest
     command: docker build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest ./generators/go
 language: go
-generatorType: sdk
+generatorType: Model
 defaultOutputMode: github
 fixtures:
   streaming:

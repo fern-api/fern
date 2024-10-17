@@ -24,7 +24,7 @@ test:
     image: fernapi/fern-ruby-sdk:latest
     command: pnpm --filter @fern-api/fern-ruby-sdk dockerTagLatest
 language: ruby
-generatorType: sdk
+generatorType: SDK
 defaultOutputMode: github
 fixtures:
   exhaustive:

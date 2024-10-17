@@ -16,6 +16,7 @@ import { logErrorMessage } from "./logErrorMessage";
 
 export declare namespace TaskContextImpl {
     export interface Init {
+        taskType?: "worker" | "prompt";
         logImmediately: (logs: Log[]) => void;
         takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
         logPrefix?: string;
@@ -35,16 +36,19 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     protected subtasks: InteractiveTaskContextImpl[] = [];
     private shouldBufferLogs: boolean;
     private bufferedLogs: Log[] = [];
+    protected taskType: "worker" | "prompt";
     protected status: "notStarted" | "running" | "finished" = "notStarted";
     private onResult: ((result: TaskResult) => void) | undefined;
     private instrumentPostHogEventImpl: (event: PosthogEvent) => Promise<void>;
+
     public constructor({
         logImmediately,
         logPrefix,
         takeOverTerminal,
         onResult,
         shouldBufferLogs,
-        instrumentPostHogEvent
+        instrumentPostHogEvent,
+        taskType
     }: TaskContextImpl.Init) {
         this.logImmediately = logImmediately;
         this.logPrefix = logPrefix ?? "";
@@ -52,6 +56,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         this.onResult = onResult;
         this.shouldBufferLogs = shouldBufferLogs;
         this.instrumentPostHogEventImpl = instrumentPostHogEvent;
+        this.taskType = taskType ?? "worker";
     }
 
     public start(): Finishable & TaskContext {
@@ -112,28 +117,37 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             ...log,
             prefix: this.logPrefix
         });
-        if (!this.shouldBufferLogs) {
+        if (!this.shouldBufferLogs || log.level === LogLevel.Error) {
             this.flushLogs();
         }
     }
 
-    protected flushLogs(): void {
+    public flushLogs(): void {
         this.logImmediately(this.bufferedLogs);
         this.bufferedLogs = [];
     }
 
     public readonly logger = createLogger(this.logAtLevel.bind(this));
 
-    public addInteractiveTask({ name, subtitle }: CreateInteractiveTaskParams): Startable<InteractiveTaskContext> {
+    public addInteractiveTask({
+        name,
+        subtitle,
+        useProgressBar,
+        taskType,
+        silent
+    }: CreateInteractiveTaskParams): Startable<InteractiveTaskContext> {
         const subtask = new InteractiveTaskContextImpl({
             name,
             subtitle,
+            useProgressBar,
             logImmediately: (content) => this.logImmediately(content),
             logPrefix: `${this.logPrefix}${chalk.blackBright(name)} `,
             takeOverTerminal: this.takeOverTerminal,
             onResult: this.onResult,
             shouldBufferLogs: this.shouldBufferLogs,
-            instrumentPostHogEvent: async (event) => await this.instrumentPostHogEventImpl(event)
+            instrumentPostHogEvent: async (event) => await this.instrumentPostHogEventImpl(event),
+            taskType,
+            silent
         });
         this.subtasks.push(subtask);
         return subtask;
@@ -154,8 +168,43 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         return subtask.getResult() === TaskResult.Success;
     }
 
-    public printInteractiveTasks({ spinner }: { spinner: string }): string {
-        return this.subtasks.map((subtask) => subtask.print({ spinner })).join("\n");
+    public printInteractiveTasks({ spinner }: { spinner: string }): string | undefined {
+        return this.subtasks
+            .map((subtask) => subtask.print({ spinner }))
+            .filter((printedTask): printedTask is string => printedTask != null)
+            .join("\n");
+    }
+
+    public clearTasks(): void {
+        this.subtasks = [];
+    }
+}
+
+class ProgressBar {
+    private total: number;
+    private progress: number;
+
+    constructor() {
+        this.total = 0;
+        this.progress = 0;
+    }
+
+    public start(total: number): void {
+        this.total = total;
+    }
+
+    public update(progress: number): void {
+        this.progress = progress;
+    }
+
+    public done(): void {}
+
+    public draw() {
+        const barWidth = 30;
+        const filledWidth = Math.floor((this.progress / this.total) * barWidth);
+        const emptyWidth = barWidth - filledWidth;
+        const progressBar = "=".repeat(filledWidth) + " ".repeat(emptyWidth);
+        return `[${progressBar}] ${this.total > 0 ? Math.round((this.progress / this.total) * 100) : 0}%`;
     }
 }
 
@@ -168,6 +217,8 @@ export declare namespace InteractiveTaskContextImpl {
     export interface Init extends TaskContextImpl.Init {
         name: string;
         subtitle: string | undefined;
+        useProgressBar?: boolean;
+        silent?: boolean;
     }
 }
 
@@ -177,11 +228,35 @@ export class InteractiveTaskContextImpl
 {
     private name: string;
     private subtitle: string | undefined;
+    private silent: boolean;
+    private progressBar: ProgressBar | undefined;
+    private output: string | undefined;
 
-    constructor({ name, subtitle, ...superArgs }: InteractiveTaskContextImpl.Init) {
+    constructor({ name, subtitle, useProgressBar, silent, ...superArgs }: InteractiveTaskContextImpl.Init) {
         super(superArgs);
         this.name = name;
         this.subtitle = subtitle;
+        this.silent = silent ?? false;
+        if (useProgressBar) {
+            this.progressBar = new ProgressBar();
+        }
+    }
+    public startProgress(total: number, start: number): void {
+        this.progressBar?.start(total);
+    }
+    public updateProgress(progress: number): void {
+        this.progressBar?.update(progress);
+    }
+    public finishProgress(): void {
+        this.progressBar?.done();
+    }
+
+    public setOutput(output: string): void {
+        this.output = output;
+    }
+
+    public getOutput(): string | undefined {
+        return this.output;
     }
 
     public start(): Finishable & InteractiveTaskContext {
@@ -214,12 +289,28 @@ export class InteractiveTaskContextImpl
         this.subtitle = subtitle;
     }
 
-    public print({ spinner }: { spinner: string }): string {
+    public print({ spinner }: { spinner: string }): string | undefined {
+        if (this.silent) {
+            return undefined;
+        }
         const lines = [this.name];
         if (this.subtitle != null) {
             lines.push(chalk.dim(this.subtitle));
         }
-        lines.push(...this.subtasks.map((subtask) => subtask.print({ spinner })));
+
+        if (this.progressBar != null) {
+            lines.push(this.progressBar.draw());
+        }
+
+        lines.push(
+            ...this.subtasks
+                .map((subtask) => subtask.print({ spinner }))
+                .filter((printedTask): printedTask is string => printedTask != null)
+        );
+
+        if (this.output != null) {
+            lines.push(this.output);
+        }
 
         return addPrefixToString({
             prefix: `${this.getIcon({ spinner }).padEnd(spinner.length)} `,
@@ -227,7 +318,7 @@ export class InteractiveTaskContextImpl
         });
     }
 
-    public printInteractiveTasks({ spinner }: { spinner: string }): string {
+    public printInteractiveTasks({ spinner }: { spinner: string }): string | undefined {
         return this.print({ spinner });
     }
 
@@ -236,7 +327,7 @@ export class InteractiveTaskContextImpl
             case "notStarted":
                 return chalk.dim("◦");
             case "running":
-                return spinner;
+                return this.taskType === "prompt" ? chalk.dim("?") : spinner;
             case "finished":
                 switch (this.getResult()) {
                     case TaskResult.Success:
