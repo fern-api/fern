@@ -96,6 +96,7 @@
                 },
                 "typeId": "type_imdb:MovieId"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -198,6 +199,7 @@
                 },
                 "typeId": "type_imdb:Movie"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -555,6 +557,7 @@
                 },
                 "typeId": "type_imdb:CreateMovieRequest"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -714,6 +717,7 @@
                 },
                 "typeId": "type_imdb:Cast"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -977,6 +981,7 @@
                 },
                 "typeId": "type_imdb:Name"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -1079,6 +1084,7 @@
                 },
                 "typeId": "type_imdb:GenericApplication"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -1358,6 +1364,7 @@
                 },
                 "typeId": "type_imdb:Sample"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -1636,6 +1643,7 @@
                 },
                 "typeId": "type_imdb:VanillaAlias"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

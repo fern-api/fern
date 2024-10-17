@@ -3,7 +3,7 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GlobalHeader } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildHeader } from "./buildHeader";
-import { buildTypeReference } from "./buildTypeReference";
+import { buildNonInlineableTypeReference, buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
@@ -59,7 +59,7 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                 type:
                     header.schema != null
                         ? getTypeFromTypeReference(
-                              buildTypeReference({
+                              buildNonInlineableTypeReference({
                                   schema: header.schema,
                                   context,
                                   fileContainingReference: namespace

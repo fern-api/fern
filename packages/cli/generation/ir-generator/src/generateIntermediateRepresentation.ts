@@ -10,6 +10,7 @@ import {
     ServiceId,
     ServiceTypeReferenceInfo,
     Type,
+    TypeDeclaration,
     TypeId,
     Webhook
 } from "@fern-api/ir-sdk";
@@ -201,15 +202,16 @@ export async function generateIntermediateRepresentation({
                         continue;
                     }
 
-                    const convertedTypeDeclarationWithFilepaths = await convertTypeDeclaration({
-                        typeName,
-                        typeDeclaration,
-                        file,
-                        typeResolver,
-                        exampleResolver,
-                        sourceResolver,
-                        workspace
-                    });
+                    const { response: convertedTypeDeclarationWithFilepaths, inlinedTypeDeclarations } =
+                        await convertTypeDeclaration({
+                            typeName,
+                            typeDeclaration,
+                            file,
+                            typeResolver,
+                            exampleResolver,
+                            sourceResolver,
+                            workspace
+                        });
                     const convertedTypeDeclaration = convertedTypeDeclarationWithFilepaths.typeDeclaration;
                     if (disableExamples) {
                         convertedTypeDeclaration.userProvidedExamples = [];
@@ -219,6 +221,14 @@ export async function generateIntermediateRepresentation({
 
                     const typeId = IdGenerator.generateTypeId(convertedTypeDeclaration.name);
                     intermediateRepresentation.types[typeId] = convertedTypeDeclaration;
+
+                    for (const [_, inlinedTypeDeclaration] of Object.entries(inlinedTypeDeclarations)) {
+                        const inlinedTypeId = IdGenerator.generateTypeId(inlinedTypeDeclaration.name);
+                        console.log(`Adding inlined type ${_} with id ${inlinedTypeId}`);
+                        intermediateRepresentation.types[inlinedTypeId] = inlinedTypeDeclaration;
+                        packageTreeGenerator.addType(inlinedTypeId, inlinedTypeDeclaration);
+                    }
+
                     packageTreeGenerator.addType(typeId, convertedTypeDeclaration);
 
                     irGraph.addType({

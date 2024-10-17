@@ -198,6 +198,7 @@
                 },
                 "typeId": "type_payment:Currency"
             },
+            "inline": false,
             "shape": {
                 "_type": "enum",
                 "default": null,

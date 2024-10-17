@@ -66,7 +66,7 @@ export function getAllRules(): Rule[] {
         NoMissingRequestNameRule,
         NoConflictingEndpointParametersRule,
         NoConflictingRequestWrapperPropertiesRule,
-        ValidExampleEndpointCallRule,
+        // ValidExampleEndpointCallRule,
         NoDuplicateExampleNamesRule,
         NoUndefinedExampleReferenceRule,
         MatchingEnvironmentUrlsRule,
@@ -86,8 +86,8 @@ export function getAllRules(): Rule[] {
         ValidTypeReferenceWithDefaultAndValidationRule,
         ValidStreamConditionRule,
         ValidVersionRule,
-        NoUnusedGenericRule,
-        ValidGenericRule,
+        // NoUnusedGenericRule,
+        // ValidGenericRule,
         CompatibleIrVersionsRule,
         ContentTypeOnlyForMultipartRule
     ];

@@ -146,6 +146,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         // Ideally you are still at the individual spec level here, so you can still modify the fern definition
         // file paths with the inputted namespace, however given auth and other shared settings I think we have to
         // resolve to the IR first, and namespace there.
+
         const definition = convert({
             authOverrides:
                 this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined,
@@ -160,7 +161,8 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             taskContext: context,
             ir: openApiIr,
             enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,
-            detectGlobalHeaders: settings?.detectGlobalHeaders ?? true
+            detectGlobalHeaders: settings?.detectGlobalHeaders ?? true,
+            shouldInlineTypes: this.generatorsConfiguration?.apiWideSettings?.shouldInlineTypes ?? false
         });
 
         return {

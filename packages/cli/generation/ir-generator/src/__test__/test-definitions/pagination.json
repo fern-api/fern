@@ -83,6 +83,7 @@
                 },
                 "typeId": "type_:UsernameCursor"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -188,6 +189,7 @@
                 },
                 "typeId": "type_:UsernamePage"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -359,6 +361,7 @@
                 },
                 "typeId": "type_users:Order"
             },
+            "inline": false,
             "shape": {
                 "_type": "enum",
                 "default": null,
@@ -494,6 +497,7 @@
                 },
                 "typeId": "type_users:WithPage"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -622,6 +626,7 @@
                 },
                 "typeId": "type_users:WithCursor"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -750,6 +755,7 @@
                 },
                 "typeId": "type_users:UserListContainer"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -937,6 +943,7 @@
                 },
                 "typeId": "type_users:UserPage"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -1158,6 +1165,7 @@
                 },
                 "typeId": "type_users:UserOptionalListContainer"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -1351,6 +1359,7 @@
                 },
                 "typeId": "type_users:UserOptionalListPage"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -1572,6 +1581,7 @@
                 },
                 "typeId": "type_users:UsernameContainer"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -1700,6 +1710,7 @@
                 },
                 "typeId": "type_users:ListUsersExtendedResponse"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [
@@ -2026,6 +2037,7 @@
                 },
                 "typeId": "type_users:ListUsersExtendedOptionalListResponse"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [
@@ -2352,6 +2364,7 @@
                 },
                 "typeId": "type_users:ListUsersPaginationResponse"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -2717,6 +2730,7 @@
                 },
                 "typeId": "type_users:Page"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -3015,6 +3029,7 @@
                 },
                 "typeId": "type_users:NextPage"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -3174,6 +3189,7 @@
                 },
                 "typeId": "type_users:User"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

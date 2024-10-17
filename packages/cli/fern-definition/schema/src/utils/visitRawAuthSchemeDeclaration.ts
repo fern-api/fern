@@ -5,7 +5,7 @@ import {
     BearerAuthSchemeSchema,
     HeaderAuthSchemeSchema
 } from "../schemas";
-import { OAuthSchemeSchema } from "../schemas/OAuthSchemeSchema";
+import { OAuthSchemeSchema } from "../schemas";
 
 export interface AuthSchemeDeclarationVisitor<R> {
     header: (authScheme: HeaderAuthSchemeSchema) => R;

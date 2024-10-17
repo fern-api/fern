@@ -173,6 +173,7 @@
                 },
                 "typeId": "type_a/d/types:Foo"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {

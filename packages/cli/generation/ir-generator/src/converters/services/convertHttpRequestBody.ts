@@ -16,6 +16,8 @@ import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
 import { convertAvailability } from "../convertDeclaration";
+import { isNonNullish } from "@fern-api/core-utils";
+import { isNonInlinedTypeReference, isStringTypeReference } from "../../utils/isNonInlinedTypeReferenceSchema";
 
 export function convertHttpRequestBody({
     request,
@@ -50,44 +52,50 @@ export function convertHttpRequestBody({
     if (fileUploadRequest != null) {
         return HttpRequestBody.fileUpload({
             name: file.casingsGenerator.generateName(fileUploadRequest.name),
-            properties: fileUploadRequest.properties.map((property) => {
-                if (property.isFile) {
-                    if (property.isArray) {
-                        return FileUploadRequestProperty.file(
-                            FileProperty.fileArray({
-                                key: file.casingsGenerator.generateNameAndWireValue({
-                                    wireValue: property.key,
-                                    name: property.key
-                                }),
-                                isOptional: property.isOptional,
-                                contentType: property.contentType
-                            })
-                        );
+            properties: fileUploadRequest.properties
+                .map((property) => {
+                    if (property.isFile) {
+                        if (property.isArray) {
+                            return FileUploadRequestProperty.file(
+                                FileProperty.fileArray({
+                                    key: file.casingsGenerator.generateNameAndWireValue({
+                                        wireValue: property.key,
+                                        name: property.key
+                                    }),
+                                    isOptional: property.isOptional,
+                                    contentType: property.contentType
+                                })
+                            );
+                        } else {
+                            return FileUploadRequestProperty.file(
+                                FileProperty.file({
+                                    key: file.casingsGenerator.generateNameAndWireValue({
+                                        wireValue: property.key,
+                                        name: property.key
+                                    }),
+                                    isOptional: property.isOptional,
+                                    contentType: property.contentType
+                                })
+                            );
+                        }
                     } else {
-                        return FileUploadRequestProperty.file(
-                            FileProperty.file({
-                                key: file.casingsGenerator.generateNameAndWireValue({
-                                    wireValue: property.key,
-                                    name: property.key
-                                }),
-                                isOptional: property.isOptional,
-                                contentType: property.contentType
-                            })
-                        );
-                    }
-                } else {
-                    return FileUploadRequestProperty.bodyProperty({
-                        ...convertInlinedRequestProperty({
+                        const convertedProperty = convertInlinedRequestProperty({
                             propertyKey: property.key,
                             propertyDefinition: property.propertyType,
                             docs: property.docs,
                             availability: convertAvailability(property.availability),
                             file
-                        }),
-                        contentType: property.contentType
-                    });
-                }
-            }),
+                        });
+                        if (convertedProperty != null) {
+                            FileUploadRequestProperty.bodyProperty({
+                                ...convertedProperty,
+                                contentType: property.contentType
+                            });
+                        }
+                    }
+                    return undefined;
+                })
+                .filter(isNonNullish), // TODO: remove filter
             docs: request.docs
         });
     }
@@ -106,18 +114,20 @@ export function convertHttpRequestBody({
             docs: request.docs,
             properties:
                 request.body.properties != null
-                    ? Object.entries(request.body.properties).map(([propertyKey, propertyDefinition]) =>
-                          convertInlinedRequestProperty({
-                              propertyKey,
-                              propertyDefinition,
-                              docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
-                              availability:
-                                  typeof propertyDefinition !== "string"
-                                      ? convertAvailability(propertyDefinition.availability)
-                                      : undefined,
-                              file
-                          })
-                      )
+                    ? Object.entries(request.body.properties)
+                          .map(([propertyKey, propertyDefinition]) =>
+                              convertInlinedRequestProperty({
+                                  propertyKey,
+                                  propertyDefinition,
+                                  docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
+                                  availability:
+                                      typeof propertyDefinition !== "string"
+                                          ? convertAvailability(propertyDefinition.availability)
+                                          : undefined,
+                                  file
+                              })
+                          )
+                          .filter(isNonNullish) // TODO: remove filter
                     : [],
             extraProperties: request.body["extra-properties"] ?? false,
             extendedProperties: undefined
@@ -161,14 +171,18 @@ function convertInlinedRequestProperty({
     docs: string | undefined;
     availability: Availability | undefined;
     file: FernFileContext;
-}): InlinedRequestBodyProperty {
-    return {
-        docs,
-        availability,
-        name: file.casingsGenerator.generateNameAndWireValue({
-            wireValue: propertyKey,
-            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
-        }),
-        valueType: file.parseTypeReference(propertyDefinition)
-    };
+}): InlinedRequestBodyProperty | undefined {
+    if (isNonInlinedTypeReference(propertyDefinition) || isStringTypeReference(propertyDefinition)) {
+        return {
+            docs,
+            availability,
+            name: file.casingsGenerator.generateNameAndWireValue({
+                wireValue: propertyKey,
+                name: getPropertyName({ propertyKey, property: propertyDefinition }).name
+            }),
+            valueType: file.parseTypeReference(propertyDefinition)
+        };
+    }
+    // TODO: handle inlined case
+    return undefined;
 }

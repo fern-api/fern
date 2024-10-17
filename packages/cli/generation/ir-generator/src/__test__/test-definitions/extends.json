@@ -58,6 +58,7 @@
                 },
                 "typeId": "type_:ExampleType"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [
@@ -368,6 +369,7 @@
                 },
                 "typeId": "type_:NestedType"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [
@@ -780,6 +782,7 @@
                 },
                 "typeId": "type_:Docs"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -958,6 +961,7 @@
                 },
                 "typeId": "type_:JSON"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [

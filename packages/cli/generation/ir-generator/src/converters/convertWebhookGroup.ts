@@ -1,4 +1,4 @@
-import { isPlainObject } from "@fern-api/core-utils";
+import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import {
     Availability,
     ExampleWebhookCall,
@@ -18,6 +18,7 @@ import { convertAvailability } from "./convertDeclaration";
 import { convertHttpHeader } from "./services/convertHttpService";
 import { convertTypeReferenceExample } from "./type-declarations/convertExampleType";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
+import { isNonInlinedTypeReference, isStringTypeReference } from "../utils/isNonInlinedTypeReferenceSchema";
 
 export async function convertWebhookGroup({
     webhooks,
@@ -91,18 +92,20 @@ function convertWebhookPayloadSchema({
             ),
             properties:
                 payload.properties != null
-                    ? Object.entries(payload.properties).map(([propertyKey, propertyDefinition]) =>
-                          convertInlinedRequestProperty({
-                              propertyKey,
-                              propertyDefinition,
-                              docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
-                              availability:
-                                  typeof propertyDefinition !== "string"
-                                      ? convertAvailability(propertyDefinition.availability)
-                                      : undefined,
-                              file
-                          })
-                      )
+                    ? Object.entries(payload.properties)
+                          .map(([propertyKey, propertyDefinition]) =>
+                              convertInlinedRequestProperty({
+                                  propertyKey,
+                                  propertyDefinition,
+                                  docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
+                                  availability:
+                                      typeof propertyDefinition !== "string"
+                                          ? convertAvailability(propertyDefinition.availability)
+                                          : undefined,
+                                  file
+                              })
+                          )
+                          .filter(isNonNullish)
                     : []
         });
     }
@@ -120,16 +123,20 @@ function convertInlinedRequestProperty({
     docs: string | undefined;
     availability: Availability | undefined;
     file: FernFileContext;
-}): InlinedWebhookPayloadProperty {
-    return {
-        docs,
-        availability,
-        name: file.casingsGenerator.generateNameAndWireValue({
-            wireValue: propertyKey,
-            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
-        }),
-        valueType: file.parseTypeReference(propertyDefinition)
-    };
+}): InlinedWebhookPayloadProperty | undefined {
+    if (isNonInlinedTypeReference(propertyDefinition) || isStringTypeReference(propertyDefinition)) {
+        return {
+            docs,
+            availability,
+            name: file.casingsGenerator.generateNameAndWireValue({
+                wireValue: propertyKey,
+                name: getPropertyName({ propertyKey, property: propertyDefinition }).name
+            }),
+            valueType: file.parseTypeReference(propertyDefinition)
+        };
+    }
+    // TODO: handle inlined case
+    return undefined;
 }
 
 function convertWebhookExamples({

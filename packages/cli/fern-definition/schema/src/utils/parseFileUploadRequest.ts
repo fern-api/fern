@@ -84,22 +84,25 @@ function createRawFileUploadRequest(
         (acc, [key, propertyType]) => {
             const docs = typeof propertyType !== "string" ? propertyType.docs : undefined;
             const contentType = typeof propertyType !== "string" ? propertyType["content-type"] : undefined;
-            const maybeParsedFileType = parseRawFileType(
-                typeof propertyType === "string" ? propertyType : propertyType.type
-            );
-            if (maybeParsedFileType != null) {
-                acc.push({
-                    isFile: true,
-                    key,
-                    docs,
-                    isOptional: maybeParsedFileType.isOptional,
-                    isArray: maybeParsedFileType.isArray,
-                    contentType
-                });
+            if (typeof propertyType === "string") {
+                // COMPLETE HACK
+                const maybeParsedFileType = parseRawFileType(propertyType);
+                if (maybeParsedFileType != null) {
+                    acc.push({
+                        isFile: true,
+                        key,
+                        docs,
+                        isOptional: maybeParsedFileType.isOptional,
+                        isArray: maybeParsedFileType.isArray,
+                        contentType
+                    });
+                } else {
+                    acc.push({ isFile: false, key, propertyType, docs, contentType });
+                }
+                return acc;
             } else {
-                acc.push({ isFile: false, key, propertyType, docs, contentType });
+                return acc;
             }
-            return acc;
         },
         []
     );
