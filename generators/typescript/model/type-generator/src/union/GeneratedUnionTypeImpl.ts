@@ -29,22 +29,18 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
 
     private generatedUnion: GeneratedUnionImpl<Context>;
 
-    constructor({
-        includeUtilsOnUnionMembers,
-        includeOtherInUnionTypes,
-        ...superInit
-    }: GeneratedUnionTypeImpl.Init<Context>) {
-        super(superInit);
+    constructor(init: GeneratedUnionTypeImpl.Init<Context>) {
+        super(init);
 
         const parsedSingleUnionTypes = this.shape.types.map(
             (singleUnionType) =>
                 new ParsedSingleUnionTypeForUnion({
                     singleUnionType,
                     union: this.shape,
-                    includeUtilsOnUnionMembers,
+                    includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
                     includeSerdeLayer: this.includeSerdeLayer,
                     retainOriginalCasing: this.retainOriginalCasing,
-                    noOptionalProperties: this.noOptionalProperties
+                    noOptionalProperties: this.noOptionalProperties,
                 })
         );
 
@@ -52,8 +48,8 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
 
         this.generatedUnion = new GeneratedUnionImpl({
             typeName: this.typeName,
-            includeUtilsOnUnionMembers,
-            includeOtherInUnionTypes,
+            includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
+            includeOtherInUnionTypes: this.includeOtherInUnionTypes,
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
             getDocs: (context: Context) => this.getDocs(context),
             discriminant: this.includeSerdeLayer
@@ -62,7 +58,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
             parsedSingleUnionTypes,
             unknownSingleUnionType: new UnknownSingleUnionType({
                 singleUnionType: unknownSingleUnionTypeGenerator,
-                includeUtilsOnUnionMembers
+                includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
             }),
             baseProperties: this.shape.baseProperties,
             includeSerdeLayer: this.includeSerdeLayer,

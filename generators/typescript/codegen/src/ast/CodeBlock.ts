@@ -1,21 +1,18 @@
-import { CodeBlock as CommonCodeBlock } from "@fern-api/generator-commons";
-import { AstNode, Writer } from "../typescript";
+import { AbstractAstNode, CodeBlock as CommonCodeBlock } from "@fern-api/generator-commons";
+import { Writer } from "../typescript";
 
 export declare namespace CodeBlock {
     /* Write arbitrary code */
     type Args = CommonCodeBlock.Arg<Writer>;
 }
 
-export class CodeBlock extends AstNode {
-    private args: CodeBlock.Args;
-
-    public constructor(args: CodeBlock.Args) {
+export class CodeBlock extends AbstractAstNode {
+    public constructor(private readonly arg: CodeBlock.Args) {
         super();
-        this.args = args;
     }
 
     public write(writer: Writer): void {
-        const commonCodeBlock = new CommonCodeBlock(this.args);
+        const commonCodeBlock = new CommonCodeBlock(this.arg);
         return commonCodeBlock.write(writer);
     }
 }

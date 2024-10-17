@@ -8,6 +8,11 @@ export function variable(arg: AST.Variable.Args): AST.Variable {
     return new AST.Variable(arg);
 }
 
+export function interface_(arg: AST.Interface.Args): AST.Interface {
+    return new AST.Interface(arg);
+}
+
 export * from "./ast";
 export { Type as Types } from "./ast";
+export { Reference } from "./ast";
 export * from "./ast/core";

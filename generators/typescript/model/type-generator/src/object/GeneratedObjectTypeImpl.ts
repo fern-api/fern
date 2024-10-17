@@ -11,31 +11,35 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
     public readonly type = "object";
 
     public writeToFile(context: Context): void {
-        const interfaceNode = context.sourceFile.addInterface({
-            name: this.typeName,
-            properties: [
-                ...this.shape.properties.map((property) => {
-                    const value = context.type.getReferenceToType(property.valueType);
-                    const propertyNode: OptionalKind<PropertySignatureStructure> = {
-                        name: `"${this.getPropertyKeyFromProperty(property)}"`,
-                        type: getTextOfTsNode(
-                            this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined
-                        ),
-                        hasQuestionToken: !this.noOptionalProperties && value.isOptional,
-                        docs: property.docs != null ? [{ description: property.docs }] : undefined
-                    };
-
-                    return propertyNode;
-                })
-            ],
-            isExported: true
+        context.sourceFile.set({
+            statements: "waddddupppp"
         });
 
-        maybeAddDocs(interfaceNode, this.getDocs(context));
+        // const interfaceNode = context.sourceFile.addInterface({
+        //     name: this.typeName,
+        //     properties: [
+        //         ...this.shape.properties.map((property) => {
+        //             const value = context.type.getReferenceToType(property.valueType);
+        //             const propertyNode: OptionalKind<PropertySignatureStructure> = {
+        //                 name: `"${this.getPropertyKeyFromProperty(property)}"`,
+        //                 type: getTextOfTsNode(
+        //                     this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined
+        //                 ),
+        //                 hasQuestionToken: !this.noOptionalProperties && value.isOptional,
+        //                 docs: property.docs != null ? [{ description: property.docs }] : undefined
+        //             };
 
-        for (const extension of this.shape.extends) {
-            interfaceNode.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
-        }
+        //             return propertyNode;
+        //         })
+        //     ],
+        //     isExported: true
+        // });
+
+        // maybeAddDocs(interfaceNode, this.getDocs(context));
+
+        // for (const extension of this.shape.extends) {
+        //     interfaceNode.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
+        // }
     }
 
     public getPropertyKey({ propertyWireKey }: { propertyWireKey: string }): string {

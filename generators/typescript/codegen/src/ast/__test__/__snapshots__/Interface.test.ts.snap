@@ -1,0 +1,58 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Interface > toString > should generate a simple interface 1`] = `
+"interface SimpleInterface {}
+"
+`;
+
+exports[`Interface > toString > should generate an exported interface 1`] = `
+"export interface ExportedInterface {}
+"
+`;
+
+exports[`Interface > toString > should generate an interface extending another interface 1`] = `
+" interface ExtendedInterface{
+    "extendedProp": number;
+}
+"
+`;
+
+exports[`Interface > toString > should generate an interface with complex types 1`] = `
+"interface ComplexTypesInterface {
+  array: string[];
+  literal: "literal-value";
+}
+"
+`;
+
+exports[`Interface > toString > should generate an interface with multiple properties 1`] = `
+"interface MultiPropertyInterface {
+  prop1: string;
+  prop2: number;
+  prop3: boolean;
+}
+"
+`;
+
+exports[`Interface > toString > should generate an interface with one property 1`] = `
+"interface OnePropertyInterface {
+  prop1: string;
+}
+"
+`;
+
+exports[`Interface > toString > should generate an interface with optional properties 1`] = `
+"interface OptionalPropsInterface {
+  required: string;
+  optional?: number;
+}
+"
+`;
+
+exports[`Interface > toString > should generate an interface with readonly properties 1`] = `
+"interface ReadonlyPropsInterface {
+  mutable: string;
+  immutable: number;
+}
+"
+`;
