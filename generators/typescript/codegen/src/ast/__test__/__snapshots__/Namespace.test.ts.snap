@@ -1,0 +1,80 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Namespace > toString > should generate a namespace with a nested namespace 1`] = `
+"declare namespace OuterNamespace {
+  namespace InnerNamespace {
+    interface InnerInterface {
+      prop: string;
+    }
+  }
+}
+"
+`;
+
+exports[`Namespace > toString > should generate a namespace with complex nested structure 1`] = `
+"export declare namespace RootNamespace {
+  interface RootInterface {
+    rootProp: string;
+  }
+
+  namespace SubNamespace1 {
+    interface Sub1Interface {
+      sub1Prop: number;
+    }
+  }
+
+  namespace SubNamespace2 {
+    interface Sub2Interface {
+      sub2Prop: boolean;
+    }
+  }
+}
+"
+`;
+
+exports[`Namespace > toString > should generate a namespace with mixed content 1`] = `
+"declare namespace MixedContentNamespace {
+  interface Interface1 {
+    prop1: string;
+  }
+
+  namespace InnerNamespace {
+    interface Interface2 {
+      prop2: number;
+    }
+  }
+}
+"
+`;
+
+exports[`Namespace > toString > should generate a namespace with multiple interfaces 1`] = `
+"declare namespace MultiInterfaceNamespace {
+  interface Interface1 {
+    prop1: string;
+  }
+
+  interface Interface2 {
+    prop2: number;
+  }
+}
+"
+`;
+
+exports[`Namespace > toString > should generate a namespace with one interface 1`] = `
+"declare namespace NamespaceWithInterface {
+  interface InnerInterface {
+    prop: string;
+  }
+}
+"
+`;
+
+exports[`Namespace > toString > should generate a simple namespace 1`] = `
+"declare namespace SimpleNamespace {}
+"
+`;
+
+exports[`Namespace > toString > should generate an exported namespace 1`] = `
+"export declare namespace ExportedNamespace {}
+"
+`;

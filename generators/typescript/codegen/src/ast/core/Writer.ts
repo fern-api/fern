@@ -4,9 +4,15 @@ import { Reference } from "../Reference";
 export class Writer extends AbstractWriter {
     /* Import statements */
     private references: Reference[] = [];
+    /* Set to true, if within a declared namespace */
+    public isAmbient: boolean = false;
 
     public addReference(reference: Reference): void {
         this.references.push(reference);
+    }
+
+    public setAmbient(isAmbient: boolean): void {
+        this.isAmbient = isAmbient;
     }
 
     public toString(skipImports = false): string {

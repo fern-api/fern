@@ -13,6 +13,6 @@ export abstract class AstNode extends AbstractAstNode {
     }
 
     public toStringFormatted(): string {
-        return prettier.format(this.toString());
+        return prettier.format(this.toString(), { parser: "typescript" });
     }
 }
