@@ -23,4 +23,3 @@ export function file(): AST.TypescriptFile {
 export * from "./ast";
 export { Type as Types } from "./ast";
 export { Reference } from "./ast";
-export * from "./ast/core";

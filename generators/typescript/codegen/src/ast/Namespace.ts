@@ -1,7 +1,6 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { AstNode } from "./AstNode";
+import { Writer } from "./Writer";
 import { Interface } from "./Interface";
-
 
 export declare namespace Namespace {
     interface Args {

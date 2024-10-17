@@ -1,5 +1,5 @@
 import { AbstractWriter } from "@fern-api/generator-commons";
-import { Reference } from "../Reference";
+import { Reference } from "./Reference";
 
 export class Writer extends AbstractWriter {
     /* Import statements */

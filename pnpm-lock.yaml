@@ -992,19 +992,17 @@ importers:
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/codegen:
-    devDependencies:
+    dependencies:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-commons':
         specifier: workspace:*
         version: link:../../commons
       '@fern-fern/ir-sdk':
         specifier: 53.14.0
         version: 53.14.0
+    devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -1029,6 +1027,9 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      zod:
+        specifier: ^3.22.3
+        version: 3.23.8
 
   generators/typescript/express/cli:
     devDependencies:
@@ -1411,6 +1412,12 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/fs-utils
+      '@fern-api/generator-commons':
+        specifier: workspace:*
+        version: link:../../../commons
+      '@fern-api/typescript-codegen':
+        specifier: workspace:*
+        version: link:../../codegen
       '@fern-fern/ir-sdk':
         specifier: 53.14.0
         version: 53.14.0
@@ -1530,6 +1537,9 @@ importers:
 
   generators/typescript/model/type-generator:
     dependencies:
+      '@fern-api/typescript-codegen':
+        specifier: workspace:*
+        version: link:../../codegen
       '@fern-fern/ir-sdk':
         specifier: 53.14.0
         version: 53.14.0
@@ -1870,6 +1880,9 @@ importers:
       '@fern-api/generator-commons':
         specifier: workspace:*
         version: link:../../../commons
+      '@fern-api/typescript-codegen':
+        specifier: workspace:*
+        version: link:../../codegen
       '@fern-fern/ir-sdk':
         specifier: 53.14.0
         version: 53.14.0
@@ -2691,6 +2704,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
+      '@fern-api/typescript-codegen':
+        specifier: workspace:*
+        version: link:../../codegen
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898

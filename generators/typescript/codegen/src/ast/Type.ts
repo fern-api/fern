@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { AstNode } from "./AstNode";
+import { Writer } from "./Writer";
 import { Reference } from "./Reference";
 
 type InternalType =
@@ -12,10 +12,12 @@ type InternalType =
     | Object_
     | Array_
     | Set
-    | Map
+    | Record
     | Undefined
     | ReferenceType
-    | Literal;
+    | Literal
+    | Unknown
+    | Union;
 
 interface Number {
     type: "number";
@@ -56,8 +58,8 @@ interface Literal {
     value: string | boolean;
 }
 
-interface Map {
-    type: "map";
+interface Record {
+    type: "record";
     keyType: Type;
     valueType: Type;
 }
@@ -69,6 +71,15 @@ interface Undefined {
 interface ReferenceType {
     type: "reference";
     reference: Reference;
+}
+
+interface Unknown {
+    type: "unknown";
+}
+
+interface Union {
+    type: "union";
+    variants: Type[];
 }
 
 export class Type extends AstNode {
@@ -99,7 +110,7 @@ export class Type extends AstNode {
             case "number":
                 writer.write("number");
                 break;
-            case "map":
+            case "record":
                 writer.write("Record<");
                 writer.writeNode(this.internalType.keyType);
                 writer.write(", ");
@@ -125,6 +136,19 @@ export class Type extends AstNode {
                     writer.write(`${this.internalType.value}`);
                 }
                 break;
+            case "unknown":
+                writer.write("unknown");
+                break;
+            case "union": {
+                const numVariants = this.internalType.variants.length;
+                this.internalType.variants.forEach((variant, idx) => {
+                    writer.writeNode(variant);
+                    if (idx < numVariants - 1) {
+                        writer.write(" | ");
+                    }
+                });
+                break;
+            }
             default:
                 assertNever(this.internalType);
         }
@@ -156,6 +180,12 @@ export class Type extends AstNode {
         });
     }
 
+    public static date(): Type {
+        return new this({
+            type: "date"
+        });
+    }
+
     public static literal(value: string | boolean): Type {
         return new this({
             type: "literal",
@@ -167,6 +197,42 @@ export class Type extends AstNode {
         return new this({
             type: "reference",
             reference
+        });
+    }
+
+    public static object(): Type {
+        return new this({
+            type: "object"
+        });
+    }
+
+    public static unknown(): Type {
+        return new this({
+            type: "unknown"
+        });
+    }
+
+    public static undefined(): Type {
+        return new this({
+            type: "undefined"
+        });
+    }
+
+    public static record(keyType: Type, valueType: Type): Type {
+        return new this({
+            type: "record",
+            keyType,
+            valueType
+        });
+    }
+
+    public static union(variants: Type[]): Type {
+        if (variants.length === 0) {
+            return Type.unknown();
+        }
+        return new this({
+            type: "union",
+            variants
         });
     }
 }

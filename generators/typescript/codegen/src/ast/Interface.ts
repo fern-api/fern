@@ -1,5 +1,5 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { AstNode } from "./AstNode";
+import { Writer } from "./Writer";
 import { Type } from "./Type";
 import { Reference } from "./Reference";
 

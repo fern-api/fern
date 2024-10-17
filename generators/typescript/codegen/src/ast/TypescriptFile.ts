@@ -1,5 +1,5 @@
-import { AstNode, Writer } from "./core";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { Writer } from "..";
+import { AstNode } from "./AstNode";
 import { Interface } from "./Interface";
 import { Namespace } from "./Namespace";
 

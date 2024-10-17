@@ -1,3 +1,4 @@
+import { BaseTypescriptCustomConfigSchema, BaseTypescriptGeneratorContext } from "@fern-api/typescript-codegen";
 import { Constants } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilitiesManager,
@@ -17,6 +18,7 @@ export declare namespace BaseContextImpl {
         dependencyManager: DependencyManager;
         coreUtilitiesManager: CoreUtilitiesManager;
         fernConstants: Constants;
+        v2Context: BaseTypescriptGeneratorContext<BaseTypescriptCustomConfigSchema>;
     }
 }
 
@@ -25,14 +27,17 @@ export class BaseContextImpl implements BaseContext {
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
     public readonly fernConstants: Constants;
+    public V2: BaseTypescriptGeneratorContext<BaseTypescriptCustomConfigSchema>;
 
     constructor({
         sourceFile,
         importsManager,
         dependencyManager,
         coreUtilitiesManager,
-        fernConstants
+        fernConstants,
+        v2Context
     }: BaseContextImpl.Init) {
+        this.V2 = v2Context;
         this.sourceFile = sourceFile;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
