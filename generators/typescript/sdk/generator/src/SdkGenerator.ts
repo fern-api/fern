@@ -125,6 +125,7 @@ export declare namespace SdkGenerator {
         apiName: string;
         packageJson: Record<string, unknown> | undefined;
         useBigInt: boolean;
+        respectInlinedTypes: boolean;
     }
 }
 
@@ -298,7 +299,8 @@ export class SdkGenerator {
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
             noOptionalProperties: config.noOptionalProperties,
-            retainOriginalCasing: config.retainOriginalCasing
+            retainOriginalCasing: config.retainOriginalCasing,
+            respectInlinedTypes: true,
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -1252,6 +1254,7 @@ export class SdkGenerator {
             logger: this.context.logger,
             version: this.context.version,
             config: this.rawConfig,
+            parsedConfig: this.config,
             ir: this.intermediateRepresentation,
             npmPackage: this.npmPackage,
             isForSnippet: isForSnippet ?? false,

@@ -145,7 +145,8 @@ export class TypeContextImpl implements TypeContext {
             fernFilepath: typeDeclaration.name.fernFilepath,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
             includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            respectInlinedTypes: true,
         });
     }
 

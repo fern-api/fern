@@ -19,6 +19,8 @@
     { "path": "../express-inlined-request-body-schema-generator" },
     { "path": "../express-register-generator" },
     { "path": "../express-service-generator" },
-    { "path": "../generic-express-error-generators" }
+    { "path": "../generic-express-error-generators" },
+    { "path": "../../codegen" },
+    { "path": "../../../commons" }
   ]
 }

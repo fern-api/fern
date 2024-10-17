@@ -1,3 +1,4 @@
+import { BaseTypescriptCustomConfigSchema, BaseTypescriptGeneratorContext } from "@fern-api/typescript-codegen";
 import { Constants } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilitiesManager,
@@ -78,6 +79,8 @@ export declare namespace ExpressContextImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         useBigInt: boolean;
+
+        v2Context: BaseTypescriptGeneratorContext<BaseTypescriptCustomConfigSchema>;
     }
 }
 
@@ -99,8 +102,10 @@ export class ExpressContextImpl implements ExpressContext {
     public readonly genericAPIExpressError: GenericAPIExpressErrorContext;
     public readonly expressRegister: ExpressRegisterContext;
     public readonly expressErrorSchema: ExpressErrorSchemaContext;
+    public V2: BaseTypescriptGeneratorContext<BaseTypescriptCustomConfigSchema>;
 
     constructor({
+        v2Context,
         typeResolver,
         typeGenerator,
         typeDeclarationReferencer,
@@ -134,6 +139,7 @@ export class ExpressContextImpl implements ExpressContext {
         retainOriginalCasing,
         useBigInt
     }: ExpressContextImpl.Init) {
+        this.V2 = v2Context;
         this.includeSerdeLayer = includeSerdeLayer;
         this.sourceFile = sourceFile;
         this.externalDependencies = createExternalDependencies({
@@ -145,7 +151,6 @@ export class ExpressContextImpl implements ExpressContext {
             importsManager
         });
         this.fernConstants = fernConstants;
-
         this.type = new TypeContextImpl({
             sourceFile,
             importsManager,

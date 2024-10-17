@@ -1,5 +1,6 @@
+import { AstNode } from "./AstNode";
 import { CodeBlock } from "./CodeBlock";
-import { AstNode, Writer } from "./core";
+import { Writer } from "./Writer";
 
 export declare namespace Variable {
     interface Args {

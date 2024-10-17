@@ -2,18 +2,16 @@ import { ExampleType, ExampleTypeShape, FernFilepath } from "@fern-fern/ir-sdk/a
 import { GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { BaseGeneratedType } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+import { TypeGenerator } from "./TypeGenerator";
 
 export declare namespace AbstractGeneratedType {
-    export interface Init<Shape, Context> {
+    export interface Init<Shape, Context> extends TypeGenerator.Init {
         typeName: string;
         shape: Shape;
         examples: ExampleType[];
         docs: string | undefined;
         fernFilepath: FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
-        includeSerdeLayer: boolean;
-        noOptionalProperties: boolean;
-        retainOriginalCasing: boolean;
     }
 }
 
@@ -28,6 +26,8 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
     protected includeSerdeLayer: boolean;
     protected noOptionalProperties: boolean;
     protected retainOriginalCasing: boolean;
+    protected includeUtilsOnUnionMembers: boolean;
+    protected includeOtherInUnionTypes: boolean;
 
     private docs: string | undefined;
 
@@ -40,7 +40,9 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
         fernFilepath,
         includeSerdeLayer,
         noOptionalProperties,
-        retainOriginalCasing
+        retainOriginalCasing,
+        includeUtilsOnUnionMembers,
+        includeOtherInUnionTypes
     }: AbstractGeneratedType.Init<Shape, Context>) {
         this.typeName = typeName;
         this.shape = shape;
@@ -51,6 +53,8 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
         this.includeSerdeLayer = includeSerdeLayer;
         this.noOptionalProperties = noOptionalProperties;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
+        this.includeOtherInUnionTypes = includeOtherInUnionTypes;
     }
 
     protected getDocs(context: Context): string | undefined {

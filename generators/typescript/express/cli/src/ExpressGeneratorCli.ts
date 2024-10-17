@@ -47,6 +47,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         intermediateRepresentation: IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject> {
         const expressGenerator = new ExpressGenerator({
+            generatorExecConfig: config,
             namespaceExport: `${upperFirst(camelCase(config.organization))}${upperFirst(
                 camelCase(config.workspaceName)
             )}`,

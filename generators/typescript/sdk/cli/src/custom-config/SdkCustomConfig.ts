@@ -34,4 +34,5 @@ export interface SdkCustomConfig {
     generateWireTests: boolean | undefined;
     noScripts: boolean | undefined;
     useBigInt: boolean | undefined;
+    respectInlinedTypes: boolean | undefined;
 }
