@@ -398,34 +398,34 @@ export class SdkGenerator {
     public async generate(): Promise<TypescriptProject> {
         const running: Promise<any>[] = [];
 
-        running.push(this.asyncPerformanceObserver.measureAsync(this.generateTypeDeclarations));
+        running.push(this.asyncPerformanceObserver.measureAsync(this.generateTypeDeclarations.bind(this)));
         this.context.logger.debug("Generated types");
-        running.push(this.asyncPerformanceObserver.measureAsync(this.generateErrorDeclarations));
+        running.push(this.asyncPerformanceObserver.measureAsync(this.generateErrorDeclarations.bind(this)));
         this.context.logger.debug("Generated errors");
-        running.push(this.asyncPerformanceObserver.measureAsync(this.generateServiceDeclarations));
+        running.push(this.asyncPerformanceObserver.measureAsync(this.generateServiceDeclarations.bind(this)));
         this.context.logger.debug("Generated services");
-        running.push(this.asyncPerformanceObserver.measureAsync(this.generateEnvironments));
+        running.push(this.asyncPerformanceObserver.measureAsync(this.generateEnvironments.bind(this)));
         this.context.logger.debug("Generated environments");
-        await this.asyncPerformanceObserver.measureAsync(this.generateRequestWrappers);
+        await this.asyncPerformanceObserver.measureAsync(this.generateRequestWrappers.bind(this));
         this.context.logger.debug("Generated request wrappers");
-        running.push(this.asyncPerformanceObserver.measureAsync(this.generateVersion));
+        running.push(this.asyncPerformanceObserver.measureAsync(this.generateVersion.bind(this)));
         this.context.logger.debug("Generated version");
 
         if (this.config.neverThrowErrors) {
-            await this.asyncPerformanceObserver.measureAsync(this.generateEndpointErrorUnion);
+            await this.asyncPerformanceObserver.measureAsync(this.generateEndpointErrorUnion.bind(this));
         }
         if (!this.config.neverThrowErrors || this.generateOAuthClients) {
-            await this.asyncPerformanceObserver.measureAsync(this.generateGenericAPISdkError);
-            await this.asyncPerformanceObserver.measureAsync(this.generateTimeoutSdkError);
+            await this.asyncPerformanceObserver.measureAsync(this.generateGenericAPISdkError.bind(this));
+            await this.asyncPerformanceObserver.measureAsync(this.generateTimeoutSdkError.bind(this));
             if (this.config.includeSerdeLayer) {
-                await this.asyncPerformanceObserver.measureAsync(this.generateSdkErrorSchemas);
+                await this.asyncPerformanceObserver.measureAsync(this.generateSdkErrorSchemas.bind(this));
             }
         }
 
         if (this.config.includeSerdeLayer) {
-            await this.asyncPerformanceObserver.measureAsync(this.generateTypeSchemas);
-            await this.asyncPerformanceObserver.measureAsync(this.generateEndpointTypeSchemas);
-            await this.asyncPerformanceObserver.measureAsync(this.generateInlinedRequestBodySchemas);
+            await this.asyncPerformanceObserver.measureAsync(this.generateTypeSchemas.bind(this));
+            await this.asyncPerformanceObserver.measureAsync(this.generateEndpointTypeSchemas.bind(this));
+            await this.asyncPerformanceObserver.measureAsync(this.generateInlinedRequestBodySchemas.bind(this));
 
             const serializationDirectory = this.rootDirectory.getDirectory(RelativeFilePath.of("src/serialization"));
             if (serializationDirectory != null && serializationDirectory?.getSourceFiles().length > 0) {
@@ -439,7 +439,10 @@ export class SdkGenerator {
         if (this.generateOAuthClients) {
             const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
             if (oauthScheme != null && oauthScheme.type === "oauth") {
-                await this.asyncPerformanceObserver.measureAsync(this.generateOAuthTokenProvider, oauthScheme);
+                await this.asyncPerformanceObserver.measureAsync(
+                    this.generateOAuthTokenProvider.bind(this),
+                    oauthScheme
+                );
             }
         }
 
@@ -456,7 +459,7 @@ export class SdkGenerator {
         this.context.logger.debug("Generated exports");
 
         if (this.generateJestTests && this.config.writeUnitTests) {
-            await this.asyncPerformanceObserver.measureAsync(this.generateTestFiles);
+            await this.asyncPerformanceObserver.measureAsync(this.generateTestFiles.bind(this));
         }
         this.jestTestGenerator.addExtras();
         this.extraScripts = {
@@ -469,7 +472,7 @@ export class SdkGenerator {
         };
 
         if (this.config.snippetFilepath != null) {
-            await this.asyncPerformanceObserver.measureAsync(this.generateSnippets);
+            await this.asyncPerformanceObserver.measureAsync(this.generateSnippets.bind(this));
             const snippets: FernGeneratorExec.Snippets = {
                 endpoints: this.endpointSnippets,
                 types: {}
@@ -509,13 +512,13 @@ export class SdkGenerator {
             this.context.logger.debug("Generated snippets");
 
             try {
-                await this.asyncPerformanceObserver.measureAsync(this.generateReadme);
+                await this.asyncPerformanceObserver.measureAsync(this.generateReadme.bind(this));
             } catch (e) {
                 this.context.logger.warn("Failed to generate README.md, this is OK");
             }
 
             try {
-                await this.asyncPerformanceObserver.measureAsync(this.generateReference);
+                await this.asyncPerformanceObserver.measureAsync(this.generateReference.bind(this));
             } catch (e) {
                 this.context.logger.warn("Failed to generate reference.md, this is OK");
             }
