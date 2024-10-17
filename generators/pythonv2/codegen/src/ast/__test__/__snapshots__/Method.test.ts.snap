@@ -9,7 +9,8 @@ def class_method(cls):
 
 exports[`Method > toString > should generate a method with a body 1`] = `
 "def with_body():
-    return True"
+    return True
+"
 `;
 
 exports[`Method > toString > should generate a method with a decorator 1`] = `
