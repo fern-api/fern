@@ -46,11 +46,6 @@ export class Reference extends AstNode {
             });
             writer.write("]");
         }
-
-        if (this.alias) {
-            writer.write(" as ");
-            writer.write(this.alias);
-        }
     }
 
     public getName(): string {
