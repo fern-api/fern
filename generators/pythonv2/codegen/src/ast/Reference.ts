@@ -34,7 +34,7 @@ export class Reference extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write(this.name);
+        writer.write(this.alias ?? this.name);
 
         if (this.genericTypes.length > 0) {
             writer.write("[");
