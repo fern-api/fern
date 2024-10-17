@@ -140,12 +140,11 @@ export class Type extends AstNode {
                 writer.write("unknown");
                 break;
             case "union": {
-                const numVariants = this.internalType.variants.length;
                 this.internalType.variants.forEach((variant, idx) => {
-                    writer.writeNode(variant);
-                    if (idx < numVariants - 1) {
+                    if (idx > 0) {
                         writer.write(" | ");
                     }
+                    writer.writeNode(variant);
                 });
                 break;
             }
