@@ -14,6 +14,8 @@ export declare namespace Reference {
         modulePath?: string[];
         /* The generic types of the reference */
         genericTypes?: Type[];
+        /* The alias of the reference */
+        alias?: string;
     }
 }
 
@@ -21,12 +23,14 @@ export class Reference extends AstNode {
     private name: string;
     private modulePath: string[];
     private genericTypes: Type[];
+    private alias: string | undefined;
 
-    constructor({ name, modulePath, genericTypes }: Reference.Args) {
+    constructor({ name, modulePath, genericTypes, alias }: Reference.Args) {
         super();
         this.name = name;
         this.modulePath = modulePath ?? [];
         this.genericTypes = genericTypes ?? [];
+        this.alias = alias;
     }
 
     public write(writer: Writer): void {
@@ -41,6 +45,11 @@ export class Reference extends AstNode {
                 genericType.write(writer);
             });
             writer.write("]");
+        }
+
+        if (this.alias) {
+            writer.write(" as ");
+            writer.write(this.alias);
         }
     }
 
@@ -58,5 +67,9 @@ export class Reference extends AstNode {
 
     public getFullyQualifiedName(): string {
         return [this.getFullyQualifiedModulePath(), this.name].join(".");
+    }
+
+    public getAlias(): string | undefined {
+        return this.alias;
     }
 }

@@ -111,4 +111,50 @@ describe("PythonFile", () => {
         file.write(writer);
         expect(writer.toString()).toMatchSnapshot();
     });
+
+    it("Add a class with an absolute import and alias", () => {
+        const file = python.file({
+            moduleName: "test_module",
+            path: ["test"],
+            name: "test_file"
+        });
+
+        const absoluteRef = python.reference({
+            modulePath: ["external_module", "submodule"],
+            name: "ExternalClass",
+            alias: "AliasedClass"
+        });
+        const testClass = python.class_({
+            name: "TestClassWithAlias",
+            extends_: [absoluteRef]
+        });
+        writer.addReference(absoluteRef);
+        file.addStatement(testClass);
+
+        file.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
+
+    it("Add a class with a relative import and alias", () => {
+        const file = python.file({
+            moduleName: "test_module",
+            path: ["test", "subdir"],
+            name: "test_file"
+        });
+
+        const relativeRef = python.reference({
+            modulePath: ["test_module", "test", "sibling_dir"],
+            name: "SiblingClass",
+            alias: "AliasedSibling"
+        });
+        const testClass = python.class_({
+            name: "TestClassWithRelativeAlias",
+            extends_: [relativeRef]
+        });
+        writer.addReference(relativeRef);
+        file.addStatement(testClass);
+
+        file.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
 });
