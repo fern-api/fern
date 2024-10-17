@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { TaskContext } from "@fern-api/task-context";
-import { parse } from "@fern-api/openapi-ir-parser";
-import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
+import { parse, FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { getAllOpenAPISpecs, OpenAPISpec, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { readFile } from "fs/promises";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";

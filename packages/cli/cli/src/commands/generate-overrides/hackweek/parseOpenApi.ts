@@ -1,6 +1,6 @@
 import { HttpMethod } from "@fern-api/openapi-ir";
 import { OpenAPI, OpenAPIV3 } from "openapi-types";
-import { parseOpenAPI } from "@fern-api/openapi-ir-parser/src/loadOpenAPI";
+import { parseOpenAPI } from "@fern-api/openapi-ir-parser";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 // This is a little duplicative of what we do in the OAI IR generation, but the OpenAPI IR is just way too large to send.

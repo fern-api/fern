@@ -3,7 +3,6 @@ import { encodingForModel, TiktokenModel } from "js-tiktoken";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { writeFile } from "fs/promises";
 import { dirname, join } from "path";
-import { parseApiSpec } from "./parseOpenApi";
 import { OpenAPIV3 } from "openapi-types";
 
 export function tokenize({
