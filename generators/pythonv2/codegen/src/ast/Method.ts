@@ -6,6 +6,7 @@ import { Reference } from "./Reference";
 import { Field } from "./Field";
 import { Parameter } from "./Parameter";
 import { python } from "..";
+import { Decorator } from "./Decorator";
 
 export enum ClassMethodType {
     STATIC,
@@ -29,6 +30,8 @@ export declare namespace Method {
         type?: ClassMethodType;
         /* The class this method belongs to, if any */
         classReference?: Reference;
+        /* The decorators that should be applied to this method */
+        decorators?: Decorator[];
     }
 }
 
@@ -40,8 +43,9 @@ export class Method extends AstNode {
     public readonly type: ClassMethodType | undefined;
     public readonly reference: Reference | undefined;
     private readonly parameters: Parameter[];
+    private readonly decorators: Decorator[];
 
-    constructor({ name, parameters, return_, body, docstring, type, classReference }: Method.Args) {
+    constructor({ name, parameters, return_, body, docstring, type, classReference, decorators }: Method.Args) {
         super();
         this.name = name;
         this.parameters = parameters;
@@ -50,6 +54,7 @@ export class Method extends AstNode {
         this.docstring = docstring;
         this.type = type;
         this.reference = classReference;
+        this.decorators = decorators ?? [];
     }
 
     public getName(): string {
@@ -58,6 +63,10 @@ export class Method extends AstNode {
 
     public write(writer: Writer): void {
         // Write decorators
+        this.decorators.forEach((decorator) => {
+            decorator.write(writer);
+        });
+
         if (this.type === ClassMethodType.CLASS) {
             python
                 .decorator({

@@ -12,6 +12,15 @@ exports[`Method > toString > should generate a method with a body 1`] = `
     return True"
 `;
 
+exports[`Method > toString > should generate a method with a decorator 1`] = `
+"from decorators import decorator_with_reference
+    
+@decorator_with_reference
+def with_decorator():
+    pass
+"
+`;
+
 exports[`Method > toString > should generate a method with a docstring 1`] = `
 "def with_docstring():
     """This is a docstring"""

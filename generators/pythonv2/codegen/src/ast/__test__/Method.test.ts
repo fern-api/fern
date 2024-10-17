@@ -101,5 +101,18 @@ describe("Method", () => {
             });
             expect(method.toString()).toMatchSnapshot();
         });
+
+        it("should generate a method with a decorator", () => {
+            const method = python.method({
+                name: "with_decorator",
+                parameters: [],
+                decorators: [
+                    python.decorator({
+                        reference: python.reference({ name: "decorator_with_reference", modulePath: ["decorators"] })
+                    })
+                ]
+            });
+            expect(method.toString()).toMatchSnapshot();
+        });
     });
 });
