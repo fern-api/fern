@@ -56,9 +56,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
         await this.generateGitIgnore();
         await this.generateNpmIgnore();
         await this.generatePrettierRc();
-        // await this.generateBiomeConfig();
         await this.generateTsConfig();
-        await this.generateSwcConfig();
         await this.generatePackageJson();
         if (this.outputJsr) {
             await this.generateJsrJson();
