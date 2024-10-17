@@ -16,6 +16,10 @@ export function namespace(arg: AST.Namespace.Args): AST.Namespace {
     return new AST.Namespace(arg);
 }
 
+export function file(): AST.TypescriptFile {
+    return new AST.TypescriptFile();
+}
+
 export * from "./ast";
 export { Type as Types } from "./ast";
 export { Reference } from "./ast";

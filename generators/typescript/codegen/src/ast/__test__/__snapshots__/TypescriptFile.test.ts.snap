@@ -1,0 +1,66 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TypescriptFile > toStringFormatted > should generate a TypeScript file with mixed content 1`] = `
+"interface TopLevelInterface {
+  topProp: string;
+}
+declare namespace MixedNamespace {
+  interface NestedInterface {
+    nestedProp: number;
+  }
+}
+interface AnotherTopLevelInterface {
+  anotherProp: boolean;
+}
+"
+`;
+
+exports[`TypescriptFile > toStringFormatted > should generate a TypeScript file with multiple interfaces 1`] = `
+"interface Interface1 {
+  prop1: string;
+}
+interface Interface2 {
+  prop2: number;
+}
+"
+`;
+
+exports[`TypescriptFile > toStringFormatted > should generate a TypeScript file with multiple namespaces 1`] = `
+"declare namespace Namespace1 {
+  interface Interface1 {
+    prop1: string;
+  }
+}
+declare namespace Namespace2 {
+  interface Interface2 {
+    prop2: number;
+  }
+}
+"
+`;
+
+exports[`TypescriptFile > toStringFormatted > should generate a TypeScript file with one interface 1`] = `
+"interface SimpleInterface {
+  prop: string;
+}
+"
+`;
+
+exports[`TypescriptFile > toStringFormatted > should generate a TypeScript file with one namespace 1`] = `
+"declare namespace SimpleNamespace {
+  interface InnerInterface {
+    prop: string;
+  }
+}
+"
+`;
+
+exports[`TypescriptFile > toStringFormatted > should generate an empty TypeScript file 1`] = `""`;
+
+exports[`TypescriptFile > toStringFormatted > should maintain the correct order of added elements 1`] = `
+"interface Interface1 {}
+declare namespace Namespace1 {}
+interface Interface2 {}
+declare namespace Namespace2 {}
+"
+`;
