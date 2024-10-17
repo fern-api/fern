@@ -844,9 +844,7 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     defaultToAllApiWorkspaces: true
                 }),
                 includeModels: !(argv.excludeModels as boolean),
-                cliContext,
-                // TODO: make this a CLI option
-                withAI: true
+                cliContext
             });
         }
     );

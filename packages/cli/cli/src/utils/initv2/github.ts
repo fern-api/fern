@@ -1,4 +1,4 @@
-import { TaskContext } from "@fern-api/task-context";
+import { InteractiveTaskContext, TaskContext } from "@fern-api/task-context";
 import { App, Octokit } from "octokit";
 
 // Taken from my fern-bot work
@@ -23,7 +23,7 @@ export async function createGithubRepo({
     usersToInvite,
     description
 }: {
-    context: TaskContext;
+    context?: InteractiveTaskContext;
     app: App;
     orgName: string;
     repoName: string;
@@ -32,9 +32,7 @@ export async function createGithubRepo({
 }): Promise<string> {
     const octokit = await app.getInstallationOctokit(56013476);
 
-    context.logger.enable();
-    context.logger.info(`Creating repository ${repoName} in organization ${orgName}`);
-    context.logger.disable();
+    context?.setSubtitle(`Creating repository ${repoName} in organization ${orgName}`);
     const response = await octokit.rest.repos.createInOrg({
         org: orgName,
         name: repoName,
@@ -42,9 +40,11 @@ export async function createGithubRepo({
         visibility: "private"
     });
 
+    context?.setSubtitle(`Inviting you to ${orgName}/${repoName}`);
     for (const user of usersToInvite ?? []) {
         await inviteCollaboratorToRepo(octokit, orgName, repoName, user);
     }
+    context?.setSubtitle(`Invited you to ${orgName}/${repoName}`);
 
     return response.data.html_url;
 }

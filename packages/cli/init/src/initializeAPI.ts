@@ -18,13 +18,15 @@ export async function initializeAPI({
     versionOfCli,
     openApiPath,
     context,
-    writeDefaultGeneratorsConfiguration = true
+    writeDefaultGeneratorsConfiguration = true,
+    includeOverrides = false
 }: {
     organization: string | undefined;
     versionOfCli: string;
     openApiPath: AbsoluteFilePath | undefined;
     context: TaskContext;
     writeDefaultGeneratorsConfiguration?: boolean;
+    includeOverrides?: boolean;
 }): Promise<void> {
     const { absolutePathToFernDirectory } = await createFernDirectoryAndWorkspace({
         organization,
@@ -42,7 +44,8 @@ export async function initializeAPI({
             openAPIFilePath: openApiPath,
             cliVersion: versionOfCli,
             context,
-            writeDefaultGeneratorsConfiguration
+            writeDefaultGeneratorsConfiguration,
+            includeOverrides
         });
     } else {
         await createFernWorkspace({

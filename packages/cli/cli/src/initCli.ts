@@ -11,22 +11,23 @@ import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "@fern-api/init/src/utils/
 import ora from "ora";
 import { initializeAPI } from "@fern-api/init";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
-import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
+import { addGeneratorToWorkspace } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
-import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
 import { createGithubRepo, setupGithubApp } from "./utils/initv2/github";
 import fileSelector from "inquirer-file-selector";
-
 import { App } from "octokit";
 import chalk from "chalk";
 import boxen from "boxen";
-import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { FERN_DIRECTORY } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { askToLogin } from "@fern-api/login";
-import { getCurrentUser } from "@fern-api/auth";
-import { getOrganziation } from "./commands/organization/getOrganization";
+import { FernToken, getCurrentUser } from "@fern-api/auth";
 import { initializeAndPushRepository, writeFernConfigRepoAdditions } from "./utils/initv2/fernConfig";
+import { black } from "./commands/generate-overrides/black";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { generateWorkspace } from "./commands/generate/generateAPIWorkspace";
+import { Project } from "@fern-api/project-loader";
 
 export interface InitV2Output {
     organization: string;
@@ -35,166 +36,222 @@ export interface InitV2Output {
 }
 
 export async function initV2(cliContext: CliContext): Promise<void> {
+    let maybeOrganization: string | undefined;
+    let token: FernToken | undefined;
+    let usersToInvite: string[] = [];
+    const app = setupGithubApp();
+
+    // Initialize the workspace
     await cliContext.runTask(async (context) => {
         // Needed to stop the fight for stdout, and allow ora to update the spinners in place
-        cliContext.logger.disable();
-        context.logger.disable();
-
         const pathToFernDirectory = join(cwd(), RelativeFilePath.of(FERN_DIRECTORY));
         if (await doesPathExist(pathToFernDirectory)) {
             cliContext.failAndThrow(
                 "Fern workspace has already been initialized, run `fern add` to add additional generators."
             );
         }
-        const app = setupGithubApp();
-        const username = await getCurrentUsersGithubUsername(context);
-        const usersToInvite = username == null ? [] : [username];
+        const tokenUser = await getCurrentUsersGithubUsername(context);
+        usersToInvite = tokenUser == null ? [] : [tokenUser.username];
+        token = tokenUser?.token;
 
-        let organization: string | undefined = await input({
+        maybeOrganization = await input({
             message: "Do you have a preferred organization name? (leave blank to use your GitHub username)"
         });
-        if (organization == "") {
-            organization = undefined;
+        if (maybeOrganization == "") {
+            maybeOrganization = undefined;
         }
 
         // Prompt for spec + initialize workspace
-        await initializeFernWorkspace(organization, cliContext, context);
-
-        // Go back to the source of truth to pull the org
-        organization = (
-            await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineApiWorkspace: undefined,
-                defaultToAllApiWorkspaces: true
-            })
-        ).config.organization;
-
-        // Write overrides
-        await initializeOverrides(cliContext);
-
-        // TODO: validate spec
-
-        // Prompt for generators, add them to the workspace, and create repos
-        const generatedMessages = await initializeGenerators(organization, cliContext, app, usersToInvite, context);
-        // Create a repo for their fern config
-        generatedMessages.push(await initializeFernConfigRepo(organization, app, usersToInvite, context));
-
-        // Run generate on these new generators
-        await runGenerate(cliContext);
-
-        let message = "";
-        message += `${chalk.underline("Your Repositories")}\n\n`;
-        message += generatedMessages.map((generatedMessage) => `- ${generatedMessage}`).join("\n");
-
-        cliContext.logger.enable();
-        cliContext.logger.info(
-            boxen(message, {
-                padding: 1,
-                float: "center",
-                textAlignment: "center",
-                borderColor: "green",
-                borderStyle: "round"
-            })
-        );
+        await initializeFernWorkspace(maybeOrganization, cliContext, context);
     });
+
+    // Go back to the source of truth to pull the org
+    const organization = (
+        await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+            commandLineApiWorkspace: undefined,
+            defaultToAllApiWorkspaces: true
+        })
+    ).config.organization;
+
+    // Get that workspace and leverage it
+    let generatedMessages: string[] = [];
+
+    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+        commandLineApiWorkspace: undefined,
+        defaultToAllApiWorkspaces: true
+    });
+    await Promise.all(
+        project.apiWorkspaces.map(async (workspace) => {
+            await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                // Write overrides
+                await initializeOverrides(context, workspace);
+
+                generatedMessages = await initializeGenerators(
+                    organization,
+                    cliContext,
+                    workspace,
+                    app,
+                    usersToInvite,
+                    context
+                );
+
+                // Create a repo for their fern config
+                const fernConfigRepoUrl = await initializeFernConfigRepo(context, organization, app, usersToInvite);
+                if (fernConfigRepoUrl != null) {
+                    generatedMessages.push(fernConfigRepoUrl);
+                }
+            });
+        })
+    );
+
+    // Refetch the workspace to get the new generators
+    const freshProject = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+        commandLineApiWorkspace: undefined,
+        defaultToAllApiWorkspaces: true
+    });
+
+    await Promise.all(
+        freshProject.apiWorkspaces.map(async (workspace) => {
+            await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                // Run generate on these new generators
+                await runGenerateAndFinish(context, workspace, freshProject, token!, generatedMessages);
+            });
+        })
+    );
 }
 
-async function getCurrentUsersGithubUsername(taskContext: TaskContext): Promise<string | undefined> {
+async function getCurrentUsersGithubUsername(
+    taskContext: TaskContext
+): Promise<{ token: FernToken; username: string } | undefined> {
     const token = await askToLogin(taskContext);
     if (token.type === "user") {
         const user = await getCurrentUser({ token, context: taskContext });
-        return user.username;
+        return { token, username: user.username };
     }
     return undefined;
 }
 
-async function runGenerate(cliContext: CliContext) {
-    const generateSpinner = ora({ text: "Generating your libraries...\n" }).start();
+async function runGenerateAndFinish(
+    context: TaskContext,
+    workspace: AbstractAPIWorkspace<unknown>,
+    project: Project,
+    token: FernToken,
+    generatedMessages: string[]
+) {
     try {
-        await generateAPIWorkspaces({
-            project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineApiWorkspace: undefined,
-                defaultToAllApiWorkspaces: false
-            }),
-            cliContext,
-            version: undefined,
-            groupName: undefined,
-            shouldLogS3Url: false,
-            keepDocker: false,
-            useLocalDocker: false,
-            preview: false,
-            mode: undefined
+        await context.runInteractiveTask({ name: "Generating your libraries..." }, async (interactiveContext) => {
+            await generateWorkspace({
+                organization: project.config.organization,
+                workspace,
+                projectConfig: project.config,
+                context,
+                version: undefined,
+                groupName: undefined,
+                shouldLogS3Url: false,
+                keepDocker: false,
+                useLocalDocker: false,
+                absolutePathToPreview: undefined,
+                mode: undefined,
+                token
+            });
+
+            interactiveContext.setSubtitle("Libraries generated!");
+
+            let message = "";
+            message += `${chalk.underline("Your Repositories")}\n\n`;
+            message += generatedMessages.map((generatedMessage) => `- ${generatedMessage}`).join("\n");
+            interactiveContext.setOutput(
+                boxen(message, {
+                    padding: 1,
+                    float: "center",
+                    textAlignment: "center",
+                    borderColor: "green",
+                    borderStyle: "round"
+                })
+            );
         });
-        generateSpinner.succeed("Libraries generated!");
     } catch (error) {
-        generateSpinner.fail("Failed to generate libraries, linking repositories, but they're empty for now.");
-        cliContext.failAndThrow(error as string);
+        context.failWithoutThrowing(
+            `Failed to generate libraries, linking repositories, but they're empty for now: ${error as string}`
+        );
     }
 }
 async function initializeGenerators(
     organization: string,
     cliContext: CliContext,
+    workspace: AbstractAPIWorkspace<unknown>,
     app: App,
     usersToInvite: string[],
     context: TaskContext
 ) {
-    const generators = await promptForGenerators(cliContext);
+    const generators = await promptForGenerators(context);
     const genPromises: Promise<string | undefined>[] = [];
     for (const generator of generators) {
-        genPromises.push(addGenerator(generator, organization, cliContext, app, usersToInvite, context));
+        genPromises.push(addGenerator(generator, organization, workspace, cliContext, app, usersToInvite, context));
     }
+
     const maybeRepoMessages = await Promise.all(genPromises);
     const repoMessages = maybeRepoMessages.filter((maybeRepoUrl) => maybeRepoUrl !== undefined) as string[];
     return repoMessages;
 }
 
-async function promptForGenerators(cliContext: CliContext): Promise<Generator[]> {
+async function promptForGenerators(context: TaskContext): Promise<Generator[]> {
     const generatorsResponse = await new FernRegistryClient().generators.listGenerators();
     if (!generatorsResponse.ok) {
-        cliContext.failAndThrow("Could not fetch generators from registry, please try again later.");
+        context.failAndThrow("Could not fetch generators from registry, please try again later.");
     }
 
     const sdkGenerators = generatorsResponse.body.filter((generator) => generator.generatorType.type === "sdk");
     const serverGenerators = generatorsResponse.body.filter((generator) => generator.generatorType.type === "server");
 
-    const shouldGenerateSdk = await confirm({
-        message: "Would you like to generate SDKs?"
-    });
     let generators: Generator[] = [];
-    if (shouldGenerateSdk) {
-        generators.push(...(await selectGenerators(sdkGenerators, "SDKs")));
-    }
 
-    const shouldGenerateServer = await confirm({
-        message: "Would you like to generate server boilerplate?"
-    });
-    if (shouldGenerateServer) {
-        generators.push(...(await selectGenerators(serverGenerators, "server boilerplate")));
-    }
+    await context.runInteractiveTask(
+        { name: "Select your generators", taskType: "prompt" },
+        async (interactiveContext) => {
+            await interactiveContext.takeOverTerminal(async () => {
+                const shouldGenerateSdk = await confirm({
+                    message: "Would you like to generate SDKs?"
+                });
+                if (shouldGenerateSdk) {
+                    const sdkGeneratorsSelected = await selectGenerators(sdkGenerators, "SDKs");
+                    generators.push(...sdkGeneratorsSelected);
+                }
+
+                const shouldGenerateServer = await confirm({
+                    message: "Would you like to generate server boilerplate?"
+                });
+                if (shouldGenerateServer) {
+                    generators.push(...(await selectGenerators(serverGenerators, "server boilerplate")));
+                }
+
+                const generatorNamesSelected = generators.map((generator) => generator.displayName);
+                interactiveContext.setSubtitle(
+                    generatorNamesSelected.length > 0
+                        ? "Selected: " + generatorNamesSelected.join(", ")
+                        : "No generators selected"
+                );
+            });
+        }
+    );
 
     return generators;
 }
 
-async function initializeOverrides(cliContext: CliContext) {
-    // TODO: augment this with AI
+async function initializeOverrides(context: TaskContext, workspace: AbstractAPIWorkspace<unknown>) {
     // TODO: show a stream of the overrides being written to console
-
-    const overridesSpinner = ora({ text: "Writing overrides to improve your API spec...\n" }).start();
     try {
-        await writeOverridesForWorkspaces({
-            project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineApiWorkspace: undefined,
-                defaultToAllApiWorkspaces: true
-            }),
-            includeModels: true,
-            cliContext,
-            withAI: false
-        });
-        overridesSpinner.succeed("Overrides written!");
+        if (workspace instanceof OSSWorkspace) {
+            await context.runInteractiveTask(
+                { name: "Writing overrides to improve your API spec", useProgressBar: true },
+                async (interactiveContext) => {
+                    await black({ workspace, context: interactiveContext });
+                    interactiveContext.setSubtitle("Overrides written!");
+                }
+            );
+        }
     } catch (error) {
-        overridesSpinner.fail(
-            "Could not write overrides, but you can do so manually following the steps in our documentation: https://buildwithfern.com/learn/api-definition/openapi/overlay-customizations"
-        );
-        cliContext.failAndThrow(error as string);
+        context.failWithoutThrowing(error as string);
     }
 }
 
@@ -209,15 +266,21 @@ async function initializeFernWorkspace(organization: string | undefined, cliCont
         });
     }
     const absoluteOpenApiPath = await getOpenApiPathFromInput(openApiSpec, cliContext);
-    const initSpinner = ora({ text: "Initializing your Fern workspace...\n" }).start();
+    const initSpinner = ora({ text: "Initializing your Fern workspace..." }).start();
     try {
+        context.logger.disable();
         await initializeAPI({
             organization: organization,
-            versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
+            versionOfCli: await getLatestVersionOfCli({
+                cliEnvironment: cliContext.environment,
+                alwaysReturnLatestVersion: true
+            }),
             context,
             openApiPath: absoluteOpenApiPath,
-            writeDefaultGeneratorsConfiguration: false
+            writeDefaultGeneratorsConfiguration: false,
+            includeOverrides: true
         });
+        context.logger.enable();
         initSpinner.succeed("Fern workspace initialized!");
     } catch (error) {
         initSpinner.fail("Failed to initialize Fern workspace");
@@ -228,67 +291,72 @@ async function initializeFernWorkspace(organization: string | undefined, cliCont
 const FERN_DEMO_ORG = "fern-demo";
 
 const initializeFernConfigRepo = async (
+    context: TaskContext,
     organization: string,
     app: App,
-    usersToInvite: string[],
-    context: TaskContext
+    usersToInvite: string[]
 ) => {
-    const repoName = `${organization}-fern-config`;
-    const repoUrl = await createGithubRepo({
-        app,
-        orgName: FERN_DEMO_ORG,
-        repoName,
-        usersToInvite,
-        context,
-        description: `The Fern Configuration for generating ${organization}'s SDKs.`
+    let repoUrl: string | undefined = undefined;
+    await context.runInteractiveTask({ name: "Creating Fern Configuration repository" }, async (interactiveContext) => {
+        const repoName = `${organization}-fern-config`;
+        repoUrl = await createGithubRepo({
+            app,
+            orgName: FERN_DEMO_ORG,
+            repoName,
+            usersToInvite,
+            description: `The Fern Configuration for generating ${organization}'s SDKs.`
+        });
+        await writeFernConfigRepoAdditions(organization);
+        await initializeAndPushRepository(repoUrl + ".git");
+        interactiveContext.setSubtitle("Fern configuration repository created!");
     });
-    await writeFernConfigRepoAdditions(organization);
-    await initializeAndPushRepository(repoUrl + ".git");
-    return `Fern configuration: ${repoUrl}`;
+
+    return repoUrl ? `Fern configuration: ${repoUrl}` : undefined;
 };
 
 const addGenerator = async (
     generator: Generator,
     organization: string,
+    workspace: AbstractAPIWorkspace<unknown>,
     cliContext: CliContext,
     app: App,
     usersToInvite: string[],
     context: TaskContext
 ): Promise<string | undefined> => {
-    const generatorSpinner = ora({
-        text: `Adding ${generator.displayName} generator...\n`
-    }).start();
     try {
-        const repoName = `${organization}-${generator.generatorLanguage}-${generator.generatorType.type}`;
-        const repoUrl = await createGithubRepo({
-            app,
-            orgName: FERN_DEMO_ORG,
-            repoName,
-            usersToInvite,
-            context,
-            description: `A ${generator.displayName} for ${organization}.`
-        });
-        // TODO: we should likely add the generators to different groups and respect those throughout (generation and the github workflows)
-        await addGeneratorToWorkspaces({
-            project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineApiWorkspace: undefined,
-                defaultToAllApiWorkspaces: false
-            }),
-            generatorName: generator.dockerImage,
-            groupName: undefined,
-            cliContext,
-            invocation: {
-                github: {
-                    repository: `${FERN_DEMO_ORG}/${repoName}`,
-                    branch: "main",
-                    mode: "push"
-                }
+        let repoUrl: string | undefined = undefined;
+        await context.runInteractiveTask(
+            { name: `Adding ${generator.displayName} generator...` },
+            async (interactiveContext) => {
+                const repoName = `${organization}-${generator.generatorLanguage}-${generator.generatorType.type}`;
+                repoUrl = await createGithubRepo({
+                    app,
+                    orgName: FERN_DEMO_ORG,
+                    repoName,
+                    usersToInvite,
+                    context: interactiveContext,
+                    description: `A ${generator.displayName} for ${organization}.`
+                });
+                // TODO: we should likely add the generators to different groups and respect those throughout (generation and the github workflows)
+                await addGeneratorToWorkspace({
+                    workspace,
+                    generatorName: generator.dockerImage,
+                    groupName: undefined,
+                    context,
+                    invocation: {
+                        github: {
+                            repository: `${FERN_DEMO_ORG}/${repoName}`,
+                            branch: "main",
+                            mode: "push"
+                        }
+                    },
+                    cliVersion: cliContext.environment.packageVersion
+                });
             }
-        });
-        generatorSpinner.succeed(`${generator.displayName} added!`);
-        return `${generator.displayName}: ${repoUrl}`;
+        );
+
+        return repoUrl ? `${generator.displayName}: ${repoUrl}` : undefined;
     } catch (error) {
-        generatorSpinner.fail(`Failed to add ${generator.displayName}`);
         return undefined;
     }
 };

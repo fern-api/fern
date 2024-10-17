@@ -47,31 +47,44 @@ export async function createOpenAPIWorkspace({
     openAPIFilePath,
     cliVersion,
     context,
-    writeDefaultGeneratorsConfiguration
+    writeDefaultGeneratorsConfiguration,
+    includeOverrides
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
     openAPIFilePath: AbsoluteFilePath;
     cliVersion: string;
     context: TaskContext;
     writeDefaultGeneratorsConfiguration: boolean;
+    includeOverrides?: boolean;
 }): Promise<void> {
     if (!(await doesPathExist(directoryOfWorkspace))) {
         await mkdir(directoryOfWorkspace);
     }
     const openAPIfilename = path.basename(openAPIFilePath);
-    await writeGeneratorsConfiguration({
-        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
-        cliVersion,
-        context,
-        apiConfiguration: {
-            path: join(RelativeFilePath.of(OPENAPI_DIRECTORY), RelativeFilePath.of(openAPIfilename))
-        },
-        writeDefaultGeneratorsConfiguration
-    });
+    const apiConfiguration: generatorsYml.APIConfigurationSchema = {
+        path: join(RelativeFilePath.of(OPENAPI_DIRECTORY), RelativeFilePath.of(openAPIfilename))
+    };
     const openapiDirectory = join(directoryOfWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     await mkdir(openapiDirectory);
     const openAPIContents = await readFile(openAPIFilePath);
     await writeFile(join(openapiDirectory, RelativeFilePath.of(openAPIfilename)), openAPIContents);
+
+    if (includeOverrides) {
+        const overridesFilename = "openapi-overrides.yml";
+        apiConfiguration.overrides = join(
+            RelativeFilePath.of(OPENAPI_DIRECTORY),
+            RelativeFilePath.of(overridesFilename)
+        );
+        // Essentially running `touch`
+        await writeFile(join(openapiDirectory, RelativeFilePath.of(overridesFilename)), "");
+    }
+    await writeGeneratorsConfiguration({
+        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
+        cliVersion,
+        context,
+        apiConfiguration,
+        writeDefaultGeneratorsConfiguration
+    });
 }
 
 async function getDefaultGeneratorsConfiguration({

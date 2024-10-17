@@ -33,11 +33,11 @@ export class CliContext {
     private didSucceed = true;
 
     private numTasks = 0;
-    private ttyAwareLogger: TtyAwareLogger;
-
+    public ttyAwareLogger: TtyAwareLogger;
+    private bufferedLogs: Log[] = [];
     private logLevel: LogLevel = LogLevel.Info;
 
-    constructor(stream: NodeJS.WriteStream) {
+    constructor(stream?: NodeJS.WriteStream, private readonly shouldBufferLogs: boolean = false) {
         this.ttyAwareLogger = new TtyAwareLogger(stream);
 
         const packageName = this.getPackageName();
@@ -163,9 +163,10 @@ export class CliContext {
 
     public async runTaskForWorkspace(
         workspace: Workspace,
-        run: (context: TaskContext) => void | Promise<void>
+        run: (context: TaskContext) => void | Promise<void>,
+        taskType: "worker" | "prompt" = "worker"
     ): Promise<void> {
-        await this.runTaskWithInit(this.constructTaskInitForWorkspace(workspace), run);
+        await this.runTaskWithInit(this.constructTaskInitForWorkspace(workspace, taskType), run);
     }
 
     private addTaskWithInit(init: TaskContextImpl.Init): Startable<TaskContext & Finishable> {
@@ -197,7 +198,7 @@ export class CliContext {
 
     public readonly logger = createLogger(this.log.bind(this));
 
-    private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
+    private constructTaskInitForWorkspace(workspace: Workspace, taskType: "worker" | "prompt"): TaskContextImpl.Init {
         const prefixWithoutPadding = wrapWorkspaceNameForPrefix(
             workspace.type === "docs" ? "docs" : workspace.workspaceName ?? "api"
         );
@@ -218,7 +219,8 @@ export class CliContext {
         const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
         return {
             ...this.constructTaskInit(),
-            logPrefix: prefixWithColor
+            logPrefix: prefixWithColor,
+            taskType
         };
     }
 
@@ -234,18 +236,24 @@ export class CliContext {
             instrumentPostHogEvent: async (event) => {
                 await this.instrumentPostHogEvent(event);
             },
-            shouldBufferLogs: false
+            shouldBufferLogs: this.shouldBufferLogs
         };
     }
 
-    private log(level: LogLevel, ...parts: string[]) {
-        this.logImmediately([
-            {
-                parts,
-                level,
-                time: new Date()
-            }
-        ]);
+    protected log(level: LogLevel, ...parts: string[]): void {
+        this.bufferedLogs.push({
+            parts,
+            level,
+            time: new Date()
+        });
+        if (!this.shouldBufferLogs || level === LogLevel.Error) {
+            this.flushLogs();
+        }
+    }
+
+    public flushLogs(): void {
+        this.logImmediately(this.bufferedLogs);
+        this.bufferedLogs = [];
     }
 
     private logImmediately(logs: Log[]): void {

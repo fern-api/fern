@@ -3547,6 +3547,9 @@ importers:
       is-ci:
         specifier: ^3.0.1
         version: 3.0.1
+      js-tiktoken:
+        specifier: ^1.0.15
+        version: 1.0.15
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -3562,6 +3565,9 @@ importers:
       openai:
         specifier: ^4.67.3
         version: 4.67.3(zod@3.23.8)
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
       ora:
         specifier: ^7.0.1
         version: 7.0.1
@@ -10786,6 +10792,9 @@ packages:
     resolution: {integrity: sha512-X2BB11YZtrRqY4EnQcLX5Rh373zbK4alC1FW7D7MBhL2gtcC17cTnr6DmfHZeS0s2rTHjUTMMHfG7gO8SSdw+g==}
     engines: {node: '>=0.10.0'}
 
+  js-tiktoken@1.0.15:
+    resolution: {integrity: sha512-65ruOWWXDEZHHbAo7EjOcNxOGasQKbL4Fq3jEr2xsCqSsoOo6VVSqzWQb6PRIqypFSDcma4jO90YP0w5X8qVXQ==}
+
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -15087,7 +15096,7 @@ snapshots:
   '@jest/console@29.7.0':
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 18.19.55
       chalk: 4.1.2
       jest-message-util: 29.7.0
       jest-util: 29.7.0
@@ -15172,7 +15181,7 @@ snapshots:
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
       '@jridgewell/trace-mapping': 0.3.25
-      '@types/node': 18.7.18
+      '@types/node': 18.19.55
       chalk: 4.1.2
       collect-v8-coverage: 1.0.1
       exit: 0.1.2
@@ -15638,7 +15647,7 @@ snapshots:
 
   '@types/connect@3.4.35':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 18.19.55
 
   '@types/cors@2.8.17':
     dependencies:
@@ -15854,7 +15863,7 @@ snapshots:
   '@types/send@0.17.3':
     dependencies:
       '@types/mime': 1.3.4
-      '@types/node': 18.7.18
+      '@types/node': 18.19.55
 
   '@types/serve-static@1.15.0':
     dependencies:
@@ -15863,7 +15872,7 @@ snapshots:
 
   '@types/ssh2@1.11.4':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 18.19.55
 
   '@types/stack-utils@2.0.1': {}
 
@@ -15882,7 +15891,7 @@ snapshots:
 
   '@types/swagger2openapi@7.0.4':
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 18.19.55
       openapi-types: 12.1.3
 
   '@types/tar@6.1.11':
@@ -18824,7 +18833,7 @@ snapshots:
     dependencies:
       '@jest/types': 29.6.3
       '@types/graceful-fs': 4.1.5
-      '@types/node': 18.7.18
+      '@types/node': 18.19.55
       anymatch: 3.1.2
       fb-watchman: 2.0.1
       graceful-fs: 4.2.11
@@ -18898,7 +18907,7 @@ snapshots:
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 18.19.55
       chalk: 4.1.2
       emittery: 0.13.1
       graceful-fs: 4.2.11
@@ -18926,7 +18935,7 @@ snapshots:
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 18.19.55
       chalk: 4.1.2
       cjs-module-lexer: 1.2.2
       collect-v8-coverage: 1.0.1
@@ -18998,7 +19007,7 @@ snapshots:
     dependencies:
       '@jest/test-result': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 18.7.18
+      '@types/node': 18.19.55
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       emittery: 0.13.1
@@ -19007,7 +19016,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 18.7.18
+      '@types/node': 18.19.55
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -19041,6 +19050,10 @@ snapshots:
   js-base64@3.7.7: {}
 
   js-levenshtein@1.1.6: {}
+
+  js-tiktoken@1.0.15:
+    dependencies:
+      base64-js: 1.5.1
 
   js-tokens@4.0.0: {}
 

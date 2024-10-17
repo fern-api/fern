@@ -26,6 +26,8 @@ export function createMockTaskContext({ logger = CONSOLE_LOGGER }: { logger?: Lo
             context.failAndThrow(message, error);
         },
         getResult: () => TaskResult.Success,
+        flushLogs: () => {},
+        clearTasks: () => {},
         addInteractiveTask: () => {
             throw new Error("Not implemented");
         },

@@ -13,22 +13,16 @@ import { black } from "./black";
 export async function writeOverridesForWorkspaces({
     project,
     includeModels,
-    cliContext,
-    withAI
+    cliContext
 }: {
     project: Project;
     includeModels: boolean;
     cliContext: CliContext;
-    withAI: boolean;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace instanceof OSSWorkspace) {
-                    if (withAI) {
-                        context.logger.info("Generating overrides using OpenAI");
-                        await black({ workspace, context });
-                    }
                     await writeDefinitionForOpenAPIWorkspace({
                         workspace,
                         context,
