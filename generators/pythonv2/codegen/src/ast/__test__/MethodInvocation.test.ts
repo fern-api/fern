@@ -3,7 +3,13 @@ import { Writer } from "../core/Writer";
 import { python } from "../..";
 
 describe("MethodInvocation", () => {
-    it("should write a method invocation with no args", () => {
+    let writer: Writer;
+
+    beforeEach(() => {
+        writer = new Writer();
+    });
+
+    it("should write a method invocation with no args", async () => {
         const invocation = new MethodInvocation({
             method: "test_method",
             arguments_: []
@@ -12,10 +18,10 @@ describe("MethodInvocation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(writer.toString()).toBe("test_method()");
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("should write a method invocation with one positional arg", () => {
+    it("should write a method invocation with one positional arg", async () => {
         const invocation = new MethodInvocation({
             method: "test_method",
             arguments_: [python.methodArgument({ value: python.codeBlock("42") })]
@@ -24,10 +30,10 @@ describe("MethodInvocation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(writer.toString()).toBe("test_method(42)");
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("should write a method invocation with one positional arg and one kwarg", () => {
+    it("should write a method invocation with one positional arg and one kwarg", async () => {
         const invocation = new MethodInvocation({
             method: "test_method",
             arguments_: [
@@ -39,10 +45,10 @@ describe("MethodInvocation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(writer.toString()).toBe("test_method(42, key='value')");
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("should write a method invocation with multiple positional and kwarg args", () => {
+    it("should write a method invocation with multiple positional and kwarg args", async () => {
         const invocation = new MethodInvocation({
             method: "test_method",
             arguments_: [
@@ -56,6 +62,6 @@ describe("MethodInvocation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(writer.toString()).toBe("test_method(42, 'hello', key1=True, key2=[1, 2, 3])");
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 });

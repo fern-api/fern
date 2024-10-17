@@ -9,34 +9,38 @@ describe("CodeBlock", () => {
     });
 
     describe("toString", () => {
-        it("returns an empty string for an empty code block", () => {
+        it("returns an empty string for an empty code block", async () => {
             const codeBlock = python.codeBlock("");
-            expect(codeBlock.toString()).toMatchSnapshot();
+            codeBlock.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("returns a single line of code", () => {
+        it("returns a single line of code", async () => {
             const codeBlock = python.codeBlock('print("Hello, World!")');
-            expect(codeBlock.toString()).toMatchSnapshot();
+            codeBlock.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("returns multiple lines of code", () => {
+        it("returns multiple lines of code", async () => {
             const codeBlock = python.codeBlock(`\
 def greet(name):
     return f"Hello, {name}!"
 
 print(greet("Alice"))\
 `);
-            expect(codeBlock.toString()).toMatchSnapshot();
+            codeBlock.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("preserves indentation", () => {
+        it("preserves indentation", async () => {
             const codeBlock = python.codeBlock(`\
 if True:
     print("Indented")
     if False:
         print("Nested indentation")\
 `);
-            expect(codeBlock.toString()).toMatchSnapshot();
+            codeBlock.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
     });
 });

@@ -20,7 +20,7 @@ export class PythonFile extends AstNode {
     public readonly moduleName: string;
     public readonly path: string[];
     public readonly name: string;
-    private readonly statements: (Class | Method | CodeBlock)[] = [];
+    private readonly statements: AstNode[] = [];
 
     constructor({ moduleName, path, name }: PythonFile.Args) {
         super();

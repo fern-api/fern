@@ -13,7 +13,7 @@ describe("PythonFile", () => {
         writer = new Writer();
     });
 
-    it("Add a class with no references", () => {
+    it("Add a class with no references", async () => {
         const file = python.file({
             moduleName: "test_module",
             path: ["test"],
@@ -24,10 +24,10 @@ describe("PythonFile", () => {
         file.addStatement(testClass);
 
         file.write(writer);
-        expect(writer.toString()).toMatchSnapshot();
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("Add a class with a reference that uses a python standard library reference", () => {
+    it("Add a class with a reference that uses a python standard library reference", async () => {
         const file = python.file({
             moduleName: "test_module",
             path: ["test"],
@@ -43,10 +43,10 @@ describe("PythonFile", () => {
         file.addStatement(testClass);
 
         file.write(writer);
-        expect(writer.toString()).toMatchSnapshot();
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("Add a class with a reference that uses a relative import", () => {
+    it("Add a class with a reference that uses a relative import", async () => {
         const file = python.file({
             moduleName: "my_module",
             path: ["level_1"],
@@ -77,10 +77,10 @@ describe("PythonFile", () => {
         file.addStatement(deeplyNestedClass);
 
         file.write(writer);
-        expect(writer.toString()).toMatchSnapshot();
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("Add a Method", () => {
+    it("Add a Method", async () => {
         const file = python.file({
             moduleName: "test_module",
             path: ["test"],
@@ -95,10 +95,10 @@ describe("PythonFile", () => {
         file.addStatement(testMethod);
 
         file.write(writer);
-        expect(writer.toString()).toMatchSnapshot();
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("Add a code block", () => {
+    it("Add a code block", async () => {
         const file = python.file({
             moduleName: "test_module",
             path: ["test"],
@@ -109,10 +109,10 @@ describe("PythonFile", () => {
         file.addStatement(codeBlock);
 
         file.write(writer);
-        expect(writer.toString()).toMatchSnapshot();
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("Add a class with an absolute import and alias", () => {
+    it("Add a class with an absolute import and alias", async () => {
         const file = python.file({
             moduleName: "test_module",
             path: ["test"],
@@ -132,10 +132,10 @@ describe("PythonFile", () => {
         file.addStatement(testClass);
 
         file.write(writer);
-        expect(writer.toString()).toMatchSnapshot();
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("Add a class with a relative import and alias", () => {
+    it("Add a class with a relative import and alias", async () => {
         const file = python.file({
             moduleName: "test_module",
             path: ["test", "subdir"],
@@ -155,6 +155,6 @@ describe("PythonFile", () => {
         file.addStatement(testClass);
 
         file.write(writer);
-        expect(writer.toString()).toMatchSnapshot();
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 });
