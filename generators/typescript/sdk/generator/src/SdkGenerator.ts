@@ -300,7 +300,7 @@ export class SdkGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             noOptionalProperties: config.noOptionalProperties,
             retainOriginalCasing: config.retainOriginalCasing,
-            respectInlinedTypes: true,
+            respectInlinedTypes: true
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -554,13 +554,15 @@ export class SdkGenerator {
 
     private generateTypeDeclarations() {
         for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
-            this.withSourceFile({
-                filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
-                run: ({ sourceFile, importsManager }) => {
-                    const context = this.generateSdkContext({ sourceFile, importsManager });
-                    context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
-                }
-            });
+            if (typeDeclaration.inline) {
+                this.withSourceFile({
+                    filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
+                    run: ({ sourceFile, importsManager }) => {
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
+                    }
+                });
+            }
         }
     }
 
