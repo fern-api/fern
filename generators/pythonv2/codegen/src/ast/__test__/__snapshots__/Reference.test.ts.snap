@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Reference > toString > handles class with alias 1`] = `
+"Alias
+"
+`;
+
+exports[`Reference > toString > handles class with one generic type 1`] = `
+"GenericClass[str]
+"
+`;
+
+exports[`Reference > toString > handles class with two generic types 1`] = `
+"DoubleGenericClass[str, int]
+"
+`;
+
+exports[`Reference > toString > handles class without module path 1`] = `
+"StandaloneClass
+"
+`;
+
+exports[`Reference > toString > handles deeply nested module path 1`] = `
+"DeepClass
+"
+`;
+
+exports[`Reference > toString > handles single-level module path 1`] = `
+"SimpleClass
+"
+`;
+
+exports[`Reference > toString > returns the fully qualified name 1`] = `
+"MyClass
+"
+`;

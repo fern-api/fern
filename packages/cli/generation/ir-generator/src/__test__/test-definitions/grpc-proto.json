@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:CreateResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "CreateResponse",
@@ -177,6 +178,7 @@
             "docs": null
         },
         "type_:UserModel": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UserModel",
@@ -486,6 +488,7 @@
             "docs": null
         },
         "type_:Metadata": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Metadata",
@@ -613,6 +616,7 @@
             "docs": null
         },
         "type_:MetadataValue": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "MetadataValue",

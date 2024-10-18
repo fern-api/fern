@@ -34,6 +34,9 @@ types:
         type: set<commons.TypeId>
       encoding: optional<Encoding>
       source: optional<Source>
+      inline: 
+        type: optional<boolean>
+        docs: Whether to try and inline the type declaration
 
   DeclaredTypeName:
     properties:

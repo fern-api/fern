@@ -683,12 +683,18 @@ importers:
 
   generators/pythonv2/codegen:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/generator-commons':
         specifier: workspace:*
         version: link:../../commons
       '@fern-fern/ir-sdk':
         specifier: ^53.7.0
         version: 53.9.0
+      '@wasm-fmt/ruff_fmt':
+        specifier: ^0.6.1
+        version: 0.6.1
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12
@@ -8322,6 +8328,9 @@ packages:
   '@vue/shared@3.2.33':
     resolution: {integrity: sha512-UBc1Pg1T3yZ97vsA2ueER0F6GbJebLHYlEi4ou1H5YL4KWvMOOWwpYo9/QpWq93wxKG6Wo13IY74Hcn/f7c7Bg==}
 
+  '@wasm-fmt/ruff_fmt@0.6.1':
+    resolution: {integrity: sha512-7O3kVJ3JLYbo2l6+2LQHtPfq+1/Bna7tg8TE9sUft0Wj70qizlu7QJY6hC7KpJwW8LQjvSlLRtGv5W5wu0Pa5w==}
+
   '@webassemblyjs/ast@1.12.1':
     resolution: {integrity: sha512-EKfMUOPRRUTy5UII4qJDGPpqfwjOmZ5jeGFwid9mnoqIFK+e0vqoi1qH56JpmZSzEL53jKnNzScdmftJyG5xWg==}
 
@@ -15600,6 +15609,8 @@ snapshots:
       magic-string: 0.25.9
 
   '@vue/shared@3.2.33': {}
+
+  '@wasm-fmt/ruff_fmt@0.6.1': {}
 
   '@webassemblyjs/ast@1.12.1':
     dependencies:

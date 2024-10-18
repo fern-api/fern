@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_dummy:StreamResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "StreamResponse",

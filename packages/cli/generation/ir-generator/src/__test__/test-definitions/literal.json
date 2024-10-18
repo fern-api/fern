@@ -106,6 +106,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:SendResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "SendResponse",
@@ -263,6 +264,7 @@
             "docs": null
         },
         "type_inlined:SomeAliasedLiteral": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "SomeAliasedLiteral",
@@ -363,6 +365,7 @@
             "docs": null
         },
         "type_inlined:ATopLevelLiteral": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ATopLevelLiteral",
@@ -544,6 +547,7 @@
             "docs": null
         },
         "type_inlined:ANestedLiteral": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ANestedLiteral",
@@ -665,6 +669,7 @@
             "docs": null
         },
         "type_reference:SendRequest": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "SendRequest",
@@ -1151,6 +1156,7 @@
             "docs": null
         },
         "type_reference:ContainerObject": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ContainerObject",
@@ -1338,6 +1344,7 @@
             "docs": null
         },
         "type_reference:NestedObjectWithLiterals": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "NestedObjectWithLiterals",
@@ -1532,6 +1539,7 @@
             "docs": null
         },
         "type_reference:SomeLiteral": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "SomeLiteral",
