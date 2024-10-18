@@ -5,7 +5,9 @@ import { getGeneratorNameOrThrow } from "./getGeneratorName";
 import { getLatestGeneratorVersion } from "./getGeneratorVersions";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 
-export type GeneratorInvocationOverride = Omit<GeneratorInvocationSchema, "name" | "version">;
+export interface GeneratorInvocationOverride extends Omit<GeneratorInvocationSchema, "name" | "version"> {
+    version?: string;
+}
 
 export async function addGenerator({
     generatorName,
@@ -40,12 +42,14 @@ export async function addGenerator({
                 ...invocation,
                 // Fall back to the hardcoded version if a "latest" does not yet exist
                 version:
+                    invocation.version ??
                     (await getLatestGeneratorVersion({
                         cliVersion,
                         generatorName: normalizedGeneratorName,
                         context,
                         channel: undefined
-                    })) ?? versionFallback
+                    })) ??
+                    versionFallback
             });
         }
     });

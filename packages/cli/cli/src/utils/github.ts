@@ -44,7 +44,7 @@ export async function createGithubRepo({
     for (const user of usersToInvite ?? []) {
         await inviteCollaboratorToRepo(octokit, orgName, repoName, user);
     }
-    context?.setSubtitle(`Invited you to ${orgName}/${repoName}`);
+    context?.setSubtitle(`Invited you to collaborate on ${orgName}/${repoName}`);
 
     return response.data.html_url;
 }

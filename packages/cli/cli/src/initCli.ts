@@ -6,8 +6,7 @@ import { input, confirm } from "@inquirer/prompts";
 import { select } from "inquirer-select-pro";
 import { isURL } from "./utils/isUrl";
 import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "@fern-api/init/src/utils/loadOpenApiFromUrl";
-// Ideally we'd use interactive tasks from the context, but there's a fight for stdout that I can't
-// figure out how to fix right now, so sticking with Ora
+import { GeneratorInvocationOverride } from "@fern-api/configuration/src/generators-yml/addGenerator";
 import ora from "ora";
 import { initializeAPI } from "@fern-api/init";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
@@ -342,13 +341,7 @@ const addGenerator = async (
                     generatorName: generator.dockerImage,
                     groupName: undefined,
                     context,
-                    invocation: {
-                        github: {
-                            repository: `${FERN_DEMO_ORG}/${repoName}`,
-                            branch: "main",
-                            mode: "push"
-                        }
-                    },
+                    invocation: getGeneratorInvocationOverride(generator, repoName, organization),
                     cliVersion: cliContext.environment.packageVersion
                 });
             }
@@ -359,6 +352,35 @@ const addGenerator = async (
         return undefined;
     }
 };
+
+function getGeneratorInvocationOverride(
+    generator: Generator,
+    repoName: string,
+    organization: string
+): GeneratorInvocationOverride {
+    const defaultInvocation: GeneratorInvocationOverride = {
+        github: {
+            repository: `${FERN_DEMO_ORG}/${repoName}`,
+            branch: "main",
+            mode: "push"
+        },
+        "smart-casing": true
+    };
+    if (generator.generatorType.type === "sdk" && generator.generatorLanguage === "typescript") {
+        return {
+            ...defaultInvocation,
+            "ir-version": "v53",
+            version: "0.0.0-hw0",
+            config: {
+                namespaceExport: organization,
+                allowCustomFetcher: true,
+                skipResponseValidation: true,
+                generateWireTests: true
+            }
+        };
+    }
+    return defaultInvocation;
+}
 
 // Ripped from cli.ts
 const getOpenApiPathFromInput = async (openapi: string, cliContext: CliContext): Promise<AbsoluteFilePath> => {

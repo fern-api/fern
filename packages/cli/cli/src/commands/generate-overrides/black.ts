@@ -1,7 +1,7 @@
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import OpenAI from "openai";
-import { getOverridesPrompt } from "./prompt";
+import { GET_OVERRIDES_PROMPT } from "./prompt";
 import { transformSpecToSchema } from "./transformSpecToSchema";
 import { writeFile } from "fs/promises";
 import { dirname, join } from "path";
@@ -123,7 +123,7 @@ async function invokeOpenAIOverChunk({
             messages: [
                 {
                     role: "system",
-                    content: getOverridesPrompt()
+                    content: GET_OVERRIDES_PROMPT
                 },
                 {
                     role: "system",
