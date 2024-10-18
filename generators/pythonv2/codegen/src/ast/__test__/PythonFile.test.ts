@@ -176,4 +176,70 @@ describe("PythonFile", () => {
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
+
+    it("Add a field with a list of reference type and initializer", async () => {
+        const file = python.file({
+            moduleName: "test_module",
+            path: ["test"],
+            name: "test_file"
+        });
+
+        const carRef = python.reference({
+            name: "Car",
+            modulePath: ["test_module", "cars"]
+        });
+
+        const carsField = python.field({
+            name: "cars",
+            type: python.Type.list(python.Type.reference(carRef)),
+            initializer: python.codeBlock("[Car(), Car()]")
+        });
+
+        file.addStatement(carsField);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
+    it("Multiple imports from the same module should work", async () => {
+        const file = python.file({
+            moduleName: "test_module",
+            path: ["test"],
+            name: "test_file"
+        });
+
+        const unionField = python.field({
+            name: "variable",
+            type: python.Type.union([python.Type.list(python.Type.str()), python.Type.set(python.Type.str())])
+        });
+
+        file.addStatement(unionField);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
+    it("Ensure we don't duplicate imports", async () => {
+        const file = python.file({
+            moduleName: "test_module",
+            path: ["test"],
+            name: "test_file"
+        });
+
+        const varAField = python.field({
+            name: "var_a",
+            type: python.Type.list(python.Type.str())
+        });
+
+        const varBField = python.field({
+            name: "var_b",
+            type: python.Type.list(python.Type.str())
+        });
+
+        file.addStatement(varAField);
+        file.addStatement(varBField);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
 });

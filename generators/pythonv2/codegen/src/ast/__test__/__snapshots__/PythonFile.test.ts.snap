@@ -66,3 +66,27 @@ exports[`PythonFile > Add a code block 1`] = `
 "print("Hello, World!")
 "
 `;
+
+exports[`PythonFile > Add a field with a list of reference type and initializer 1`] = `
+"from typing import List
+from ..test_module.cars import Car
+
+cars: List[Car] = [Car(), Car()]
+"
+`;
+
+exports[`PythonFile > Ensure we don't duplicate imports 1`] = `
+"from typing import List
+
+var_a: List[str]
+
+var_b: List[str]
+"
+`;
+
+exports[`PythonFile > Multiple imports from the same module should work 1`] = `
+"from typing import Union, List, Set
+
+variable: Union[List[str], Set[str]]
+"
+`;

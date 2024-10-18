@@ -31,6 +31,19 @@ export class Field extends AstNode {
         this.name = name;
         this.type = type;
         this.initializer = initializer;
+
+        if (this.type) {
+            const typeReferences = this.type.getReferences();
+            typeReferences.forEach((reference) => {
+                this.addReference(reference);
+            });
+        }
+        if (this.initializer) {
+            const initializerReferences = this.initializer.getReferences();
+            initializerReferences.forEach((reference) => {
+                this.addReference(reference);
+            });
+        }
     }
 
     public write(writer: Writer): void {

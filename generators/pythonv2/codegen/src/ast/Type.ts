@@ -113,19 +113,32 @@ export class Type extends AstNode {
     }
 
     public static list(value: Type): Type {
-        return new Type({ type: "list", value });
+        const listType = new Type({ type: "list", value });
+        listType.addReference(python.reference({ name: "List", modulePath: ["typing"] }));
+        listType.maybeAddReference(value);
+        return listType;
     }
 
     public static set(value: Type): Type {
-        return new Type({ type: "set", value });
+        const setType = new Type({ type: "set", value });
+        setType.addReference(python.reference({ name: "Set", modulePath: ["typing"] }));
+        setType.maybeAddReference(value);
+        return setType;
     }
 
     public static tuple(values: Type[]): Type {
-        return new Type({ type: "tuple", values });
+        const tupleType = new Type({ type: "tuple", values });
+        tupleType.addReference(python.reference({ name: "Tuple", modulePath: ["typing"] }));
+        values.forEach((value) => tupleType.maybeAddReference(value));
+        return tupleType;
     }
 
     public static dict(keyType: Type, valueType: Type): Type {
-        return new Type({ type: "dict", keyType, valueType });
+        const dictType = new Type({ type: "dict", keyType, valueType });
+        dictType.addReference(python.reference({ name: "Dict", modulePath: ["typing"] }));
+        dictType.maybeAddReference(keyType);
+        dictType.maybeAddReference(valueType);
+        return dictType;
     }
 
     public static none(): Type {
@@ -133,19 +146,29 @@ export class Type extends AstNode {
     }
 
     public static optional(value: Type): Type {
-        return new Type({ type: "optional", value });
+        const optionalType = new Type({ type: "optional", value });
+        optionalType.addReference(python.reference({ name: "Optional", modulePath: ["typing"] }));
+        optionalType.maybeAddReference(value);
+        return optionalType;
     }
 
     public static union(values: Type[]): Type {
-        return new Type({ type: "union", values });
+        const unionType = new Type({ type: "union", values });
+        unionType.addReference(python.reference({ name: "Union", modulePath: ["typing"] }));
+        values.forEach((value) => unionType.maybeAddReference(value));
+        return unionType;
     }
 
     public static any(): Type {
-        return new Type({ type: "any" });
+        const anyType = new Type({ type: "any" });
+        anyType.addReference(python.reference({ name: "Any", modulePath: ["typing"] }));
+        return anyType;
     }
 
     public static reference(value: Reference): Type {
-        return new Type({ type: "reference", value });
+        const referenceType = new Type({ type: "reference", value });
+        referenceType.addReference(value);
+        return referenceType;
     }
 
     public write(writer: Writer): void {
@@ -166,19 +189,16 @@ export class Type extends AstNode {
                 writer.write("bytes");
                 break;
             case "list":
-                this.addReference(python.reference({ name: "List", modulePath: ["typing"] }));
                 writer.write("List[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "set":
-                this.addReference(python.reference({ name: "Set", modulePath: ["typing"] }));
                 writer.write("Set[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "tuple":
-                this.addReference(python.reference({ name: "Tuple", modulePath: ["typing"] }));
                 writer.write("Tuple[");
                 this.internalType.values.forEach((value, index) => {
                     if (index > 0) {
@@ -189,7 +209,6 @@ export class Type extends AstNode {
                 writer.write("]");
                 break;
             case "dict":
-                this.addReference(python.reference({ name: "Dict", modulePath: ["typing"] }));
                 writer.write("Dict[");
                 this.internalType.keyType.write(writer);
                 writer.write(", ");
@@ -200,13 +219,11 @@ export class Type extends AstNode {
                 writer.write("None");
                 break;
             case "optional":
-                this.addReference(python.reference({ name: "Optional", modulePath: ["typing"] }));
                 writer.write("Optional[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "union":
-                this.addReference(python.reference({ name: "Union", modulePath: ["typing"] }));
                 writer.write("Union[");
                 this.internalType.values.forEach((value, index) => {
                     if (index > 0) {
@@ -217,15 +234,17 @@ export class Type extends AstNode {
                 writer.write("]");
                 break;
             case "any":
-                this.addReference(python.reference({ name: "Any", modulePath: ["typing"] }));
                 writer.write("Any");
                 break;
             case "reference":
-                this.addReference(this.internalType.value);
                 this.internalType.value.write(writer);
                 break;
             default:
                 assertNever(this.internalType);
         }
+    }
+
+    private maybeAddReference(type: Type): void {
+        type.getReferences().forEach((reference) => this.addReference(reference));
     }
 }
