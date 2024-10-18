@@ -27,7 +27,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_service:ObjectType": {
@@ -382,7 +385,8 @@
                     "value": {
                       "type": "file",
                       "key": "file",
-                      "isOptional": false
+                      "isOptional": false,
+                      "contentType": "application/octet-stream"
                     }
                   },
                   {
@@ -401,7 +405,8 @@
                     "valueType": {
                       "type": "id",
                       "value": "type_service:MyObject"
-                    }
+                    },
+                    "contentType": "application/json"
                   }
                 ]
               }

@@ -22,7 +22,7 @@ module SeedAliasExtendsClient
     # @return [Void]
     # @example
     #  alias_extends = SeedAliasExtendsClient::Client.new(base_url: "https://api.example.com")
-    #  alias_extends.extended_inline_request_body(child: "string")
+    #  alias_extends.extended_inline_request_body(child: "child")
     def extended_inline_request_body(child:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -58,7 +58,7 @@ module SeedAliasExtendsClient
     # @return [Void]
     # @example
     #  alias_extends = SeedAliasExtendsClient::Client.new(base_url: "https://api.example.com")
-    #  alias_extends.extended_inline_request_body(child: "string")
+    #  alias_extends.extended_inline_request_body(child: "child")
     def extended_inline_request_body(child:, request_options: nil)
       @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

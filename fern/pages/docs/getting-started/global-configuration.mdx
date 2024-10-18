@@ -67,6 +67,9 @@ favicon: path/to/favicon.ico
 </ParamField>
 
 ## Instances configuration
+
+An `instance` is the backend of a distinct docs website. Each instance is published to a unique domain using the `--instance` flag. It is most common to use instances to configure staging and production docs which publish to separate URLs.
+
 ```yaml docs.yml
 instances: 
   - url: plantstore.docs.buildwithfern.com

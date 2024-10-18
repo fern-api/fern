@@ -5,11 +5,9 @@
 /**
  * @example
  *     {
- *         limit: 1,
- *         otherField: "string",
- *         multiLineDocs: "string",
- *         optionalMultipleField: "string",
- *         multipleField: "string"
+ *         otherField: "otherField",
+ *         multiLineDocs: "multiLineDocs",
+ *         multipleField: "multipleField"
  *     }
  */
 export interface GetPlaylistsRequest {

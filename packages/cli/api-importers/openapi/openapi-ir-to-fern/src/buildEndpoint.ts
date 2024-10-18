@@ -422,6 +422,10 @@ function getRequest({
                 convertedRequest.value["content-type"] = request.contentType;
             }
 
+            if (request.description != null) {
+                convertedRequest.value.docs = request.description;
+            }
+
             return convertedRequest;
         }
         const properties = Object.fromEntries(
@@ -522,6 +526,9 @@ function getRequest({
         if (request.contentType != null) {
             convertedRequestValue["content-type"] = request.contentType;
         }
+        if (request.description != null) {
+            convertedRequestValue.docs = request.description;
+        }
         return {
             schemaIdsToExclude: maybeSchemaId != null ? [maybeSchemaId] : [],
             value: convertedRequestValue
@@ -531,7 +538,8 @@ function getRequest({
             schemaIdsToExclude: [],
             value: {
                 body: "bytes",
-                "content-type": MediaType.APPLICATION_OCTET_STREAM
+                "content-type": MediaType.APPLICATION_OCTET_STREAM,
+                ...(request.description ? { docs: request.description } : {})
             }
         };
     } else if (request.type === "multipart") {
@@ -584,7 +592,8 @@ function getRequest({
                 body: {
                     properties
                 },
-                "content-type": MediaType.MULTIPART_FORM_DATA
+                "content-type": MediaType.MULTIPART_FORM_DATA,
+                ...(request.description ? { docs: request.description } : {})
             }
         };
     } else {

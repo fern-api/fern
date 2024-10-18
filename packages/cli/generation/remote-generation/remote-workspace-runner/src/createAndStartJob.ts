@@ -23,7 +23,7 @@ import FormData from "form-data";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { relative } from "path";
-import tar from "tar";
+import { create as createTar } from "tar";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
 
@@ -157,7 +157,7 @@ async function createJob({
             }
 
             const tarPath = join(absolutePathToTmpDir, RelativeFilePath.of("definition.tgz"));
-            await tar.create({ file: tarPath, cwd: absolutePathToTmpFernDirectory }, ["."]);
+            await createTar({ file: tarPath, cwd: absolutePathToTmpFernDirectory }, ["."]);
 
             // Upload definition to S3
             context.logger.debug("Getting upload URL for Fern definition.");

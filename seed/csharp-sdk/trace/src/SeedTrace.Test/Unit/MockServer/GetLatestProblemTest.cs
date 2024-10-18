@@ -16,60 +16,248 @@ public class GetLatestProblemTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "problemId": "string",
+              "problemId": "problemId",
               "problemDescription": {
                 "boards": [
                   {
-                    "0": "s",
-                    "1": "t",
-                    "2": "r",
-                    "3": "i",
-                    "4": "n",
-                    "5": "g",
-                    "type": "html"
+                    "type": "html",
+                    "value": "boards"
+                  },
+                  {
+                    "type": "html",
+                    "value": "boards"
                   }
                 ]
               },
-              "problemName": "string",
+              "problemName": "problemName",
               "problemVersion": 1,
               "supportedLanguages": [
                 "JAVA"
               ],
               "customFiles": {
-                "type": "basic"
+                "type": "basic",
+                "methodName": "methodName",
+                "signature": {
+                  "parameters": [
+                    {
+                      "parameterId": "parameterId",
+                      "name": "name",
+                      "variableType": {
+                        "type": "integerType"
+                      }
+                    },
+                    {
+                      "parameterId": "parameterId",
+                      "name": "name",
+                      "variableType": {
+                        "type": "integerType"
+                      }
+                    }
+                  ],
+                  "returnType": {
+                    "type": "integerType"
+                  }
+                },
+                "additionalFiles": {
+                  "JAVA": {
+                    "files": [
+                      {
+                        "filename": "filename",
+                        "directory": "directory",
+                        "contents": "contents",
+                        "editable": true
+                      },
+                      {
+                        "filename": "filename",
+                        "directory": "directory",
+                        "contents": "contents",
+                        "editable": true
+                      }
+                    ]
+                  }
+                },
+                "basicTestCaseTemplate": {
+                  "templateId": "templateId",
+                  "name": "name",
+                  "description": {
+                    "boards": [
+                      {
+                        "type": "html",
+                        "value": "boards"
+                      },
+                      {
+                        "type": "html",
+                        "value": "boards"
+                      }
+                    ]
+                  },
+                  "expectedValueParameterId": "expectedValueParameterId"
+                }
               },
               "generatedFiles": {
                 "generatedTestCaseFiles": {
-                  "string": {
-                    "files": []
+                  "JAVA": {
+                    "files": [
+                      {
+                        "filename": "filename",
+                        "directory": "directory",
+                        "contents": "contents",
+                        "editable": true
+                      },
+                      {
+                        "filename": "filename",
+                        "directory": "directory",
+                        "contents": "contents",
+                        "editable": true
+                      }
+                    ]
                   }
                 },
                 "generatedTemplateFiles": {
-                  "string": {
-                    "files": []
+                  "JAVA": {
+                    "files": [
+                      {
+                        "filename": "filename",
+                        "directory": "directory",
+                        "contents": "contents",
+                        "editable": true
+                      },
+                      {
+                        "filename": "filename",
+                        "directory": "directory",
+                        "contents": "contents",
+                        "editable": true
+                      }
+                    ]
                   }
                 },
                 "other": {
-                  "string": {
-                    "files": []
+                  "JAVA": {
+                    "files": [
+                      {
+                        "filename": "filename",
+                        "directory": "directory",
+                        "contents": "contents",
+                        "editable": true
+                      },
+                      {
+                        "filename": "filename",
+                        "directory": "directory",
+                        "contents": "contents",
+                        "editable": true
+                      }
+                    ]
                   }
                 }
               },
               "customTestCaseTemplates": [
                 {
-                  "templateId": "string",
-                  "name": "string",
+                  "templateId": "templateId",
+                  "name": "name",
                   "implementation": {
                     "description": {
                       "boards": [
                         {
                           "type": "html",
-                          "key": "value"
+                          "value": "boards"
+                        },
+                        {
+                          "type": "html",
+                          "value": "boards"
                         }
                       ]
                     },
                     "function": {
-                      "type": "withActualResult"
+                      "type": "withActualResult",
+                      "getActualResult": {
+                        "signature": {
+                          "parameters": [
+                            {
+                              "parameterId": "parameterId",
+                              "name": "name",
+                              "variableType": {
+                                "type": "integerType"
+                              }
+                            },
+                            {
+                              "parameterId": "parameterId",
+                              "name": "name",
+                              "variableType": {
+                                "type": "integerType"
+                              }
+                            }
+                          ],
+                          "returnType": {
+                            "type": "integerType"
+                          }
+                        },
+                        "code": {
+                          "codeByLanguage": {
+                            "JAVA": {
+                              "impl": "impl"
+                            }
+                          }
+                        }
+                      },
+                      "assertCorrectnessCheck": {
+                        "type": "deepEquality",
+                        "expectedValueParameterId": "expectedValueParameterId"
+                      }
+                    }
+                  }
+                },
+                {
+                  "templateId": "templateId",
+                  "name": "name",
+                  "implementation": {
+                    "description": {
+                      "boards": [
+                        {
+                          "type": "html",
+                          "value": "boards"
+                        },
+                        {
+                          "type": "html",
+                          "value": "boards"
+                        }
+                      ]
+                    },
+                    "function": {
+                      "type": "withActualResult",
+                      "getActualResult": {
+                        "signature": {
+                          "parameters": [
+                            {
+                              "parameterId": "parameterId",
+                              "name": "name",
+                              "variableType": {
+                                "type": "integerType"
+                              }
+                            },
+                            {
+                              "parameterId": "parameterId",
+                              "name": "name",
+                              "variableType": {
+                                "type": "integerType"
+                              }
+                            }
+                          ],
+                          "returnType": {
+                            "type": "integerType"
+                          }
+                        },
+                        "code": {
+                          "codeByLanguage": {
+                            "JAVA": {
+                              "impl": "impl"
+                            }
+                          }
+                        }
+                      },
+                      "assertCorrectnessCheck": {
+                        "type": "deepEquality",
+                        "expectedValueParameterId": "expectedValueParameterId"
+                      }
                     }
                   }
                 }
@@ -77,26 +265,37 @@ public class GetLatestProblemTest : BaseMockServerTest
               "testcases": [
                 {
                   "metadata": {
-                    "id": "string",
-                    "name": "string",
+                    "id": "id",
+                    "name": "name",
                     "hidden": true
                   },
                   "implementation": {
-                    "0": "s",
-                    "1": "t",
-                    "2": "r",
-                    "3": "i",
-                    "4": "n",
-                    "5": "g",
-                    "type": "templateId"
+                    "type": "templateId",
+                    "value": "implementation"
                   },
                   "arguments": {
-                    "string": {
+                    "arguments": {
                       "type": "integerValue",
-                      "key": "value"
+                      "value": 1
                     }
+                  }
+                },
+                {
+                  "metadata": {
+                    "id": "id",
+                    "name": "name",
+                    "hidden": true
                   },
-                  "expects": {}
+                  "implementation": {
+                    "type": "templateId",
+                    "value": "implementation"
+                  },
+                  "arguments": {
+                    "arguments": {
+                      "type": "integerValue",
+                      "value": 1
+                    }
+                  }
                 }
               ],
               "isPublic": true
@@ -107,7 +306,7 @@ public class GetLatestProblemTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/problems-v2/problem-info/string")
+                    .WithPath("/problems-v2/problem-info/problemId")
                     .UsingGet()
             )
             .RespondWith(
@@ -117,7 +316,10 @@ public class GetLatestProblemTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.V2.V3.Problem.GetLatestProblemAsync("string", RequestOptions);
+        var response = await Client.V2.V3.Problem.GetLatestProblemAsync(
+            "problemId",
+            RequestOptions
+        );
         JToken
             .Parse(mockResponse)
             .Should()

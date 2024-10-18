@@ -7,11 +7,11 @@ from seed import AsyncSeedNurseryApi
 async def test_test(client: SeedNurseryApi, async_client: AsyncSeedNurseryApi) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.package.test(for_="string")  # type: ignore[func-returns-value]
+        client.package.test(for_="for")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.package.test(for_="string")  # type: ignore[func-returns-value]
+        await async_client.package.test(for_="for")  # type: ignore[func-returns-value]
         is None
     )

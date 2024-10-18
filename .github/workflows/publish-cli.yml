@@ -62,7 +62,7 @@ jobs:
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
           pnpm --filter @fern-api/cli dist:cli:prod
-          cli_path="$(pwd)/packages/cli/cli/dist/prod/bundle.cjs"
+          cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs"
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN"
 
   publish:

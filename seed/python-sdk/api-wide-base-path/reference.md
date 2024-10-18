@@ -19,9 +19,9 @@ client = SeedApiWideBasePath(
     base_url="https://yourhost.com/path/to/api",
 )
 client.service.post(
-    path_param="string",
-    service_param="string",
-    resource_param="string",
+    path_param="pathParam",
+    service_param="serviceParam",
+    resource_param="resourceParam",
     endpoint_param=1,
 )
 

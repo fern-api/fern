@@ -157,9 +157,10 @@ export class DocsDefinitionResolver {
         const pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
 
         Object.entries(this.parsedDocsConfig.pages).forEach(([relativePageFilepath, markdown]) => {
-            pages[relativePageFilepath] = {
+            const url = createEditThisPageUrl(this.editThisPage, relativePageFilepath);
+            pages[DocsV1Write.PageId(relativePageFilepath)] = {
                 markdown,
-                editThisPageUrl: createEditThisPageUrl(this.editThisPage, relativePageFilepath)
+                editThisPageUrl: url ? DocsV1Write.Url(url) : undefined
             };
         });
 
@@ -244,11 +245,14 @@ export class DocsDefinitionResolver {
         const config: WithoutQuestionMarks<DocsV1Write.DocsConfig> = {
             title: this.parsedDocsConfig.title,
             logoHeight: this.parsedDocsConfig.logo?.height,
-            logoHref: this.parsedDocsConfig.logo?.href,
+            logoHref: this.parsedDocsConfig.logo?.href ? DocsV1Write.Url(this.parsedDocsConfig.logo?.href) : undefined,
             favicon: this.getFileId(this.parsedDocsConfig.favicon),
             navigation: convertedNavigation,
             colorsV3: this.convertColorConfigImageReferences(),
-            navbarLinks: this.parsedDocsConfig.navbarLinks,
+            navbarLinks: this.parsedDocsConfig.navbarLinks?.map((navbarLink) => ({
+                ...navbarLink,
+                url: DocsV1Write.Url(navbarLink.url)
+            })),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
             css: this.parsedDocsConfig.css,
@@ -256,9 +260,40 @@ export class DocsDefinitionResolver {
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
             integrations: this.parsedDocsConfig.integrations,
-            footerLinks: this.parsedDocsConfig.footerLinks,
+            footerLinks: this.parsedDocsConfig.footerLinks?.map((footerLink) => ({
+                ...footerLink,
+                value: DocsV1Write.Url(footerLink.value)
+            })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
-            analyticsConfig: this.parsedDocsConfig.analyticsConfig,
+            analyticsConfig: {
+                ...this.parsedDocsConfig.analyticsConfig,
+                segment: this.parsedDocsConfig.analyticsConfig?.segment,
+                fullstory: this.parsedDocsConfig.analyticsConfig?.fullstory,
+                intercom: this.parsedDocsConfig.analyticsConfig?.intercom
+                    ? {
+                          appId: this.parsedDocsConfig.analyticsConfig.intercom.appId,
+                          apiBase: this.parsedDocsConfig.analyticsConfig.intercom.apiBase
+                      }
+                    : undefined,
+                posthog: this.parsedDocsConfig.analyticsConfig?.posthog
+                    ? {
+                          apiKey: this.parsedDocsConfig.analyticsConfig.posthog.apiKey,
+                          endpoint: this.parsedDocsConfig.analyticsConfig.posthog.endpoint
+                      }
+                    : undefined,
+                gtm: undefined,
+                ga4: undefined,
+                amplitude: undefined,
+                mixpanel: undefined,
+                hotjar: undefined,
+                koala: undefined,
+                logrocket: undefined,
+                pirsch: undefined,
+                plausible: undefined,
+                fathom: undefined,
+                clearbit: undefined,
+                heap: undefined
+            },
             announcement:
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
@@ -290,7 +325,7 @@ export class DocsDefinitionResolver {
     }
 
     private async convertNavigationConfig(): Promise<DocsV1Write.NavigationConfig> {
-        const slug = FernNavigation.SlugGenerator.init(FernNavigation.utils.slugjoin(this.getDocsBasePath()));
+        const slug = FernNavigation.V1.SlugGenerator.init(FernNavigation.slugjoin(this.getDocsBasePath()));
         switch (this.parsedDocsConfig.navigation.type) {
             case "versioned": {
                 const versions = await Promise.all(
@@ -303,7 +338,7 @@ export class DocsDefinitionResolver {
                                 parentSlug: versionSlug
                             });
                             return {
-                                version: version.version,
+                                version: FernNavigation.VersionId(version.version),
                                 config: convertedNavigation,
                                 availability:
                                     version.availability != null
@@ -330,7 +365,7 @@ export class DocsDefinitionResolver {
 
     private async convertNavigationItem(
         item: docsYml.DocsNavigationItem,
-        parentSlug: FernNavigation.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<DocsV1Write.NavigationItem> {
         switch (item.type) {
             case "page": {
@@ -338,7 +373,7 @@ export class DocsDefinitionResolver {
                     type: "page",
                     title: item.title,
                     icon: item.icon,
-                    id: this.toRelativeFilepath(item.absolutePath),
+                    id: FernNavigation.PageId(this.toRelativeFilepath(item.absolutePath)),
                     urlSlugOverride: item.slug,
                     fullSlug: this.markdownFilesToFullSlugs.get(item.absolutePath)?.split("/"),
                     hidden: item.hidden
@@ -353,6 +388,7 @@ export class DocsDefinitionResolver {
                 const sectionItems = await Promise.all(
                     item.contents.map((nestedItem) => this.convertNavigationItem(nestedItem, slug))
                 );
+                const relativeFilePath = this.toRelativeFilepath(item.overviewAbsolutePath);
                 return {
                     type: "section",
                     title: item.title,
@@ -363,7 +399,8 @@ export class DocsDefinitionResolver {
                     icon: item.icon,
                     hidden: item.hidden,
                     skipUrlSlug: item.skipUrlSlug,
-                    overviewPageId: this.toRelativeFilepath(item.overviewAbsolutePath)
+                    overviewPageId: relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined,
+                    fullSlug: undefined
                 };
             }
             case "apiSection": {
@@ -381,6 +418,7 @@ export class DocsDefinitionResolver {
                     packageName: undefined,
                     context: this.taskContext
                 });
+                // console.log(JSON.stringify(ir, undefined, 2));
                 const apiDefinitionId = await this.registerApi({
                     ir,
                     snippetsConfig,
@@ -403,8 +441,9 @@ export class DocsDefinitionResolver {
             case "link": {
                 return {
                     type: "link",
+                    icon: item.icon,
                     title: item.text,
-                    url: item.url
+                    url: APIV1Write.Url(item.url)
                 };
             }
             case "changelog": {
@@ -418,11 +457,12 @@ export class DocsDefinitionResolver {
                 ).convert({
                     parentSlug,
                     title: item.title,
-                    icon: item.icon,
                     hidden: item.hidden,
-                    slug: item.slug
+                    slug: item.slug,
+                    icon: item.icon
                 });
 
+                const relativeFilePath = this.toRelativeFilepath(item.changelog[0]);
                 return {
                     type: "changelogV3",
                     node: node ?? {
@@ -430,7 +470,11 @@ export class DocsDefinitionResolver {
                         type: "changelog",
                         title: item.title,
                         slug: parentSlug.append(slug).get(),
-                        children: []
+                        children: [],
+                        icon: item.icon,
+                        hidden: item.hidden,
+                        overviewPageId: relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined,
+                        noindex: false
                     }
                 };
             }
@@ -446,12 +490,12 @@ export class DocsDefinitionResolver {
     }: {
         landingPage: docsYml.DocsNavigationItem.Page | undefined;
         navigationConfig: docsYml.UnversionedNavigationConfiguration;
-        parentSlug: FernNavigation.SlugGenerator;
+        parentSlug: FernNavigation.V1.SlugGenerator;
     }): Promise<DocsV1Write.UnversionedNavigationConfig> {
         const landingPage =
             landingPageConfig != null
                 ? {
-                      id: this.toRelativeFilepath(landingPageConfig.absolutePath),
+                      id: FernNavigation.PageId(this.toRelativeFilepath(landingPageConfig.absolutePath)),
                       urlSlugOverride: landingPageConfig.slug,
                       fullSlug: this.markdownFilesToFullSlugs.get(landingPageConfig.absolutePath)?.split("/"),
                       hidden: landingPageConfig.hidden,
@@ -472,6 +516,7 @@ export class DocsDefinitionResolver {
             case "tabbed": {
                 return {
                     landingPage,
+                    tabs: undefined,
                     tabsV2: await this.convertTabbedNavigation(navigationConfig.items, parentSlug)
                 };
             }
@@ -482,7 +527,7 @@ export class DocsDefinitionResolver {
 
     private async convertTabbedNavigation(
         items: docsYml.TabbedNavigation[],
-        parentSlug: FernNavigation.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<DocsV1Write.NavigationTabV2[]> {
         return Promise.all(
             items.map(async (tab): Promise<WithoutQuestionMarks<DocsV1Write.NavigationTabV2>> => {
@@ -491,7 +536,7 @@ export class DocsDefinitionResolver {
                         type: "link",
                         title: tab.title,
                         icon: tab.icon,
-                        url: tab.child.href
+                        url: APIV1Write.Url(tab.child.href)
                     };
                 }
 
@@ -509,6 +554,7 @@ export class DocsDefinitionResolver {
                         hidden: tab.hidden,
                         slug: tab.slug
                     });
+                    const relativeFilePath = this.toRelativeFilepath(tab.child.changelog[0]);
                     return {
                         type: "changelogV3",
                         node: node ?? {
@@ -516,7 +562,11 @@ export class DocsDefinitionResolver {
                             type: "changelog",
                             title: tab.title,
                             slug: parentSlug.append(tab.slug ?? kebabCase(tab.title)).get(),
-                            children: []
+                            children: [],
+                            icon: tab.icon,
+                            hidden: tab.hidden,
+                            overviewPageId: relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined,
+                            noindex: false
                         }
                     };
                 }
@@ -558,7 +608,7 @@ export class DocsDefinitionResolver {
         if (fileId == null) {
             return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
         }
-        return fileId;
+        return DocsV1Write.FileId(fileId);
     }
 
     private convertColorConfigImageReferences(): DocsV1Write.ColorsConfigV3 | undefined {
@@ -578,7 +628,8 @@ export class DocsDefinitionResolver {
                 ...colors,
                 ...this.convertLogoAndBackgroundImage({
                     theme: "light"
-                })
+                }),
+                type: "light"
             };
         } else {
             return {
@@ -654,8 +705,16 @@ export class DocsDefinitionResolver {
         }
         return {
             files: this.parsedDocsConfig.js.files
-                .map(({ absolutePath, strategy }) => ({ fileId: this.getFileId(absolutePath), strategy }))
-                .filter(isNonNullish)
+                .map(({ absolutePath, strategy }) => ({
+                    fileId: this.getFileId(absolutePath),
+                    strategy
+                }))
+                .filter(isNonNullish),
+            remote: this.parsedDocsConfig.js.remote?.map((remote) => ({
+                ...remote,
+                url: DocsV1Write.Url(remote.url)
+            })),
+            inline: undefined
         };
     }
 
@@ -688,7 +747,7 @@ export class DocsDefinitionResolver {
                 type: "fileId",
                 value: this.getFileId(value)
             }),
-            url: ({ value }) => ({ type: "url", value }),
+            url: ({ value }) => ({ type: "url", value: DocsV1Write.Url(value) }),
             _other: () => this.taskContext.failAndThrow("Invalid metadata configuration")
         });
     }
@@ -707,16 +766,16 @@ function createEditThisPageUrl(
     return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}`;
 }
 
-function convertAvailability(availability: docsYml.RawSchemas.VersionAvailability): DocsV1Write.VersionAvailability {
+function convertAvailability(availability: docsYml.RawSchemas.VersionAvailability): DocsV1Write.Availability {
     switch (availability) {
         case "beta":
-            return DocsV1Write.VersionAvailability.Beta;
+            return DocsV1Write.Availability.Beta;
         case "deprecated":
-            return DocsV1Write.VersionAvailability.Deprecated;
+            return DocsV1Write.Availability.Deprecated;
         case "ga":
-            return DocsV1Write.VersionAvailability.GenerallyAvailable;
+            return DocsV1Write.Availability.GenerallyAvailable;
         case "stable":
-            return DocsV1Write.VersionAvailability.Stable;
+            return DocsV1Write.Availability.Stable;
         default:
             assertNever(availability);
     }

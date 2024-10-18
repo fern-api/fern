@@ -34,7 +34,7 @@ export class Union {
      * @example
      *     await client.endpoints.union.getAndReturnUnion({
      *         animal: "dog",
-     *         name: "string",
+     *         name: "name",
      *         likesToWoof: true
      *     })
      */

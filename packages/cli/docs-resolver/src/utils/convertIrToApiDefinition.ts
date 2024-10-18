@@ -24,8 +24,18 @@ export function convertIrToApiDefinition(
     // the navigation constructor doesn't need to know about snippets, so we can pass an empty object
     return convertDbAPIDefinitionToRead(
         convertAPIDefinitionToDb(
-            convertIrToFdrApi({ ir, snippetsConfig: {}, playgroundConfig }),
-            apiDefinitionId,
+            convertIrToFdrApi({
+                ir,
+                snippetsConfig: {
+                    typescriptSdk: undefined,
+                    pythonSdk: undefined,
+                    javaSdk: undefined,
+                    rubySdk: undefined,
+                    goSdk: undefined
+                },
+                playgroundConfig
+            }),
+            APIV1Read.ApiDefinitionId(apiDefinitionId),
             EMPTY_SNIPPET_HOLDER
         )
     );

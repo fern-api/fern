@@ -14,7 +14,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "sideEffects": false,
-  "bin": "./dist/bundle.cjs",
+  "bin": "./dist/cli.cjs",
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -26,13 +26,12 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "dist:cli": "pnpm compile && node build.cjs",
+    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-model:latest ../../..",
     "dockerTagVersion": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-model:${0} ../../.."
   },
-  "dependencies": {
+  "devDependencies": {
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
@@ -40,20 +39,18 @@
     "@fern-api/ruby-generator-cli": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.898",
     "@fern-fern/ir-sdk": "^39",
-    "zod": "^3.22.3"
-  },
-  "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "^18.7.18",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
-    "env-cmd": "toddbluhm/env-cmd",
-    "esbuild": "^0.15.7",
+    "esbuild": "^0.24.0",
     "eslint": "^8.56.0",
-    "vitest": "^2.0.5",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "ts-loader": "^9.3.1",
-    "typescript": "4.6.4"
+    "tsup": "^8.0.2",
+    "typescript": "4.6.4",
+    "vitest": "^2.0.5",
+    "zod": "^3.22.3"
   }
 }

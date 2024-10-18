@@ -46,7 +46,19 @@ export class ConjureWorkspace extends AbstractAPIWorkspace<ConjureWorkspace.Sett
         settings?: ConjureWorkspace.Settings
     ): Promise<FernDefinition> {
         const conjure = new ConjureImporter(context);
-        const definition = await conjure.import({ absolutePathToConjureFolder: this.absolutePathToConjureFolder });
+        const definition = await conjure.import({
+            absolutePathToConjureFolder: this.absolutePathToConjureFolder,
+            authOverrides:
+                this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined,
+            environmentOverrides:
+                this.generatorsConfiguration?.api?.environments != null
+                    ? { ...this.generatorsConfiguration?.api }
+                    : undefined,
+            globalHeaderOverrides:
+                this.generatorsConfiguration?.api?.headers != null
+                    ? { ...this.generatorsConfiguration?.api }
+                    : undefined
+        });
         return {
             // these files doesn't live on disk, so there's no absolute filepath
             absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH"),

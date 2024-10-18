@@ -17,7 +17,7 @@ import { SeedExamplesClient } from "@fern/examples";
 const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });        
 await client.echo(
 	{
-		"Hello world!\\n\\nwith\\n\\tnewlines"
+		"string"
 	}
 )
  
@@ -43,7 +43,7 @@ const client = new SeedExamplesClient({
   environment: SeedExamplesEnvironment.Production,
   token: "YOUR_TOKEN",
 });
-await client.file.notification.service.getException("string");
+await client.file.notification.service.getException("notificationId");
  
 ```                        
 
@@ -67,19 +67,7 @@ const client = new SeedExamplesClient({
   environment: SeedExamplesEnvironment.Production,
   token: "YOUR_TOKEN",
 });
-await client.file.service.getFile("string");
- 
-```                        
-
-
-```typescript
-import { SeedExamplesClient } from "@fern/examples";
-
-const client = new SeedExamplesClient({
-  environment: SeedExamplesEnvironment.Production,
-  token: "YOUR_TOKEN",
-});
-await client.file.service.getFile("string");
+await client.file.service.getFile("filename");
  
 ```                        
 
@@ -115,19 +103,7 @@ const client = new SeedExamplesClient({
   environment: SeedExamplesEnvironment.Production,
   token: "YOUR_TOKEN",
 });
-await client.health.service.check("string");
- 
-```                        
-
-
-```typescript
-import { SeedExamplesClient } from "@fern/examples";
-
-const client = new SeedExamplesClient({
-  environment: SeedExamplesEnvironment.Production,
-  token: "YOUR_TOKEN",
-});
-await client.health.service.check("string");
+await client.health.service.check("id");
  
 ```                        
 
@@ -175,7 +151,7 @@ const client = new SeedExamplesClient({
   environment: SeedExamplesEnvironment.Production,
   token: "YOUR_TOKEN",
 });
-await client.service.getMovie("movie-c06a4ad7");
+await client.service.getMovie("movieId");
  
 ```                        
 
@@ -213,16 +189,13 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.service.createMovie({
-  id: "movie-c06a4ad7",
-  prequel: "movie-cv9b914f",
-  title: "The Boy and the Heron",
-  from: "Hayao Miyazaki",
-  rating: 8,
-  tag: "tag-wf9as23d",
+  id: "id",
+  title: "title",
+  from: "from",
+  rating: 1.1,
+  tag: "tag",
   metadata: {
-    actors: ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-    releaseDate: "2023-12-08",
-    ratings: { rottenTomatoes: 97, imdb: 7.6 },
+    metadata: { key: "value" },
   },
   revenue: 1000000,
 });
@@ -254,9 +227,7 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.service.getMetadata({
-  shallow: true,
-  tag: "string",
-  xApiVersion: "string",
+  xApiVersion: "X-API-Version",
 });
  
 ```                        

@@ -18,7 +18,7 @@ public partial class Ec2Client
 
     /// <example>
     /// <code>
-    /// await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "string" });
+    /// await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
     /// </code>
     /// </example>
     public async Task BootInstanceAsync(

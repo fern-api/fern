@@ -22,7 +22,7 @@ public partial class MetadataClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = "string" });
+    /// await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = "id" });
     /// </code>
     /// </example>
     public async Task<Metadata> GetMetadataAsync(

@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.User.GetUserAsync("string");
+await client.User.GetUserAsync("userId");
 ```
 </dd>
 </dl>

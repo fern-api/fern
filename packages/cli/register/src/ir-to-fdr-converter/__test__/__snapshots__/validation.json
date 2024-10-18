@@ -139,7 +139,10 @@
               "value": "type_:Shape"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -233,7 +236,46 @@
           }
         },
         "errorsV2": [],
-        "examples": []
+        "examples": [
+          {
+            "path": "/create",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "decimal": 1.1,
+              "even": 1,
+              "name": "name",
+              "shape": "SQUARE"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "decimal": 1.1,
+                "even": 1,
+                "name": "name",
+                "shape": "SQUARE"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": {
+              "decimal": 1.1,
+              "even": 1,
+              "name": "name",
+              "shape": "SQUARE"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "decimal": 1.1,
+                "even": 1,
+                "name": "name",
+                "shape": "SQUARE"
+              }
+            },
+            "codeSamples": []
+          }
+        ]
       },
       {
         "auth": false,
@@ -304,7 +346,35 @@
           }
         },
         "errorsV2": [],
-        "examples": []
+        "examples": [
+          {
+            "path": "",
+            "pathParameters": {},
+            "queryParameters": {
+              "decimal": 1.1,
+              "even": 1,
+              "name": "name"
+            },
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "decimal": 1.1,
+              "even": 1,
+              "name": "name",
+              "shape": "SQUARE"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "decimal": 1.1,
+                "even": 1,
+                "name": "name",
+                "shape": "SQUARE"
+              }
+            },
+            "codeSamples": []
+          }
+        ]
       }
     ],
     "webhooks": [],

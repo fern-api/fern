@@ -1,5 +1,5 @@
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
-import { FernIr as Ir } from "@fern-api/ir-sdk";
+import { FernIr as Ir, TypeReference } from "@fern-api/ir-sdk";
 import { convertIrAvailability } from "./convertPackage";
 
 export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.register.TypeShape {
@@ -26,22 +26,23 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
         object: (object) => {
             return {
                 type: "object",
-                extends: object.extends.map((extension) => extension.typeId),
+                extends: object.extends.map((extension) => FdrCjsSdk.TypeId(extension.typeId)),
                 properties: object.properties.map(
                     (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
                         description: property.docs ?? undefined,
-                        key: property.name.wireValue,
+                        key: FdrCjsSdk.PropertyKey(property.name.wireValue),
                         valueType: convertTypeReference(property.valueType),
                         availability: convertIrAvailability(property.availability)
                     })
-                )
+                ),
+                extraProperties: convertExtraProperties(object.extraProperties)
             };
         },
         union: (union) => {
             const baseProperties: FdrCjsSdk.api.v1.register.ObjectProperty[] = union.baseProperties.map(
                 (baseProperty): FdrCjsSdk.api.v1.register.ObjectProperty => {
                     return {
-                        key: baseProperty.name.wireValue,
+                        key: FdrCjsSdk.PropertyKey(baseProperty.name.wireValue),
                         valueType: convertTypeReference(baseProperty.valueType),
                         availability: convertIrAvailability(baseProperty.availability),
                         description: baseProperty.docs
@@ -63,15 +64,17 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                                 variant.shape,
                                 {
                                     samePropertiesAsObject: (extension) => ({
-                                        extends: [extension.typeId],
+                                        extends: [FdrCjsSdk.TypeId(extension.typeId)],
                                         properties: baseProperties
                                     }),
                                     singleProperty: (singleProperty) => ({
                                         extends: [],
                                         properties: [
                                             {
-                                                key: singleProperty.name.wireValue,
-                                                valueType: convertTypeReference(singleProperty.type)
+                                                key: FdrCjsSdk.PropertyKey(singleProperty.name.wireValue),
+                                                valueType: convertTypeReference(singleProperty.type),
+                                                description: undefined,
+                                                availability: undefined
                                             },
                                             ...baseProperties
                                         ]
@@ -98,7 +101,8 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                     return {
                         typeName: variant.type.type === "named" ? variant.type.name.originalName : undefined,
                         description: variant.docs ?? undefined,
-                        type: convertTypeReference(variant.type)
+                        type: convertTypeReference(variant.type),
+                        availability: undefined
                     };
                 })
             };
@@ -129,7 +133,8 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                 optional: (itemType) => {
                     return {
                         type: "optional",
-                        itemType: convertTypeReference(itemType)
+                        itemType: convertTypeReference(itemType),
+                        defaultValue: undefined
                     };
                 },
                 set: (itemType) => {
@@ -171,7 +176,8 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
         named: (name) => {
             return {
                 type: "id",
-                value: name.typeId
+                value: FdrCjsSdk.TypeId(name.typeId),
+                default: undefined
             };
         },
         primitive: (primitive) => {
@@ -185,7 +191,10 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         // TODO: Add support for float types in FDR. We render them as double for now
                         // (they have the same JSON representation).
                         return {
-                            type: "double"
+                            type: "double",
+                            minimum: 2.2250738585072014e-308,
+                            maximum: 1.7976931348623157e308,
+                            default: 0.0
                         };
                     },
                     double: () => {
@@ -196,37 +205,46 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     },
                     long: () => {
                         return {
-                            type: "long"
+                            type: "long",
+                            default: 0,
+                            minimum: undefined,
+                            maximum: undefined
                         };
                     },
                     boolean: () => {
                         return {
-                            type: "boolean"
+                            type: "boolean",
+                            default: false
                         };
                     },
                     dateTime: () => {
                         return {
-                            type: "datetime"
+                            type: "datetime",
+                            default: new Date(0).toISOString()
                         };
                     },
                     date: () => {
                         return {
-                            type: "date"
+                            type: "date",
+                            default: new Date(0).toISOString()
                         };
                     },
                     uuid: () => {
                         return {
-                            type: "uuid"
+                            type: "uuid",
+                            default: undefined
                         };
                     },
                     base64: () => {
                         return {
-                            type: "base64"
+                            type: "base64",
+                            default: (0x00).toString()
                         };
                     },
                     bigInteger: () => {
                         return {
-                            type: "bigInteger"
+                            type: "bigInteger",
+                            default: BigInt(0).toString()
                         };
                     },
                     uint: () => {
@@ -288,4 +306,20 @@ function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
         maximum: rules != null ? rules.max : undefined,
         default: primitive != null && primitive.type === "double" ? primitive.default : undefined
     };
+}
+
+function convertExtraProperties(
+    extraProperties: boolean | string | Ir.types.TypeReference
+): FdrCjsSdk.api.v1.register.TypeReference {
+    if (typeof extraProperties === "boolean") {
+        return TypeReference.unknown();
+    } else if (typeof extraProperties === "string") {
+        return {
+            type: "id",
+            value: FdrCjsSdk.TypeId(extraProperties),
+            default: undefined
+        };
+    } else {
+        return convertTypeReference(extraProperties);
+    }
 }

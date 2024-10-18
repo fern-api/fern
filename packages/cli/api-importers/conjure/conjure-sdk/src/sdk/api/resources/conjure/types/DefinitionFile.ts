@@ -5,7 +5,6 @@
 import * as FernConjure from "../../../index";
 
 export interface DefinitionFile {
-    imports: Record<string, string> | undefined;
     types: FernConjure.ConjureTypes | undefined;
     services: Record<FernConjure.ConjureServiceName, FernConjure.ConjureService> | undefined;
 }

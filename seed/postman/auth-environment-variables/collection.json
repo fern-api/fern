@@ -143,7 +143,7 @@
                 "key": "X-Endpoint-Header",
                 "description": "Specifies the endpoint key.",
                 "type": "text",
-                "value": "\"string\""
+                "value": "\"X-Endpoint-Header\""
               },
               {
                 "type": "text",
@@ -184,7 +184,7 @@
                     "key": "X-Endpoint-Header",
                     "description": "Specifies the endpoint key.",
                     "type": "text",
-                    "value": "\"string\""
+                    "value": "\"X-Endpoint-Header\""
                   },
                   {
                     "type": "text",

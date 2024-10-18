@@ -13,9 +13,7 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "unique": "string",
-              "name": "string",
-              "docs": "string"
+              "unique": "unique"
             }
             """;
 
@@ -32,12 +30,7 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.ExtendedInlineRequestBodyAsync(
-                    new Inlined
-                    {
-                        Unique = "string",
-                        Name = "string",
-                        Docs = "string",
-                    },
+                    new Inlined { Unique = "unique" },
                     RequestOptions
                 )
         );

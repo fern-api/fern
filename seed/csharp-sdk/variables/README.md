@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedVariables;
 
 var client = new SeedVariablesClient();
-await client.Service.PostAsync("string");
+await client.Service.PostAsync("endpointParam");
 ```
 
 ## Exception Handling

@@ -100,7 +100,21 @@
           "queryParameters": [],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/test/pathParam/serviceParam/1/resourceParam",
+              "pathParameters": {
+                "pathParam": "pathParam",
+                "serviceParam": "serviceParam",
+                "resourceParam": "resourceParam",
+                "endpointParam": 1
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

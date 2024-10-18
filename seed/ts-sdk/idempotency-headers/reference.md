@@ -66,7 +66,7 @@ await client.payment.create({
 <dd>
 
 ```typescript
-await client.payment.delete("string");
+await client.payment.delete("paymentId");
 ```
 
 </dd>

@@ -88,10 +88,13 @@ export async function publishDocs({
                     return;
                 }
                 const imageFilePath = {
-                    filePath: convertToFernHostRelativeFilePath(filePath.relativeFilePath),
+                    filePath: CjsFdrSdk.docs.v1.write.FilePath(
+                        convertToFernHostRelativeFilePath(filePath.relativeFilePath)
+                    ),
                     width: image.width,
                     height: image.height,
-                    blurDataUrl: image.blurDataUrl
+                    blurDataUrl: image.blurDataUrl,
+                    alt: undefined
                 };
                 images.push(imageFilePath);
             });
@@ -102,9 +105,9 @@ export async function publishDocs({
 
             if (preview) {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
-                    orgId: organization,
+                    orgId: CjsFdrSdk.OrgId(organization),
                     authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
-                    filepaths,
+                    filepaths: filepaths.map((filePath) => CjsFdrSdk.docs.v1.write.FilePath(filePath)),
                     images,
                     basePath
                 });
@@ -129,9 +132,9 @@ export async function publishDocs({
                     domain,
                     customDomains,
                     authConfig,
-                    apiId: "",
-                    orgId: organization,
-                    filepaths,
+                    apiId: CjsFdrSdk.ApiId(""),
+                    orgId: CjsFdrSdk.OrgId(organization),
+                    filepaths: filepaths.map((filePath) => CjsFdrSdk.docs.v1.write.FilePath(filePath)),
                     images
                 });
                 if (startDocsRegisterResponse.ok) {
@@ -155,8 +158,8 @@ export async function publishDocs({
             const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
             context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
             const response = await fdr.api.v1.register.registerApiDefinition({
-                orgId: organization,
-                apiId: ir.apiName.originalName,
+                orgId: CjsFdrSdk.OrgId(organization),
+                apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
                 definition: apiDefinition
             });
 
@@ -189,9 +192,12 @@ export async function publishDocs({
     }
 
     context.logger.debug("Calling registerDocs... ", JSON.stringify(docsDefinition, undefined, 4));
-    const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(docsRegistrationId, {
-        docsDefinition
-    });
+    const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
+        CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
+        {
+            docsDefinition
+        }
+    );
 
     if (registerDocsResponse.ok) {
         const url = wrapWithHttps(urlToOutput);

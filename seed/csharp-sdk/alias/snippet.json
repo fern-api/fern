@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedAlias;\n\nvar client = new SeedAliasClient();\nawait client.GetAsync(\"type-kaljhv87\");\n"
+                "client": "using SeedAlias;\n\nvar client = new SeedAliasClient();\nawait client.GetAsync(\"typeId\");\n"
             }
         }
     ]

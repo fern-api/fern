@@ -1,5 +1,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+imports: 
+  commons: commons.yml
+
 types: 
   ConjureTypes: 
     properties: 
@@ -33,8 +36,20 @@ types:
 
   ConjureEnumDeclaration: 
     properties: 
-      values: list<string>
-
+      values: list<ConjureEnumVariant>
+  
+  ConjureEnumVariant: 
+    discriminated: false
+    union: 
+      - string
+      - ConjureEnumWithDocs
+  
+  ConjureEnumWithDocs: 
+    extends: 
+      - commons.WithDocs
+    properties: 
+      value: string
+      
   ConjureTypeReference: 
     discriminated: false
     union: 

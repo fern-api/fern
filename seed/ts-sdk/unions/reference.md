@@ -15,7 +15,7 @@
 <dd>
 
 ```typescript
-await client.union.get("string");
+await client.union.get("id");
 ```
 
 </dd>
@@ -65,7 +65,6 @@ await client.union.get("string");
 ```typescript
 await client.union.update({
     type: "circle",
-    id: "string",
     radius: 1.1,
 });
 ```

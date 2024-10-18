@@ -30,7 +30,7 @@ const client = new SeedMultiUrlEnvironmentNoDefaultClient({
     token: "YOUR_TOKEN",
 });
 await client.ec2.bootInstance({
-    size: "string",
+    size: "size",
 });
 ```
 

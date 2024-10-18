@@ -7,8 +7,8 @@ from .utilities import validate_response
 
 
 async def test_get_homepage_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response: typing.Any = ["string"]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: None})
+    expected_response: typing.Any = ["string", "string"]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: None, 1: None})
     response = client.homepage.get_homepage_problems()
     validate_response(response, expected_response, expected_types)
 
@@ -19,11 +19,11 @@ async def test_get_homepage_problems(client: SeedTrace, async_client: AsyncSeedT
 async def test_set_homepage_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.homepage.set_homepage_problems(request=["string"])  # type: ignore[func-returns-value]
+        client.homepage.set_homepage_problems(request=["string", "string"])  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.homepage.set_homepage_problems(request=["string"])  # type: ignore[func-returns-value]
+        await async_client.homepage.set_homepage_problems(request=["string", "string"])  # type: ignore[func-returns-value]
         is None
     )

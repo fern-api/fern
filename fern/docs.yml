@@ -132,12 +132,24 @@ navigation:
           - page: Types
             icon: fa-regular fa-shapes
             path: ./pages/api-definition/fern-definition/types.mdx
-          - page: Endpoints
+          - section: Endpoints
             icon: fa-regular fa-plug
             path: ./pages/api-definition/fern-definition/endpoints.mdx
+            contents: 
+              - page: HTTP JSON Endpoints
+                icon: fa-regular fa-display-code
+                path: ./pages/api-definition/fern-definition/endpoints/rest.mdx
+                slug: http
+              - page: Multipart Form Uploads
+                icon: fa-regular fa-file
+                path: ./pages/api-definition/fern-definition/endpoints/multipart.mdx
+                slug: multipart
           - page: Webhooks
             icon: fa-regular fa-webhook
             path: ./pages/api-definition/fern-definition/webhooks.mdx
+          - page: WebSockets
+            icon: fa-regular fa-globe
+            path: ./pages/api-definition/fern-definition/websockets.mdx
           - page: Errors
             icon: fa-regular fa-exclamation-triangle
             path: ./pages/api-definition/fern-definition/errors.mdx
@@ -551,10 +563,7 @@ layout:
   tabs-placement: header
 
 js:
-  - url: https://guidebar-backend-727ab3a68ba9.herokuapp.com/install/buildwithfern_com
   - ./js/koala.js
-  - ./js/rbtob.js
-
 analytics:
   posthog:
     api-key: ${POSTHOG_API_KEY}

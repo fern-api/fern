@@ -19,12 +19,18 @@ public class GetAndReturnListOfObjectsTest : BaseMockServerTest
             [
               {
                 "string": "string"
+              },
+              {
+                "string": "string"
               }
             ]
             """;
 
         const string mockResponse = """
             [
+              {
+                "string": "string"
+              },
               {
                 "string": "string"
               }
@@ -49,6 +55,7 @@ public class GetAndReturnListOfObjectsTest : BaseMockServerTest
         var response = await Client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
             new List<ObjectWithRequiredField>()
             {
+                new ObjectWithRequiredField { String = "string" },
                 new ObjectWithRequiredField { String = "string" },
             },
             RequestOptions

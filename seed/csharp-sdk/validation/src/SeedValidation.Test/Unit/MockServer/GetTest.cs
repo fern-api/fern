@@ -18,8 +18,8 @@ public class GetTest : BaseMockServerTest
         const string mockResponse = """
             {
               "decimal": 1.1,
-              "even": 2,
-              "name": "rules",
+              "even": 1,
+              "name": "name",
               "shape": "SQUARE"
             }
             """;
@@ -31,7 +31,7 @@ public class GetTest : BaseMockServerTest
                     .WithPath("/")
                     .WithParam("decimal", "1.1")
                     .WithParam("even", "1")
-                    .WithParam("name", "string")
+                    .WithParam("name", "name")
                     .UsingGet()
             )
             .RespondWith(
@@ -46,7 +46,7 @@ public class GetTest : BaseMockServerTest
             {
                 Decimal = 1.1,
                 Even = 1,
-                Name = "string",
+                Name = "name",
             },
             RequestOptions
         );

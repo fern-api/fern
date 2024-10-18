@@ -44,7 +44,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_imdb:CreateMovieRequest": {
@@ -71,7 +74,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -126,7 +132,32 @@
             "statusCode": 201
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/movies/create-movie",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "title": "title",
+                "rating": 1.1
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "title": "title",
+                  "rating": 1.1
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -184,10 +215,35 @@
                 }
               },
               "statusCode": 404,
+              "name": "MovieDoesNotExistError",
               "examples": []
             }
           ],
-          "examples": []
+          "examples": [
+            {
+              "path": "/movies/movieId",
+              "pathParameters": {
+                "movieId": "movieId"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "id": "id",
+                "title": "title",
+                "rating": 1.1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "id",
+                  "title": "title",
+                  "rating": 1.1
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

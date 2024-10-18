@@ -8,25 +8,27 @@ from seed.types.object import ObjectWithRequiredField
 
 
 async def test_get_and_return_list_of_primitives(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response: typing.Any = ["string"]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: None})
-    response = client.endpoints.container.get_and_return_list_of_primitives(request=["string"])
+    expected_response: typing.Any = ["string", "string"]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: None, 1: None})
+    response = client.endpoints.container.get_and_return_list_of_primitives(request=["string", "string"])
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.endpoints.container.get_and_return_list_of_primitives(request=["string"])
+    async_response = await async_client.endpoints.container.get_and_return_list_of_primitives(
+        request=["string", "string"]
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_and_return_list_of_objects(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response: typing.Any = [{"string": "string"}]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: {"string": None}})
+    expected_response: typing.Any = [{"string": "string"}, {"string": "string"}]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: {"string": None}, 1: {"string": None}})
     response = client.endpoints.container.get_and_return_list_of_objects(
-        request=[ObjectWithRequiredField(string="string")]
+        request=[ObjectWithRequiredField(string="string"), ObjectWithRequiredField(string="string")]
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.endpoints.container.get_and_return_list_of_objects(
-        request=[ObjectWithRequiredField(string="string")]
+        request=[ObjectWithRequiredField(string="string"), ObjectWithRequiredField(string="string")]
     )
     validate_response(async_response, expected_response, expected_types)
 
@@ -82,12 +84,13 @@ async def test_get_and_return_map_of_prim_to_object(client: SeedExhaustive, asyn
 
 
 async def test_get_and_return_optional(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response: typing.Any = {"string": "string"}
-    expected_types: typing.Any = {"string": None}
-    response = client.endpoints.container.get_and_return_optional(request=ObjectWithRequiredField(string="string"))
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.endpoints.container.get_and_return_optional(
-        request=ObjectWithRequiredField(string="string")
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.endpoints.container.get_and_return_optional()  # type: ignore[func-returns-value]
+        is None
     )
-    validate_response(async_response, expected_response, expected_types)
+
+    assert (
+        await async_client.endpoints.container.get_and_return_optional()  # type: ignore[func-returns-value]
+        is None
+    )

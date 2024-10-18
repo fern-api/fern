@@ -28,7 +28,8 @@ export function convertHttpRequestBody({
     if (bytesRequest != null) {
         return HttpRequestBody.bytes({
             isOptional: bytesRequest.isOptional,
-            contentType: typeof request === "string" ? undefined : request?.["content-type"]
+            contentType: typeof request === "string" ? undefined : request?.["content-type"],
+            docs: typeof request === "string" ? undefined : request?.docs
         });
     }
 
@@ -86,7 +87,8 @@ export function convertHttpRequestBody({
                         contentType: property.contentType
                     });
                 }
-            })
+            }),
+            docs: request.docs
         });
     }
 
@@ -101,6 +103,7 @@ export function convertHttpRequestBody({
                 parseTypeName({ typeName: extended, file })
             ),
             contentType: request["content-type"],
+            docs: request.docs,
             properties:
                 request.body.properties != null
                     ? Object.entries(request.body.properties).map(([propertyKey, propertyDefinition]) =>

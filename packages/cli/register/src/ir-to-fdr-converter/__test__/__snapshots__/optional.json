@@ -59,10 +59,28 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "description": "Id of the created resource"
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/send-optional-body",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

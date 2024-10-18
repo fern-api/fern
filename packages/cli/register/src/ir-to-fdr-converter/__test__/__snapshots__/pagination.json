@@ -13,7 +13,10 @@
               "value": "type_:UsernamePage"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_:UsernamePage": {
@@ -46,7 +49,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:Order": {
@@ -81,7 +87,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:WithCursor": {
@@ -102,7 +111,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:UserListContainer": {
@@ -121,7 +133,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:UserPage": {
@@ -149,7 +164,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:UserOptionalListContainer": {
@@ -171,7 +189,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:UserOptionalListPage": {
@@ -199,7 +220,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:UsernameContainer": {
@@ -220,7 +244,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:ListUsersExtendedResponse": {
@@ -241,7 +268,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:ListUsersExtendedOptionalListResponse": {
@@ -262,7 +292,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:ListUsersPaginationResponse": {
@@ -278,7 +311,8 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
@@ -313,7 +347,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:Page": {
@@ -360,7 +397,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:NextPage": {
@@ -387,7 +427,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_users:User": {
@@ -414,7 +457,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -504,7 +550,45 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -560,7 +644,50 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -643,7 +770,45 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -699,7 +864,50 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -769,7 +977,45 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -839,7 +1085,45 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -885,7 +1169,25 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "total_count": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "total_count": 1
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -931,7 +1233,25 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "total_count": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "total_count": 1
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -978,7 +1298,35 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "cursor": {
+                  "data": [
+                    "data",
+                    "data"
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "cursor": {
+                    "data": [
+                      "data",
+                      "data"
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -1024,7 +1372,31 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "results": [
+                  "results",
+                  "results"
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "results": [
+                    "results",
+                    "results"
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

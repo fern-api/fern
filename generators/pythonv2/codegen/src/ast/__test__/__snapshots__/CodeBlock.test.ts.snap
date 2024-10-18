@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CodeBlock > toString > preserves indentation 1`] = `
+"if True:
+    print("Indented")
+    if False:
+        print("Nested indentation")
+"
+`;
+
+exports[`CodeBlock > toString > returns a single line of code 1`] = `
+"print("Hello, World!")
+"
+`;
+
+exports[`CodeBlock > toString > returns an empty string for an empty code block 1`] = `""`;
+
+exports[`CodeBlock > toString > returns multiple lines of code 1`] = `
+"def greet(name):
+    return f"Hello, {name}!"
+
+
+print(greet("Alice"))
+"
+`;

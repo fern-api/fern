@@ -1,5 +1,5 @@
 import { Audiences, generatorsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, streamObjectToFile, stringifyLargeObject } from "@fern-api/fs-utils";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
@@ -50,10 +50,7 @@ export async function generateIrForWorkspaces({
                 });
 
                 const irOutputFilePath = path.resolve(irFilepath);
-                await writeFile(
-                    irOutputFilePath,
-                    await stringifyLargeObject(intermediateRepresentation, { pretty: true })
-                );
+                await streamObjectToFile(AbsoluteFilePath.of(irOutputFilePath), intermediateRepresentation);
                 context.logger.info(`Wrote IR to ${irOutputFilePath}`);
             });
         })

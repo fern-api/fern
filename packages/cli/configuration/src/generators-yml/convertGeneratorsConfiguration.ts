@@ -265,44 +265,6 @@ async function parseApiConfigurationV2Schema({
     apiConfiguration: APIConfigurationV2Schema;
     rawConfiguration: GeneratorsConfigurationSchema;
 }): Promise<APIDefinition> {
-    if (isConjureSchema(apiConfiguration.specs)) {
-        return {
-            type: "conjure",
-            pathToConjureDefinition: apiConfiguration.specs.conjure
-        };
-    }
-
-    const rootDefinitions: APIDefinitionLocation[] = [];
-    const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
-
-    for (const spec of apiConfiguration.specs ?? []) {
-        if (isOpenAPISchema(spec)) {
-            const definitionLocation: APIDefinitionLocation = {
-                schema: {
-                    type: "oss",
-                    path: spec.openapi
-                },
-                origin: undefined,
-                overrides: spec.overrides,
-                audiences: [],
-                settings: {
-                    shouldUseTitleAsName: spec.settings?.["title-as-schema-name"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                    asyncApiMessageNaming: undefined,
-                    shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true,
-                    coerceEnumsToLiterals: spec.settings?.["coerce-enums-to-literals"]
-                }
-            };
-            if (spec.namespace == null) {
-                rootDefinitions.push(definitionLocation);
-            } else {
-                namespacedDefinitions[spec.namespace] ??= [];
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                namespacedDefinitions[spec.namespace]!.push(definitionLocation);
-            }
-        }
-    }
-
     const partialConfig = {
         "auth-schemes":
             apiConfiguration.auth != null
@@ -324,6 +286,45 @@ async function parseApiConfigurationV2Schema({
                 : undefined,
         ...apiConfiguration
     };
+
+    if (isConjureSchema(apiConfiguration.specs)) {
+        return {
+            type: "conjure",
+            pathToConjureDefinition: apiConfiguration.specs.conjure,
+            ...partialConfig
+        };
+    }
+
+    const rootDefinitions: APIDefinitionLocation[] = [];
+    const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
+
+    for (const spec of apiConfiguration.specs ?? []) {
+        if (isOpenAPISchema(spec)) {
+            const definitionLocation: APIDefinitionLocation = {
+                schema: {
+                    type: "oss",
+                    path: spec.openapi
+                },
+                origin: spec.origin,
+                overrides: spec.overrides,
+                audiences: [],
+                settings: {
+                    shouldUseTitleAsName: spec.settings?.["title-as-schema-name"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                    asyncApiMessageNaming: undefined,
+                    shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true,
+                    coerceEnumsToLiterals: spec.settings?.["coerce-enums-to-literals"]
+                }
+            };
+            if (spec.namespace == null) {
+                rootDefinitions.push(definitionLocation);
+            } else {
+                namespacedDefinitions[spec.namespace] ??= [];
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                namespacedDefinitions[spec.namespace]!.push(definitionLocation);
+            }
+        }
+    }
 
     // No namespaces
     if (Object.keys(namespacedDefinitions).length === 0) {

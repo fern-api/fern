@@ -4,13 +4,13 @@ image: fernapi/fern-typescript-node-sdk
 publish:
   workingDirectory: generators/typescript
   versionSubstitution: "$VERSION"
-  command: 
+  command:
     - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
     - docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
     - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
     - docker push fernapi/fern-typescript-node-sdk:"$VERSION"
 test:
-  docker: 
+  docker:
     image: fernapi/fern-typescript-node-sdk:local
     command: pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLocal:node
   local:
@@ -26,9 +26,9 @@ language: typescript
 generatorType: SDK
 defaultOutputMode: github
 
-customFixtureConfig: 
-  customConfig: 
-    generateWireTests: true    
+customFixtureConfig:
+  customConfig:
+    generateWireTests: true
     noSerdeLayer: true
 fixtures:
   imdb:
@@ -55,7 +55,7 @@ fixtures:
     - customConfig: null
       audiences:
         - partner
-      outputFolder: with-partner-audience      
+      outputFolder: with-partner-audience
   exhaustive:
     - customConfig: null
       audiences:
@@ -123,7 +123,7 @@ fixtures:
         publishToJsr: true
     - outputFolder: bigint
       customConfig:
-        useBigInt: true        
+        useBigInt: true
   error-property:
     - customConfig:
         private: true
@@ -215,7 +215,6 @@ scripts:
       - if grep -q '"test"' package.json && grep -q 'exhaustive' package.json; then yarn test --passWithNoTests --testPathPattern='exhaustive.*\.test\.ts$'; fi
 allowedFailures:
   - response-property
-  - bytes
   - plain-text
   - alias
   - api-wide-base-path

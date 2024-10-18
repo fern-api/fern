@@ -25,7 +25,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_:Child": {
@@ -45,7 +48,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -97,7 +103,25 @@
           }
         },
         "errorsV2": [],
-        "examples": []
+        "examples": [
+          {
+            "path": "/extends/extended-inline-request-body",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "child": "child"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "child": "child"
+              }
+            },
+            "responseStatusCode": 204,
+            "codeSamples": []
+          }
+        ]
       }
     ],
     "webhooks": [],

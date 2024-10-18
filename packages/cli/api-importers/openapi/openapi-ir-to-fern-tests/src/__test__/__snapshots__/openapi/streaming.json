@@ -50,6 +50,20 @@
             "user_stream": {
               "auth": false,
               "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "stream": true,
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "id": "id",
+                      },
+                    ],
+                  },
+                },
+              ],
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/users",
@@ -117,6 +131,22 @@
             "user_v2_stream": {
               "auth": false,
               "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "stream": true,
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "id": "id",
+                        "name": "name",
+                        "streamed": true,
+                      },
+                    ],
+                  },
+                },
+              ],
               "method": "POST",
               "pagination": undefined,
               "path": "/v2/users",
@@ -183,6 +213,22 @@
             "user_v3_stream": {
               "auth": false,
               "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "stream": true,
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "id": "id",
+                        "inline": true,
+                        "streamed": true,
+                      },
+                    ],
+                  },
+                },
+              ],
               "method": "POST",
               "pagination": undefined,
               "path": "/v3/users",
@@ -345,6 +391,12 @@
         docs: ''
         type: StreamUser
         format: json
+      examples:
+        - request:
+            stream: true
+          response:
+            stream:
+              - id: id
     user:
       path: /v1/users
       method: POST
@@ -384,6 +436,14 @@
         docs: ''
         type: StreamUser2
         format: json
+      examples:
+        - request:
+            stream: true
+          response:
+            stream:
+              - id: id
+                name: name
+                streamed: true
     user_v2:
       path: /v2/users
       method: POST
@@ -425,6 +485,14 @@
         docs: ''
         type: UserV3StreamResponse
         format: json
+      examples:
+        - request:
+            stream: true
+          response:
+            stream:
+              - id: id
+                inline: true
+                streamed: true
     user_v3:
       path: /v3/users
       method: POST

@@ -4,9 +4,7 @@
 
 /**
  * @example
- *     {
- *         offset: 1
- *     }
+ *     {}
  */
 export interface ListWithGlobalConfigRequest {
     offset?: number;

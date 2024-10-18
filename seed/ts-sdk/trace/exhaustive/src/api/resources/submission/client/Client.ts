@@ -100,7 +100,7 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.submission.getExecutionSession("string")
+     *     await client.submission.getExecutionSession("sessionId")
      */
     public async getExecutionSession(
         sessionId: string,
@@ -159,7 +159,7 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.submission.stopExecutionSession("string")
+     *     await client.submission.stopExecutionSession("sessionId")
      */
     public async stopExecutionSession(
         sessionId: string,

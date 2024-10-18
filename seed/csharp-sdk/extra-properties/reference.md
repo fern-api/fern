@@ -18,7 +18,7 @@ await client.User.CreateUserAsync(
     {
         Type = "CreateUserRequest",
         Version = "v1",
-        Name = "string",
+        Name = "name",
     }
 );
 ```
