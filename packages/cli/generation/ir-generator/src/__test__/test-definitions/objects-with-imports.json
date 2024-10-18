@@ -59,6 +59,7 @@
                 },
                 "typeId": "type_:Node"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -2077,6 +2078,7 @@
                 },
                 "typeId": "type_:Tree"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -4278,6 +4280,7 @@
                 },
                 "typeId": "type_commons/metadata:Metadata"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -4892,6 +4895,7 @@
                 },
                 "typeId": "type_file:File"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -5987,6 +5991,7 @@
                 },
                 "typeId": "type_file:FileInfo"
             },
+            "inline": false,
             "shape": {
                 "_type": "enum",
                 "default": null,
@@ -6259,6 +6264,7 @@
                 },
                 "typeId": "type_file/directory:Directory"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

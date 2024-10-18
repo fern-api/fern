@@ -59,6 +59,7 @@
                 },
                 "typeId": "type_:ImportingA"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -210,6 +211,7 @@
                 },
                 "typeId": "type_:RootType"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -333,6 +335,7 @@
                 },
                 "typeId": "type_a:A"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [
@@ -486,6 +489,7 @@
                 },
                 "typeId": "type_ast:ContainerValue"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -850,6 +854,7 @@
                 },
                 "typeId": "type_ast:PrimitiveValue"
             },
+            "inline": false,
             "shape": {
                 "_type": "enum",
                 "default": null,
@@ -986,6 +991,7 @@
                 },
                 "typeId": "type_ast:ObjectValue"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -1071,6 +1077,7 @@
                 },
                 "typeId": "type_ast:FieldName"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -1174,6 +1181,7 @@
                 },
                 "typeId": "type_ast:FieldValue"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -1619,6 +1627,7 @@
                 },
                 "typeId": "type_ast:ObjectFieldValue"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

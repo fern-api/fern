@@ -314,7 +314,7 @@ export class ExampleEndpointFactory {
                     return CustomCodeSample.sdk({
                         name: codeSample.name ?? undefined,
                         description: codeSample.docs ?? undefined,
-                        sdk: codeSample.sdk === "c#" ? SupportedSdkLanguage.Csharp : codeSample.sdk,
+                        sdk: codeSample.sdk,
                         code: codeSample.code
                     });
                 }

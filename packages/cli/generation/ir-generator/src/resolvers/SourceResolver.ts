@@ -91,7 +91,7 @@ export class SourceResolverImpl implements SourceResolver {
         source,
         file
     }: {
-        source: RawSchemas.OpenAPISourceSchema;
+        source: RawSchemas.OpenApiSourceSchema;
         file: FernFileContext;
     }): Promise<ResolvedSource | undefined> {
         const absoluteFilepath = join(this.workspace.absoluteFilePath, RelativeFilePath.of(source.openapi));

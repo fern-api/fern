@@ -220,6 +220,7 @@
                 },
                 "typeId": "type_user:UserId"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -323,6 +324,7 @@
                 },
                 "typeId": "type_user:User"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

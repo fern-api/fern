@@ -1,6 +1,11 @@
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { PrimitiveTypeV1 } from "@fern-api/ir-sdk";
-import { isInlineRequestBody, isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
+import {
+    isInlineRequestBody,
+    getNonInlineableTypeReference,
+    isRawObjectDefinition,
+    RawSchemas
+} from "@fern-api/fern-definition-schema";
 
 export const REQUEST_PREFIX = "$request.";
 export const RESPONSE_PREFIX = "$response.";
@@ -326,7 +331,10 @@ function getAllPropertiesForRawObjectSchema({
 
     if (objectSchema.properties != null) {
         Object.entries(objectSchema.properties).map(([propertyKey, propertyType]) => {
-            properties[propertyKey] = typeof propertyType === "string" ? propertyType : propertyType.type;
+            const nonInlinedType = getNonInlineableTypeReference(propertyType);
+            if (nonInlinedType != null) {
+                properties[propertyKey] = typeof nonInlinedType === "string" ? nonInlinedType : nonInlinedType.type;
+            } // TODO: handle else case
         });
     }
 

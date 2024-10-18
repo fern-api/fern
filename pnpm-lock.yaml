@@ -92,6 +92,9 @@ importers:
       execa:
         specifier: ^5.1.1
         version: 5.1.1
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
       husky:
         specifier: ^9.1.5
         version: 9.1.5
@@ -101,6 +104,9 @@ importers:
       is-ci:
         specifier: ^3.0.1
         version: 3.0.1
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       jsonc-parser:
         specifier: ~3.3.0
         version: 3.3.0
@@ -3697,6 +3703,10 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/cli/cli/dist/dev: {}
+
+  packages/cli/cli/dist/prod: {}
+
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
@@ -4238,6 +4248,9 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
       zod:
         specifier: ^3.22.3
         version: 3.22.4
@@ -4245,6 +4258,9 @@ importers:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.8
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18

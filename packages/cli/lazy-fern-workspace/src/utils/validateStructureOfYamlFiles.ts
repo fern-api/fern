@@ -1,11 +1,17 @@
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { entries } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
+import {
+    RawSchemas,
+    DefinitionFileSchema,
+    PackageMarkerFileSchema,
+    RootApiFileSchema
+} from "@fern-api/fern-definition-schema";
 import path from "path";
 import { ZodError } from "zod";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
 import { OnDiskNamedDefinitionFile, ParsedFernFile } from "@fern-api/api-workspace-commons";
+import { ValidationError } from "@fern-fern/fiddle-sdk/core/schemas/Schema";
 
 export declare namespace validateStructureOfYamlFiles {
     export type Return = SuccessfulResult | FailedResult;
@@ -45,7 +51,7 @@ export function validateStructureOfYamlFiles({
     for (const [relativeFilepath, file] of entries(files)) {
         const parsedFileContents = file.contents;
 
-        const addFailure = (error: ZodError) => {
+        const addFailure = (error: unknown) => {
             failures[relativeFilepath] = {
                 type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION,
                 error
@@ -53,41 +59,41 @@ export function validateStructureOfYamlFiles({
         };
 
         if (relativeFilepath === ROOT_API_FILENAME) {
-            const maybeValidFileContents = RootApiFileSchema.safeParse(parsedFileContents);
-            if (maybeValidFileContents.success) {
+            const maybeValidFileContents = RawSchemas.serialization.RootApiFileSchema.parse(parsedFileContents);
+            if (maybeValidFileContents.ok) {
                 rootApiFile = {
-                    defaultUrl: maybeValidFileContents.data["default-url"],
-                    contents: maybeValidFileContents.data,
+                    defaultUrl: maybeValidFileContents.value["default-url"],
+                    contents: maybeValidFileContents.value,
                     rawContents: file.rawContents
                 };
             } else {
-                addFailure(maybeValidFileContents.error);
+                addFailure(maybeValidFileContents.errors);
             }
         } else if (path.basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME) {
-            const maybeValidFileContents = PackageMarkerFileSchema.safeParse(parsedFileContents);
-            if (maybeValidFileContents.success) {
+            const maybeValidFileContents = RawSchemas.serialization.PackageMarkerFileSchema.parse(parsedFileContents);
+            if (maybeValidFileContents.ok) {
                 packageMarkers[relativeFilepath] = {
                     defaultUrl:
-                        typeof maybeValidFileContents.data.export === "object"
-                            ? maybeValidFileContents.data.export.url
+                        typeof maybeValidFileContents.value.export === "object"
+                            ? maybeValidFileContents.value.export.url
                             : undefined,
-                    contents: maybeValidFileContents.data,
+                    contents: maybeValidFileContents.value,
                     rawContents: file.rawContents
                 };
             } else {
-                addFailure(maybeValidFileContents.error);
+                addFailure(maybeValidFileContents.errors);
             }
         } else {
-            const maybeValidFileContents = DefinitionFileSchema.safeParse(parsedFileContents);
-            if (maybeValidFileContents.success) {
+            const maybeValidFileContents = RawSchemas.serialization.DefinitionFileSchema.parse(parsedFileContents);
+            if (maybeValidFileContents.ok) {
                 namesDefinitionFiles[relativeFilepath] = {
                     defaultUrl: undefined,
-                    contents: maybeValidFileContents.data,
+                    contents: maybeValidFileContents.value,
                     rawContents: file.rawContents,
                     absoluteFilePath: join(absolutePathToDefinition, relativeFilepath)
                 };
             } else {
-                addFailure(maybeValidFileContents.error);
+                addFailure(maybeValidFileContents.errors);
             }
         }
     }

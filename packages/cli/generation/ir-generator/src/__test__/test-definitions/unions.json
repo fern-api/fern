@@ -97,6 +97,7 @@
                 },
                 "typeId": "type_types:Union"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -447,6 +448,7 @@
                 },
                 "typeId": "type_types:UnionWithDiscriminant"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -797,6 +799,7 @@
                 },
                 "typeId": "type_types:UnionWithPrimitive"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -1030,6 +1033,7 @@
                 },
                 "typeId": "type_types:UnionWithoutKey"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -1326,6 +1330,7 @@
                 },
                 "typeId": "type_types:UnionWithUnknown"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -1558,6 +1563,7 @@
                 },
                 "typeId": "type_types:UnionWithLiteral"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -1764,6 +1770,7 @@
                 },
                 "typeId": "type_types:UnionWithBaseProperties"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -2130,6 +2137,7 @@
                 },
                 "typeId": "type_types:UnionWithTime"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -2418,6 +2426,7 @@
                 },
                 "typeId": "type_types:UnionWithOptionalTime"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -2655,6 +2664,7 @@
                 },
                 "typeId": "type_types:UnionWithSingleElement"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -2857,6 +2867,7 @@
                 },
                 "typeId": "type_types:Foo"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -2980,6 +2991,7 @@
                 },
                 "typeId": "type_types:Bar"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -3103,6 +3115,7 @@
                 },
                 "typeId": "type_union:GetShapeRequest"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -3226,6 +3239,7 @@
                 },
                 "typeId": "type_union:Shape"
             },
+            "inline": false,
             "shape": {
                 "_type": "union",
                 "discriminant": {
@@ -3560,6 +3574,7 @@
                 },
                 "typeId": "type_union:Circle"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -3683,6 +3698,7 @@
                 },
                 "typeId": "type_union:Square"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
