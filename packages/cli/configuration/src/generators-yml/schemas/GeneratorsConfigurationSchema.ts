@@ -16,7 +16,13 @@ export const ASYNC_API_LOCATION_KEY = "async-api";
 export const API_SETTINGS_KEY = "api-settings";
 
 export const GeneratorsConfigurationSchema = z.strictObject({
-    "auth-schemes": z.optional(z.record(RawSchemas.AuthSchemeDeclarationSchema)),
+    "auth-schemes": z.optional(
+        z.record(
+            z.custom<RawSchemas.AuthSchemeDeclarationSchema>((val) =>
+                RawSchemas.serialization.AuthSchemeDeclarationSchema.parseOrThrow(val)
+            )
+        )
+    ),
 
     api: z.optional(APIConfigurationSchema),
 

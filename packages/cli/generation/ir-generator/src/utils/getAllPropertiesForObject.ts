@@ -6,6 +6,7 @@ import { getPropertyName } from "../converters/type-declarations/convertObjectTy
 import { constructFernFileContext } from "../FernFileContext";
 import { ResolvedType } from "../resolvers/ResolvedType";
 import { TypeResolver } from "../resolvers/TypeResolver";
+import { isNonInlinedTypeReference, isStringTypeReference } from "./isNonInlinedTypeReferenceSchema";
 
 // Note: using this exported variable is NOT recommended, but its included for convenience
 // when the call-site doesn't care about the language nor special casing convention.
@@ -87,21 +88,25 @@ export function getAllPropertiesForObject({
 
     if (objectDeclaration.properties != null) {
         for (const [propertyKey, propertyDeclaration] of Object.entries(objectDeclaration.properties)) {
-            const propertyType =
-                typeof propertyDeclaration === "string" ? propertyDeclaration : propertyDeclaration.type;
-            const resolvedPropertyType = typeResolver.resolveType({ type: propertyType, file });
-            if (resolvedPropertyType != null) {
-                properties.push({
-                    wireKey: propertyKey,
-                    name: getPropertyName({ propertyKey, property: propertyDeclaration }).name,
-                    filepathOfDeclaration,
-                    path,
-                    propertyType,
-                    resolvedPropertyType,
-                    isOptional:
-                        resolvedPropertyType._type === "container" &&
-                        resolvedPropertyType.container._type === "optional"
-                });
+            if (isNonInlinedTypeReference(propertyDeclaration) || isStringTypeReference(propertyDeclaration)) {
+                const propertyType =
+                    typeof propertyDeclaration === "string" ? propertyDeclaration : propertyDeclaration.type;
+                const resolvedPropertyType = typeResolver.resolveType({ type: propertyType, file });
+                if (resolvedPropertyType != null) {
+                    properties.push({
+                        wireKey: propertyKey,
+                        name: getPropertyName({ propertyKey, property: propertyDeclaration }).name,
+                        filepathOfDeclaration,
+                        path,
+                        propertyType,
+                        resolvedPropertyType,
+                        isOptional:
+                            resolvedPropertyType._type === "container" &&
+                            resolvedPropertyType.container._type === "optional"
+                    });
+                }
+            } else {
+                // handle inlined object case
             }
         }
     }

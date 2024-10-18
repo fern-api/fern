@@ -3,8 +3,10 @@
  */
 
 import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index../../../index";
+import * as SeedTrace from "../../../index";
 
 export interface GradedResponseV2 {
     submissionId: SeedTrace.SubmissionId;
-    testCases: Record<SeedTrace.v2.TestCaseId, SeedTrace.TestCaseGrade>;
+    testCases: Record<SeedTrace.V2.TestCaseId, SeedTrace.TestCaseGrade>;
 }

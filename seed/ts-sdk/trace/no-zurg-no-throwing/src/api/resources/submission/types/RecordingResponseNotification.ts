@@ -3,6 +3,8 @@
  */
 
 import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
 
 export interface RecordingResponseNotification {
     submissionId: SeedTrace.SubmissionId;

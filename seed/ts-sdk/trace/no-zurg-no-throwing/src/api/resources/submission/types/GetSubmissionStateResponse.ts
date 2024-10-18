@@ -3,9 +3,10 @@
  */
 
 import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
 
 export interface GetSubmissionStateResponse {
-    timeSubmitted?: string;
+    timeSubmitted?: Date;
     submission: string;
     language: SeedTrace.Language;
     submissionTypeState: SeedTrace.SubmissionTypeState;

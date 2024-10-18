@@ -28,7 +28,7 @@ const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.admin.sendTestSubmissionUpdate(
   "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   {
-    updateTime: "SGVsbG8gd29ybGQh",
+    updateTime: "2024-01-15T09:30:00Z",
   }
 );
  
@@ -56,7 +56,7 @@ const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.admin.sendWorkspaceSubmissionUpdate(
   "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   {
-    updateTime: "SGVsbG8gd29ybGQh",
+    updateTime: "2024-01-15T09:30:00Z",
   }
 );
  
@@ -258,7 +258,7 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.playlist.createPlaylist(1, {
-  datetime: "SGVsbG8gd29ybGQh",
+  datetime: "2024-01-15T09:30:00Z",
   name: "name",
   problems: ["problems", "problems"],
 });

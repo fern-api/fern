@@ -50,6 +50,7 @@ export async function getIntermediateRepresentation({
         intermediateRepresentation.sourceConfig = sourceConfig;
     }
     context.logger.debug("Generated IR");
+    context.logger.debug(`Migrating IR to ${irVersionOverride}`);
     const migratedIntermediateRepresentation =
         irVersionOverride != null
             ? await migrateIntermediateRepresentationThroughVersion({

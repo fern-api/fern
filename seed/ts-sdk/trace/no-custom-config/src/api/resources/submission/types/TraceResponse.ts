@@ -3,6 +3,9 @@
  */
 
 import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
 
 export interface TraceResponse {
     submissionId: SeedTrace.SubmissionId;

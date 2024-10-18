@@ -3,6 +3,7 @@
  */
 
 import * as SeedApi from "../index";
+import * as SeedApi from "../index";
 
 export interface Column {
     id: string;

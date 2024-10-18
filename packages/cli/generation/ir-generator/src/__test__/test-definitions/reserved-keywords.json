@@ -97,6 +97,7 @@
                 },
                 "typeId": "type_package:Package"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -220,6 +221,7 @@
                 },
                 "typeId": "type_package:Record"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

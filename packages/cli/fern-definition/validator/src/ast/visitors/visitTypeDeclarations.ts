@@ -1,5 +1,10 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { NodePath, RawSchemas, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+import {
+    getNonInlineableTypeReference,
+    NodePath,
+    RawSchemas,
+    visitRawTypeDeclaration
+} from "@fern-api/fern-definition-schema";
 import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "./utils/visitAllReferencesInExample";
@@ -90,7 +95,6 @@ export async function visitTypeDeclaration({
                         await visitTypeReference(extendedType, nodePathForExtension);
                     }
                 },
-                extensions: noop,
                 properties: async (properties) => {
                     if (properties == null) {
                         return;
@@ -105,10 +109,12 @@ export async function visitTypeDeclaration({
                                 docs: createDocsVisitor(visitor, nodePathForProperty),
                                 availability: noop,
                                 type: async (type) => {
-                                    await visitTypeReference(type, [...nodePathForProperty, "type"], {
-                                        _default: property.default,
-                                        validation: property.validation
-                                    });
+                                    if (typeof type === "string") {
+                                        await visitTypeReference(type, [...nodePathForProperty, "type"], {
+                                            _default: property.default,
+                                            validation: property.validation
+                                        });
+                                    } // TOOD: handle else case
                                 },
                                 audiences: noop,
                                 encoding: noop,

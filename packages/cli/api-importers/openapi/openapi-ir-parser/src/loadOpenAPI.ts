@@ -78,7 +78,7 @@ export async function loadOpenAPI({
     return parsed;
 }
 
-async function parseOpenAPI({
+export async function parseOpenAPI({
     absolutePathToOpenAPI,
     parsed
 }: {

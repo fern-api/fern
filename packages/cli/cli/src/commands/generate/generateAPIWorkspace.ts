@@ -30,7 +30,7 @@ export async function generateWorkspace({
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
     projectConfig: fernConfigJson.ProjectConfig;
-    context: TaskContext;
+    context: TaskContext & { appendLog?: (line: string) => void };
     version: string | undefined;
     groupName: string | undefined;
     shouldLogS3Url: boolean;
@@ -41,12 +41,12 @@ export async function generateWorkspace({
     mode: GenerationMode | undefined;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
-        context.logger.warn("This workspaces has no generators.yml");
+        context.appendLog?.("This workspaces has no generators.yml");
         return;
     }
 
     if (workspace.generatorsConfiguration.groups.length === 0) {
-        context.logger.warn(`This workspaces has no groups specified in ${GENERATORS_CONFIGURATION_FILENAME}`);
+        context.appendLog?.(`This workspaces has no groups specified in ${GENERATORS_CONFIGURATION_FILENAME}`);
         return;
     }
 

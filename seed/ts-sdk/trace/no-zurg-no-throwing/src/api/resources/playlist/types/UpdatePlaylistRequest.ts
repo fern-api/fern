@@ -6,6 +6,6 @@ import * as SeedTrace from "../../../index";
 
 export interface UpdatePlaylistRequest {
     name: string;
-    /** The problems that make up the playlist. */
+    /* The problems that make up the playlist. */
     problems: SeedTrace.ProblemId[];
 }

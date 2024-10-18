@@ -3,13 +3,19 @@
  */
 
 import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
 
 export interface ProblemInfo {
     problemId: SeedTrace.ProblemId;
     problemDescription: SeedTrace.ProblemDescription;
     problemName: string;
     problemVersion: number;
-    files: Record<SeedTrace.Language, SeedTrace.ProblemFiles | undefined>;
+    files: Record<SeedTrace.Language, SeedTrace.ProblemFiles>;
     inputParams: SeedTrace.VariableTypeAndName[];
     outputType: SeedTrace.VariableType;
     testcases: SeedTrace.TestCaseWithExpectedResult[];

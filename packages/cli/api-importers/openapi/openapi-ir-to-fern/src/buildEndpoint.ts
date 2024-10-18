@@ -8,12 +8,16 @@ import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefin
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
-import { buildTypeReference } from "./buildTypeReference";
+import { buildNonInlineableTypeReference, buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertFullExample } from "./utils/convertFullExample";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
-import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import {
+    getDocsFromTypeReference,
+    getTypeFromInlineTypeReference,
+    getTypeFromTypeReference
+} from "./utils/getTypeFromTypeReference";
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
 import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
 
@@ -161,7 +165,7 @@ export function buildEndpoint({
     if (endpoint.response != null) {
         endpoint.response._visit({
             json: (jsonResponse) => {
-                const responseTypeReference = buildTypeReference({
+                const responseTypeReference = buildNonInlineableTypeReference({
                     schema: jsonResponse.schema,
                     context,
                     fileContainingReference: declarationFile,
@@ -176,7 +180,7 @@ export function buildEndpoint({
                 }
             },
             streamingJson: (jsonResponse) => {
-                const responseTypeReference = buildTypeReference({
+                const responseTypeReference = buildNonInlineableTypeReference({
                     schema: jsonResponse.schema,
                     context,
                     fileContainingReference: declarationFile,
@@ -189,7 +193,7 @@ export function buildEndpoint({
                 };
             },
             streamingSse: (jsonResponse) => {
-                const responseTypeReference = buildTypeReference({
+                const responseTypeReference = buildNonInlineableTypeReference({
                     schema: jsonResponse.schema,
                     context,
                     fileContainingReference: declarationFile,
@@ -270,7 +274,7 @@ export function buildEndpoint({
         });
 
         if (httpError.schema != null) {
-            const typeReference = buildTypeReference({
+            const typeReference = buildNonInlineableTypeReference({
                 schema: httpError.schema,
                 context,
                 fileContainingReference: errorDeclarationFile,
@@ -392,7 +396,7 @@ function getRequest({
             resolvedSchema?.type !== "object" ||
             (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
         ) {
-            const requestTypeReference = buildTypeReference({
+            const requestTypeReference = buildNonInlineableTypeReference({
                 schema: request.schema,
                 fileContainingReference: declarationFile,
                 context,
@@ -445,7 +449,8 @@ function getRequest({
                         schema: property.schema,
                         fileContainingReference: declarationFile,
                         context,
-                        namespace
+                        namespace,
+                        inline: true
                     });
 
                     // TODO: clean up conditional logic
@@ -457,9 +462,9 @@ function getRequest({
                             return [
                                 property.key,
                                 {
-                                    type: getTypeFromTypeReference(propertyTypeReference),
-                                    docs: getDocsFromTypeReference(propertyTypeReference),
                                     name: property.nameOverride,
+                                    type: getTypeFromInlineTypeReference(propertyTypeReference),
+                                    docs: getDocsFromTypeReference(propertyTypeReference),
                                     availability
                                 }
                             ];
@@ -477,13 +482,17 @@ function getRequest({
                         ];
                     }
 
-                    const typeReference: RawSchemas.ObjectPropertySchema = {
-                        type: getTypeFromTypeReference(propertyTypeReference),
-                        docs: getDocsFromTypeReference(propertyTypeReference)
-                    };
+                    const typeReference: Partial<RawSchemas.ObjectPropertySchema> = {};
 
                     if (usedNames.has(name)) {
                         typeReference.name = property.generatedName;
+                    }
+
+                    typeReference.type = getTypeFromInlineTypeReference(propertyTypeReference);
+
+                    const docs = getDocsFromTypeReference(propertyTypeReference);
+                    if (docs != null) {
+                        typeReference.docs = docs;
                     }
 
                     if (property.audiences.length > 0) {
@@ -499,7 +508,7 @@ function getRequest({
                 })
         );
         const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {
-            const allOfTypeReference = buildTypeReference({
+            const allOfTypeReference = buildNonInlineableTypeReference({
                 schema: Schema.reference(referencedSchema),
                 fileContainingReference: declarationFile,
                 context,
@@ -563,12 +572,13 @@ function getRequest({
                     }
                     return [property.key, fileType];
                 } else {
-                    let propertyTypeReference: RawSchemas.HttpInlineRequestBodyPropertySchema = buildTypeReference({
-                        schema: property.schema.value,
-                        fileContainingReference: declarationFile,
-                        context,
-                        namespace
-                    });
+                    let propertyTypeReference: RawSchemas.HttpInlineRequestBodyPropertySchema =
+                        buildNonInlineableTypeReference({
+                            schema: property.schema.value,
+                            fileContainingReference: declarationFile,
+                            context,
+                            namespace
+                        });
                     if (property.contentType != null) {
                         if (typeof propertyTypeReference === "string") {
                             propertyTypeReference = {

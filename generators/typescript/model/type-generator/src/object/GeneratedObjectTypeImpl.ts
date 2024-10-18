@@ -1,8 +1,9 @@
 import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { GeneratedObjectType, ModelContext } from "@fern-typescript/contexts";
-import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { ts as TypeScriptAST } from "@fern-api/typescript-codegen";
 
 export class GeneratedObjectTypeImpl<Context extends ModelContext>
     extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
@@ -10,32 +11,33 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
 {
     public readonly type = "object";
 
-    public writeToFile(context: Context): void {
-        const interfaceNode = context.sourceFile.addInterface({
-            name: this.typeName,
-            properties: [
-                ...this.shape.properties.map((property) => {
-                    const value = context.type.getReferenceToType(property.valueType);
-                    const propertyNode: OptionalKind<PropertySignatureStructure> = {
-                        name: `"${this.getPropertyKeyFromProperty(property)}"`,
-                        type: getTextOfTsNode(
-                            this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined
-                        ),
-                        hasQuestionToken: !this.noOptionalProperties && value.isOptional,
-                        docs: property.docs != null ? [{ description: property.docs }] : undefined
-                    };
+    public async writeToFile(context: Context): Promise<void> {
+        const writer = TypeScriptAST.writer(context.V2.getFilepathForTypeId(this.typeDeclaration.name.typeId));
 
-                    return propertyNode;
-                })
-            ],
-            isExported: true
+        const interface_ = TypeScriptAST.interface_({
+            name: this.typeName,
+            export: true,
+            properties: this.shape.properties.map((property) => {
+                const propertyName = this.getPropertyKeyFromProperty(property);
+                return {
+                    name: propertyName,
+                    type: context.V2.tsTypeMapper.convert({ reference: property.valueType, property: property.name }),
+                    questionMark:
+                        !this.noOptionalProperties &&
+                        property.valueType.type === "container" &&
+                        property.valueType.container.type === "optional",
+                    docs: property.docs
+                };
+            }),
+            extends: this.shape.extends.map((extend) => context.V2.getReferenceToNamedType(extend.typeId)),
+            docs: this.getDocs(context)
         });
 
-        maybeAddDocs(interfaceNode, this.getDocs(context));
+        writer.addInterface(interface_);
 
-        for (const extension of this.shape.extends) {
-            interfaceNode.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
-        }
+        context.sourceFile.set({
+            statements: writer.toStringFormatted()
+        });
     }
 
     public getPropertyKey({ propertyWireKey }: { propertyWireKey: string }): string {

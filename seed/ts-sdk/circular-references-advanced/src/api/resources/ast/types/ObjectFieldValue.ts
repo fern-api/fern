@@ -3,10 +3,9 @@
  */
 
 import * as SeedApi from "../../../index";
+import * as SeedApi from "../../../index";
 
-/**
- * This type allows us to test a circular reference with a union type (see FieldValue).
- */
+/* This type allows us to test a circular reference with a union type (see FieldValue). */
 export interface ObjectFieldValue {
     name: SeedApi.FieldName;
     value: SeedApi.FieldValue;

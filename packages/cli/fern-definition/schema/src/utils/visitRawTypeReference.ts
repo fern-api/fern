@@ -1,7 +1,7 @@
 import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-api/ir-sdk";
-import { NumberValidationSchema } from "../schemas/NumberValidationSchema";
-import { StringValidationSchema } from "../schemas/StringValidationSchema";
-import { ValidationSchema } from "../schemas/ValidationSchema";
+import { NumberValidationSchema } from "../schemas";
+import { StringValidationSchema } from "../schemas";
+import { ValidationSchema } from "../schemas";
 import { RawPrimitiveType } from "./RawPrimitiveType";
 
 export const FernContainerRegex = {
@@ -151,6 +151,10 @@ export function visitRawTypeReference<R>({
             keyType: mapMatch[1],
             valueType: mapMatch[2]
         });
+    }
+
+    if (type === "list") {
+        return visitor.unknown(); // Should be refactored into its own thing
     }
 
     const listMatch = type.match(FernContainerRegex.LIST);

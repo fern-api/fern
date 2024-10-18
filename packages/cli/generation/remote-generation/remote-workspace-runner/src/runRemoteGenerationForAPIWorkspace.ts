@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { InteractiveTaskContext, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, getOSSWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
@@ -27,7 +27,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
-    context: TaskContext;
+    context: TaskContext & { appendLog?: (line: string) => void };
     generatorGroup: generatorsYml.GeneratorGroup;
     version: string | undefined;
     shouldLogS3Url: boolean;
@@ -46,7 +46,7 @@ export async function runRemoteGenerationForAPIWorkspace({
 
     interactiveTasks.push(
         ...generatorGroup.generators.map((generatorInvocation) =>
-            context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+            context.runInteractiveTask({ name: generatorInvocation.name, silent: true }, async (_) => {
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
                     getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
@@ -56,7 +56,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     projectConfig,
                     organization,
                     workspace: fernWorkspace,
-                    interactiveTaskContext,
+                    interactiveTaskContext: context as InteractiveTaskContext,
                     generatorInvocation: {
                         ...generatorInvocation,
                         outputMode: generatorInvocation.outputMode._visit<FernFiddle.OutputMode>({
@@ -99,7 +99,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                         await downloadSnippetsForTask({
                             snippetsS3PreSignedReadUrl: remoteTaskHandlerResponse.snippetsS3PreSignedReadUrl,
                             absolutePathToLocalSnippetJSON: generatorInvocation.absolutePathToLocalSnippets,
-                            context: interactiveTaskContext
+                            context: context as InteractiveTaskContext
                         });
                     }
                 }

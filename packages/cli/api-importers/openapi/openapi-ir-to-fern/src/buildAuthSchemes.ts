@@ -3,6 +3,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildEnumTypeDeclaration } from "./buildTypeDeclaration";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getHeaderName } from "./utils/getHeaderName";
+import { getInlineableTypeReference } from "@fern-api/fern-definition-schema/src/utils/getNonInlineableTypeReference";
 
 const BASIC_AUTH_SCHEME = "BasicAuthScheme";
 const BEARER_AUTH_SCHEME = "BearerAuthScheme";
@@ -149,9 +150,11 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 setAuth = true;
             }
             if (securityScheme.scopesEnum != null && securityScheme.scopesEnum.values.length > 0) {
+                const enumTypeDeclaration = buildEnumTypeDeclaration(securityScheme.scopesEnum).schema;
+
                 context.builder.addType(RelativeFilePath.of("__package__.yml"), {
                     name: "OauthScope",
-                    schema: buildEnumTypeDeclaration(securityScheme.scopesEnum).schema
+                    schema: enumTypeDeclaration
                 });
             }
         }

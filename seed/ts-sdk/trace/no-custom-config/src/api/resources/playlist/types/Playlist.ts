@@ -3,6 +3,8 @@
  */
 
 import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
 
 export interface Playlist extends SeedTrace.PlaylistCreateRequest {
     playlistId: SeedTrace.PlaylistId;

@@ -77,7 +77,7 @@ function logViolationsSummary({
     logWarnings
 }: {
     stats: ViolationStats;
-    context: TaskContext;
+    context: TaskContext & { appendLog?: (line: string) => void };
     logWarnings: boolean;
 }): void {
     const { numErrors, numWarnings } = stats;
@@ -92,7 +92,7 @@ function logViolationsSummary({
     } else if (numWarnings > 0) {
         context.logger.warn(message);
     } else {
-        context.logger.info(chalk.green("✓ All checks passed"));
+        context.appendLog?.(chalk.green("✓ All checks passed"));
     }
 }
 

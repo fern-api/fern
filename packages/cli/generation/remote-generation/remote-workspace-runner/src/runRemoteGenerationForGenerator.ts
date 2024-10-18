@@ -94,10 +94,10 @@ export async function runRemoteGenerationForGenerator({
     }
 
     if (sourceUploads != null) {
-        interactiveTaskContext.logger.debug("Uploading source files ...");
+        interactiveTaskContext.appendLog("Uploading source files ...");
         const sourceConfig = await sourceUploader.uploadSources(sourceUploads);
 
-        interactiveTaskContext.logger.debug("Setting IR source configuration ...");
+        interactiveTaskContext.appendLog("Setting IR source configuration ...");
         ir.sourceConfig = sourceConfig;
     }
 
@@ -130,14 +130,14 @@ export async function runRemoteGenerationForGenerator({
         irVersionOverride,
         absolutePathToPreview
     });
-    interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
+    interactiveTaskContext.appendLog(`Job ID: ${job.jobId}`);
 
     const taskId = job.taskIds[0];
     if (taskId == null) {
         interactiveTaskContext.failAndThrow("Did not receive a task ID.");
         return undefined;
     }
-    interactiveTaskContext.logger.debug(`Task ID: ${taskId}`);
+    interactiveTaskContext.appendLog(`Task ID: ${taskId}`);
 
     const taskHandler = new RemoteTaskHandler({
         job,

@@ -15,11 +15,13 @@ import {
     PrimitiveSchemaValue,
     ReferencedSchema,
     Schema,
-    SdkGroupName,
     StringSchema
 } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { camelCase } from "lodash-es";
+import {
+    getNonInlineableTypeReference,
+    RawSchemas,
+    visitInlineableTypeReferenceSchema
+} from "@fern-api/fern-definition-schema";
 import {
     buildEnumTypeDeclaration,
     buildObjectTypeDeclaration,
@@ -36,6 +38,7 @@ import {
 } from "./utils/getTypeFromTypeReference";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { convertAvailability } from "./utils/convertAvailability";
+import { getInlineableTypeReference } from "@fern-api/fern-definition-schema/src/utils/getNonInlineableTypeReference";
 
 const MIN_INT_32 = -2147483648;
 const MAX_INT_32 = 2147483647;
@@ -43,7 +46,7 @@ const MAX_INT_32 = 2147483647;
 const MIN_DOUBLE_64 = -1.7976931348623157e308;
 const MAX_DOUBLE_64 = 1.7976931348623157e308;
 
-export function buildTypeReference({
+export function buildNonInlineableTypeReference({
     schema,
     /* The file the type reference will be written to */
     fileContainingReference,
@@ -58,12 +61,48 @@ export function buildTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
 }): RawSchemas.TypeReferenceSchema {
+    const typeReference = buildTypeReference({
+        schema,
+        fileContainingReference,
+        declarationFile,
+        context,
+        namespace,
+        inline: false
+    });
+    const uninlinedTypeReference = getNonInlineableTypeReference(typeReference) ?? "unknown";
+    return uninlinedTypeReference;
+}
+
+export function buildTypeReference({
+    schema,
+    /* The file the type reference will be written to */
+    fileContainingReference,
+    /* The file any type declarations will be written to. Defaults to fileContainingReference if not present */
+    declarationFile = fileContainingReference,
+    context,
+    namespace,
+    inline
+}: {
+    schema: Schema;
+    fileContainingReference: RelativeFilePath;
+    declarationFile?: RelativeFilePath;
+    context: OpenApiIrConverterContext;
+    namespace: string | undefined;
+    inline: boolean;
+}): RawSchemas.InlineableTypeReferenceSchema {
     switch (schema.type) {
         case "primitive": {
             return buildPrimitiveTypeReference(schema);
         }
         case "array":
-            return buildArrayTypeReference({ schema, fileContainingReference, context, declarationFile, namespace });
+            return buildArrayTypeReference({
+                schema,
+                fileContainingReference,
+                context,
+                declarationFile,
+                namespace,
+                inline
+            });
         case "map":
             return buildMapTypeReference({ schema, fileContainingReference, context, declarationFile, namespace });
         case "reference":
@@ -72,21 +111,37 @@ export function buildTypeReference({
             return buildUnknownTypeReference();
         case "optional":
         case "nullable":
-            return buildOptionalTypeReference({ schema, fileContainingReference, context, declarationFile, namespace });
+            return buildOptionalTypeReference({
+                schema,
+                fileContainingReference,
+                context,
+                declarationFile,
+                namespace,
+                inline
+            });
         case "enum":
-            return buildEnumTypeReference({ schema, fileContainingReference, context, declarationFile });
+            return buildEnumTypeReference({ schema, fileContainingReference, context, declarationFile, inline });
         case "literal":
-            schema.value;
             return buildLiteralTypeReference(schema);
-        case "object":
-            return buildObjectTypeReference({ schema, fileContainingReference, context, declarationFile, namespace });
+        case "object": {
+            const value = buildObjectTypeReference({
+                schema,
+                fileContainingReference,
+                context,
+                declarationFile,
+                namespace,
+                inline
+            });
+            return value;
+        }
         case "oneOf":
             return buildOneOfTypeReference({
                 schema: schema.value,
                 fileContainingReference,
                 context,
                 declarationFile,
-                namespace
+                namespace,
+                inline
             });
         default:
             assertNever(schema);
@@ -432,15 +487,50 @@ export function buildArrayTypeReference({
     fileContainingReference,
     declarationFile,
     context,
-    namespace
+    namespace,
+    inline
 }: {
     schema: ArraySchema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
-}): RawSchemas.TypeReferenceSchema {
-    const item = buildTypeReference({
+    inline: boolean;
+}): RawSchemas.InlineableTypeReferenceSchema {
+    if (inline) {
+        const item = buildTypeReference({
+            schema: schema.value,
+            fileContainingReference,
+            declarationFile,
+            context,
+            namespace,
+            inline
+        });
+        return visitInlineableTypeReferenceSchema<RawSchemas.InlineableTypeReferenceSchema>(item, {
+            reference: (value) => `list<${getTypeFromTypeReference(value)}>`,
+            detailedReference: (value) => {
+                return {
+                    ...(schema.description != null ? { docs: schema.description } : {}),
+                    ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
+                    type: `list<${getTypeFromTypeReference(value)}>`
+                };
+            },
+            inlineList: (value) => {
+                return {
+                    type: `list`,
+                    value
+                };
+            },
+            inlineType: (value) => {
+                return {
+                    type: `list`,
+                    value
+                };
+            }
+        });
+    }
+
+    const item = buildNonInlineableTypeReference({
         schema: schema.value,
         fileContainingReference,
         declarationFile,
@@ -472,7 +562,7 @@ export function buildMapTypeReference({
     namespace: string | undefined;
 }): RawSchemas.TypeReferenceSchema {
     const keyTypeReference = buildPrimitiveTypeReference(schema.key);
-    const valueTypeReference = buildTypeReference({
+    const valueTypeReference = buildNonInlineableTypeReference({
         schema: schema.value,
         fileContainingReference,
         declarationFile,
@@ -504,52 +594,67 @@ export function buildOptionalTypeReference({
     fileContainingReference,
     declarationFile,
     context,
-    namespace
+    namespace,
+    inline
 }: {
     schema: OptionalSchema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
-}): RawSchemas.TypeReferenceSchema {
+    inline: boolean;
+}): RawSchemas.InlineableTypeReferenceSchema {
     const itemTypeReference = buildTypeReference({
         schema: schema.value,
         fileContainingReference,
         declarationFile,
         context,
-        namespace
+        namespace,
+        inline
     });
-    const itemType = getTypeFromTypeReference(itemTypeReference);
-    const itemDocs = getDocsFromTypeReference(itemTypeReference);
-    const itemDefault = getDefaultFromTypeReference(itemTypeReference);
-    const itemValidation = getValidationFromTypeReference(itemTypeReference);
-    const type = itemType.startsWith("optional<") ? itemType : `optional<${itemType}>`;
-    if (
-        schema.availability == null &&
-        schema.description == null &&
-        itemDocs == null &&
-        itemDefault == null &&
-        itemValidation == null &&
-        schema.title == null
-    ) {
-        return type;
+
+    const uninlinedTypeReference = getNonInlineableTypeReference(itemTypeReference);
+
+    if (uninlinedTypeReference != null) {
+        const itemType = getTypeFromTypeReference(uninlinedTypeReference);
+        const itemDocs = getDocsFromTypeReference(uninlinedTypeReference);
+        const itemDefault = getDefaultFromTypeReference(uninlinedTypeReference);
+        const itemValidation = getValidationFromTypeReference(uninlinedTypeReference);
+        const type = itemType.startsWith("optional<") ? itemType : `optional<${itemType}>`;
+        if (
+            schema.availability == null &&
+            schema.description == null &&
+            itemDocs == null &&
+            itemDefault == null &&
+            itemValidation == null &&
+            schema.title == null
+        ) {
+            return type;
+        }
+        const result: RawSchemas.TypeReferenceSchema = {
+            type
+        };
+        if (schema.description != null || itemDocs != null) {
+            result.docs = schema.description ?? itemDocs;
+        }
+        if (itemDefault != null) {
+            result.default = itemDefault;
+        }
+        if (itemValidation != null) {
+            result.validation = itemValidation;
+        }
+        if (schema.availability != null) {
+            result.availability = convertAvailability(schema.availability);
+        }
+        return result;
     }
-    const result: RawSchemas.TypeReferenceSchema = {
-        type
-    };
-    if (schema.description != null || itemDocs != null) {
-        result.docs = schema.description ?? itemDocs;
+
+    const inlinedTypeReference = getInlineableTypeReference(itemTypeReference);
+    if (inlinedTypeReference != null) {
+        return { ...inlinedTypeReference, optional: true };
     }
-    if (itemDefault != null) {
-        result.default = itemDefault;
-    }
-    if (itemValidation != null) {
-        result.validation = itemValidation;
-    }
-    if (schema.availability != null) {
-        result.availability = convertAvailability(schema.availability);
-    }
-    return result;
+
+    return itemTypeReference;
 }
 
 export function buildUnknownTypeReference(): RawSchemas.TypeReferenceSchema {
@@ -584,15 +689,27 @@ export function buildEnumTypeReference({
     schema,
     fileContainingReference,
     declarationFile,
-    context
+    context,
+    inline
 }: {
     schema: EnumSchema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-}): RawSchemas.TypeReferenceSchema {
+    inline: boolean;
+}): RawSchemas.InlineableTypeReferenceSchema {
     const enumTypeDeclaration = buildEnumTypeDeclaration(schema);
     const name = schema.nameOverride ?? schema.generatedName;
+    if (inline) {
+        if (typeof enumTypeDeclaration.schema !== "string") {
+            return {
+                type: {
+                    ...enumTypeDeclaration.schema,
+                    name
+                }
+            };
+        }
+    }
     context.builder.addType(declarationFile, {
         name,
         schema: enumTypeDeclaration.schema
@@ -622,21 +739,34 @@ export function buildObjectTypeReference({
     fileContainingReference,
     declarationFile,
     context,
-    namespace
+    namespace,
+    inline
 }: {
     schema: ObjectSchema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
-}): RawSchemas.TypeReferenceSchema {
+    inline: boolean;
+}): RawSchemas.InlineableTypeReferenceSchema {
     const objectTypeDeclaration = buildObjectTypeDeclaration({
         schema,
         declarationFile,
         context,
-        namespace
+        namespace,
+        inline: true
     });
     const name = schema.nameOverride ?? schema.generatedName;
+    if (inline) {
+        if (typeof objectTypeDeclaration.schema !== "string") {
+            return {
+                type: {
+                    ...objectTypeDeclaration.schema,
+                    name
+                }
+            };
+        }
+    }
     context.builder.addType(declarationFile, {
         name,
         schema: objectTypeDeclaration.schema
@@ -657,14 +787,16 @@ export function buildOneOfTypeReference({
     fileContainingReference,
     declarationFile,
     context,
-    namespace
+    namespace,
+    inline
 }: {
     schema: OneOfSchema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
-}): RawSchemas.TypeReferenceSchema {
+    inline: boolean;
+}): RawSchemas.InlineableTypeReferenceSchema {
     const unionTypeDeclaration = buildOneOfTypeDeclaration({
         schema,
         declarationFile,
@@ -672,10 +804,21 @@ export function buildOneOfTypeReference({
         namespace
     });
     const name = schema.nameOverride ?? schema.generatedName;
+    if (inline) {
+        if (typeof unionTypeDeclaration.schema !== "string") {
+            return {
+                type: {
+                    ...unionTypeDeclaration.schema,
+                    name
+                }
+            };
+        }
+    }
     context.builder.addType(declarationFile, {
         name,
         schema: unionTypeDeclaration.schema
     });
+
     const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null && schema.title == null) {
         return prefixedType;

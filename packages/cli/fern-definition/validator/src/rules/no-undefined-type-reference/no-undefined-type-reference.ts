@@ -7,7 +7,8 @@ import {
     parseRawBytesType,
     parseRawFileType,
     recursivelyVisitRawTypeReference,
-    parseGeneric
+    parseGeneric,
+    isInlinedListType
 } from "@fern-api/fern-definition-schema";
 import { visitDefinitionFileYamlAst, TypeReferenceLocation } from "../../ast";
 import chalk from "chalk";
@@ -91,6 +92,10 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                                 }
                             ];
                         }
+                    }
+
+                    if (isInlinedListType(typeReference)) {
+                        return [];
                     }
 
                     if (isRawTextType(typeReference)) {

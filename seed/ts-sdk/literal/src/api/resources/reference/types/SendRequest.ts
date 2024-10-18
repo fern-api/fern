@@ -3,6 +3,8 @@
  */
 
 import * as SeedLiteral from "../../../index";
+import * as SeedLiteral from "../../../index";
+import * as SeedLiteral from "../../../index";
 
 export interface SendRequest {
     prompt: "You are a helpful assistant";

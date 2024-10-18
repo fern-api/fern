@@ -1,19 +1,18 @@
-import { ExampleType, ExampleTypeShape, FernFilepath } from "@fern-fern/ir-sdk/api";
+import { ExampleType, ExampleTypeShape, FernFilepath, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { BaseGeneratedType } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+import { TypeGenerator } from "./TypeGenerator";
 
 export declare namespace AbstractGeneratedType {
-    export interface Init<Shape, Context> {
+    export interface Init<Shape, Context> extends TypeGenerator.Init {
+        typeDeclaration: TypeDeclaration;
         typeName: string;
         shape: Shape;
         examples: ExampleType[];
         docs: string | undefined;
         fernFilepath: FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
-        includeSerdeLayer: boolean;
-        noOptionalProperties: boolean;
-        retainOriginalCasing: boolean;
     }
 }
 
@@ -28,10 +27,14 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
     protected includeSerdeLayer: boolean;
     protected noOptionalProperties: boolean;
     protected retainOriginalCasing: boolean;
+    protected includeUtilsOnUnionMembers: boolean;
+    protected includeOtherInUnionTypes: boolean;
+    protected typeDeclaration: TypeDeclaration;
 
     private docs: string | undefined;
 
     constructor({
+        typeDeclaration,
         getReferenceToSelf,
         typeName,
         shape,
@@ -40,8 +43,11 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
         fernFilepath,
         includeSerdeLayer,
         noOptionalProperties,
-        retainOriginalCasing
+        retainOriginalCasing,
+        includeUtilsOnUnionMembers,
+        includeOtherInUnionTypes
     }: AbstractGeneratedType.Init<Shape, Context>) {
+        this.typeDeclaration = typeDeclaration;
         this.typeName = typeName;
         this.shape = shape;
         this.examples = examples;
@@ -51,6 +57,8 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
         this.includeSerdeLayer = includeSerdeLayer;
         this.noOptionalProperties = noOptionalProperties;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
+        this.includeOtherInUnionTypes = includeOtherInUnionTypes;
     }
 
     protected getDocs(context: Context): string | undefined {

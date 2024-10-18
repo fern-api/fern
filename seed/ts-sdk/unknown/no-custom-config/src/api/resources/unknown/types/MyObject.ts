@@ -12,5 +12,5 @@
  *     }
  */
 export interface MyObject {
-    unknown?: unknown;
+    unknown: unknown;
 }

@@ -8,6 +8,18 @@ export function variable(arg: AST.Variable.Args): AST.Variable {
     return new AST.Variable(arg);
 }
 
+export function interface_(arg: AST.Interface.Args): AST.Interface {
+    return new AST.Interface(arg);
+}
+
+export function namespace(arg: AST.Namespace.Args): AST.Namespace {
+    return new AST.Namespace(arg);
+}
+
+export function writer(filepath?: string): AST.Writer {
+    return new AST.Writer(filepath);
+}
+
 export * from "./ast";
 export { Type as Types } from "./ast";
-export * from "./ast/core";
+export { Reference } from "./ast";

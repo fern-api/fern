@@ -59,6 +59,7 @@
                 },
                 "typeId": "type_:TypeId"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -163,6 +164,7 @@
                 },
                 "typeId": "type_:Type"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -500,6 +502,7 @@
                 },
                 "typeId": "type_:Object"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {

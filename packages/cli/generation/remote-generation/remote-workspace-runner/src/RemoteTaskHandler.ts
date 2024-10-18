@@ -71,12 +71,12 @@ export class RemoteTaskHandler {
         }
 
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
-            this.context.logger.log(convertLogLevel(newLog.level), newLog.message);
+            this.context.appendLog(newLog.message);
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
 
         const logS3Url = (s3Url: string) => {
-            this.context.logger.debug(
+            this.context.appendLog(
                 `Generated files. ${terminalLink("View here", s3Url, {
                     fallback: (text, url) => `${text}: ${url}`
                 })}`

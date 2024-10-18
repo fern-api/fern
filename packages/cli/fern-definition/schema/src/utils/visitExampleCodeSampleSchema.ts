@@ -3,7 +3,7 @@ import {
     ExampleCodeSampleSchema,
     ExampleCodeSampleSchemaLanguage,
     ExampleCodeSampleSchemaSdk
-} from "../schemas/ExampleCodeSampleSchema";
+} from "../schemas";
 
 export interface ExampleCodeSampleVisitor<R> {
     language: (languageScheme: ExampleCodeSampleSchemaLanguage) => R;

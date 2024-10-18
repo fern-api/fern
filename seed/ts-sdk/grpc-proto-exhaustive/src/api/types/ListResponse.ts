@@ -3,6 +3,8 @@
  */
 
 import * as SeedApi from "../index";
+import * as SeedApi from "../index";
+import * as SeedApi from "../index";
 
 export interface ListResponse {
     columns?: SeedApi.ListElement[];

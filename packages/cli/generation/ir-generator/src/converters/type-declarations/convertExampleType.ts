@@ -31,6 +31,7 @@ import {
 } from "./convertDiscriminatedUnionTypeDeclaration";
 import { getEnumNameFromEnumValue } from "./convertEnumTypeDeclaration";
 import { getPropertyName } from "./convertObjectTypeDeclaration";
+import { isNonInlinedTypeReference, isStringTypeReference } from "../../utils/isNonInlinedTypeReferenceSchema";
 
 export function convertTypeExample({
     typeName,
@@ -497,29 +498,36 @@ function convertObject({
                               throw new Error("Could not find original type declaration for property: " + wireKey);
                           }
 
-                          const valueExample = convertTypeReferenceExample({
-                              example: propertyExample,
-                              fileContainingExample,
-                              rawTypeBeingExemplified:
-                                  typeof originalTypeDeclaration.rawPropertyType === "string"
-                                      ? originalTypeDeclaration.rawPropertyType
-                                      : originalTypeDeclaration.rawPropertyType.type,
-                              fileContainingRawTypeReference: originalTypeDeclaration.file,
-                              typeResolver,
-                              exampleResolver,
-                              workspace
-                          });
-                          exampleProperties.push({
-                              name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
-                                  name: getPropertyName({
-                                      propertyKey: wireKey,
-                                      property: originalTypeDeclaration.rawPropertyType
-                                  }).name,
-                                  wireValue: wireKey
-                              }),
-                              value: valueExample,
-                              originalTypeDeclaration: originalTypeDeclaration.typeName
-                          });
+                          if (
+                              isNonInlinedTypeReference(originalTypeDeclaration?.rawPropertyType) ||
+                              isStringTypeReference(originalTypeDeclaration.rawPropertyType)
+                          ) {
+                              const valueExample = convertTypeReferenceExample({
+                                  example: propertyExample,
+                                  fileContainingExample,
+                                  rawTypeBeingExemplified:
+                                      typeof originalTypeDeclaration.rawPropertyType === "string"
+                                          ? originalTypeDeclaration.rawPropertyType
+                                          : originalTypeDeclaration.rawPropertyType.type,
+                                  fileContainingRawTypeReference: originalTypeDeclaration.file,
+                                  typeResolver,
+                                  exampleResolver,
+                                  workspace
+                              });
+                              exampleProperties.push({
+                                  name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                                      name: getPropertyName({
+                                          propertyKey: wireKey,
+                                          property: originalTypeDeclaration.rawPropertyType
+                                      }).name,
+                                      wireValue: wireKey
+                                  }),
+                                  value: valueExample,
+                                  originalTypeDeclaration: originalTypeDeclaration.typeName
+                              });
+                          } else {
+                              // TODO: handle else case
+                          }
 
                           return exampleProperties;
                       },

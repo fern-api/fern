@@ -97,6 +97,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             typeName: this.typeSchemaDeclarationReferencer.getExportedName(typeDeclaration.name),
             getGeneratedType: () =>
                 this.typeGenerator.generateType({
+                    typeDeclaration,
                     shape: typeDeclaration.shape,
                     docs: typeDeclaration.docs ?? undefined,
                     examples,
@@ -104,7 +105,8 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                     typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
                     getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
                     includeSerdeLayer: this.includeSerdeLayer,
-                    retainOriginalCasing: this.retainOriginalCasing
+                    retainOriginalCasing: this.retainOriginalCasing,
+                    respectInlinedTypes: true
                 }),
             getReferenceToGeneratedType: () =>
                 this.typeDeclarationReferencer

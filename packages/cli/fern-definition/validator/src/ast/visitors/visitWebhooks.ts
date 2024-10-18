@@ -76,11 +76,13 @@ export async function visitWebhooks({
                                 docs: createDocsVisitor(visitor, nodePathForProperty),
                                 availability: noop,
                                 type: async (type) => {
-                                    await visitTypeReference(type, [...nodePathForProperty, "type"], {
-                                        _default: property.default,
-                                        validation: property.validation,
-                                        location: TypeReferenceLocation.InlinedRequestProperty
-                                    });
+                                    if (typeof type === "string") {
+                                        await visitTypeReference(type, [...nodePathForProperty, "type"], {
+                                            _default: property.default,
+                                            validation: property.validation,
+                                            location: TypeReferenceLocation.InlinedRequestProperty
+                                        });
+                                    } // TOOD: handle else case
                                 },
                                 audiences: noop,
                                 encoding: noop,

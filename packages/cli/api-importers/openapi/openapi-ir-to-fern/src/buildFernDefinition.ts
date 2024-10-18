@@ -1,6 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { isRawAliasDefinition } from "@fern-api/fern-definition-schema";
+import { getNonInlineableTypeReference, isRawAliasDefinition } from "@fern-api/fern-definition-schema";
 import { buildAuthSchemes } from "./buildAuthSchemes";
 import { buildChannel } from "./buildChannel";
 import { buildEnvironments } from "./buildEnvironments";
@@ -16,6 +16,7 @@ import { getDeclarationFileForSchema } from "./utils/getDeclarationFileForSchema
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { Schema } from "@fern-api/openapi-ir";
+import { getInlineableTypeReference } from "@fern-api/fern-definition-schema/src/utils/getNonInlineableTypeReference";
 
 export const ROOT_PREFIX = "root";
 export const EXTERNAL_AUDIENCE = "external";
@@ -39,15 +40,7 @@ function addSchemas({
         }
 
         const declarationFile = getDeclarationFileForSchema(schema);
-        const typeDeclaration = buildTypeDeclaration({ schema, context, declarationFile, namespace });
-
-        // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
-        if (isRawAliasDefinition(typeDeclaration.schema)) {
-            const aliasType = getTypeFromTypeReference(typeDeclaration.schema);
-            if (aliasType === (typeDeclaration.name ?? id) || aliasType === `optional<${typeDeclaration.name ?? id}>`) {
-                continue;
-            }
-        }
+        const typeDeclaration = buildTypeDeclaration({ schema, context, declarationFile, namespace, inline: true });
 
         context.builder.addType(declarationFile, {
             name: typeDeclaration.name ?? id,

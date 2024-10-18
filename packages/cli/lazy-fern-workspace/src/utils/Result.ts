@@ -44,7 +44,7 @@ export declare namespace WorkspaceLoader {
 
     export interface StructureValidationFailure {
         type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION;
-        error: ZodError;
+        error: unknown;
     }
 
     export type DependencyFailure =

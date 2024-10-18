@@ -4,7 +4,7 @@ import { Webhook } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase, isEqual } from "lodash-es";
 import { buildHeader } from "./buildHeader";
-import { buildTypeReference } from "./buildTypeReference";
+import { buildNonInlineableTypeReference, buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertFullExample } from "./utils/convertFullExample";
 import { tokenizeString } from "./utils/getEndpointLocation";
@@ -34,7 +34,7 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
             method: webhook.method,
             "display-name": webhook.summary ?? undefined,
             headers,
-            payload: buildTypeReference({
+            payload: buildNonInlineableTypeReference({
                 schema: webhook.payload,
                 context,
                 fileContainingReference: webhookLocation.file,

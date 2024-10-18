@@ -3,6 +3,7 @@
  */
 
 import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
 
 export interface CustomTestCasesUnsupported {
     problemId: SeedTrace.ProblemId;

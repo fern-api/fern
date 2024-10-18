@@ -59,6 +59,7 @@
                 },
                 "typeId": "type_:Id"
             },
+            "inline": false,
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
@@ -162,6 +163,7 @@
                 },
                 "typeId": "type_organization:Organization"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -444,6 +446,7 @@
                 },
                 "typeId": "type_organization:CreateOrganizationRequest"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -567,6 +570,7 @@
                 },
                 "typeId": "type_user:User"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -824,6 +828,7 @@
                 },
                 "typeId": "type_user/events:Event"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],
@@ -1082,6 +1087,7 @@
                 },
                 "typeId": "type_user/events/metadata:Metadata"
             },
+            "inline": false,
             "shape": {
                 "_type": "object",
                 "extends": [],

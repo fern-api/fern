@@ -18,6 +18,6 @@ export interface User {
      * - Charlie
      */
     name: string;
-    /** The user's age. */
+    /* The user's age. */
     age?: number;
 }
