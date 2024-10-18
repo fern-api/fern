@@ -176,4 +176,28 @@ describe("PythonFile", () => {
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
+
+    it("Add a field with a list of reference type and initializer", async () => {
+        const file = python.file({
+            moduleName: "test_module",
+            path: ["test"],
+            name: "test_file"
+        });
+
+        const carRef = python.reference({
+            name: "Car",
+            modulePath: ["test_module", "cars"]
+        });
+
+        const carsField = python.field({
+            name: "cars",
+            type: python.Type.list(python.Type.reference(carRef)),
+            initializer: python.codeBlock("[Car(), Car()]")
+        });
+
+        file.addStatement(carsField);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
 });

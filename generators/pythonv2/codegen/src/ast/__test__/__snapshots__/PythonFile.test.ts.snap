@@ -66,3 +66,11 @@ exports[`PythonFile > Add a code block 1`] = `
 "print("Hello, World!")
 "
 `;
+
+exports[`PythonFile > Add a field with a list of reference type and initializer 1`] = `
+"from typing import List
+from ..test_module.cars import Car
+
+cars: List[Car] = [Car(), Car()]
+"
+`;
