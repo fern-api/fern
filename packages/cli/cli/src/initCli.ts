@@ -20,7 +20,7 @@ import boxen from "boxen";
 import { FERN_DIRECTORY } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { askToLogin } from "@fern-api/login";
-import { FernToken, getCurrentUser } from "@fern-api/auth";
+import { createOrganizationIfDoesNotExist, FernToken, getCurrentUser } from "@fern-api/auth";
 import { initializeAndPushRepository, writeFernConfigRepoAdditions } from "./utils/fernConfig";
 import { black } from "./commands/generate-overrides/black";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
@@ -111,6 +111,13 @@ export async function initV2(cliContext: CliContext): Promise<void> {
     await Promise.all(
         freshProject.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                if (token!.type === "user") {
+                    await createOrganizationIfDoesNotExist({
+                        organization: project.config.organization,
+                        token: token!,
+                        context
+                    });
+                }
                 // Run generate on these new generators
                 await runGenerateAndFinish(context, workspace, freshProject, token!, generatedMessages);
             });
