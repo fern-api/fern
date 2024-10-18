@@ -3,7 +3,17 @@ import { AstNode } from "./AstNode";
 import { Writer } from "./Writer";
 
 export declare namespace Reference {
-    type Args = NamedImport | ModuleImport | RootModuleImport;
+    type Args = Local | NamedImport | ModuleImport | RootModuleImport;
+
+    interface Local {
+        type: "local";
+        /**
+         * The path to access the reference from the module.
+         * [module, ...name].join(".") is the reference
+         */
+        path?: string[];
+        name: string;
+    }
 
     interface NamedImport {
         type: "named";
@@ -60,16 +70,21 @@ export class Reference extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.addReference(this);
         switch (this.args.type) {
             case "module":
+                writer.addReference(this);
                 writer.write([this.args.module, ...(this.args.path ?? []), this.args.name].join("."));
                 break;
             case "named":
+                writer.addReference(this);
                 writer.write(this.args.name);
                 break;
             case "root":
+                writer.addReference(this);
                 writer.write([this.args.module, ...(this.args.path ?? []), this.args.name].join("."));
+                break;
+            case "local":
+                writer.write([this.args.name, ...(this.args.path ?? [])].join("."));
                 break;
             default:
                 assertNever(this.args);
@@ -86,5 +101,9 @@ export class Reference extends AstNode {
 
     public static named(import_: Omit<Reference.NamedImport, "type">): Reference {
         return new Reference({ ...import_, type: "named" });
+    }
+
+    public static local(import_: Omit<Reference.Local, "type">): Reference {
+        return new Reference({ ...import_, type: "local" });
     }
 }

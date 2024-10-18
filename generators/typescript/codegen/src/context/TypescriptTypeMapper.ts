@@ -3,6 +3,8 @@ import {
     ContainerType,
     DeclaredTypeName,
     Literal,
+    NameAndWireValue,
+    ObjectProperty,
     PrimitiveType,
     PrimitiveTypeV1,
     TypeReference
@@ -14,6 +16,7 @@ import { BaseTypescriptGeneratorContext } from "./BaseTypescriptGeneratorContext
 
 export declare namespace TypescriptTypeMapper {
     interface Args {
+        property?: NameAndWireValue;
         reference: TypeReference;
     }
 }
@@ -21,14 +24,14 @@ export declare namespace TypescriptTypeMapper {
 export class TypescriptTypeMapper {
     constructor(private readonly context: BaseTypescriptGeneratorContext<BaseTypescriptCustomConfigSchema>) {}
 
-    public convert({ reference }: TypescriptTypeMapper.Args): Type {
+    public convert({ reference, property }: TypescriptTypeMapper.Args): Type {
         switch (reference.type) {
             case "container":
                 return this.convertContainer({
                     container: reference.container
                 });
             case "named":
-                return this.convertNamed({ named: reference });
+                return this.convertNamed({ named: reference, property });
             case "primitive":
                 return this.convertPrimitive(reference);
             case "unknown":
@@ -38,7 +41,7 @@ export class TypescriptTypeMapper {
         }
     }
 
-    private convertContainer({ container }: { container: ContainerType }): Type {
+    private convertContainer({ property, container }: { container: ContainerType; property?: NameAndWireValue }): Type {
         switch (container.type) {
             case "list":
                 return ts.Type.array(this.convert({ reference: container.list }));
@@ -55,7 +58,7 @@ export class TypescriptTypeMapper {
                 if (this.context.customConfig.noSerdeLayer) {
                     return Type.set(this.convert({ reference: container.set }));
                 } else {
-                    return Type.array(this.convert({ reference: container.set }));
+                    return Type.array(this.convert({ reference: container.set, property }));
                 }
             }
             case "optional":
@@ -107,21 +110,54 @@ export class TypescriptTypeMapper {
         );
     }
 
-    private convertNamed({ named }: { named: DeclaredTypeName }): Type {
+    private convertNamed({ named, property }: { named: DeclaredTypeName; property?: NameAndWireValue }): Type {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
-        if (
-            typeDeclaration.inline &&
-            this.context.customConfig.respectInlinedTypes &&
-            this.context.customConfig.noSerdeLayer
-        ) {
+        if (typeDeclaration.inline) {
             switch (typeDeclaration.shape.type) {
                 case "enum":
                     return Type.union(typeDeclaration.shape.values.map((value) => Type.literal(value.name.wireValue)));
+                case "object": {
+                    if (property != null) {
+                        console.log(`Added inlined object for property ${property}`);
+                        const interface_ = ts.interface_({
+                            name: property.name.pascalCase.safeName,
+                            properties: typeDeclaration.shape.properties.map((property) => {
+                                const name = this.getPropertyKeyFromProperty(property);
+                                return {
+                                    name,
+                                    type: this.convert({ reference: property.valueType, property: property.name }),
+                                    questionMark:
+                                        property.valueType.type === "container" &&
+                                        property.valueType.container.type === "optional",
+                                    docs: property.docs
+                                };
+                            }),
+                            extends: typeDeclaration.shape.extends.map((extend) =>
+                                this.context.getReferenceToNamedType(extend.typeId)
+                            )
+                            // docs: this.getDocs(context)
+                        });
+                        return ts.Type.reference(ts.Reference.local({ name: property.name.pascalCase.safeName }), {
+                            interfaces: [interface_]
+                        });
+                    } else {
+                        console.log("Skipping inlined object!!");
+                    }
+                    break;
+                }
                 default:
                     break;
             }
         }
         const reference = this.context.getReferenceToNamedType(named.typeId);
         return ts.Type.reference(reference);
+    }
+
+    private getPropertyKeyFromProperty(property: ObjectProperty): string {
+        if (this.context.customConfig.noSerdeLayer) {
+            return property.name.wireValue;
+        } else {
+            return property.name.name.camelCase.unsafeName;
+        }
     }
 }

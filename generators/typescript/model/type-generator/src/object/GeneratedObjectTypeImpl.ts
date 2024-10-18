@@ -18,9 +18,10 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
             name: this.typeName,
             export: true,
             properties: this.shape.properties.map((property) => {
+                const propertyName = this.getPropertyKeyFromProperty(property);
                 return {
-                    name: `${this.getPropertyKeyFromProperty(property)}`,
-                    type: context.V2.tsTypeMapper.convert({ reference: property.valueType }),
+                    name: propertyName,
+                    type: context.V2.tsTypeMapper.convert({ reference: property.valueType, property: property.name }),
                     questionMark:
                         !this.noOptionalProperties &&
                         property.valueType.type === "container" &&

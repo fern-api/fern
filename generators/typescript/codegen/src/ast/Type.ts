@@ -208,16 +208,13 @@ export class Type extends AstNode {
 
     public static reference(
         reference: Reference,
-        { namespaces, interfaces }: { namespaces: Namespace[]; interfaces: Interface[] } = {
-            namespaces: [],
-            interfaces: []
-        }
+        { namespaces, interfaces }: { namespaces?: Namespace[]; interfaces?: Interface[] } = {}
     ): Type {
         return new this({
             type: "reference",
             reference,
-            namespaces,
-            interfaces
+            namespaces: namespaces ?? [],
+            interfaces: interfaces ?? []
         });
     }
 

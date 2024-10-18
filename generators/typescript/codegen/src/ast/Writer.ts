@@ -110,7 +110,8 @@ export class Writer extends AbstractWriter {
     }
 
     public toStringFormatted(): string {
-        return prettier.format(this.toString(), { parser: "typescript", tabWidth: 4, printWidth: 120 });
+        const formatted = prettier.format(this.toString(), { parser: "typescript", tabWidth: 4, printWidth: 120 });
+        return formatted.replaceAll("}\ninterface", "}\n\ninterface");
     }
 
     private getImportFrom(source: Reference.PackageOrPath) {
