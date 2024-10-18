@@ -81,29 +81,272 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
     private static CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
 
-    private isRoot: boolean;
-    private intermediateRepresentation: IntermediateRepresentation;
+    private isRoot!: boolean;
+    private intermediateRepresentation!: IntermediateRepresentation;
     private oauthAuthScheme: OAuthScheme | undefined;
     private bearerAuthScheme: BearerAuthScheme | undefined;
     private basicAuthScheme: BasicAuthScheme | undefined;
-    private authHeaders: HeaderAuthScheme[];
-    private serviceClassName: string;
-    private package_: Package;
-    private generatedEndpointImplementations: GeneratedEndpointImplementation[];
-    private generatedWrappedServices: GeneratedWrappedService[];
-    private allowCustomFetcher: boolean;
-    private packageResolver: PackageResolver;
-    private requireDefaultEnvironment: boolean;
-    private npmPackage: NpmPackage | undefined;
-    private targetRuntime: JavaScriptRuntime;
-    private packageId: PackageId;
-    private retainOriginalCasing: boolean;
-    private inlineFileProperties: boolean;
-    private omitUndefined: boolean;
-    private importsManager: ImportsManager;
-    private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
+    private authHeaders!: HeaderAuthScheme[];
+    private serviceClassName!: string;
+    private package_!: Package;
+    private generatedEndpointImplementations!: GeneratedEndpointImplementation[];
+    private generatedWrappedServices!: GeneratedWrappedService[];
+    private allowCustomFetcher!: boolean;
+    private packageResolver!: PackageResolver;
+    private requireDefaultEnvironment!: boolean;
+    private npmPackage!: NpmPackage | undefined;
+    private targetRuntime!: JavaScriptRuntime;
+    private packageId!: PackageId;
+    private retainOriginalCasing!: boolean;
+    private inlineFileProperties!: boolean;
+    private omitUndefined!: boolean;
+    private importsManager!: ImportsManager;
+    private oauthTokenProviderGenerator!: OAuthTokenProviderGenerator;
 
-    constructor({
+    // constructor({
+    //     isRoot,
+    //     intermediateRepresentation,
+    //     serviceClassName,
+    //     packageId,
+    //     errorResolver,
+    //     packageResolver,
+    //     neverThrowErrors,
+    //     includeCredentialsOnCrossOriginRequests,
+    //     allowCustomFetcher,
+    //     requireDefaultEnvironment,
+    //     defaultTimeoutInSeconds,
+    //     npmPackage,
+    //     targetRuntime,
+    //     includeContentHeadersOnFileDownloadResponse,
+    //     includeSerdeLayer,
+    //     retainOriginalCasing,
+    //     inlineFileProperties,
+    //     omitUndefined,
+    //     importsManager,
+    //     oauthTokenProviderGenerator
+    // }: GeneratedSdkClientClassImpl.Init) {
+    //     this.isRoot = isRoot;
+    //     this.intermediateRepresentation = intermediateRepresentation;
+    //     this.serviceClassName = serviceClassName;
+    //     this.packageId = packageId;
+    //     this.allowCustomFetcher = allowCustomFetcher;
+    //     this.packageResolver = packageResolver;
+    //     this.requireDefaultEnvironment = requireDefaultEnvironment;
+    //     this.npmPackage = npmPackage;
+    //     this.targetRuntime = targetRuntime;
+    //     this.retainOriginalCasing = retainOriginalCasing;
+    //     this.inlineFileProperties = inlineFileProperties;
+    //     this.omitUndefined = omitUndefined;
+    //     this.importsManager = importsManager;
+    //     this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
+
+    //     const package_ = packageResolver.resolvePackage(packageId);
+    //     this.package_ = package_;
+
+    //     const service = packageResolver.getServiceDeclaration(packageId);
+
+    //     this.generatedEndpointImplementations = [];
+    //     if (service != null) {
+    //         this.generatedEndpointImplementations = service.endpoints.map((endpoint) => {
+    //             const requestBody = endpoint.requestBody ?? undefined;
+
+    //             const getGeneratedEndpointRequest = () => {
+    //                 if (requestBody?.type === "bytes") {
+    //                     return new GeneratedBytesEndpointRequest({
+    //                         ir: this.intermediateRepresentation,
+    //                         packageId,
+    //                         service,
+    //                         endpoint,
+    //                         requestBody,
+    //                         generatedSdkClientClass: this,
+    //                         targetRuntime: this.targetRuntime,
+    //                         retainOriginalCasing: this.retainOriginalCasing
+    //                     });
+    //                 }
+    //                 if (requestBody?.type === "fileUpload") {
+    //                     return new GeneratedFileUploadEndpointRequest({
+    //                         importsManager: this.importsManager,
+    //                         ir: this.intermediateRepresentation,
+    //                         packageId,
+    //                         service,
+    //                         endpoint,
+    //                         requestBody,
+    //                         generatedSdkClientClass: this,
+    //                         targetRuntime: this.targetRuntime,
+    //                         retainOriginalCasing: this.retainOriginalCasing,
+    //                         inlineFileProperties: this.inlineFileProperties
+    //                     });
+    //                 } else {
+    //                     return new GeneratedDefaultEndpointRequest({
+    //                         ir: this.intermediateRepresentation,
+    //                         packageId,
+    //                         sdkRequest: endpoint.sdkRequest ?? undefined,
+    //                         service,
+    //                         endpoint,
+    //                         requestBody,
+    //                         generatedSdkClientClass: this,
+    //                         retainOriginalCasing: this.retainOriginalCasing
+    //                     });
+    //                 }
+    //             };
+
+    //             const getGeneratedEndpointResponse = ({
+    //                 response
+    //             }: {
+    //                 response:
+    //                     | HttpResponseBody.Json
+    //                     | HttpResponseBody.FileDownload
+    //                     | HttpResponseBody.Text
+    //                     | HttpResponseBody.Streaming
+    //                     | undefined;
+    //             }) => {
+    //                 if (neverThrowErrors) {
+    //                     return new GeneratedNonThrowingEndpointResponse({
+    //                         packageId,
+    //                         endpoint,
+    //                         errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
+    //                         errorResolver,
+    //                         response,
+    //                         includeSerdeLayer
+    //                     });
+    //                 } else {
+    //                     return new GeneratedThrowingEndpointResponse({
+    //                         packageId,
+    //                         endpoint,
+    //                         errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
+    //                         errorResolver,
+    //                         response,
+    //                         includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
+    //                         clientClass: this
+    //                     });
+    //                 }
+    //             };
+
+    //             const getDefaultEndpointImplementation = ({
+    //                 response
+    //             }: {
+    //                 response: HttpResponseBody.Json | HttpResponseBody.FileDownload | HttpResponseBody.Text | undefined;
+    //             }) => {
+    //                 return new GeneratedDefaultEndpointImplementation({
+    //                     endpoint,
+    //                     request: getGeneratedEndpointRequest(),
+    //                     response: getGeneratedEndpointResponse({ response }),
+    //                     generatedSdkClientClass: this,
+    //                     includeCredentialsOnCrossOriginRequests,
+    //                     defaultTimeoutInSeconds,
+    //                     includeSerdeLayer,
+    //                     retainOriginalCasing: this.retainOriginalCasing,
+    //                     omitUndefined: this.omitUndefined
+    //                 });
+    //             };
+
+    //             if (endpoint.response?.body == null) {
+    //                 return getDefaultEndpointImplementation({ response: undefined });
+    //             }
+
+    //             return HttpResponseBody._visit<GeneratedEndpointImplementation>(endpoint.response.body, {
+    //                 fileDownload: (fileDownload) =>
+    //                     new GeneratedFileDownloadEndpointImplementation({
+    //                         endpoint,
+    //                         generatedSdkClientClass: this,
+    //                         includeCredentialsOnCrossOriginRequests,
+    //                         defaultTimeoutInSeconds,
+    //                         request: getGeneratedEndpointRequest(),
+    //                         response: getGeneratedEndpointResponse({
+    //                             response: HttpResponseBody.fileDownload(fileDownload)
+    //                         }),
+    //                         includeSerdeLayer,
+    //                         retainOriginalCasing: this.retainOriginalCasing,
+    //                         omitUndefined: this.omitUndefined
+    //                     }),
+    //                 json: (jsonResponse) =>
+    //                     getDefaultEndpointImplementation({
+    //                         response: HttpResponseBody.json(jsonResponse)
+    //                     }),
+    //                 streaming: (streamingResponse) =>
+    //                     new GeneratedStreamingEndpointImplementation({
+    //                         packageId,
+    //                         endpoint,
+    //                         generatedSdkClientClass: this,
+    //                         includeCredentialsOnCrossOriginRequests,
+    //                         response: getGeneratedEndpointResponse({
+    //                             response: HttpResponseBody.streaming(streamingResponse)
+    //                         }),
+    //                         defaultTimeoutInSeconds,
+    //                         request: getGeneratedEndpointRequest(),
+    //                         includeSerdeLayer,
+    //                         retainOriginalCasing: this.retainOriginalCasing,
+    //                         omitUndefined: this.omitUndefined
+    //                     }),
+    //                 streamParameter: (streamParameter) =>
+    //                     // TODO(amckinney): For now we just generate the stream variant of the endpoint.
+    //                     // We need to implement both the non-streaming and streaming variants.
+    //                     new GeneratedStreamingEndpointImplementation({
+    //                         packageId,
+    //                         endpoint,
+    //                         generatedSdkClientClass: this,
+    //                         includeCredentialsOnCrossOriginRequests,
+    //                         response: getGeneratedEndpointResponse({
+    //                             response: HttpResponseBody.streaming(streamParameter.streamResponse)
+    //                         }),
+    //                         defaultTimeoutInSeconds,
+    //                         request: getGeneratedEndpointRequest(),
+    //                         includeSerdeLayer,
+    //                         retainOriginalCasing: this.retainOriginalCasing,
+    //                         omitUndefined: this.omitUndefined
+    //                     }),
+    //                 text: (textResponse) => {
+    //                     return getDefaultEndpointImplementation({
+    //                         response: HttpResponseBody.text(textResponse)
+    //                     });
+    //                 },
+    //                 _other: () => {
+    //                     throw new Error("Unknown Response type: " + endpoint.response?.body?.type);
+    //                 }
+    //             });
+    //         });
+    //     }
+
+    //     this.generatedWrappedServices = package_.subpackages.reduce<GeneratedWrappedService[]>(
+    //         (acc, wrappedSubpackageId) => {
+    //             const subpackage = this.packageResolver.resolveSubpackage(wrappedSubpackageId);
+    //             if (subpackage.hasEndpointsInTree) {
+    //                 acc.push(
+    //                     new GeneratedWrappedService({
+    //                         wrappedSubpackageId,
+    //                         wrappedSubpackage: this.packageResolver.resolveSubpackage(wrappedSubpackageId),
+    //                         wrapperService: this
+    //                     })
+    //                 );
+    //             }
+    //             return acc;
+    //         },
+    //         []
+    //     );
+
+    //     this.authHeaders = [];
+    //     for (const authScheme of intermediateRepresentation.auth.schemes) {
+    //         AuthScheme._visit(authScheme, {
+    //             basic: (basicAuthScheme) => {
+    //                 this.basicAuthScheme = basicAuthScheme;
+    //             },
+    //             bearer: (bearerAuthScheme) => {
+    //                 this.bearerAuthScheme = bearerAuthScheme;
+    //             },
+    //             header: (header) => {
+    //                 this.authHeaders.push(header);
+    //             },
+    //             oauth: (oauthScheme) => {
+    //                 this.oauthAuthScheme = oauthScheme;
+    //             },
+    //             _other: () => {
+    //                 throw new Error("Unknown auth scheme: " + authScheme.type);
+    //             }
+    //         });
+    //     }
+    // }
+
+    async constructAsync({
         isRoot,
         intermediateRepresentation,
         serviceClassName,
@@ -145,167 +388,172 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         const service = packageResolver.getServiceDeclaration(packageId);
 
-        if (service == null) {
-            this.generatedEndpointImplementations = [];
-        } else {
-            this.generatedEndpointImplementations = service.endpoints.map((endpoint) => {
-                const requestBody = endpoint.requestBody ?? undefined;
+        this.generatedEndpointImplementations = [];
+        if (service != null) {
+            this.generatedEndpointImplementations = await Promise.all(
+                service.endpoints.map(async (endpoint) => {
+                    const requestBody = endpoint.requestBody ?? undefined;
 
-                const getGeneratedEndpointRequest = () => {
-                    if (requestBody?.type === "bytes") {
-                        return new GeneratedBytesEndpointRequest({
-                            ir: this.intermediateRepresentation,
-                            packageId,
-                            service,
+                    const getGeneratedEndpointRequest = () => {
+                        if (requestBody?.type === "bytes") {
+                            return new GeneratedBytesEndpointRequest({
+                                ir: this.intermediateRepresentation,
+                                packageId,
+                                service,
+                                endpoint,
+                                requestBody,
+                                generatedSdkClientClass: this,
+                                targetRuntime: this.targetRuntime,
+                                retainOriginalCasing: this.retainOriginalCasing
+                            });
+                        }
+                        if (requestBody?.type === "fileUpload") {
+                            return new GeneratedFileUploadEndpointRequest({
+                                importsManager: this.importsManager,
+                                ir: this.intermediateRepresentation,
+                                packageId,
+                                service,
+                                endpoint,
+                                requestBody,
+                                generatedSdkClientClass: this,
+                                targetRuntime: this.targetRuntime,
+                                retainOriginalCasing: this.retainOriginalCasing,
+                                inlineFileProperties: this.inlineFileProperties
+                            });
+                        } else {
+                            return new GeneratedDefaultEndpointRequest({
+                                ir: this.intermediateRepresentation,
+                                packageId,
+                                sdkRequest: endpoint.sdkRequest ?? undefined,
+                                service,
+                                endpoint,
+                                requestBody,
+                                generatedSdkClientClass: this,
+                                retainOriginalCasing: this.retainOriginalCasing
+                            });
+                        }
+                    };
+
+                    const getGeneratedEndpointResponse = ({
+                        response
+                    }: {
+                        response:
+                            | HttpResponseBody.Json
+                            | HttpResponseBody.FileDownload
+                            | HttpResponseBody.Text
+                            | HttpResponseBody.Streaming
+                            | undefined;
+                    }) => {
+                        if (neverThrowErrors) {
+                            return new GeneratedNonThrowingEndpointResponse({
+                                packageId,
+                                endpoint,
+                                errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
+                                errorResolver,
+                                response,
+                                includeSerdeLayer
+                            });
+                        } else {
+                            return new GeneratedThrowingEndpointResponse({
+                                packageId,
+                                endpoint,
+                                errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
+                                errorResolver,
+                                response,
+                                includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
+                                clientClass: this
+                            });
+                        }
+                    };
+
+                    const getDefaultEndpointImplementation = ({
+                        response
+                    }: {
+                        response:
+                            | HttpResponseBody.Json
+                            | HttpResponseBody.FileDownload
+                            | HttpResponseBody.Text
+                            | undefined;
+                    }) => {
+                        return new GeneratedDefaultEndpointImplementation({
                             endpoint,
-                            requestBody,
+                            request: getGeneratedEndpointRequest(),
+                            response: getGeneratedEndpointResponse({ response }),
                             generatedSdkClientClass: this,
-                            targetRuntime: this.targetRuntime,
-                            retainOriginalCasing: this.retainOriginalCasing
-                        });
-                    }
-                    if (requestBody?.type === "fileUpload") {
-                        return new GeneratedFileUploadEndpointRequest({
-                            importsManager: this.importsManager,
-                            ir: this.intermediateRepresentation,
-                            packageId,
-                            service,
-                            endpoint,
-                            requestBody,
-                            generatedSdkClientClass: this,
-                            targetRuntime: this.targetRuntime,
+                            includeCredentialsOnCrossOriginRequests,
+                            defaultTimeoutInSeconds,
+                            includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
-                            inlineFileProperties: this.inlineFileProperties
+                            omitUndefined: this.omitUndefined
                         });
-                    } else {
-                        return new GeneratedDefaultEndpointRequest({
-                            ir: this.intermediateRepresentation,
-                            packageId,
-                            sdkRequest: endpoint.sdkRequest ?? undefined,
-                            service,
-                            endpoint,
-                            requestBody,
-                            generatedSdkClientClass: this,
-                            retainOriginalCasing: this.retainOriginalCasing
-                        });
-                    }
-                };
+                    };
 
-                const getGeneratedEndpointResponse = ({
-                    response
-                }: {
-                    response:
-                        | HttpResponseBody.Json
-                        | HttpResponseBody.FileDownload
-                        | HttpResponseBody.Text
-                        | HttpResponseBody.Streaming
-                        | undefined;
-                }) => {
-                    if (neverThrowErrors) {
-                        return new GeneratedNonThrowingEndpointResponse({
-                            packageId,
-                            endpoint,
-                            errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
-                            errorResolver,
-                            response,
-                            includeSerdeLayer
-                        });
-                    } else {
-                        return new GeneratedThrowingEndpointResponse({
-                            packageId,
-                            endpoint,
-                            errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
-                            errorResolver,
-                            response,
-                            includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
-                            clientClass: this
-                        });
+                    if (endpoint.response?.body == null) {
+                        return getDefaultEndpointImplementation({ response: undefined });
                     }
-                };
 
-                const getDefaultEndpointImplementation = ({
-                    response
-                }: {
-                    response: HttpResponseBody.Json | HttpResponseBody.FileDownload | HttpResponseBody.Text | undefined;
-                }) => {
-                    return new GeneratedDefaultEndpointImplementation({
-                        endpoint,
-                        request: getGeneratedEndpointRequest(),
-                        response: getGeneratedEndpointResponse({ response }),
-                        generatedSdkClientClass: this,
-                        includeCredentialsOnCrossOriginRequests,
-                        defaultTimeoutInSeconds,
-                        includeSerdeLayer,
-                        retainOriginalCasing: this.retainOriginalCasing,
-                        omitUndefined: this.omitUndefined
+                    return HttpResponseBody._visit<GeneratedEndpointImplementation>(endpoint.response.body, {
+                        fileDownload: (fileDownload) =>
+                            new GeneratedFileDownloadEndpointImplementation({
+                                endpoint,
+                                generatedSdkClientClass: this,
+                                includeCredentialsOnCrossOriginRequests,
+                                defaultTimeoutInSeconds,
+                                request: getGeneratedEndpointRequest(),
+                                response: getGeneratedEndpointResponse({
+                                    response: HttpResponseBody.fileDownload(fileDownload)
+                                }),
+                                includeSerdeLayer,
+                                retainOriginalCasing: this.retainOriginalCasing,
+                                omitUndefined: this.omitUndefined
+                            }),
+                        json: (jsonResponse) =>
+                            getDefaultEndpointImplementation({
+                                response: HttpResponseBody.json(jsonResponse)
+                            }),
+                        streaming: (streamingResponse) =>
+                            new GeneratedStreamingEndpointImplementation({
+                                packageId,
+                                endpoint,
+                                generatedSdkClientClass: this,
+                                includeCredentialsOnCrossOriginRequests,
+                                response: getGeneratedEndpointResponse({
+                                    response: HttpResponseBody.streaming(streamingResponse)
+                                }),
+                                defaultTimeoutInSeconds,
+                                request: getGeneratedEndpointRequest(),
+                                includeSerdeLayer,
+                                retainOriginalCasing: this.retainOriginalCasing,
+                                omitUndefined: this.omitUndefined
+                            }),
+                        streamParameter: (streamParameter) =>
+                            // TODO(amckinney): For now we just generate the stream variant of the endpoint.
+                            // We need to implement both the non-streaming and streaming variants.
+                            new GeneratedStreamingEndpointImplementation({
+                                packageId,
+                                endpoint,
+                                generatedSdkClientClass: this,
+                                includeCredentialsOnCrossOriginRequests,
+                                response: getGeneratedEndpointResponse({
+                                    response: HttpResponseBody.streaming(streamParameter.streamResponse)
+                                }),
+                                defaultTimeoutInSeconds,
+                                request: getGeneratedEndpointRequest(),
+                                includeSerdeLayer,
+                                retainOriginalCasing: this.retainOriginalCasing,
+                                omitUndefined: this.omitUndefined
+                            }),
+                        text: (textResponse) => {
+                            return getDefaultEndpointImplementation({
+                                response: HttpResponseBody.text(textResponse)
+                            });
+                        },
+                        _other: () => {
+                            throw new Error("Unknown Response type: " + endpoint.response?.body?.type);
+                        }
                     });
-                };
-
-                if (endpoint.response?.body == null) {
-                    return getDefaultEndpointImplementation({ response: undefined });
-                }
-
-                return HttpResponseBody._visit<GeneratedEndpointImplementation>(endpoint.response.body, {
-                    fileDownload: (fileDownload) =>
-                        new GeneratedFileDownloadEndpointImplementation({
-                            endpoint,
-                            generatedSdkClientClass: this,
-                            includeCredentialsOnCrossOriginRequests,
-                            defaultTimeoutInSeconds,
-                            request: getGeneratedEndpointRequest(),
-                            response: getGeneratedEndpointResponse({
-                                response: HttpResponseBody.fileDownload(fileDownload)
-                            }),
-                            includeSerdeLayer,
-                            retainOriginalCasing: this.retainOriginalCasing,
-                            omitUndefined: this.omitUndefined
-                        }),
-                    json: (jsonResponse) =>
-                        getDefaultEndpointImplementation({
-                            response: HttpResponseBody.json(jsonResponse)
-                        }),
-                    streaming: (streamingResponse) =>
-                        new GeneratedStreamingEndpointImplementation({
-                            packageId,
-                            endpoint,
-                            generatedSdkClientClass: this,
-                            includeCredentialsOnCrossOriginRequests,
-                            response: getGeneratedEndpointResponse({
-                                response: HttpResponseBody.streaming(streamingResponse)
-                            }),
-                            defaultTimeoutInSeconds,
-                            request: getGeneratedEndpointRequest(),
-                            includeSerdeLayer,
-                            retainOriginalCasing: this.retainOriginalCasing,
-                            omitUndefined: this.omitUndefined
-                        }),
-                    streamParameter: (streamParameter) =>
-                        // TODO(amckinney): For now we just generate the stream variant of the endpoint.
-                        // We need to implement both the non-streaming and streaming variants.
-                        new GeneratedStreamingEndpointImplementation({
-                            packageId,
-                            endpoint,
-                            generatedSdkClientClass: this,
-                            includeCredentialsOnCrossOriginRequests,
-                            response: getGeneratedEndpointResponse({
-                                response: HttpResponseBody.streaming(streamParameter.streamResponse)
-                            }),
-                            defaultTimeoutInSeconds,
-                            request: getGeneratedEndpointRequest(),
-                            includeSerdeLayer,
-                            retainOriginalCasing: this.retainOriginalCasing,
-                            omitUndefined: this.omitUndefined
-                        }),
-                    text: (textResponse) => {
-                        return getDefaultEndpointImplementation({
-                            response: HttpResponseBody.text(textResponse)
-                        });
-                    },
-                    _other: () => {
-                        throw new Error("Unknown Response type: " + endpoint.response?.body?.type);
-                    }
-                });
-            });
+                })
+            );
         }
 
         this.generatedWrappedServices = package_.subpackages.reduce<GeneratedWrappedService[]>(
@@ -345,6 +593,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
             });
         }
+        return this;
     }
 
     private getGeneratedEndpointImplementation(endpointId: string): GeneratedEndpointImplementation | undefined {
@@ -424,7 +673,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
     }
 
-    public writeToFile(context: SdkContext): void {
+    public async writeToFile(context: SdkContext): Promise<void> {
         const serviceModule = context.sourceFile.addModule({
             name: this.serviceClassName,
             isExported: true,
@@ -633,7 +882,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         for (const wrappedService of this.generatedWrappedServices) {
-            wrappedService.addToServiceClass({
+            await wrappedService.addToServiceClass({
                 isRoot: this.isRoot,
                 class_: serviceClass,
                 context

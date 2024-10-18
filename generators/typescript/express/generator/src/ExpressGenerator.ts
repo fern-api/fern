@@ -436,7 +436,7 @@ export class ExpressGenerator {
 
         if (sourceFile.getStatements().length === 0) {
             sourceFile.delete();
-            this.context.logger.debug(`Skipping ${filepathStr} (no content)`);
+            // this.context.logger.debug(`Skipping ${filepathStr} (no content)`);
         } else {
             importsManager.writeImportsToSourceFile(sourceFile);
             this.exportsManager.addExportsForFilepath(filepath);
@@ -447,7 +447,7 @@ export class ExpressGenerator {
                 writer.writeLine(FILE_HEADER);
             });
 
-            this.context.logger.debug(`Generated ${filepathStr}`);
+            // this.context.logger.debug(`Generated ${filepathStr}`);
         }
     }
 

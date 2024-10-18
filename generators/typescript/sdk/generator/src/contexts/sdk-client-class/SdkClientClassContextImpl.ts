@@ -33,8 +33,8 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
         this.sdkClientClassDeclarationReferencer = sdkClientClassDeclarationReferencer;
     }
 
-    public getGeneratedSdkClientClass(packageId: PackageId): GeneratedSdkClientClass {
-        return this.sdkClientClassGenerator.generateService({
+    public async getGeneratedSdkClientClass(packageId: PackageId): Promise<GeneratedSdkClientClass> {
+        return await this.sdkClientClassGenerator.generateService({
             isRoot: packageId.isRoot,
             importsManager: this.importsManager,
             packageId,

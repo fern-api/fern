@@ -24,7 +24,7 @@ export class GeneratedWrappedService {
         this.wrappedSubpackage = wrappedSubpackage;
     }
 
-    public addToServiceClass({
+    public async addToServiceClass({
         isRoot,
         class_,
         context
@@ -32,9 +32,9 @@ export class GeneratedWrappedService {
         isRoot: boolean;
         class_: ClassDeclaration;
         context: SdkContext;
-    }): void {
+    }): Promise<void> {
         const referenceToWrapped = this.getReferenceToWrappedService(class_, context);
-        const generatedWrappedService = context.sdkClientClass.getGeneratedSdkClientClass({
+        const generatedWrappedService = await context.sdkClientClass.getGeneratedSdkClientClass({
             isRoot: false,
             subpackageId: this.wrappedSubpackageId
         });

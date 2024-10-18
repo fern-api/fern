@@ -176,7 +176,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         });
     }
 
-    public writeToFile(context: SdkContext): void {
+    public async writeToFile(context: SdkContext): Promise<void> {
         if (this.generatedRequestSchema != null) {
             this.generatedRequestSchema.writeSchemaToFile(context);
             context.sourceFile.addStatements("\n");
@@ -192,7 +192,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             context.sourceFile.addStatements("\n");
         }
 
-        this.generatedSdkErrorSchema?.writeToFile(context);
+        await this.generatedSdkErrorSchema?.writeToFile(context);
     }
 
     public getReferenceToRawResponse(context: SdkContext): ts.TypeNode {

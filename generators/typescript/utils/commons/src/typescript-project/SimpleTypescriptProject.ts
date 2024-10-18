@@ -168,7 +168,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             main: "./index.js",
             types: "./index.d.ts",
             scripts: {
-                [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
+                [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown --loglevel silent",
                 [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
                 prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`
             }
