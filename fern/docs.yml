@@ -112,6 +112,9 @@ navigation:
           - page: Overlay Customizations
             icon: fa-regular fa-shuffle
             path: ./pages/api-definition/openapi/overrides.mdx
+          - page: Automatic Updates
+            icon: fa-regular fa-arrows-rotate
+            path: ./pages/api-definition/openapi/automation.mdx            
           - section: Integrate your Server Framework
             icon: fa-regular fa-server
             slug: frameworks
