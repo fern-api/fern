@@ -29,7 +29,7 @@ export class Decorator extends AstNode {
             writer.write(this.reference);
         } else {
             this.reference.write(writer);
-            writer.addReference(this.reference);
+            this.addReference(this.reference);
         }
 
         if (this.args.length > 0) {

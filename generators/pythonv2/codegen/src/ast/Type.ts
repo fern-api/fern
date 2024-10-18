@@ -166,19 +166,19 @@ export class Type extends AstNode {
                 writer.write("bytes");
                 break;
             case "list":
-                writer.addReference(python.reference({ name: "List", modulePath: ["typing"] }));
+                this.addReference(python.reference({ name: "List", modulePath: ["typing"] }));
                 writer.write("List[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "set":
-                writer.addReference(python.reference({ name: "Set", modulePath: ["typing"] }));
+                this.addReference(python.reference({ name: "Set", modulePath: ["typing"] }));
                 writer.write("Set[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "tuple":
-                writer.addReference(python.reference({ name: "Tuple", modulePath: ["typing"] }));
+                this.addReference(python.reference({ name: "Tuple", modulePath: ["typing"] }));
                 writer.write("Tuple[");
                 this.internalType.values.forEach((value, index) => {
                     if (index > 0) {
@@ -189,7 +189,7 @@ export class Type extends AstNode {
                 writer.write("]");
                 break;
             case "dict":
-                writer.addReference(python.reference({ name: "Dict", modulePath: ["typing"] }));
+                this.addReference(python.reference({ name: "Dict", modulePath: ["typing"] }));
                 writer.write("Dict[");
                 this.internalType.keyType.write(writer);
                 writer.write(", ");
@@ -200,13 +200,13 @@ export class Type extends AstNode {
                 writer.write("None");
                 break;
             case "optional":
-                writer.addReference(python.reference({ name: "Optional", modulePath: ["typing"] }));
+                this.addReference(python.reference({ name: "Optional", modulePath: ["typing"] }));
                 writer.write("Optional[");
                 this.internalType.value.write(writer);
                 writer.write("]");
                 break;
             case "union":
-                writer.addReference(python.reference({ name: "Union", modulePath: ["typing"] }));
+                this.addReference(python.reference({ name: "Union", modulePath: ["typing"] }));
                 writer.write("Union[");
                 this.internalType.values.forEach((value, index) => {
                     if (index > 0) {
@@ -217,11 +217,11 @@ export class Type extends AstNode {
                 writer.write("]");
                 break;
             case "any":
-                writer.addReference(python.reference({ name: "Any", modulePath: ["typing"] }));
+                this.addReference(python.reference({ name: "Any", modulePath: ["typing"] }));
                 writer.write("Any");
                 break;
             case "reference":
-                writer.addReference(this.internalType.value);
+                this.addReference(this.internalType.value);
                 break;
             default:
                 assertNever(this.internalType);

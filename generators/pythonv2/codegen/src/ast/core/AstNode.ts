@@ -1,8 +1,19 @@
 import { AbstractAstNode } from "@fern-api/generator-commons";
 import { Writer } from "./Writer";
 import init, { format } from "@wasm-fmt/ruff_fmt";
+import { Reference } from "../Reference";
 
 export abstract class AstNode extends AbstractAstNode {
+    private references: Reference[] = [];
+
+    public addReference(reference: Reference): void {
+        this.references.push(reference);
+    }
+
+    public getReferences(): Reference[] {
+        return this.references;
+    }
+
     /**
      * Writes the node to a string.
      */
