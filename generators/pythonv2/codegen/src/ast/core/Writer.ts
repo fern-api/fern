@@ -8,9 +8,6 @@ type ModulePath = string;
 export declare namespace Writer {}
 
 export class Writer extends AbstractWriter {
-    /* Import statements */
-    private references: Reference[] = [];
-
     public toString(): string {
         return this.buffer;
     }
@@ -18,13 +15,5 @@ export class Writer extends AbstractWriter {
     public async toStringFormatted(): Promise<string> {
         await init();
         return format(this.buffer);
-    }
-
-    public addReference(reference: Reference): void {
-        this.references.push(reference);
-    }
-
-    public getReferences(): Reference[] {
-        return this.references;
     }
 }

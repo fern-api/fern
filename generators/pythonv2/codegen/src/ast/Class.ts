@@ -28,6 +28,10 @@ export class Class extends AstNode {
         this.name = name;
         this.extends_ = extends_ ?? [];
         this.decorators = decorators ?? [];
+
+        this.extends_.forEach((parentClassReference) => {
+            this.addReference(parentClassReference);
+        });
     }
 
     public write(writer: Writer): void {
@@ -44,7 +48,6 @@ export class Class extends AstNode {
                     writer.write(", ");
                 }
                 parentClassReference.write(writer);
-                writer.addReference(parentClassReference);
             });
             writer.write(")");
         }
