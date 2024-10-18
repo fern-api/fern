@@ -6,6 +6,15 @@ exports[`PythonFile > Add a Method 1`] = `
 "
 `;
 
+exports[`PythonFile > Add a class that inherits from a class imported from another file 1`] = `
+"from ..test_module.base import BaseClass
+
+
+class DerivedClass(BaseClass):
+    pass
+"
+`;
+
 exports[`PythonFile > Add a class with a reference that uses a python standard library reference 1`] = `
 "from itertools import chain
 

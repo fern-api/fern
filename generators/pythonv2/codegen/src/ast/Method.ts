@@ -28,8 +28,6 @@ export declare namespace Method {
         docstring?: string;
         /* The type of the method if defined within the context of a class */
         type?: ClassMethodType;
-        /* The class this method belongs to, if any */
-        classReference?: Reference;
         /* The decorators that should be applied to this method */
         decorators?: Decorator[];
     }
@@ -45,7 +43,7 @@ export class Method extends AstNode {
     private readonly parameters: Parameter[];
     private readonly decorators: Decorator[];
 
-    constructor({ name, parameters, return_, body, docstring, type, classReference, decorators }: Method.Args) {
+    constructor({ name, parameters, return_, body, docstring, type, decorators }: Method.Args) {
         super();
         this.name = name;
         this.parameters = parameters;

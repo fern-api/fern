@@ -31,6 +31,10 @@ export class PythonFile extends AstNode {
 
     public addStatement(statement: AstNode): void {
         this.statements.push(statement);
+
+        statement.getReferences().forEach((reference) => {
+            this.addReference(reference);
+        });
     }
 
     public write(writer: Writer): void {
@@ -49,7 +53,7 @@ export class PythonFile extends AstNode {
      *******************************/
 
     private writeImports(writer: Writer): void {
-        const references = writer.getReferences();
+        const references = this.getReferences();
 
         // Deduplicate references by their fully qualified paths
         const uniqueReferences = new Map<string, Reference>();

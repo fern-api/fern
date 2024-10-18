@@ -37,8 +37,8 @@ describe("PythonFile", () => {
         const testClass = python.class_({
             name: "TestClass"
         });
+        testClass.addReference(python.reference({ modulePath: ["itertools"], name: "chain" }));
         testClass.addBody(python.codeBlock("flat_list = list(itertools.chain([[1, 2], [3, 4]]))"));
-        writer.addReference(python.reference({ modulePath: ["itertools"], name: "chain" }));
 
         file.addStatement(testClass);
 
@@ -61,7 +61,6 @@ describe("PythonFile", () => {
             name: "TestClass",
             extends_: [relativeRef]
         });
-        writer.addReference(relativeRef);
         file.addStatement(testClass);
 
         // Add a class with a deeply nested relative import
@@ -73,7 +72,6 @@ describe("PythonFile", () => {
             name: "DeeplyNestedTestClass",
             extends_: [deeplyNestedRef]
         });
-        writer.addReference(deeplyNestedRef);
         file.addStatement(deeplyNestedClass);
 
         file.write(writer);
@@ -128,7 +126,6 @@ describe("PythonFile", () => {
             name: "TestClassWithAlias",
             extends_: [absoluteRef]
         });
-        writer.addReference(absoluteRef);
         file.addStatement(testClass);
 
         file.write(writer);
@@ -151,8 +148,30 @@ describe("PythonFile", () => {
             name: "TestClassWithRelativeAlias",
             extends_: [relativeRef]
         });
-        writer.addReference(relativeRef);
         file.addStatement(testClass);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
+    it("Add a class that inherits from a class imported from another file", async () => {
+        const file = python.file({
+            moduleName: "test_module",
+            path: ["test"],
+            name: "test_file"
+        });
+
+        const baseClassRef = python.reference({
+            modulePath: ["test_module", "base"],
+            name: "BaseClass"
+        });
+
+        const derivedClass = python.class_({
+            name: "DerivedClass",
+            extends_: [baseClassRef]
+        });
+
+        file.addStatement(derivedClass);
 
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
