@@ -20,10 +20,10 @@ describe("class", () => {
         const clazz = python.class_({
             name: "Car"
         });
-        clazz.addField(
+        clazz.addStatement(
             python.field({ name: "color", type: python.Type.str(), initializer: python.codeBlock("'red'") })
         );
-        clazz.addField(
+        clazz.addStatement(
             python.field({
                 name: "partNameById",
                 type: python.Type.dict(python.Type.int(), python.Type.str()),
@@ -75,6 +75,33 @@ describe("class", () => {
                 })
             ]
         });
+        clazz.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
+    it("should generate a class with local classes", async () => {
+        const clazz = python.class_({
+            name: "OuterClass"
+        });
+
+        const parentClassRef = python.reference({
+            name: "ParentClass",
+            modulePath: ["some_module"]
+        });
+
+        const innerClassDef = python.class_({
+            name: "InnerClass",
+            extends_: [parentClassRef]
+        });
+        const innerMethod = python.method({
+            name: "inner_method",
+            parameters: [python.parameter({ name: "self", type: python.Type.str() })]
+        });
+        innerMethod.addStatement(python.codeBlock('return "Inner method called"'));
+        innerClassDef.addStatement(innerMethod);
+
+        clazz.addStatement(innerClassDef);
+
         clazz.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
