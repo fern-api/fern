@@ -144,12 +144,12 @@ async function runGenerateAndFinish(
     generatedMessages: string[]
 ) {
     try {
-        await context.runInteractiveTask({ name: "Generating your libraries..." }, async (interactiveContext) => {
+        await context.runInteractiveTask({ name: "Generating your TypeScript SDK..." }, async (interactiveContext) => {
             await generateWorkspace({
                 organization: project.config.organization,
                 workspace,
                 projectConfig: project.config,
-                context,
+                context: interactiveContext,
                 version: undefined,
                 groupName: undefined,
                 shouldLogS3Url: false,
@@ -160,7 +160,7 @@ async function runGenerateAndFinish(
                 token
             });
 
-            interactiveContext.setSubtitle("Libraries generated!");
+            interactiveContext.setSubtitle("SDK generated!");
 
             let message = "";
             message += `${chalk.underline("Your Repositories")}\n\n`;

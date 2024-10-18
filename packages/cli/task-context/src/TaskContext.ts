@@ -17,6 +17,7 @@ export interface TaskContext {
 }
 
 export interface InteractiveTaskContext extends TaskContext {
+    appendLog: (line: string) => void;
     setSubtitle: (subtitle: string | undefined) => void;
     getOutput: () => string | undefined;
     setOutput: (output: string) => void;

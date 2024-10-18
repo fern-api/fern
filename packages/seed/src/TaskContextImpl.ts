@@ -227,6 +227,7 @@ export class InteractiveTaskContextImpl
     implements Startable<InteractiveTaskContext>, Finishable, InteractiveTaskContext
 {
     private name: string;
+    private logCache: string[] = [];
     private subtitle: string | undefined;
     private silent: boolean;
     private progressBar: ProgressBar | undefined;
@@ -285,6 +286,14 @@ export class InteractiveTaskContextImpl
         super.finish();
     }
 
+    public appendLog(subtitle: string): void {
+        if (this.logCache.length > 10) {
+            this.logCache = [...this.logCache.slice(-9), subtitle];
+        } else {
+            this.logCache.push(subtitle);
+        }
+    }
+
     public setSubtitle(subtitle: string | undefined): void {
         this.subtitle = subtitle;
     }
@@ -295,7 +304,9 @@ export class InteractiveTaskContextImpl
         }
         const lines = [this.name];
         if (this.subtitle != null) {
-            lines.push(chalk.dim(this.subtitle));
+            let renderedSubtitle = this.subtitle;
+            renderedSubtitle += `\n${this.logCache.join("\n")}`;
+            lines.push(chalk.dim(renderedSubtitle));
         }
 
         if (this.progressBar != null) {
