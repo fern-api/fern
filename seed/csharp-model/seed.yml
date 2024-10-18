@@ -27,7 +27,7 @@ test:
     runCommand: node model/dist/cli.cjs
 
 language: csharp
-generatorType: SDK
+generatorType: Model
 defaultOutputMode: github
 fixtures:
   grpc-proto-exhaustive:
