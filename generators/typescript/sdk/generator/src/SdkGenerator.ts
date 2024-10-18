@@ -555,14 +555,15 @@ export class SdkGenerator {
     private generateTypeDeclarations() {
         for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
             if (typeDeclaration.inline) {
-                this.withSourceFile({
-                    filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
-                    run: ({ sourceFile, importsManager }) => {
-                        const context = this.generateSdkContext({ sourceFile, importsManager });
-                        context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
-                    }
-                });
+                continue;
             }
+            this.withSourceFile({
+                filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
+                }
+            });
         }
     }
 

@@ -224,7 +224,7 @@ export async function generateIntermediateRepresentation({
 
                     for (const [_, inlinedTypeDeclaration] of Object.entries(inlinedTypeDeclarations)) {
                         const inlinedTypeId = IdGenerator.generateTypeId(inlinedTypeDeclaration.name);
-                        console.log(`Adding inlined type ${_} with id ${inlinedTypeId}`);
+                        // console.log(`Adding inlined type ${_} with id ${inlinedTypeId}`);
                         intermediateRepresentation.types[inlinedTypeId] = inlinedTypeDeclaration;
                         packageTreeGenerator.addType(inlinedTypeId, inlinedTypeDeclaration);
                     }
