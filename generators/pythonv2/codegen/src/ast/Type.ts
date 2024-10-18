@@ -222,6 +222,7 @@ export class Type extends AstNode {
                 break;
             case "reference":
                 this.addReference(this.internalType.value);
+                this.internalType.value.write(writer);
                 break;
             default:
                 assertNever(this.internalType);

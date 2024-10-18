@@ -45,7 +45,10 @@ exports[`Type > writes optional type 1`] = `
 "
 `;
 
-exports[`Type > writes reference type 1`] = `""`;
+exports[`Type > writes reference type 1`] = `
+"MyClass
+"
+`;
 
 exports[`Type > writes set type 1`] = `
 "Set[str]
