@@ -29,7 +29,7 @@ export class PythonFile extends AstNode {
         this.name = name;
     }
 
-    public addStatement(statement: Class | Method | CodeBlock): void {
+    public addStatement(statement: AstNode): void {
         this.statements.push(statement);
     }
 
