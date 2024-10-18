@@ -85,9 +85,9 @@ describe("Method", () => {
         it("should generate a method with a body", async () => {
             const method = python.method({
                 name: "with_body",
-                parameters: [],
-                body: python.codeBlock("return True")
+                parameters: []
             });
+            method.addStatement(python.codeBlock("return True"));
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
@@ -130,6 +130,36 @@ describe("Method", () => {
                     })
                 ]
             });
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("should generate a method with local classes", async () => {
+            const method = python.method({
+                name: "method_with_local_classes",
+                parameters: []
+            });
+
+            const parentClassRef = python.reference({
+                name: "ParentClass",
+                modulePath: ["some_module"]
+            });
+
+            const childClassDef = python.class_({
+                name: "ChildClass",
+                extends_: [parentClassRef]
+            });
+            const childMethod = python.method({
+                name: "child_method",
+                parameters: [python.parameter({ name: "self", type: python.Type.str() })]
+            });
+            childMethod.addStatement(python.codeBlock("self.parent_method()"));
+            childMethod.addStatement(python.codeBlock('return "Child method called"'));
+            childClassDef.addStatement(childMethod);
+
+            method.addStatement(childClassDef);
+            method.addStatement(python.codeBlock("return ChildClass()"));
+
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
