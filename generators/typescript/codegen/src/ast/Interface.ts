@@ -37,7 +37,7 @@ export class Interface extends AstNode {
 
     public write(writer: Writer): void {
         if (this.args.docs != null) {
-            writer.writeNode(new DocString(this.args.docs));
+            writer.writeNode(new DocString(this.args.docs, { multiline: true }));
             writer.writeLine();
         }
         if (this.args.export) {

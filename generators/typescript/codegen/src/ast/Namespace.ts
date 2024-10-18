@@ -35,9 +35,9 @@ export class Namespace extends AstNode {
         }
 
         let setAmbience = false;
-        if (!writer.isAmbient) {
+        if (!writer.isAmbient()) {
             writer.write("declare ");
-            writer.setAmbient(true);
+            writer.startAmbient();
             setAmbience = true;
         }
 
@@ -54,7 +54,7 @@ export class Namespace extends AstNode {
         writer.writeLine(`}`);
 
         if (setAmbience) {
-            writer.setAmbient(false);
+            writer.stopAmbient();
         }
     }
 }

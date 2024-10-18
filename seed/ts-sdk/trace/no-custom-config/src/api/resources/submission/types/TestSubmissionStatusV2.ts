@@ -3,10 +3,12 @@
  */
 
 import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index../../../index";
 
 export interface TestSubmissionStatusV2 {
     updates: SeedTrace.TestSubmissionUpdate[];
     problemId: SeedTrace.ProblemId;
     problemVersion: number;
-    problemInfo: SeedTrace.v2.ProblemInfoV2;
+    problemInfo: SeedTrace.V2.ProblemInfoV2;
 }

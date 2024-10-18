@@ -118,6 +118,7 @@ export class TypeContextImpl implements TypeContext {
         }
 
         return this.typeGenerator.generateType({
+            typeDeclaration,
             shape: typeDeclaration.shape,
             docs: typeDeclaration.docs ?? undefined,
             typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),

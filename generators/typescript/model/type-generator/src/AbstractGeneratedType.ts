@@ -1,4 +1,4 @@
-import { ExampleType, ExampleTypeShape, FernFilepath } from "@fern-fern/ir-sdk/api";
+import { ExampleType, ExampleTypeShape, FernFilepath, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { BaseGeneratedType } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -6,6 +6,7 @@ import { TypeGenerator } from "./TypeGenerator";
 
 export declare namespace AbstractGeneratedType {
     export interface Init<Shape, Context> extends TypeGenerator.Init {
+        typeDeclaration: TypeDeclaration;
         typeName: string;
         shape: Shape;
         examples: ExampleType[];
@@ -28,10 +29,12 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
     protected retainOriginalCasing: boolean;
     protected includeUtilsOnUnionMembers: boolean;
     protected includeOtherInUnionTypes: boolean;
+    protected typeDeclaration: TypeDeclaration;
 
     private docs: string | undefined;
 
     constructor({
+        typeDeclaration,
         getReferenceToSelf,
         typeName,
         shape,
@@ -44,6 +47,7 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
         includeUtilsOnUnionMembers,
         includeOtherInUnionTypes
     }: AbstractGeneratedType.Init<Shape, Context>) {
+        this.typeDeclaration = typeDeclaration;
         this.typeName = typeName;
         this.shape = shape;
         this.examples = examples;

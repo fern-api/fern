@@ -79,7 +79,7 @@ describe("Interface", () => {
                 extends: [
                     ts.Reference.module({
                         module: "Sdk",
-                        name: ["BaseSchema"],
+                        name: "BaseSchema",
                         source: "../../"
                     })
                 ]
