@@ -5,7 +5,10 @@ exports[`Reference > toString > handles class with alias 1`] = `
 "
 `;
 
-exports[`Reference > toString > handles class with generic type referencing another class 1`] = `"ComplexGenericClass[OtherClass]"`;
+exports[`Reference > toString > handles class with generic type referencing another class 1`] = `
+"ComplexGenericClass[OtherClass]
+"
+`;
 
 exports[`Reference > toString > handles class with one generic type 1`] = `
 "GenericClass[str]

@@ -74,7 +74,7 @@ describe("Reference", () => {
                 ]
             });
             reference.write(writer);
-            expect(await writer.toString()).toMatchSnapshot();
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
         it("handles class with alias", async () => {
