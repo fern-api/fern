@@ -7,6 +7,7 @@ export async function parseGeneratorConfig(pathToConfig: string): Promise<FernGe
     // eslint-disable-next-line no-console
     console.log(`Parsed ${pathToConfig}`);
     const rawConfig = JSON.parse(configStr.toString());
+    console.log(`Reading ${JSON.stringify(rawConfig)}`);
     const parsedConfig = await GeneratorExecParsing.GeneratorConfig.parse(rawConfig, {
         unrecognizedObjectKeys: "passthrough"
     });

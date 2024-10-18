@@ -311,6 +311,7 @@ async function startJob({
     context: TaskContext;
     irVersionOverride: string | undefined;
 }): Promise<void> {
+    context.logger.debug("Migrating IR.");
     const migratedIntermediateRepresentation =
         irVersionOverride == null
             ? await migrateIntermediateRepresentationForGenerator({
