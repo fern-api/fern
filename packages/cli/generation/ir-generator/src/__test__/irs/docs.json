@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_service:Object": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Object",

@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Node": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Node",
@@ -2048,6 +2049,7 @@
             "docs": null
         },
         "type_:Tree": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Tree",
@@ -4171,6 +4173,7 @@
             "docs": null
         },
         "type_commons/metadata:Metadata": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Metadata",
@@ -4823,6 +4826,7 @@
             "docs": null
         },
         "type_file:File": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "File",
@@ -5917,6 +5921,7 @@
             "docs": null
         },
         "type_file:FileInfo": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "FileInfo",
@@ -6149,6 +6154,7 @@
             "docs": null
         },
         "type_file/directory:Directory": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Directory",
