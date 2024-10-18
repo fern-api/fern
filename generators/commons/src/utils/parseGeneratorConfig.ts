@@ -15,6 +15,7 @@ export async function parseGeneratorConfig(pathToConfig: string): Promise<FernGe
     if (!parsedConfig.ok) {
         // eslint-disable-next-line no-console
         console.log(`Failed to parse ${pathToConfig}`);
+        console.log(`Failed to parse ${JSON.stringify(parsedConfig.errors)}`);
         throw new Error("Failed to parse the generator configuration");
     }
 
