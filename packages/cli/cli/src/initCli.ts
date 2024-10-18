@@ -296,7 +296,8 @@ const initializeFernConfigRepo = async (
 ) => {
     let repoUrl: string | undefined = undefined;
     await context.runInteractiveTask({ name: "Creating Fern Configuration repository" }, async (interactiveContext) => {
-        const repoName = `${organization}-fern-config`;
+        // const repoName = `${organization}-fern-config`;
+        const repoName = `${organization}-configuration`;
         repoUrl = await createGithubRepo({
             app,
             orgName: FERN_DEMO_ORG,
