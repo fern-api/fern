@@ -1,8 +1,8 @@
 # TODO: delete this when we migrate to the one versions file in `publish-generators-v2`
-name: publish-generators
+name: publish-generators (hackweek)
 
 on:
-  pull_request:
+  push:
     branches:
       - dsinghvi/full-hackweek
 
