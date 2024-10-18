@@ -22,8 +22,6 @@ export declare namespace Method {
         parameters: Parameter[];
         /* The return type of the method */
         return_?: Type;
-        /* The body of the method */
-        body?: CodeBlock;
         /* The docstring for the method */
         docstring?: string;
         /* The type of the method if defined within the context of a class */
@@ -37,18 +35,17 @@ export declare namespace Method {
 export class Method extends AstNode {
     public readonly name: string;
     public readonly return: Type | undefined;
-    public readonly body: CodeBlock | undefined;
     public readonly docstring: string | undefined;
     public readonly type: ClassMethodType | undefined;
     private readonly parameters: Parameter[];
     private readonly decorators: Decorator[];
+    private readonly statements: AstNode[] = [];
 
-    constructor({ name, parameters, return_, body, docstring, type, decorators }: Method.Args) {
+    constructor({ name, parameters, return_, docstring, type, decorators }: Method.Args) {
         super();
         this.name = name;
         this.parameters = parameters;
         this.return = return_;
-        this.body = body;
         this.docstring = docstring;
         this.type = type;
         this.decorators = decorators ?? [];
@@ -56,6 +53,14 @@ export class Method extends AstNode {
 
     public getName(): string {
         return this.name;
+    }
+
+    public addStatement(statement: AstNode): void {
+        this.statements.push(statement);
+
+        statement.getReferences().forEach((reference) => {
+            this.addReference(reference);
+        });
     }
 
     public write(writer: Writer): void {
@@ -119,15 +124,20 @@ export class Method extends AstNode {
         }
 
         // Write method body
-        if (this.body) {
+        if (this.statements.length) {
             writer.indent();
-            this.body.write(writer);
+            this.statements.forEach((statement, index) => {
+                statement.write(writer);
+                if (index < this.statements.length - 1) {
+                    writer.newLine();
+                }
+            });
             writer.dedent();
         } else {
             writer.indent();
             writer.write("pass");
-            writer.newLine();
             writer.dedent();
         }
+        writer.newLine();
     }
 }

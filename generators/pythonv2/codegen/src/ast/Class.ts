@@ -20,8 +20,7 @@ export class Class extends AstNode {
     public readonly name: string;
     public readonly extends_: Reference[];
     public readonly decorators: Decorator[];
-    private fields: Field[] = [];
-    private body?: CodeBlock;
+    private statements: AstNode[] = [];
 
     constructor({ name, extends_, decorators }: Class.Args) {
         super();
@@ -55,32 +54,24 @@ export class Class extends AstNode {
         writer.newLine();
 
         writer.indent();
-        let hasContents = false;
-        if (this.fields.length) {
-            this.writeFields({ writer });
-            hasContents = true;
-        }
-        if (this.body) {
-            this.body.write(writer);
-            hasContents = true;
-        }
-        if (!hasContents) {
+        if (this.statements.length) {
+            this.writeStatements({ writer });
+        } else {
             writer.write("pass");
         }
         writer.dedent();
     }
 
-    public addField(field: Field): void {
-        this.fields.push(field);
-    }
+    public addStatement(statement: AstNode): void {
+        this.statements.push(statement);
 
-    public addBody(body: CodeBlock): void {
-        this.body = body;
+        statement.getReferences().forEach((reference) => {
+            this.addReference(reference);
+        });
     }
-
-    private writeFields({ writer }: { writer: Writer }): void {
-        this.fields.forEach((field, index) => {
-            field.write(writer);
+    private writeStatements({ writer }: { writer: Writer }): void {
+        this.statements.forEach((statement, index) => {
+            statement.write(writer);
             writer.writeNewLineIfLastLineNot();
         });
     }
