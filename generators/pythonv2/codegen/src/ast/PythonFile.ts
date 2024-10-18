@@ -67,7 +67,9 @@ export class PythonFile extends AstNode {
             const fullyQualifiedPath = reference.getFullyQualifiedModulePath();
             const existingRefs = uniqueReferences.get(fullyQualifiedPath);
             if (existingRefs) {
-                existingRefs.references.push(reference);
+                if (!existingRefs.references.includes(reference)) {
+                    existingRefs.references.push(reference);
+                }
             } else {
                 uniqueReferences.set(fullyQualifiedPath, {
                     modulePath: reference.getModulePath(),
