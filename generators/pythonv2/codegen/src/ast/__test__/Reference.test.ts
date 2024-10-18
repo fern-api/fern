@@ -56,6 +56,27 @@ describe("Reference", () => {
             expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
+        it("handles class with generic type referencing another class", async () => {
+            const otherClassReference = python.reference({
+                name: "OtherClass",
+                modulePath: ["other_module"]
+            });
+            const reference = python.reference({
+                name: "ComplexGenericClass",
+                modulePath: ["module"],
+                genericTypes: [
+                    python.Type.reference(
+                        python.reference({
+                            name: otherClassReference.getName(),
+                            modulePath: otherClassReference.getModulePath()
+                        })
+                    )
+                ]
+            });
+            reference.write(writer);
+            expect(await writer.toString()).toMatchSnapshot();
+        });
+
         it("handles class with alias", async () => {
             const reference = python.reference({
                 name: "AliasClass",
