@@ -371,12 +371,13 @@ function getGeneratorInvocationOverride(
         return {
             ...defaultInvocation,
             "ir-version": "v53",
-            version: "0.0.0-hw0",
+            version: "0.0.0-rc0",
             config: {
                 namespaceExport: organization,
                 allowCustomFetcher: true,
                 skipResponseValidation: true,
-                generateWireTests: true
+                generateWireTests: true,
+                noSerdeLayer: true
             }
         };
     }

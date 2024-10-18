@@ -32,5 +32,5 @@ jobs:
 
       - name: Publish fernapi/fern-typescript-node-sdk docker
         run: |
-          pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "0.0.0-hw0"
-          docker push fernapi/fern-typescript-node-sdk:0.0.0-hw0
+          pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "0.0.0-rc0"
+          docker push fernapi/fern-typescript-node-sdk:0.0.0-rc0

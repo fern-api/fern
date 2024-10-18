@@ -62,19 +62,24 @@ export async function createOpenAPIWorkspace({
     }
     const openAPIfilename = path.basename(openAPIFilePath);
     const apiConfiguration: generatorsYml.APIConfigurationSchema = {
-        path: join(RelativeFilePath.of(OPENAPI_DIRECTORY), RelativeFilePath.of(openAPIfilename))
+        specs: [
+            {
+                openapi: join(RelativeFilePath.of(OPENAPI_DIRECTORY), RelativeFilePath.of(openAPIfilename))
+            }
+        ],
+        settings: {
+            "inline-types": true
+        }
     };
     const openapiDirectory = join(directoryOfWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     await mkdir(openapiDirectory);
     const openAPIContents = await readFile(openAPIFilePath);
     await writeFile(join(openapiDirectory, RelativeFilePath.of(openAPIfilename)), openAPIContents);
 
-    if (includeOverrides) {
+    const val = (apiConfiguration.specs as any)[0]!;
+    if (val != null && includeOverrides) {
         const overridesFilename = "openapi-overrides.yml";
-        apiConfiguration.overrides = join(
-            RelativeFilePath.of(OPENAPI_DIRECTORY),
-            RelativeFilePath.of(overridesFilename)
-        );
+        val.overrides = join(RelativeFilePath.of(OPENAPI_DIRECTORY), RelativeFilePath.of(overridesFilename));
         // Essentially running `touch`
         await writeFile(join(openapiDirectory, RelativeFilePath.of(overridesFilename)), "");
     }
