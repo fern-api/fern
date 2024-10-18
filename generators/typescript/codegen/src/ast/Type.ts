@@ -179,6 +179,13 @@ export class Type extends AstNode {
         });
     }
 
+    public static set(value: Type): Type {
+        return new this({
+            type: "set",
+            value
+        });
+    }
+
     public static date(): Type {
         return new this({
             type: "date"

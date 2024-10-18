@@ -3,7 +3,8 @@
  */
 
 import * as SeedTrace from "../../../index";
+import * as SeedTrace from "../../../index../../../index";
 
 export interface WorkspaceStarterFilesResponseV2 {
-    filesByLanguage: Record<SeedTrace.Language, SeedTrace.v2.Files | undefined>;
+    filesByLanguage: Record<SeedTrace.Language, SeedTrace.V2.Files>;
 }

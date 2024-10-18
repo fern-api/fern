@@ -1,6 +1,6 @@
 import { ts, Writer } from "../..";
 
-describe("TypescriptFile", () => {
+describe("Writer", () => {
     describe("toStringFormatted", () => {
         it("should generate an empty TypeScript file", () => {
             const writer = new Writer();

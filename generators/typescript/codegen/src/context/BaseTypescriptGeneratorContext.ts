@@ -6,6 +6,10 @@ import { Reference } from "../ast";
 import { BaseTypescriptCustomConfigSchema } from "../custom-config/BaseTypescriptCustomConfigSchema";
 import { TypescriptTypeMapper } from "./TypescriptTypeMapper";
 
+const API_DIRECTORY_NAME = "api";
+const RESOURCES_DIRECTORY_NAME = "api";
+const TYPES_DIRECTORY_NAME = "types";
+
 export class BaseTypescriptGeneratorContext<
     CustomConfig extends BaseTypescriptCustomConfigSchema
 > extends AbstractGeneratorContext {
@@ -42,13 +46,29 @@ export class BaseTypescriptGeneratorContext<
 
     public getReferenceToNamedType(typeId: TypeId): ts.Reference {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return Reference.module({
+        return Reference.rootModule({
             module: this.getNamespaceExport(),
-            name: [
-                ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName),
-                typeDeclaration.name.name.pascalCase.safeName
-            ],
-            source: `${typeDeclaration.name.fernFilepath.allParts.map(() => "../../../").join("")}`
+            path: [...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName)],
+            name: typeDeclaration.name.name.pascalCase.safeName
         });
+    }
+
+    public getFilepathForTypeId(typeId: TypeId): string {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+
+        const filename = `${typeDeclaration.name.name.camelCase.safeName}.ts`;
+
+        if (typeDeclaration.name.fernFilepath.packagePath == null) {
+            return [API_DIRECTORY_NAME, TYPES_DIRECTORY_NAME, filename].join("/");
+        }
+
+        return [
+            API_DIRECTORY_NAME,
+            ...typeDeclaration.name.fernFilepath.packagePath.flatMap((part) => [
+                part.camelCase.safeName,
+                TYPES_DIRECTORY_NAME
+            ]),
+            filename
+        ].join("/");
     }
 }

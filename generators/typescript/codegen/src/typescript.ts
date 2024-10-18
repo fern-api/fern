@@ -16,8 +16,8 @@ export function namespace(arg: AST.Namespace.Args): AST.Namespace {
     return new AST.Namespace(arg);
 }
 
-export function file(): AST.TypescriptFile {
-    return new AST.TypescriptFile();
+export function writer(filepath?: string): AST.Writer {
+    return new AST.Writer(filepath);
 }
 
 export * from "./ast";

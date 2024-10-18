@@ -11,8 +11,8 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
 {
     public readonly type = "object";
 
-    public writeToFile(context: Context): void {
-        const file = TypeScriptAST.file();
+    public async writeToFile(context: Context): Promise<void> {
+        const writer = TypeScriptAST.writer(context.V2.getFilepathForTypeId(this.typeDeclaration.name.typeId));
 
         const interface_ = TypeScriptAST.interface_({
             name: this.typeName,
@@ -32,10 +32,10 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
             docs: this.getDocs(context)
         });
 
-        file.addInterface(interface_);
+        writer.addInterface(interface_);
 
         context.sourceFile.set({
-            statements: file.toStringFormatted()
+            statements: writer.toStringFormatted()
         });
     }
 

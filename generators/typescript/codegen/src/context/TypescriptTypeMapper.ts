@@ -51,8 +51,13 @@ export class TypescriptTypeMapper {
                 }
                 return Type.record(key, value);
             }
-            case "set":
-                return Type.array(this.convert({ reference: container.set }));
+            case "set": {
+                if (this.context.customConfig.noSerdeLayer) {
+                    return Type.set(this.convert({ reference: container.set }));
+                } else {
+                    return Type.array(this.convert({ reference: container.set }));
+                }
+            }
             case "optional":
                 return this.convert({ reference: container.optional });
             case "literal":
@@ -72,8 +77,16 @@ export class TypescriptTypeMapper {
             double: () => ts.Type.number(),
             boolean: () => ts.Type.boolean(),
             string: () => ts.Type.string(),
-            date: () => ts.Type.string(),
-            dateTime: () => ts.Type.date(),
+            date: () => {
+                return Type.string();
+            },
+            dateTime: () => {
+                if (this.context.customConfig.noSerdeLayer) {
+                    return Type.string();
+                } else {
+                    return Type.date();
+                }
+            },
             uuid: () => ts.Type.string(),
             // https://learn.microsoft.com/en-us/dotnet/api/system.convert.tobase64string?view=net-8.0
             base64: () => ts.Type.string(),
