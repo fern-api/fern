@@ -4,6 +4,21 @@ import { Namespace } from "./Namespace";
 import { Reference } from "./Reference";
 import * as prettier from "prettier";
 import * as path from "path";
+import internal from "stream";
+
+export declare namespace Writer {
+    type Element = InterfaceElement | NamespaceElement;
+
+    interface InterfaceElement {
+        type: "interface";
+        value: Interface;
+    }
+
+    interface NamespaceElement {
+        type: "namespace";
+        value: Namespace;
+    }
+}
 
 export class Writer extends AbstractWriter {
     private filepath: string | undefined;
@@ -14,7 +29,7 @@ export class Writer extends AbstractWriter {
     /**
      * The ordered elements inside of a namespace
      */
-    private elements: (Interface | Namespace)[] = [];
+    private elements: Writer.Element[] = [];
 
     public constructor(filepath?: string) {
         super();
@@ -25,8 +40,8 @@ export class Writer extends AbstractWriter {
      * Add a namespace to the relevant file
      * @param interface_
      */
-    public addNamespace(interface_: Namespace): void {
-        this.elements.push(interface_);
+    public addNamespace(namespace: Namespace): void {
+        this.elements.push({ type: "namespace", value: namespace });
     }
 
     /**
@@ -34,7 +49,16 @@ export class Writer extends AbstractWriter {
      * @param interface_
      */
     public addInterface(interface_: Interface): void {
-        this.elements.push(interface_);
+        const alreadyContainsInterface =
+            this.elements.find((element) => {
+                if (element.type === "interface" && element.value.name === interface_.name) {
+                    return true;
+                }
+                return undefined;
+            }) != null;
+        if (!alreadyContainsInterface) {
+            this.elements.push({ type: "interface", value: interface_ });
+        }
     }
 
     /**
@@ -59,7 +83,7 @@ export class Writer extends AbstractWriter {
 
     public toString(skipImports = false): string {
         for (const element of this.elements) {
-            this.writeNode(element);
+            this.writeNode(element.value);
             this.writeLine();
             this.writeLine();
         }

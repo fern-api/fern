@@ -28,7 +28,8 @@ export class TypescriptTypeMapper {
         switch (reference.type) {
             case "container":
                 return this.convertContainer({
-                    container: reference.container
+                    container: reference.container,
+                    property
                 });
             case "named":
                 return this.convertNamed({ named: reference, property });
@@ -44,7 +45,7 @@ export class TypescriptTypeMapper {
     private convertContainer({ property, container }: { container: ContainerType; property?: NameAndWireValue }): Type {
         switch (container.type) {
             case "list":
-                return ts.Type.array(this.convert({ reference: container.list }));
+                return ts.Type.array(this.convert({ reference: container.list, property }));
             case "map": {
                 const key = this.convert({ reference: container.keyType });
                 const value = this.convert({ reference: container.valueType });
@@ -56,13 +57,13 @@ export class TypescriptTypeMapper {
             }
             case "set": {
                 if (this.context.customConfig.noSerdeLayer) {
-                    return Type.set(this.convert({ reference: container.set }));
+                    return Type.set(this.convert({ reference: container.set, property }));
                 } else {
                     return Type.array(this.convert({ reference: container.set, property }));
                 }
             }
             case "optional":
-                return this.convert({ reference: container.optional });
+                return this.convert({ reference: container.optional, property });
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:

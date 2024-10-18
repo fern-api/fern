@@ -31,8 +31,11 @@ export declare namespace Interface {
 }
 
 export class Interface extends AstNode {
+    public name: string;
+
     public constructor(private readonly args: Interface.Args) {
         super();
+        this.name = args.name;
     }
 
     public write(writer: Writer): void {
