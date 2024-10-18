@@ -17,7 +17,25 @@ public class GetAccountTest : BaseMockServerTest
         const string mockResponse = """
             {
               "resource_type": "Account",
-              "name": "name"
+              "name": "name",
+              "patient": {
+                "resource_type": "Patient",
+                "name": "name",
+                "scripts": [
+                  {
+                    "resource_type": "Script",
+                    "name": "name"
+                  },
+                  {
+                    "resource_type": "Script",
+                    "name": "name"
+                  }
+                ]
+              },
+              "practitioner": {
+                "resource_type": "Practitioner",
+                "name": "name"
+              }
             }
             """;
 

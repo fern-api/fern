@@ -1,47 +1,18 @@
 # frozen_string_literal: true
 
-require_relative "types_export"
-require_relative "requests"
-require_relative "seed_pagination_client/users/client"
-
-module SeedPaginationClient
-  class Client
-    # @return [SeedPaginationClient::UsersClient]
-    attr_reader :users
-
-    # @param base_url [String]
-    # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
-    # @param timeout_in_seconds [Long]
-    # @param token [String]
-    # @return [SeedPaginationClient::Client]
-    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedPaginationClient::RequestClient.new(
-        base_url: base_url,
-        max_retries: max_retries,
-        timeout_in_seconds: timeout_in_seconds,
-        token: token
-      )
-      @users = SeedPaginationClient::UsersClient.new(request_client: @request_client)
-    end
-  end
-
-  class AsyncClient
-    # @return [SeedPaginationClient::AsyncUsersClient]
-    attr_reader :users
-
-    # @param base_url [String]
-    # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
-    # @param timeout_in_seconds [Long]
-    # @param token [String]
-    # @return [SeedPaginationClient::AsyncClient]
-    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedPaginationClient::AsyncRequestClient.new(
-        base_url: base_url,
-        max_retries: max_retries,
-        timeout_in_seconds: timeout_in_seconds,
-        token: token
-      )
-      @users = SeedPaginationClient::AsyncUsersClient.new(request_client: @async_request_client)
-    end
-  end
-end
+require_relative "seed_pagination_client/types/username_cursor"
+require_relative "seed_pagination_client/types/username_page"
+require_relative "seed_pagination_client/users/types/order"
+require_relative "seed_pagination_client/users/types/with_page"
+require_relative "seed_pagination_client/users/types/with_cursor"
+require_relative "seed_pagination_client/users/types/user_list_container"
+require_relative "seed_pagination_client/users/types/user_page"
+require_relative "seed_pagination_client/users/types/user_optional_list_container"
+require_relative "seed_pagination_client/users/types/user_optional_list_page"
+require_relative "seed_pagination_client/users/types/username_container"
+require_relative "seed_pagination_client/users/types/list_users_extended_response"
+require_relative "seed_pagination_client/users/types/list_users_extended_optional_list_response"
+require_relative "seed_pagination_client/users/types/list_users_pagination_response"
+require_relative "seed_pagination_client/users/types/page"
+require_relative "seed_pagination_client/users/types/next_page"
+require_relative "seed_pagination_client/users/types/user"

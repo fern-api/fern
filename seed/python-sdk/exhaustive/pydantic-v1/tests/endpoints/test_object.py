@@ -9,20 +9,34 @@ from seed.types.object import NestedObjectWithRequiredField
 
 
 async def test_get_and_return_with_optional_field(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response: typing.Any = {}
+    expected_response: typing.Any = {
+        "string": "string",
+        "integer": 1,
+        "long": 1000000,
+        "double": 1.1,
+        "bool": True,
+        "datetime": "2024-01-15T09:30:00Z",
+        "date": "2023-01-15",
+        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        "base64": "SGVsbG8gd29ybGQh",
+        "list": ["list", "list"],
+        "set": ["set"],
+        "map": {"1": "map"},
+        "bigint": "1000000",
+    }
     expected_types: typing.Any = {
         "string": None,
-        "integer": None,
+        "integer": "integer",
         "long": None,
         "double": None,
         "bool": None,
-        "datetime": None,
-        "date": None,
-        "uuid": None,
+        "datetime": "datetime",
+        "date": "date",
+        "uuid": "uuid",
         "base64": None,
-        "list": None,
-        "set": None,
-        "map": None,
+        "list": ("list", {0: None, 1: None}),
+        "set": ("set", {0: None}),
+        "map": ("dict", {0: ("integer", None)}),
         "bigint": None,
     }
     response = client.endpoints.object.get_and_return_with_optional_field()
@@ -55,8 +69,42 @@ async def test_get_and_return_with_map_of_map(client: SeedExhaustive, async_clie
 async def test_get_and_return_nested_with_optional_field(
     client: SeedExhaustive, async_client: AsyncSeedExhaustive
 ) -> None:
-    expected_response: typing.Any = {}
-    expected_types: typing.Any = {"string": None, "NestedObject": None}
+    expected_response: typing.Any = {
+        "string": "string",
+        "NestedObject": {
+            "string": "string",
+            "integer": 1,
+            "long": 1000000,
+            "double": 1.1,
+            "bool": True,
+            "datetime": "2024-01-15T09:30:00Z",
+            "date": "2023-01-15",
+            "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            "base64": "SGVsbG8gd29ybGQh",
+            "list": ["list", "list"],
+            "set": ["set"],
+            "map": {"1": "map"},
+            "bigint": "1000000",
+        },
+    }
+    expected_types: typing.Any = {
+        "string": None,
+        "NestedObject": {
+            "string": None,
+            "integer": "integer",
+            "long": None,
+            "double": None,
+            "bool": None,
+            "datetime": "datetime",
+            "date": "date",
+            "uuid": "uuid",
+            "base64": None,
+            "list": ("list", {0: None, 1: None}),
+            "set": ("set", {0: None}),
+            "map": ("dict", {0: ("integer", None)}),
+            "bigint": None,
+        },
+    }
     response = client.endpoints.object.get_and_return_nested_with_optional_field()
     validate_response(response, expected_response, expected_types)
 
@@ -67,22 +115,39 @@ async def test_get_and_return_nested_with_optional_field(
 async def test_get_and_return_nested_with_required_field(
     client: SeedExhaustive, async_client: AsyncSeedExhaustive
 ) -> None:
-    expected_response: typing.Any = {"string": "string", "NestedObject": {}}
+    expected_response: typing.Any = {
+        "string": "string",
+        "NestedObject": {
+            "string": "string",
+            "integer": 1,
+            "long": 1000000,
+            "double": 1.1,
+            "bool": True,
+            "datetime": "2024-01-15T09:30:00Z",
+            "date": "2023-01-15",
+            "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            "base64": "SGVsbG8gd29ybGQh",
+            "list": ["list", "list"],
+            "set": ["set"],
+            "map": {"1": "map"},
+            "bigint": "1000000",
+        },
+    }
     expected_types: typing.Any = {
         "string": None,
         "NestedObject": {
             "string": None,
-            "integer": None,
+            "integer": "integer",
             "long": None,
             "double": None,
             "bool": None,
-            "datetime": None,
-            "date": None,
-            "uuid": None,
+            "datetime": "datetime",
+            "date": "date",
+            "uuid": "uuid",
             "base64": None,
-            "list": None,
-            "set": None,
-            "map": None,
+            "list": ("list", {0: None, 1: None}),
+            "set": ("set", {0: None}),
+            "map": ("dict", {0: ("integer", None)}),
             "bigint": None,
         },
     }
@@ -100,22 +165,39 @@ async def test_get_and_return_nested_with_required_field(
 async def test_get_and_return_nested_with_required_field_as_list(
     client: SeedExhaustive, async_client: AsyncSeedExhaustive
 ) -> None:
-    expected_response: typing.Any = {"string": "string", "NestedObject": {}}
+    expected_response: typing.Any = {
+        "string": "string",
+        "NestedObject": {
+            "string": "string",
+            "integer": 1,
+            "long": 1000000,
+            "double": 1.1,
+            "bool": True,
+            "datetime": "2024-01-15T09:30:00Z",
+            "date": "2023-01-15",
+            "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            "base64": "SGVsbG8gd29ybGQh",
+            "list": ["list", "list"],
+            "set": ["set"],
+            "map": {"1": "map"},
+            "bigint": "1000000",
+        },
+    }
     expected_types: typing.Any = {
         "string": None,
         "NestedObject": {
             "string": None,
-            "integer": None,
+            "integer": "integer",
             "long": None,
             "double": None,
             "bool": None,
-            "datetime": None,
-            "date": None,
-            "uuid": None,
+            "datetime": "datetime",
+            "date": "date",
+            "uuid": "uuid",
             "base64": None,
-            "list": None,
-            "set": None,
-            "map": None,
+            "list": ("list", {0: None, 1: None}),
+            "set": ("set", {0: None}),
+            "map": ("dict", {0: ("integer", None)}),
             "bigint": None,
         },
     }

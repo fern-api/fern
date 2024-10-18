@@ -576,7 +576,7 @@
                     "body": null
                   },
                   "description": null,
-                  "body": "",
+                  "body": "{\n    \"string\": \"string\"\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -822,7 +822,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{}",
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -914,7 +914,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{}",
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -1006,7 +1006,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{}",
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -1169,7 +1169,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{}",
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -1409,7 +1409,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{}",
+                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -1503,7 +1503,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {}\n}",
+                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -1583,7 +1583,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {}\n}",
+                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -2921,7 +2921,7 @@
                 }
               },
               "description": null,
-              "body": "{}",
+              "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -3075,7 +3075,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{}",
+              "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]

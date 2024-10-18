@@ -61,7 +61,7 @@ export function generatePrimitiveExample({
             return {
                 type: "success",
                 example: ExamplePrimitive.bigInteger(Examples.INT64.toString()),
-                jsonExample: Examples.INT64
+                jsonExample: `${Examples.INT64}`
             };
         }
         case "LONG": {

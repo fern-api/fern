@@ -24,7 +24,8 @@ public class CreateUserTest : BaseMockServerTest
         const string mockResponse = """
             {
               "id": "id",
-              "name": "name"
+              "name": "name",
+              "age": 1
             }
             """;
 

@@ -84,13 +84,10 @@ async def test_get_and_return_map_of_prim_to_object(client: SeedExhaustive, asyn
 
 
 async def test_get_and_return_optional(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert (
-        client.endpoints.container.get_and_return_optional()  # type: ignore[func-returns-value]
-        is None
-    )
+    expected_response: typing.Any = {"string": "string"}
+    expected_types: typing.Any = {"string": None}
+    response = client.endpoints.container.get_and_return_optional()
+    validate_response(response, expected_response, expected_types)
 
-    assert (
-        await async_client.endpoints.container.get_and_return_optional()  # type: ignore[func-returns-value]
-        is None
-    )
+    async_response = await async_client.endpoints.container.get_and_return_optional()
+    validate_response(async_response, expected_response, expected_types)
