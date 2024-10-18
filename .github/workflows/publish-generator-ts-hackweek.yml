@@ -21,10 +21,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Print Version
-        run: |
-          echo "VERSION=$projectVersion" >> "0.0.0-hw0"
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -36,5 +32,5 @@ jobs:
 
       - name: Publish fernapi/fern-typescript-node-sdk docker
         run: |
-          pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
-          docker push fernapi/fern-typescript-node-sdk:"$VERSION"
+          pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "0.0.0-hw0"
+          docker push fernapi/fern-typescript-node-sdk:0.0.0-hw0
