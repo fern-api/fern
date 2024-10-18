@@ -41,6 +41,8 @@ You must write endpoint overrides in the form:
 
 
 It is very important that the keys of the overrides file match the keys of the input file, as the overrides file will be overlain on top of the input file.
+It is very important that the result is valid YAML, with no duplicate keys.
+It is very important that every endpoint has an override.
 
 User:
 \`\`\`
@@ -662,4 +664,5 @@ paths:
         x-fern-sdk-method-name: test
 \`\`\`
 ##
-Always adhere to this format and style in your responses.`;
+Always adhere to this format and style in your responses.
+It is extremely important that you do not write new endpoints. The response should only contain paths that have been defined within the OpenAPI spec.`;

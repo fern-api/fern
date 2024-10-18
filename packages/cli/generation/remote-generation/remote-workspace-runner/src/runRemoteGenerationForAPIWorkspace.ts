@@ -46,64 +46,67 @@ export async function runRemoteGenerationForAPIWorkspace({
 
     interactiveTasks.push(
         ...generatorGroup.generators.map((generatorInvocation) =>
-            context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
-                const fernWorkspace = await workspace.toFernWorkspace(
-                    { context },
-                    getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
-                );
+            context.runInteractiveTask(
+                { name: generatorInvocation.name, silent: true },
+                async (interactiveTaskContext) => {
+                    const fernWorkspace = await workspace.toFernWorkspace(
+                        { context },
+                        getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                    );
 
-                const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
-                    projectConfig,
-                    organization,
-                    workspace: fernWorkspace,
-                    interactiveTaskContext,
-                    generatorInvocation: {
-                        ...generatorInvocation,
-                        outputMode: generatorInvocation.outputMode._visit<FernFiddle.OutputMode>({
-                            downloadFiles: () => generatorInvocation.outputMode,
-                            github: (val) => {
-                                return FernFiddle.OutputMode.github({
-                                    ...val,
-                                    makePr: mode === "pull-request"
-                                });
-                            },
-                            githubV2: (val) => {
-                                if (mode === "pull-request") {
-                                    return FernFiddle.OutputMode.githubV2(
-                                        FernFiddle.GithubOutputModeV2.pullRequest(val)
-                                    );
-                                }
-                                return generatorInvocation.outputMode;
-                            },
-                            publish: () => generatorInvocation.outputMode,
-                            publishV2: () => generatorInvocation.outputMode,
-                            _other: () => generatorInvocation.outputMode
-                        })
-                    },
-                    version,
-                    audiences: generatorGroup.audiences,
-                    shouldLogS3Url,
-                    token,
-                    whitelabel,
-                    readme: generatorInvocation.readme,
-                    irVersionOverride: generatorInvocation.irVersionOverride,
-                    absolutePathToPreview
-                });
-                if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
-                    snippetsProducedBy.push(generatorInvocation);
+                    const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
+                        projectConfig,
+                        organization,
+                        workspace: fernWorkspace,
+                        interactiveTaskContext,
+                        generatorInvocation: {
+                            ...generatorInvocation,
+                            outputMode: generatorInvocation.outputMode._visit<FernFiddle.OutputMode>({
+                                downloadFiles: () => generatorInvocation.outputMode,
+                                github: (val) => {
+                                    return FernFiddle.OutputMode.github({
+                                        ...val,
+                                        makePr: mode === "pull-request"
+                                    });
+                                },
+                                githubV2: (val) => {
+                                    if (mode === "pull-request") {
+                                        return FernFiddle.OutputMode.githubV2(
+                                            FernFiddle.GithubOutputModeV2.pullRequest(val)
+                                        );
+                                    }
+                                    return generatorInvocation.outputMode;
+                                },
+                                publish: () => generatorInvocation.outputMode,
+                                publishV2: () => generatorInvocation.outputMode,
+                                _other: () => generatorInvocation.outputMode
+                            })
+                        },
+                        version,
+                        audiences: generatorGroup.audiences,
+                        shouldLogS3Url,
+                        token,
+                        whitelabel,
+                        readme: generatorInvocation.readme,
+                        irVersionOverride: generatorInvocation.irVersionOverride,
+                        absolutePathToPreview
+                    });
+                    if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
+                        snippetsProducedBy.push(generatorInvocation);
 
-                    if (
-                        generatorInvocation.absolutePathToLocalSnippets != null &&
-                        remoteTaskHandlerResponse.snippetsS3PreSignedReadUrl != null
-                    ) {
-                        await downloadSnippetsForTask({
-                            snippetsS3PreSignedReadUrl: remoteTaskHandlerResponse.snippetsS3PreSignedReadUrl,
-                            absolutePathToLocalSnippetJSON: generatorInvocation.absolutePathToLocalSnippets,
-                            context: interactiveTaskContext
-                        });
+                        if (
+                            generatorInvocation.absolutePathToLocalSnippets != null &&
+                            remoteTaskHandlerResponse.snippetsS3PreSignedReadUrl != null
+                        ) {
+                            await downloadSnippetsForTask({
+                                snippetsS3PreSignedReadUrl: remoteTaskHandlerResponse.snippetsS3PreSignedReadUrl,
+                                absolutePathToLocalSnippetJSON: generatorInvocation.absolutePathToLocalSnippets,
+                                context: interactiveTaskContext
+                            });
+                        }
                     }
                 }
-            })
+            )
         )
     );
 

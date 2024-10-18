@@ -13,8 +13,10 @@ export class TtyAwareLogger {
     private spinner = ora({ spinner: "dots11" });
     private interval: NodeJS.Timer | undefined;
 
-    constructor(private readonly stream: NodeJS.WriteStream) {
-        this.start();
+    constructor(private readonly stream?: NodeJS.WriteStream) {
+        if (this.stream != null) {
+            this.start();
+        }
     }
 
     private start() {
@@ -46,13 +48,17 @@ export class TtyAwareLogger {
         this.tasks.push(context);
     }
 
+    public deregisterTask(context: TaskContextImpl): void {
+        this.tasks = this.tasks.filter((task) => task !== context);
+    }
+
     private shouldBuffer = false;
     private buffer = "";
     private write(content: string) {
         if (this.shouldBuffer) {
             this.buffer += content;
         } else {
-            this.stream.write(content);
+            this.stream?.write(content);
         }
     }
 
@@ -100,7 +106,7 @@ export class TtyAwareLogger {
         const taskLines = [];
         for (const task of this.tasks) {
             const paintForTask = task.printInteractiveTasks({ spinner: spinnerFrame });
-            if (paintForTask.length > 0) {
+            if (paintForTask != null && paintForTask.length > 0) {
                 taskLines.push(paintForTask);
             }
         }
@@ -122,7 +128,7 @@ export class TtyAwareLogger {
     }
 
     public get isTTY(): boolean {
-        return this.stream.isTTY && !IS_CI;
+        return this.stream != null && this.stream.isTTY && !IS_CI;
     }
 }
 

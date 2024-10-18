@@ -40,6 +40,7 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
+import { initV2 } from "./initCli";
 
 void runCli();
 
@@ -206,8 +207,17 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("openapi", {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec"
+                })
+                .option("v2", {
+                    boolean: true,
+                    default: false,
+                    description: "Use the new v2 init flow"
                 }),
         async (argv) => {
+            if (argv.v2) {
+                await initV2(cliContext);
+                return;
+            }
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
             } else if (argv.docs != null) {
@@ -834,9 +844,7 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     defaultToAllApiWorkspaces: true
                 }),
                 includeModels: !(argv.excludeModels as boolean),
-                cliContext,
-                // TODO: make this a CLI option
-                withAI: true
+                cliContext
             });
         }
     );
