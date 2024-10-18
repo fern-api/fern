@@ -3,6 +3,7 @@ import { Interface } from "./Interface";
 import { Namespace } from "./Namespace";
 import { Reference } from "./Reference";
 import * as prettier from "prettier";
+import * as path from "path";
 
 export class Writer extends AbstractWriter {
     private filepath: string | undefined;
@@ -82,12 +83,14 @@ export class Writer extends AbstractWriter {
                 switch (reference.args.type) {
                     case "module":
                         addUniqueImport(
-                            `import * as ${reference.args.module} from "${reference.args.source}";`,
+                            `import * as ${reference.args.module} from "${this.getImportFrom(reference.args.source)}";`,
                             reference.args.module
                         );
                         break;
                     case "named":
-                        addUniqueImport(`import { ${reference.args.name}} from "${reference.args.source}";`);
+                        addUniqueImport(
+                            `import { ${reference.args.name}} from "${this.getImportFrom(reference.args.source)}";`
+                        );
                         break;
                     case "root": {
                         if (!rootModuleAdded && this.filepath != null) {
@@ -109,4 +112,36 @@ export class Writer extends AbstractWriter {
     public toStringFormatted(): string {
         return prettier.format(this.toString(), { parser: "typescript", tabWidth: 4, printWidth: 120 });
     }
+
+    private getImportFrom(source: Reference.PackageOrPath) {
+        switch (source.type) {
+            case "package":
+                return source.packageName;
+            case "path": {
+                if (this.filepath == null) {
+                    return this.removeExtensionFromFile(source.pathFromRoot);
+                }
+                return this.removeExtensionFromFile(getRelativePath(this.filepath, source.pathFromRoot));
+            }
+        }
+    }
+
+    private removeExtensionFromFile(path: string): string {
+        const extensionIndex = path.lastIndexOf(".");
+        if (extensionIndex > 0) {
+            return path.substring(0, extensionIndex);
+        }
+        return path;
+    }
+}
+
+function getRelativePath(from: string, to: string): string {
+    let response = path.relative(from, to);
+    if (response.startsWith("../")) {
+        response = response.substring(3);
+    }
+    if (!response.startsWith(".")) {
+        response = `./${response}`;
+    }
+    return response;
 }

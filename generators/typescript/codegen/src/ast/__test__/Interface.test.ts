@@ -80,7 +80,10 @@ describe("Interface", () => {
                     ts.Reference.module({
                         module: "Sdk",
                         name: "BaseSchema",
-                        source: "../../"
+                        source: {
+                            type: "path",
+                            pathFromRoot: "../../"
+                        }
                     })
                 ]
             });

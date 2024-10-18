@@ -102,5 +102,26 @@ describe("Writer", () => {
             writer.addNamespace(ts.namespace({ name: "Namespace2" }));
             expect(writer.toStringFormatted()).toMatchSnapshot();
         });
+
+        it("Relativize imports", () => {
+            const writer = new Writer("src/api/types/Movie.ts");
+            writer.addInterface(
+                ts.interface_({
+                    name: "Interface1",
+                    properties: [
+                        {
+                            name: "cast",
+                            type: ts.Type.reference(
+                                ts.Reference.named({
+                                    name: "Cast",
+                                    source: { type: "path", pathFromRoot: "src/api/Cast.ts" }
+                                })
+                            )
+                        }
+                    ]
+                })
+            );
+            expect(writer.toStringFormatted()).toMatchSnapshot();
+        });
     });
 });

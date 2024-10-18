@@ -2,6 +2,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "./AstNode";
 import { Writer } from "./Writer";
 import { Reference } from "./Reference";
+import { Namespace } from "./Namespace";
+import { Interface } from "./Interface";
 
 type InternalType =
     | Number
@@ -71,6 +73,9 @@ interface Undefined {
 interface ReferenceType {
     type: "reference";
     reference: Reference;
+    /* Helpful if the reference has not been defined elsewhere yet */
+    namespaces: Namespace[];
+    interfaces: Interface[];
 }
 
 interface Unknown {
@@ -127,6 +132,8 @@ export class Type extends AstNode {
                 writer.write("uuid");
                 break;
             case "reference":
+                this.internalType.interfaces.forEach((obj) => writer.addInterface(obj));
+                this.internalType.namespaces.forEach((obj) => writer.addNamespace(obj));
                 writer.writeNode(this.internalType.reference);
                 break;
             case "literal":
@@ -199,10 +206,18 @@ export class Type extends AstNode {
         });
     }
 
-    public static reference(reference: Reference): Type {
+    public static reference(
+        reference: Reference,
+        { namespaces, interfaces }: { namespaces: Namespace[]; interfaces: Interface[] } = {
+            namespaces: [],
+            interfaces: []
+        }
+    ): Type {
         return new this({
             type: "reference",
-            reference
+            reference,
+            namespaces,
+            interfaces
         });
     }
 

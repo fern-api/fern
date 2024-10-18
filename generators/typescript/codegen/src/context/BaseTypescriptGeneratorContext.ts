@@ -46,9 +46,11 @@ export class BaseTypescriptGeneratorContext<
 
     public getReferenceToNamedType(typeId: TypeId): ts.Reference {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return Reference.rootModule({
-            module: this.getNamespaceExport(),
-            path: [...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName)],
+        return Reference.named({
+            source: {
+                type: "path",
+                pathFromRoot: this.getFilepathForTypeId(typeId)
+            },
             name: typeDeclaration.name.name.pascalCase.safeName
         });
     }
@@ -56,7 +58,7 @@ export class BaseTypescriptGeneratorContext<
     public getFilepathForTypeId(typeId: TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
 
-        const filename = `${typeDeclaration.name.name.camelCase.safeName}.ts`;
+        const filename = `${typeDeclaration.name.name.pascalCase.safeName}.ts`;
 
         if (typeDeclaration.name.fernFilepath.packagePath == null) {
             return [API_DIRECTORY_NAME, TYPES_DIRECTORY_NAME, filename].join("/");
@@ -65,7 +67,7 @@ export class BaseTypescriptGeneratorContext<
         return [
             API_DIRECTORY_NAME,
             ...typeDeclaration.name.fernFilepath.packagePath.flatMap((part) => [
-                part.camelCase.safeName,
+                part.pascalCase.safeName,
                 TYPES_DIRECTORY_NAME
             ]),
             filename

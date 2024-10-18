@@ -8,7 +8,7 @@ export declare namespace Reference {
     interface NamedImport {
         type: "named";
         /* The package or path to import from  */
-        source: string;
+        source: PackageOrPath;
         /* Name of the reference to import */
         name: string;
     }
@@ -16,7 +16,7 @@ export declare namespace Reference {
     interface ModuleImport {
         type: "module";
         /* The package or path to import from  */
-        source: string;
+        source: PackageOrPath;
         /* The module to import from */
         module: string;
         /**
@@ -40,6 +40,18 @@ export declare namespace Reference {
         /* Name of the reference to import */
         name: string;
     }
+
+    type PackageOrPath = Package | Path;
+
+    interface Package {
+        type: "package";
+        packageName: string;
+    }
+
+    interface Path {
+        type: "path";
+        pathFromRoot: string;
+    }
 }
 
 export class Reference extends AstNode {
@@ -58,7 +70,7 @@ export class Reference extends AstNode {
                 break;
             case "root":
                 writer.write([this.args.module, ...(this.args.path ?? []), this.args.name].join("."));
-                break;                
+                break;
             default:
                 assertNever(this.args);
         }
