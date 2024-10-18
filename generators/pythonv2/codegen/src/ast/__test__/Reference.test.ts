@@ -86,5 +86,60 @@ describe("Reference", () => {
             reference.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
+
+        it("handles list with reference as inner type", async () => {
+            const innerReference = python.reference({
+                name: "InnerClass",
+                modulePath: ["inner_module"]
+            });
+            const listType = python.Type.list(python.Type.reference(innerReference));
+            listType.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("handles tuple with reference as inner type", async () => {
+            const innerReference = python.reference({
+                name: "InnerClass",
+                modulePath: ["inner_module"]
+            });
+            const tupleType = python.Type.tuple([python.Type.reference(innerReference), python.Type.str()]);
+            tupleType.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("handles set with reference as inner type", async () => {
+            const innerReference = python.reference({
+                name: "InnerClass",
+                modulePath: ["inner_module"]
+            });
+            const setType = python.Type.set(python.Type.reference(innerReference));
+            setType.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("handles union with reference as inner type", async () => {
+            const innerReference = python.reference({
+                name: "InnerClass",
+                modulePath: ["inner_module"]
+            });
+            const unionType = python.Type.union([python.Type.reference(innerReference), python.Type.str()]);
+            unionType.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("handles dict with reference as inner type", async () => {
+            const innerReference = python.reference({
+                name: "InnerClass",
+                modulePath: ["inner_module"]
+            });
+            const dictType = python.Type.dict(python.Type.str(), python.Type.reference(innerReference));
+            const reference = python.reference({
+                name: "DictClass",
+                modulePath: ["module"],
+                genericTypes: [dictType]
+            });
+            reference.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
     });
 });

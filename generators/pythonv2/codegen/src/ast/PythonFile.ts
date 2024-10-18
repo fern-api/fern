@@ -52,23 +52,40 @@ export class PythonFile extends AstNode {
      * Helper Methods
      *******************************/
 
+    private getImportName(reference: Reference): string {
+        const name = reference.getName();
+        const alias = reference.getAlias();
+        return `${name}${alias ? ` as ${alias}` : ""}`;
+    }
+
     private writeImports(writer: Writer): void {
         const references = this.getReferences();
 
         // Deduplicate references by their fully qualified paths
-        const uniqueReferences = new Map<string, Reference>();
-        references.forEach((reference) => {
+        const uniqueReferences = new Map<
+            string,
+            { modulePath: string[]; references: Reference[]; referenceNames: Set<string> }
+        >();
+        for (const reference of references) {
             const fullyQualifiedPath = reference.getFullyQualifiedModulePath();
-            if (!uniqueReferences.has(fullyQualifiedPath)) {
-                uniqueReferences.set(fullyQualifiedPath, reference);
+            const existingRefs = uniqueReferences.get(fullyQualifiedPath);
+            const referenceName = reference.getName();
+            if (existingRefs) {
+                if (!existingRefs.referenceNames.has(referenceName)) {
+                    existingRefs.references.push(reference);
+                    existingRefs.referenceNames.add(referenceName);
+                }
+            } else {
+                uniqueReferences.set(fullyQualifiedPath, {
+                    modulePath: reference.getModulePath(),
+                    references: [reference],
+                    referenceNames: new Set([referenceName])
+                });
             }
-        });
+        }
 
-        // Use the deduplicated references
-        const deduplicatedReferences = Array.from(uniqueReferences.values());
-
-        deduplicatedReferences.forEach((reference) => {
-            const refModulePath = reference.getModulePath();
+        for (const [fullyQualifiedPath, { modulePath, references }] of uniqueReferences) {
+            const refModulePath = modulePath;
             if (refModulePath[0] === this.moduleName) {
                 // Relativize the import
                 // Calculate the common prefix length
@@ -92,20 +109,20 @@ export class PythonFile extends AstNode {
                 relativePath += refModulePath.slice(commonPrefixLength).join(".");
 
                 // Write the relative import statement
-                writer.write(`from ${relativePath} import ${reference.getName()}`);
+                writer.write(
+                    `from ${relativePath} import ${references.map((ref) => this.getImportName(ref)).join(", ")}`
+                );
             } else {
                 // Use fully qualified path
-                writer.write(`from ${reference.getFullyQualifiedModulePath()} import ${reference.getName()}`);
-            }
-
-            if (reference.getAlias()) {
-                writer.write(` as ${reference.getAlias()}`);
+                writer.write(
+                    `from ${fullyQualifiedPath} import ${references.map((ref) => this.getImportName(ref)).join(", ")}`
+                );
             }
 
             writer.newLine();
-        });
+        }
 
-        if (deduplicatedReferences.length > 0) {
+        if (Object.keys(uniqueReferences).length > 0) {
             writer.newLine();
         }
     }
