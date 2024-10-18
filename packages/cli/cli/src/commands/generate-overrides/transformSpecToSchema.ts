@@ -4,6 +4,7 @@ import { parse } from "@fern-api/openapi-ir-parser";
 import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { getAllOpenAPISpecs, OpenAPISpec, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { readFile } from "fs/promises";
+import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 
 export async function transformSpecToSchema({
     workspace,
@@ -11,9 +12,23 @@ export async function transformSpecToSchema({
 }: {
     workspace: OSSWorkspace;
     context: TaskContext;
-}): Promise<{ openApiSpec: OpenAPISpec; stringifiedSpec: string; schema: z.ZodTypeAny }[]> {
+}): Promise<
+    {
+        openApiSpec: OpenAPISpec;
+        stringifiedSpec: string;
+        schema: z.ZodTypeAny;
+        numEndpoints: number;
+        ir: OpenApiIntermediateRepresentation;
+    }[]
+> {
     // This is for sure overkill, but alas we are HACKIN'
-    const specSchemasForWorkspace: { openApiSpec: OpenAPISpec; stringifiedSpec: string; schema: z.ZodTypeAny }[] = [];
+    const specSchemasForWorkspace: {
+        openApiSpec: OpenAPISpec;
+        stringifiedSpec: string;
+        schema: z.ZodTypeAny;
+        numEndpoints: number;
+        ir: OpenApiIntermediateRepresentation;
+    }[] = [];
     const specs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
     for (const spec of specs) {
         const ir = await parse({
@@ -65,7 +80,9 @@ export async function transformSpecToSchema({
             stringifiedSpec: (await readFile(spec.absoluteFilepath, "utf8")).toString(),
             schema: z.object({
                 paths: z.object(schemaObject)
-            })
+            }),
+            numEndpoints: ir.endpoints.length,
+            ir
         });
     }
 
