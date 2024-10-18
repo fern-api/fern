@@ -221,7 +221,7 @@ export class Type extends AstNode {
                 writer.write("Any");
                 break;
             case "reference":
-                this.addReference(this.internalType.value);
+                writer.addReference(this.internalType.value);
                 this.internalType.value.write(writer);
                 break;
             default:
