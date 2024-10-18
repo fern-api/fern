@@ -78,7 +78,7 @@ jobs:
 
   ts-node-sdk:
     runs-on: ubuntu-latest
-    if: ${{ needs.versions-changed.outputs.ts-sdk == 'true' || inputs.generator == 'typescript-sdk' }}
+    # if: ${{ needs.versions-changed.outputs.ts-sdk == 'true' || inputs.generator == 'typescript-sdk' }}
     # needs: versions-changed
     steps:
       - name: Checkout repo
@@ -90,20 +90,20 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Print Version
-        if: ${{ inputs.generator != 'ts-sdk' }}
+        # if: ${{ inputs.generator != 'ts-sdk' }}
         run: |
           projectVersion=$(cat generators/typescript/sdk/VERSION)
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
 
-      - name: Print Version Dev
-        if: ${{ inputs.generator == 'ts-sdk' }}
-        run: |
-          projectVersion=$(cat generators/typescript/sdk/VERSION)
-          commitNumber=$(git log --oneline | wc -l )
-          sha_short=$(git rev-parse --short HEAD)
-          echo $projectVersion-$commitNumber-$sha_short
-          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+      # - name: Print Version Dev
+      #   # if: ${{ inputs.generator == 'ts-sdk' }}
+      #   run: |
+      #     projectVersion=$(cat generators/typescript/sdk/VERSION)
+      #     commitNumber=$(git log --oneline | wc -l )
+      #     sha_short=$(git rev-parse --short HEAD)
+      #     echo $projectVersion-$commitNumber-$sha_short
+      #     echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
