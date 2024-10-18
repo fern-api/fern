@@ -111,7 +111,7 @@ export async function initV2(cliContext: CliContext): Promise<void> {
     await Promise.all(
         freshProject.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (token!.type === "user") {
+                if (token != null && token.type === "user") {
                     await createOrganizationIfDoesNotExist({
                         organization: project.config.organization,
                         token: token!,
@@ -378,13 +378,17 @@ function getGeneratorInvocationOverride(
         return {
             ...defaultInvocation,
             "ir-version": "v53",
-            version: "0.0.0-rc0",
+            version: "2.0.0-rc4",
             config: {
                 namespaceExport: organization,
                 allowCustomFetcher: true,
                 skipResponseValidation: true,
-                generateWireTests: true,
+                // generateWireTests: true,
                 noSerdeLayer: true
+            },
+            output: {
+                location: "npm",
+                "package-name": organization
             }
         };
     }
