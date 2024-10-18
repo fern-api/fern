@@ -9,7 +9,8 @@ export async function parseGeneratorConfig(pathToConfig: string): Promise<FernGe
     const rawConfig = JSON.parse(configStr.toString());
     console.log(`Reading ${JSON.stringify(rawConfig)}`);
     const parsedConfig = await GeneratorExecParsing.GeneratorConfig.parse(rawConfig, {
-        unrecognizedObjectKeys: "passthrough"
+        unrecognizedObjectKeys: "passthrough",
+        skipValidation: true
     });
 
     if (!parsedConfig.ok) {
