@@ -312,25 +312,15 @@ async function startJob({
     irVersionOverride: string | undefined;
 }): Promise<void> {
     context.logger.debug("Migrating IR.");
-    const migratedIntermediateRepresentation =
-        irVersionOverride == null
-            ? await migrateIntermediateRepresentationForGenerator({
-                  intermediateRepresentation,
-                  context,
-                  targetGenerator: {
-                      name: generatorInvocation.name,
-                      version: generatorInvocation.version
-                  }
-              })
-            : await migrateIntermediateRepresentationToVersionForGenerator({
-                  intermediateRepresentation,
-                  context,
-                  irVersion: irVersionOverride,
-                  targetGenerator: {
-                      name: generatorInvocation.name,
-                      version: generatorInvocation.version
-                  }
-              });
+    const migratedIntermediateRepresentation = await migrateIntermediateRepresentationToVersionForGenerator({
+        intermediateRepresentation,
+        context,
+        irVersion: "v53",
+        targetGenerator: {
+            name: generatorInvocation.name,
+            version: generatorInvocation.version
+        }
+    });
 
     const formData = new FormData();
 
