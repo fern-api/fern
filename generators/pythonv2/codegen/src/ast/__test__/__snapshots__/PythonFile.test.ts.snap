@@ -74,3 +74,10 @@ from ..test_module.cars import Car
 cars: List[Car] = [Car(), Car()]
 "
 `;
+
+exports[`PythonFile > Multiple imports from the same module should work 1`] = `
+"from typing import Union, List, Set
+
+variable: Union[List[str], Set[str]]
+"
+`;

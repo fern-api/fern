@@ -200,4 +200,22 @@ describe("PythonFile", () => {
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
+
+    it("Multiple imports from the same module should work", async () => {
+        const file = python.file({
+            moduleName: "test_module",
+            path: ["test"],
+            name: "test_file"
+        });
+
+        const unionField = python.field({
+            name: "variable",
+            type: python.Type.union([python.Type.list(python.Type.str()), python.Type.set(python.Type.str())])
+        });
+
+        file.addStatement(unionField);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
 });
