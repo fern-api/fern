@@ -218,4 +218,28 @@ describe("PythonFile", () => {
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
+
+    it("Ensure we don't duplicate imports", async () => {
+        const file = python.file({
+            moduleName: "test_module",
+            path: ["test"],
+            name: "test_file"
+        });
+
+        const varAField = python.field({
+            name: "var_a",
+            type: python.Type.list(python.Type.str())
+        });
+
+        const varBField = python.field({
+            name: "var_b",
+            type: python.Type.list(python.Type.str())
+        });
+
+        file.addStatement(varAField);
+        file.addStatement(varBField);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
 });

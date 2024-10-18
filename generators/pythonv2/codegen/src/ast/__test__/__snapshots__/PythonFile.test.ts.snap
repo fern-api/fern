@@ -75,6 +75,15 @@ cars: List[Car] = [Car(), Car()]
 "
 `;
 
+exports[`PythonFile > Ensure we don't duplicate imports 1`] = `
+"from typing import List
+
+var_a: List[str]
+
+var_b: List[str]
+"
+`;
+
 exports[`PythonFile > Multiple imports from the same module should work 1`] = `
 "from typing import Union, List, Set
 

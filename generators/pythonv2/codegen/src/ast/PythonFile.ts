@@ -62,18 +62,24 @@ export class PythonFile extends AstNode {
         const references = this.getReferences();
 
         // Deduplicate references by their fully qualified paths
-        const uniqueReferences = new Map<string, { modulePath: string[]; references: Reference[] }>();
+        const uniqueReferences = new Map<
+            string,
+            { modulePath: string[]; references: Reference[]; referenceNames: Set<string> }
+        >();
         for (const reference of references) {
             const fullyQualifiedPath = reference.getFullyQualifiedModulePath();
             const existingRefs = uniqueReferences.get(fullyQualifiedPath);
+            const referenceName = reference.getName();
             if (existingRefs) {
-                if (!existingRefs.references.includes(reference)) {
+                if (!existingRefs.referenceNames.has(referenceName)) {
                     existingRefs.references.push(reference);
+                    existingRefs.referenceNames.add(referenceName);
                 }
             } else {
                 uniqueReferences.set(fullyQualifiedPath, {
                     modulePath: reference.getModulePath(),
-                    references: [reference]
+                    references: [reference],
+                    referenceNames: new Set([referenceName])
                 });
             }
         }
