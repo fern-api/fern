@@ -1002,6 +1002,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: 53.14.0
         version: 53.14.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12
@@ -1027,9 +1030,6 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-      zod:
-        specifier: ^3.22.3
-        version: 3.23.8
 
   generators/typescript/express/cli:
     devDependencies:

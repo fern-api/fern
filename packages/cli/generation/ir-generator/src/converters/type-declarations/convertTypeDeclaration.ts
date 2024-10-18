@@ -90,7 +90,6 @@ export async function convertTypeDeclaration({
             ...declaration,
             inline: false,
             name: declaredTypeName,
-            inline: false,
             shape,
             referencedTypes: new Set(referencedTypes.map((referencedType) => referencedType.typeId)),
             encoding: convertTypeDeclarationEncoding({ typeDeclaration, source }),
