@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "raw": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "raw"
+  ],
+  "definitions": {}
+}

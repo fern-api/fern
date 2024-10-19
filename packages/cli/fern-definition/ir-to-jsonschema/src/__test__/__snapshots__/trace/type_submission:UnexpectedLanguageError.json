@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "expectedLanguage": {
+      "$ref": "#/definitions/commons.Language"
+    },
+    "actualLanguage": {
+      "$ref": "#/definitions/commons.Language"
+    }
+  },
+  "required": [
+    "expectedLanguage",
+    "actualLanguage"
+  ],
+  "definitions": {
+    "commons.Language": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    }
+  }
+}

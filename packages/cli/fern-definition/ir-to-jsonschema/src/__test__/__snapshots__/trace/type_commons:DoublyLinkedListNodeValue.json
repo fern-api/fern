@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "nodeId": {
+      "$ref": "#/definitions/commons.NodeId"
+    },
+    "val": {
+      "type": "number"
+    },
+    "next": {
+      "$ref": "#/definitions/commons.NodeId"
+    },
+    "prev": {
+      "$ref": "#/definitions/commons.NodeId"
+    }
+  },
+  "required": [
+    "nodeId",
+    "val"
+  ],
+  "definitions": {
+    "commons.NodeId": {
+      "type": "string"
+    }
+  }
+}

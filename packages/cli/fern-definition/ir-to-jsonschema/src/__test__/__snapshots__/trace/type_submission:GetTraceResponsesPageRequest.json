@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "offset": {
+      "type": "integer"
+    }
+  },
+  "definitions": {}
+}

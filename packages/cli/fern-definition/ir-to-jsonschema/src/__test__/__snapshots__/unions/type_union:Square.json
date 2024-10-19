@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "length": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "length"
+  ],
+  "definitions": {}
+}

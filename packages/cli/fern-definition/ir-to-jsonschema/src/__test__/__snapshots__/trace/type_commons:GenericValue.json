@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "stringifiedType": {
+      "type": "string"
+    },
+    "stringifiedValue": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "stringifiedValue"
+  ],
+  "definitions": {}
+}

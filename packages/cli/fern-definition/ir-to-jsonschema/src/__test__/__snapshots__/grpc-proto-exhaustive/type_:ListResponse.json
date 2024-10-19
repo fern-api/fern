@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "columns": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ListElement"
+      }
+    },
+    "pagination": {
+      "$ref": "#/definitions/Pagination"
+    },
+    "namespace": {
+      "type": "string"
+    },
+    "usage": {
+      "$ref": "#/definitions/Usage"
+    }
+  },
+  "definitions": {
+    "ListElement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "Pagination": {
+      "type": "object",
+      "properties": {
+        "next": {
+          "type": "string"
+        }
+      }
+    },
+    "Usage": {
+      "type": "object",
+      "properties": {
+        "units": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

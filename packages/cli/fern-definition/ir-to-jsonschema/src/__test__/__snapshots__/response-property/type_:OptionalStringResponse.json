@@ -1,0 +1,16 @@
+{
+  "$ref": "#/definitions/StringResponse",
+  "definitions": {
+    "StringResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "data"
+      ]
+    }
+  }
+}

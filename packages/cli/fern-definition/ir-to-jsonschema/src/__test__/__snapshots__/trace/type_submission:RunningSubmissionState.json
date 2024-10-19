@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "enum": [
+    "QUEUEING_SUBMISSION",
+    "KILLING_HISTORICAL_SUBMISSIONS",
+    "WRITING_SUBMISSION_TO_FILE",
+    "COMPILING_SUBMISSION",
+    "RUNNING_SUBMISSION"
+  ],
+  "definitions": {}
+}

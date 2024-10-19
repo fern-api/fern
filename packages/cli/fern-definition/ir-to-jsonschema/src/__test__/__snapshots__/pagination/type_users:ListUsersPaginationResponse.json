@@ -1,0 +1,78 @@
+{
+  "type": "object",
+  "properties": {
+    "hasNextPage": {
+      "type": "boolean"
+    },
+    "page": {
+      "$ref": "#/definitions/users.Page"
+    },
+    "total_count": {
+      "type": "integer"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/users.User"
+      }
+    }
+  },
+  "required": [
+    "total_count",
+    "data"
+  ],
+  "definitions": {
+    "users.NextPage": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "starting_after": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "page",
+        "starting_after"
+      ]
+    },
+    "users.Page": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "next": {
+          "$ref": "#/definitions/users.NextPage"
+        },
+        "per_page": {
+          "type": "integer"
+        },
+        "total_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "page",
+        "per_page",
+        "total_page"
+      ]
+    },
+    "users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ]
+    }
+  }
+}

@@ -54,7 +54,7 @@ importers:
         specifier: ^4.17.6
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.27.1
@@ -181,7 +181,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -236,7 +236,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -275,7 +275,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
@@ -344,7 +344,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
@@ -407,7 +407,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
@@ -480,7 +480,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -519,7 +519,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
@@ -582,7 +582,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
@@ -642,7 +642,7 @@ importers:
         specifier: ^4.17.4
         version: 4.17.4
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
@@ -681,7 +681,7 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
 
-  generators/pythonv2/codegen:
+  generators/python-v2/codegen:
     dependencies:
       '@fern-api/core-utils':
         specifier: workspace:*
@@ -690,17 +690,14 @@ importers:
         specifier: workspace:*
         version: link:../../commons
       '@fern-fern/ir-sdk':
-        specifier: ^53.7.0
-        version: 53.9.0
+        specifier: 53.7.0
+        version: 53.7.0
       '@wasm-fmt/ruff_fmt':
         specifier: ^0.6.1
         version: 0.6.1
     devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -746,7 +743,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -795,7 +792,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -843,7 +840,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
@@ -909,7 +906,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
@@ -958,7 +955,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
@@ -1000,7 +997,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1051,7 +1048,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/tmp':
         specifier: ^0.2.4
@@ -1112,7 +1109,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1155,7 +1152,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1201,7 +1198,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1238,7 +1235,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1281,7 +1278,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1330,7 +1327,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1373,7 +1370,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1458,7 +1455,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1498,7 +1495,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1541,7 +1538,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1581,7 +1578,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1624,7 +1621,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1670,7 +1667,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1713,7 +1710,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1756,7 +1753,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1802,7 +1799,7 @@ importers:
         version: 5.0.0
     devDependencies:
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/node-fetch':
         specifier: 2.6.9
@@ -1886,7 +1883,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/tmp':
         specifier: ^0.2.4
@@ -1950,7 +1947,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -1996,7 +1993,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2036,7 +2033,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2157,7 +2154,7 @@ importers:
         specifier: ^0.5.9
         version: 0.5.9
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/url-join':
         specifier: 4.0.1
@@ -2206,7 +2203,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2249,7 +2246,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2301,7 +2298,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2344,7 +2341,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2390,7 +2387,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2433,7 +2430,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2470,7 +2467,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2519,7 +2516,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2556,7 +2553,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2647,7 +2644,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/url-join':
         specifier: 4.0.1
@@ -2699,7 +2696,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2733,7 +2730,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2763,7 +2760,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2793,7 +2790,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2845,7 +2842,7 @@ importers:
         specifier: ^1.4.11
         version: 1.4.11
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/node-fetch':
         specifier: 2.6.9
@@ -2905,7 +2902,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2941,7 +2938,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -2978,7 +2975,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3021,7 +3018,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3048,7 +3045,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3091,7 +3088,7 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3125,7 +3122,7 @@ importers:
         version: link:../../../workspace-loader
     devDependencies:
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3155,7 +3152,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3222,7 +3219,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/swagger2openapi':
         specifier: ^7.0.4
@@ -3286,7 +3283,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3326,7 +3323,7 @@ importers:
         version: link:../../../workspace-loader
     devDependencies:
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3381,7 +3378,7 @@ importers:
         specifier: ^9.0.6
         version: 9.0.6
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3452,6 +3449,9 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk
+      '@fern-api/ir-to-jsonschema':
+        specifier: workspace:*
+        version: link:../fern-definition/ir-to-jsonschema
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../lazy-fern-workspace
@@ -3534,7 +3534,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/tar':
         specifier: ^6.1.11
@@ -3673,7 +3673,7 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3749,7 +3749,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/semver':
         specifier: ^7.5.8
@@ -3798,7 +3798,7 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3850,7 +3850,7 @@ importers:
         version: 4.0.3
     devDependencies:
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3905,7 +3905,7 @@ importers:
         specifier: ^5.2.1
         version: 5.2.1
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -3996,7 +3996,7 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/uuid':
         specifier: ^9.0.8
@@ -4081,7 +4081,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -4145,7 +4145,7 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/node-fetch':
         specifier: 2.6.9
@@ -4203,7 +4203,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/prettier':
         specifier: ^2.7.1
@@ -4217,6 +4217,55 @@ importers:
       globals:
         specifier: link:@types/vitest/globals
         version: link:@types/vitest/globals
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/fern-definition/ir-to-jsonschema:
+    dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../generation/ir-generator
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      '@fern-api/project-loader':
+        specifier: workspace:*
+        version: link:../../project-loader
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      json-schema:
+        specifier: ^0.4.0
+        version: 0.4.0
+    devDependencies:
+      '@types/json-schema':
+        specifier: ^7.0.15
+        version: 7.0.15
+      '@types/node':
+        specifier: 18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4246,7 +4295,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -4331,7 +4380,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -4401,7 +4450,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/object-hash':
         specifier: ^3.0.6
@@ -4627,7 +4676,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -4670,7 +4719,7 @@ importers:
         specifier: ^3.3.9
         version: 3.3.9
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -4752,7 +4801,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/tmp':
         specifier: ^0.2.4
@@ -4876,7 +4925,7 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/tar':
         specifier: ^6.1.11
@@ -4964,7 +5013,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5073,7 +5122,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/object-hash':
         specifier: ^3.0.6
@@ -5116,7 +5165,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5180,7 +5229,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/qs':
         specifier: 6.9.15
@@ -5235,7 +5284,7 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/url-join':
         specifier: 4.0.1
@@ -5284,7 +5333,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/uuid':
         specifier: ^9.0.8
@@ -5333,7 +5382,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5397,7 +5446,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5431,7 +5480,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5462,7 +5511,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5511,7 +5560,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5584,7 +5633,7 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5678,7 +5727,7 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5727,7 +5776,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/title':
         specifier: ^3.4.3
@@ -5782,7 +5831,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/stream-json':
         specifier: ^1.7.7
@@ -5816,7 +5865,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5850,7 +5899,7 @@ importers:
         version: 3.0.3
     devDependencies:
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5896,7 +5945,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5923,7 +5972,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       depcheck:
         specifier: ^1.4.6
@@ -5959,7 +6008,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/yargs':
         specifier: ^17.0.28
@@ -6070,7 +6119,7 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@types/pretty-ms':
         specifier: ^5.0.1
@@ -10601,6 +10650,9 @@ packages:
 
   json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
+
+  json-schema@0.4.0:
+    resolution: {integrity: sha512-es94M3nTIfsEPisRafak+HDLfHXnKBhV3vU5eqPcS3flIWqcxJWgXHXiey3YrpaNsanY5ei1VoYEbOzijuq9BA==}
 
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
@@ -18460,6 +18512,8 @@ snapshots:
   json-schema-traverse@0.4.1: {}
 
   json-schema-traverse@1.0.0: {}
+
+  json-schema@0.4.0: {}
 
   json-stable-stringify-without-jsonify@1.0.1: {}
 

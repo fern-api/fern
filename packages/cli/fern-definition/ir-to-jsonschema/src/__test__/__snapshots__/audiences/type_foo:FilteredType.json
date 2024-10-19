@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "public_property": {
+      "type": "string"
+    },
+    "private_property": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "private_property"
+  ],
+  "definitions": {}
+}

@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "namespaces": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/NamespaceSummary"
+      }
+    },
+    "dimension": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "fullness": {
+      "type": "number"
+    },
+    "totalCount": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "definitions": {
+    "NamespaceSummary": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

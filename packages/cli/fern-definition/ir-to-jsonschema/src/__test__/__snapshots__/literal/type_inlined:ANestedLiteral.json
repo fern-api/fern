@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "myLiteral": {
+      "const": {
+        "string": "How super cool",
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "myLiteral"
+  ],
+  "definitions": {}
+}

@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "solutionFile": {
+      "$ref": "#/definitions/commons.FileInfo"
+    },
+    "readOnlyFiles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/commons.FileInfo"
+      }
+    }
+  },
+  "required": [
+    "solutionFile",
+    "readOnlyFiles"
+  ],
+  "definitions": {
+    "commons.FileInfo": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "filename",
+        "contents"
+      ]
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "user": {
+      "$ref": "#/definitions/UserModel"
+    }
+  },
+  "definitions": {
+    "MetadataValue": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    },
+    "Metadata": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/MetadataValue"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      ]
+    },
+    "UserModel": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "weight": {
+          "type": "number"
+        },
+        "metadata": {
+          "$ref": "#/definitions/Metadata"
+        }
+      }
+    }
+  }
+}
