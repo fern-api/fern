@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "radius": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "radius"
+  ],
+  "definitions": {}
+}

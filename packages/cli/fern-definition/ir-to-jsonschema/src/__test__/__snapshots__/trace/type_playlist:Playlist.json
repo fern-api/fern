@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "playlist_id": {
+      "$ref": "#/definitions/PlaylistID"
+    },
+    "owner-id": {
+      "$ref": "#/definitions/UserID"
+    }
+  },
+  "required": [
+    "playlist_id",
+    "owner-id"
+  ],
+  "definitions": {
+    "playlist": {
+      "type": "string"
+    },
+    "commons": {
+      "type": "string"
+    }
+  }
+}

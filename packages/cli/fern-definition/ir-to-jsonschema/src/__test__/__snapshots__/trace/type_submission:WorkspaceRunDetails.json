@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "exceptionV2": {
+      "$ref": "#/definitions/ExceptionV2"
+    },
+    "exception": {
+      "$ref": "#/definitions/ExceptionInfo"
+    },
+    "stdout": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "stdout"
+  ],
+  "definitions": {
+    "submission": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace"
+      ]
+    }
+  }
+}

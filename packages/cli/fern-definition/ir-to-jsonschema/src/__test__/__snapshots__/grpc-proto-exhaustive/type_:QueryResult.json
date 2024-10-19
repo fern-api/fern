@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "properties": {
+    "matches": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ScoredColumn"
+      }
+    },
+    "namespace": {
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/Metadata"
+        },
+        "indexedData": {
+          "$ref": "#/definitions/IndexedData"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  }
+}

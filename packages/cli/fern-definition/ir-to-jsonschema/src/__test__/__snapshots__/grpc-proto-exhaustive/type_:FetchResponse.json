@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "columns": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Column"
+      }
+    },
+    "namespace": {
+      "type": "string"
+    },
+    "usage": {
+      "$ref": "#/definitions/Usage"
+    }
+  },
+  "definitions": {
+    "": {
+      "type": "object",
+      "properties": {
+        "units": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

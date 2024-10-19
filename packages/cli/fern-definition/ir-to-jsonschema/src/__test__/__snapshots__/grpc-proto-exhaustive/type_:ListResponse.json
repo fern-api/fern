@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "columns": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ListElement"
+      }
+    },
+    "pagination": {
+      "$ref": "#/definitions/Pagination"
+    },
+    "namespace": {
+      "type": "string"
+    },
+    "usage": {
+      "$ref": "#/definitions/Usage"
+    }
+  },
+  "definitions": {
+    "": {
+      "type": "object",
+      "properties": {
+        "units": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

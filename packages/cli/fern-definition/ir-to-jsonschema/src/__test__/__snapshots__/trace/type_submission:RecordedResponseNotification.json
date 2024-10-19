@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/SubmissionID"
+    },
+    "traceResponsesSize": {
+      "type": "integer"
+    },
+    "testCaseId": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "submissionId",
+    "traceResponsesSize"
+  ],
+  "definitions": {
+    "submission": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

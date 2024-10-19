@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "user": {
+      "$ref": "#/definitions/User"
+    }
+  },
+  "required": [
+    "name",
+    "user"
+  ],
+  "definitions": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "tags"
+      ]
+    }
+  }
+}

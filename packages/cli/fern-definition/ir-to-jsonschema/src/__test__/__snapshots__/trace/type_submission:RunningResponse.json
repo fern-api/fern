@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/SubmissionID"
+    },
+    "state": {
+      "$ref": "#/definitions/RunningSubmissionState"
+    }
+  },
+  "required": [
+    "submissionId",
+    "state"
+  ],
+  "definitions": {
+    "submission": {
+      "type": "string",
+      "enum": [
+        "QUEUEING_SUBMISSION",
+        "KILLING_HISTORICAL_SUBMISSIONS",
+        "WRITING_SUBMISSION_TO_FILE",
+        "COMPILING_SUBMISSION",
+        "RUNNING_SUBMISSION"
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "myUnion": {
+      "$ref": "#/definitions/MyUnion"
+    }
+  },
+  "definitions": {
+    "union": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      ]
+    }
+  }
+}

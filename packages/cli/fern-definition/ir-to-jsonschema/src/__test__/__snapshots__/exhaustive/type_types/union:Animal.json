@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "properties": {
+    "animal": {
+      "type": "string",
+      "enum": [
+        "dog",
+        "cat"
+      ]
+    }
+  },
+  "required": [
+    "animal"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "animal": {
+          "const": "dog"
+        },
+        "name": {
+          "type": "string"
+        },
+        "likesToWoof": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "animal",
+        "name",
+        "likesToWoof"
+      ]
+    },
+    {
+      "properties": {
+        "animal": {
+          "const": "cat"
+        },
+        "name": {
+          "type": "string"
+        },
+        "likesToMeow": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "animal",
+        "name",
+        "likesToMeow"
+      ]
+    }
+  ],
+  "definitions": {}
+}

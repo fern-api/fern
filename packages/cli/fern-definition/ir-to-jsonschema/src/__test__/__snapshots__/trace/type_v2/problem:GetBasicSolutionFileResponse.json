@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "solutionFileByLanguage": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/FileInfoV2"
+      }
+    }
+  },
+  "required": [
+    "solutionFileByLanguage"
+  ],
+  "definitions": {
+    "v2.problem": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "editable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "filename",
+        "directory",
+        "contents",
+        "editable"
+      ]
+    }
+  }
+}

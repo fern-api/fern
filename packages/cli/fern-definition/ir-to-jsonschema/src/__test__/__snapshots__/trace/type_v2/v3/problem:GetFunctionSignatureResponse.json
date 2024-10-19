@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "functionByLanguage": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "functionByLanguage"
+  ],
+  "definitions": {}
+}

@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "page": {
+      "type": "integer"
+    },
+    "next": {
+      "$ref": "#/definitions/NextPage"
+    },
+    "per_page": {
+      "type": "integer"
+    },
+    "total_page": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "page",
+    "per_page",
+    "total_page"
+  ],
+  "definitions": {
+    "users": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "starting_after": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "page",
+        "starting_after"
+      ]
+    }
+  }
+}

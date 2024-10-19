@@ -1,0 +1,138 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "initializeProblemRequest",
+        "initializeWorkspaceRequest",
+        "submitV2",
+        "workspaceSubmit",
+        "stop"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "initializeProblemRequest"
+        },
+        "problemId": {
+          "$ref": "#/definitions/ProblemID"
+        },
+        "problemVersion": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "type",
+        "problemId"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "initializeWorkspaceRequest"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "submitV2"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/SubmissionID"
+        },
+        "language": {
+          "$ref": "#/definitions/Language"
+        },
+        "submissionFiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubmissionFileInfo"
+          }
+        },
+        "problemId": {
+          "$ref": "#/definitions/ProblemID"
+        },
+        "problemVersion": {
+          "type": "integer"
+        },
+        "userId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "submissionId",
+        "language",
+        "submissionFiles",
+        "problemId"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "workspaceSubmit"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/SubmissionID"
+        },
+        "language": {
+          "$ref": "#/definitions/Language"
+        },
+        "submissionFiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubmissionFileInfo"
+          }
+        },
+        "userId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "submissionId",
+        "language",
+        "submissionFiles"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "stop"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/SubmissionID"
+        }
+      },
+      "required": [
+        "type",
+        "submissionId"
+      ]
+    }
+  ],
+  "definitions": {
+    "commons": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "submission": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

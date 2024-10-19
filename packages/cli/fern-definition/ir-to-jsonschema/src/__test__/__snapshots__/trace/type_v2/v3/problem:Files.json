@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/FileInfoV2"
+      }
+    }
+  },
+  "required": [
+    "files"
+  ],
+  "definitions": {
+    "v2.v3.problem": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "editable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "filename",
+        "directory",
+        "contents",
+        "editable"
+      ]
+    }
+  }
+}

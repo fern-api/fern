@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "title",
+    "rating"
+  ],
+  "definitions": {}
+}

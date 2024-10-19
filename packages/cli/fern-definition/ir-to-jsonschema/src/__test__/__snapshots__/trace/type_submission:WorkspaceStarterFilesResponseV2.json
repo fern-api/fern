@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "filesByLanguage": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Files"
+      }
+    }
+  },
+  "required": [
+    "filesByLanguage"
+  ],
+  "definitions": {
+    "v2.problem": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FileInfoV2"
+          }
+        }
+      },
+      "required": [
+        "files"
+      ]
+    }
+  }
+}

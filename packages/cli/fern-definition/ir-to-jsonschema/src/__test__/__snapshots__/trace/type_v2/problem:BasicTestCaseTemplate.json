@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "templateId": {
+      "$ref": "#/definitions/TestCaseTemplateID"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "$ref": "#/definitions/TestCaseImplementationDescription"
+    },
+    "expectedValueParameterId": {
+      "$ref": "#/definitions/ParameterID"
+    }
+  },
+  "required": [
+    "templateId",
+    "name",
+    "description",
+    "expectedValueParameterId"
+  ],
+  "definitions": {
+    "v2.problem": {
+      "type": "string"
+    }
+  }
+}

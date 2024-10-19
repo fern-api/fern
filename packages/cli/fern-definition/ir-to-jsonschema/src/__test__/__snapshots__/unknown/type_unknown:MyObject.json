@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "unknown": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "unknown"
+  ],
+  "definitions": {}
+}

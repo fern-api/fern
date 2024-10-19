@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "topK": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "namespace": {
+      "type": "string"
+    },
+    "filter": {
+      "$ref": "#/definitions/Metadata"
+    },
+    "indexedData": {
+      "$ref": "#/definitions/IndexedData"
+    }
+  },
+  "required": [
+    "values"
+  ],
+  "definitions": {
+    "": {
+      "type": "object",
+      "properties": {
+        "indices": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "indices",
+        "values"
+      ]
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "nestedLiteral": {
+      "$ref": "#/definitions/ANestedLiteral"
+    }
+  },
+  "required": [
+    "nestedLiteral"
+  ],
+  "definitions": {
+    "inlined": {
+      "type": "object",
+      "properties": {
+        "myLiteral": {
+          "const": {
+            "string": "How super cool",
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "myLiteral"
+      ]
+    }
+  }
+}

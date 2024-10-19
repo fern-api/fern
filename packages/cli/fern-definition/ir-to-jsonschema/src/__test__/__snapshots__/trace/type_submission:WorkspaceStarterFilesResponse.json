@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "files": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/WorkspaceFiles"
+      }
+    }
+  },
+  "required": [
+    "files"
+  ],
+  "definitions": {
+    "commons": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "filename",
+        "contents"
+      ]
+    },
+    "submission": {
+      "type": "object",
+      "properties": {
+        "mainFile": {
+          "$ref": "#/definitions/FileInfo"
+        },
+        "readOnlyFiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FileInfo"
+          }
+        }
+      },
+      "required": [
+        "mainFile",
+        "readOnlyFiles"
+      ]
+    }
+  }
+}

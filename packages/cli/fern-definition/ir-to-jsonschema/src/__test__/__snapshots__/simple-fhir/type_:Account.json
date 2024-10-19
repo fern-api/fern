@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "resource_type": {
+      "const": {
+        "string": "Account",
+        "type": "string"
+      }
+    },
+    "name": {
+      "type": "string"
+    },
+    "patient": {
+      "$ref": "#/definitions/Patient"
+    },
+    "practitioner": {
+      "$ref": "#/definitions/Practitioner"
+    }
+  },
+  "required": [
+    "resource_type",
+    "name"
+  ],
+  "definitions": {
+    "": {
+      "type": "object",
+      "properties": {
+        "resource_type": {
+          "const": {
+            "string": "Practitioner",
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "resource_type",
+        "name"
+      ]
+    }
+  }
+}

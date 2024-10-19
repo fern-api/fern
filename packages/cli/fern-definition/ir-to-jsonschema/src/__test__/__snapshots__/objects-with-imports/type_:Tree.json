@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Node"
+      }
+    }
+  },
+  "definitions": {
+    "commons.metadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/definitions/Metadata"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  }
+}

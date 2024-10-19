@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/ID"
+    },
+    "name": {
+      "type": "string"
+    },
+    "age": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "age"
+  ],
+  "definitions": {
+    "": {
+      "type": "string"
+    }
+  }
+}

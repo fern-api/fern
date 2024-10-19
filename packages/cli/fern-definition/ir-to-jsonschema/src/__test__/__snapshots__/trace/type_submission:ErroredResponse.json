@@ -1,0 +1,77 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/SubmissionID"
+    },
+    "errorInfo": {
+      "$ref": "#/definitions/ErrorInfo"
+    }
+  },
+  "required": [
+    "submissionId",
+    "errorInfo"
+  ],
+  "definitions": {
+    "submission": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "compileError",
+            "runtimeError",
+            "internalError"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "compileError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "runtimeError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "internalError"
+            },
+            "exceptionInfo": {
+              "$ref": "#/definitions/ExceptionInfo"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionInfo"
+          ]
+        }
+      ]
+    }
+  }
+}

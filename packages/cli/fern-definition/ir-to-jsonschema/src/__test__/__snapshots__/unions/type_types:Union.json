@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "foo",
+        "bar"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "foo"
+        },
+        "value": {
+          "$ref": "#/definitions/Foo"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "bar"
+        },
+        "value": {
+          "$ref": "#/definitions/Bar"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {
+    "types": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  }
+}

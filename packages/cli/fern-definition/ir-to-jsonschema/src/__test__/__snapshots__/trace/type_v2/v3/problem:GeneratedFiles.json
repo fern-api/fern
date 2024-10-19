@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "generatedTestCaseFiles": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Files"
+      }
+    },
+    "generatedTemplateFiles": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Files"
+      }
+    },
+    "other": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Files"
+      }
+    }
+  },
+  "required": [
+    "generatedTestCaseFiles",
+    "generatedTemplateFiles",
+    "other"
+  ],
+  "definitions": {
+    "v2.v3.problem": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FileInfoV2"
+          }
+        }
+      },
+      "required": [
+        "files"
+      ]
+    }
+  }
+}

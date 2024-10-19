@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/SubmissionID"
+    },
+    "runDetails": {
+      "$ref": "#/definitions/WorkspaceRunDetails"
+    }
+  },
+  "required": [
+    "submissionId",
+    "runDetails"
+  ],
+  "definitions": {
+    "submission": {
+      "type": "object",
+      "properties": {
+        "exceptionV2": {
+          "$ref": "#/definitions/ExceptionV2"
+        },
+        "exception": {
+          "$ref": "#/definitions/ExceptionInfo"
+        },
+        "stdout": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "stdout"
+      ]
+    }
+  }
+}

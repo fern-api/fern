@@ -1,0 +1,22 @@
+{
+  "oneOf": [
+    {
+      "$ref": "#/definitions/KeyType"
+    },
+    {
+      "const": {
+        "string": "default",
+        "type": "string"
+      }
+    }
+  ],
+  "definitions": {
+    "union": {
+      "type": "string",
+      "enum": [
+        "name",
+        "value"
+      ]
+    }
+  }
+}

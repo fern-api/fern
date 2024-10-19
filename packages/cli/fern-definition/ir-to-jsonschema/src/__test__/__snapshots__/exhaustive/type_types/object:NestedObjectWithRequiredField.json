@@ -1,0 +1,76 @@
+{
+  "type": "object",
+  "properties": {
+    "string": {
+      "type": "string"
+    },
+    "NestedObject": {
+      "$ref": "#/definitions/ObjectWithOptionalField"
+    }
+  },
+  "required": [
+    "string",
+    "NestedObject"
+  ],
+  "definitions": {
+    "types.object": {
+      "type": "object",
+      "properties": {
+        "string": {
+          "type": "string"
+        },
+        "integer": {
+          "type": "integer"
+        },
+        "long": {
+          "type": "integer"
+        },
+        "double": {
+          "type": "number"
+        },
+        "bool": {
+          "type": "boolean"
+        },
+        "datetime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "base64": {
+          "type": "string",
+          "contentEncoding": "base64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "set": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "map": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "bigint": {
+          "type": "string",
+          "pattern": "^-?[0-9]+$"
+        }
+      }
+    }
+  }
+}

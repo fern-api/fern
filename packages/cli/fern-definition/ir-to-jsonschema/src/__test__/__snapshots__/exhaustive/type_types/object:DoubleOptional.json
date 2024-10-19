@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "optionalAlias": {
+      "$ref": "#/definitions/OptionalAlias"
+    }
+  },
+  "definitions": {
+    "types.object": {
+      "type": "string"
+    }
+  }
+}

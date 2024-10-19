@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "user": {
+      "$ref": "#/definitions/UserModel"
+    }
+  },
+  "definitions": {
+    "": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "weight": {
+          "type": "number"
+        },
+        "metadata": {
+          "$ref": "#/definitions/Metadata"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/Type"
+    },
+    "value": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "value",
+    "label"
+  ],
+  "definitions": {
+    "": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BasicType"
+        },
+        {
+          "$ref": "#/definitions/ComplexType"
+        }
+      ]
+    }
+  }
+}

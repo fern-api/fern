@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/MovieID"
+    },
+    "prequel": {
+      "$ref": "#/definitions/MovieID"
+    },
+    "title": {
+      "type": "string"
+    },
+    "from": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number"
+    },
+    "type": {
+      "const": {
+        "string": "movie",
+        "type": "string"
+      }
+    },
+    "tag": {
+      "$ref": "#/definitions/Tag"
+    },
+    "book": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    },
+    "revenue": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "from",
+    "rating",
+    "type",
+    "tag",
+    "metadata",
+    "revenue"
+  ],
+  "definitions": {
+    "types": {
+      "type": "string"
+    },
+    "commons.types": {
+      "type": "string"
+    }
+  }
+}

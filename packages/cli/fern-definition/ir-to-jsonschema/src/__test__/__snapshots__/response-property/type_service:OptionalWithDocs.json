@@ -1,0 +1,16 @@
+{
+  "$ref": "#/definitions/WithDocs",
+  "definitions": {
+    "service": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "docs"
+      ]
+    }
+  }
+}

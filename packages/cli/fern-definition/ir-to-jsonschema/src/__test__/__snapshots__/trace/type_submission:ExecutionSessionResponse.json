@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "sessionId": {
+      "type": "string"
+    },
+    "executionSessionUrl": {
+      "type": "string"
+    },
+    "language": {
+      "$ref": "#/definitions/Language"
+    },
+    "status": {
+      "$ref": "#/definitions/ExecutionSessionStatus"
+    }
+  },
+  "required": [
+    "sessionId",
+    "language",
+    "status"
+  ],
+  "definitions": {
+    "commons": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "submission": {
+      "type": "string",
+      "enum": [
+        "CREATING_CONTAINER",
+        "PROVISIONING_CONTAINER",
+        "PENDING_CONTAINER",
+        "RUNNING_CONTAINER",
+        "LIVE_CONTAINER",
+        "FAILED_TO_LAUNCH"
+      ]
+    }
+  }
+}

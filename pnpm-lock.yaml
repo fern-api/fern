@@ -4242,12 +4242,24 @@ importers:
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../schema
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../generation/ir-generator
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
+      '@fern-api/project-loader':
+        specifier: workspace:*
+        version: link:../../project-loader
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../workspace-loader
     devDependencies:
       '@types/json-schema':
         specifier: ^7.0.15

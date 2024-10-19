@@ -1,11 +1,19 @@
-import { TypeReference } from "@fern-api/ir-sdk";
-import { TaskContext } from "@fern-api/task-context";
+import { PrimitiveTypeV1, TypeReference } from "@fern-api/ir-sdk";
 import { JSONSchema4 } from "json-schema";
+import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
+import { assertNever } from "@fern-api/core-utils";
+import { convertContainerToJsonSchema } from "./containerToJsonSchema";
+import { convertTypeDeclarationToJsonSchema } from "./convertTypeDeclarationToJsonSchema";
 
 export declare namespace convertTypeReferenceToJsonSchema {
     interface Args {
         typeReference: TypeReference;
-        context: TaskContext;
+        context: JsonSchemaConverterContext;
+    }
+
+    interface Response {
+        $ref: string;
+        definitions: Record<string, JSONSchema4>;
     }
 }
 
@@ -13,32 +21,94 @@ export function convertTypeReferenceToJsonSchema({
     typeReference,
     context
 }: convertTypeReferenceToJsonSchema.Args): JSONSchema4 {
-    typeReference._visit({
-        named: ({ typeId }) => {
-            return convertIRtoJsonSchema({ ir, typeId, context });
-        },
-        container: () => {
+    switch (typeReference.type) {
+        case "named":
+            const typeDeclaration = context.getTypeDeclarationForId({ typeId: typeReference.typeId });
+            const schemaName = typeReference.name.pascalCase.unsafeName;
+            const schema = convertTypeDeclarationToJsonSchema({ typeDeclaration, context });
+
+            // Register the schema definition
+            context.registerDefinition(typeReference.typeId, schema);
+
+            // Return a reference to the schema in the definitions
             return {
-                type: "object",
-                properties: typeReference.properties.map((property) => {
-                    return {
-                        [property.name]: convertIRtoJsonSchema({ ir, typeId: property.typeId, context })
-                    };
-                })
+                $ref: `#/definitions/${schemaName}`
             };
-        },
-        primitive: () => {
+        case "container":
+            return convertContainerToJsonSchema({ container: typeReference.container, context });
+        case "primitive":
+            return convertPrimitiveTypeReferenceToJsonSchema(typeReference.primitive.v1);
+        case "unknown":
             return {
-                type: typeReference.primitive
+                type: ["string", "number", "boolean", "object", "array", "null"]
             };
-        },
-        unknown: () => {
+        default:
+            assertNever(typeReference);
+    }
+}
+
+function convertPrimitiveTypeReferenceToJsonSchema(primitive: PrimitiveTypeV1): JSONSchema4 {
+    switch (primitive) {
+        case PrimitiveTypeV1.String:
             return {
-                type: "object"
+                type: "string"
             };
-        },
-        _other: () => {
-            context.failAndThrow(`Unsupported type reference: ${typeReference.type}`);
-        }
-    });
+        case PrimitiveTypeV1.Integer:
+            return {
+                type: "integer"
+            };
+        case PrimitiveTypeV1.Long:
+            return {
+                type: "integer"
+            };
+        case PrimitiveTypeV1.Uint:
+            return {
+                type: "integer",
+                minimum: 0
+            };
+        case PrimitiveTypeV1.Uint64:
+            return {
+                type: "integer",
+                minimum: 0
+            };
+        case PrimitiveTypeV1.Float:
+            return {
+                type: "number"
+            };
+        case PrimitiveTypeV1.Double:
+            return {
+                type: "number"
+            };
+        case PrimitiveTypeV1.Boolean:
+            return {
+                type: "boolean"
+            };
+        case PrimitiveTypeV1.Date:
+            return {
+                type: "string",
+                format: "date"
+            };
+        case PrimitiveTypeV1.DateTime:
+            return {
+                type: "string",
+                format: "date-time"
+            };
+        case PrimitiveTypeV1.Uuid:
+            return {
+                type: "string",
+                format: "uuid"
+            };
+        case PrimitiveTypeV1.Base64:
+            return {
+                type: "string",
+                contentEncoding: "base64"
+            };
+        case PrimitiveTypeV1.BigInteger:
+            return {
+                type: "string",
+                pattern: "^-?[0-9]+$"
+            };
+        default:
+            assertNever(primitive);
+    }
 }

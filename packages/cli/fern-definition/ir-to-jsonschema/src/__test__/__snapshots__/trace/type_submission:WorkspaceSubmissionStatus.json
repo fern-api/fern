@@ -1,0 +1,117 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "stopped",
+        "errored",
+        "running",
+        "ran",
+        "traced"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "stopped"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "errored"
+        },
+        "value": {
+          "$ref": "#/definitions/ErrorInfo"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "running"
+        },
+        "value": {
+          "$ref": "#/definitions/RunningSubmissionState"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "ran"
+        },
+        "exceptionV2": {
+          "$ref": "#/definitions/ExceptionV2"
+        },
+        "exception": {
+          "$ref": "#/definitions/ExceptionInfo"
+        },
+        "stdout": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "stdout"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "traced"
+        },
+        "exceptionV2": {
+          "$ref": "#/definitions/ExceptionV2"
+        },
+        "exception": {
+          "$ref": "#/definitions/ExceptionInfo"
+        },
+        "stdout": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "stdout"
+      ]
+    }
+  ],
+  "definitions": {
+    "submission": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace"
+      ]
+    }
+  }
+}

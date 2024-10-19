@@ -1,0 +1,174 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "running",
+        "ran",
+        "stopped",
+        "traced",
+        "tracedV2",
+        "errored",
+        "finished"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "running"
+        },
+        "value": {
+          "$ref": "#/definitions/RunningSubmissionState"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "ran"
+        },
+        "exceptionV2": {
+          "$ref": "#/definitions/ExceptionV2"
+        },
+        "exception": {
+          "$ref": "#/definitions/ExceptionInfo"
+        },
+        "stdout": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "stdout"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "stopped"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "traced"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "tracedV2"
+        },
+        "traceResponsesSize": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "type",
+        "traceResponsesSize"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "errored"
+        },
+        "value": {
+          "$ref": "#/definitions/ErrorInfo"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "finished"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {
+    "submission": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "compileError",
+            "runtimeError",
+            "internalError"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "compileError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "runtimeError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "internalError"
+            },
+            "exceptionInfo": {
+              "$ref": "#/definitions/ExceptionInfo"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionInfo"
+          ]
+        }
+      ]
+    }
+  }
+}

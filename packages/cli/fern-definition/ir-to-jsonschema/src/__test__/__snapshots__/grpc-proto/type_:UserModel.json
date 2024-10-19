@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "age": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "weight": {
+      "type": "number"
+    },
+    "metadata": {
+      "$ref": "#/definitions/Metadata"
+    }
+  },
+  "definitions": {
+    "": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/MetadataValue"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

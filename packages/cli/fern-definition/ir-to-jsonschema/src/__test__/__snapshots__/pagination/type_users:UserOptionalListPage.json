@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/definitions/UserOptionalListContainer"
+    },
+    "next": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "definitions": {
+    "users": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          }
+        }
+      }
+    }
+  }
+}

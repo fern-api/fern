@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/SubmissionID"
+    },
+    "status": {
+      "$ref": "#/definitions/ExecutionSessionStatus"
+    }
+  },
+  "required": [
+    "submissionId",
+    "status"
+  ],
+  "definitions": {
+    "submission": {
+      "type": "string",
+      "enum": [
+        "CREATING_CONTAINER",
+        "PROVISIONING_CONTAINER",
+        "PENDING_CONTAINER",
+        "RUNNING_CONTAINER",
+        "LIVE_CONTAINER",
+        "FAILED_TO_LAUNCH"
+      ]
+    }
+  }
+}

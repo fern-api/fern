@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "prompt": {
+      "const": {
+        "string": "You are a helpful assistant",
+        "type": "string"
+      }
+    },
+    "query": {
+      "type": "string"
+    },
+    "stream": {
+      "const": {
+        "boolean": false,
+        "type": "boolean"
+      }
+    },
+    "context": {
+      "$ref": "#/definitions/SomeLiteral"
+    },
+    "maybeContext": {
+      "$ref": "#/definitions/SomeLiteral"
+    },
+    "containerObject": {
+      "$ref": "#/definitions/ContainerObject"
+    }
+  },
+  "required": [
+    "prompt",
+    "query",
+    "stream",
+    "context",
+    "containerObject"
+  ],
+  "definitions": {
+    "reference": {
+      "type": "object",
+      "properties": {
+        "nestedObjects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NestedObjectWithLiterals"
+          }
+        }
+      },
+      "required": [
+        "nestedObjects"
+      ]
+    }
+  }
+}

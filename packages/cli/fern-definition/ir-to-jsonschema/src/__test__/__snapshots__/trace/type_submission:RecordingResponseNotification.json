@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/SubmissionID"
+    },
+    "testCaseId": {
+      "type": "string"
+    },
+    "lineNumber": {
+      "type": "integer"
+    },
+    "lightweightStackInfo": {
+      "$ref": "#/definitions/LightweightStackframeInformation"
+    },
+    "tracedFile": {
+      "$ref": "#/definitions/TracedFile"
+    }
+  },
+  "required": [
+    "submissionId",
+    "lineNumber",
+    "lightweightStackInfo"
+  ],
+  "definitions": {
+    "submission": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "filename",
+        "directory"
+      ]
+    }
+  }
+}

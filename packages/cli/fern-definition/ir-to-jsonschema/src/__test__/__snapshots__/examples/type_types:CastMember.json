@@ -1,0 +1,30 @@
+{
+  "oneOf": [
+    {
+      "$ref": "#/definitions/Actor"
+    },
+    {
+      "$ref": "#/definitions/Actress"
+    },
+    {
+      "$ref": "#/definitions/StuntDouble"
+    }
+  ],
+  "definitions": {
+    "types": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "actorOrActressId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "actorOrActressId"
+      ]
+    }
+  }
+}

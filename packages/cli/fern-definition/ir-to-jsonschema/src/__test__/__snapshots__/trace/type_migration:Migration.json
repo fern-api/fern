@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/definitions/MigrationStatus"
+    }
+  },
+  "required": [
+    "name",
+    "status"
+  ],
+  "definitions": {
+    "migration": {
+      "type": "string",
+      "enum": [
+        "RUNNING",
+        "FAILED",
+        "FINISHED"
+      ]
+    }
+  }
+}

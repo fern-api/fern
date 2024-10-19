@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/SubmissionID"
+    },
+    "language": {
+      "$ref": "#/definitions/Language"
+    },
+    "submissionFiles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SubmissionFileInfo"
+      }
+    },
+    "userId": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "submissionId",
+    "language",
+    "submissionFiles"
+  ],
+  "definitions": {
+    "submission": {
+      "type": "object",
+      "properties": {
+        "directory": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "directory",
+        "filename",
+        "contents"
+      ]
+    },
+    "commons": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "cast": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "cast"
+  ],
+  "definitions": {}
+}

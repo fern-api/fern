@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "a": {
+      "$ref": "#/definitions/A"
+    },
+    "b": {
+      "$ref": "#/definitions/B"
+    }
+  },
+  "required": [
+    "a",
+    "b"
+  ],
+  "definitions": {
+    "a.aa": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "oneOf": [
+    {
+      "$ref": "#/definitions/BasicType"
+    },
+    {
+      "$ref": "#/definitions/ComplexType"
+    }
+  ],
+  "definitions": {
+    "": {
+      "type": "string",
+      "enum": [
+        "object",
+        "union",
+        "unknown"
+      ]
+    }
+  }
+}

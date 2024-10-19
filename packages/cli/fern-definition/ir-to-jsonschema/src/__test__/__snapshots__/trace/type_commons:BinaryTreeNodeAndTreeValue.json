@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "nodeId": {
+      "$ref": "#/definitions/NodeID"
+    },
+    "fullTree": {
+      "$ref": "#/definitions/BinaryTreeValue"
+    }
+  },
+  "required": [
+    "nodeId",
+    "fullTree"
+  ],
+  "definitions": {
+    "commons": {
+      "type": "object",
+      "properties": {
+        "root": {
+          "$ref": "#/definitions/NodeID"
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/BinaryTreeNodeValue"
+          }
+        }
+      },
+      "required": [
+        "nodes"
+      ]
+    }
+  }
+}

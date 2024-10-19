@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "metadata": {
+      "$ref": "#/definitions/Metadata"
+    }
+  },
+  "required": [
+    "id"
+  ],
+  "definitions": {
+    "commons.metadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  }
+}

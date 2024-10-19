@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "updates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/WorkspaceSubmissionUpdate"
+      }
+    }
+  },
+  "required": [
+    "updates"
+  ],
+  "definitions": {
+    "submission": {
+      "type": "object",
+      "properties": {
+        "updateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updateInfo": {
+          "$ref": "#/definitions/WorkspaceSubmissionUpdateInfo"
+        }
+      },
+      "required": [
+        "updateTime",
+        "updateInfo"
+      ]
+    }
+  }
+}

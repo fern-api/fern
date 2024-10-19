@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "nodeId": {
+      "$ref": "#/definitions/NodeID"
+    },
+    "fullList": {
+      "$ref": "#/definitions/DoublyLinkedListValue"
+    }
+  },
+  "required": [
+    "nodeId",
+    "fullList"
+  ],
+  "definitions": {
+    "commons": {
+      "type": "object",
+      "properties": {
+        "head": {
+          "$ref": "#/definitions/NodeID"
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/DoublyLinkedListNodeValue"
+          }
+        }
+      },
+      "required": [
+        "nodes"
+      ]
+    }
+  }
+}

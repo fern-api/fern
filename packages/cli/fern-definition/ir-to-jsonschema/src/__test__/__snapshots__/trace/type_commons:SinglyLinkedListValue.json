@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "head": {
+      "$ref": "#/definitions/NodeID"
+    },
+    "nodes": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/SinglyLinkedListNodeValue"
+      }
+    }
+  },
+  "required": [
+    "nodes"
+  ],
+  "definitions": {
+    "commons": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/NodeID"
+        },
+        "val": {
+          "type": "number"
+        },
+        "next": {
+          "$ref": "#/definitions/NodeID"
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ]
+    }
+  }
+}

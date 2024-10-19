@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "related_resources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ResourceList"
+      }
+    },
+    "memo": {
+      "$ref": "#/definitions/Memo"
+    }
+  },
+  "required": [
+    "id",
+    "related_resources",
+    "memo"
+  ],
+  "definitions": {
+    "": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "account": {
+          "$ref": "#/definitions/Account"
+        }
+      },
+      "required": [
+        "description"
+      ]
+    }
+  }
+}

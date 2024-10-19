@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/ID"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "definitions": {
+    "": {
+      "type": "string"
+    }
+  }
+}

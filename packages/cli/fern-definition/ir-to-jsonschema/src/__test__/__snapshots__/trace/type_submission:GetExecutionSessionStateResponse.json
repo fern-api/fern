@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "states": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/ExecutionSessionState"
+      }
+    },
+    "numWarmingInstances": {
+      "type": "integer"
+    },
+    "warmingSessionIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "states",
+    "warmingSessionIds"
+  ],
+  "definitions": {
+    "commons": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "submission": {
+      "type": "object",
+      "properties": {
+        "lastTimeContacted": {
+          "type": "string"
+        },
+        "sessionId": {
+          "type": "string"
+        },
+        "isWarmInstance": {
+          "type": "boolean"
+        },
+        "awsTaskId": {
+          "type": "string"
+        },
+        "language": {
+          "$ref": "#/definitions/Language"
+        },
+        "status": {
+          "$ref": "#/definitions/ExecutionSessionStatus"
+        }
+      },
+      "required": [
+        "sessionId",
+        "isWarmInstance",
+        "language",
+        "status"
+      ]
+    }
+  }
+}

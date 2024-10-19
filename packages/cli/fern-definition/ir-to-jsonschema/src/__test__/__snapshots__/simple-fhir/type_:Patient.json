@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "resource_type": {
+      "const": {
+        "string": "Patient",
+        "type": "string"
+      }
+    },
+    "name": {
+      "type": "string"
+    },
+    "scripts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Script"
+      }
+    }
+  },
+  "required": [
+    "resource_type",
+    "name",
+    "scripts"
+  ],
+  "definitions": {
+    "": {
+      "type": "object",
+      "properties": {
+        "resource_type": {
+          "const": {
+            "string": "Script",
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "resource_type",
+        "name"
+      ]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "hasNextPage": {
+      "type": "boolean"
+    },
+    "page": {
+      "$ref": "#/definitions/Page"
+    },
+    "total_count": {
+      "type": "integer"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/User"
+      }
+    }
+  },
+  "required": [
+    "total_count",
+    "data"
+  ],
+  "definitions": {
+    "users": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ]
+    }
+  }
+}

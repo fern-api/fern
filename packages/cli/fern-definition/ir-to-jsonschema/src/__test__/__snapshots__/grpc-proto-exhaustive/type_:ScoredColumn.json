@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "score": {
+      "type": "number"
+    },
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "metadata": {
+      "$ref": "#/definitions/Metadata"
+    },
+    "indexedData": {
+      "$ref": "#/definitions/IndexedData"
+    }
+  },
+  "required": [
+    "id"
+  ],
+  "definitions": {
+    "": {
+      "type": "object",
+      "properties": {
+        "indices": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "indices",
+        "values"
+      ]
+    }
+  }
+}

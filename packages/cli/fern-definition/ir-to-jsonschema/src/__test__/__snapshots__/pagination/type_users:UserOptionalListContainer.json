@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/User"
+      }
+    }
+  },
+  "definitions": {
+    "users": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ]
+    }
+  }
+}

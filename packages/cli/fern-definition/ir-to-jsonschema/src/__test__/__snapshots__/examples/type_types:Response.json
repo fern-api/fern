@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    },
+    "identifiers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Identifier"
+      }
+    }
+  },
+  "required": [
+    "response",
+    "identifiers"
+  ],
+  "definitions": {
+    "": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/Type"
+        },
+        "value": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value",
+        "label"
+      ]
+    }
+  }
+}
