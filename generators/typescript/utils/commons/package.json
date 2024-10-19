@@ -59,6 +59,6 @@
     "memfs": "^3.4.1",
     "organize-imports-cli": "^0.10.0",
     "package-json-type": "^1.0.3",
-    "prettier": "^2.7.1"
+    "prettier": "^3.3.3"
   }
 }
