@@ -4,13 +4,14 @@ import { Class } from "./Class";
 import { Method } from "./Method";
 import { CodeBlock } from "./CodeBlock";
 import { Reference } from "./Reference";
+import { ModulePath } from "./core/types";
 
 export declare namespace PythonFile {
     interface Args {
         /* The name of the Python module that this file belongs to*/
         moduleName: string;
         /* The path of the Python file relative to the module */
-        path: string[];
+        path: ModulePath;
         /* The name of the Python file */
         name: string;
     }
@@ -18,7 +19,7 @@ export declare namespace PythonFile {
 
 export class PythonFile extends AstNode {
     public readonly moduleName: string;
-    public readonly path: string[];
+    public readonly path: ModulePath;
     public readonly name: string;
     private readonly statements: AstNode[] = [];
 
@@ -64,7 +65,7 @@ export class PythonFile extends AstNode {
         // Deduplicate references by their fully qualified paths
         const uniqueReferences = new Map<
             string,
-            { modulePath: string[]; references: Reference[]; referenceNames: Set<string> }
+            { modulePath: ModulePath; references: Reference[]; referenceNames: Set<string> }
         >();
         for (const reference of references) {
             const fullyQualifiedPath = reference.getFullyQualifiedModulePath();

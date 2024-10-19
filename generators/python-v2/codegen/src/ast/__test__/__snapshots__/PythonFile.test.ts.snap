@@ -90,3 +90,10 @@ exports[`PythonFile > Multiple imports from the same module should work 1`] = `
 variable: Union[List[str], Set[str]]
 "
 `;
+
+exports[`PythonFile > Set a variable to a nested attribute of an imported reference 1`] = `
+"from external_module import ImportedClass
+
+my_variable: ImportedClass.nested.attribute
+"
+`;

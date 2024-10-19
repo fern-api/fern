@@ -141,5 +141,15 @@ describe("Reference", () => {
             reference.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
+
+        it("handles reference with attr path", async () => {
+            const reference = python.reference({
+                name: "AttrPathClass",
+                modulePath: ["module"],
+                attrPath: ["attr1", "attr2"]
+            });
+            reference.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
     });
 });

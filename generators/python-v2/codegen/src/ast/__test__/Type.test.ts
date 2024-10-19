@@ -98,4 +98,16 @@ describe("Type", () => {
         referenceType.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
+
+    it("writes reference type with attribute path", async () => {
+        const referenceType = Type.reference(
+            python.reference({
+                name: "MyClass",
+                modulePath: ["module"],
+                attrPath: ["attr1", "attr2"]
+            })
+        );
+        referenceType.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
 });
