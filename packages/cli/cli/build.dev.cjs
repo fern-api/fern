@@ -38,7 +38,7 @@ async function main() {
                 name: "fern-api",
                 version: packageJson.version,
                 repository: packageJson.repository,
-                files: ["bundle.cjs", "cli.cjs"],
+                files: ["cli.cjs"],
                 bin: { fern: "cli.cjs" }
             },
             undefined,
