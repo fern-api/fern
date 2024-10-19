@@ -47,10 +47,10 @@ describe("convertIRtoJsonSchema", async () => {
                         typeId,
                         context
                     });
+
+                    const json = JSON.stringify(jsonschema, undefined, 2);
                     // eslint-disable-next-line jest/no-standalone-expect
-                    expect(JSON.stringify(jsonschema, undefined, 2)).toMatchFileSnapshot(
-                        `./__snapshots__/${workspace.workspaceName}/${typeId}.json`
-                    );
+                    await expect(json).toMatchFileSnapshot(`./__snapshots__/${workspace.workspaceName}/${typeId}.json`);
                 });
             }
         })
