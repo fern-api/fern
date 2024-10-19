@@ -40,6 +40,11 @@ exports[`Reference > toString > handles list with reference as inner type 1`] = 
 "
 `;
 
+exports[`Reference > toString > handles reference with attr path 1`] = `
+"AttrPathClass.attr1.attr2
+"
+`;
+
 exports[`Reference > toString > handles set with reference as inner type 1`] = `
 "Set[InnerClass]
 "
