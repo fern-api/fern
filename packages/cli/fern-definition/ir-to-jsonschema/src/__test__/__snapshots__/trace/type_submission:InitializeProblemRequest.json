@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "problemId": {
+      "$ref": "#/definitions/commons.ProblemId"
+    },
+    "problemVersion": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "problemId"
+  ],
+  "definitions": {
+    "commons.ProblemId": {
+      "type": "string"
+    }
+  }
+}

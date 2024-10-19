@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "nestedObjects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/reference.NestedObjectWithLiterals"
+      }
+    }
+  },
+  "required": [
+    "nestedObjects"
+  ],
+  "definitions": {
+    "reference.NestedObjectWithLiterals": {
+      "type": "object",
+      "properties": {
+        "literal1": {
+          "const": {
+            "string": "literal1",
+            "type": "string"
+          }
+        },
+        "literal2": {
+          "const": {
+            "string": "literal2",
+            "type": "string"
+          }
+        },
+        "strProp": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "literal1",
+        "literal2",
+        "strProp"
+      ]
+    }
+  }
+}

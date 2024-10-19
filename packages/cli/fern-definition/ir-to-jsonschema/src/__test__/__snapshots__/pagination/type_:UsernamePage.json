@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "after": {
+      "type": "string"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "definitions": {}
+}

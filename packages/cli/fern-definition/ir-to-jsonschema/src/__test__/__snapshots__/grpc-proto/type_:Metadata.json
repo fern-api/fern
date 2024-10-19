@@ -1,0 +1,38 @@
+{
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/MetadataValue"
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    }
+  ],
+  "definitions": {
+    "MetadataValue": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    }
+  }
+}

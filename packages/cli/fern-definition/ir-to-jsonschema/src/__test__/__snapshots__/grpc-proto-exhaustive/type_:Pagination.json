@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "next": {
+      "type": "string"
+    }
+  },
+  "definitions": {}
+}

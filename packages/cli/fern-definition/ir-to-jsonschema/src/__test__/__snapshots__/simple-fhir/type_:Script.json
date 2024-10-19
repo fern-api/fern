@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "resource_type": {
+      "const": {
+        "string": "Script",
+        "type": "string"
+      }
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "resource_type",
+    "name"
+  ],
+  "definitions": {}
+}

@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "delta": {
+      "type": "string"
+    },
+    "tokens": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "delta"
+  ],
+  "definitions": {}
+}

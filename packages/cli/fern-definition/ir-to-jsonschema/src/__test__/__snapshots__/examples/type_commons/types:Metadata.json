@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "jsonString": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id"
+  ],
+  "definitions": {}
+}

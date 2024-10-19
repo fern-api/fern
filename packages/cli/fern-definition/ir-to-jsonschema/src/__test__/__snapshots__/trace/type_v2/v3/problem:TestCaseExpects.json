@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "expectedStdout": {
+      "type": "string"
+    }
+  },
+  "definitions": {}
+}

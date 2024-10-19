@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/types.Node"
+      }
+    },
+    "trees": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/types.Tree"
+      }
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "definitions": {
+    "types.Tree": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.Node"
+          }
+        }
+      }
+    },
+    "types.Node": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.Node"
+          }
+        },
+        "trees": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.Tree"
+          }
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  }
+}

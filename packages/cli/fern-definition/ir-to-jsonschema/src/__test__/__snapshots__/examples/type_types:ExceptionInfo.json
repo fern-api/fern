@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "exceptionType": {
+      "type": "string"
+    },
+    "exceptionMessage": {
+      "type": "string"
+    },
+    "exceptionStacktrace": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "exceptionType",
+    "exceptionMessage",
+    "exceptionStacktrace"
+  ],
+  "definitions": {}
+}

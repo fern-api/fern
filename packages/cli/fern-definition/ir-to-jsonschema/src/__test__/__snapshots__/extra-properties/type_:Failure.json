@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "const": {
+        "string": "failure",
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "status"
+  ],
+  "definitions": {}
+}

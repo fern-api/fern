@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "page": {
+      "type": "integer"
+    }
+  },
+  "definitions": {}
+}

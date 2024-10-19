@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ],
+  "definitions": {}
+}

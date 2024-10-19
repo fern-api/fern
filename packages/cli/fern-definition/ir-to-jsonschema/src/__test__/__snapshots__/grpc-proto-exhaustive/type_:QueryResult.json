@@ -1,0 +1,100 @@
+{
+  "type": "object",
+  "properties": {
+    "matches": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ScoredColumn"
+      }
+    },
+    "namespace": {
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "MetadataValue": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    },
+    "Metadata": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/MetadataValue"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      ]
+    },
+    "IndexedData": {
+      "type": "object",
+      "properties": {
+        "indices": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "indices",
+        "values"
+      ]
+    },
+    "ScoredColumn": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/Metadata"
+        },
+        "indexedData": {
+          "$ref": "#/definitions/IndexedData"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  }
+}

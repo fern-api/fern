@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "root": {
+      "$ref": "#/definitions/commons.NodeId"
+    },
+    "nodes": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/commons.BinaryTreeNodeValue"
+      }
+    }
+  },
+  "required": [
+    "nodes"
+  ],
+  "definitions": {
+    "commons.NodeId": {
+      "type": "string"
+    },
+    "commons.BinaryTreeNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "right": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "left": {
+          "$ref": "#/definitions/commons.NodeId"
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ]
+    }
+  }
+}

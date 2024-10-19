@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "head": {
+      "$ref": "#/definitions/commons.NodeId"
+    },
+    "nodes": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/commons.SinglyLinkedListNodeValue"
+      }
+    }
+  },
+  "required": [
+    "nodes"
+  ],
+  "definitions": {
+    "commons.NodeId": {
+      "type": "string"
+    },
+    "commons.SinglyLinkedListNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "next": {
+          "$ref": "#/definitions/commons.NodeId"
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ]
+    }
+  }
+}

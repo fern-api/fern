@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "enum": [
+    ">",
+    "=",
+    "less_than"
+  ],
+  "definitions": {}
+}

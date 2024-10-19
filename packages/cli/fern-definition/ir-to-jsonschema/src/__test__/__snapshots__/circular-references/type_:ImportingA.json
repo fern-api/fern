@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "a": {
+      "$ref": "#/definitions/a.A"
+    }
+  },
+  "definitions": {
+    "a.A": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+}

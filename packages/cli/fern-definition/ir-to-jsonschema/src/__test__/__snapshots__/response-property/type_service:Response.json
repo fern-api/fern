@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/definitions/service.Movie"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "definitions": {
+    "service.Movie": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    }
+  }
+}
