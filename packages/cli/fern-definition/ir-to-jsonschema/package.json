@@ -29,13 +29,12 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
-    "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/ir-generator": "workspace:*",
+    "json-schema": "^0.4.0"
   },
   "devDependencies": {
     "@types/json-schema": "^7.0.15",

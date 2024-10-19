@@ -27,17 +27,18 @@ export function convertUnionToJsonSchema({ union, context }: convertUnionToJsonS
             let properties: Record<string, JSONSchema4> = {};
             let required: string[] = [];
             switch (member.shape.propertiesType) {
-                case "samePropertiesAsObject":
+                case "samePropertiesAsObject": {
                     const typeDeclaration = context.getTypeDeclarationForId({ typeId: member.shape.typeId });
                     const jsonSchema = convertTypeDeclarationToJsonSchema({
                         typeDeclaration,
                         context
                     });
-                    properties = jsonSchema.properties || {};
+                    properties = jsonSchema.properties ?? {};
                     required = Array.isArray(jsonSchema.required) ? jsonSchema.required : [];
                     break;
+                }
                 case "singleProperty":
-                    properties["value"] = convertTypeReferenceToJsonSchema({
+                    properties.value = convertTypeReferenceToJsonSchema({
                         typeReference: member.shape.type,
                         context
                     });

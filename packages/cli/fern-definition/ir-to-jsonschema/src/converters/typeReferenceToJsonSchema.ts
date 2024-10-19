@@ -22,7 +22,7 @@ export function convertTypeReferenceToJsonSchema({
     context
 }: convertTypeReferenceToJsonSchema.Args): JSONSchema4 {
     switch (typeReference.type) {
-        case "named":
+        case "named": {
             const typeDeclaration = context.getTypeDeclarationForId({ typeId: typeReference.typeId });
 
             // Check if the type hasn't been defined yet and isn't currently being built
@@ -44,6 +44,7 @@ export function convertTypeReferenceToJsonSchema({
             return {
                 $ref: `#/definitions/${context.getDefinitionKey(typeDeclaration)}`
             };
+        }
         case "container":
             return convertContainerToJsonSchema({ container: typeReference.container, context });
         case "primitive":
