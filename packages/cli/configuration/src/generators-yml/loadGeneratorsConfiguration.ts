@@ -7,7 +7,7 @@ import { validateSchema } from "../commons/validateSchema";
 import { GENERATORS_CONFIGURATION_FILENAME } from "../constants";
 import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration";
 import { GeneratorsConfiguration } from "./GeneratorsConfiguration";
-import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
+import { GeneratorsConfigurationSchema } from "./schemas";
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,

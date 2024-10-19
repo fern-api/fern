@@ -17,7 +17,7 @@ import { APIConfigurationSchemaInternal, APIConfigurationV2Schema } from "./sche
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
-import { isApiConfigurationV2Schema, isConjureSchema, isOpenAPISchema } from "./schemas/utils";
+import { isApiConfigurationV2Schema, isConjureSchema, isOpenAPISchema } from "./utils";
 import {
     API_ORIGIN_LOCATION_KEY,
     API_SETTINGS_KEY,

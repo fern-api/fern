@@ -3,10 +3,10 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Audiences } from "../commons";
-import { APIDefinitionSettingsSchema } from "./schemas/APIConfigurationSchema";
-import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
-import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
-import { ReadmeSchema } from "./schemas/ReadmeSchema";
+import { APIDefinitionSettingsSchema } from "./schemas";
+import { GeneratorInvocationSchema } from "./schemas";
+import { GeneratorsConfigurationSchema } from "./schemas";
+import { ReadmeSchema } from "./schemas";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;

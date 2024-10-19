@@ -28,7 +28,6 @@
     "fern-local:build": "pnpm --filter @fern-api/cli dist:cli:local && echo 'Run node packages/cli/cli/dist/local/cli.cjs'",
     "seed:build": "pnpm --filter @fern-api/seed-cli dist:cli && echo 'Run packages/seed/dist/cli.cjs'",
     "publish": "pnpm -r publish --access public --no-git-checks --loglevel=verbose",
-    "fern-script": "pnpm --filter @fern-api/scripts dist:cli && node ./packages/scripts/dist/cli.cjs",
     "generate-json-schema": "pnpm fern-script write-json-schema fern.schema.json",
     "generate-json-schema:dev": "pnpm fern-script write-json-schema fern.schema.dev.json",
     "check-cli-release-blockers": "pnpm fern-script check-cli-release-blockers",
@@ -43,6 +42,7 @@
     "seed-config:generate": "pnpm --filter @fern-api/seed-cli generate",
     "docs-config:generate": "pnpm --filter @fern-api/configuration generate",
     "fern-definition:generate": "fern generate --local --api fern-definition",
+    "generators-yml:generate": "fern generate --local --api generators-yml",
     "prepare": "husky"
   },
   "devDependencies": {

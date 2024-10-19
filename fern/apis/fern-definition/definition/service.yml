@@ -7,7 +7,6 @@ imports:
   variables: variables.yml
 
 types: 
-  
   HttpServiceSchema: 
     extends: 
       - commons.DeclarationWithoutDocsSchema
