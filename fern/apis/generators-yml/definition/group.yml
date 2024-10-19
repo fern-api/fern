@@ -140,6 +140,7 @@ types:
       metadata: optional<PypiOutputMetadataSchema>
 
   PypiOutputMetadataSchema:
+    extends: generators.OutputMetadataSchema
     properties:
       keywords: optional<list<string>>
       documentation-link: optional<string>

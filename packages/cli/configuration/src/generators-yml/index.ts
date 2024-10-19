@@ -21,5 +21,5 @@ export {
     ASYNC_API_LOCATION_KEY,
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
     OPENAPI_LOCATION_KEY
-} from "./schemas/GeneratorsConfigurationSchema";
+} from "./schemas";
 export { updateGeneratorGroup } from "./updateGeneratorGroup";

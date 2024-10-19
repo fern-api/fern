@@ -3,7 +3,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Audiences } from "../commons";
-import { APIDefinitionSettingsSchema } from "./schemas";
+import { ApiDefinitionSettingsSchema } from "./schemas";
 import { GeneratorInvocationSchema } from "./schemas";
 import { GeneratorsConfigurationSchema } from "./schemas";
 import { ReadmeSchema } from "./schemas";
@@ -110,7 +110,7 @@ export interface GeneratorInvocation {
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
     readme: ReadmeSchema | undefined;
-    settings: APIDefinitionSettingsSchema | undefined;
+    settings: ApiDefinitionSettingsSchema | undefined;
 }
 
 export const GenerationLanguage = {

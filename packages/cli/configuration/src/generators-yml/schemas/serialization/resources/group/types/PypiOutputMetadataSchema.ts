@@ -5,18 +5,21 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { OutputMetadataSchema } from "../../generators/types/OutputMetadataSchema";
 
 export const PypiOutputMetadataSchema: core.serialization.ObjectSchema<
     serializers.PypiOutputMetadataSchema.Raw,
     FernDefinition.PypiOutputMetadataSchema
-> = core.serialization.object({
-    keywords: core.serialization.list(core.serialization.string()).optional(),
-    "documentation-link": core.serialization.string().optional(),
-    "homepage-link": core.serialization.string().optional(),
-});
+> = core.serialization
+    .object({
+        keywords: core.serialization.list(core.serialization.string()).optional(),
+        "documentation-link": core.serialization.string().optional(),
+        "homepage-link": core.serialization.string().optional(),
+    })
+    .extend(OutputMetadataSchema);
 
 export declare namespace PypiOutputMetadataSchema {
-    interface Raw {
+    interface Raw extends OutputMetadataSchema.Raw {
         keywords?: string[] | null;
         "documentation-link"?: string | null;
         "homepage-link"?: string | null;
