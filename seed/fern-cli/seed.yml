@@ -10,7 +10,6 @@ publishGa:
     - pnpm install
     - pnpm --filter @fern-api/cli compile
     - pnpm --filter @fern-api/cli publish:cli:prod --tag latest
-    - mv package.json.tmp package.json
 publishRc:
   workingDirectory: packages/cli/cli
   versionSubstitution: $VERSION
