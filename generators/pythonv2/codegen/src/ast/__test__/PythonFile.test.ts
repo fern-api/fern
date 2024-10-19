@@ -78,6 +78,30 @@ describe("PythonFile", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
+    it("Set a variable to a nested attribute of an imported reference", async () => {
+        const file = python.file({
+            moduleName: "test_module",
+            path: ["test"],
+            name: "test_file"
+        });
+
+        const importedRef = python.reference({
+            modulePath: ["external_module"],
+            name: "ImportedClass",
+            attrPath: ["nested", "attribute"]
+        });
+
+        const field = python.field({
+            name: "my_variable",
+            type: python.Type.reference(importedRef)
+        });
+
+        file.addStatement(field);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
     it("Add a Method", async () => {
         const file = python.file({
             moduleName: "test_module",
