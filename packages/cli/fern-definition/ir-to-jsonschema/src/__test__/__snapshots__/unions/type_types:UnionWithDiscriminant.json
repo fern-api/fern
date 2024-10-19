@@ -19,7 +19,7 @@
           "const": "foo"
         },
         "value": {
-          "$ref": "#/definitions/types"
+          "$ref": "#/definitions/types.Foo"
         }
       },
       "required": [
@@ -32,7 +32,7 @@
           "const": "bar"
         },
         "value": {
-          "$ref": "#/definitions/types"
+          "$ref": "#/definitions/types.Bar"
         }
       },
       "required": [
@@ -41,7 +41,18 @@
     }
   ],
   "definitions": {
-    "types": {
+    "types.Foo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "types.Bar": {
       "type": "object",
       "properties": {
         "name": {

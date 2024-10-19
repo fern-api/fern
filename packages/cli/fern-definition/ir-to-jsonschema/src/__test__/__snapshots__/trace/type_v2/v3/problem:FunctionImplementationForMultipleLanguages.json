@@ -4,7 +4,7 @@
     "codeByLanguage": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/v2.v3.problem"
+        "$ref": "#/definitions/v2.v3.problem.FunctionImplementation"
       }
     }
   },
@@ -12,7 +12,7 @@
     "codeByLanguage"
   ],
   "definitions": {
-    "v2.v3.problem": {
+    "v2.v3.problem.FunctionImplementation": {
       "type": "object",
       "properties": {
         "impl": {

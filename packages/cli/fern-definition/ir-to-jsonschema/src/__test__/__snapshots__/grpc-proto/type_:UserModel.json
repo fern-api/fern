@@ -15,16 +15,29 @@
       "type": "number"
     },
     "metadata": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/Metadata"
     }
   },
   "definitions": {
-    "": {
+    "MetadataValue": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    },
+    "Metadata": {
       "oneOf": [
         {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/"
+            "$ref": "#/definitions/MetadataValue"
           }
         },
         {

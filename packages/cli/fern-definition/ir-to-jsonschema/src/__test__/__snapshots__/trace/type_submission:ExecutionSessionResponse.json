@@ -8,10 +8,10 @@
       "type": "string"
     },
     "language": {
-      "$ref": "#/definitions/commons"
+      "$ref": "#/definitions/commons.Language"
     },
     "status": {
-      "$ref": "#/definitions/submission"
+      "$ref": "#/definitions/submission.ExecutionSessionStatus"
     }
   },
   "required": [
@@ -20,7 +20,7 @@
     "status"
   ],
   "definitions": {
-    "commons": {
+    "commons.Language": {
       "type": "string",
       "enum": [
         "JAVA",
@@ -28,7 +28,7 @@
         "PYTHON"
       ]
     },
-    "submission": {
+    "submission.ExecutionSessionStatus": {
       "type": "string",
       "enum": [
         "CREATING_CONTAINER",

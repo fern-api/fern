@@ -2,14 +2,14 @@
   "type": "object",
   "properties": {
     "exceptionInfo": {
-      "$ref": "#/definitions/submission"
+      "$ref": "#/definitions/submission.ExceptionInfo"
     }
   },
   "required": [
     "exceptionInfo"
   ],
   "definitions": {
-    "submission": {
+    "submission.ExceptionInfo": {
       "type": "object",
       "properties": {
         "exceptionType": {

@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/v2.v3.problem"
+      "$ref": "#/definitions/v2.v3.problem.TestCaseId"
     },
     "name": {
       "type": "string"
@@ -17,7 +17,7 @@
     "hidden"
   ],
   "definitions": {
-    "v2.v3.problem": {
+    "v2.v3.problem.TestCaseId": {
       "type": "string"
     }
   }

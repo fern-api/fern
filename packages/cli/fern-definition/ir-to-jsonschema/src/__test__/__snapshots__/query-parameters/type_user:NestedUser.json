@@ -5,7 +5,7 @@
       "type": "string"
     },
     "user": {
-      "$ref": "#/definitions/user"
+      "$ref": "#/definitions/user.User"
     }
   },
   "required": [
@@ -13,7 +13,7 @@
     "user"
   ],
   "definitions": {
-    "user": {
+    "user.User": {
       "type": "object",
       "properties": {
         "name": {

@@ -13,7 +13,7 @@
     "scripts": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/"
+        "$ref": "#/definitions/Script"
       }
     }
   },
@@ -23,7 +23,7 @@
     "scripts"
   ],
   "definitions": {
-    "": {
+    "Script": {
       "type": "object",
       "properties": {
         "resource_type": {

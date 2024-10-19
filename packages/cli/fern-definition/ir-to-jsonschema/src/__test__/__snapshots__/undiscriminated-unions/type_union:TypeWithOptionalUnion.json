@@ -2,11 +2,11 @@
   "type": "object",
   "properties": {
     "myUnion": {
-      "$ref": "#/definitions/union"
+      "$ref": "#/definitions/union.MyUnion"
     }
   },
   "definitions": {
-    "union": {
+    "union.MyUnion": {
       "oneOf": [
         {
           "type": "string"

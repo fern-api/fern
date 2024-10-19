@@ -4,7 +4,7 @@
     "files": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/problem"
+        "$ref": "#/definitions/problem.ProblemFiles"
       }
     }
   },
@@ -12,7 +12,7 @@
     "files"
   ],
   "definitions": {
-    "commons": {
+    "commons.FileInfo": {
       "type": "object",
       "properties": {
         "filename": {
@@ -27,16 +27,16 @@
         "contents"
       ]
     },
-    "problem": {
+    "problem.ProblemFiles": {
       "type": "object",
       "properties": {
         "solutionFile": {
-          "$ref": "#/definitions/commons"
+          "$ref": "#/definitions/commons.FileInfo"
         },
         "readOnlyFiles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/commons"
+            "$ref": "#/definitions/commons.FileInfo"
           }
         }
       },

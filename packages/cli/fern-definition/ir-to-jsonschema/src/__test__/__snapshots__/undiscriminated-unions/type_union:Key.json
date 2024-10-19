@@ -1,7 +1,7 @@
 {
   "oneOf": [
     {
-      "$ref": "#/definitions/union"
+      "$ref": "#/definitions/union.KeyType"
     },
     {
       "const": {
@@ -11,7 +11,7 @@
     }
   ],
   "definitions": {
-    "union": {
+    "union.KeyType": {
       "type": "string",
       "enum": [
         "name",

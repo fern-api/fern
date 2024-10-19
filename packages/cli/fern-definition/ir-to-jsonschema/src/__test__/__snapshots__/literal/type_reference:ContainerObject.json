@@ -4,7 +4,7 @@
     "nestedObjects": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/reference"
+        "$ref": "#/definitions/reference.NestedObjectWithLiterals"
       }
     }
   },
@@ -12,7 +12,7 @@
     "nestedObjects"
   ],
   "definitions": {
-    "reference": {
+    "reference.NestedObjectWithLiterals": {
       "type": "object",
       "properties": {
         "literal1": {

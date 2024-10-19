@@ -1,7 +1,7 @@
 {
-  "$ref": "#/definitions/",
+  "$ref": "#/definitions/Parent",
   "definitions": {
-    "": {
+    "Parent": {
       "type": "object",
       "properties": {
         "parent": {

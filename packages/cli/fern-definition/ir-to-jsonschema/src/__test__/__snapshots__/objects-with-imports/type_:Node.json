@@ -8,14 +8,14 @@
       "type": "string"
     },
     "metadata": {
-      "$ref": "#/definitions/commons.metadata"
+      "$ref": "#/definitions/commons.metadata.Metadata"
     }
   },
   "required": [
     "id"
   ],
   "definitions": {
-    "commons.metadata": {
+    "commons.metadata.Metadata": {
       "type": "object",
       "properties": {
         "id": {

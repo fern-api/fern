@@ -2,12 +2,12 @@
   "type": "object",
   "properties": {
     "file": {
-      "$ref": "#/definitions/v2.problem"
+      "$ref": "#/definitions/v2.problem.FileInfoV2"
     },
     "relatedTypes": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/commons"
+        "$ref": "#/definitions/commons.VariableType"
       }
     }
   },
@@ -16,7 +16,7 @@
     "relatedTypes"
   ],
   "definitions": {
-    "v2.problem": {
+    "v2.problem.FileInfoV2": {
       "type": "object",
       "properties": {
         "filename": {
@@ -39,7 +39,7 @@
         "editable"
       ]
     },
-    "commons": {
+    "commons.VariableType": {
       "type": "object",
       "properties": {
         "type": {
@@ -118,7 +118,7 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "isFixedLength": {
               "type": "boolean"
@@ -135,10 +135,10 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             }
           },
           "required": [

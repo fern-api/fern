@@ -2,14 +2,14 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/submission"
+      "$ref": "#/definitions/submission.SubmissionId"
     }
   },
   "required": [
     "submissionId"
   ],
   "definitions": {
-    "submission": {
+    "submission.SubmissionId": {
       "type": "string",
       "format": "uuid"
     }

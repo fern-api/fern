@@ -7,13 +7,13 @@
     "files": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/file"
+        "$ref": "#/definitions/file.File"
       }
     },
     "directories": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/file.directory"
+        "$ref": "#/definitions/file.directory.Directory"
       }
     }
   },
@@ -21,7 +21,14 @@
     "name"
   ],
   "definitions": {
-    "file": {
+    "file.FileInfo": {
+      "type": "string",
+      "enum": [
+        "REGULAR",
+        "DIRECTORY"
+      ]
+    },
+    "file.File": {
       "type": "object",
       "properties": {
         "name": {
@@ -31,7 +38,7 @@
           "type": "string"
         },
         "info": {
-          "$ref": "#/definitions/file"
+          "$ref": "#/definitions/file.FileInfo"
         }
       },
       "required": [
@@ -40,7 +47,7 @@
         "info"
       ]
     },
-    "file.directory": {
+    "file.directory.Directory": {
       "type": "object",
       "properties": {
         "name": {
@@ -49,13 +56,13 @@
         "files": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/file"
+            "$ref": "#/definitions/file.File"
           }
         },
         "directories": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/file.directory"
+            "$ref": "#/definitions/file.directory.Directory"
           }
         }
       },

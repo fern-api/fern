@@ -4,7 +4,7 @@
     "filesByLanguage": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/v2.problem"
+        "$ref": "#/definitions/v2.problem.Files"
       }
     }
   },
@@ -12,13 +12,36 @@
     "filesByLanguage"
   ],
   "definitions": {
-    "v2.problem": {
+    "v2.problem.FileInfoV2": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "editable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "filename",
+        "directory",
+        "contents",
+        "editable"
+      ]
+    },
+    "v2.problem.Files": {
       "type": "object",
       "properties": {
         "files": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v2.problem"
+            "$ref": "#/definitions/v2.problem.FileInfoV2"
           }
         }
       },

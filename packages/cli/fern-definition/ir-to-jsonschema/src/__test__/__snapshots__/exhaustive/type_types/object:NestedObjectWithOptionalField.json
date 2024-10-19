@@ -5,11 +5,11 @@
       "type": "string"
     },
     "NestedObject": {
-      "$ref": "#/definitions/types.object"
+      "$ref": "#/definitions/types.object.ObjectWithOptionalField"
     }
   },
   "definitions": {
-    "types.object": {
+    "types.object.ObjectWithOptionalField": {
       "type": "object",
       "properties": {
         "string": {

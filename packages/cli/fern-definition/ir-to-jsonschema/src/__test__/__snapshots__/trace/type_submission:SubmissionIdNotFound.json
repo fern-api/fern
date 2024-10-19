@@ -2,14 +2,14 @@
   "type": "object",
   "properties": {
     "missingSubmissionId": {
-      "$ref": "#/definitions/submission"
+      "$ref": "#/definitions/submission.SubmissionId"
     }
   },
   "required": [
     "missingSubmissionId"
   ],
   "definitions": {
-    "submission": {
+    "submission.SubmissionId": {
       "type": "string",
       "format": "uuid"
     }

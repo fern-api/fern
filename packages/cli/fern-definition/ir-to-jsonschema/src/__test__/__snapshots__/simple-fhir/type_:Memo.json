@@ -5,14 +5,75 @@
       "type": "string"
     },
     "account": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/Account"
     }
   },
   "required": [
     "description"
   ],
   "definitions": {
-    "": {
+    "Script": {
+      "type": "object",
+      "properties": {
+        "resource_type": {
+          "const": {
+            "string": "Script",
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "resource_type",
+        "name"
+      ]
+    },
+    "Patient": {
+      "type": "object",
+      "properties": {
+        "resource_type": {
+          "const": {
+            "string": "Patient",
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "scripts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Script"
+          }
+        }
+      },
+      "required": [
+        "resource_type",
+        "name",
+        "scripts"
+      ]
+    },
+    "Practitioner": {
+      "type": "object",
+      "properties": {
+        "resource_type": {
+          "const": {
+            "string": "Practitioner",
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "resource_type",
+        "name"
+      ]
+    },
+    "Account": {
       "type": "object",
       "properties": {
         "resource_type": {
@@ -25,10 +86,10 @@
           "type": "string"
         },
         "patient": {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/Patient"
         },
         "practitioner": {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/Practitioner"
         }
       },
       "required": [

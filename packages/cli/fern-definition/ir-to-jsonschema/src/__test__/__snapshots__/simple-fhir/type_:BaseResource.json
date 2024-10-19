@@ -7,11 +7,11 @@
     "related_resources": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/"
+        "$ref": "#/definitions/ResourceList"
       }
     },
     "memo": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/Memo"
     }
   },
   "required": [
@@ -20,20 +20,119 @@
     "memo"
   ],
   "definitions": {
-    "": {
+    "Script": {
+      "type": "object",
+      "properties": {
+        "resource_type": {
+          "const": {
+            "string": "Script",
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "resource_type",
+        "name"
+      ]
+    },
+    "Patient": {
+      "type": "object",
+      "properties": {
+        "resource_type": {
+          "const": {
+            "string": "Patient",
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "scripts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Script"
+          }
+        }
+      },
+      "required": [
+        "resource_type",
+        "name",
+        "scripts"
+      ]
+    },
+    "Practitioner": {
+      "type": "object",
+      "properties": {
+        "resource_type": {
+          "const": {
+            "string": "Practitioner",
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "resource_type",
+        "name"
+      ]
+    },
+    "Account": {
+      "type": "object",
+      "properties": {
+        "resource_type": {
+          "const": {
+            "string": "Account",
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "patient": {
+          "$ref": "#/definitions/Patient"
+        },
+        "practitioner": {
+          "$ref": "#/definitions/Practitioner"
+        }
+      },
+      "required": [
+        "resource_type",
+        "name"
+      ]
+    },
+    "ResourceList": {
       "oneOf": [
         {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/Account"
         },
         {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/Patient"
         },
         {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/Practitioner"
         },
         {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/Script"
         }
+      ]
+    },
+    "Memo": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "account": {
+          "$ref": "#/definitions/Account"
+        }
+      },
+      "required": [
+        "description"
       ]
     }
   }

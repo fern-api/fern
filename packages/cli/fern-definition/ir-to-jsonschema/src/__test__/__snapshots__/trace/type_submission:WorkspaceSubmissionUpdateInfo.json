@@ -24,7 +24,7 @@
           "const": "running"
         },
         "value": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.RunningSubmissionState"
         }
       },
       "required": [
@@ -37,10 +37,10 @@
           "const": "ran"
         },
         "exceptionV2": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.ExceptionV2"
         },
         "exception": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.ExceptionInfo"
         },
         "stdout": {
           "type": "string"
@@ -91,7 +91,7 @@
           "const": "errored"
         },
         "value": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.ErrorInfo"
         }
       },
       "required": [
@@ -110,7 +110,7 @@
     }
   ],
   "definitions": {
-    "submission": {
+    "submission.RunningSubmissionState": {
       "type": "string",
       "enum": [
         "QUEUEING_SUBMISSION",
@@ -118,6 +118,134 @@
         "WRITING_SUBMISSION_TO_FILE",
         "COMPILING_SUBMISSION",
         "RUNNING_SUBMISSION"
+      ]
+    },
+    "submission.ExceptionV2": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "generic",
+            "timeout"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "generic"
+            },
+            "exceptionType": {
+              "type": "string"
+            },
+            "exceptionMessage": {
+              "type": "string"
+            },
+            "exceptionStacktrace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionType",
+            "exceptionMessage",
+            "exceptionStacktrace"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "timeout"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "submission.ExceptionInfo": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace"
+      ]
+    },
+    "submission.ErrorInfo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "compileError",
+            "runtimeError",
+            "internalError"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "compileError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "runtimeError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "internalError"
+            },
+            "exceptionInfo": {
+              "$ref": "#/definitions/submission.ExceptionInfo"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionInfo"
+          ]
+        }
       ]
     }
   }

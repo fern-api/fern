@@ -4,7 +4,7 @@
     "namespaces": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/"
+        "$ref": "#/definitions/NamespaceSummary"
       }
     },
     "dimension": {
@@ -20,7 +20,7 @@
     }
   },
   "definitions": {
-    "": {
+    "NamespaceSummary": {
       "type": "object",
       "properties": {
         "count": {

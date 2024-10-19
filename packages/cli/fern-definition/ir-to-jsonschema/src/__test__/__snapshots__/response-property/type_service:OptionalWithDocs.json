@@ -1,7 +1,7 @@
 {
-  "$ref": "#/definitions/service",
+  "$ref": "#/definitions/service.WithDocs",
   "definitions": {
-    "service": {
+    "service.WithDocs": {
       "type": "object",
       "properties": {
         "docs": {

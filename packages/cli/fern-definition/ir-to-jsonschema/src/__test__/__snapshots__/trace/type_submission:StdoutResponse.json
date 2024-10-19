@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/submission"
+      "$ref": "#/definitions/submission.SubmissionId"
     },
     "stdout": {
       "type": "string"
@@ -13,7 +13,7 @@
     "stdout"
   ],
   "definitions": {
-    "submission": {
+    "submission.SubmissionId": {
       "type": "string",
       "format": "uuid"
     }

@@ -2,11 +2,47 @@
   "type": "object",
   "properties": {
     "user": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/UserModel"
     }
   },
   "definitions": {
-    "": {
+    "MetadataValue": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    },
+    "Metadata": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/MetadataValue"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      ]
+    },
+    "UserModel": {
       "type": "object",
       "properties": {
         "username": {
@@ -23,7 +59,7 @@
           "type": "number"
         },
         "metadata": {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/Metadata"
         }
       }
     }

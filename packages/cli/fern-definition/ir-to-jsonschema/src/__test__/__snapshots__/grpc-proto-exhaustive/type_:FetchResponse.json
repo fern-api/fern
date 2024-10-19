@@ -4,18 +4,76 @@
     "columns": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/"
+        "$ref": "#/definitions/Column"
       }
     },
     "namespace": {
       "type": "string"
     },
     "usage": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/Usage"
     }
   },
   "definitions": {
-    "": {
+    "MetadataValue": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    },
+    "Metadata": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/MetadataValue"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      ]
+    },
+    "IndexedData": {
+      "type": "object",
+      "properties": {
+        "indices": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "indices",
+        "values"
+      ]
+    },
+    "Column": {
       "type": "object",
       "properties": {
         "id": {
@@ -28,16 +86,25 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/Metadata"
         },
         "indexedData": {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/IndexedData"
         }
       },
       "required": [
         "id",
         "values"
       ]
+    },
+    "Usage": {
+      "type": "object",
+      "properties": {
+        "units": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
     }
   }
 }

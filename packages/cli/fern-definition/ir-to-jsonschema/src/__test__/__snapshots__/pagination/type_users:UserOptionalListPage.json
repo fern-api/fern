@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "data": {
-      "$ref": "#/definitions/users"
+      "$ref": "#/definitions/users.UserOptionalListContainer"
     },
     "next": {
       "type": "string",
@@ -13,13 +13,28 @@
     "data"
   ],
   "definitions": {
-    "users": {
+    "users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ]
+    },
+    "users.UserOptionalListContainer": {
       "type": "object",
       "properties": {
         "users": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/users"
+            "$ref": "#/definitions/users.User"
           }
         }
       }

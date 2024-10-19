@@ -3,7 +3,7 @@
     {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/"
+        "$ref": "#/definitions/MetadataValue"
       }
     },
     {
@@ -21,7 +21,7 @@
     }
   ],
   "definitions": {
-    "": {
+    "MetadataValue": {
       "oneOf": [
         {
           "type": "number"

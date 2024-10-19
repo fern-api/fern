@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/submission"
+      "$ref": "#/definitions/submission.SubmissionId"
     },
     "testCaseId": {
       "type": "string"
@@ -11,10 +11,10 @@
       "type": "integer"
     },
     "lightweightStackInfo": {
-      "$ref": "#/definitions/submission"
+      "$ref": "#/definitions/submission.LightweightStackframeInformation"
     },
     "tracedFile": {
-      "$ref": "#/definitions/submission"
+      "$ref": "#/definitions/submission.TracedFile"
     }
   },
   "required": [
@@ -23,9 +23,39 @@
     "lightweightStackInfo"
   ],
   "definitions": {
-    "submission": {
+    "submission.SubmissionId": {
       "type": "string",
       "format": "uuid"
+    },
+    "submission.LightweightStackframeInformation": {
+      "type": "object",
+      "properties": {
+        "numStackFrames": {
+          "type": "integer"
+        },
+        "topStackFrameMethodName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "numStackFrames",
+        "topStackFrameMethodName"
+      ]
+    },
+    "submission.TracedFile": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "filename",
+        "directory"
+      ]
     }
   }
 }

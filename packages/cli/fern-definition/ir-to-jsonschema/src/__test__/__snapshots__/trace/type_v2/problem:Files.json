@@ -4,7 +4,7 @@
     "files": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/v2.problem"
+        "$ref": "#/definitions/v2.problem.FileInfoV2"
       }
     }
   },
@@ -12,7 +12,7 @@
     "files"
   ],
   "definitions": {
-    "v2.problem": {
+    "v2.problem.FileInfoV2": {
       "type": "object",
       "properties": {
         "filename": {

@@ -2,13 +2,13 @@
   "type": "object",
   "properties": {
     "nodeId": {
-      "$ref": "#/definitions/commons"
+      "$ref": "#/definitions/commons.NodeId"
     },
     "val": {
       "type": "number"
     },
     "next": {
-      "$ref": "#/definitions/commons"
+      "$ref": "#/definitions/commons.NodeId"
     }
   },
   "required": [
@@ -16,7 +16,7 @@
     "val"
   ],
   "definitions": {
-    "commons": {
+    "commons.NodeId": {
       "type": "string"
     }
   }

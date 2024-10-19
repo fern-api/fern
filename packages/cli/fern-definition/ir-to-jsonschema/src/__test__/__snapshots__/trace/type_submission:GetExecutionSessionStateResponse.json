@@ -4,7 +4,7 @@
     "states": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/submission"
+        "$ref": "#/definitions/submission.ExecutionSessionState"
       }
     },
     "numWarmingInstances": {
@@ -22,7 +22,7 @@
     "warmingSessionIds"
   ],
   "definitions": {
-    "commons": {
+    "commons.Language": {
       "type": "string",
       "enum": [
         "JAVA",
@@ -30,7 +30,18 @@
         "PYTHON"
       ]
     },
-    "submission": {
+    "submission.ExecutionSessionStatus": {
+      "type": "string",
+      "enum": [
+        "CREATING_CONTAINER",
+        "PROVISIONING_CONTAINER",
+        "PENDING_CONTAINER",
+        "RUNNING_CONTAINER",
+        "LIVE_CONTAINER",
+        "FAILED_TO_LAUNCH"
+      ]
+    },
+    "submission.ExecutionSessionState": {
       "type": "object",
       "properties": {
         "lastTimeContacted": {
@@ -46,10 +57,10 @@
           "type": "string"
         },
         "language": {
-          "$ref": "#/definitions/commons"
+          "$ref": "#/definitions/commons.Language"
         },
         "status": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.ExecutionSessionStatus"
         }
       },
       "required": [

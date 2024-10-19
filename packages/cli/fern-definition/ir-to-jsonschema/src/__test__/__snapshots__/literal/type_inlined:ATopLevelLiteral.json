@@ -2,14 +2,14 @@
   "type": "object",
   "properties": {
     "nestedLiteral": {
-      "$ref": "#/definitions/inlined"
+      "$ref": "#/definitions/inlined.ANestedLiteral"
     }
   },
   "required": [
     "nestedLiteral"
   ],
   "definitions": {
-    "inlined": {
+    "inlined.ANestedLiteral": {
       "type": "object",
       "properties": {
         "myLiteral": {

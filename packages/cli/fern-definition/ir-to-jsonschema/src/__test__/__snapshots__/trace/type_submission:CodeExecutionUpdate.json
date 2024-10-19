@@ -28,10 +28,10 @@
           "const": "buildingExecutor"
         },
         "submissionId": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.SubmissionId"
         },
         "status": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.ExecutionSessionStatus"
         }
       },
       "required": [
@@ -46,10 +46,10 @@
           "const": "running"
         },
         "submissionId": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.SubmissionId"
         },
         "state": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.RunningSubmissionState"
         }
       },
       "required": [
@@ -64,10 +64,10 @@
           "const": "errored"
         },
         "submissionId": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.SubmissionId"
         },
         "errorInfo": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.ErrorInfo"
         }
       },
       "required": [
@@ -82,7 +82,7 @@
           "const": "stopped"
         },
         "submissionId": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.SubmissionId"
         }
       },
       "required": [
@@ -96,12 +96,12 @@
           "const": "graded"
         },
         "submissionId": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.SubmissionId"
         },
         "testCases": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/submission"
+            "$ref": "#/definitions/submission.TestCaseResultWithStdout"
           }
         }
       },
@@ -117,12 +117,12 @@
           "const": "gradedV2"
         },
         "submissionId": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.SubmissionId"
         },
         "testCases": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/submission"
+            "$ref": "#/definitions/submission.TestCaseGrade"
           }
         }
       },
@@ -138,10 +138,10 @@
           "const": "workspaceRan"
         },
         "submissionId": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.SubmissionId"
         },
         "runDetails": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.WorkspaceRunDetails"
         }
       },
       "required": [
@@ -156,7 +156,7 @@
           "const": "recording"
         },
         "submissionId": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.SubmissionId"
         },
         "testCaseId": {
           "type": "string"
@@ -165,10 +165,10 @@
           "type": "integer"
         },
         "lightweightStackInfo": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.LightweightStackframeInformation"
         },
         "tracedFile": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.TracedFile"
         }
       },
       "required": [
@@ -184,7 +184,7 @@
           "const": "recorded"
         },
         "submissionId": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.SubmissionId"
         },
         "traceResponsesSize": {
           "type": "integer"
@@ -205,10 +205,10 @@
           "const": "invalidRequest"
         },
         "request": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.SubmissionRequest"
         },
         "cause": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.InvalidRequestCause"
         }
       },
       "required": [
@@ -223,7 +223,7 @@
           "const": "finished"
         },
         "submissionId": {
-          "$ref": "#/definitions/submission"
+          "$ref": "#/definitions/submission.SubmissionId"
         }
       },
       "required": [
@@ -233,9 +233,854 @@
     }
   ],
   "definitions": {
-    "submission": {
+    "submission.SubmissionId": {
       "type": "string",
       "format": "uuid"
+    },
+    "submission.ExecutionSessionStatus": {
+      "type": "string",
+      "enum": [
+        "CREATING_CONTAINER",
+        "PROVISIONING_CONTAINER",
+        "PENDING_CONTAINER",
+        "RUNNING_CONTAINER",
+        "LIVE_CONTAINER",
+        "FAILED_TO_LAUNCH"
+      ]
+    },
+    "submission.RunningSubmissionState": {
+      "type": "string",
+      "enum": [
+        "QUEUEING_SUBMISSION",
+        "KILLING_HISTORICAL_SUBMISSIONS",
+        "WRITING_SUBMISSION_TO_FILE",
+        "COMPILING_SUBMISSION",
+        "RUNNING_SUBMISSION"
+      ]
+    },
+    "submission.ExceptionInfo": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace"
+      ]
+    },
+    "submission.ErrorInfo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "compileError",
+            "runtimeError",
+            "internalError"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "compileError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "runtimeError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "internalError"
+            },
+            "exceptionInfo": {
+              "$ref": "#/definitions/submission.ExceptionInfo"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionInfo"
+          ]
+        }
+      ]
+    },
+    "commons.KeyValuePair": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "$ref": "#/definitions/commons.VariableValue"
+        },
+        "value": {
+          "$ref": "#/definitions/commons.VariableValue"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ]
+    },
+    "commons.NodeId": {
+      "type": "string"
+    },
+    "commons.BinaryTreeNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "right": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "left": {
+          "$ref": "#/definitions/commons.NodeId"
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ]
+    },
+    "commons.SinglyLinkedListNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "next": {
+          "$ref": "#/definitions/commons.NodeId"
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ]
+    },
+    "commons.DoublyLinkedListNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "next": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "prev": {
+          "$ref": "#/definitions/commons.NodeId"
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ]
+    },
+    "commons.VariableValue": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "integerValue",
+            "booleanValue",
+            "doubleValue",
+            "stringValue",
+            "charValue",
+            "mapValue",
+            "listValue",
+            "binaryTreeValue",
+            "singlyLinkedListValue",
+            "doublyLinkedListValue",
+            "nullValue"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "integerValue"
+            },
+            "value": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "booleanValue"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "doubleValue"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "stringValue"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "charValue"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "mapValue"
+            },
+            "keyValuePairs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/commons.KeyValuePair"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "keyValuePairs"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "listValue"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/commons.VariableValue"
+              }
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "binaryTreeValue"
+            },
+            "root": {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            "nodes": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/commons.BinaryTreeNodeValue"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "nodes"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "singlyLinkedListValue"
+            },
+            "head": {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            "nodes": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/commons.SinglyLinkedListNodeValue"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "nodes"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "doublyLinkedListValue"
+            },
+            "head": {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            "nodes": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/commons.DoublyLinkedListNodeValue"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "nodes"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "nullValue"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "submission.ExceptionV2": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "generic",
+            "timeout"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "generic"
+            },
+            "exceptionType": {
+              "type": "string"
+            },
+            "exceptionMessage": {
+              "type": "string"
+            },
+            "exceptionStacktrace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionType",
+            "exceptionMessage",
+            "exceptionStacktrace"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "timeout"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "submission.ActualResult": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "value",
+            "exception",
+            "exceptionV2"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "value"
+            },
+            "value": {
+              "$ref": "#/definitions/commons.VariableValue"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "exception"
+            },
+            "exceptionType": {
+              "type": "string"
+            },
+            "exceptionMessage": {
+              "type": "string"
+            },
+            "exceptionStacktrace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionType",
+            "exceptionMessage",
+            "exceptionStacktrace"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "exceptionV2"
+            },
+            "value": {
+              "$ref": "#/definitions/submission.ExceptionV2"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "submission.TestCaseResult": {
+      "type": "object",
+      "properties": {
+        "expectedResult": {
+          "$ref": "#/definitions/commons.VariableValue"
+        },
+        "actualResult": {
+          "$ref": "#/definitions/submission.ActualResult"
+        },
+        "passed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expectedResult",
+        "actualResult",
+        "passed"
+      ]
+    },
+    "submission.TestCaseResultWithStdout": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/submission.TestCaseResult"
+        },
+        "stdout": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "result",
+        "stdout"
+      ]
+    },
+    "submission.TestCaseGrade": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "hidden",
+            "nonHidden"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "hidden"
+            },
+            "passed": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type",
+            "passed"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "nonHidden"
+            },
+            "passed": {
+              "type": "boolean"
+            },
+            "actualResult": {
+              "$ref": "#/definitions/commons.VariableValue"
+            },
+            "exception": {
+              "$ref": "#/definitions/submission.ExceptionV2"
+            },
+            "stdout": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "passed",
+            "stdout"
+          ]
+        }
+      ]
+    },
+    "submission.WorkspaceRunDetails": {
+      "type": "object",
+      "properties": {
+        "exceptionV2": {
+          "$ref": "#/definitions/submission.ExceptionV2"
+        },
+        "exception": {
+          "$ref": "#/definitions/submission.ExceptionInfo"
+        },
+        "stdout": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "stdout"
+      ]
+    },
+    "submission.LightweightStackframeInformation": {
+      "type": "object",
+      "properties": {
+        "numStackFrames": {
+          "type": "integer"
+        },
+        "topStackFrameMethodName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "numStackFrames",
+        "topStackFrameMethodName"
+      ]
+    },
+    "submission.TracedFile": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "filename",
+        "directory"
+      ]
+    },
+    "commons.ProblemId": {
+      "type": "string"
+    },
+    "commons.Language": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "submission.SubmissionFileInfo": {
+      "type": "object",
+      "properties": {
+        "directory": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "directory",
+        "filename",
+        "contents"
+      ]
+    },
+    "submission.SubmissionRequest": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "initializeProblemRequest",
+            "initializeWorkspaceRequest",
+            "submitV2",
+            "workspaceSubmit",
+            "stop"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "initializeProblemRequest"
+            },
+            "problemId": {
+              "$ref": "#/definitions/commons.ProblemId"
+            },
+            "problemVersion": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "type",
+            "problemId"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "initializeWorkspaceRequest"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "submitV2"
+            },
+            "submissionId": {
+              "$ref": "#/definitions/submission.SubmissionId"
+            },
+            "language": {
+              "$ref": "#/definitions/commons.Language"
+            },
+            "submissionFiles": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/submission.SubmissionFileInfo"
+              }
+            },
+            "problemId": {
+              "$ref": "#/definitions/commons.ProblemId"
+            },
+            "problemVersion": {
+              "type": "integer"
+            },
+            "userId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "submissionId",
+            "language",
+            "submissionFiles",
+            "problemId"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "workspaceSubmit"
+            },
+            "submissionId": {
+              "$ref": "#/definitions/submission.SubmissionId"
+            },
+            "language": {
+              "$ref": "#/definitions/commons.Language"
+            },
+            "submissionFiles": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/submission.SubmissionFileInfo"
+              }
+            },
+            "userId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "submissionId",
+            "language",
+            "submissionFiles"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "stop"
+            },
+            "submissionId": {
+              "$ref": "#/definitions/submission.SubmissionId"
+            }
+          },
+          "required": [
+            "type",
+            "submissionId"
+          ]
+        }
+      ]
+    },
+    "submission.InvalidRequestCause": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "submissionIdNotFound",
+            "customTestCasesUnsupported",
+            "unexpectedLanguage"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "submissionIdNotFound"
+            },
+            "missingSubmissionId": {
+              "$ref": "#/definitions/submission.SubmissionId"
+            }
+          },
+          "required": [
+            "type",
+            "missingSubmissionId"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "customTestCasesUnsupported"
+            },
+            "problemId": {
+              "$ref": "#/definitions/commons.ProblemId"
+            },
+            "submissionId": {
+              "$ref": "#/definitions/submission.SubmissionId"
+            }
+          },
+          "required": [
+            "type",
+            "problemId",
+            "submissionId"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "unexpectedLanguage"
+            },
+            "expectedLanguage": {
+              "$ref": "#/definitions/commons.Language"
+            },
+            "actualLanguage": {
+              "$ref": "#/definitions/commons.Language"
+            }
+          },
+          "required": [
+            "type",
+            "expectedLanguage",
+            "actualLanguage"
+          ]
+        }
+      ]
     }
   }
 }

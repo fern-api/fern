@@ -4,11 +4,11 @@
     "additionalParameters": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/v2.problem"
+        "$ref": "#/definitions/v2.problem.Parameter"
       }
     },
     "code": {
-      "$ref": "#/definitions/v2.problem"
+      "$ref": "#/definitions/v2.problem.FunctionImplementationForMultipleLanguages"
     }
   },
   "required": [
@@ -16,26 +16,10 @@
     "code"
   ],
   "definitions": {
-    "v2.problem": {
-      "type": "object",
-      "properties": {
-        "parameterId": {
-          "$ref": "#/definitions/v2.problem"
-        },
-        "name": {
-          "type": "string"
-        },
-        "variableType": {
-          "$ref": "#/definitions/commons"
-        }
-      },
-      "required": [
-        "parameterId",
-        "name",
-        "variableType"
-      ]
+    "v2.problem.ParameterId": {
+      "type": "string"
     },
-    "commons": {
+    "commons.VariableType": {
       "type": "object",
       "properties": {
         "type": {
@@ -114,7 +98,7 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "isFixedLength": {
               "type": "boolean"
@@ -131,10 +115,10 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             }
           },
           "required": [
@@ -173,6 +157,53 @@
             "type"
           ]
         }
+      ]
+    },
+    "v2.problem.Parameter": {
+      "type": "object",
+      "properties": {
+        "parameterId": {
+          "$ref": "#/definitions/v2.problem.ParameterId"
+        },
+        "name": {
+          "type": "string"
+        },
+        "variableType": {
+          "$ref": "#/definitions/commons.VariableType"
+        }
+      },
+      "required": [
+        "parameterId",
+        "name",
+        "variableType"
+      ]
+    },
+    "v2.problem.FunctionImplementation": {
+      "type": "object",
+      "properties": {
+        "impl": {
+          "type": "string"
+        },
+        "imports": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "impl"
+      ]
+    },
+    "v2.problem.FunctionImplementationForMultipleLanguages": {
+      "type": "object",
+      "properties": {
+        "codeByLanguage": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v2.problem.FunctionImplementation"
+          }
+        }
+      },
+      "required": [
+        "codeByLanguage"
       ]
     }
   }

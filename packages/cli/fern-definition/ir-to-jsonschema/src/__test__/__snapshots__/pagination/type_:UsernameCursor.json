@@ -2,14 +2,14 @@
   "type": "object",
   "properties": {
     "cursor": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/UsernamePage"
     }
   },
   "required": [
     "cursor"
   ],
   "definitions": {
-    "": {
+    "UsernamePage": {
       "type": "object",
       "properties": {
         "after": {

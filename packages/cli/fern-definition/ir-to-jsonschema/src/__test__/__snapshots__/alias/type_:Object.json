@@ -1,11 +1,14 @@
 {
-  "$ref": "#/definitions/",
+  "$ref": "#/definitions/Type",
   "definitions": {
-    "": {
+    "TypeId": {
+      "type": "string"
+    },
+    "Type": {
       "type": "object",
       "properties": {
         "id": {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/TypeId"
         },
         "name": {
           "type": "string"

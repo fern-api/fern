@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "request": {
-      "$ref": "#/definitions/submission"
+      "$ref": "#/definitions/submission.SubmissionRequest"
     },
     "cause": {
-      "$ref": "#/definitions/submission"
+      "$ref": "#/definitions/submission.InvalidRequestCause"
     }
   },
   "required": [
@@ -13,10 +13,41 @@
     "cause"
   ],
   "definitions": {
-    "commons": {
+    "commons.ProblemId": {
       "type": "string"
     },
-    "submission": {
+    "submission.SubmissionId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "commons.Language": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "submission.SubmissionFileInfo": {
+      "type": "object",
+      "properties": {
+        "directory": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "directory",
+        "filename",
+        "contents"
+      ]
+    },
+    "submission.SubmissionRequest": {
       "type": "object",
       "properties": {
         "type": {
@@ -40,7 +71,7 @@
               "const": "initializeProblemRequest"
             },
             "problemId": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.ProblemId"
             },
             "problemVersion": {
               "type": "integer"
@@ -67,19 +98,19 @@
               "const": "submitV2"
             },
             "submissionId": {
-              "$ref": "#/definitions/submission"
+              "$ref": "#/definitions/submission.SubmissionId"
             },
             "language": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.Language"
             },
             "submissionFiles": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/submission"
+                "$ref": "#/definitions/submission.SubmissionFileInfo"
               }
             },
             "problemId": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.ProblemId"
             },
             "problemVersion": {
               "type": "integer"
@@ -102,15 +133,15 @@
               "const": "workspaceSubmit"
             },
             "submissionId": {
-              "$ref": "#/definitions/submission"
+              "$ref": "#/definitions/submission.SubmissionId"
             },
             "language": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.Language"
             },
             "submissionFiles": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/submission"
+                "$ref": "#/definitions/submission.SubmissionFileInfo"
               }
             },
             "userId": {
@@ -130,12 +161,80 @@
               "const": "stop"
             },
             "submissionId": {
-              "$ref": "#/definitions/submission"
+              "$ref": "#/definitions/submission.SubmissionId"
             }
           },
           "required": [
             "type",
             "submissionId"
+          ]
+        }
+      ]
+    },
+    "submission.InvalidRequestCause": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "submissionIdNotFound",
+            "customTestCasesUnsupported",
+            "unexpectedLanguage"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "submissionIdNotFound"
+            },
+            "missingSubmissionId": {
+              "$ref": "#/definitions/submission.SubmissionId"
+            }
+          },
+          "required": [
+            "type",
+            "missingSubmissionId"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "customTestCasesUnsupported"
+            },
+            "problemId": {
+              "$ref": "#/definitions/commons.ProblemId"
+            },
+            "submissionId": {
+              "$ref": "#/definitions/submission.SubmissionId"
+            }
+          },
+          "required": [
+            "type",
+            "problemId",
+            "submissionId"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "unexpectedLanguage"
+            },
+            "expectedLanguage": {
+              "$ref": "#/definitions/commons.Language"
+            },
+            "actualLanguage": {
+              "$ref": "#/definitions/commons.Language"
+            }
+          },
+          "required": [
+            "type",
+            "expectedLanguage",
+            "actualLanguage"
           ]
         }
       ]

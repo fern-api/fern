@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/Id"
     },
     "name": {
       "type": "string"
@@ -10,7 +10,7 @@
     "users": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/user"
+        "$ref": "#/definitions/user.User"
       }
     }
   },
@@ -20,14 +20,14 @@
     "users"
   ],
   "definitions": {
-    "": {
+    "Id": {
       "type": "string"
     },
-    "user": {
+    "user.User": {
       "type": "object",
       "properties": {
         "id": {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/Id"
         },
         "name": {
           "type": "string"

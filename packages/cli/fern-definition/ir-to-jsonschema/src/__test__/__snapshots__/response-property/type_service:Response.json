@@ -2,14 +2,14 @@
   "type": "object",
   "properties": {
     "data": {
-      "$ref": "#/definitions/service"
+      "$ref": "#/definitions/service.Movie"
     }
   },
   "required": [
     "data"
   ],
   "definitions": {
-    "service": {
+    "service.Movie": {
       "type": "object",
       "properties": {
         "id": {

@@ -22,7 +22,7 @@
         "parameters": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v2.v3.problem"
+            "$ref": "#/definitions/v2.v3.problem.Parameter"
           }
         }
       },
@@ -39,11 +39,11 @@
         "parameters": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v2.v3.problem"
+            "$ref": "#/definitions/v2.v3.problem.Parameter"
           }
         },
         "returnType": {
-          "$ref": "#/definitions/commons"
+          "$ref": "#/definitions/commons.VariableType"
         }
       },
       "required": [
@@ -60,11 +60,11 @@
         "parameters": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v2.v3.problem"
+            "$ref": "#/definitions/v2.v3.problem.Parameter"
           }
         },
         "actualResultType": {
-          "$ref": "#/definitions/commons"
+          "$ref": "#/definitions/commons.VariableType"
         }
       },
       "required": [
@@ -75,26 +75,10 @@
     }
   ],
   "definitions": {
-    "v2.v3.problem": {
-      "type": "object",
-      "properties": {
-        "parameterId": {
-          "$ref": "#/definitions/v2.v3.problem"
-        },
-        "name": {
-          "type": "string"
-        },
-        "variableType": {
-          "$ref": "#/definitions/commons"
-        }
-      },
-      "required": [
-        "parameterId",
-        "name",
-        "variableType"
-      ]
+    "v2.v3.problem.ParameterId": {
+      "type": "string"
     },
-    "commons": {
+    "commons.VariableType": {
       "type": "object",
       "properties": {
         "type": {
@@ -173,7 +157,7 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "isFixedLength": {
               "type": "boolean"
@@ -190,10 +174,10 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             }
           },
           "required": [
@@ -232,6 +216,25 @@
             "type"
           ]
         }
+      ]
+    },
+    "v2.v3.problem.Parameter": {
+      "type": "object",
+      "properties": {
+        "parameterId": {
+          "$ref": "#/definitions/v2.v3.problem.ParameterId"
+        },
+        "name": {
+          "type": "string"
+        },
+        "variableType": {
+          "$ref": "#/definitions/commons.VariableType"
+        }
+      },
+      "required": [
+        "parameterId",
+        "name",
+        "variableType"
       ]
     }
   }

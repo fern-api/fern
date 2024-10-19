@@ -96,7 +96,7 @@
       }
     },
     "nineteen": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/Name"
     },
     "twenty": {
       "type": "integer",
@@ -139,7 +139,7 @@
     "twentythree"
   ],
   "definitions": {
-    "": {
+    "Name": {
       "type": "object",
       "properties": {
         "id": {

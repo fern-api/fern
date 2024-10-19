@@ -11,7 +11,7 @@
       "type": "string"
     },
     "shape": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/Shape"
     }
   },
   "required": [
@@ -21,7 +21,7 @@
     "shape"
   ],
   "definitions": {
-    "": {
+    "Shape": {
       "type": "string",
       "enum": [
         "SQUARE",

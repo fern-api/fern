@@ -1,17 +1,17 @@
 {
   "oneOf": [
     {
-      "$ref": "#/definitions/types"
+      "$ref": "#/definitions/types.Actor"
     },
     {
-      "$ref": "#/definitions/types"
+      "$ref": "#/definitions/types.Actress"
     },
     {
-      "$ref": "#/definitions/types"
+      "$ref": "#/definitions/types.StuntDouble"
     }
   ],
   "definitions": {
-    "types": {
+    "types.Actor": {
       "type": "object",
       "properties": {
         "name": {
@@ -24,6 +24,36 @@
       "required": [
         "name",
         "id"
+      ]
+    },
+    "types.Actress": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ]
+    },
+    "types.StuntDouble": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "actorOrActressId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "actorOrActressId"
       ]
     }
   }

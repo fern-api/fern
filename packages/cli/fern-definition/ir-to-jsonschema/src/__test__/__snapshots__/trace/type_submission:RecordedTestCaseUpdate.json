@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "testCaseId": {
-      "$ref": "#/definitions/v2.problem"
+      "$ref": "#/definitions/v2.problem.TestCaseId"
     },
     "traceResponsesSize": {
       "type": "integer"
@@ -13,7 +13,7 @@
     "traceResponsesSize"
   ],
   "definitions": {
-    "v2.problem": {
+    "v2.problem.TestCaseId": {
       "type": "string"
     }
   }

@@ -2,11 +2,11 @@
   "type": "object",
   "properties": {
     "optionalAlias": {
-      "$ref": "#/definitions/types.object"
+      "$ref": "#/definitions/types.object.OptionalAlias"
     }
   },
   "definitions": {
-    "types.object": {
+    "types.object.OptionalAlias": {
       "type": "string"
     }
   }

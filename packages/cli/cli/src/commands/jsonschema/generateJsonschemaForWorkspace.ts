@@ -1,3 +1,4 @@
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, RelativeFilePath, dirname } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
@@ -26,7 +27,6 @@ export async function generateJsonschemaForWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                cliContext.logger.info(`Generating JSON Schema for workspace ${workspace.workspaceName}`);
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
 
                 const intermediateRepresentation = await generateIntermediateRepresentation({
@@ -48,17 +48,22 @@ export async function generateJsonschemaForWorkspaces({
                     keywords: undefined,
                     smartCasing: false
                 });
+                const typeName = splitTypeLocator[splitTypeLocator.length - 1] ?? typeLocator;
+                const relativeFilepath =
+                    splitTypeLocator.length > 1
+                        ? `${splitTypeLocator.slice(0, -1).join("/")}.yml`
+                        : FERN_PACKAGE_MARKER_FILENAME;
                 const typeId = IdGenerator.generateTypeId({
                     fernFilepath: convertToFernFilepath({
-                        relativeFilepath: RelativeFilePath.of(splitTypeLocator.slice(0, -1).join("/")),
+                        relativeFilepath: RelativeFilePath.of(`${splitTypeLocator.slice(0, -1).join("/")}.yml`),
                         casingsGenerator
                     }),
-                    name: casingsGenerator.generateName(typeLocator)
+                    name: casingsGenerator.generateName(typeName)
                 });
 
                 const jsonSchema = convertIRtoJsonSchema({
                     ir: intermediateRepresentation,
-                    typeName: splitTypeLocator[splitTypeLocator.length - 1],
+                    typeName,
                     typeId,
                     context
                 });
@@ -68,7 +73,7 @@ export async function generateJsonschemaForWorkspaces({
                 }
                 await writeFile(jsonschemaFilepath, JSON.stringify(jsonSchema, null, 2));
 
-                context.logger.info(chalk.green(`Wrote JSON Schema to ${AbsoluteFilePath}`));
+                context.logger.info(chalk.green(`Wrote JSON Schema to ${jsonschemaFilepath}`));
             });
         })
     );

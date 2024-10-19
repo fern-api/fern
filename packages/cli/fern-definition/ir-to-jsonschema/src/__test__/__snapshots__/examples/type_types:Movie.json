@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/types"
+      "$ref": "#/definitions/types.MovieId"
     },
     "prequel": {
-      "$ref": "#/definitions/types"
+      "$ref": "#/definitions/types.MovieId"
     },
     "title": {
       "type": "string"
@@ -23,7 +23,7 @@
       }
     },
     "tag": {
-      "$ref": "#/definitions/commons.types"
+      "$ref": "#/definitions/commons.types.Tag"
     },
     "book": {
       "type": "string"
@@ -56,10 +56,10 @@
     "revenue"
   ],
   "definitions": {
-    "types": {
+    "types.MovieId": {
       "type": "string"
     },
-    "commons.types": {
+    "commons.types.Tag": {
       "type": "string"
     }
   }

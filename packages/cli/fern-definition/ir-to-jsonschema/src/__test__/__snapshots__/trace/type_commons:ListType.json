@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "valueType": {
-      "$ref": "#/definitions/commons"
+      "$ref": "#/definitions/commons.VariableType"
     },
     "isFixedLength": {
       "type": "boolean"
@@ -12,7 +12,7 @@
     "valueType"
   ],
   "definitions": {
-    "commons": {
+    "commons.VariableType": {
       "type": "object",
       "properties": {
         "type": {
@@ -91,7 +91,7 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "isFixedLength": {
               "type": "boolean"
@@ -108,10 +108,10 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             }
           },
           "required": [

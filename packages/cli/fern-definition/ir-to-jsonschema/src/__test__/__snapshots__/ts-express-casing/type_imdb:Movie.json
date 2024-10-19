@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/imdb"
+      "$ref": "#/definitions/imdb.MovieId"
     },
     "title": {
       "type": "string"
@@ -17,7 +17,7 @@
     "rating"
   ],
   "definitions": {
-    "imdb": {
+    "imdb.MovieId": {
       "type": "string"
     }
   }

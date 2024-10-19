@@ -4,7 +4,7 @@
     "users": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/users"
+        "$ref": "#/definitions/users.User"
       }
     }
   },
@@ -12,7 +12,7 @@
     "users"
   ],
   "definitions": {
-    "users": {
+    "users.User": {
       "type": "object",
       "properties": {
         "name": {

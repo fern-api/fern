@@ -2,11 +2,11 @@
   "type": "object",
   "properties": {
     "foo": {
-      "$ref": "#/definitions/folder-b.common"
+      "$ref": "#/definitions/folder-b.common.Foo"
     }
   },
   "definitions": {
-    "folder-c.common": {
+    "folder-c.common.FolderCFoo": {
       "type": "object",
       "properties": {
         "bar_property": {
@@ -18,11 +18,11 @@
         "bar_property"
       ]
     },
-    "folder-b.common": {
+    "folder-b.common.Foo": {
       "type": "object",
       "properties": {
         "foo": {
-          "$ref": "#/definitions/folder-c.common"
+          "$ref": "#/definitions/folder-c.common.FolderCFoo"
         }
       }
     }

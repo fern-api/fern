@@ -15,22 +15,35 @@
       "type": "string"
     },
     "filter": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/Metadata"
     },
     "indexedData": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/IndexedData"
     }
   },
   "required": [
     "values"
   ],
   "definitions": {
-    "": {
+    "MetadataValue": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    },
+    "Metadata": {
       "oneOf": [
         {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/"
+            "$ref": "#/definitions/MetadataValue"
           }
         },
         {
@@ -46,6 +59,28 @@
             ]
           }
         }
+      ]
+    },
+    "IndexedData": {
+      "type": "object",
+      "properties": {
+        "indices": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "indices",
+        "values"
       ]
     }
   }

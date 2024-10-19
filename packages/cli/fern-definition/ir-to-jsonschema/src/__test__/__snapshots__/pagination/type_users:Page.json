@@ -5,7 +5,7 @@
       "type": "integer"
     },
     "next": {
-      "$ref": "#/definitions/users"
+      "$ref": "#/definitions/users.NextPage"
     },
     "per_page": {
       "type": "integer"
@@ -20,7 +20,7 @@
     "total_page"
   ],
   "definitions": {
-    "users": {
+    "users.NextPage": {
       "type": "object",
       "properties": {
         "page": {

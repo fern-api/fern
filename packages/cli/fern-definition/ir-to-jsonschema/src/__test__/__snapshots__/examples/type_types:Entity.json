@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "type": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/Type"
     },
     "name": {
       "type": "string"
@@ -13,13 +13,28 @@
     "name"
   ],
   "definitions": {
-    "": {
+    "BasicType": {
+      "type": "string",
+      "enum": [
+        "primitive",
+        "literal"
+      ]
+    },
+    "ComplexType": {
+      "type": "string",
+      "enum": [
+        "object",
+        "union",
+        "unknown"
+      ]
+    },
+    "Type": {
       "oneOf": [
         {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/BasicType"
         },
         {
-          "$ref": "#/definitions/"
+          "$ref": "#/definitions/ComplexType"
         }
       ]
     }

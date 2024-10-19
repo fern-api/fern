@@ -2,14 +2,14 @@
   "type": "object",
   "properties": {
     "expectedValueParameterId": {
-      "$ref": "#/definitions/v2.v3.problem"
+      "$ref": "#/definitions/v2.v3.problem.ParameterId"
     }
   },
   "required": [
     "expectedValueParameterId"
   ],
   "definitions": {
-    "v2.v3.problem": {
+    "v2.v3.problem.ParameterId": {
       "type": "string"
     }
   }

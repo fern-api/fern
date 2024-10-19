@@ -5,7 +5,7 @@
       "type": "boolean"
     },
     "page": {
-      "$ref": "#/definitions/users"
+      "$ref": "#/definitions/users.Page"
     },
     "total_count": {
       "type": "integer"
@@ -13,7 +13,7 @@
     "data": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/users"
+        "$ref": "#/definitions/users.User"
       }
     }
   },
@@ -22,14 +22,29 @@
     "data"
   ],
   "definitions": {
-    "users": {
+    "users.NextPage": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "starting_after": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "page",
+        "starting_after"
+      ]
+    },
+    "users.Page": {
       "type": "object",
       "properties": {
         "page": {
           "type": "integer"
         },
         "next": {
-          "$ref": "#/definitions/users"
+          "$ref": "#/definitions/users.NextPage"
         },
         "per_page": {
           "type": "integer"
@@ -42,6 +57,21 @@
         "page",
         "per_page",
         "total_page"
+      ]
+    },
+    "users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
       ]
     }
   }

@@ -2,12 +2,12 @@
   "type": "object",
   "properties": {
     "mainFile": {
-      "$ref": "#/definitions/commons"
+      "$ref": "#/definitions/commons.FileInfo"
     },
     "readOnlyFiles": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/commons"
+        "$ref": "#/definitions/commons.FileInfo"
       }
     }
   },
@@ -16,7 +16,7 @@
     "readOnlyFiles"
   ],
   "definitions": {
-    "commons": {
+    "commons.FileInfo": {
       "type": "object",
       "properties": {
         "filename": {

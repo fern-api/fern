@@ -4,12 +4,12 @@
     "nodes": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/"
+        "$ref": "#/definitions/Node"
       }
     }
   },
   "definitions": {
-    "commons.metadata": {
+    "commons.metadata.Metadata": {
       "type": "object",
       "properties": {
         "id": {
@@ -26,7 +26,7 @@
         "id"
       ]
     },
-    "": {
+    "Node": {
       "type": "object",
       "properties": {
         "id": {
@@ -36,7 +36,7 @@
           "type": "string"
         },
         "metadata": {
-          "$ref": "#/definitions/commons.metadata"
+          "$ref": "#/definitions/commons.metadata.Metadata"
         }
       },
       "required": [

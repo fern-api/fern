@@ -3,13 +3,13 @@
     {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/ast"
+        "$ref": "#/definitions/ast.JsonLike"
       }
     },
     {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/ast"
+        "$ref": "#/definitions/ast.JsonLike"
       }
     },
     {
@@ -23,18 +23,18 @@
     }
   ],
   "definitions": {
-    "ast": {
+    "ast.JsonLike": {
       "oneOf": [
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ast"
+            "$ref": "#/definitions/ast.JsonLike"
           }
         },
         {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/ast"
+            "$ref": "#/definitions/ast.JsonLike"
           }
         },
         {

@@ -7,7 +7,7 @@
     "problems": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/commons"
+        "$ref": "#/definitions/commons.ProblemId"
       }
     }
   },
@@ -16,7 +16,7 @@
     "problems"
   ],
   "definitions": {
-    "commons": {
+    "commons.ProblemId": {
       "type": "string"
     }
   }

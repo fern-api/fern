@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/"
+      "$ref": "#/definitions/Id"
     },
     "value": {
       "type": [
@@ -20,7 +20,7 @@
     "value"
   ],
   "definitions": {
-    "": {
+    "Id": {
       "type": "string"
     }
   }

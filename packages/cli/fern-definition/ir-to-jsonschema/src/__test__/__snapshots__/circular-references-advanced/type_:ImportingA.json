@@ -2,11 +2,11 @@
   "type": "object",
   "properties": {
     "a": {
-      "$ref": "#/definitions/a"
+      "$ref": "#/definitions/a.A"
     }
   },
   "definitions": {
-    "a": {
+    "a.A": {
       "type": "object",
       "properties": {}
     }

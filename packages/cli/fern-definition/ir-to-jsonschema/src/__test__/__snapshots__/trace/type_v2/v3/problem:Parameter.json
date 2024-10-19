@@ -2,13 +2,13 @@
   "type": "object",
   "properties": {
     "parameterId": {
-      "$ref": "#/definitions/v2.v3.problem"
+      "$ref": "#/definitions/v2.v3.problem.ParameterId"
     },
     "name": {
       "type": "string"
     },
     "variableType": {
-      "$ref": "#/definitions/commons"
+      "$ref": "#/definitions/commons.VariableType"
     }
   },
   "required": [
@@ -17,10 +17,10 @@
     "variableType"
   ],
   "definitions": {
-    "v2.v3.problem": {
+    "v2.v3.problem.ParameterId": {
       "type": "string"
     },
-    "commons": {
+    "commons.VariableType": {
       "type": "object",
       "properties": {
         "type": {
@@ -99,7 +99,7 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "isFixedLength": {
               "type": "boolean"
@@ -116,10 +116,10 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.VariableType"
             }
           },
           "required": [

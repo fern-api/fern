@@ -7,13 +7,13 @@
     "nodes": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/types"
+        "$ref": "#/definitions/types.Node"
       }
     },
     "trees": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/types"
+        "$ref": "#/definitions/types.Tree"
       }
     }
   },
@@ -21,7 +21,18 @@
     "name"
   ],
   "definitions": {
-    "types": {
+    "types.Tree": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.Node"
+          }
+        }
+      }
+    },
+    "types.Node": {
       "type": "object",
       "properties": {
         "name": {
@@ -30,13 +41,13 @@
         "nodes": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/types"
+            "$ref": "#/definitions/types.Node"
           }
         },
         "trees": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/types"
+            "$ref": "#/definitions/types.Tree"
           }
         }
       },

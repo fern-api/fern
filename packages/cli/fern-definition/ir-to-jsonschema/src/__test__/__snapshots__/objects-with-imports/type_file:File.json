@@ -8,7 +8,7 @@
       "type": "string"
     },
     "info": {
-      "$ref": "#/definitions/file"
+      "$ref": "#/definitions/file.FileInfo"
     }
   },
   "required": [
@@ -17,7 +17,7 @@
     "info"
   ],
   "definitions": {
-    "file": {
+    "file.FileInfo": {
       "type": "string",
       "enum": [
         "REGULAR",

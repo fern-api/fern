@@ -7,7 +7,7 @@
     "traceResponses": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/submission"
+        "$ref": "#/definitions/submission.TraceResponseV2"
       }
     }
   },
@@ -15,39 +15,155 @@
     "traceResponses"
   ],
   "definitions": {
-    "submission": {
+    "submission.SubmissionId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "submission.TracedFile": {
       "type": "object",
       "properties": {
-        "submissionId": {
-          "$ref": "#/definitions/submission"
+        "filename": {
+          "type": "string"
         },
-        "lineNumber": {
-          "type": "integer"
-        },
-        "file": {
-          "$ref": "#/definitions/submission"
-        },
-        "returnValue": {
-          "$ref": "#/definitions/commons"
-        },
-        "expressionLocation": {
-          "$ref": "#/definitions/submission"
-        },
-        "stack": {
-          "$ref": "#/definitions/submission"
-        },
-        "stdout": {
+        "directory": {
           "type": "string"
         }
       },
       "required": [
-        "submissionId",
-        "lineNumber",
-        "file",
-        "stack"
+        "filename",
+        "directory"
       ]
     },
-    "commons": {
+    "commons.DebugKeyValuePairs": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "$ref": "#/definitions/commons.DebugVariableValue"
+        },
+        "value": {
+          "$ref": "#/definitions/commons.DebugVariableValue"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ]
+    },
+    "commons.NodeId": {
+      "type": "string"
+    },
+    "commons.BinaryTreeNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "right": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "left": {
+          "$ref": "#/definitions/commons.NodeId"
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ]
+    },
+    "commons.BinaryTreeValue": {
+      "type": "object",
+      "properties": {
+        "root": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/commons.BinaryTreeNodeValue"
+          }
+        }
+      },
+      "required": [
+        "nodes"
+      ]
+    },
+    "commons.SinglyLinkedListNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "next": {
+          "$ref": "#/definitions/commons.NodeId"
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ]
+    },
+    "commons.SinglyLinkedListValue": {
+      "type": "object",
+      "properties": {
+        "head": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/commons.SinglyLinkedListNodeValue"
+          }
+        }
+      },
+      "required": [
+        "nodes"
+      ]
+    },
+    "commons.DoublyLinkedListNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "next": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "prev": {
+          "$ref": "#/definitions/commons.NodeId"
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ]
+    },
+    "commons.DoublyLinkedListValue": {
+      "type": "object",
+      "properties": {
+        "head": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/commons.DoublyLinkedListNodeValue"
+          }
+        }
+      },
+      "required": [
+        "nodes"
+      ]
+    },
+    "commons.DebugVariableValue": {
       "type": "object",
       "properties": {
         "type": {
@@ -146,7 +262,7 @@
             "keyValuePairs": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/commons"
+                "$ref": "#/definitions/commons.DebugKeyValuePairs"
               }
             }
           },
@@ -163,7 +279,7 @@
             "value": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/commons"
+                "$ref": "#/definitions/commons.DebugVariableValue"
               }
             }
           },
@@ -177,10 +293,10 @@
               "const": "binaryTreeNodeValue"
             },
             "nodeId": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.NodeId"
             },
             "fullTree": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.BinaryTreeValue"
             }
           },
           "required": [
@@ -195,10 +311,10 @@
               "const": "singlyLinkedListNodeValue"
             },
             "nodeId": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.NodeId"
             },
             "fullList": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.SinglyLinkedListValue"
             }
           },
           "required": [
@@ -213,10 +329,10 @@
               "const": "doublyLinkedListNodeValue"
             },
             "nodeId": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.NodeId"
             },
             "fullList": {
-              "$ref": "#/definitions/commons"
+              "$ref": "#/definitions/commons.DoublyLinkedListValue"
             }
           },
           "required": [
@@ -262,6 +378,103 @@
             "stringifiedValue"
           ]
         }
+      ]
+    },
+    "submission.ExpressionLocation": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "integer"
+        },
+        "offset": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "offset"
+      ]
+    },
+    "submission.Scope": {
+      "type": "object",
+      "properties": {
+        "variables": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/commons.DebugVariableValue"
+          }
+        }
+      },
+      "required": [
+        "variables"
+      ]
+    },
+    "submission.StackFrame": {
+      "type": "object",
+      "properties": {
+        "methodName": {
+          "type": "string"
+        },
+        "lineNumber": {
+          "type": "integer"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/submission.Scope"
+          }
+        }
+      },
+      "required": [
+        "methodName",
+        "lineNumber",
+        "scopes"
+      ]
+    },
+    "submission.StackInformation": {
+      "type": "object",
+      "properties": {
+        "numStackFrames": {
+          "type": "integer"
+        },
+        "topStackFrame": {
+          "$ref": "#/definitions/submission.StackFrame"
+        }
+      },
+      "required": [
+        "numStackFrames"
+      ]
+    },
+    "submission.TraceResponseV2": {
+      "type": "object",
+      "properties": {
+        "submissionId": {
+          "$ref": "#/definitions/submission.SubmissionId"
+        },
+        "lineNumber": {
+          "type": "integer"
+        },
+        "file": {
+          "$ref": "#/definitions/submission.TracedFile"
+        },
+        "returnValue": {
+          "$ref": "#/definitions/commons.DebugVariableValue"
+        },
+        "expressionLocation": {
+          "$ref": "#/definitions/submission.ExpressionLocation"
+        },
+        "stack": {
+          "$ref": "#/definitions/submission.StackInformation"
+        },
+        "stdout": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "submissionId",
+        "lineNumber",
+        "file",
+        "stack"
       ]
     }
   }

@@ -2,11 +2,11 @@
   "type": "object",
   "properties": {
     "foo": {
-      "$ref": "#/definitions/folder-c.common"
+      "$ref": "#/definitions/folder-c.common.Foo"
     }
   },
   "definitions": {
-    "folder-c.common": {
+    "folder-c.common.Foo": {
       "type": "object",
       "properties": {
         "bar_property": {
