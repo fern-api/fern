@@ -35,7 +35,7 @@ async function main() {
         "package.json",
         JSON.stringify(
             {
-                name: "fern-api",
+                name: "@fern-api/fern-api-dev",
                 version: packageJson.version,
                 repository: packageJson.repository,
                 files: ["cli.cjs"],
