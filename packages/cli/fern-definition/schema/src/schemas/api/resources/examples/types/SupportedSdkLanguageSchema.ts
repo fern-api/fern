@@ -17,7 +17,8 @@ export type SupportedSdkLanguageSchema =
     | "nodets"
     | "golang"
     | "dotnet"
-    | "jvm";
+    | "jvm"
+    | "c#";
 
 export const SupportedSdkLanguageSchema = {
     Curl: "curl",
@@ -35,4 +36,5 @@ export const SupportedSdkLanguageSchema = {
     Golang: "golang",
     Dotnet: "dotnet",
     Jvm: "jvm",
+    Csharp2: "c#",
 } as const;

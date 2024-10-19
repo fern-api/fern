@@ -1,5 +1,5 @@
-import { OpenAPISpecSchema, AsyncAPIOrOpenAPISpecSchema } from "../APIConfigurationV2Schema";
+import { OpenApiSpecSchema, AsyncApiOrOpenApiSpecSchema } from "../schemas";
 
-export function isOpenAPISchema(spec: AsyncAPIOrOpenAPISpecSchema): spec is OpenAPISpecSchema {
-    return (spec as OpenAPISpecSchema)?.openapi != null;
+export function isOpenAPISchema(spec: AsyncApiOrOpenApiSpecSchema): spec is OpenApiSpecSchema {
+    return (spec as OpenApiSpecSchema)?.openapi != null;
 }

@@ -1,5 +1,5 @@
-import { AsyncAPIOrOpenAPISpecSchema, ConjureSchema } from "../APIConfigurationV2Schema";
+import { AsyncApiOrOpenApiSpecSchema, ConjureSchema } from "../schemas";
 
-export function isConjureSchema(specs: AsyncAPIOrOpenAPISpecSchema[] | ConjureSchema): specs is ConjureSchema {
+export function isConjureSchema(specs: AsyncApiOrOpenApiSpecSchema[] | ConjureSchema): specs is ConjureSchema {
     return (specs as ConjureSchema)?.conjure != null;
 }

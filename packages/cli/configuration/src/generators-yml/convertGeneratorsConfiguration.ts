@@ -17,7 +17,7 @@ import { ApiConfigurationSchemaInternal, ApiConfigurationV2Schema } from "./sche
 import { GeneratorGroupSchema } from "./schemas";
 import { GeneratorInvocationSchema } from "./schemas";
 import { GeneratorOutputSchema } from "./schemas";
-import { isApiConfigurationV2Schema, isConjureSchema, isOpenAPISchema } from "./utils";
+import { isApiConfigurationV2Schema, isConjureSchema, isNamespacedApiConfiguration, isOpenAPISchema } from "./utils";
 import {
     API_ORIGIN_LOCATION_KEY,
     API_SETTINGS_KEY,
@@ -352,7 +352,7 @@ async function parseAPIConfiguration(
         return parseApiConfigurationV2Schema({ apiConfiguration, rawConfiguration: rawGeneratorsConfiguration });
     }
 
-    if (isPlainObject(apiConfiguration) && "namespaces" in apiConfiguration) {
+    if (apiConfiguration != null && isNamespacedApiConfiguration(apiConfiguration)) {
         const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
         for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaces)) {
             namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(

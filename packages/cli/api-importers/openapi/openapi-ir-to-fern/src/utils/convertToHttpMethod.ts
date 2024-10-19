@@ -3,11 +3,11 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function convertToHttpMethod(httpMethod: HttpMethod): RawSchemas.HttpMethodSchema {
     return HttpMethod._visit<RawSchemas.HttpMethodSchema>(httpMethod, {
-        get: () => RawSchemas.HttpMethodSchema.Enum.GET,
-        post: () => RawSchemas.HttpMethodSchema.Enum.POST,
-        put: () => RawSchemas.HttpMethodSchema.Enum.PUT,
-        patch: () => RawSchemas.HttpMethodSchema.Enum.PATCH,
-        delete: () => RawSchemas.HttpMethodSchema.Enum.DELETE,
+        get: () => RawSchemas.HttpMethodSchema.Get,
+        post: () => RawSchemas.HttpMethodSchema.Post,
+        put: () => RawSchemas.HttpMethodSchema.Put,
+        patch: () => RawSchemas.HttpMethodSchema.Patch,
+        delete: () => RawSchemas.HttpMethodSchema.Delete,
         head: () => {
             throw new Error("HEAD is unsupported");
         },

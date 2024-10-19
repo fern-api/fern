@@ -22,4 +22,11 @@ export {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
     OPENAPI_LOCATION_KEY
 } from "./schemas";
+export {
+    type APIDefinitionLocation,
+    type GeneratorGroup,
+    type GeneratorInvocation,
+    type GeneratorsConfiguration,
+    type ProtoAPIDefinitionSchema
+} from "./GeneratorsConfiguration";
 export { updateGeneratorGroup } from "./updateGeneratorGroup";

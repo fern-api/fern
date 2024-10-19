@@ -110,7 +110,9 @@ types:
       - golang
       - dotnet
       - jvm
-  
+      - value: c#
+        name: csharp2  
+    
   ExampleCodeSampleSchemaLanguage: 
     extends: 
       - commons.WithDocsSchema

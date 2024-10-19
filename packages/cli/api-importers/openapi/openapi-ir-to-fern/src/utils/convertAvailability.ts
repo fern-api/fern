@@ -1,7 +1,7 @@
 import { Availability } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-export function convertAvailability(availability: Availability | undefined): RawSchemas.AvailabilityUnionSchema {
+export function convertAvailability(availability: Availability | undefined): RawSchemas.AvailabilityUnionSchema | undefined {
     switch (availability) {
         case Availability.Deprecated:
             return "deprecated";
@@ -10,6 +10,6 @@ export function convertAvailability(availability: Availability | undefined): Raw
         case Availability.GenerallyAvailable:
             return "generally-available";
         default:
-            return;
+            return undefined;
     }
 }

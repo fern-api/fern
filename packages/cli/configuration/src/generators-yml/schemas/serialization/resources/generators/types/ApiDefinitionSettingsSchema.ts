@@ -5,20 +5,22 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { UnionSettingsSchema } from "./UnionSettingsSchema";
+import { MessageNamingSettingsSchema } from "./MessageNamingSettingsSchema";
 
 export const ApiDefinitionSettingsSchema: core.serialization.ObjectSchema<
     serializers.ApiDefinitionSettingsSchema.Raw,
     FernDefinition.ApiDefinitionSettingsSchema
 > = core.serialization.object({
     "use-title": core.serialization.boolean().optional(),
-    unions: core.serialization.string().optional(),
-    "message-naming": core.serialization.string().optional(),
+    unions: UnionSettingsSchema.optional(),
+    "message-naming": MessageNamingSettingsSchema.optional(),
 });
 
 export declare namespace ApiDefinitionSettingsSchema {
     interface Raw {
         "use-title"?: boolean | null;
-        unions?: string | null;
-        "message-naming"?: string | null;
+        unions?: UnionSettingsSchema.Raw | null;
+        "message-naming"?: MessageNamingSettingsSchema.Raw | null;
     }
 }

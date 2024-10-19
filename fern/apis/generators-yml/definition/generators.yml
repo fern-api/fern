@@ -130,11 +130,20 @@ types:
         type: optional<boolean>
         docs: Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true.
       unions:
-        type: optional<string>
+        type: optional<UnionSettingsSchema>
         docs: What version of union generation to use, this will grow over time. Defaults to v0.
       message-naming:
-        type: optional<string>
+        type: optional<MessageNamingSettingsSchema>
         docs: What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1.
+  
+  UnionSettingsSchema:
+    enum: 
+      - v1
+  
+  MessageNamingSettingsSchema:
+    enum:
+      - v1
+      - v2
 
   APIDefinitionWithOverridesSchema:
     properties:

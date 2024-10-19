@@ -1,5 +1,5 @@
-import { APIConfigurationSchema, APIConfigurationV2Schema } from "../APIConfigurationSchema";
+import { ApiConfigurationSchema, ApiConfigurationV2Schema } from "../schemas";
 
-export function isApiConfigurationV2Schema(api: APIConfigurationSchema): api is APIConfigurationV2Schema {
-    return (api as APIConfigurationV2Schema)?.specs != null;
+export function isApiConfigurationV2Schema(api: ApiConfigurationSchema): api is ApiConfigurationV2Schema {
+    return (api as ApiConfigurationV2Schema)?.specs != null;
 }
