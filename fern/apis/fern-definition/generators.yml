@@ -6,7 +6,7 @@ groups:
         version: 0.39.3
         output:
           location: local-file-system
-          path: ../../../packages/cli/fern-definition/schema
+          path: ../../../packages/cli/fern-definition/schema/src/schemas
         config:
           outputSourceFiles: true
           namespaceExport: FernDefinition
