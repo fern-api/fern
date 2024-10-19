@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/fern-to-jsonschema",
+  "name": "@fern-api/ir-to-jsonschema",
   "version": "0.0.0",
   "repository": {
     "type": "git",

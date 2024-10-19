@@ -33,3 +33,5 @@ export {
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";
 export { parseReferenceToEndpointName, type ReferenceToEndpointName } from "./utils/parseReferenceToEndpointName";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";
+export { IdGenerator } from "./IdGenerator";
+export { convertToFernFilepath } from "./utils/convertToFernFilepath";
