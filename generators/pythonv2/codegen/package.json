@@ -29,11 +29,10 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
-    "@fern-fern/ir-sdk": "^53.7.0",
+    "@fern-fern/ir-sdk": "53.7.0",
     "@wasm-fmt/ruff_fmt": "^0.6.1"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
     "@types/node": "18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

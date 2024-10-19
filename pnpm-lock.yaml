@@ -690,15 +690,12 @@ importers:
         specifier: workspace:*
         version: link:../../commons
       '@fern-fern/ir-sdk':
-        specifier: ^53.7.0
-        version: 53.9.0
+        specifier: 53.7.0
+        version: 53.7.0
       '@wasm-fmt/ruff_fmt':
         specifier: ^0.6.1
         version: 0.6.1
     devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
