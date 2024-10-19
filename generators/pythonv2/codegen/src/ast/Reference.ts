@@ -1,4 +1,5 @@
 import { AstNode } from "./core/AstNode";
+import { AttrPath, ModulePath } from "./core/types";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 
@@ -11,22 +12,22 @@ export declare namespace Reference {
             - "foo.bar" -> ["foo", "bar"]
             - "foo.bar.baz" -> ["foo", "bar", "baz"]
         */
-        modulePath?: string[];
+        modulePath?: ModulePath;
         /* The generic types of the reference */
         genericTypes?: Type[];
         /* The alias of the reference */
         alias?: string;
         /* The path to the attribute of the reference */
-        attrPath?: string[];
+        attrPath?: AttrPath;
     }
 }
 
 export class Reference extends AstNode {
     private name: string;
-    private modulePath: string[];
+    private modulePath: ModulePath;
     private genericTypes: Type[];
     private alias: string | undefined;
-    private attrPath: string[];
+    private attrPath: AttrPath;
 
     constructor({ name, modulePath, genericTypes, alias, attrPath }: Reference.Args) {
         super();
@@ -66,7 +67,7 @@ export class Reference extends AstNode {
         return this.name;
     }
 
-    public getModulePath(): string[] {
+    public getModulePath(): ModulePath {
         return this.modulePath;
     }
 
