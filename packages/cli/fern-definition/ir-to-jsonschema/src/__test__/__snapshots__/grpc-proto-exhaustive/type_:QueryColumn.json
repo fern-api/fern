@@ -15,10 +15,10 @@
       "type": "string"
     },
     "filter": {
-      "$ref": "#/definitions/Metadata"
+      "$ref": "#/definitions/"
     },
     "indexedData": {
-      "$ref": "#/definitions/IndexedData"
+      "$ref": "#/definitions/"
     }
   },
   "required": [
@@ -26,25 +26,26 @@
   ],
   "definitions": {
     "": {
-      "type": "object",
-      "properties": {
-        "indices": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "minimum": 0
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/"
           }
         },
-        "values": {
-          "type": "array",
-          "items": {
-            "type": "number"
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
           }
         }
-      },
-      "required": [
-        "indices",
-        "values"
       ]
     }
   }

@@ -5,7 +5,7 @@
       "type": "string"
     },
     "status": {
-      "$ref": "#/definitions/MigrationStatus"
+      "$ref": "#/definitions/migration"
     }
   },
   "required": [

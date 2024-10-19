@@ -11,10 +11,10 @@
       "type": "string"
     },
     "patient": {
-      "$ref": "#/definitions/Patient"
+      "$ref": "#/definitions/"
     },
     "practitioner": {
-      "$ref": "#/definitions/Practitioner"
+      "$ref": "#/definitions/"
     }
   },
   "required": [
@@ -27,17 +27,24 @@
       "properties": {
         "resource_type": {
           "const": {
-            "string": "Practitioner",
+            "string": "Patient",
             "type": "string"
           }
         },
         "name": {
           "type": "string"
+        },
+        "scripts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/"
+          }
         }
       },
       "required": [
         "resource_type",
-        "name"
+        "name",
+        "scripts"
       ]
     }
   }

@@ -24,15 +24,25 @@ export function convertTypeReferenceToJsonSchema({
     switch (typeReference.type) {
         case "named":
             const typeDeclaration = context.getTypeDeclarationForId({ typeId: typeReference.typeId });
-            const schemaName = typeReference.name.pascalCase.unsafeName;
-            const schema = convertTypeDeclarationToJsonSchema({ typeDeclaration, context });
 
-            // Register the schema definition
-            context.registerDefinition(typeReference.typeId, schema);
+            // Check if the type hasn't been defined yet and isn't currently being built
+            // This prevents infinite recursion and ensures each type is only defined once
+            if (
+                !context.hasDefinition(typeReference.typeId) &&
+                !context.isBuildingTypeDeclaration(typeReference.typeId)
+            ) {
+                context.buildingTypeDeclaration(typeReference.typeId);
+
+                const schema = convertTypeDeclarationToJsonSchema({ typeDeclaration, context });
+                // Register the schema definition
+                context.registerDefinition(typeReference.typeId, schema);
+
+                context.finishedBuildingTypeDeclaration(typeReference.typeId);
+            }
 
             // Return a reference to the schema in the definitions
             return {
-                $ref: `#/definitions/${schemaName}`
+                $ref: `#/definitions/${context.getDefinitionKey(typeDeclaration)}`
             };
         case "container":
             return convertContainerToJsonSchema({ container: typeReference.container, context });

@@ -8,7 +8,7 @@
       "type": "string"
     },
     "info": {
-      "$ref": "#/definitions/FileInfo"
+      "$ref": "#/definitions/file"
     }
   },
   "required": [

@@ -1,0 +1,241 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "buildingExecutor",
+        "running",
+        "errored",
+        "stopped",
+        "graded",
+        "gradedV2",
+        "workspaceRan",
+        "recording",
+        "recorded",
+        "invalidRequest",
+        "finished"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "buildingExecutor"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission"
+        },
+        "status": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "type",
+        "submissionId",
+        "status"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "running"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission"
+        },
+        "state": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "type",
+        "submissionId",
+        "state"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "errored"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission"
+        },
+        "errorInfo": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "type",
+        "submissionId",
+        "errorInfo"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "stopped"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "type",
+        "submissionId"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "graded"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission"
+        },
+        "testCases": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/submission"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "submissionId",
+        "testCases"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "gradedV2"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission"
+        },
+        "testCases": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/submission"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "submissionId",
+        "testCases"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "workspaceRan"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission"
+        },
+        "runDetails": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "type",
+        "submissionId",
+        "runDetails"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "recording"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission"
+        },
+        "testCaseId": {
+          "type": "string"
+        },
+        "lineNumber": {
+          "type": "integer"
+        },
+        "lightweightStackInfo": {
+          "$ref": "#/definitions/submission"
+        },
+        "tracedFile": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "type",
+        "submissionId",
+        "lineNumber",
+        "lightweightStackInfo"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "recorded"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission"
+        },
+        "traceResponsesSize": {
+          "type": "integer"
+        },
+        "testCaseId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "submissionId",
+        "traceResponsesSize"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "invalidRequest"
+        },
+        "request": {
+          "$ref": "#/definitions/submission"
+        },
+        "cause": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "type",
+        "request",
+        "cause"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "finished"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "type",
+        "submissionId"
+      ]
+    }
+  ],
+  "definitions": {
+    "submission": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

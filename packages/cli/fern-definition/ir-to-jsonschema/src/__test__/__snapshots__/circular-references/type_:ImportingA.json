@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "a": {
-      "$ref": "#/definitions/A"
+      "$ref": "#/definitions/a"
     }
   },
   "definitions": {

@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "imported": {
-      "$ref": "#/definitions/Imported"
+      "$ref": "#/definitions/commons"
     }
   },
   "required": [

@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/ID"
+      "$ref": "#/definitions/"
     },
     "name": {
       "type": "string"
@@ -10,7 +10,7 @@
     "users": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/User"
+        "$ref": "#/definitions/user"
       }
     }
   },
@@ -27,7 +27,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "$ref": "#/definitions/ID"
+          "$ref": "#/definitions/"
         },
         "name": {
           "type": "string"

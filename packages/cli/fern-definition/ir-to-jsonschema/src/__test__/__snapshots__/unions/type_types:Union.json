@@ -19,7 +19,7 @@
           "const": "foo"
         },
         "value": {
-          "$ref": "#/definitions/Foo"
+          "$ref": "#/definitions/types"
         }
       },
       "required": [
@@ -32,7 +32,7 @@
           "const": "bar"
         },
         "value": {
-          "$ref": "#/definitions/Bar"
+          "$ref": "#/definitions/types"
         }
       },
       "required": [

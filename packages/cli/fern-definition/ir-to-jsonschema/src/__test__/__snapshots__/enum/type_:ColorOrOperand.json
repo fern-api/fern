@@ -1,19 +1,18 @@
 {
   "oneOf": [
     {
-      "$ref": "#/definitions/Color"
+      "$ref": "#/definitions/"
     },
     {
-      "$ref": "#/definitions/Operand"
+      "$ref": "#/definitions/"
     }
   ],
   "definitions": {
     "": {
       "type": "string",
       "enum": [
-        ">",
-        "=",
-        "less_than"
+        "red",
+        "blue"
       ]
     }
   }

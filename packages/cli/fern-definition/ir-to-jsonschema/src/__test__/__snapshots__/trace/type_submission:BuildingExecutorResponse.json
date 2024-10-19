@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/SubmissionID"
+      "$ref": "#/definitions/submission"
     },
     "status": {
-      "$ref": "#/definitions/ExecutionSessionStatus"
+      "$ref": "#/definitions/submission"
     }
   },
   "required": [
@@ -15,14 +15,7 @@
   "definitions": {
     "submission": {
       "type": "string",
-      "enum": [
-        "CREATING_CONTAINER",
-        "PROVISIONING_CONTAINER",
-        "PENDING_CONTAINER",
-        "RUNNING_CONTAINER",
-        "LIVE_CONTAINER",
-        "FAILED_TO_LAUNCH"
-      ]
+      "format": "uuid"
     }
   }
 }

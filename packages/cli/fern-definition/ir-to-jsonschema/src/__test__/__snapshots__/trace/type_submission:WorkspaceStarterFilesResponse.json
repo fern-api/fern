@@ -4,7 +4,7 @@
     "files": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/WorkspaceFiles"
+        "$ref": "#/definitions/submission"
       }
     }
   },
@@ -31,12 +31,12 @@
       "type": "object",
       "properties": {
         "mainFile": {
-          "$ref": "#/definitions/FileInfo"
+          "$ref": "#/definitions/commons"
         },
         "readOnlyFiles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/FileInfo"
+            "$ref": "#/definitions/commons"
           }
         }
       },

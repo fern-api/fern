@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/file"
+      }
+    },
+    "directories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/file.directory"
+      }
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "definitions": {
+    "file": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "info": {
+          "$ref": "#/definitions/file"
+        }
+      },
+      "required": [
+        "name",
+        "contents",
+        "info"
+      ]
+    },
+    "file.directory": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/file"
+          }
+        },
+        "directories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/file.directory"
+          }
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  }
+}

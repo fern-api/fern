@@ -2,19 +2,19 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/SubmissionID"
+      "$ref": "#/definitions/submission"
     },
     "language": {
-      "$ref": "#/definitions/Language"
+      "$ref": "#/definitions/commons"
     },
     "submissionFiles": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/SubmissionFileInfo"
+        "$ref": "#/definitions/submission"
       }
     },
     "problemId": {
-      "$ref": "#/definitions/ProblemID"
+      "$ref": "#/definitions/commons"
     },
     "problemVersion": {
       "type": "integer"
@@ -31,26 +31,16 @@
   ],
   "definitions": {
     "submission": {
-      "type": "object",
-      "properties": {
-        "directory": {
-          "type": "string"
-        },
-        "filename": {
-          "type": "string"
-        },
-        "contents": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "directory",
-        "filename",
-        "contents"
-      ]
+      "type": "string",
+      "format": "uuid"
     },
     "commons": {
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
     }
   }
 }

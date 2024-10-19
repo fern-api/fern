@@ -4,25 +4,40 @@
     "columns": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/Column"
+        "$ref": "#/definitions/"
       }
     },
     "namespace": {
       "type": "string"
     },
     "usage": {
-      "$ref": "#/definitions/Usage"
+      "$ref": "#/definitions/"
     }
   },
   "definitions": {
     "": {
       "type": "object",
       "properties": {
-        "units": {
-          "type": "integer",
-          "minimum": 0
+        "id": {
+          "type": "string"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/"
+        },
+        "indexedData": {
+          "$ref": "#/definitions/"
         }
-      }
+      },
+      "required": [
+        "id",
+        "values"
+      ]
     }
   }
 }

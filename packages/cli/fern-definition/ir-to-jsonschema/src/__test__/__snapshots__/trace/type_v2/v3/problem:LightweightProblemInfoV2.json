@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "problemId": {
+      "$ref": "#/definitions/commons"
+    },
+    "problemName": {
+      "type": "string"
+    },
+    "problemVersion": {
+      "type": "integer"
+    },
+    "variableTypes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/commons"
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "problemId",
+    "problemName",
+    "problemVersion",
+    "variableTypes"
+  ],
+  "definitions": {
+    "commons": {
+      "type": "string"
+    }
+  }
+}

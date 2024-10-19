@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "playlist_id": {
-      "$ref": "#/definitions/PlaylistID"
+      "$ref": "#/definitions/playlist"
     },
     "owner-id": {
-      "$ref": "#/definitions/UserID"
+      "$ref": "#/definitions/commons"
     }
   },
   "required": [

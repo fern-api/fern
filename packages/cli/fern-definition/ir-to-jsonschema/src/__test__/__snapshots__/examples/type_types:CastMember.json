@@ -1,13 +1,13 @@
 {
   "oneOf": [
     {
-      "$ref": "#/definitions/Actor"
+      "$ref": "#/definitions/types"
     },
     {
-      "$ref": "#/definitions/Actress"
+      "$ref": "#/definitions/types"
     },
     {
-      "$ref": "#/definitions/StuntDouble"
+      "$ref": "#/definitions/types"
     }
   ],
   "definitions": {
@@ -17,13 +17,13 @@
         "name": {
           "type": "string"
         },
-        "actorOrActressId": {
+        "id": {
           "type": "string"
         }
       },
       "required": [
         "name",
-        "actorOrActressId"
+        "id"
       ]
     }
   }

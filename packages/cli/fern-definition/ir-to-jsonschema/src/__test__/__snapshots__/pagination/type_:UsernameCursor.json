@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "cursor": {
-      "$ref": "#/definitions/UsernamePage"
+      "$ref": "#/definitions/"
     }
   },
   "required": [

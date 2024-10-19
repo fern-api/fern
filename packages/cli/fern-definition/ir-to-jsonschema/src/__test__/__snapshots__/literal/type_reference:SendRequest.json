@@ -17,13 +17,13 @@
       }
     },
     "context": {
-      "$ref": "#/definitions/SomeLiteral"
+      "$ref": "#/definitions/reference"
     },
     "maybeContext": {
-      "$ref": "#/definitions/SomeLiteral"
+      "$ref": "#/definitions/reference"
     },
     "containerObject": {
-      "$ref": "#/definitions/ContainerObject"
+      "$ref": "#/definitions/reference"
     }
   },
   "required": [
@@ -35,18 +35,10 @@
   ],
   "definitions": {
     "reference": {
-      "type": "object",
-      "properties": {
-        "nestedObjects": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/NestedObjectWithLiterals"
-          }
-        }
-      },
-      "required": [
-        "nestedObjects"
-      ]
+      "const": {
+        "string": "You're super wise",
+        "type": "string"
+      }
     }
   }
 }

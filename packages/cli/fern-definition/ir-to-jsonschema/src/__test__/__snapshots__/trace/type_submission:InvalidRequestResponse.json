@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "request": {
-      "$ref": "#/definitions/SubmissionRequest"
+      "$ref": "#/definitions/submission"
     },
     "cause": {
-      "$ref": "#/definitions/InvalidRequestCause"
+      "$ref": "#/definitions/submission"
     }
   },
   "required": [
@@ -14,12 +14,7 @@
   ],
   "definitions": {
     "commons": {
-      "type": "string",
-      "enum": [
-        "JAVA",
-        "JAVASCRIPT",
-        "PYTHON"
-      ]
+      "type": "string"
     },
     "submission": {
       "type": "object",
@@ -27,9 +22,11 @@
         "type": {
           "type": "string",
           "enum": [
-            "submissionIdNotFound",
-            "customTestCasesUnsupported",
-            "unexpectedLanguage"
+            "initializeProblemRequest",
+            "initializeWorkspaceRequest",
+            "submitV2",
+            "workspaceSubmit",
+            "stop"
           ]
         }
       },
@@ -40,51 +37,105 @@
         {
           "properties": {
             "type": {
-              "const": "submissionIdNotFound"
-            },
-            "missingSubmissionId": {
-              "$ref": "#/definitions/SubmissionID"
-            }
-          },
-          "required": [
-            "type",
-            "missingSubmissionId"
-          ]
-        },
-        {
-          "properties": {
-            "type": {
-              "const": "customTestCasesUnsupported"
+              "const": "initializeProblemRequest"
             },
             "problemId": {
-              "$ref": "#/definitions/ProblemID"
+              "$ref": "#/definitions/commons"
             },
-            "submissionId": {
-              "$ref": "#/definitions/SubmissionID"
+            "problemVersion": {
+              "type": "integer"
             }
           },
           "required": [
             "type",
-            "problemId",
-            "submissionId"
+            "problemId"
           ]
         },
         {
           "properties": {
             "type": {
-              "const": "unexpectedLanguage"
+              "const": "initializeWorkspaceRequest"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "submitV2"
             },
-            "expectedLanguage": {
-              "$ref": "#/definitions/Language"
+            "submissionId": {
+              "$ref": "#/definitions/submission"
             },
-            "actualLanguage": {
-              "$ref": "#/definitions/Language"
+            "language": {
+              "$ref": "#/definitions/commons"
+            },
+            "submissionFiles": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/submission"
+              }
+            },
+            "problemId": {
+              "$ref": "#/definitions/commons"
+            },
+            "problemVersion": {
+              "type": "integer"
+            },
+            "userId": {
+              "type": "string"
             }
           },
           "required": [
             "type",
-            "expectedLanguage",
-            "actualLanguage"
+            "submissionId",
+            "language",
+            "submissionFiles",
+            "problemId"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "workspaceSubmit"
+            },
+            "submissionId": {
+              "$ref": "#/definitions/submission"
+            },
+            "language": {
+              "$ref": "#/definitions/commons"
+            },
+            "submissionFiles": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/submission"
+              }
+            },
+            "userId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "submissionId",
+            "language",
+            "submissionFiles"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "stop"
+            },
+            "submissionId": {
+              "$ref": "#/definitions/submission"
+            }
+          },
+          "required": [
+            "type",
+            "submissionId"
           ]
         }
       ]

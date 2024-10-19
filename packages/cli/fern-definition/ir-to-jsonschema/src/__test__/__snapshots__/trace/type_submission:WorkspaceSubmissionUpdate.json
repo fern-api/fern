@@ -6,7 +6,7 @@
       "format": "date-time"
     },
     "updateInfo": {
-      "$ref": "#/definitions/WorkspaceSubmissionUpdateInfo"
+      "$ref": "#/definitions/submission"
     }
   },
   "required": [
@@ -40,7 +40,7 @@
               "const": "running"
             },
             "value": {
-              "$ref": "#/definitions/RunningSubmissionState"
+              "$ref": "#/definitions/submission"
             }
           },
           "required": [
@@ -53,10 +53,10 @@
               "const": "ran"
             },
             "exceptionV2": {
-              "$ref": "#/definitions/ExceptionV2"
+              "$ref": "#/definitions/submission"
             },
             "exception": {
-              "$ref": "#/definitions/ExceptionInfo"
+              "$ref": "#/definitions/submission"
             },
             "stdout": {
               "type": "string"
@@ -107,7 +107,7 @@
               "const": "errored"
             },
             "value": {
-              "$ref": "#/definitions/ErrorInfo"
+              "$ref": "#/definitions/submission"
             }
           },
           "required": [

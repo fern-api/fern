@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/SubmissionID"
+      "$ref": "#/definitions/submission"
     },
     "runDetails": {
-      "$ref": "#/definitions/WorkspaceRunDetails"
+      "$ref": "#/definitions/submission"
     }
   },
   "required": [
@@ -14,21 +14,8 @@
   ],
   "definitions": {
     "submission": {
-      "type": "object",
-      "properties": {
-        "exceptionV2": {
-          "$ref": "#/definitions/ExceptionV2"
-        },
-        "exception": {
-          "$ref": "#/definitions/ExceptionInfo"
-        },
-        "stdout": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "stdout"
-      ]
+      "type": "string",
+      "format": "uuid"
     }
   }
 }

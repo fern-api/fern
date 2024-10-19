@@ -1,0 +1,311 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "value",
+        "exception",
+        "exceptionV2"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "value"
+        },
+        "value": {
+          "$ref": "#/definitions/commons"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "exception"
+        },
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "exceptionV2"
+        },
+        "value": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {
+    "commons": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "integerValue",
+            "booleanValue",
+            "doubleValue",
+            "stringValue",
+            "charValue",
+            "mapValue",
+            "listValue",
+            "binaryTreeValue",
+            "singlyLinkedListValue",
+            "doublyLinkedListValue",
+            "nullValue"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "integerValue"
+            },
+            "value": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "booleanValue"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "doubleValue"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "stringValue"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "charValue"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "mapValue"
+            },
+            "keyValuePairs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/commons"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "keyValuePairs"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "listValue"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/commons"
+              }
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "binaryTreeValue"
+            },
+            "root": {
+              "$ref": "#/definitions/commons"
+            },
+            "nodes": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/commons"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "nodes"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "singlyLinkedListValue"
+            },
+            "head": {
+              "$ref": "#/definitions/commons"
+            },
+            "nodes": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/commons"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "nodes"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "doublyLinkedListValue"
+            },
+            "head": {
+              "$ref": "#/definitions/commons"
+            },
+            "nodes": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/commons"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "nodes"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "nullValue"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "submission": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "generic",
+            "timeout"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "generic"
+            },
+            "exceptionType": {
+              "type": "string"
+            },
+            "exceptionMessage": {
+              "type": "string"
+            },
+            "exceptionStacktrace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionType",
+            "exceptionMessage",
+            "exceptionStacktrace"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "timeout"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    }
+  }
+}

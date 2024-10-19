@@ -42,7 +42,7 @@
           "const": "tag"
         },
         "value": {
-          "$ref": "#/definitions/Tag"
+          "$ref": "#/definitions/commons.types"
         }
       },
       "required": [

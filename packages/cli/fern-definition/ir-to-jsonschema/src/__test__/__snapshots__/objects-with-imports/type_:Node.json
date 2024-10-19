@@ -8,7 +8,7 @@
       "type": "string"
     },
     "metadata": {
-      "$ref": "#/definitions/Metadata"
+      "$ref": "#/definitions/commons.metadata"
     }
   },
   "required": [

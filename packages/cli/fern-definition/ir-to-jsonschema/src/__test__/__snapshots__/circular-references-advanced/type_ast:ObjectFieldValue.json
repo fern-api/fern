@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "#/definitions/ast"
+    },
+    "value": {
+      "$ref": "#/definitions/ast"
+    }
+  },
+  "required": [
+    "name",
+    "value"
+  ],
+  "definitions": {
+    "ast": {
+      "type": "string"
+    }
+  }
+}

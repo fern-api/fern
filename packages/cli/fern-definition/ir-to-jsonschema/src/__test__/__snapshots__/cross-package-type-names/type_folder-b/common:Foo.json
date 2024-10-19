@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "foo": {
-      "$ref": "#/definitions/Foo"
+      "$ref": "#/definitions/folder-c.common"
     }
   },
   "definitions": {

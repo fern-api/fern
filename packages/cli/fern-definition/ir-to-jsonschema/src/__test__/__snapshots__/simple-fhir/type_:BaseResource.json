@@ -7,11 +7,11 @@
     "related_resources": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/ResourceList"
+        "$ref": "#/definitions/"
       }
     },
     "memo": {
-      "$ref": "#/definitions/Memo"
+      "$ref": "#/definitions/"
     }
   },
   "required": [
@@ -21,17 +21,19 @@
   ],
   "definitions": {
     "": {
-      "type": "object",
-      "properties": {
-        "description": {
-          "type": "string"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/"
         },
-        "account": {
-          "$ref": "#/definitions/Account"
+        {
+          "$ref": "#/definitions/"
+        },
+        {
+          "$ref": "#/definitions/"
+        },
+        {
+          "$ref": "#/definitions/"
         }
-      },
-      "required": [
-        "description"
       ]
     }
   }

@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "properties": {
+    "problemId": {
+      "$ref": "#/definitions/commons"
+    },
+    "problemDescription": {
+      "$ref": "#/definitions/problem"
+    },
+    "problemName": {
+      "type": "string"
+    },
+    "problemVersion": {
+      "type": "integer"
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/problem"
+      }
+    },
+    "inputParams": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/problem"
+      }
+    },
+    "outputType": {
+      "$ref": "#/definitions/commons"
+    },
+    "testcases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/commons"
+      }
+    },
+    "methodName": {
+      "type": "string"
+    },
+    "supportsCustomTestCases": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "problemId",
+    "problemDescription",
+    "problemName",
+    "problemVersion",
+    "files",
+    "inputParams",
+    "outputType",
+    "testcases",
+    "methodName",
+    "supportsCustomTestCases"
+  ],
+  "definitions": {
+    "commons": {
+      "type": "string"
+    },
+    "problem": {
+      "type": "object",
+      "properties": {
+        "boards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/problem"
+          }
+        }
+      },
+      "required": [
+        "boards"
+      ]
+    }
+  }
+}

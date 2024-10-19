@@ -4,19 +4,19 @@
     "generatedTestCaseFiles": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/Files"
+        "$ref": "#/definitions/v2.v3.problem"
       }
     },
     "generatedTemplateFiles": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/Files"
+        "$ref": "#/definitions/v2.v3.problem"
       }
     },
     "other": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/Files"
+        "$ref": "#/definitions/v2.v3.problem"
       }
     }
   },
@@ -32,7 +32,7 @@
         "files": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/FileInfoV2"
+            "$ref": "#/definitions/v2.v3.problem"
           }
         }
       },

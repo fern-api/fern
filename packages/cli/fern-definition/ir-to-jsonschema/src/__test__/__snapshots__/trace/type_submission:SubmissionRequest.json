@@ -22,7 +22,7 @@
           "const": "initializeProblemRequest"
         },
         "problemId": {
-          "$ref": "#/definitions/ProblemID"
+          "$ref": "#/definitions/commons"
         },
         "problemVersion": {
           "type": "integer"
@@ -49,19 +49,19 @@
           "const": "submitV2"
         },
         "submissionId": {
-          "$ref": "#/definitions/SubmissionID"
+          "$ref": "#/definitions/submission"
         },
         "language": {
-          "$ref": "#/definitions/Language"
+          "$ref": "#/definitions/commons"
         },
         "submissionFiles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/SubmissionFileInfo"
+            "$ref": "#/definitions/submission"
           }
         },
         "problemId": {
-          "$ref": "#/definitions/ProblemID"
+          "$ref": "#/definitions/commons"
         },
         "problemVersion": {
           "type": "integer"
@@ -84,15 +84,15 @@
           "const": "workspaceSubmit"
         },
         "submissionId": {
-          "$ref": "#/definitions/SubmissionID"
+          "$ref": "#/definitions/submission"
         },
         "language": {
-          "$ref": "#/definitions/Language"
+          "$ref": "#/definitions/commons"
         },
         "submissionFiles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/SubmissionFileInfo"
+            "$ref": "#/definitions/submission"
           }
         },
         "userId": {
@@ -112,7 +112,7 @@
           "const": "stop"
         },
         "submissionId": {
-          "$ref": "#/definitions/SubmissionID"
+          "$ref": "#/definitions/submission"
         }
       },
       "required": [
@@ -123,12 +123,7 @@
   ],
   "definitions": {
     "commons": {
-      "type": "string",
-      "enum": [
-        "JAVA",
-        "JAVASCRIPT",
-        "PYTHON"
-      ]
+      "type": "string"
     },
     "submission": {
       "type": "string",

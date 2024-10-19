@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "data": {
-      "$ref": "#/definitions/UserListContainer"
+      "$ref": "#/definitions/users"
     },
     "next": {
       "type": "string",
@@ -19,7 +19,7 @@
         "users": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/User"
+            "$ref": "#/definitions/users"
           }
         }
       },

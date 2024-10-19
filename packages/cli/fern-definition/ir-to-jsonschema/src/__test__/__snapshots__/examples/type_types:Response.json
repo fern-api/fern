@@ -14,7 +14,7 @@
     "identifiers": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/Identifier"
+        "$ref": "#/definitions/"
       }
     }
   },
@@ -27,7 +27,7 @@
       "type": "object",
       "properties": {
         "type": {
-          "$ref": "#/definitions/Type"
+          "$ref": "#/definitions/"
         },
         "value": {
           "type": "string"

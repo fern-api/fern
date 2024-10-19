@@ -2,16 +2,16 @@
   "type": "object",
   "properties": {
     "templateId": {
-      "$ref": "#/definitions/TestCaseTemplateID"
+      "$ref": "#/definitions/v2.problem"
     },
     "name": {
       "type": "string"
     },
     "description": {
-      "$ref": "#/definitions/TestCaseImplementationDescription"
+      "$ref": "#/definitions/v2.problem"
     },
     "expectedValueParameterId": {
-      "$ref": "#/definitions/ParameterID"
+      "$ref": "#/definitions/v2.problem"
     }
   },
   "required": [

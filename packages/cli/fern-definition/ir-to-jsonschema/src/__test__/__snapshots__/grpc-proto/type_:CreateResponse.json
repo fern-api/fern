@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "user": {
-      "$ref": "#/definitions/UserModel"
+      "$ref": "#/definitions/"
     }
   },
   "definitions": {
@@ -23,7 +23,7 @@
           "type": "number"
         },
         "metadata": {
-          "$ref": "#/definitions/Metadata"
+          "$ref": "#/definitions/"
         }
       }
     }

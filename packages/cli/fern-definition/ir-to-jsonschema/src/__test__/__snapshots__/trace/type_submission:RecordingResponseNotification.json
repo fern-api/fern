@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/SubmissionID"
+      "$ref": "#/definitions/submission"
     },
     "testCaseId": {
       "type": "string"
@@ -11,10 +11,10 @@
       "type": "integer"
     },
     "lightweightStackInfo": {
-      "$ref": "#/definitions/LightweightStackframeInformation"
+      "$ref": "#/definitions/submission"
     },
     "tracedFile": {
-      "$ref": "#/definitions/TracedFile"
+      "$ref": "#/definitions/submission"
     }
   },
   "required": [
@@ -24,19 +24,8 @@
   ],
   "definitions": {
     "submission": {
-      "type": "object",
-      "properties": {
-        "filename": {
-          "type": "string"
-        },
-        "directory": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "filename",
-        "directory"
-      ]
+      "type": "string",
+      "format": "uuid"
     }
   }
 }

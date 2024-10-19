@@ -3,7 +3,7 @@
     {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/MetadataValue"
+        "$ref": "#/definitions/"
       }
     },
     {

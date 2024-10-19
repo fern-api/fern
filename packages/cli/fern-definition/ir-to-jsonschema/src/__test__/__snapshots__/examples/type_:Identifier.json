@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "type": {
-      "$ref": "#/definitions/Type"
+      "$ref": "#/definitions/"
     },
     "value": {
       "type": "string"
@@ -20,10 +20,10 @@
     "": {
       "oneOf": [
         {
-          "$ref": "#/definitions/BasicType"
+          "$ref": "#/definitions/"
         },
         {
-          "$ref": "#/definitions/ComplexType"
+          "$ref": "#/definitions/"
         }
       ]
     }

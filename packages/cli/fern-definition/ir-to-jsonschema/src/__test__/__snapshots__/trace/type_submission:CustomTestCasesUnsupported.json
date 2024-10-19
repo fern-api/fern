@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "problemId": {
-      "$ref": "#/definitions/ProblemID"
+      "$ref": "#/definitions/commons"
     },
     "submissionId": {
-      "$ref": "#/definitions/SubmissionID"
+      "$ref": "#/definitions/submission"
     }
   },
   "required": [

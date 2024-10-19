@@ -11,7 +11,7 @@
       "type": "string"
     },
     "shape": {
-      "$ref": "#/definitions/Shape"
+      "$ref": "#/definitions/"
     }
   },
   "required": [

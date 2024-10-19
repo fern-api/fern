@@ -4,7 +4,7 @@
     "matches": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/ScoredColumn"
+        "$ref": "#/definitions/"
       }
     },
     "namespace": {
@@ -28,10 +28,10 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/Metadata"
+          "$ref": "#/definitions/"
         },
         "indexedData": {
-          "$ref": "#/definitions/IndexedData"
+          "$ref": "#/definitions/"
         }
       },
       "required": [

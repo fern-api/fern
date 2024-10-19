@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "myUnion": {
-      "$ref": "#/definitions/MyUnion"
+      "$ref": "#/definitions/union"
     }
   },
   "definitions": {

@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "testCase": {
+      "$ref": "#/definitions/commons"
+    },
+    "expectedResult": {
+      "$ref": "#/definitions/commons"
+    }
+  },
+  "required": [
+    "testCase",
+    "expectedResult"
+  ],
+  "definitions": {
+    "commons": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "params": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/commons"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "params"
+      ]
+    }
+  }
+}

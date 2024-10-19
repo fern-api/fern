@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "a": {
-      "$ref": "#/definitions/A"
+      "$ref": "#/definitions/a.aa"
     },
     "b": {
-      "$ref": "#/definitions/B"
+      "$ref": "#/definitions/a.aa"
     }
   },
   "required": [

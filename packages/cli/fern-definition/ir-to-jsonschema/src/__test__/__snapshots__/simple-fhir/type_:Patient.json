@@ -13,7 +13,7 @@
     "scripts": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/Script"
+        "$ref": "#/definitions/"
       }
     }
   },

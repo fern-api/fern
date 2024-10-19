@@ -18,7 +18,7 @@
           "const": "playlistId"
         },
         "value": {
-          "$ref": "#/definitions/PlaylistID"
+          "$ref": "#/definitions/playlist"
         }
       },
       "required": [

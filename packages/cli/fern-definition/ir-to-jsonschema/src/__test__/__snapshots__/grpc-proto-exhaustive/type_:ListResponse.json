@@ -4,26 +4,25 @@
     "columns": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/ListElement"
+        "$ref": "#/definitions/"
       }
     },
     "pagination": {
-      "$ref": "#/definitions/Pagination"
+      "$ref": "#/definitions/"
     },
     "namespace": {
       "type": "string"
     },
     "usage": {
-      "$ref": "#/definitions/Usage"
+      "$ref": "#/definitions/"
     }
   },
   "definitions": {
     "": {
       "type": "object",
       "properties": {
-        "units": {
-          "type": "integer",
-          "minimum": 0
+        "id": {
+          "type": "string"
         }
       }
     }

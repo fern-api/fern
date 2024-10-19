@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/TypeID"
+      "$ref": "#/definitions/"
     },
     "name": {
       "type": "string"

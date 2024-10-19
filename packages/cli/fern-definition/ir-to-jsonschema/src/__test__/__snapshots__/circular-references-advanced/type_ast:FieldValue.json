@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "primitive_value",
+        "object_value",
+        "container_value"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "primitive_value"
+        },
+        "value": {
+          "$ref": "#/definitions/ast"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "object_value"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "container_value"
+        },
+        "value": {
+          "$ref": "#/definitions/ast"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {
+    "ast": {
+      "type": "string",
+      "enum": [
+        "STRING",
+        "NUMBER"
+      ]
+    }
+  }
+}

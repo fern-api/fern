@@ -5,7 +5,7 @@
       "type": "string"
     },
     "NestedUser": {
-      "$ref": "#/definitions/User"
+      "$ref": "#/definitions/service"
     }
   },
   "required": [

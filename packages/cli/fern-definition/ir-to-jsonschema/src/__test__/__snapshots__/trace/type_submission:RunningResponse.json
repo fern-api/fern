@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/SubmissionID"
+      "$ref": "#/definitions/submission"
     },
     "state": {
-      "$ref": "#/definitions/RunningSubmissionState"
+      "$ref": "#/definitions/submission"
     }
   },
   "required": [
@@ -15,13 +15,7 @@
   "definitions": {
     "submission": {
       "type": "string",
-      "enum": [
-        "QUEUEING_SUBMISSION",
-        "KILLING_HISTORICAL_SUBMISSIONS",
-        "WRITING_SUBMISSION_TO_FILE",
-        "COMPILING_SUBMISSION",
-        "RUNNING_SUBMISSION"
-      ]
+      "format": "uuid"
     }
   }
 }

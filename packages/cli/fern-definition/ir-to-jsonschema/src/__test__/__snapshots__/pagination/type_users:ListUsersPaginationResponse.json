@@ -5,7 +5,7 @@
       "type": "boolean"
     },
     "page": {
-      "$ref": "#/definitions/Page"
+      "$ref": "#/definitions/users"
     },
     "total_count": {
       "type": "integer"
@@ -13,7 +13,7 @@
     "data": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/User"
+        "$ref": "#/definitions/users"
       }
     }
   },
@@ -25,16 +25,23 @@
     "users": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string"
+        "page": {
+          "type": "integer"
         },
-        "id": {
+        "next": {
+          "$ref": "#/definitions/users"
+        },
+        "per_page": {
+          "type": "integer"
+        },
+        "total_page": {
           "type": "integer"
         }
       },
       "required": [
-        "name",
-        "id"
+        "page",
+        "per_page",
+        "total_page"
       ]
     }
   }

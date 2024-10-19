@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "description": {
+      "$ref": "#/definitions/v2.v3.problem"
+    },
+    "function": {
+      "$ref": "#/definitions/v2.v3.problem"
+    }
+  },
+  "required": [
+    "description",
+    "function"
+  ],
+  "definitions": {
+    "v2.v3.problem": {
+      "type": "object",
+      "properties": {
+        "boards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v2.v3.problem"
+          }
+        }
+      },
+      "required": [
+        "boards"
+      ]
+    }
+  }
+}

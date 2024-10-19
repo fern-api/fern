@@ -24,7 +24,7 @@
           "const": "running"
         },
         "value": {
-          "$ref": "#/definitions/RunningSubmissionState"
+          "$ref": "#/definitions/submission"
         }
       },
       "required": [
@@ -37,10 +37,10 @@
           "const": "ran"
         },
         "exceptionV2": {
-          "$ref": "#/definitions/ExceptionV2"
+          "$ref": "#/definitions/submission"
         },
         "exception": {
-          "$ref": "#/definitions/ExceptionInfo"
+          "$ref": "#/definitions/submission"
         },
         "stdout": {
           "type": "string"
@@ -91,7 +91,7 @@
           "const": "errored"
         },
         "value": {
-          "$ref": "#/definitions/ErrorInfo"
+          "$ref": "#/definitions/submission"
         }
       },
       "required": [
@@ -111,63 +111,13 @@
   ],
   "definitions": {
     "submission": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "compileError",
-            "runtimeError",
-            "internalError"
-          ]
-        }
-      },
-      "required": [
-        "type"
-      ],
-      "oneOf": [
-        {
-          "properties": {
-            "type": {
-              "const": "compileError"
-            },
-            "message": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "type",
-            "message"
-          ]
-        },
-        {
-          "properties": {
-            "type": {
-              "const": "runtimeError"
-            },
-            "message": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "type",
-            "message"
-          ]
-        },
-        {
-          "properties": {
-            "type": {
-              "const": "internalError"
-            },
-            "exceptionInfo": {
-              "$ref": "#/definitions/ExceptionInfo"
-            }
-          },
-          "required": [
-            "type",
-            "exceptionInfo"
-          ]
-        }
+      "type": "string",
+      "enum": [
+        "QUEUEING_SUBMISSION",
+        "KILLING_HISTORICAL_SUBMISSIONS",
+        "WRITING_SUBMISSION_TO_FILE",
+        "COMPILING_SUBMISSION",
+        "RUNNING_SUBMISSION"
       ]
     }
   }

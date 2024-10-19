@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/submission"
+    },
+    "testCases": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/submission"
+      }
+    }
+  },
+  "required": [
+    "submissionId",
+    "testCases"
+  ],
+  "definitions": {
+    "submission": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

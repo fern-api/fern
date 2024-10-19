@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "templateId": {
+      "$ref": "#/definitions/v2.problem"
+    },
+    "name": {
+      "type": "string"
+    },
+    "implementation": {
+      "$ref": "#/definitions/v2.problem"
+    }
+  },
+  "required": [
+    "templateId",
+    "name",
+    "implementation"
+  ],
+  "definitions": {
+    "v2.problem": {
+      "type": "string"
+    }
+  }
+}

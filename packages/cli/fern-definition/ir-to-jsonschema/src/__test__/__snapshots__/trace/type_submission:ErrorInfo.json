@@ -48,7 +48,7 @@
           "const": "internalError"
         },
         "exceptionInfo": {
-          "$ref": "#/definitions/ExceptionInfo"
+          "$ref": "#/definitions/submission"
         }
       },
       "required": [

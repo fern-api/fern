@@ -1,5 +1,5 @@
 {
-  "$ref": "#/definitions/WithDocs",
+  "$ref": "#/definitions/service",
   "definitions": {
     "service": {
       "type": "object",

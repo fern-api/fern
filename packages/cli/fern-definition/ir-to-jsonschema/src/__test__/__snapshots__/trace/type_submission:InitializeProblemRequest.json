@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "problemId": {
-      "$ref": "#/definitions/ProblemID"
+      "$ref": "#/definitions/commons"
     },
     "problemVersion": {
       "type": "integer"

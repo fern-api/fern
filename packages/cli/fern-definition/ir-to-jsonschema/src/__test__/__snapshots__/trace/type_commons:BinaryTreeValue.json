@@ -2,12 +2,12 @@
   "type": "object",
   "properties": {
     "root": {
-      "$ref": "#/definitions/NodeID"
+      "$ref": "#/definitions/commons"
     },
     "nodes": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/BinaryTreeNodeValue"
+        "$ref": "#/definitions/commons"
       }
     }
   },
@@ -16,25 +16,7 @@
   ],
   "definitions": {
     "commons": {
-      "type": "object",
-      "properties": {
-        "nodeId": {
-          "$ref": "#/definitions/NodeID"
-        },
-        "val": {
-          "type": "number"
-        },
-        "right": {
-          "$ref": "#/definitions/NodeID"
-        },
-        "left": {
-          "$ref": "#/definitions/NodeID"
-        }
-      },
-      "required": [
-        "nodeId",
-        "val"
-      ]
+      "type": "string"
     }
   }
 }

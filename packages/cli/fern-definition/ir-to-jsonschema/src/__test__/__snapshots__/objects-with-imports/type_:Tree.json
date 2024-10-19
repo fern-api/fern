@@ -4,7 +4,7 @@
     "nodes": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/Node"
+        "$ref": "#/definitions/"
       }
     }
   },
@@ -36,7 +36,7 @@
           "type": "string"
         },
         "metadata": {
-          "$ref": "#/definitions/Metadata"
+          "$ref": "#/definitions/commons.metadata"
         }
       },
       "required": [

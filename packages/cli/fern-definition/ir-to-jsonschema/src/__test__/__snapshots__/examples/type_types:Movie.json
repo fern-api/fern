@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/MovieID"
+      "$ref": "#/definitions/types"
     },
     "prequel": {
-      "$ref": "#/definitions/MovieID"
+      "$ref": "#/definitions/types"
     },
     "title": {
       "type": "string"
@@ -23,7 +23,7 @@
       }
     },
     "tag": {
-      "$ref": "#/definitions/Tag"
+      "$ref": "#/definitions/commons.types"
     },
     "book": {
       "type": "string"

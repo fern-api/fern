@@ -1,0 +1,96 @@
+{
+  "type": "object",
+  "properties": {
+    "timeSubmitted": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "submission": {
+      "type": "string"
+    },
+    "language": {
+      "$ref": "#/definitions/commons"
+    },
+    "submissionTypeState": {
+      "$ref": "#/definitions/submission"
+    }
+  },
+  "required": [
+    "submission",
+    "language",
+    "submissionTypeState"
+  ],
+  "definitions": {
+    "commons": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "submission": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "test",
+            "workspace"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "test"
+            },
+            "problemId": {
+              "$ref": "#/definitions/commons"
+            },
+            "defaultTestCases": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/commons"
+              }
+            },
+            "customTestCases": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/commons"
+              }
+            },
+            "status": {
+              "$ref": "#/definitions/submission"
+            }
+          },
+          "required": [
+            "type",
+            "problemId",
+            "defaultTestCases",
+            "customTestCases",
+            "status"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "workspace"
+            },
+            "status": {
+              "$ref": "#/definitions/submission"
+            }
+          },
+          "required": [
+            "type",
+            "status"
+          ]
+        }
+      ]
+    }
+  }
+}

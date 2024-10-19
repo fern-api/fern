@@ -1,0 +1,118 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "running",
+        "stopped",
+        "errored",
+        "gradedTestCase",
+        "recordedTestCase",
+        "finished"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "running"
+        },
+        "value": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "stopped"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "errored"
+        },
+        "value": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "gradedTestCase"
+        },
+        "testCaseId": {
+          "$ref": "#/definitions/v2.problem"
+        },
+        "grade": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "type",
+        "testCaseId",
+        "grade"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "recordedTestCase"
+        },
+        "testCaseId": {
+          "$ref": "#/definitions/v2.problem"
+        },
+        "traceResponsesSize": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "type",
+        "testCaseId",
+        "traceResponsesSize"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "finished"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {
+    "submission": {
+      "type": "string",
+      "enum": [
+        "QUEUEING_SUBMISSION",
+        "KILLING_HISTORICAL_SUBMISSIONS",
+        "WRITING_SUBMISSION_TO_FILE",
+        "COMPILING_SUBMISSION",
+        "RUNNING_SUBMISSION"
+      ]
+    },
+    "v2.problem": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/types"
+      }
+    },
+    "directories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/types"
+      }
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "definitions": {
+    "types": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "contents"
+      ]
+    }
+  }
+}

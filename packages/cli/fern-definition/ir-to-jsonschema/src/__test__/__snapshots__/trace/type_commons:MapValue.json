@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "keyValuePairs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/commons"
+      }
+    }
+  },
+  "required": [
+    "keyValuePairs"
+  ],
+  "definitions": {
+    "commons": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "$ref": "#/definitions/commons"
+        },
+        "value": {
+          "$ref": "#/definitions/commons"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ]
+    }
+  }
+}

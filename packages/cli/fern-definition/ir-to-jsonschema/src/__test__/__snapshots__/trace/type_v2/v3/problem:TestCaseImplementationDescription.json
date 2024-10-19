@@ -4,7 +4,7 @@
     "boards": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/TestCaseImplementationDescriptionBoard"
+        "$ref": "#/definitions/v2.v3.problem"
       }
     }
   },
@@ -46,7 +46,7 @@
               "const": "paramId"
             },
             "value": {
-              "$ref": "#/definitions/ParameterID"
+              "$ref": "#/definitions/v2.v3.problem"
             }
           },
           "required": [

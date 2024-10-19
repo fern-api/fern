@@ -96,7 +96,7 @@
       }
     },
     "nineteen": {
-      "$ref": "#/definitions/Name"
+      "$ref": "#/definitions/"
     },
     "twenty": {
       "type": "integer",

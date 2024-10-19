@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/UserID"
+      "$ref": "#/definitions/user"
     },
     "name": {
       "type": "string"

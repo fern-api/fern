@@ -2,16 +2,16 @@
   "type": "object",
   "properties": {
     "nodeId": {
-      "$ref": "#/definitions/NodeID"
+      "$ref": "#/definitions/commons"
     },
     "val": {
       "type": "number"
     },
     "right": {
-      "$ref": "#/definitions/NodeID"
+      "$ref": "#/definitions/commons"
     },
     "left": {
-      "$ref": "#/definitions/NodeID"
+      "$ref": "#/definitions/commons"
     }
   },
   "required": [

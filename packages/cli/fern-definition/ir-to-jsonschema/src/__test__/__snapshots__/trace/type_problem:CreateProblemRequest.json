@@ -1,0 +1,254 @@
+{
+  "type": "object",
+  "properties": {
+    "problemName": {
+      "type": "string"
+    },
+    "problemDescription": {
+      "$ref": "#/definitions/problem"
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/problem"
+      }
+    },
+    "inputParams": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/problem"
+      }
+    },
+    "outputType": {
+      "$ref": "#/definitions/commons"
+    },
+    "testcases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/commons"
+      }
+    },
+    "methodName": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "problemName",
+    "problemDescription",
+    "files",
+    "inputParams",
+    "outputType",
+    "testcases",
+    "methodName"
+  ],
+  "definitions": {
+    "commons": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "integerValue",
+            "booleanValue",
+            "doubleValue",
+            "stringValue",
+            "charValue",
+            "mapValue",
+            "listValue",
+            "binaryTreeValue",
+            "singlyLinkedListValue",
+            "doublyLinkedListValue",
+            "nullValue"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "integerValue"
+            },
+            "value": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "booleanValue"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "doubleValue"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "stringValue"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "charValue"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "mapValue"
+            },
+            "keyValuePairs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/commons"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "keyValuePairs"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "listValue"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/commons"
+              }
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "binaryTreeValue"
+            },
+            "root": {
+              "$ref": "#/definitions/commons"
+            },
+            "nodes": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/commons"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "nodes"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "singlyLinkedListValue"
+            },
+            "head": {
+              "$ref": "#/definitions/commons"
+            },
+            "nodes": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/commons"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "nodes"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "doublyLinkedListValue"
+            },
+            "head": {
+              "$ref": "#/definitions/commons"
+            },
+            "nodes": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/commons"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "nodes"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "nullValue"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "problem": {
+      "type": "object",
+      "properties": {
+        "boards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/problem"
+          }
+        }
+      },
+      "required": [
+        "boards"
+      ]
+    }
+  }
+}

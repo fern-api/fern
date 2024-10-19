@@ -4,29 +4,34 @@
     "results": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/QueryResult"
+        "$ref": "#/definitions/"
       }
     },
     "matches": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/ScoredColumn"
+        "$ref": "#/definitions/"
       }
     },
     "namespace": {
       "type": "string"
     },
     "usage": {
-      "$ref": "#/definitions/Usage"
+      "$ref": "#/definitions/"
     }
   },
   "definitions": {
     "": {
       "type": "object",
       "properties": {
-        "units": {
-          "type": "integer",
-          "minimum": 0
+        "matches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/"
+          }
+        },
+        "namespace": {
+          "type": "string"
         }
       }
     }

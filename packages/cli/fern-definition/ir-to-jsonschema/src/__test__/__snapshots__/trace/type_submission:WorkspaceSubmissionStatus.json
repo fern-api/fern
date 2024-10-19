@@ -32,7 +32,7 @@
           "const": "errored"
         },
         "value": {
-          "$ref": "#/definitions/ErrorInfo"
+          "$ref": "#/definitions/submission"
         }
       },
       "required": [
@@ -45,7 +45,7 @@
           "const": "running"
         },
         "value": {
-          "$ref": "#/definitions/RunningSubmissionState"
+          "$ref": "#/definitions/submission"
         }
       },
       "required": [
@@ -58,10 +58,10 @@
           "const": "ran"
         },
         "exceptionV2": {
-          "$ref": "#/definitions/ExceptionV2"
+          "$ref": "#/definitions/submission"
         },
         "exception": {
-          "$ref": "#/definitions/ExceptionInfo"
+          "$ref": "#/definitions/submission"
         },
         "stdout": {
           "type": "string"
@@ -78,10 +78,10 @@
           "const": "traced"
         },
         "exceptionV2": {
-          "$ref": "#/definitions/ExceptionV2"
+          "$ref": "#/definitions/submission"
         },
         "exception": {
-          "$ref": "#/definitions/ExceptionInfo"
+          "$ref": "#/definitions/submission"
         },
         "stdout": {
           "type": "string"
@@ -97,20 +97,61 @@
     "submission": {
       "type": "object",
       "properties": {
-        "exceptionType": {
-          "type": "string"
-        },
-        "exceptionMessage": {
-          "type": "string"
-        },
-        "exceptionStacktrace": {
-          "type": "string"
+        "type": {
+          "type": "string",
+          "enum": [
+            "compileError",
+            "runtimeError",
+            "internalError"
+          ]
         }
       },
       "required": [
-        "exceptionType",
-        "exceptionMessage",
-        "exceptionStacktrace"
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "compileError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "runtimeError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "internalError"
+            },
+            "exceptionInfo": {
+              "$ref": "#/definitions/submission"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionInfo"
+          ]
+        }
       ]
     }
   }

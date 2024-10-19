@@ -4,7 +4,7 @@
     "states": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/definitions/ExecutionSessionState"
+        "$ref": "#/definitions/submission"
       }
     },
     "numWarmingInstances": {
@@ -46,10 +46,10 @@
           "type": "string"
         },
         "language": {
-          "$ref": "#/definitions/Language"
+          "$ref": "#/definitions/commons"
         },
         "status": {
-          "$ref": "#/definitions/ExecutionSessionStatus"
+          "$ref": "#/definitions/submission"
         }
       },
       "required": [

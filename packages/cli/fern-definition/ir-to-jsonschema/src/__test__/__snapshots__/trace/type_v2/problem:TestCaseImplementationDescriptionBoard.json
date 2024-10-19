@@ -32,7 +32,7 @@
           "const": "paramId"
         },
         "value": {
-          "$ref": "#/definitions/ParameterID"
+          "$ref": "#/definitions/v2.problem"
         }
       },
       "required": [

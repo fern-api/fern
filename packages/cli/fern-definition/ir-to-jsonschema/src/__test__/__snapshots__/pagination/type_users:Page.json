@@ -5,7 +5,7 @@
       "type": "integer"
     },
     "next": {
-      "$ref": "#/definitions/NextPage"
+      "$ref": "#/definitions/users"
     },
     "per_page": {
       "type": "integer"

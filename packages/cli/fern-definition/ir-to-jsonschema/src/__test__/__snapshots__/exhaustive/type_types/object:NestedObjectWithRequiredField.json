@@ -5,7 +5,7 @@
       "type": "string"
     },
     "NestedObject": {
-      "$ref": "#/definitions/ObjectWithOptionalField"
+      "$ref": "#/definitions/types.object"
     }
   },
   "required": [

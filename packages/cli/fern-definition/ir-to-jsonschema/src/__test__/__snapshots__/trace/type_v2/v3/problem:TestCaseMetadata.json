@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/TestCaseID"
+      "$ref": "#/definitions/v2.v3.problem"
     },
     "name": {
       "type": "string"

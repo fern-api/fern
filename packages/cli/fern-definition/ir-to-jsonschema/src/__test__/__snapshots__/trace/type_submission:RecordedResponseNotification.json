@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/SubmissionID"
+      "$ref": "#/definitions/submission"
     },
     "traceResponsesSize": {
       "type": "integer"

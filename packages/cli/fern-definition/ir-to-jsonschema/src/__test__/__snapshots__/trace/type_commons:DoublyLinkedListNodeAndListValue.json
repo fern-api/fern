@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "nodeId": {
-      "$ref": "#/definitions/NodeID"
+      "$ref": "#/definitions/commons"
     },
     "fullList": {
-      "$ref": "#/definitions/DoublyLinkedListValue"
+      "$ref": "#/definitions/commons"
     }
   },
   "required": [
@@ -14,21 +14,7 @@
   ],
   "definitions": {
     "commons": {
-      "type": "object",
-      "properties": {
-        "head": {
-          "$ref": "#/definitions/NodeID"
-        },
-        "nodes": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/DoublyLinkedListNodeValue"
-          }
-        }
-      },
-      "required": [
-        "nodes"
-      ]
+      "type": "string"
     }
   }
 }

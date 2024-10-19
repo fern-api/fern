@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/SubmissionID"
+      "$ref": "#/definitions/submission"
     },
     "errorInfo": {
-      "$ref": "#/definitions/ErrorInfo"
+      "$ref": "#/definitions/submission"
     }
   },
   "required": [
@@ -14,64 +14,8 @@
   ],
   "definitions": {
     "submission": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "compileError",
-            "runtimeError",
-            "internalError"
-          ]
-        }
-      },
-      "required": [
-        "type"
-      ],
-      "oneOf": [
-        {
-          "properties": {
-            "type": {
-              "const": "compileError"
-            },
-            "message": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "type",
-            "message"
-          ]
-        },
-        {
-          "properties": {
-            "type": {
-              "const": "runtimeError"
-            },
-            "message": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "type",
-            "message"
-          ]
-        },
-        {
-          "properties": {
-            "type": {
-              "const": "internalError"
-            },
-            "exceptionInfo": {
-              "$ref": "#/definitions/ExceptionInfo"
-            }
-          },
-          "required": [
-            "type",
-            "exceptionInfo"
-          ]
-        }
-      ]
+      "type": "string",
+      "format": "uuid"
     }
   }
 }

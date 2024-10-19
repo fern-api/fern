@@ -5,7 +5,7 @@
       "type": "string"
     },
     "user": {
-      "$ref": "#/definitions/User"
+      "$ref": "#/definitions/user"
     }
   },
   "required": [

@@ -1,0 +1,87 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "test",
+        "workspace"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "test"
+        },
+        "updates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/submission"
+          }
+        },
+        "problemId": {
+          "$ref": "#/definitions/commons"
+        },
+        "problemVersion": {
+          "type": "integer"
+        },
+        "problemInfo": {
+          "$ref": "#/definitions/v2.problem"
+        }
+      },
+      "required": [
+        "type",
+        "updates",
+        "problemId",
+        "problemVersion",
+        "problemInfo"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "workspace"
+        },
+        "updates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/submission"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "updates"
+      ]
+    }
+  ],
+  "definitions": {
+    "submission": {
+      "type": "object",
+      "properties": {
+        "updateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updateInfo": {
+          "$ref": "#/definitions/submission"
+        }
+      },
+      "required": [
+        "updateTime",
+        "updateInfo"
+      ]
+    },
+    "v2.problem": {
+      "type": "string"
+    },
+    "commons": {
+      "type": "string"
+    }
+  }
+}
