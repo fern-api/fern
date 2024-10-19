@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@types/json-schema": "^7.0.15",
-    "@types/node": "^18.7.18",
+    "@types/node": "18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
