@@ -1,3 +1,4 @@
+import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { runScript } from "../runScript";
 
@@ -14,4 +15,19 @@ export async function runCommands(commands: string[], context: TaskContext, cwd:
         logger: context.logger,
         workingDir: cwd
     });
+    for (const command of commands) {
+        if (commands[0] == null) {
+            throw new Error(`Failed to run ${command}`);
+        }
+        const { exitCode } = await loggingExeca(context.logger, commands[0], commands.slice(-1), {
+            doNotPipeOutput: false,
+            env: {
+                ...process.env
+            },
+            cwd
+        });
+        if (exitCode !== 0) {
+            throw new Error(`Failed to run ${command}`);
+        }
+    }
 }
