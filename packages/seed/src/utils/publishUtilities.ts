@@ -9,12 +9,6 @@ export function subVersion(command: string, version: string, versionSubsitution?
 }
 
 export async function runCommands(commands: string[], context: TaskContext, cwd: string) {
-    await runScript({
-        commands,
-        doNotPipeOutput: false,
-        logger: context.logger,
-        workingDir: cwd
-    });
     for (const command of commands) {
         const splitCommand = command.split(" ");
         if (splitCommand[0] == null) {
