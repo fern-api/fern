@@ -9,7 +9,7 @@ async function main() {
     await tsup.build({
         entry: ['src/cli.ts'],
         format: ['cjs'],
-        minify: true,
+        minify: false,
         outDir: 'dist/prod',
         env: {
             AUTH0_DOMAIN: "fern-prod.us.auth0.com",
@@ -23,7 +23,7 @@ async function main() {
             DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",
             DOCS_PREVIEW_BUCKET: 'https://prod-local-preview-bundle2.s3.amazonaws.com/',
             CLI_NAME: "fern",
-            CLI_VERSION: packageJson.version,
+            CLI_VERSION: process.argv[2] || packageJson.version,
             CLI_PACKAGE_NAME: "fern-api",
         },
     });     

@@ -1,5 +1,12 @@
 - changelogEntry: 
     - summary: | 
+        Stop minifying the CLI to prevent javascript runtime errors.
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc7
+
+- changelogEntry: 
+    - summary: | 
         Update the CLI package.json to include the correct files.
       type: fix
   irVersion: 53
