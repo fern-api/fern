@@ -34,8 +34,8 @@
     "dist:cli:dev": "pnpm compile && node build.dev.cjs",
     "dist:cli:local": "pnpm compile && node build.local.cjs",
     "dist:cli:prod": "pnpm compile && node build.prod.cjs",
-    "publish:cli:dev": "pnpm dist:cli:dev && cd dist/dev && npm publish",
-    "publish:cli:prod": "pnpm dist:cli:prod && cd dist/prod && npm publish"
+    "publish:cli:dev": "cd dist/dev && npm publish",
+    "publish:cli:prod": "cd dist/prod && npm publish"
   },
   "devDependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",

@@ -36,7 +36,7 @@ async function main() {
         JSON.stringify(
             {
                 name: "fern-api",
-                version: packageJson.version,
+                version: process.argv[2] || packageJson.version,
                 repository: packageJson.repository,
                 files: ["cli.cjs"],
                 bin: { fern: "cli.cjs" }
