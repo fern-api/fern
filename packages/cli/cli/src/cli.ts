@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import {
     fernConfigJson,
     generatorsYml,

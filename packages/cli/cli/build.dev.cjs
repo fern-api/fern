@@ -39,7 +39,7 @@ async function main() {
                 version: process.argv[2] || packageJson.version,
                 repository: packageJson.repository,
                 files: ["cli.cjs"],
-                bin: { fern: "cli.cjs" }
+                bin: { "fern-dev": "cli.cjs" }
             },
             undefined,
             2
