@@ -1,5 +1,12 @@
 - changelogEntry: 
     - summary: | 
+        Update the CLI package.json to include the correct files.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc6
+
+- changelogEntry: 
+    - summary: | 
         Introduce a new command `fern jsonschema <output-file> --type <type-name>`
         that outputs the JSON Schema for a given type in your Fern Definition.
 
