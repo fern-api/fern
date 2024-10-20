@@ -25,7 +25,6 @@ test:
 language: typescript
 generatorType: SDK
 defaultOutputMode: github
-
 customFixtureConfig:
   customConfig:
     generateWireTests: true
