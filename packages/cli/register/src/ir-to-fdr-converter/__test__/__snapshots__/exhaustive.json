@@ -21,7 +21,7 @@
         }
       }
     },
-    "type_types/enum:WeatherReport": {
+    "type_types.enum:WeatherReport": {
       "name": "WeatherReport",
       "shape": {
         "type": "enum",
@@ -41,7 +41,7 @@
         ]
       }
     },
-    "type_types/object:ObjectWithOptionalField": {
+    "type_types.object:ObjectWithOptionalField": {
       "name": "ObjectWithOptionalField",
       "shape": {
         "type": "object",
@@ -231,7 +231,7 @@
         }
       }
     },
-    "type_types/object:ObjectWithRequiredField": {
+    "type_types.object:ObjectWithRequiredField": {
       "name": "ObjectWithRequiredField",
       "shape": {
         "type": "object",
@@ -252,7 +252,7 @@
         }
       }
     },
-    "type_types/object:ObjectWithMapOfMap": {
+    "type_types.object:ObjectWithMapOfMap": {
       "name": "ObjectWithMapOfMap",
       "shape": {
         "type": "object",
@@ -291,7 +291,7 @@
         }
       }
     },
-    "type_types/object:NestedObjectWithOptionalField": {
+    "type_types.object:NestedObjectWithOptionalField": {
       "name": "NestedObjectWithOptionalField",
       "shape": {
         "type": "object",
@@ -315,7 +315,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "type_types/object:ObjectWithOptionalField"
+                "value": "type_types.object:ObjectWithOptionalField"
               }
             }
           }
@@ -325,7 +325,7 @@
         }
       }
     },
-    "type_types/object:NestedObjectWithRequiredField": {
+    "type_types.object:NestedObjectWithRequiredField": {
       "name": "NestedObjectWithRequiredField",
       "shape": {
         "type": "object",
@@ -344,7 +344,7 @@
             "key": "NestedObject",
             "valueType": {
               "type": "id",
-              "value": "type_types/object:ObjectWithOptionalField"
+              "value": "type_types.object:ObjectWithOptionalField"
             }
           }
         ],
@@ -353,7 +353,7 @@
         }
       }
     },
-    "type_types/object:DoubleOptional": {
+    "type_types.object:DoubleOptional": {
       "name": "DoubleOptional",
       "shape": {
         "type": "object",
@@ -365,7 +365,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "type_types/object:OptionalAlias"
+                "value": "type_types.object:OptionalAlias"
               }
             }
           }
@@ -375,7 +375,7 @@
         }
       }
     },
-    "type_types/object:OptionalAlias": {
+    "type_types.object:OptionalAlias": {
       "name": "OptionalAlias",
       "shape": {
         "type": "alias",
@@ -390,7 +390,7 @@
         }
       }
     },
-    "type_types/union:Animal": {
+    "type_types.union:Animal": {
       "name": "Animal",
       "shape": {
         "type": "discriminatedUnion",
@@ -400,7 +400,7 @@
             "discriminantValue": "dog",
             "additionalProperties": {
               "extends": [
-                "type_types/union:Dog"
+                "type_types.union:Dog"
               ],
               "properties": []
             }
@@ -409,7 +409,7 @@
             "discriminantValue": "cat",
             "additionalProperties": {
               "extends": [
-                "type_types/union:Cat"
+                "type_types.union:Cat"
               ],
               "properties": []
             }
@@ -417,7 +417,7 @@
         ]
       }
     },
-    "type_types/union:Dog": {
+    "type_types.union:Dog": {
       "name": "Dog",
       "shape": {
         "type": "object",
@@ -448,7 +448,7 @@
         }
       }
     },
-    "type_types/union:Cat": {
+    "type_types.union:Cat": {
       "name": "Cat",
       "shape": {
         "type": "object",
@@ -489,24 +489,24 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_endpoints/container",
-        "subpackage_endpoints/enum",
-        "subpackage_endpoints/http-methods",
-        "subpackage_endpoints/object",
-        "subpackage_endpoints/params",
-        "subpackage_endpoints/primitive",
-        "subpackage_endpoints/union"
+        "subpackage_endpoints.container",
+        "subpackage_endpoints.enum",
+        "subpackage_endpoints.http-methods",
+        "subpackage_endpoints.object",
+        "subpackage_endpoints.params",
+        "subpackage_endpoints.primitive",
+        "subpackage_endpoints.union"
       ]
     },
-    "subpackage_endpoints/container": {
-      "subpackageId": "subpackage_endpoints/container",
+    "subpackage_endpoints.container": {
+      "subpackageId": "subpackage_endpoints.container",
       "name": "container",
       "endpoints": [
         {
           "auth": true,
           "method": "POST",
           "id": "getAndReturnListOfPrimitives",
-          "originalEndpointId": "endpoint_endpoints/container.getAndReturnListOfPrimitives",
+          "originalEndpointId": "endpoint_endpoints.container.getAndReturnListOfPrimitives",
           "name": "Get And Return List Of Primitives",
           "path": {
             "pathParameters": [],
@@ -593,7 +593,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnListOfObjects",
-          "originalEndpointId": "endpoint_endpoints/container.getAndReturnListOfObjects",
+          "originalEndpointId": "endpoint_endpoints.container.getAndReturnListOfObjects",
           "name": "Get And Return List Of Objects",
           "path": {
             "pathParameters": [],
@@ -620,7 +620,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "type_types/object:ObjectWithRequiredField"
+                    "value": "type_types.object:ObjectWithRequiredField"
                   }
                 }
               }
@@ -633,7 +633,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "type_types/object:ObjectWithRequiredField"
+                  "value": "type_types.object:ObjectWithRequiredField"
                 }
               }
             }
@@ -692,7 +692,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnSetOfPrimitives",
-          "originalEndpointId": "endpoint_endpoints/container.getAndReturnSetOfPrimitives",
+          "originalEndpointId": "endpoint_endpoints.container.getAndReturnSetOfPrimitives",
           "name": "Get And Return Set Of Primitives",
           "path": {
             "pathParameters": [],
@@ -775,7 +775,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnSetOfObjects",
-          "originalEndpointId": "endpoint_endpoints/container.getAndReturnSetOfObjects",
+          "originalEndpointId": "endpoint_endpoints.container.getAndReturnSetOfObjects",
           "name": "Get And Return Set Of Objects",
           "path": {
             "pathParameters": [],
@@ -802,7 +802,7 @@
                   "type": "set",
                   "itemType": {
                     "type": "id",
-                    "value": "type_types/object:ObjectWithRequiredField"
+                    "value": "type_types.object:ObjectWithRequiredField"
                   }
                 }
               }
@@ -815,7 +815,7 @@
                 "type": "set",
                 "itemType": {
                   "type": "id",
-                  "value": "type_types/object:ObjectWithRequiredField"
+                  "value": "type_types.object:ObjectWithRequiredField"
                 }
               }
             }
@@ -862,7 +862,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnMapPrimToPrim",
-          "originalEndpointId": "endpoint_endpoints/container.getAndReturnMapPrimToPrim",
+          "originalEndpointId": "endpoint_endpoints.container.getAndReturnMapPrimToPrim",
           "name": "Get And Return Map Prim To Prim",
           "path": {
             "pathParameters": [],
@@ -957,7 +957,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnMapOfPrimToObject",
-          "originalEndpointId": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject",
+          "originalEndpointId": "endpoint_endpoints.container.getAndReturnMapOfPrimToObject",
           "name": "Get And Return Map Of Prim To Object",
           "path": {
             "pathParameters": [],
@@ -990,7 +990,7 @@
                   },
                   "valueType": {
                     "type": "id",
-                    "value": "type_types/object:ObjectWithRequiredField"
+                    "value": "type_types.object:ObjectWithRequiredField"
                   }
                 }
               }
@@ -1009,7 +1009,7 @@
                 },
                 "valueType": {
                   "type": "id",
-                  "value": "type_types/object:ObjectWithRequiredField"
+                  "value": "type_types.object:ObjectWithRequiredField"
                 }
               }
             }
@@ -1056,7 +1056,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnOptional",
-          "originalEndpointId": "endpoint_endpoints/container.getAndReturnOptional",
+          "originalEndpointId": "endpoint_endpoints.container.getAndReturnOptional",
           "name": "Get And Return Optional",
           "path": {
             "pathParameters": [],
@@ -1083,7 +1083,7 @@
                   "type": "optional",
                   "itemType": {
                     "type": "id",
-                    "value": "type_types/object:ObjectWithRequiredField"
+                    "value": "type_types.object:ObjectWithRequiredField"
                   }
                 }
               }
@@ -1096,7 +1096,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "type_types/object:ObjectWithRequiredField"
+                  "value": "type_types.object:ObjectWithRequiredField"
                 }
               }
             }
@@ -1125,15 +1125,15 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_endpoints/enum": {
-      "subpackageId": "subpackage_endpoints/enum",
+    "subpackage_endpoints.enum": {
+      "subpackageId": "subpackage_endpoints.enum",
       "name": "enum",
       "endpoints": [
         {
           "auth": true,
           "method": "POST",
           "id": "getAndReturnEnum",
-          "originalEndpointId": "endpoint_endpoints/enum.getAndReturnEnum",
+          "originalEndpointId": "endpoint_endpoints.enum.getAndReturnEnum",
           "name": "Get And Return Enum",
           "path": {
             "pathParameters": [],
@@ -1158,7 +1158,7 @@
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "type_types/enum:WeatherReport"
+                  "value": "type_types.enum:WeatherReport"
                 }
               }
             }
@@ -1168,7 +1168,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/enum:WeatherReport"
+                "value": "type_types.enum:WeatherReport"
               }
             }
           },
@@ -1200,15 +1200,15 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_endpoints/http-methods": {
-      "subpackageId": "subpackage_endpoints/http-methods",
+    "subpackage_endpoints.http-methods": {
+      "subpackageId": "subpackage_endpoints.http-methods",
       "name": "http-methods",
       "endpoints": [
         {
           "auth": true,
           "method": "GET",
           "id": "testGet",
-          "originalEndpointId": "endpoint_endpoints/http-methods.testGet",
+          "originalEndpointId": "endpoint_endpoints.http-methods.testGet",
           "name": "Test Get",
           "path": {
             "pathParameters": [
@@ -1277,7 +1277,7 @@
           "auth": true,
           "method": "POST",
           "id": "testPost",
-          "originalEndpointId": "endpoint_endpoints/http-methods.testPost",
+          "originalEndpointId": "endpoint_endpoints.http-methods.testPost",
           "name": "Test Post",
           "path": {
             "pathParameters": [],
@@ -1302,7 +1302,7 @@
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "type_types/object:ObjectWithRequiredField"
+                  "value": "type_types.object:ObjectWithRequiredField"
                 }
               }
             }
@@ -1312,7 +1312,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/object:ObjectWithOptionalField"
+                "value": "type_types.object:ObjectWithOptionalField"
               }
             }
           },
@@ -1346,7 +1346,7 @@
           "auth": true,
           "method": "PUT",
           "id": "testPut",
-          "originalEndpointId": "endpoint_endpoints/http-methods.testPut",
+          "originalEndpointId": "endpoint_endpoints.http-methods.testPut",
           "name": "Test Put",
           "path": {
             "pathParameters": [
@@ -1389,7 +1389,7 @@
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "type_types/object:ObjectWithRequiredField"
+                  "value": "type_types.object:ObjectWithRequiredField"
                 }
               }
             }
@@ -1399,7 +1399,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/object:ObjectWithOptionalField"
+                "value": "type_types.object:ObjectWithOptionalField"
               }
             }
           },
@@ -1435,7 +1435,7 @@
           "auth": true,
           "method": "PATCH",
           "id": "testPatch",
-          "originalEndpointId": "endpoint_endpoints/http-methods.testPatch",
+          "originalEndpointId": "endpoint_endpoints.http-methods.testPatch",
           "name": "Test Patch",
           "path": {
             "pathParameters": [
@@ -1478,7 +1478,7 @@
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "type_types/object:ObjectWithOptionalField"
+                  "value": "type_types.object:ObjectWithOptionalField"
                 }
               }
             }
@@ -1488,7 +1488,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/object:ObjectWithOptionalField"
+                "value": "type_types.object:ObjectWithOptionalField"
               }
             }
           },
@@ -1520,7 +1520,7 @@
           "auth": true,
           "method": "DELETE",
           "id": "testDelete",
-          "originalEndpointId": "endpoint_endpoints/http-methods.testDelete",
+          "originalEndpointId": "endpoint_endpoints.http-methods.testDelete",
           "name": "Test Delete",
           "path": {
             "pathParameters": [
@@ -1592,15 +1592,15 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_endpoints/object": {
-      "subpackageId": "subpackage_endpoints/object",
+    "subpackage_endpoints.object": {
+      "subpackageId": "subpackage_endpoints.object",
       "name": "object",
       "endpoints": [
         {
           "auth": true,
           "method": "POST",
           "id": "getAndReturnWithOptionalField",
-          "originalEndpointId": "endpoint_endpoints/object.getAndReturnWithOptionalField",
+          "originalEndpointId": "endpoint_endpoints.object.getAndReturnWithOptionalField",
           "name": "Get And Return With Optional Field",
           "path": {
             "pathParameters": [],
@@ -1625,7 +1625,7 @@
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "type_types/object:ObjectWithOptionalField"
+                  "value": "type_types.object:ObjectWithOptionalField"
                 }
               }
             }
@@ -1635,7 +1635,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/object:ObjectWithOptionalField"
+                "value": "type_types.object:ObjectWithOptionalField"
               }
             }
           },
@@ -1665,7 +1665,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnWithRequiredField",
-          "originalEndpointId": "endpoint_endpoints/object.getAndReturnWithRequiredField",
+          "originalEndpointId": "endpoint_endpoints.object.getAndReturnWithRequiredField",
           "name": "Get And Return With Required Field",
           "path": {
             "pathParameters": [],
@@ -1690,7 +1690,7 @@
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "type_types/object:ObjectWithRequiredField"
+                  "value": "type_types.object:ObjectWithRequiredField"
                 }
               }
             }
@@ -1700,7 +1700,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/object:ObjectWithRequiredField"
+                "value": "type_types.object:ObjectWithRequiredField"
               }
             }
           },
@@ -1738,7 +1738,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnWithMapOfMap",
-          "originalEndpointId": "endpoint_endpoints/object.getAndReturnWithMapOfMap",
+          "originalEndpointId": "endpoint_endpoints.object.getAndReturnWithMapOfMap",
           "name": "Get And Return With Map Of Map",
           "path": {
             "pathParameters": [],
@@ -1763,7 +1763,7 @@
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "type_types/object:ObjectWithMapOfMap"
+                  "value": "type_types.object:ObjectWithMapOfMap"
                 }
               }
             }
@@ -1773,7 +1773,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/object:ObjectWithMapOfMap"
+                "value": "type_types.object:ObjectWithMapOfMap"
               }
             }
           },
@@ -1827,7 +1827,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnNestedWithOptionalField",
-          "originalEndpointId": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField",
+          "originalEndpointId": "endpoint_endpoints.object.getAndReturnNestedWithOptionalField",
           "name": "Get And Return Nested With Optional Field",
           "path": {
             "pathParameters": [],
@@ -1852,7 +1852,7 @@
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "type_types/object:NestedObjectWithOptionalField"
+                  "value": "type_types.object:NestedObjectWithOptionalField"
                 }
               }
             }
@@ -1862,7 +1862,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/object:NestedObjectWithOptionalField"
+                "value": "type_types.object:NestedObjectWithOptionalField"
               }
             }
           },
@@ -1892,7 +1892,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnNestedWithRequiredField",
-          "originalEndpointId": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField",
+          "originalEndpointId": "endpoint_endpoints.object.getAndReturnNestedWithRequiredField",
           "name": "Get And Return Nested With Required Field",
           "path": {
             "pathParameters": [
@@ -1935,7 +1935,7 @@
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "type_types/object:NestedObjectWithRequiredField"
+                  "value": "type_types.object:NestedObjectWithRequiredField"
                 }
               }
             }
@@ -1945,7 +1945,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/object:NestedObjectWithRequiredField"
+                "value": "type_types.object:NestedObjectWithRequiredField"
               }
             }
           },
@@ -1989,7 +1989,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnNestedWithRequiredFieldAsList",
-          "originalEndpointId": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList",
+          "originalEndpointId": "endpoint_endpoints.object.getAndReturnNestedWithRequiredFieldAsList",
           "name": "Get And Return Nested With Required Field As List",
           "path": {
             "pathParameters": [],
@@ -2016,7 +2016,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "type_types/object:NestedObjectWithRequiredField"
+                    "value": "type_types.object:NestedObjectWithRequiredField"
                   }
                 }
               }
@@ -2027,7 +2027,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/object:NestedObjectWithRequiredField"
+                "value": "type_types.object:NestedObjectWithRequiredField"
               }
             }
           },
@@ -2083,8 +2083,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_endpoints/params": {
-      "subpackageId": "subpackage_endpoints/params",
+    "subpackage_endpoints.params": {
+      "subpackageId": "subpackage_endpoints.params",
       "name": "params",
       "endpoints": [
         {
@@ -2092,7 +2092,7 @@
           "description": "GET with path param",
           "method": "GET",
           "id": "getWithPath",
-          "originalEndpointId": "endpoint_endpoints/params.getWithPath",
+          "originalEndpointId": "endpoint_endpoints.params.getWithPath",
           "name": "Get With Path",
           "path": {
             "pathParameters": [
@@ -2162,7 +2162,7 @@
           "description": "GET with query param",
           "method": "GET",
           "id": "getWithQuery",
-          "originalEndpointId": "endpoint_endpoints/params.getWithQuery",
+          "originalEndpointId": "endpoint_endpoints.params.getWithQuery",
           "name": "Get With Query",
           "path": {
             "pathParameters": [],
@@ -2218,7 +2218,7 @@
           "description": "GET with multiple of same query param",
           "method": "GET",
           "id": "getWithAllowMultipleQuery",
-          "originalEndpointId": "endpoint_endpoints/params.getWithAllowMultipleQuery",
+          "originalEndpointId": "endpoint_endpoints.params.getWithAllowMultipleQuery",
           "name": "Get With Allow Multiple Query",
           "path": {
             "pathParameters": [],
@@ -2274,7 +2274,7 @@
           "description": "GET with path and query params",
           "method": "GET",
           "id": "getWithPathAndQuery",
-          "originalEndpointId": "endpoint_endpoints/params.getWithPathAndQuery",
+          "originalEndpointId": "endpoint_endpoints.params.getWithPathAndQuery",
           "name": "Get With Path And Query",
           "path": {
             "pathParameters": [
@@ -2340,7 +2340,7 @@
           "description": "PUT to update with path param",
           "method": "PUT",
           "id": "modifyWithPath",
-          "originalEndpointId": "endpoint_endpoints/params.modifyWithPath",
+          "originalEndpointId": "endpoint_endpoints.params.modifyWithPath",
           "name": "Modify With Path",
           "path": {
             "pathParameters": [
@@ -2431,15 +2431,15 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_endpoints/primitive": {
-      "subpackageId": "subpackage_endpoints/primitive",
+    "subpackage_endpoints.primitive": {
+      "subpackageId": "subpackage_endpoints.primitive",
       "name": "primitive",
       "endpoints": [
         {
           "auth": true,
           "method": "POST",
           "id": "getAndReturnString",
-          "originalEndpointId": "endpoint_endpoints/primitive.getAndReturnString",
+          "originalEndpointId": "endpoint_endpoints.primitive.getAndReturnString",
           "name": "Get And Return String",
           "path": {
             "pathParameters": [],
@@ -2508,7 +2508,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnInt",
-          "originalEndpointId": "endpoint_endpoints/primitive.getAndReturnInt",
+          "originalEndpointId": "endpoint_endpoints.primitive.getAndReturnInt",
           "name": "Get And Return Int",
           "path": {
             "pathParameters": [],
@@ -2577,7 +2577,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnLong",
-          "originalEndpointId": "endpoint_endpoints/primitive.getAndReturnLong",
+          "originalEndpointId": "endpoint_endpoints.primitive.getAndReturnLong",
           "name": "Get And Return Long",
           "path": {
             "pathParameters": [],
@@ -2648,7 +2648,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnDouble",
-          "originalEndpointId": "endpoint_endpoints/primitive.getAndReturnDouble",
+          "originalEndpointId": "endpoint_endpoints.primitive.getAndReturnDouble",
           "name": "Get And Return Double",
           "path": {
             "pathParameters": [],
@@ -2717,7 +2717,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnBool",
-          "originalEndpointId": "endpoint_endpoints/primitive.getAndReturnBool",
+          "originalEndpointId": "endpoint_endpoints.primitive.getAndReturnBool",
           "name": "Get And Return Bool",
           "path": {
             "pathParameters": [],
@@ -2788,7 +2788,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnDatetime",
-          "originalEndpointId": "endpoint_endpoints/primitive.getAndReturnDatetime",
+          "originalEndpointId": "endpoint_endpoints.primitive.getAndReturnDatetime",
           "name": "Get And Return Datetime",
           "path": {
             "pathParameters": [],
@@ -2859,7 +2859,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnDate",
-          "originalEndpointId": "endpoint_endpoints/primitive.getAndReturnDate",
+          "originalEndpointId": "endpoint_endpoints.primitive.getAndReturnDate",
           "name": "Get And Return Date",
           "path": {
             "pathParameters": [],
@@ -2930,7 +2930,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnUUID",
-          "originalEndpointId": "endpoint_endpoints/primitive.getAndReturnUUID",
+          "originalEndpointId": "endpoint_endpoints.primitive.getAndReturnUUID",
           "name": "Get And Return UUID",
           "path": {
             "pathParameters": [],
@@ -2999,7 +2999,7 @@
           "auth": true,
           "method": "POST",
           "id": "getAndReturnBase64",
-          "originalEndpointId": "endpoint_endpoints/primitive.getAndReturnBase64",
+          "originalEndpointId": "endpoint_endpoints.primitive.getAndReturnBase64",
           "name": "Get And Return Base 64",
           "path": {
             "pathParameters": [],
@@ -3072,15 +3072,15 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_endpoints/union": {
-      "subpackageId": "subpackage_endpoints/union",
+    "subpackage_endpoints.union": {
+      "subpackageId": "subpackage_endpoints.union",
       "name": "union",
       "endpoints": [
         {
           "auth": true,
           "method": "POST",
           "id": "getAndReturnUnion",
-          "originalEndpointId": "endpoint_endpoints/union.getAndReturnUnion",
+          "originalEndpointId": "endpoint_endpoints.union.getAndReturnUnion",
           "name": "Get And Return Union",
           "path": {
             "pathParameters": [],
@@ -3105,7 +3105,7 @@
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "type_types/union:Animal"
+                  "value": "type_types.union:Animal"
                 }
               }
             }
@@ -3115,7 +3115,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/union:Animal"
+                "value": "type_types.union:Animal"
               }
             }
           },
@@ -3230,7 +3230,7 @@
                     "key": "NestedObject",
                     "valueType": {
                       "type": "id",
-                      "value": "type_types/object:ObjectWithOptionalField"
+                      "value": "type_types.object:ObjectWithOptionalField"
                     }
                   }
                 ]
@@ -3242,7 +3242,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/object:ObjectWithOptionalField"
+                "value": "type_types.object:ObjectWithOptionalField"
               }
             }
           },
@@ -3420,7 +3420,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_types/object:ObjectWithOptionalField"
+                "value": "type_types.object:ObjectWithOptionalField"
               }
             }
           },
@@ -3589,49 +3589,49 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_types/enum",
-        "subpackage_types/object",
-        "subpackage_types/union"
+        "subpackage_types.enum",
+        "subpackage_types.object",
+        "subpackage_types.union"
       ]
     },
-    "subpackage_types/enum": {
-      "subpackageId": "subpackage_types/enum",
+    "subpackage_types.enum": {
+      "subpackageId": "subpackage_types.enum",
       "name": "enum",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_types/enum:WeatherReport"
+        "type_types.enum:WeatherReport"
       ],
       "subpackages": []
     },
-    "subpackage_types/object": {
-      "subpackageId": "subpackage_types/object",
+    "subpackage_types.object": {
+      "subpackageId": "subpackage_types.object",
       "name": "object",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_types/object:ObjectWithOptionalField",
-        "type_types/object:ObjectWithRequiredField",
-        "type_types/object:ObjectWithMapOfMap",
-        "type_types/object:NestedObjectWithOptionalField",
-        "type_types/object:NestedObjectWithRequiredField",
-        "type_types/object:DoubleOptional",
-        "type_types/object:OptionalAlias"
+        "type_types.object:ObjectWithOptionalField",
+        "type_types.object:ObjectWithRequiredField",
+        "type_types.object:ObjectWithMapOfMap",
+        "type_types.object:NestedObjectWithOptionalField",
+        "type_types.object:NestedObjectWithRequiredField",
+        "type_types.object:DoubleOptional",
+        "type_types.object:OptionalAlias"
       ],
       "subpackages": []
     },
-    "subpackage_types/union": {
-      "subpackageId": "subpackage_types/union",
+    "subpackage_types.union": {
+      "subpackageId": "subpackage_types.union",
       "name": "union",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_types/union:Animal",
-        "type_types/union:Dog",
-        "type_types/union:Cat"
+        "type_types.union:Animal",
+        "type_types.union:Dog",
+        "type_types.union:Cat"
       ],
       "subpackages": []
     }

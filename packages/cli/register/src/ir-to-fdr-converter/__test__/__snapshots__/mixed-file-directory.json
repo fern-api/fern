@@ -108,7 +108,7 @@
         }
       }
     },
-    "type_user/events:Event": {
+    "type_user.events:Event": {
       "name": "Event",
       "shape": {
         "type": "object",
@@ -136,7 +136,7 @@
         }
       }
     },
-    "type_user/events/metadata:Metadata": {
+    "type_user.events.metadata:Metadata": {
       "name": "Metadata",
       "shape": {
         "type": "object",
@@ -374,11 +374,11 @@
         "type_user:User"
       ],
       "subpackages": [
-        "subpackage_user/events"
+        "subpackage_user.events"
       ]
     },
-    "subpackage_user/events": {
-      "subpackageId": "subpackage_user/events",
+    "subpackage_user.events": {
+      "subpackageId": "subpackage_user.events",
       "name": "events",
       "endpoints": [
         {
@@ -386,7 +386,7 @@
           "description": "List all user events.",
           "method": "GET",
           "id": "listEvents",
-          "originalEndpointId": "endpoint_user/events.listEvents",
+          "originalEndpointId": "endpoint_user.events.listEvents",
           "name": "List Events",
           "path": {
             "pathParameters": [],
@@ -424,7 +424,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "type_user/events:Event"
+                  "value": "type_user.events:Event"
                 }
               }
             }
@@ -468,14 +468,14 @@
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_user/events:Event"
+        "type_user.events:Event"
       ],
       "subpackages": [
-        "subpackage_user/events/metadata"
+        "subpackage_user.events.metadata"
       ]
     },
-    "subpackage_user/events/metadata": {
-      "subpackageId": "subpackage_user/events/metadata",
+    "subpackage_user.events.metadata": {
+      "subpackageId": "subpackage_user.events.metadata",
       "name": "metadata",
       "endpoints": [
         {
@@ -483,7 +483,7 @@
           "description": "Get event metadata.",
           "method": "GET",
           "id": "getMetadata",
-          "originalEndpointId": "endpoint_user/events/metadata.getMetadata",
+          "originalEndpointId": "endpoint_user.events.metadata.getMetadata",
           "name": "Get Metadata",
           "path": {
             "pathParameters": [],
@@ -513,7 +513,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_user/events/metadata:Metadata"
+                "value": "type_user.events.metadata:Metadata"
               }
             }
           },
@@ -550,7 +550,7 @@
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_user/events/metadata:Metadata"
+        "type_user.events.metadata:Metadata"
       ],
       "subpackages": []
     }

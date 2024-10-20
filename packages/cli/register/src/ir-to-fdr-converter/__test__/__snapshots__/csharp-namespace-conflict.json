@@ -1,6 +1,6 @@
 {
   "types": {
-    "type_a/aa:A": {
+    "type_a.aa:A": {
       "name": "A",
       "shape": {
         "type": "object",
@@ -11,7 +11,7 @@
         }
       }
     },
-    "type_a/aa:B": {
+    "type_a.aa:B": {
       "name": "B",
       "shape": {
         "type": "object",
@@ -22,7 +22,7 @@
         }
       }
     },
-    "type_a/aa:SubTestType": {
+    "type_a.aa:SubTestType": {
       "name": "SubTestType",
       "shape": {
         "type": "object",
@@ -32,14 +32,14 @@
             "key": "a",
             "valueType": {
               "type": "id",
-              "value": "type_a/aa:A"
+              "value": "type_a.aa:A"
             }
           },
           {
             "key": "b",
             "valueType": {
               "type": "id",
-              "value": "type_a/aa:B"
+              "value": "type_a.aa:B"
             }
           }
         ],
@@ -58,14 +58,14 @@
             "key": "a",
             "valueType": {
               "type": "id",
-              "value": "type_a/aa:A"
+              "value": "type_a.aa:A"
             }
           },
           {
             "key": "b",
             "valueType": {
               "type": "id",
-              "value": "type_a/aa:B"
+              "value": "type_a.aa:B"
             }
           }
         ],
@@ -105,19 +105,19 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_a/aa"
+        "subpackage_a.aa"
       ]
     },
-    "subpackage_a/aa": {
-      "subpackageId": "subpackage_a/aa",
+    "subpackage_a.aa": {
+      "subpackageId": "subpackage_a.aa",
       "name": "aa",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_a/aa:A",
-        "type_a/aa:B",
-        "type_a/aa:SubTestType"
+        "type_a.aa:A",
+        "type_a.aa:B",
+        "type_a.aa:SubTestType"
       ],
       "subpackages": []
     },

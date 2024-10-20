@@ -1,6 +1,6 @@
 {
   "types": {
-    "type_a/d/types:Foo": {
+    "type_a.d.types:Foo": {
       "name": "Foo",
       "shape": {
         "type": "alias",
@@ -22,20 +22,20 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_a/b",
-        "subpackage_a/c",
-        "subpackage_a/d"
+        "subpackage_a.b",
+        "subpackage_a.c",
+        "subpackage_a.d"
       ]
     },
-    "subpackage_a/b": {
-      "subpackageId": "subpackage_a/b",
+    "subpackage_a.b": {
+      "subpackageId": "subpackage_a.b",
       "name": "b",
       "endpoints": [
         {
           "auth": false,
           "method": "POST",
           "id": "foo",
-          "originalEndpointId": "endpoint_a/b.foo",
+          "originalEndpointId": "endpoint_a.b.foo",
           "name": "Foo",
           "path": {
             "pathParameters": [],
@@ -70,15 +70,15 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_a/c": {
-      "subpackageId": "subpackage_a/c",
+    "subpackage_a.c": {
+      "subpackageId": "subpackage_a.c",
       "name": "c",
       "endpoints": [
         {
           "auth": false,
           "method": "POST",
           "id": "foo",
-          "originalEndpointId": "endpoint_a/c.foo",
+          "originalEndpointId": "endpoint_a.c.foo",
           "name": "Foo",
           "path": {
             "pathParameters": [],
@@ -155,40 +155,40 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_folder/service"
+        "subpackage_folder.service"
       ]
     },
-    "subpackage_a/d": {
-      "subpackageId": "subpackage_a/d",
+    "subpackage_a.d": {
+      "subpackageId": "subpackage_a.d",
       "name": "d",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_a/d/types"
+        "subpackage_a.d.types"
       ]
     },
-    "subpackage_a/d/types": {
-      "subpackageId": "subpackage_a/d/types",
+    "subpackage_a.d.types": {
+      "subpackageId": "subpackage_a.d.types",
       "name": "types",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_a/d/types:Foo"
+        "type_a.d.types:Foo"
       ],
       "subpackages": []
     },
-    "subpackage_folder/service": {
-      "subpackageId": "subpackage_folder/service",
+    "subpackage_folder.service": {
+      "subpackageId": "subpackage_folder.service",
       "name": "service",
       "endpoints": [
         {
           "auth": false,
           "method": "GET",
           "id": "endpoint",
-          "originalEndpointId": "endpoint_folder/service.endpoint",
+          "originalEndpointId": "endpoint_folder.service.endpoint",
           "name": "Endpoint",
           "path": {
             "pathParameters": [],
@@ -221,7 +221,7 @@
           "auth": false,
           "method": "POST",
           "id": "unknownRequest",
-          "originalEndpointId": "endpoint_folder/service.unknownRequest",
+          "originalEndpointId": "endpoint_folder.service.unknownRequest",
           "name": "Unknown Request",
           "path": {
             "pathParameters": [],

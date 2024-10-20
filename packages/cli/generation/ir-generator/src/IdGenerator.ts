@@ -50,5 +50,5 @@ export const IdGenerator = {
 };
 
 function stringifyFernFilepath(fernFilepath: FernFilepath): string {
-    return fernFilepath.allParts.map((part) => part.originalName).join("/");
+    return fernFilepath.allParts.map((part) => part.originalName).join(".");
 }

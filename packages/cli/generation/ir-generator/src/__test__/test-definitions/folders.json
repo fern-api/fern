@@ -30,7 +30,7 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_a/d/types:Foo": {
+        "type_a.d.types:Foo": {
             "inline": false,
             "name": {
                 "name": {
@@ -172,7 +172,7 @@
                         }
                     }
                 },
-                "typeId": "type_a/d/types:Foo"
+                "typeId": "type_a.d.types:Foo"
             },
             "shape": {
                 "_type": "alias",
@@ -212,7 +212,7 @@
         }
     },
     "errors": {
-        "error_folder/service:NotFoundError": {
+        "error_folder.service:NotFoundError": {
             "name": {
                 "name": {
                     "originalName": "NotFoundError",
@@ -315,7 +315,7 @@
                         }
                     }
                 },
-                "errorId": "error_folder/service:NotFoundError"
+                "errorId": "error_folder.service:NotFoundError"
             },
             "discriminantValue": {
                 "name": {
@@ -457,7 +457,7 @@
                 }
             ]
         },
-        "service_a/b": {
+        "service_a.b": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -560,7 +560,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_a/b.foo",
+                    "id": "endpoint_a.b.foo",
                     "name": {
                         "originalName": "foo",
                         "camelCase": {
@@ -636,7 +636,7 @@
                 }
             ]
         },
-        "service_a/c": {
+        "service_a.c": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -739,7 +739,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_a/c.foo",
+                    "id": "endpoint_a.c.foo",
                     "name": {
                         "originalName": "foo",
                         "camelCase": {
@@ -956,7 +956,7 @@
                 }
             ]
         },
-        "service_folder/service": {
+        "service_folder.service": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -1058,7 +1058,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_folder/service.endpoint",
+                    "id": "endpoint_folder.service.endpoint",
                     "name": {
                         "originalName": "endpoint",
                         "camelCase": {
@@ -1133,7 +1133,7 @@
                     "docs": null
                 },
                 {
-                    "id": "endpoint_folder/service.unknownRequest",
+                    "id": "endpoint_folder.service.unknownRequest",
                     "name": {
                         "originalName": "unknownRequest",
                         "camelCase": {
@@ -1320,7 +1320,7 @@
                                         }
                                     }
                                 },
-                                "errorId": "error_folder/service:NotFoundError"
+                                "errorId": "error_folder.service:NotFoundError"
                             },
                             "docs": null
                         }
@@ -1402,7 +1402,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
-            "type_a/d/types:Foo"
+            "type_a.d.types:Foo"
         ]
     },
     "webhookGroups": {},
@@ -1480,9 +1480,9 @@
             "types": [],
             "errors": [],
             "subpackages": [
-                "subpackage_a/b",
-                "subpackage_a/c",
-                "subpackage_a/d"
+                "subpackage_a.b",
+                "subpackage_a.c",
+                "subpackage_a.d"
             ],
             "navigationConfig": null,
             "webhooks": null,
@@ -1490,7 +1490,7 @@
             "hasEndpointsInTree": true,
             "docs": null
         },
-        "subpackage_a/b": {
+        "subpackage_a.b": {
             "name": {
                 "originalName": "b",
                 "camelCase": {
@@ -1593,7 +1593,7 @@
                 ],
                 "file": null
             },
-            "service": "service_a/b",
+            "service": "service_a.b",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -1603,7 +1603,7 @@
             "hasEndpointsInTree": true,
             "docs": null
         },
-        "subpackage_a/c": {
+        "subpackage_a.c": {
             "name": {
                 "originalName": "c",
                 "camelCase": {
@@ -1706,7 +1706,7 @@
                 ],
                 "file": null
             },
-            "service": "service_a/c",
+            "service": "service_a.c",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -1785,7 +1785,7 @@
             "types": [],
             "errors": [],
             "subpackages": [
-                "subpackage_folder/service"
+                "subpackage_folder.service"
             ],
             "navigationConfig": null,
             "webhooks": null,
@@ -1793,7 +1793,7 @@
             "hasEndpointsInTree": true,
             "docs": null
         },
-        "subpackage_a/d": {
+        "subpackage_a.d": {
             "name": {
                 "originalName": "d",
                 "camelCase": {
@@ -1900,7 +1900,7 @@
             "types": [],
             "errors": [],
             "subpackages": [
-                "subpackage_a/d/types"
+                "subpackage_a.d.types"
             ],
             "navigationConfig": null,
             "webhooks": null,
@@ -1908,7 +1908,7 @@
             "hasEndpointsInTree": false,
             "docs": null
         },
-        "subpackage_a/d/types": {
+        "subpackage_a.d.types": {
             "name": {
                 "originalName": "types",
                 "camelCase": {
@@ -2050,7 +2050,7 @@
             },
             "service": null,
             "types": [
-                "type_a/d/types:Foo"
+                "type_a.d.types:Foo"
             ],
             "errors": [],
             "subpackages": [],
@@ -2060,7 +2060,7 @@
             "hasEndpointsInTree": false,
             "docs": null
         },
-        "subpackage_folder/service": {
+        "subpackage_folder.service": {
             "name": {
                 "originalName": "service",
                 "camelCase": {
@@ -2162,10 +2162,10 @@
                     }
                 }
             },
-            "service": "service_folder/service",
+            "service": "service_folder.service",
             "types": [],
             "errors": [
-                "error_folder/service:NotFoundError"
+                "error_folder.service:NotFoundError"
             ],
             "subpackages": [],
             "navigationConfig": null,

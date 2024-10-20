@@ -12,7 +12,7 @@
         }
       }
     },
-    "type_folder-a/service:Response": {
+    "type_folder-a.service:Response": {
       "name": "Response",
       "shape": {
         "type": "object",
@@ -24,7 +24,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "type_folder-b/common:Foo"
+                "value": "type_folder-b.common:Foo"
               }
             }
           }
@@ -34,7 +34,7 @@
         }
       }
     },
-    "type_folder-b/common:Foo": {
+    "type_folder-b.common:Foo": {
       "name": "Foo",
       "shape": {
         "type": "object",
@@ -46,7 +46,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "type_folder-c/common:FolderCFoo"
+                "value": "type_folder-c.common:FolderCFoo"
               }
             }
           }
@@ -56,7 +56,7 @@
         }
       }
     },
-    "type_folder-c/common:FolderCFoo": {
+    "type_folder-c.common:FolderCFoo": {
       "name": "FolderCFoo",
       "shape": {
         "type": "object",
@@ -77,7 +77,7 @@
         }
       }
     },
-    "type_folder-d/service:Response": {
+    "type_folder-d.service:Response": {
       "name": "Response",
       "shape": {
         "type": "object",
@@ -186,11 +186,11 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_folder-a/service"
+        "subpackage_folder-a.service"
       ]
     },
-    "subpackage_folder-a/service": {
-      "subpackageId": "subpackage_folder-a/service",
+    "subpackage_folder-a.service": {
+      "subpackageId": "subpackage_folder-a.service",
       "name": "service",
       "endpoints": [
         {
@@ -207,7 +207,7 @@
             }
           ],
           "id": "getDirectThread",
-          "originalEndpointId": "endpoint_folder-a/service.getDirectThread",
+          "originalEndpointId": "endpoint_folder-a.service.getDirectThread",
           "name": "Get Direct Thread",
           "path": {
             "pathParameters": [],
@@ -229,7 +229,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_folder-a/service:Response"
+                "value": "type_folder-a.service:Response"
               }
             }
           },
@@ -254,7 +254,7 @@
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_folder-a/service:Response"
+        "type_folder-a.service:Response"
       ],
       "subpackages": []
     },
@@ -266,17 +266,17 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_folder-b/common"
+        "subpackage_folder-b.common"
       ]
     },
-    "subpackage_folder-b/common": {
-      "subpackageId": "subpackage_folder-b/common",
+    "subpackage_folder-b.common": {
+      "subpackageId": "subpackage_folder-b.common",
       "name": "common",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_folder-b/common:Foo"
+        "type_folder-b.common:Foo"
       ],
       "subpackages": []
     },
@@ -288,17 +288,17 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_folder-c/common"
+        "subpackage_folder-c.common"
       ]
     },
-    "subpackage_folder-c/common": {
-      "subpackageId": "subpackage_folder-c/common",
+    "subpackage_folder-c.common": {
+      "subpackageId": "subpackage_folder-c.common",
       "name": "common",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_folder-c/common:FolderCFoo"
+        "type_folder-c.common:FolderCFoo"
       ],
       "subpackages": []
     },
@@ -310,11 +310,11 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_folder-d/service"
+        "subpackage_folder-d.service"
       ]
     },
-    "subpackage_folder-d/service": {
-      "subpackageId": "subpackage_folder-d/service",
+    "subpackage_folder-d.service": {
+      "subpackageId": "subpackage_folder-d.service",
       "name": "service",
       "endpoints": [
         {
@@ -331,7 +331,7 @@
             }
           ],
           "id": "getDirectThread",
-          "originalEndpointId": "endpoint_folder-d/service.getDirectThread",
+          "originalEndpointId": "endpoint_folder-d.service.getDirectThread",
           "name": "Get Direct Thread",
           "path": {
             "pathParameters": [],
@@ -353,7 +353,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_folder-d/service:Response"
+                "value": "type_folder-d.service:Response"
               }
             }
           },
@@ -382,7 +382,7 @@
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_folder-d/service:Response"
+        "type_folder-d.service:Response"
       ],
       "subpackages": []
     },

@@ -90,7 +90,7 @@
         ]
       }
     },
-    "type_commons/types:Tag": {
+    "type_commons.types:Tag": {
       "name": "Tag",
       "shape": {
         "type": "alias",
@@ -102,7 +102,7 @@
         }
       }
     },
-    "type_commons/types:Metadata": {
+    "type_commons.types:Metadata": {
       "name": "Metadata",
       "shape": {
         "type": "object",
@@ -156,7 +156,7 @@
         }
       }
     },
-    "type_commons/types:EventInfo": {
+    "type_commons.types:EventInfo": {
       "name": "EventInfo",
       "shape": {
         "type": "discriminatedUnion",
@@ -166,7 +166,7 @@
             "discriminantValue": "metadata",
             "additionalProperties": {
               "extends": [
-                "type_commons/types:Metadata"
+                "type_commons.types:Metadata"
               ],
               "properties": []
             }
@@ -180,7 +180,7 @@
                   "key": "value",
                   "valueType": {
                     "type": "id",
-                    "value": "type_commons/types:Tag"
+                    "value": "type_commons.types:Tag"
                   }
                 }
               ]
@@ -189,7 +189,7 @@
         ]
       }
     },
-    "type_commons/types:Data": {
+    "type_commons.types:Data": {
       "name": "Data",
       "shape": {
         "type": "discriminatedUnion",
@@ -233,7 +233,7 @@
         ]
       }
     },
-    "type_file/service:Filename": {
+    "type_file.service:Filename": {
       "name": "Filename",
       "shape": {
         "type": "alias",
@@ -322,7 +322,7 @@
             "key": "tag",
             "valueType": {
               "type": "id",
-              "value": "type_commons/types:Tag"
+              "value": "type_commons.types:Tag"
             }
           },
           {
@@ -1065,20 +1065,20 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_commons/types"
+        "subpackage_commons.types"
       ]
     },
-    "subpackage_commons/types": {
-      "subpackageId": "subpackage_commons/types",
+    "subpackage_commons.types": {
+      "subpackageId": "subpackage_commons.types",
       "name": "types",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_commons/types:Tag",
-        "type_commons/types:Metadata",
-        "type_commons/types:EventInfo",
-        "type_commons/types:Data"
+        "type_commons.types:Tag",
+        "type_commons.types:Metadata",
+        "type_commons.types:EventInfo",
+        "type_commons.types:Data"
       ],
       "subpackages": []
     },
@@ -1090,23 +1090,23 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_file/notification",
-        "subpackage_file/service"
+        "subpackage_file.notification",
+        "subpackage_file.service"
       ]
     },
-    "subpackage_file/notification": {
-      "subpackageId": "subpackage_file/notification",
+    "subpackage_file.notification": {
+      "subpackageId": "subpackage_file.notification",
       "name": "notification",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_file/notification/service"
+        "subpackage_file.notification.service"
       ]
     },
-    "subpackage_file/notification/service": {
-      "subpackageId": "subpackage_file/notification/service",
+    "subpackage_file.notification.service": {
+      "subpackageId": "subpackage_file.notification.service",
       "name": "service",
       "endpoints": [
         {
@@ -1123,7 +1123,7 @@
             }
           ],
           "id": "getException",
-          "originalEndpointId": "endpoint_file/notification/service.getException",
+          "originalEndpointId": "endpoint_file.notification.service.getException",
           "name": "Get Exception",
           "path": {
             "pathParameters": [
@@ -1201,8 +1201,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_file/service": {
-      "subpackageId": "subpackage_file/service",
+    "subpackage_file.service": {
+      "subpackageId": "subpackage_file.service",
       "name": "service",
       "endpoints": [
         {
@@ -1220,7 +1220,7 @@
             }
           ],
           "id": "getFile",
-          "originalEndpointId": "endpoint_file/service.getFile",
+          "originalEndpointId": "endpoint_file.service.getFile",
           "name": "Get File",
           "path": {
             "pathParameters": [
@@ -1314,7 +1314,7 @@
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_file/service:Filename"
+        "type_file.service:Filename"
       ],
       "subpackages": []
     },
@@ -1326,11 +1326,11 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_health/service"
+        "subpackage_health.service"
       ]
     },
-    "subpackage_health/service": {
-      "subpackageId": "subpackage_health/service",
+    "subpackage_health.service": {
+      "subpackageId": "subpackage_health.service",
       "name": "service",
       "endpoints": [
         {
@@ -1348,7 +1348,7 @@
             }
           ],
           "id": "check",
-          "originalEndpointId": "endpoint_health/service.check",
+          "originalEndpointId": "endpoint_health.service.check",
           "name": "Check",
           "path": {
             "pathParameters": [
@@ -1423,7 +1423,7 @@
             }
           ],
           "id": "ping",
-          "originalEndpointId": "endpoint_health/service.ping",
+          "originalEndpointId": "endpoint_health.service.ping",
           "name": "Ping",
           "path": {
             "pathParameters": [],

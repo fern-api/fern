@@ -273,7 +273,7 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_commons/metadata:Metadata",
+                                    "typeId": "type_commons.metadata:Metadata",
                                     "default": null,
                                     "inline": null
                                 }
@@ -287,7 +287,7 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_commons/metadata:Metadata"
+                "type_commons.metadata:Metadata"
             ],
             "encoding": {
                 "json": {},
@@ -496,7 +496,7 @@
                                                 "shape": {
                                                     "type": "named",
                                                     "typeName": {
-                                                        "typeId": "type_commons/metadata:Metadata",
+                                                        "typeId": "type_commons.metadata:Metadata",
                                                         "fernFilepath": {
                                                             "allParts": [
                                                                 {
@@ -638,7 +638,7 @@
                                                                     "jsonExample": "metadata-kjasf923"
                                                                 },
                                                                 "originalTypeDeclaration": {
-                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                    "typeId": "type_commons.metadata:Metadata",
                                                                     "fernFilepath": {
                                                                         "allParts": [
                                                                             {
@@ -894,7 +894,7 @@
                                                                     }
                                                                 },
                                                                 "originalTypeDeclaration": {
-                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                    "typeId": "type_commons.metadata:Metadata",
                                                                     "fernFilepath": {
                                                                         "allParts": [
                                                                             {
@@ -1112,7 +1112,7 @@
                                                         }
                                                     }
                                                 },
-                                                "typeId": "type_commons/metadata:Metadata",
+                                                "typeId": "type_commons.metadata:Metadata",
                                                 "default": null,
                                                 "inline": null
                                             }
@@ -1370,7 +1370,7 @@
                                                 "shape": {
                                                     "type": "named",
                                                     "typeName": {
-                                                        "typeId": "type_commons/metadata:Metadata",
+                                                        "typeId": "type_commons.metadata:Metadata",
                                                         "fernFilepath": {
                                                             "allParts": [
                                                                 {
@@ -1512,7 +1512,7 @@
                                                                     "jsonExample": "metadata-lkasdfv9j"
                                                                 },
                                                                 "originalTypeDeclaration": {
-                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                    "typeId": "type_commons.metadata:Metadata",
                                                                     "fernFilepath": {
                                                                         "allParts": [
                                                                             {
@@ -1768,7 +1768,7 @@
                                                                     }
                                                                 },
                                                                 "originalTypeDeclaration": {
-                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                    "typeId": "type_commons.metadata:Metadata",
                                                                     "fernFilepath": {
                                                                         "allParts": [
                                                                             {
@@ -1986,7 +1986,7 @@
                                                         }
                                                     }
                                                 },
-                                                "typeId": "type_commons/metadata:Metadata",
+                                                "typeId": "type_commons.metadata:Metadata",
                                                 "default": null,
                                                 "inline": null
                                             }
@@ -2155,7 +2155,7 @@
             },
             "referencedTypes": [
                 "type_:Node",
-                "type_commons/metadata:Metadata"
+                "type_commons.metadata:Metadata"
             ],
             "encoding": {
                 "json": {},
@@ -2431,7 +2431,7 @@
                                                                                                 "shape": {
                                                                                                     "type": "named",
                                                                                                     "typeName": {
-                                                                                                        "typeId": "type_commons/metadata:Metadata",
+                                                                                                        "typeId": "type_commons.metadata:Metadata",
                                                                                                         "fernFilepath": {
                                                                                                             "allParts": [
                                                                                                                 {
@@ -2573,7 +2573,7 @@
                                                                                                                     "jsonExample": "metadata-kjasf923"
                                                                                                                 },
                                                                                                                 "originalTypeDeclaration": {
-                                                                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                                                                    "typeId": "type_commons.metadata:Metadata",
                                                                                                                     "fernFilepath": {
                                                                                                                         "allParts": [
                                                                                                                             {
@@ -2829,7 +2829,7 @@
                                                                                                                     }
                                                                                                                 },
                                                                                                                 "originalTypeDeclaration": {
-                                                                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                                                                    "typeId": "type_commons.metadata:Metadata",
                                                                                                                     "fernFilepath": {
                                                                                                                         "allParts": [
                                                                                                                             {
@@ -3047,7 +3047,7 @@
                                                                                                         }
                                                                                                     }
                                                                                                 },
-                                                                                                "typeId": "type_commons/metadata:Metadata",
+                                                                                                "typeId": "type_commons.metadata:Metadata",
                                                                                                 "default": null,
                                                                                                 "inline": null
                                                                                             }
@@ -3315,7 +3315,7 @@
                                                                                                 "shape": {
                                                                                                     "type": "named",
                                                                                                     "typeName": {
-                                                                                                        "typeId": "type_commons/metadata:Metadata",
+                                                                                                        "typeId": "type_commons.metadata:Metadata",
                                                                                                         "fernFilepath": {
                                                                                                             "allParts": [
                                                                                                                 {
@@ -3457,7 +3457,7 @@
                                                                                                                     "jsonExample": "metadata-lkasdfv9j"
                                                                                                                 },
                                                                                                                 "originalTypeDeclaration": {
-                                                                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                                                                    "typeId": "type_commons.metadata:Metadata",
                                                                                                                     "fernFilepath": {
                                                                                                                         "allParts": [
                                                                                                                             {
@@ -3713,7 +3713,7 @@
                                                                                                                     }
                                                                                                                 },
                                                                                                                 "originalTypeDeclaration": {
-                                                                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                                                                    "typeId": "type_commons.metadata:Metadata",
                                                                                                                     "fernFilepath": {
                                                                                                                         "allParts": [
                                                                                                                             {
@@ -3931,7 +3931,7 @@
                                                                                                         }
                                                                                                     }
                                                                                                 },
-                                                                                                "typeId": "type_commons/metadata:Metadata",
+                                                                                                "typeId": "type_commons.metadata:Metadata",
                                                                                                 "default": null,
                                                                                                 "inline": null
                                                                                             }
@@ -4172,7 +4172,7 @@
             "availability": null,
             "docs": null
         },
-        "type_commons/metadata:Metadata": {
+        "type_commons.metadata:Metadata": {
             "inline": false,
             "name": {
                 "name": {
@@ -4276,7 +4276,7 @@
                         }
                     }
                 },
-                "typeId": "type_commons/metadata:Metadata"
+                "typeId": "type_commons.metadata:Metadata"
             },
             "shape": {
                 "_type": "object",
@@ -4550,7 +4550,7 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_commons/metadata:Metadata"
+                                    "typeId": "type_commons.metadata:Metadata"
                                 }
                             },
                             {
@@ -4806,7 +4806,7 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_commons/metadata:Metadata"
+                                    "typeId": "type_commons.metadata:Metadata"
                                 }
                             }
                         ]
@@ -6153,7 +6153,7 @@
             "availability": null,
             "docs": null
         },
-        "type_file/directory:Directory": {
+        "type_file.directory:Directory": {
             "inline": false,
             "name": {
                 "name": {
@@ -6257,7 +6257,7 @@
                         }
                     }
                 },
-                "typeId": "type_file/directory:Directory"
+                "typeId": "type_file.directory:Directory"
             },
             "shape": {
                 "_type": "object",
@@ -6540,7 +6540,7 @@
                                                     }
                                                 }
                                             },
-                                            "typeId": "type_file/directory:Directory",
+                                            "typeId": "type_file.directory:Directory",
                                             "default": null,
                                             "inline": null
                                         }
@@ -6558,7 +6558,7 @@
             "referencedTypes": [
                 "type_file:File",
                 "type_file:FileInfo",
-                "type_file/directory:Directory"
+                "type_file.directory:Directory"
             ],
             "encoding": {
                 "json": {},
@@ -6726,7 +6726,7 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_file/directory:Directory"
+                                    "typeId": "type_file.directory:Directory"
                                 }
                             },
                             {
@@ -7495,7 +7495,7 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_file/directory:Directory"
+                                    "typeId": "type_file.directory:Directory"
                                 }
                             },
                             {
@@ -7536,7 +7536,7 @@
                                                                 "shape": {
                                                                     "type": "named",
                                                                     "typeName": {
-                                                                        "typeId": "type_file/directory:Directory",
+                                                                        "typeId": "type_file.directory:Directory",
                                                                         "fernFilepath": {
                                                                             "allParts": [
                                                                                 {
@@ -7678,7 +7678,7 @@
                                                                                     "jsonExample": "tmp"
                                                                                 },
                                                                                 "originalTypeDeclaration": {
-                                                                                    "typeId": "type_file/directory:Directory",
+                                                                                    "typeId": "type_file.directory:Directory",
                                                                                     "fernFilepath": {
                                                                                         "allParts": [
                                                                                             {
@@ -8447,7 +8447,7 @@
                                                                                     ]
                                                                                 },
                                                                                 "originalTypeDeclaration": {
-                                                                                    "typeId": "type_file/directory:Directory",
+                                                                                    "typeId": "type_file.directory:Directory",
                                                                                     "fernFilepath": {
                                                                                         "allParts": [
                                                                                             {
@@ -8669,7 +8669,7 @@
                                                                     }
                                                                 }
                                                             },
-                                                            "typeId": "type_file/directory:Directory",
+                                                            "typeId": "type_file.directory:Directory",
                                                             "default": null,
                                                             "inline": null
                                                         }
@@ -8795,7 +8795,7 @@
                                                                 }
                                                             }
                                                         },
-                                                        "typeId": "type_file/directory:Directory",
+                                                        "typeId": "type_file.directory:Directory",
                                                         "default": null,
                                                         "inline": null
                                                     }
@@ -8918,7 +8918,7 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_file/directory:Directory"
+                                    "typeId": "type_file.directory:Directory"
                                 }
                             }
                         ]
@@ -8991,10 +8991,10 @@
         "sharedTypes": [
             "type_:Node",
             "type_:Tree",
-            "type_commons/metadata:Metadata",
+            "type_commons.metadata:Metadata",
             "type_file:File",
             "type_file:FileInfo",
-            "type_file/directory:Directory"
+            "type_file.directory:Directory"
         ]
     },
     "webhookGroups": {},
@@ -9072,7 +9072,7 @@
             "types": [],
             "errors": [],
             "subpackages": [
-                "subpackage_commons/metadata"
+                "subpackage_commons.metadata"
             ],
             "navigationConfig": null,
             "webhooks": null,
@@ -9080,7 +9080,7 @@
             "hasEndpointsInTree": false,
             "docs": null
         },
-        "subpackage_commons/metadata": {
+        "subpackage_commons.metadata": {
             "name": {
                 "originalName": "metadata",
                 "camelCase": {
@@ -9184,7 +9184,7 @@
             },
             "service": null,
             "types": [
-                "type_commons/metadata:Metadata"
+                "type_commons.metadata:Metadata"
             ],
             "errors": [],
             "subpackages": [],
@@ -9264,7 +9264,7 @@
             ],
             "errors": [],
             "subpackages": [
-                "subpackage_file/directory"
+                "subpackage_file.directory"
             ],
             "navigationConfig": null,
             "webhooks": null,
@@ -9272,7 +9272,7 @@
             "hasEndpointsInTree": false,
             "docs": null
         },
-        "subpackage_file/directory": {
+        "subpackage_file.directory": {
             "name": {
                 "originalName": "directory",
                 "camelCase": {
@@ -9376,7 +9376,7 @@
             },
             "service": null,
             "types": [
-                "type_file/directory:Directory"
+                "type_file.directory:Directory"
             ],
             "errors": [],
             "subpackages": [],

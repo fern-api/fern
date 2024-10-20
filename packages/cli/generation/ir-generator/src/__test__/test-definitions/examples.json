@@ -573,7 +573,7 @@
             "availability": null,
             "docs": null
         },
-        "type_commons/types:Tag": {
+        "type_commons.types:Tag": {
             "inline": false,
             "name": {
                 "name": {
@@ -677,7 +677,7 @@
                         }
                     }
                 },
-                "typeId": "type_commons/types:Tag"
+                "typeId": "type_commons.types:Tag"
             },
             "shape": {
                 "_type": "alias",
@@ -754,7 +754,7 @@
             "availability": null,
             "docs": null
         },
-        "type_commons/types:Metadata": {
+        "type_commons.types:Metadata": {
             "inline": false,
             "name": {
                 "name": {
@@ -858,7 +858,7 @@
                         }
                     }
                 },
-                "typeId": "type_commons/types:Metadata"
+                "typeId": "type_commons.types:Metadata"
             },
             "shape": {
                 "_type": "object",
@@ -1175,7 +1175,7 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_commons/types:Metadata"
+                                    "typeId": "type_commons.types:Metadata"
                                 }
                             },
                             {
@@ -1431,7 +1431,7 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_commons/types:Metadata"
+                                    "typeId": "type_commons.types:Metadata"
                                 }
                             },
                             {
@@ -1591,7 +1591,7 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_commons/types:Metadata"
+                                    "typeId": "type_commons.types:Metadata"
                                 }
                             }
                         ]
@@ -1611,7 +1611,7 @@
             "availability": null,
             "docs": null
         },
-        "type_commons/types:EventInfo": {
+        "type_commons.types:EventInfo": {
             "inline": false,
             "name": {
                 "name": {
@@ -1715,7 +1715,7 @@
                         }
                     }
                 },
-                "typeId": "type_commons/types:EventInfo"
+                "typeId": "type_commons.types:EventInfo"
             },
             "shape": {
                 "_type": "union",
@@ -1870,7 +1870,7 @@
                                     }
                                 }
                             },
-                            "typeId": "type_commons/types:Metadata"
+                            "typeId": "type_commons.types:Metadata"
                         },
                         "displayName": null,
                         "availability": null,
@@ -2026,7 +2026,7 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_commons/types:Tag",
+                                "typeId": "type_commons.types:Tag",
                                 "default": null,
                                 "inline": null
                             }
@@ -2038,8 +2038,8 @@
                 ]
             },
             "referencedTypes": [
-                "type_commons/types:Metadata",
-                "type_commons/types:Tag"
+                "type_commons.types:Metadata",
+                "type_commons.types:Tag"
             ],
             "encoding": {
                 "json": {},
@@ -2116,7 +2116,7 @@
                             },
                             "shape": {
                                 "type": "samePropertiesAsObject",
-                                "typeId": "type_commons/types:Metadata",
+                                "typeId": "type_commons.types:Metadata",
                                 "object": {
                                     "properties": [
                                         {
@@ -2155,7 +2155,7 @@
                                                 "jsonExample": "metadata-alskjfg8"
                                             },
                                             "originalTypeDeclaration": {
-                                                "typeId": "type_commons/types:Metadata",
+                                                "typeId": "type_commons.types:Metadata",
                                                 "fernFilepath": {
                                                     "allParts": [
                                                         {
@@ -2383,7 +2383,7 @@
                                                 }
                                             },
                                             "originalTypeDeclaration": {
-                                                "typeId": "type_commons/types:Metadata",
+                                                "typeId": "type_commons.types:Metadata",
                                                 "fernFilepath": {
                                                     "allParts": [
                                                         {
@@ -2543,7 +2543,7 @@
                                                 "jsonExample": "{\"one\": \"two\"}"
                                             },
                                             "originalTypeDeclaration": {
-                                                "typeId": "type_commons/types:Metadata",
+                                                "typeId": "type_commons.types:Metadata",
                                                 "fernFilepath": {
                                                     "allParts": [
                                                         {
@@ -2667,7 +2667,7 @@
             "availability": null,
             "docs": null
         },
-        "type_commons/types:Data": {
+        "type_commons.types:Data": {
             "inline": false,
             "name": {
                 "name": {
@@ -2771,7 +2771,7 @@
                         }
                     }
                 },
-                "typeId": "type_commons/types:Data"
+                "typeId": "type_commons.types:Data"
             },
             "shape": {
                 "_type": "union",
@@ -3024,7 +3024,7 @@
             "availability": null,
             "docs": null
         },
-        "type_file/service:Filename": {
+        "type_file.service:Filename": {
             "inline": false,
             "name": {
                 "name": {
@@ -3128,7 +3128,7 @@
                         }
                     }
                 },
-                "typeId": "type_file/service:Filename"
+                "typeId": "type_file.service:Filename"
             },
             "shape": {
                 "_type": "alias",
@@ -3885,7 +3885,7 @@
                                     }
                                 }
                             },
-                            "typeId": "type_commons/types:Tag",
+                            "typeId": "type_commons.types:Tag",
                             "default": null,
                             "inline": null
                         },
@@ -4020,7 +4020,7 @@
             },
             "referencedTypes": [
                 "type_types:MovieId",
-                "type_commons/types:Tag"
+                "type_commons.types:Tag"
             ],
             "encoding": {
                 "json": {},
@@ -4910,7 +4910,7 @@
                                     "shape": {
                                         "type": "named",
                                         "typeName": {
-                                            "typeId": "type_commons/types:Tag",
+                                            "typeId": "type_commons.types:Tag",
                                             "fernFilepath": {
                                                 "allParts": [
                                                     {
@@ -7716,7 +7716,7 @@
                                     }
                                 }
                             },
-                            "typeId": "type_commons/types:Tag",
+                            "typeId": "type_commons.types:Tag",
                             "default": null,
                             "inline": null
                         },
@@ -7850,7 +7850,7 @@
             "referencedTypes": [
                 "type_types:Movie",
                 "type_types:MovieId",
-                "type_commons/types:Tag"
+                "type_commons.types:Tag"
             ],
             "encoding": {
                 "json": {},
@@ -8470,7 +8470,7 @@
                                     "shape": {
                                         "type": "named",
                                         "typeName": {
-                                            "typeId": "type_commons/types:Tag",
+                                            "typeId": "type_commons.types:Tag",
                                             "fernFilepath": {
                                                 "allParts": [
                                                     {
@@ -20592,7 +20592,7 @@
                 }
             ]
         },
-        "service_file/notification/service": {
+        "service_file.notification.service": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -20773,7 +20773,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_file/notification/service.getException",
+                    "id": "endpoint_file.notification.service.getException",
                     "name": {
                         "originalName": "getException",
                         "camelCase": {
@@ -21926,7 +21926,7 @@
                 }
             ]
         },
-        "service_file/service": {
+        "service_file.service": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -22067,7 +22067,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_file/service.getFile",
+                    "id": "endpoint_file.service.getFile",
                     "name": {
                         "originalName": "getFile",
                         "camelCase": {
@@ -22949,7 +22949,7 @@
                 }
             ]
         },
-        "service_health/service": {
+        "service_health.service": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -23051,7 +23051,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_health/service.check",
+                    "id": "endpoint_health.service.check",
                     "name": {
                         "originalName": "check",
                         "camelCase": {
@@ -23393,7 +23393,7 @@
                     "docs": "This endpoint checks the health of a resource."
                 },
                 {
-                    "id": "endpoint_health/service.ping",
+                    "id": "endpoint_health.service.ping",
                     "name": {
                         "originalName": "ping",
                         "camelCase": {
@@ -24975,7 +24975,7 @@
                                                                 "shape": {
                                                                     "type": "named",
                                                                     "typeName": {
-                                                                        "typeId": "type_commons/types:Tag",
+                                                                        "typeId": "type_commons.types:Tag",
                                                                         "fernFilepath": {
                                                                             "allParts": [
                                                                                 {
@@ -25499,7 +25499,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "2bcbffcae23ad4a95f59da6c307d4ce329d33694",
+                                "id": "404338335892d3b51427db9d18fb4ce97949c346",
                                 "url": "/movie/movieId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -26581,7 +26581,7 @@
                                                                                 }
                                                                             }
                                                                         },
-                                                                        "typeId": "type_commons/types:Tag"
+                                                                        "typeId": "type_commons.types:Tag"
                                                                     }
                                                                 },
                                                                 "jsonExample": "tag"
@@ -28263,7 +28263,7 @@
                                                         "shape": {
                                                             "type": "named",
                                                             "typeName": {
-                                                                "typeId": "type_commons/types:Tag",
+                                                                "typeId": "type_commons.types:Tag",
                                                                 "fernFilepath": {
                                                                     "allParts": [
                                                                         {
@@ -28877,7 +28877,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "0b81152143e2f2ba856d7c88e4b8cc68f74c03ac",
+                                "id": "c7adf0860b32b199ead2e9c6d9dc5eac000e8b54",
                                 "url": "/movie",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -29847,7 +29847,7 @@
                                                                         }
                                                                     }
                                                                 },
-                                                                "typeId": "type_commons/types:Tag"
+                                                                "typeId": "type_commons.types:Tag"
                                                             }
                                                         },
                                                         "jsonExample": "tag"
@@ -33394,12 +33394,12 @@
             "type_:Identifier",
             "type_:BasicType",
             "type_:ComplexType",
-            "type_commons/types:Tag",
-            "type_commons/types:Metadata",
-            "type_commons/types:EventInfo",
-            "type_commons/types:Data",
+            "type_commons.types:Tag",
+            "type_commons.types:Metadata",
+            "type_commons.types:EventInfo",
+            "type_commons.types:Data",
             "type_types:Exception",
-            "type_file/service:Filename",
+            "type_file.service:Filename",
             "type_types:File",
             "type_types:MovieId",
             "type_types:Movie",
@@ -33498,7 +33498,7 @@
             "types": [],
             "errors": [],
             "subpackages": [
-                "subpackage_commons/types"
+                "subpackage_commons.types"
             ],
             "navigationConfig": null,
             "webhooks": null,
@@ -33506,7 +33506,7 @@
             "hasEndpointsInTree": false,
             "docs": null
         },
-        "subpackage_commons/types": {
+        "subpackage_commons.types": {
             "name": {
                 "originalName": "types",
                 "camelCase": {
@@ -33610,10 +33610,10 @@
             },
             "service": null,
             "types": [
-                "type_commons/types:Tag",
-                "type_commons/types:Metadata",
-                "type_commons/types:EventInfo",
-                "type_commons/types:Data"
+                "type_commons.types:Tag",
+                "type_commons.types:Metadata",
+                "type_commons.types:EventInfo",
+                "type_commons.types:Data"
             ],
             "errors": [],
             "subpackages": [],
@@ -33692,8 +33692,8 @@
             "types": [],
             "errors": [],
             "subpackages": [
-                "subpackage_file/notification",
-                "subpackage_file/service"
+                "subpackage_file.notification",
+                "subpackage_file.service"
             ],
             "navigationConfig": null,
             "webhooks": null,
@@ -33701,7 +33701,7 @@
             "hasEndpointsInTree": true,
             "docs": null
         },
-        "subpackage_file/notification": {
+        "subpackage_file.notification": {
             "name": {
                 "originalName": "notification",
                 "camelCase": {
@@ -33808,7 +33808,7 @@
             "types": [],
             "errors": [],
             "subpackages": [
-                "subpackage_file/notification/service"
+                "subpackage_file.notification.service"
             ],
             "navigationConfig": null,
             "webhooks": null,
@@ -33816,7 +33816,7 @@
             "hasEndpointsInTree": true,
             "docs": null
         },
-        "subpackage_file/notification/service": {
+        "subpackage_file.notification.service": {
             "name": {
                 "originalName": "service",
                 "camelCase": {
@@ -33956,7 +33956,7 @@
                     }
                 }
             },
-            "service": "service_file/notification/service",
+            "service": "service_file.notification.service",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -33966,7 +33966,7 @@
             "hasEndpointsInTree": true,
             "docs": null
         },
-        "subpackage_file/service": {
+        "subpackage_file.service": {
             "name": {
                 "originalName": "service",
                 "camelCase": {
@@ -34068,9 +34068,9 @@
                     }
                 }
             },
-            "service": "service_file/service",
+            "service": "service_file.service",
             "types": [
-                "type_file/service:Filename"
+                "type_file.service:Filename"
             ],
             "errors": [],
             "subpackages": [],
@@ -34149,7 +34149,7 @@
             "types": [],
             "errors": [],
             "subpackages": [
-                "subpackage_health/service"
+                "subpackage_health.service"
             ],
             "navigationConfig": null,
             "webhooks": null,
@@ -34157,7 +34157,7 @@
             "hasEndpointsInTree": true,
             "docs": null
         },
-        "subpackage_health/service": {
+        "subpackage_health.service": {
             "name": {
                 "originalName": "service",
                 "camelCase": {
@@ -34259,7 +34259,7 @@
                     }
                 }
             },
-            "service": "service_health/service",
+            "service": "service_health.service",
             "types": [],
             "errors": [],
             "subpackages": [],

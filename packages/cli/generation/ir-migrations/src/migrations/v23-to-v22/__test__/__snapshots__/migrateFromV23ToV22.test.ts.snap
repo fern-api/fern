@@ -247,7 +247,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "typeId": "type_general-errors:BadObjectRequestInfo",
       },
     },
-    "error_types/enum:ErrorWithEnumBody": {
+    "error_types.enum:ErrorWithEnumBody": {
       "discriminantValue": {
         "name": {
           "camelCase": {
@@ -272,7 +272,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       },
       "docs": undefined,
       "name": {
-        "errorId": "error_types/enum:ErrorWithEnumBody",
+        "errorId": "error_types.enum:ErrorWithEnumBody",
         "fernFilepath": {
           "allParts": [
             {
@@ -483,10 +483,10 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
         },
         "type": "named",
-        "typeId": "type_types/enum:WeatherReport",
+        "typeId": "type_types.enum:WeatherReport",
       },
     },
-    "error_types/object:NestedObjectWithOptionalFieldError": {
+    "error_types.object:NestedObjectWithOptionalFieldError": {
       "discriminantValue": {
         "name": {
           "camelCase": {
@@ -511,7 +511,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       },
       "docs": undefined,
       "name": {
-        "errorId": "error_types/object:NestedObjectWithOptionalFieldError",
+        "errorId": "error_types.object:NestedObjectWithOptionalFieldError",
         "fernFilepath": {
           "allParts": [
             {
@@ -722,10 +722,10 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
         },
         "type": "named",
-        "typeId": "type_types/object:NestedObjectWithOptionalField",
+        "typeId": "type_types.object:NestedObjectWithOptionalField",
       },
     },
-    "error_types/object:NestedObjectWithRequiredFieldError": {
+    "error_types.object:NestedObjectWithRequiredFieldError": {
       "discriminantValue": {
         "name": {
           "camelCase": {
@@ -750,7 +750,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       },
       "docs": undefined,
       "name": {
-        "errorId": "error_types/object:NestedObjectWithRequiredFieldError",
+        "errorId": "error_types.object:NestedObjectWithRequiredFieldError",
         "fernFilepath": {
           "allParts": [
             {
@@ -961,10 +961,10 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
         },
         "type": "named",
-        "typeId": "type_types/object:NestedObjectWithRequiredField",
+        "typeId": "type_types.object:NestedObjectWithRequiredField",
       },
     },
-    "error_types/object:ObjectWithOptionalFieldError": {
+    "error_types.object:ObjectWithOptionalFieldError": {
       "discriminantValue": {
         "name": {
           "camelCase": {
@@ -989,7 +989,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       },
       "docs": undefined,
       "name": {
-        "errorId": "error_types/object:ObjectWithOptionalFieldError",
+        "errorId": "error_types.object:ObjectWithOptionalFieldError",
         "fernFilepath": {
           "allParts": [
             {
@@ -1200,10 +1200,10 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
         },
         "type": "named",
-        "typeId": "type_types/object:ObjectWithOptionalField",
+        "typeId": "type_types.object:ObjectWithOptionalField",
       },
     },
-    "error_types/object:ObjectWithRequiredFieldError": {
+    "error_types.object:ObjectWithRequiredFieldError": {
       "discriminantValue": {
         "name": {
           "camelCase": {
@@ -1228,7 +1228,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       },
       "docs": undefined,
       "name": {
-        "errorId": "error_types/object:ObjectWithRequiredFieldError",
+        "errorId": "error_types.object:ObjectWithRequiredFieldError",
         "fernFilepath": {
           "allParts": [
             {
@@ -1439,10 +1439,10 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
         },
         "type": "named",
-        "typeId": "type_types/object:ObjectWithRequiredField",
+        "typeId": "type_types.object:ObjectWithRequiredField",
       },
     },
-    "error_types/union:ErrorWithUnionBody": {
+    "error_types.union:ErrorWithUnionBody": {
       "discriminantValue": {
         "name": {
           "camelCase": {
@@ -1467,7 +1467,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       },
       "docs": undefined,
       "name": {
-        "errorId": "error_types/union:ErrorWithUnionBody",
+        "errorId": "error_types.union:ErrorWithUnionBody",
         "fernFilepath": {
           "allParts": [
             {
@@ -1678,7 +1678,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
         },
         "type": "named",
-        "typeId": "type_types/union:Animal",
+        "typeId": "type_types.union:Animal",
       },
     },
   },
@@ -1722,20 +1722,20 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
   },
   "serviceTypeReferenceInfo": {
     "sharedTypes": [
-      "type_types/object:ObjectWithRequiredField",
-      "type_types/enum:WeatherReport",
-      "type_types/object:ObjectWithOptionalField",
-      "type_types/object:NestedObjectWithOptionalField",
-      "type_types/object:NestedObjectWithRequiredField",
-      "type_types/union:Animal",
+      "type_types.object:ObjectWithRequiredField",
+      "type_types.enum:WeatherReport",
+      "type_types.object:ObjectWithOptionalField",
+      "type_types.object:NestedObjectWithOptionalField",
+      "type_types.object:NestedObjectWithRequiredField",
+      "type_types.union:Animal",
       "type_general-errors:BadObjectRequestInfo",
-      "type_types/union:Dog",
-      "type_types/union:Cat",
+      "type_types.union:Dog",
+      "type_types.union:Cat",
     ],
     "typesReferencedOnlyByService": {},
   },
   "services": {
-    "service_endpoints/container": {
+    "service_endpoints.container": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -1763,7 +1763,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/container.getAndReturnListOfPrimitives",
+          "id": "endpoint_endpoints.container.getAndReturnListOfPrimitives",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -1876,7 +1876,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/container.getAndReturnListOfObjects",
+          "id": "endpoint_endpoints.container.getAndReturnListOfObjects",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2018,7 +2018,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                   "type": "named",
-                  "typeId": "type_types/object:ObjectWithRequiredField",
+                  "typeId": "type_types.object:ObjectWithRequiredField",
                 },
               },
             },
@@ -2138,7 +2138,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                   "type": "named",
-                  "typeId": "type_types/object:ObjectWithRequiredField",
+                  "typeId": "type_types.object:ObjectWithRequiredField",
                 },
               },
             },
@@ -2279,7 +2279,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                     "type": "named",
-                    "typeId": "type_types/object:ObjectWithRequiredField",
+                    "typeId": "type_types.object:ObjectWithRequiredField",
                   },
                 },
               },
@@ -2304,7 +2304,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/container.getAndReturnSetOfPrimitives",
+          "id": "endpoint_endpoints.container.getAndReturnSetOfPrimitives",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2417,7 +2417,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/container.getAndReturnSetOfObjects",
+          "id": "endpoint_endpoints.container.getAndReturnSetOfObjects",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2559,7 +2559,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                   "type": "named",
-                  "typeId": "type_types/object:ObjectWithRequiredField",
+                  "typeId": "type_types.object:ObjectWithRequiredField",
                 },
               },
             },
@@ -2679,7 +2679,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                   "type": "named",
-                  "typeId": "type_types/object:ObjectWithRequiredField",
+                  "typeId": "type_types.object:ObjectWithRequiredField",
                 },
               },
             },
@@ -2820,7 +2820,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                     "type": "named",
-                    "typeId": "type_types/object:ObjectWithRequiredField",
+                    "typeId": "type_types.object:ObjectWithRequiredField",
                   },
                 },
               },
@@ -2845,7 +2845,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/container.getAndReturnMapPrimToPrim",
+          "id": "endpoint_endpoints.container.getAndReturnMapPrimToPrim",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2970,7 +2970,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject",
+          "id": "endpoint_endpoints.container.getAndReturnMapOfPrimToObject",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3116,7 +3116,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                   "type": "named",
-                  "typeId": "type_types/object:ObjectWithRequiredField",
+                  "typeId": "type_types.object:ObjectWithRequiredField",
                 },
               },
             },
@@ -3240,7 +3240,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                   "type": "named",
-                  "typeId": "type_types/object:ObjectWithRequiredField",
+                  "typeId": "type_types.object:ObjectWithRequiredField",
                 },
               },
             },
@@ -3385,7 +3385,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                     "type": "named",
-                    "typeId": "type_types/object:ObjectWithRequiredField",
+                    "typeId": "type_types.object:ObjectWithRequiredField",
                   },
                 },
               },
@@ -3481,7 +3481,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       },
       "pathParameters": [],
     },
-    "service_endpoints/enum": {
+    "service_endpoints.enum": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -3509,7 +3509,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/enum.getAndReturnEnum",
+          "id": "endpoint_endpoints.enum.getAndReturnEnum",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3647,7 +3647,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/enum:WeatherReport",
+              "typeId": "type_types.enum:WeatherReport",
             },
             "type": "reference",
           },
@@ -3761,7 +3761,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/enum:WeatherReport",
+              "typeId": "type_types.enum:WeatherReport",
             },
             "type": "json",
           },
@@ -3896,7 +3896,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   },
                 },
                 "type": "named",
-                "typeId": "type_types/enum:WeatherReport",
+                "typeId": "type_types.enum:WeatherReport",
               },
               "type": "justRequestBody",
             },
@@ -3990,7 +3990,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       },
       "pathParameters": [],
     },
-    "service_endpoints/http-methods": {
+    "service_endpoints.http-methods": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -4053,7 +4053,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             ],
           },
           "headers": [],
-          "id": "endpoint_endpoints/http-methods.testGet",
+          "id": "endpoint_endpoints.http-methods.testGet",
           "method": "GET",
           "name": {
             "camelCase": {
@@ -4144,7 +4144,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/http-methods.testPost",
+          "id": "endpoint_endpoints.http-methods.testPost",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -4282,7 +4282,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithRequiredField",
+              "typeId": "type_types.object:ObjectWithRequiredField",
             },
             "type": "reference",
           },
@@ -4396,7 +4396,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "typeId": "type_types.object:ObjectWithOptionalField",
             },
             "type": "json",
           },
@@ -4531,7 +4531,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   },
                 },
                 "type": "named",
-                "typeId": "type_types/object:ObjectWithRequiredField",
+                "typeId": "type_types.object:ObjectWithRequiredField",
               },
               "type": "justRequestBody",
             },
@@ -4589,7 +4589,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             ],
           },
           "headers": [],
-          "id": "endpoint_endpoints/http-methods.testPut",
+          "id": "endpoint_endpoints.http-methods.testPut",
           "method": "PUT",
           "name": {
             "camelCase": {
@@ -4762,7 +4762,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithRequiredField",
+              "typeId": "type_types.object:ObjectWithRequiredField",
             },
             "type": "reference",
           },
@@ -4876,7 +4876,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "typeId": "type_types.object:ObjectWithOptionalField",
             },
             "type": "json",
           },
@@ -5011,7 +5011,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   },
                 },
                 "type": "named",
-                "typeId": "type_types/object:ObjectWithRequiredField",
+                "typeId": "type_types.object:ObjectWithRequiredField",
               },
               "type": "justRequestBody",
             },
@@ -5069,7 +5069,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             ],
           },
           "headers": [],
-          "id": "endpoint_endpoints/http-methods.testPatch",
+          "id": "endpoint_endpoints.http-methods.testPatch",
           "method": "PATCH",
           "name": {
             "camelCase": {
@@ -5242,7 +5242,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "typeId": "type_types.object:ObjectWithOptionalField",
             },
             "type": "reference",
           },
@@ -5356,7 +5356,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "typeId": "type_types.object:ObjectWithOptionalField",
             },
             "type": "json",
           },
@@ -5491,7 +5491,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   },
                 },
                 "type": "named",
-                "typeId": "type_types/object:ObjectWithOptionalField",
+                "typeId": "type_types.object:ObjectWithOptionalField",
               },
               "type": "justRequestBody",
             },
@@ -5549,7 +5549,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             ],
           },
           "headers": [],
-          "id": "endpoint_endpoints/http-methods.testDelete",
+          "id": "endpoint_endpoints.http-methods.testDelete",
           "method": "DELETE",
           "name": {
             "camelCase": {
@@ -5711,7 +5711,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       },
       "pathParameters": [],
     },
-    "service_endpoints/object": {
+    "service_endpoints.object": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -5739,7 +5739,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/object.getAndReturnWithOptionalField",
+          "id": "endpoint_endpoints.object.getAndReturnWithOptionalField",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -5877,7 +5877,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "typeId": "type_types.object:ObjectWithOptionalField",
             },
             "type": "reference",
           },
@@ -5991,7 +5991,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "typeId": "type_types.object:ObjectWithOptionalField",
             },
             "type": "json",
           },
@@ -6126,7 +6126,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   },
                 },
                 "type": "named",
-                "typeId": "type_types/object:ObjectWithOptionalField",
+                "typeId": "type_types.object:ObjectWithOptionalField",
               },
               "type": "justRequestBody",
             },
@@ -6149,7 +6149,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/object.getAndReturnWithRequiredField",
+          "id": "endpoint_endpoints.object.getAndReturnWithRequiredField",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -6287,7 +6287,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithRequiredField",
+              "typeId": "type_types.object:ObjectWithRequiredField",
             },
             "type": "reference",
           },
@@ -6401,7 +6401,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithRequiredField",
+              "typeId": "type_types.object:ObjectWithRequiredField",
             },
             "type": "json",
           },
@@ -6536,7 +6536,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   },
                 },
                 "type": "named",
-                "typeId": "type_types/object:ObjectWithRequiredField",
+                "typeId": "type_types.object:ObjectWithRequiredField",
               },
               "type": "justRequestBody",
             },
@@ -6559,7 +6559,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField",
+          "id": "endpoint_endpoints.object.getAndReturnNestedWithOptionalField",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -6697,7 +6697,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:NestedObjectWithOptionalField",
+              "typeId": "type_types.object:NestedObjectWithOptionalField",
             },
             "type": "reference",
           },
@@ -6811,7 +6811,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:NestedObjectWithOptionalField",
+              "typeId": "type_types.object:NestedObjectWithOptionalField",
             },
             "type": "json",
           },
@@ -6946,7 +6946,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   },
                 },
                 "type": "named",
-                "typeId": "type_types/object:NestedObjectWithOptionalField",
+                "typeId": "type_types.object:NestedObjectWithOptionalField",
               },
               "type": "justRequestBody",
             },
@@ -6969,7 +6969,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField",
+          "id": "endpoint_endpoints.object.getAndReturnNestedWithRequiredField",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -7107,7 +7107,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:NestedObjectWithRequiredField",
+              "typeId": "type_types.object:NestedObjectWithRequiredField",
             },
             "type": "reference",
           },
@@ -7221,7 +7221,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:NestedObjectWithRequiredField",
+              "typeId": "type_types.object:NestedObjectWithRequiredField",
             },
             "type": "json",
           },
@@ -7356,7 +7356,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   },
                 },
                 "type": "named",
-                "typeId": "type_types/object:NestedObjectWithRequiredField",
+                "typeId": "type_types.object:NestedObjectWithRequiredField",
               },
               "type": "justRequestBody",
             },
@@ -7450,7 +7450,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       },
       "pathParameters": [],
     },
-    "service_endpoints/params": {
+    "service_endpoints.params": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -7513,7 +7513,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             ],
           },
           "headers": [],
-          "id": "endpoint_endpoints/params.getWithPath",
+          "id": "endpoint_endpoints.params.getWithPath",
           "method": "GET",
           "name": {
             "camelCase": {
@@ -7604,7 +7604,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/params.getWithQuery",
+          "id": "endpoint_endpoints.params.getWithQuery",
           "method": "GET",
           "name": {
             "camelCase": {
@@ -7783,7 +7783,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/params.getWithAllowMultipleQuery",
+          "id": "endpoint_endpoints.params.getWithAllowMultipleQuery",
           "method": "GET",
           "name": {
             "camelCase": {
@@ -7997,7 +7997,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             ],
           },
           "headers": [],
-          "id": "endpoint_endpoints/params.getWithPathAndQuery",
+          "id": "endpoint_endpoints.params.getWithPathAndQuery",
           "method": "GET",
           "name": {
             "camelCase": {
@@ -8212,7 +8212,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             ],
           },
           "headers": [],
-          "id": "endpoint_endpoints/params.modifyWithPath",
+          "id": "endpoint_endpoints.params.modifyWithPath",
           "method": "PUT",
           "name": {
             "camelCase": {
@@ -8413,7 +8413,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       },
       "pathParameters": [],
     },
-    "service_endpoints/primitive": {
+    "service_endpoints.primitive": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -8441,7 +8441,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/primitive.getAndReturnString",
+          "id": "endpoint_endpoints.primitive.getAndReturnString",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8536,7 +8536,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/primitive.getAndReturnInt",
+          "id": "endpoint_endpoints.primitive.getAndReturnInt",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8631,7 +8631,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/primitive.getAndReturnLong",
+          "id": "endpoint_endpoints.primitive.getAndReturnLong",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8726,7 +8726,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/primitive.getAndReturnDouble",
+          "id": "endpoint_endpoints.primitive.getAndReturnDouble",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8821,7 +8821,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/primitive.getAndReturnBool",
+          "id": "endpoint_endpoints.primitive.getAndReturnBool",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8916,7 +8916,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/primitive.getAndReturnDatetime",
+          "id": "endpoint_endpoints.primitive.getAndReturnDatetime",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9011,7 +9011,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/primitive.getAndReturnDate",
+          "id": "endpoint_endpoints.primitive.getAndReturnDate",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9106,7 +9106,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/primitive.getAndReturnUUID",
+          "id": "endpoint_endpoints.primitive.getAndReturnUUID",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9201,7 +9201,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/primitive.getAndReturnBase64",
+          "id": "endpoint_endpoints.primitive.getAndReturnBase64",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9367,7 +9367,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       },
       "pathParameters": [],
     },
-    "service_endpoints/union": {
+    "service_endpoints.union": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -9395,7 +9395,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_endpoints/union.getAndReturnUnion",
+          "id": "endpoint_endpoints.union.getAndReturnUnion",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9533,7 +9533,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/union:Animal",
+              "typeId": "type_types.union:Animal",
             },
             "type": "reference",
           },
@@ -9647,7 +9647,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/union:Animal",
+              "typeId": "type_types.union:Animal",
             },
             "type": "json",
           },
@@ -9782,7 +9782,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   },
                 },
                 "type": "named",
-                "typeId": "type_types/union:Animal",
+                "typeId": "type_types.union:Animal",
               },
               "type": "justRequestBody",
             },
@@ -10219,7 +10219,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                   "type": "named",
-                  "typeId": "type_types/object:ObjectWithOptionalField",
+                  "typeId": "type_types.object:ObjectWithOptionalField",
                 },
               },
             ],
@@ -10335,7 +10335,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "typeId": "type_types.object:ObjectWithOptionalField",
             },
             "type": "json",
           },
@@ -10840,7 +10840,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "typeId": "type_types.object:ObjectWithOptionalField",
             },
             "type": "json",
           },
@@ -11217,19 +11217,19 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "navigationConfig": undefined,
       "service": undefined,
       "subpackages": [
-        "subpackage_endpoints/container",
-        "subpackage_endpoints/enum",
-        "subpackage_endpoints/http-methods",
-        "subpackage_endpoints/object",
-        "subpackage_endpoints/params",
-        "subpackage_endpoints/primitive",
-        "subpackage_endpoints/union",
+        "subpackage_endpoints.container",
+        "subpackage_endpoints.enum",
+        "subpackage_endpoints.http-methods",
+        "subpackage_endpoints.object",
+        "subpackage_endpoints.params",
+        "subpackage_endpoints.primitive",
+        "subpackage_endpoints.union",
       ],
       "types": [],
       "webhooks": undefined,
       "websocket": undefined,
     },
-    "subpackage_endpoints/container": {
+    "subpackage_endpoints.container": {
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -11335,13 +11335,13 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         },
       },
       "navigationConfig": undefined,
-      "service": "service_endpoints/container",
+      "service": "service_endpoints.container",
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
       "websocket": undefined,
     },
-    "subpackage_endpoints/enum": {
+    "subpackage_endpoints.enum": {
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -11447,13 +11447,13 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         },
       },
       "navigationConfig": undefined,
-      "service": "service_endpoints/enum",
+      "service": "service_endpoints.enum",
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
       "websocket": undefined,
     },
-    "subpackage_endpoints/http-methods": {
+    "subpackage_endpoints.http-methods": {
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -11559,13 +11559,13 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         },
       },
       "navigationConfig": undefined,
-      "service": "service_endpoints/http-methods",
+      "service": "service_endpoints.http-methods",
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
       "websocket": undefined,
     },
-    "subpackage_endpoints/object": {
+    "subpackage_endpoints.object": {
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -11671,13 +11671,13 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         },
       },
       "navigationConfig": undefined,
-      "service": "service_endpoints/object",
+      "service": "service_endpoints.object",
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
       "websocket": undefined,
     },
-    "subpackage_endpoints/params": {
+    "subpackage_endpoints.params": {
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -11783,13 +11783,13 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         },
       },
       "navigationConfig": undefined,
-      "service": "service_endpoints/params",
+      "service": "service_endpoints.params",
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
       "websocket": undefined,
     },
-    "subpackage_endpoints/primitive": {
+    "subpackage_endpoints.primitive": {
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -11895,13 +11895,13 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         },
       },
       "navigationConfig": undefined,
-      "service": "service_endpoints/primitive",
+      "service": "service_endpoints.primitive",
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
       "websocket": undefined,
     },
-    "subpackage_endpoints/union": {
+    "subpackage_endpoints.union": {
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -12007,7 +12007,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         },
       },
       "navigationConfig": undefined,
-      "service": "service_endpoints/union",
+      "service": "service_endpoints.union",
       "subpackages": [],
       "types": [],
       "webhooks": undefined,
@@ -12453,18 +12453,18 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "navigationConfig": undefined,
       "service": undefined,
       "subpackages": [
-        "subpackage_types/enum",
-        "subpackage_types/object",
-        "subpackage_types/union",
+        "subpackage_types.enum",
+        "subpackage_types.object",
+        "subpackage_types.union",
       ],
       "types": [],
       "webhooks": undefined,
       "websocket": undefined,
     },
-    "subpackage_types/enum": {
+    "subpackage_types.enum": {
       "docs": undefined,
       "errors": [
-        "error_types/enum:ErrorWithEnumBody",
+        "error_types.enum:ErrorWithEnumBody",
       ],
       "fernFilepath": {
         "allParts": [
@@ -12572,18 +12572,18 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "service": undefined,
       "subpackages": [],
       "types": [
-        "type_types/enum:WeatherReport",
+        "type_types.enum:WeatherReport",
       ],
       "webhooks": undefined,
       "websocket": undefined,
     },
-    "subpackage_types/object": {
+    "subpackage_types.object": {
       "docs": undefined,
       "errors": [
-        "error_types/object:ObjectWithOptionalFieldError",
-        "error_types/object:ObjectWithRequiredFieldError",
-        "error_types/object:NestedObjectWithOptionalFieldError",
-        "error_types/object:NestedObjectWithRequiredFieldError",
+        "error_types.object:ObjectWithOptionalFieldError",
+        "error_types.object:ObjectWithRequiredFieldError",
+        "error_types.object:NestedObjectWithOptionalFieldError",
+        "error_types.object:NestedObjectWithRequiredFieldError",
       ],
       "fernFilepath": {
         "allParts": [
@@ -12691,18 +12691,18 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "service": undefined,
       "subpackages": [],
       "types": [
-        "type_types/object:ObjectWithOptionalField",
-        "type_types/object:ObjectWithRequiredField",
-        "type_types/object:NestedObjectWithOptionalField",
-        "type_types/object:NestedObjectWithRequiredField",
+        "type_types.object:ObjectWithOptionalField",
+        "type_types.object:ObjectWithRequiredField",
+        "type_types.object:NestedObjectWithOptionalField",
+        "type_types.object:NestedObjectWithRequiredField",
       ],
       "webhooks": undefined,
       "websocket": undefined,
     },
-    "subpackage_types/union": {
+    "subpackage_types.union": {
       "docs": undefined,
       "errors": [
-        "error_types/union:ErrorWithUnionBody",
+        "error_types.union:ErrorWithUnionBody",
       ],
       "fernFilepath": {
         "allParts": [
@@ -12810,9 +12810,9 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "service": undefined,
       "subpackages": [],
       "types": [
-        "type_types/union:Animal",
-        "type_types/union:Dog",
-        "type_types/union:Cat",
+        "type_types.union:Animal",
+        "type_types.union:Dog",
+        "type_types.union:Cat",
       ],
       "webhooks": undefined,
       "websocket": undefined,
@@ -12936,7 +12936,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "type": "object",
       },
     },
-    "type_types/enum:WeatherReport": {
+    "type_types.enum:WeatherReport": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -13045,7 +13045,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "unsafeName": "weather_report",
           },
         },
-        "typeId": "type_types/enum:WeatherReport",
+        "typeId": "type_types.enum:WeatherReport",
       },
       "referencedTypes": [],
       "shape": {
@@ -13173,7 +13173,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         ],
       },
     },
-    "type_types/object:NestedObjectWithOptionalField": {
+    "type_types.object:NestedObjectWithOptionalField": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -13282,7 +13282,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "unsafeName": "nested_object_with_optional_field",
           },
         },
-        "typeId": "type_types/object:NestedObjectWithOptionalField",
+        "typeId": "type_types.object:NestedObjectWithOptionalField",
       },
       "referencedTypes": [
         {
@@ -13387,7 +13387,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "unsafeName": "object_with_optional_field",
             },
           },
-          "typeId": "type_types/object:ObjectWithOptionalField",
+          "typeId": "type_types.object:ObjectWithOptionalField",
         },
       ],
       "shape": {
@@ -13575,7 +13575,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                   "type": "named",
-                  "typeId": "type_types/object:ObjectWithOptionalField",
+                  "typeId": "type_types.object:ObjectWithOptionalField",
                 },
               },
             },
@@ -13584,7 +13584,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "type": "object",
       },
     },
-    "type_types/object:NestedObjectWithRequiredField": {
+    "type_types.object:NestedObjectWithRequiredField": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -13693,7 +13693,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "unsafeName": "nested_object_with_required_field",
           },
         },
-        "typeId": "type_types/object:NestedObjectWithRequiredField",
+        "typeId": "type_types.object:NestedObjectWithRequiredField",
       },
       "referencedTypes": [
         {
@@ -13798,7 +13798,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "unsafeName": "object_with_optional_field",
             },
           },
-          "typeId": "type_types/object:ObjectWithOptionalField",
+          "typeId": "type_types.object:ObjectWithOptionalField",
         },
       ],
       "shape": {
@@ -13976,14 +13976,14 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "named",
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "typeId": "type_types.object:ObjectWithOptionalField",
             },
           },
         ],
         "type": "object",
       },
     },
-    "type_types/object:ObjectWithOptionalField": {
+    "type_types.object:ObjectWithOptionalField": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -14092,7 +14092,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "unsafeName": "object_with_optional_field",
           },
         },
-        "typeId": "type_types/object:ObjectWithOptionalField",
+        "typeId": "type_types.object:ObjectWithOptionalField",
       },
       "referencedTypes": [],
       "shape": {
@@ -14596,7 +14596,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "type": "object",
       },
     },
-    "type_types/object:ObjectWithRequiredField": {
+    "type_types.object:ObjectWithRequiredField": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -14705,7 +14705,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "unsafeName": "object_with_required_field",
           },
         },
-        "typeId": "type_types/object:ObjectWithRequiredField",
+        "typeId": "type_types.object:ObjectWithRequiredField",
       },
       "referencedTypes": [],
       "shape": {
@@ -14752,7 +14752,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "type": "object",
       },
     },
-    "type_types/union:Animal": {
+    "type_types.union:Animal": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -14861,7 +14861,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "unsafeName": "animal",
           },
         },
-        "typeId": "type_types/union:Animal",
+        "typeId": "type_types.union:Animal",
       },
       "referencedTypes": [
         {
@@ -14966,7 +14966,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "unsafeName": "dog",
             },
           },
-          "typeId": "type_types/union:Dog",
+          "typeId": "type_types.union:Dog",
         },
         {
           "fernFilepath": {
@@ -15070,7 +15070,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "unsafeName": "cat",
             },
           },
-          "typeId": "type_types/union:Cat",
+          "typeId": "type_types.union:Cat",
         },
       ],
       "shape": {
@@ -15236,7 +15236,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "propertiesType": "samePropertiesAsObject",
               "type": "named",
-              "typeId": "type_types/union:Dog",
+              "typeId": "type_types.union:Dog",
             },
           },
           {
@@ -15373,13 +15373,13 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "propertiesType": "samePropertiesAsObject",
               "type": "named",
-              "typeId": "type_types/union:Cat",
+              "typeId": "type_types.union:Cat",
             },
           },
         ],
       },
     },
-    "type_types/union:Cat": {
+    "type_types.union:Cat": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -15488,7 +15488,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "unsafeName": "cat",
           },
         },
-        "typeId": "type_types/union:Cat",
+        "typeId": "type_types.union:Cat",
       },
       "referencedTypes": [],
       "shape": {
@@ -15568,7 +15568,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "type": "object",
       },
     },
-    "type_types/union:Dog": {
+    "type_types.union:Dog": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -15677,7 +15677,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "unsafeName": "dog",
           },
         },
-        "typeId": "type_types/union:Dog",
+        "typeId": "type_types.union:Dog",
       },
       "referencedTypes": [],
       "shape": {

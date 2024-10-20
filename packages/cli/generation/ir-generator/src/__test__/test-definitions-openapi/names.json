@@ -338,7 +338,7 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_infra/telemetry:TelemetryData",
+                                    "typeId": "type_infra.telemetry:TelemetryData",
                                     "default": null,
                                     "inline": null
                                 }
@@ -352,7 +352,7 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_infra/telemetry:TelemetryData"
+                "type_infra.telemetry:TelemetryData"
             ],
             "encoding": {
                 "json": {},
@@ -364,7 +364,7 @@
             "availability": null,
             "docs": null
         },
-        "type_infra/telemetry:TelemetryData": {
+        "type_infra.telemetry:TelemetryData": {
             "inline": false,
             "name": {
                 "name": {
@@ -468,7 +468,7 @@
                         }
                     }
                 },
-                "typeId": "type_infra/telemetry:TelemetryData"
+                "typeId": "type_infra.telemetry:TelemetryData"
             },
             "shape": {
                 "_type": "object",
@@ -1250,7 +1250,7 @@
                                                                             "shape": {
                                                                                 "type": "named",
                                                                                 "typeName": {
-                                                                                    "typeId": "type_infra/telemetry:TelemetryData",
+                                                                                    "typeId": "type_infra.telemetry:TelemetryData",
                                                                                     "fernFilepath": {
                                                                                         "allParts": [
                                                                                             {
@@ -1406,7 +1406,7 @@
                                                                                                 "jsonExample": 1.1
                                                                                             },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "typeId": "type_infra/telemetry:TelemetryData",
+                                                                                                "typeId": "type_infra.telemetry:TelemetryData",
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [
                                                                                                         {
@@ -1560,7 +1560,7 @@
                                                                                                 "jsonExample": 1.1
                                                                                             },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "typeId": "type_infra/telemetry:TelemetryData",
+                                                                                                "typeId": "type_infra.telemetry:TelemetryData",
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [
                                                                                                         {
@@ -1714,7 +1714,7 @@
                                                                                                 "jsonExample": 1.1
                                                                                             },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "typeId": "type_infra/telemetry:TelemetryData",
+                                                                                                "typeId": "type_infra.telemetry:TelemetryData",
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [
                                                                                                         {
@@ -1930,7 +1930,7 @@
                                                                                     }
                                                                                 }
                                                                             },
-                                                                            "typeId": "type_infra/telemetry:TelemetryData",
+                                                                            "typeId": "type_infra.telemetry:TelemetryData",
                                                                             "default": null,
                                                                             "inline": null
                                                                         }
@@ -2031,7 +2031,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "b577685474915f72a428f1e9e10409aef7eef25d",
+                                "id": "a327a87e314ddc6e0e12e3e1befc27120f059cab",
                                 "url": "/telemetry",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -2462,7 +2462,7 @@
                                                                                     }
                                                                                 }
                                                                             },
-                                                                            "typeId": "type_infra/telemetry:TelemetryData",
+                                                                            "typeId": "type_infra.telemetry:TelemetryData",
                                                                             "default": null,
                                                                             "inline": null
                                                                         }
@@ -2591,7 +2591,7 @@
             ]
         },
         "sharedTypes": [
-            "type_infra/telemetry:TelemetryData"
+            "type_infra.telemetry:TelemetryData"
         ]
     },
     "webhookGroups": {},
@@ -2744,7 +2744,7 @@
             "types": [],
             "errors": [],
             "subpackages": [
-                "subpackage_infra/telemetry"
+                "subpackage_infra.telemetry"
             ],
             "navigationConfig": null,
             "webhooks": null,
@@ -2752,7 +2752,7 @@
             "hasEndpointsInTree": false,
             "docs": null
         },
-        "subpackage_infra/telemetry": {
+        "subpackage_infra.telemetry": {
             "name": {
                 "originalName": "telemetry",
                 "camelCase": {
@@ -2856,7 +2856,7 @@
             },
             "service": null,
             "types": [
-                "type_infra/telemetry:TelemetryData"
+                "type_infra.telemetry:TelemetryData"
             ],
             "errors": [],
             "subpackages": [],

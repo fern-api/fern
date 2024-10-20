@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "$ref": "#/definitions/folder-c.common.FolderCFoo"
+    }
+  },
+  "definitions": {
+    "folder-c.common.FolderCFoo": {
+      "type": "object",
+      "properties": {
+        "bar_property": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "bar_property"
+      ]
+    }
+  }
+}

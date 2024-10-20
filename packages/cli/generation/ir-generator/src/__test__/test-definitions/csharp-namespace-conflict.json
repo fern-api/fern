@@ -30,7 +30,7 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_a/aa:A": {
+        "type_a.aa:A": {
             "inline": false,
             "name": {
                 "name": {
@@ -135,7 +135,7 @@
                     ],
                     "file": null
                 },
-                "typeId": "type_a/aa:A"
+                "typeId": "type_a.aa:A"
             },
             "shape": {
                 "_type": "object",
@@ -155,7 +155,7 @@
             "availability": null,
             "docs": null
         },
-        "type_a/aa:B": {
+        "type_a.aa:B": {
             "inline": false,
             "name": {
                 "name": {
@@ -260,7 +260,7 @@
                     ],
                     "file": null
                 },
-                "typeId": "type_a/aa:B"
+                "typeId": "type_a.aa:B"
             },
             "shape": {
                 "_type": "object",
@@ -280,7 +280,7 @@
             "availability": null,
             "docs": null
         },
-        "type_a/aa:SubTestType": {
+        "type_a.aa:SubTestType": {
             "inline": false,
             "name": {
                 "name": {
@@ -385,7 +385,7 @@
                     ],
                     "file": null
                 },
-                "typeId": "type_a/aa:SubTestType"
+                "typeId": "type_a.aa:SubTestType"
             },
             "shape": {
                 "_type": "object",
@@ -518,7 +518,7 @@
                                 ],
                                 "file": null
                             },
-                            "typeId": "type_a/aa:A",
+                            "typeId": "type_a.aa:A",
                             "default": null,
                             "inline": null
                         },
@@ -652,7 +652,7 @@
                                 ],
                                 "file": null
                             },
-                            "typeId": "type_a/aa:B",
+                            "typeId": "type_a.aa:B",
                             "default": null,
                             "inline": null
                         },
@@ -664,8 +664,8 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_a/aa:A",
-                "type_a/aa:B"
+                "type_a.aa:A",
+                "type_a.aa:B"
             ],
             "encoding": {
                 "json": {},
@@ -877,7 +877,7 @@
                                 ],
                                 "file": null
                             },
-                            "typeId": "type_a/aa:A",
+                            "typeId": "type_a.aa:A",
                             "default": null,
                             "inline": null
                         },
@@ -1011,7 +1011,7 @@
                                 ],
                                 "file": null
                             },
-                            "typeId": "type_a/aa:B",
+                            "typeId": "type_a.aa:B",
                             "default": null,
                             "inline": null
                         },
@@ -1023,8 +1023,8 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_a/aa:A",
-                "type_a/aa:B"
+                "type_a.aa:A",
+                "type_a.aa:B"
             ],
             "encoding": {
                 "json": {},
@@ -1336,9 +1336,9 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
-            "type_a/aa:A",
-            "type_a/aa:B",
-            "type_a/aa:SubTestType",
+            "type_a.aa:A",
+            "type_a.aa:B",
+            "type_a.aa:SubTestType",
             "type_b:TestType",
             "type_tasktest:Task"
         ]
@@ -1418,7 +1418,7 @@
             "types": [],
             "errors": [],
             "subpackages": [
-                "subpackage_a/aa"
+                "subpackage_a.aa"
             ],
             "navigationConfig": null,
             "webhooks": null,
@@ -1426,7 +1426,7 @@
             "hasEndpointsInTree": false,
             "docs": null
         },
-        "subpackage_a/aa": {
+        "subpackage_a.aa": {
             "name": {
                 "originalName": "aa",
                 "camelCase": {
@@ -1531,9 +1531,9 @@
             },
             "service": null,
             "types": [
-                "type_a/aa:A",
-                "type_a/aa:B",
-                "type_a/aa:SubTestType"
+                "type_a.aa:A",
+                "type_a.aa:B",
+                "type_a.aa:SubTestType"
             ],
             "errors": [],
             "subpackages": [],
