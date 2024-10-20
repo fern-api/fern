@@ -88,7 +88,7 @@ describe("PythonFile", () => {
         const importedRef = python.reference({
             modulePath: ["external_module"],
             name: "ImportedClass",
-            attrPath: ["nested", "attribute"]
+            attribute: ["nested", "attribute"]
         });
 
         const field = python.field({

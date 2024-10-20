@@ -146,7 +146,7 @@ describe("Reference", () => {
             const reference = python.reference({
                 name: "AttrPathClass",
                 modulePath: ["module"],
-                attrPath: ["attr1", "attr2"]
+                attribute: ["attr1", "attr2"]
             });
             reference.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();

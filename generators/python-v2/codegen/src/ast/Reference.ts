@@ -18,7 +18,7 @@ export declare namespace Reference {
         /* The alias of the reference */
         alias?: string;
         /* The path to the attribute of the reference */
-        attrPath?: AttrPath;
+        attribute?: AttrPath;
     }
 }
 
@@ -27,15 +27,15 @@ export class Reference extends AstNode {
     private modulePath: ModulePath;
     private genericTypes: Type[];
     private alias: string | undefined;
-    private attrPath: AttrPath;
+    private attribute: AttrPath;
 
-    constructor({ name, modulePath, genericTypes, alias, attrPath }: Reference.Args) {
+    constructor({ name, modulePath, genericTypes, alias, attribute }: Reference.Args) {
         super();
         this.name = name;
         this.modulePath = modulePath ?? [];
         this.genericTypes = genericTypes ?? [];
         this.alias = alias;
-        this.attrPath = attrPath ?? [];
+        this.attribute = attribute ?? [];
     }
 
     public write(writer: Writer): void {
@@ -52,9 +52,9 @@ export class Reference extends AstNode {
             writer.write("]");
         }
 
-        if (this.attrPath.length > 0) {
+        if (this.attribute.length > 0) {
             writer.write(".");
-            this.attrPath.forEach((attr, index) => {
+            this.attribute.forEach((attr, index) => {
                 if (index > 0) {
                     writer.write(".");
                 }
