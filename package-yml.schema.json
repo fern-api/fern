@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "navigation": {
+      "$ref": "#/definitions/file.Navigation"
+    },
+    "export": {
+      "$ref": "#/definitions/file.Export"
+    }
+  },
+  "definitions": {
+    "file.Navigation": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "file.ExportDetailed": {
+      "type": "object",
+      "properties": {
+        "dependency": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "dependency"
+      ]
+    },
+    "file.Export": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/file.ExportDetailed"
+        }
+      ]
+    }
+  }
+}

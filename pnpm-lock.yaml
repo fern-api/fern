@@ -92,6 +92,9 @@ importers:
       execa:
         specifier: ^5.1.1
         version: 5.1.1
+      fern-api:
+        specifier: 0.45.0-rc8
+        version: 0.45.0-rc8
       husky:
         specifier: ^9.1.5
         version: 9.1.5
@@ -5762,6 +5765,9 @@ importers:
 
   packages/commons/core-utils:
     dependencies:
+      ajv:
+        specifier: ^8.17.1
+        version: 8.17.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -5778,6 +5784,12 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
+      '@types/ajv':
+        specifier: ^1.0.0
+        version: 1.0.0
+      '@types/json-schema':
+        specifier: ^7.0.15
+        version: 7.0.15
       '@types/lodash':
         specifier: ^4.17.4
         version: 4.17.4
@@ -9669,6 +9681,10 @@ packages:
     peerDependenciesMeta:
       picomatch:
         optional: true
+
+  fern-api@0.45.0-rc8:
+    resolution: {integrity: sha512-04u+CeStsGgMkuEafNmGrk+245JWfd806e2BTq31WgTrm/n4cm4KXiYIMohKaEs+iTCCFB3oD0bRHc383hX6rw==}
+    hasBin: true
 
   fetch-mock-jest@1.5.1:
     resolution: {integrity: sha512-+utwzP8C+Pax1GSka3nFXILWMY3Er2L+s090FOgqVNrNCPp0fDqgXnAHAJf12PLHi0z4PhcTaZNTz8e7K3fjqQ==}
@@ -17293,6 +17309,8 @@ snapshots:
   fdir@6.4.0(picomatch@4.0.2):
     optionalDependencies:
       picomatch: 4.0.2
+
+  fern-api@0.45.0-rc8: {}
 
   fetch-mock-jest@1.5.1(node-fetch@2.7.0):
     dependencies:

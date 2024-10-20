@@ -1,0 +1,306 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "imports": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "error-discrimination": {
+      "$ref": "#/definitions/file.ErrorDiscriminationSchema"
+    },
+    "audiences": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "base-path": {
+      "type": "string"
+    },
+    "path-parameters": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/service.HttpPathParameterSchema"
+      }
+    },
+    "idempotency-headers": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/service.HttpHeaderSchema"
+      }
+    },
+    "variables": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/variables.VariableDeclarationSchema"
+      }
+    },
+    "pagination": {
+      "$ref": "#/definitions/pagination.PaginationSchema"
+    },
+    "version": {
+      "$ref": "#/definitions/versioning.VersionDeclarationSchema"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "definitions": {
+    "file.PropertyBasedErrorDiscrimination": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "const": {
+            "string": "property",
+            "type": "string"
+          }
+        },
+        "property-name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "strategy",
+        "property-name"
+      ]
+    },
+    "file.StatusCodeBasedErrorDiscrimination": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "const": {
+            "string": "status-code",
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "strategy"
+      ]
+    },
+    "file.ErrorDiscriminationSchema": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/file.PropertyBasedErrorDiscrimination"
+        },
+        {
+          "$ref": "#/definitions/file.StatusCodeBasedErrorDiscrimination"
+        }
+      ]
+    },
+    "types.TypeReferenceDetailedSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "types.TypeReferenceSchema": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/types.TypeReferenceDetailedSchema"
+        }
+      ]
+    },
+    "variables.VariableReferenceSchema": {
+      "type": "object",
+      "properties": {
+        "variable": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "variable"
+      ]
+    },
+    "service.HttpPathParameterSchema": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.TypeReferenceSchema"
+        },
+        {
+          "$ref": "#/definitions/variables.VariableReferenceSchema"
+        }
+      ]
+    },
+    "service.TypeReferenceDeclarationWithEnvOverrideSchema": {
+      "type": "object",
+      "properties": {
+        "env": {
+          "type": "string"
+        }
+      }
+    },
+    "service.TypeReferenceDeclarationWithEnvOverride": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/service.TypeReferenceDeclarationWithEnvOverrideSchema"
+        }
+      ]
+    },
+    "service.HttpHeaderSchema": {
+      "$ref": "#/definitions/service.TypeReferenceDeclarationWithEnvOverride"
+    },
+    "variables.VariableDeclarationDetailed": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "variables.VariableDeclarationSchema": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/variables.VariableDeclarationDetailed"
+        }
+      ]
+    },
+    "pagination.CursorPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "cursor": {
+          "type": "string"
+        },
+        "next_cursor": {
+          "type": "string"
+        },
+        "results": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "cursor",
+        "next_cursor",
+        "results"
+      ]
+    },
+    "pagination.OffsetPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "string"
+        },
+        "results": {
+          "type": "string"
+        },
+        "step": {
+          "type": "string"
+        },
+        "has-next-page": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "offset",
+        "results"
+      ]
+    },
+    "pagination.PaginationSchema": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/pagination.CursorPaginationSchema"
+        },
+        {
+          "$ref": "#/definitions/pagination.OffsetPaginationSchema"
+        }
+      ]
+    },
+    "versioning.VersionValueDetailed": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "versioning.VersionValue": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/versioning.VersionValueDetailed"
+        }
+      ]
+    },
+    "versioning.VersionDeclarationHeaderObjectSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "env": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "versioning.VersionDeclarationHeaderSchema": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/versioning.VersionDeclarationHeaderObjectSchema"
+        }
+      ]
+    },
+    "versioning.VersionDeclarationSchema": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "type": "string"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/versioning.VersionValue"
+          }
+        },
+        "header": {
+          "$ref": "#/definitions/versioning.VersionDeclarationHeaderSchema"
+        }
+      },
+      "required": [
+        "values",
+        "header"
+      ]
+    }
+  }
+}

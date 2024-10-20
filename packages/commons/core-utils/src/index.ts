@@ -26,3 +26,4 @@ export { titleCase } from "./titleCase";
 export { stripLeadingSlash } from "./stripLeadingSlash";
 export { parseEndpointLocator } from "./parseEndpointLocator";
 export { removeSuffix } from "./removeSuffix";
+export { validateAgainstJsonSchema } from "./validateAgainstJsonSchema";
