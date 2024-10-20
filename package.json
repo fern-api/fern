@@ -28,8 +28,9 @@
     "fern-local:build": "pnpm --filter @fern-api/cli dist:cli:local && echo 'Run node packages/cli/cli/dist/local/cli.cjs'",
     "seed:build": "pnpm --filter @fern-api/seed-cli dist:cli && echo 'Run packages/seed/dist/cli.cjs'",
     "publish": "pnpm -r publish --access public --no-git-checks --loglevel=verbose",
-    "generate-json-schema": "pnpm fern-script write-json-schema fern.schema.json",
-    "generate-json-schema:dev": "pnpm fern-script write-json-schema fern.schema.dev.json",
+    "definition:jsonschema": "fern jsonschema fern.schema.json --api fern-definition --type file.DefinitionFileSchema",
+    "docs:jsonschema": "fern jsonschema fern-docs.schema.json --api docs-yml --type docs.DocsConfiguration",
+    "generators:jsonschema": "fern jsonschema fern-generators.schema.json --api generators-yml --type generators.GeneratorsConfigurationSchema",
     "check-cli-release-blockers": "pnpm fern-script check-cli-release-blockers",
     "check-docs-release-blockers": "pnpm fern-script check-docs-release-blockers",
     "root-package:check": "pnpm fern-script check-root-package",
@@ -40,9 +41,9 @@
     "openapi-ir:generate": "pnpm --filter @fern-api/openapi-ir generate",
     "conjure-sdk:generate": "pnpm --filter @fern-api/conjure-sdk generate",
     "seed-config:generate": "pnpm --filter @fern-api/seed-cli generate",
-    "docs-config:generate": "pnpm --filter @fern-api/configuration generate",
-    "fern-definition:generate": "fern generate --local --api fern-definition",
-    "generators-yml:generate": "fern generate --local --api generators-yml",
+    "docs:generate": "fern generate --local --api docs-yml",
+    "definition:generate": "fern generate --local --api fern-definition",
+    "generators:generate": "fern generate --local --api generators-yml",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -70,7 +71,6 @@
     "husky": "^9.1.5",
     "immer": "^9.0.15",
     "is-ci": "^3.0.1",
-    "vitest": "^2.0.5",
     "jsonc-parser": "~3.3.0",
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
@@ -82,7 +82,8 @@
     "stylelint-config-standard-scss": "^5.0.0",
     "tailwindcss": "^3.3.2",
     "ts-node": "^10.9.2",
-    "typescript": "4.6.4"
+    "typescript": "4.6.4",
+    "vitest": "^2.0.5"
   },
   "resolutions": {
     "@babel/traverse": "7.23.2",

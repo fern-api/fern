@@ -29,8 +29,8 @@ jobs:
       - name: Lint
         run: pnpm lint:style
 
-      # - name: generate (dev) JSON Schema
-      #   run: pnpm generate-json-schema:dev
+      - name: generate JSON Schema
+        run: pnpm definition:jsonschema
 
       - name: Format
         run: pnpm format:check

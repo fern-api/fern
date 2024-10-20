@@ -6,7 +6,7 @@ groups:
         version: 0.8.13
         output:
           location: local-file-system
-          path: ../src/docs-yml/schemas/sdk
+          path: ../../../packages/cli/configuration/src/docs-yml/schemas/sdk
         config:
           outputSourceFiles: true
           includeUtilsOnUnionMembers: false
