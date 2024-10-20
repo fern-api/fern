@@ -104,7 +104,7 @@ describe("Type", () => {
             python.reference({
                 name: "MyClass",
                 modulePath: ["module"],
-                attrPath: ["attr1", "attr2"]
+                attribute: ["attr1", "attr2"]
             })
         );
         referenceType.write(writer);
