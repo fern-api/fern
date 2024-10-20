@@ -41,6 +41,7 @@ jobs:
 
       - name: Publish Dev CLI
         run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           git_version="$(./scripts/git-version.sh)"
           pnpm seed publish cli --ver ${git_version} --dev --log-level debug
 

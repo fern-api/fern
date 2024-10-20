@@ -14,15 +14,20 @@ export async function runCommands(commands: string[], context: TaskContext, cwd:
         if (splitCommand[0] == null) {
             throw new Error(`Failed to run ${command}`);
         }
-        context.logger.info(`Running ${command}`);
-        const { exitCode } = await loggingExeca(context.logger, splitCommand[0], splitCommand.slice(1), {
-            doNotPipeOutput: false,
-            env: {
-                ...process.env
-            },
-            cwd
-        });
+        const { exitCode, stdout, stderr } = await loggingExeca(
+            context.logger,
+            splitCommand[0],
+            splitCommand.slice(1),
+            {
+                doNotPipeOutput: true,
+                env: {
+                    ...process.env
+                },
+                cwd
+            }
+        );
         if (exitCode !== 0) {
+            context.logger.error(`Failed to run ${command}\n${stdout}\n${stderr}`);
             throw new Error(`Failed to run ${command}`);
         }
     }

@@ -21,8 +21,6 @@ publishDev:
   workingDirectory: packages/cli/cli
   versionSubstitution: $VERSION
   command:
-    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-    - pnpm install
     - pnpm --filter @fern-api/cli compile
     - pnpm --filter @fern-api/cli dist:cli:dev $VERSION
     - pnpm --filter @fern-api/cli publish:cli:dev --access restricted
