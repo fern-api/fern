@@ -16,10 +16,12 @@ export async function runCommands(commands: string[], context: TaskContext, cwd:
         workingDir: cwd
     });
     for (const command of commands) {
-        if (commands[0] == null) {
+        const splitCommand = command.split(" ");
+        if (splitCommand[0] == null) {
             throw new Error(`Failed to run ${command}`);
         }
-        const { exitCode } = await loggingExeca(context.logger, commands[0], commands.slice(-1), {
+        context.logger.info(`Running ${command}`);
+        const { exitCode } = await loggingExeca(context.logger, splitCommand[0], splitCommand.slice(1), {
             doNotPipeOutput: false,
             env: {
                 ...process.env
