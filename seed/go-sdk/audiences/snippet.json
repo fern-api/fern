@@ -4,7 +4,7 @@
             "id": {
                 "path": "/",
                 "method": "GET",
-                "identifier_override": "endpoint_folder-a/service.getDirectThread"
+                "identifier_override": "endpoint_folder-a.service.getDirectThread"
             },
             "snippet": {
                 "type": "go",
@@ -15,7 +15,7 @@
             "id": {
                 "path": "/partner-path",
                 "method": "GET",
-                "identifier_override": "endpoint_folder-d/service.getDirectThread"
+                "identifier_override": "endpoint_folder-d.service.getDirectThread"
             },
             "snippet": {
                 "type": "go",

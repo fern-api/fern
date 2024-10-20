@@ -4,7 +4,7 @@
             "id": {
                 "path": "/",
                 "method": "POST",
-                "identifier_override": "endpoint_a/b.foo"
+                "identifier_override": "endpoint_a.b.foo"
             },
             "snippet": {
                 "type": "go",
@@ -15,7 +15,7 @@
             "id": {
                 "path": "/",
                 "method": "POST",
-                "identifier_override": "endpoint_a/c.foo"
+                "identifier_override": "endpoint_a.c.foo"
             },
             "snippet": {
                 "type": "go",
@@ -48,7 +48,7 @@
             "id": {
                 "path": "/service",
                 "method": "GET",
-                "identifier_override": "endpoint_folder/service.endpoint"
+                "identifier_override": "endpoint_folder.service.endpoint"
             },
             "snippet": {
                 "type": "go",
@@ -59,7 +59,7 @@
             "id": {
                 "path": "/service",
                 "method": "POST",
-                "identifier_override": "endpoint_folder/service.unknownRequest"
+                "identifier_override": "endpoint_folder.service.unknownRequest"
             },
             "snippet": {
                 "type": "go",

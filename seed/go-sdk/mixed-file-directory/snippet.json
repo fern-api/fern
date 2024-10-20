@@ -26,7 +26,7 @@
             "id": {
                 "path": "/users/events",
                 "method": "GET",
-                "identifier_override": "endpoint_user/events.listEvents"
+                "identifier_override": "endpoint_user.events.listEvents"
             },
             "snippet": {
                 "type": "go",
@@ -37,7 +37,7 @@
             "id": {
                 "path": "/users/events/metadata",
                 "method": "GET",
-                "identifier_override": "endpoint_user/events/metadata.getMetadata"
+                "identifier_override": "endpoint_user.events.metadata.getMetadata"
             },
             "snippet": {
                 "type": "go",
