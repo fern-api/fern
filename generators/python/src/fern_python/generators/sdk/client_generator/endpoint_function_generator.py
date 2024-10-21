@@ -421,7 +421,9 @@ class EndpointFunctionGenerator:
             AST.NamedFunctionParameter(
                 name=EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
                 docs=request_options_docs,
-                type_hint=AST.TypeHint.optional(AST.TypeHint(self._context.core_utilities.get_reference_to_request_options())),
+                type_hint=AST.TypeHint.optional(
+                    AST.TypeHint(self._context.core_utilities.get_reference_to_request_options())
+                ),
             ),
         )
 

@@ -178,7 +178,7 @@ class GeneratorCli:
             api_reference_link=self._ir.readme_config.api_reference_link if self._ir.readme_config else None,
             banner_link=self._ir.readme_config.banner_link if self._ir.readme_config else None,
             features=features,
-            reference_markdown_path=f"./{REFERENCE_FILENAME}"
+            reference_markdown_path=f"./{REFERENCE_FILENAME}",
         )
 
     def _read_feature_config(self) -> generatorcli.feature.FeatureConfig:
