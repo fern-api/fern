@@ -12,6 +12,8 @@
     }
   },
   "required": [
+    "raw",
+    "docs",
     "name"
   ],
   "definitions": {}

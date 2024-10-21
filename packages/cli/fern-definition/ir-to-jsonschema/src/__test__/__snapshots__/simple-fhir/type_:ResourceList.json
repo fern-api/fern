@@ -51,6 +51,9 @@
         }
       },
       "required": [
+        "id",
+        "related_resources",
+        "memo",
         "resource_type",
         "name"
       ]
@@ -84,6 +87,9 @@
         }
       },
       "required": [
+        "id",
+        "related_resources",
+        "memo",
         "resource_type",
         "name",
         "scripts"
@@ -112,6 +118,9 @@
         }
       },
       "required": [
+        "id",
+        "related_resources",
+        "memo",
         "resource_type",
         "name"
       ]
@@ -161,6 +170,9 @@
         }
       },
       "required": [
+        "id",
+        "related_resources",
+        "memo",
         "resource_type",
         "name"
       ]

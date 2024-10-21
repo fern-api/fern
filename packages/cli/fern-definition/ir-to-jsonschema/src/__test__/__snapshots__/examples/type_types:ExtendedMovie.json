@@ -49,6 +49,14 @@
     }
   },
   "required": [
+    "id",
+    "title",
+    "from",
+    "rating",
+    "type",
+    "tag",
+    "metadata",
+    "revenue",
     "cast"
   ],
   "definitions": {

@@ -15,7 +15,9 @@ export function convertObjectToJsonSchema({ object, context }: convertObjectToJs
         type: "object"
     };
 
-    const properties = [...(object.extendedProperties ?? []), ...object.properties].map((property) => {
+    const allProperties = [...(object.extendedProperties ?? []), ...object.properties];
+
+    const properties = allProperties.map((property) => {
         const propertyName = property.name.wireValue;
         const propertySchema = convertTypeReferenceToJsonSchema({
             typeReference: property.valueType,
@@ -24,7 +26,7 @@ export function convertObjectToJsonSchema({ object, context }: convertObjectToJs
         return [propertyName, propertySchema];
     });
 
-    const requiredProperties = object.properties
+    const requiredProperties = allProperties
         .filter((property) => !context.isOptional(property.valueType))
         .map((property) => property.name.wireValue);
 

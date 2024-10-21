@@ -9,6 +9,7 @@
     }
   },
   "required": [
+    "docs",
     "name"
   ],
   "definitions": {}

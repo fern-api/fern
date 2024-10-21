@@ -13,6 +13,7 @@
     }
   },
   "required": [
+    "data",
     "total_count"
   ],
   "definitions": {

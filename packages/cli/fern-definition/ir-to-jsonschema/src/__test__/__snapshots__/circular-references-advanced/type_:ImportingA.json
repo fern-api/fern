@@ -12,7 +12,10 @@
         "s": {
           "type": "string"
         }
-      }
+      },
+      "required": [
+        "s"
+      ]
     }
   }
 }

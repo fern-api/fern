@@ -18,6 +18,8 @@
     }
   },
   "required": [
+    "name",
+    "problems",
     "playlist_id",
     "owner-id"
   ],

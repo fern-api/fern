@@ -9,6 +9,7 @@
     }
   },
   "required": [
+    "parent",
     "child"
   ],
   "definitions": {}
