@@ -54,7 +54,7 @@ importers:
         specifier: ^4.17.6
         version: 4.17.12
       '@types/node':
-        specifier: ^18.7.18
+        specifier: 18.7.18
         version: 18.7.18
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.27.1
@@ -15802,7 +15802,7 @@ snapshots:
 
   '@types/mute-stream@0.0.4':
     dependencies:
-      '@types/node': 18.19.55
+      '@types/node': 18.7.18
 
   '@types/node-fetch@2.6.9':
     dependencies:

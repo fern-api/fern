@@ -347,7 +347,8 @@ const addGenerator = async (
                             repository: `${FERN_DEMO_ORG}/${repoName}`,
                             branch: "main",
                             mode: "push"
-                        }
+                        },
+                        "smart-casing": true
                     },
                     cliVersion: cliContext.environment.packageVersion
                 });
