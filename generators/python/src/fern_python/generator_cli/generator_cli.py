@@ -1,3 +1,4 @@
+import json
 import os
 import subprocess
 import tempfile
@@ -78,6 +79,9 @@ class GeneratorCli:
         reference_config = reference_config_builder.generate_reference_config()
         if self._should_write_reference(reference_config):
             reference_config_filepath = self._write_reference_config(reference_config=reference_config)
+            print(
+                f"running command: {' '.join([GENERATOR_CLI, 'generate-reference', '--config', reference_config_filepath])}"
+            )
             return self._run_command(
                 command=[GENERATOR_CLI, "generate-reference", "--config", reference_config_filepath]
             )
@@ -128,7 +132,7 @@ class GeneratorCli:
         reference_config: generatorcli.reference.ReferenceConfig,
     ) -> str:
         file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
-        file.write(reference_config.json())
+        file.write(json.dumps(reference_config.dict()))
         file.flush()
         return file.name
 
@@ -144,7 +148,7 @@ class GeneratorCli:
             github_installation_token=github_installation_token,
         )
         file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
-        file.write(readme_config.json())
+        file.write(json.dumps(readme_config.dict()))
         file.flush()
         return file.name
 

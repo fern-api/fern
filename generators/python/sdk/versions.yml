@@ -1,11 +1,18 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.3
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The generator now writes the reference.md configuration correctly, using `.dict()` instead of `.json()`.
+        
 - version: 4.3.2
   irVersion: 53
   changelogEntry:
     - type: fix
       summary: |
         The generator will now correctly default to the configured global `default_bytes_stream_chunk_size` when the `request_options` parameter is not provided.
-
+        
 - version: 4.3.1
   irVersion: 53
   changelogEntry:
