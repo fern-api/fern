@@ -37,6 +37,7 @@
       "$ref": "#/definitions/websocket.WebSocketChannelSchema"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "commons.WithDocsSchema": {
       "type": "object",
@@ -44,7 +45,8 @@
         "docs": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "availability.AvailabilityStatusSchema": {
       "type": "string",
@@ -67,7 +69,8 @@
       },
       "required": [
         "status"
-      ]
+      ],
+      "additionalProperties": false
     },
     "availability.AvailabilityUnionSchema": {
       "oneOf": [
@@ -85,7 +88,8 @@
         "availability": {
           "$ref": "#/definitions/availability.AvailabilityUnionSchema"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "commons.WithAudiences": {
       "type": "object",
@@ -96,7 +100,8 @@
             "type": "string"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "commons.WithName": {
       "type": "object",
@@ -104,7 +109,8 @@
         "name": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "examples.ExampleTypeValueSchema": {
       "type": [
@@ -133,7 +139,8 @@
       },
       "required": [
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "encoding.ProtobufTypeSchema": {
       "type": "object",
@@ -144,7 +151,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "encoding.EncodingSchema": {
       "type": "object",
@@ -152,7 +160,8 @@
         "proto": {
           "$ref": "#/definitions/encoding.ProtobufTypeSchema"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "source.OpenAPISourceSchema": {
       "type": "object",
@@ -163,7 +172,8 @@
       },
       "required": [
         "openapi"
-      ]
+      ],
+      "additionalProperties": false
     },
     "source.ProtobufSourceSchema": {
       "type": "object",
@@ -174,7 +184,8 @@
       },
       "required": [
         "proto"
-      ]
+      ],
+      "additionalProperties": false
     },
     "source.SourceSchema": {
       "oneOf": [
@@ -212,7 +223,8 @@
         "source": {
           "$ref": "#/definitions/source.SourceSchema"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "types.ObjectExtendsSchema": {
       "oneOf": [
@@ -242,7 +254,8 @@
         "format": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "validation.NumberValidationSchema": {
       "type": "object",
@@ -262,7 +275,8 @@
         "multipleOf": {
           "type": "integer"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "validation.ValidationSchema": {
       "oneOf": [
@@ -301,7 +315,8 @@
         "validation": {
           "$ref": "#/definitions/validation.ValidationSchema"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "types.TypeReferenceDeclarationWithName": {
       "type": "object",
@@ -323,7 +338,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "types.TypeReferenceDeclarationWithNameSchema": {
       "oneOf": [
@@ -338,7 +354,7 @@
     "types.ObjectPropertySchema": {
       "$ref": "#/definitions/types.TypeReferenceDeclarationWithNameSchema"
     },
-    "types.ObjectSchema": {
+    "types.ObjectSchemaWithExtends": {
       "type": "object",
       "allOf": [
         {
@@ -358,7 +374,47 @@
         "extra-properties": {
           "type": "boolean"
         }
-      }
+      },
+      "required": [
+        "extends"
+      ],
+      "additionalProperties": false
+    },
+    "types.ObjectSchemaWithProperties": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/types.BaseTypeDeclarationSchema"
+        }
+      ],
+      "properties": {
+        "extends": {
+          "$ref": "#/definitions/types.ObjectExtendsSchema"
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/types.ObjectPropertySchema"
+          }
+        },
+        "extra-properties": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "properties"
+      ],
+      "additionalProperties": false
+    },
+    "types.ObjectSchema": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.ObjectSchemaWithExtends"
+        },
+        {
+          "$ref": "#/definitions/types.ObjectSchemaWithProperties"
+        }
+      ]
     },
     "types.CasingOverridesSchema": {
       "type": "object",
@@ -375,7 +431,8 @@
         "screaming-snake": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "types.EnumValueSchema": {
       "type": "object",
@@ -397,7 +454,8 @@
       },
       "required": [
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "types.EnumValue": {
       "oneOf": [
@@ -429,7 +487,8 @@
       },
       "required": [
         "enum"
-      ]
+      ],
+      "additionalProperties": false
     },
     "types.UnionDiscriminantSchema": {
       "type": "object",
@@ -445,7 +504,8 @@
       },
       "required": [
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "types.UnionDiscriminant": {
       "oneOf": [
@@ -477,7 +537,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "types.TypeReferenceSchema": {
       "oneOf": [
@@ -495,7 +556,8 @@
         "display-name": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "types.SingleUnionTypeKeySchema": {
       "type": "object",
@@ -511,7 +573,8 @@
       },
       "required": [
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "types.SingleUnionTypeKey": {
       "oneOf": [
@@ -546,7 +609,8 @@
         "key": {
           "$ref": "#/definitions/types.SingleUnionTypeKey"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "types.SingleUnionTypeSchema": {
       "oneOf": [
@@ -587,7 +651,8 @@
       },
       "required": [
         "union"
-      ]
+      ],
+      "additionalProperties": false
     },
     "types.SingleUndiscriminatedUnionTypeDetailedSchema": {
       "type": "object",
@@ -606,7 +671,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "types.SingleUndiscriminatedUnionTypeSchema": {
       "oneOf": [
@@ -639,7 +705,8 @@
       "required": [
         "discriminated",
         "union"
-      ]
+      ],
+      "additionalProperties": false
     },
     "types.AliasSchema": {
       "type": "object",
@@ -658,7 +725,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "types.TypeDeclarationSchema": {
       "oneOf": [
@@ -691,7 +759,8 @@
         {
           "$ref": "#/definitions/commons.WithAudiences"
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "service.GrpcTransport": {
       "type": "object",
@@ -702,7 +771,8 @@
       },
       "required": [
         "service-name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "service.ServiceTransport": {
       "type": "object",
@@ -710,7 +780,8 @@
         "grpc": {
           "$ref": "#/definitions/service.GrpcTransport"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "commons.DeclarationSchema": {
       "type": "object",
@@ -724,7 +795,8 @@
         {
           "$ref": "#/definitions/commons.WithAudiences"
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "service.HttpMethodSchema": {
       "type": "string",
@@ -753,7 +825,8 @@
       },
       "required": [
         "variable"
-      ]
+      ],
+      "additionalProperties": false
     },
     "service.HttpPathParameterSchema": {
       "oneOf": [
@@ -776,7 +849,8 @@
         "allow-multiple": {
           "type": "boolean"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "service.HttpQueryParameterSchema": {
       "oneOf": [
@@ -799,7 +873,8 @@
         "env": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "service.TypeReferenceDeclarationWithEnvOverride": {
       "oneOf": [
@@ -828,7 +903,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "service.TypeReferenceDeclarationWithContentTypeSchema": {
       "type": "object",
@@ -841,7 +917,8 @@
         "content-type": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "service.HttpInlineRequestBodyPropertySchema": {
       "oneOf": [
@@ -868,7 +945,8 @@
             "$ref": "#/definitions/service.HttpInlineRequestBodyPropertySchema"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "service.HttpRequestBodySchema": {
       "oneOf": [
@@ -912,7 +990,8 @@
         "body": {
           "$ref": "#/definitions/service.HttpRequestBodySchema"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "service.HttpRequest": {
       "oneOf": [
@@ -944,7 +1023,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "service.HttpResponseSchema": {
       "oneOf": [
@@ -983,7 +1063,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "service.HttpResponseStreamSchema": {
       "oneOf": [
@@ -1009,7 +1090,8 @@
       },
       "required": [
         "error"
-      ]
+      ],
+      "additionalProperties": false
     },
     "service.ResponseError": {
       "oneOf": [
@@ -1046,7 +1128,8 @@
         "body": {
           "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "examples.ExampleStreamResponseSchema": {
       "type": "object",
@@ -1060,7 +1143,8 @@
       },
       "required": [
         "stream"
-      ]
+      ],
+      "additionalProperties": false
     },
     "examples.ExampleSseEventSchema": {
       "type": "object",
@@ -1074,7 +1158,8 @@
       },
       "required": [
         "event"
-      ]
+      ],
+      "additionalProperties": false
     },
     "examples.ExampleSseResponseSchema": {
       "type": "object",
@@ -1088,7 +1173,8 @@
       },
       "required": [
         "stream"
-      ]
+      ],
+      "additionalProperties": false
     },
     "examples.ExampleResponseSchema": {
       "oneOf": [
@@ -1147,7 +1233,8 @@
       "required": [
         "sdk",
         "code"
-      ]
+      ],
+      "additionalProperties": false
     },
     "examples.ExampleCodeSampleSchemaLanguage": {
       "type": "object",
@@ -1173,7 +1260,8 @@
       "required": [
         "language",
         "code"
-      ]
+      ],
+      "additionalProperties": false
     },
     "examples.ExampleCodeSampleSchema": {
       "oneOf": [
@@ -1229,7 +1317,8 @@
             "$ref": "#/definitions/examples.ExampleCodeSampleSchema"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "pagination.CursorPaginationSchema": {
       "type": "object",
@@ -1248,7 +1337,8 @@
         "cursor",
         "next_cursor",
         "results"
-      ]
+      ],
+      "additionalProperties": false
     },
     "pagination.OffsetPaginationSchema": {
       "type": "object",
@@ -1269,7 +1359,8 @@
       "required": [
         "offset",
         "results"
-      ]
+      ],
+      "additionalProperties": false
     },
     "pagination.PaginationSchema": {
       "oneOf": [
@@ -1353,7 +1444,8 @@
       },
       "required": [
         "path"
-      ]
+      ],
+      "additionalProperties": false
     },
     "service.HttpServiceSchema": {
       "type": "object",
@@ -1407,7 +1499,8 @@
         "auth",
         "base-path",
         "endpoints"
-      ]
+      ],
+      "additionalProperties": false
     },
     "errors.ErrorDeclarationSchema": {
       "type": "object",
@@ -1432,7 +1525,8 @@
       },
       "required": [
         "status-code"
-      ]
+      ],
+      "additionalProperties": false
     },
     "webhooks.WebhookMethodSchema": {
       "type": "string",
@@ -1455,7 +1549,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "webhooks.WebhookInlinedPayloadSchema": {
       "type": "object",
@@ -1475,7 +1570,8 @@
       },
       "required": [
         "name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "webhooks.WebhookPayloadSchema": {
       "oneOf": [
@@ -1510,7 +1606,8 @@
       },
       "required": [
         "payload"
-      ]
+      ],
+      "additionalProperties": false
     },
     "webhooks.WebhookSchema": {
       "type": "object",
@@ -1551,7 +1648,8 @@
       "required": [
         "method",
         "payload"
-      ]
+      ],
+      "additionalProperties": false
     },
     "websocket.WebSocketOrigin": {
       "type": "string",
@@ -1574,7 +1672,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "websocket.WebSocketChannelInlinedMessageSchema": {
       "type": "object",
@@ -1594,7 +1693,8 @@
       },
       "required": [
         "name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "websocket.WebSocketChannelMessageBodySchema": {
       "oneOf": [
@@ -1630,7 +1730,8 @@
       "required": [
         "origin",
         "body"
-      ]
+      ],
+      "additionalProperties": false
     },
     "examples.ExampleWebSocketMessage": {
       "type": "object",
@@ -1652,7 +1753,8 @@
       "required": [
         "type",
         "body"
-      ]
+      ],
+      "additionalProperties": false
     },
     "examples.ExampleWebSocketSession": {
       "type": "object",
@@ -1692,7 +1794,8 @@
       },
       "required": [
         "messages"
-      ]
+      ],
+      "additionalProperties": false
     },
     "websocket.WebSocketChannelSchema": {
       "type": "object",
@@ -1745,7 +1848,8 @@
       "required": [
         "auth",
         "path"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

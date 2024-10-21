@@ -89,6 +89,7 @@
   "required": [
     "instances"
   ],
+  "additionalProperties": false,
   "definitions": {
     "docs.CustomDomain": {
       "oneOf": [
@@ -135,7 +136,8 @@
       "required": [
         "owner",
         "repo"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.EditThisPageConfig": {
       "type": "object",
@@ -143,7 +145,8 @@
         "github": {
           "$ref": "#/definitions/docs.GithubEditThisPageConfig"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.DocsInstance": {
       "type": "object",
@@ -166,7 +169,8 @@
       },
       "required": [
         "url"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.SegmentConfig": {
       "type": "object",
@@ -177,7 +181,8 @@
       },
       "required": [
         "write-key"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.FullStoryAnalyticsConfig": {
       "type": "object",
@@ -188,7 +193,8 @@
       },
       "required": [
         "org-id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.IntercomConfig": {
       "type": "object",
@@ -202,7 +208,8 @@
       },
       "required": [
         "app-id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.PostHogConfig": {
       "type": "object",
@@ -216,7 +223,8 @@
       },
       "required": [
         "api-key"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.AnalyticsConfig": {
       "type": "object",
@@ -233,7 +241,8 @@
         "posthog": {
           "$ref": "#/definitions/docs.PostHogConfig"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.AnnouncementConfig": {
       "type": "object",
@@ -244,7 +253,8 @@
       },
       "required": [
         "message"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.ChangelogFolderRelativePath": {
       "type": "string"
@@ -276,7 +286,8 @@
       },
       "required": [
         "display-name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.VersionAvailability": {
       "type": "string",
@@ -306,7 +317,8 @@
       "required": [
         "display-name",
         "path"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.PageConfiguration": {
       "type": "object",
@@ -330,7 +342,8 @@
       "required": [
         "page",
         "path"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.SectionConfiguration": {
       "type": "object",
@@ -366,7 +379,8 @@
       "required": [
         "section",
         "contents"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.VersionedSnippetLanguageConfiguration": {
       "type": "object",
@@ -381,7 +395,8 @@
       "required": [
         "version",
         "package"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.SnippetLanguageConfiguration": {
       "oneOf": [
@@ -411,7 +426,8 @@
         "ruby": {
           "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.PlaygroundButtonSettings": {
       "type": "object",
@@ -419,7 +435,8 @@
         "href": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.PlaygroundSettings": {
       "type": "object",
@@ -436,7 +453,8 @@
         "oauth": {
           "type": "boolean"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.ApiReferencePackageConfigurationWithOptions": {
       "type": "object",
@@ -468,7 +486,8 @@
         "playground": {
           "$ref": "#/definitions/docs.PlaygroundSettings"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.ApiReferencePackageConfiguration": {
       "oneOf": [
@@ -522,7 +541,8 @@
       },
       "required": [
         "section"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.ApiReferenceEndpointConfiguration": {
       "type": "object",
@@ -548,7 +568,8 @@
       },
       "required": [
         "endpoint"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.LinkConfiguration": {
       "type": "object",
@@ -566,7 +587,8 @@
       "required": [
         "link",
         "href"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.ApiReferenceLayoutItem": {
       "oneOf": [
@@ -652,7 +674,8 @@
       },
       "required": [
         "api"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.ChangelogConfiguration": {
       "type": "object",
@@ -675,7 +698,8 @@
       },
       "required": [
         "changelog"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.NavigationItem": {
       "oneOf": [
@@ -720,7 +744,8 @@
       },
       "required": [
         "tab"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.TabbedNavigationConfig": {
       "type": "array",
@@ -954,7 +979,8 @@
         "website": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.ExperimentalConfig": {
       "type": "object",
@@ -968,7 +994,8 @@
         "disable-stream-toggle": {
           "type": "boolean"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.ProgrammingLanguage": {
       "type": "string",
@@ -1049,7 +1076,8 @@
         "twitter:card": {
           "$ref": "#/definitions/docs.TwitterCardSetting"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.RedirectConfig": {
       "type": "object",
@@ -1067,7 +1095,8 @@
       "required": [
         "source",
         "destination"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.LogoConfiguration": {
       "type": "object",
@@ -1084,7 +1113,8 @@
         "href": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.BackgroundImageThemedConfig": {
       "type": "object",
@@ -1095,7 +1125,8 @@
         "light": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.BackgroundImageConfiguration": {
       "oneOf": [
@@ -1116,7 +1147,8 @@
         "light": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.ColorConfig": {
       "oneOf": [
@@ -1152,7 +1184,8 @@
         "card-background": {
           "$ref": "#/definitions/docs.ColorConfig"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.FontWeight": {
       "oneOf": [
@@ -1186,7 +1219,8 @@
       },
       "required": [
         "path"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.FontConfigPath": {
       "oneOf": [
@@ -1241,7 +1275,8 @@
         "font-variation-settings": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.DocsTypographyConfig": {
       "type": "object",
@@ -1255,7 +1290,8 @@
         "codeFont": {
           "$ref": "#/definitions/docs.FontConfig"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.SearchbarPlacement": {
       "type": "string",
@@ -1316,7 +1352,8 @@
         "disable-header": {
           "type": "boolean"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.IntegrationsConfig": {
       "type": "object",
@@ -1324,7 +1361,8 @@
         "intercom": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs.CssConfig": {
       "oneOf": [
@@ -1359,7 +1397,8 @@
       },
       "required": [
         "url"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.JsFileConfigSettings": {
       "type": "object",
@@ -1373,7 +1412,8 @@
       },
       "required": [
         "path"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs.JsFileConfig": {
       "oneOf": [

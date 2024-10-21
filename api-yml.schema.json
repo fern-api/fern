@@ -5,6 +5,9 @@
       "$ref": "#/definitions/commons.WithDocsSchema"
     },
     {
+      "$ref": "#/definitions/commons.WithName"
+    },
+    {
       "$ref": "#/definitions/commons.WithDisplayName"
     },
     {
@@ -73,6 +76,7 @@
   "required": [
     "name"
   ],
+  "additionalProperties": false,
   "definitions": {
     "commons.WithDocsSchema": {
       "type": "object",
@@ -80,7 +84,17 @@
         "docs": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
+    },
+    "commons.WithName": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     },
     "commons.WithDisplayName": {
       "type": "object",
@@ -88,7 +102,8 @@
         "display-name": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "commons.WithAudiences": {
       "type": "object",
@@ -99,7 +114,8 @@
             "type": "string"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "environments.SingleBaseUrlEnvironmentSchema": {
       "type": "object",
@@ -118,7 +134,8 @@
       },
       "required": [
         "url"
-      ]
+      ],
+      "additionalProperties": false
     },
     "environments.MultipleBaseUrlsEnvironmentSchema": {
       "type": "object",
@@ -140,7 +157,8 @@
       },
       "required": [
         "urls"
-      ]
+      ],
+      "additionalProperties": false
     },
     "environments.EnvironmentSchema": {
       "oneOf": [
@@ -170,7 +188,8 @@
             "$ref": "#/definitions/environments.EnvironmentSchema"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "auth.AuthSchemeReferenceSchema": {
       "type": "object",
@@ -186,7 +205,8 @@
       },
       "required": [
         "scheme"
-      ]
+      ],
+      "additionalProperties": false
     },
     "auth.AnyAuthItem": {
       "oneOf": [
@@ -215,7 +235,8 @@
       },
       "required": [
         "any"
-      ]
+      ],
+      "additionalProperties": false
     },
     "auth.ApiAuthSchema": {
       "oneOf": [
@@ -242,7 +263,8 @@
         "scopes": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "auth.OAuthAccessTokenResponsePropertiesSchema": {
       "type": "object",
@@ -256,7 +278,8 @@
         "refresh-token": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "auth.OAuthGetTokenEndpointSchema": {
       "type": "object",
@@ -273,7 +296,8 @@
       },
       "required": [
         "endpoint"
-      ]
+      ],
+      "additionalProperties": false
     },
     "auth.OAuthRefreshTokenRequestPropertiesSchema": {
       "type": "object",
@@ -284,7 +308,8 @@
       },
       "required": [
         "refresh-token"
-      ]
+      ],
+      "additionalProperties": false
     },
     "auth.OAuthRefreshTokenResponsePropertiesSchema": {
       "type": "object",
@@ -298,7 +323,8 @@
         "refresh-token": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "auth.OAuthRefreshTokenEndpointSchema": {
       "type": "object",
@@ -315,7 +341,8 @@
       },
       "required": [
         "endpoint"
-      ]
+      ],
+      "additionalProperties": false
     },
     "auth.OAuthSchemeSchema": {
       "type": "object",
@@ -357,7 +384,8 @@
         "scheme",
         "type",
         "get-token"
-      ]
+      ],
+      "additionalProperties": false
     },
     "auth.WithEnvironmentVariable": {
       "type": "object",
@@ -365,15 +393,8 @@
         "env": {
           "type": "string"
         }
-      }
-    },
-    "commons.WithName": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        }
-      }
+      },
+      "additionalProperties": false
     },
     "auth.HeaderAuthSchemeSchema": {
       "type": "object",
@@ -401,7 +422,8 @@
       },
       "required": [
         "header"
-      ]
+      ],
+      "additionalProperties": false
     },
     "auth.AuthVariable": {
       "type": "object",
@@ -412,7 +434,8 @@
         {
           "$ref": "#/definitions/commons.WithName"
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "auth.BasicAuthSchemeSchema": {
       "type": "object",
@@ -434,7 +457,8 @@
       },
       "required": [
         "scheme"
-      ]
+      ],
+      "additionalProperties": false
     },
     "auth.BearerAuthSchemeSchema": {
       "type": "object",
@@ -453,7 +477,8 @@
       },
       "required": [
         "scheme"
-      ]
+      ],
+      "additionalProperties": false
     },
     "auth.AuthSchemeDeclarationSchema": {
       "oneOf": [
@@ -483,7 +508,8 @@
             "$ref": "#/definitions/auth.AuthSchemeDeclarationSchema"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "availability.AvailabilityStatusSchema": {
       "type": "string",
@@ -506,7 +532,8 @@
       },
       "required": [
         "status"
-      ]
+      ],
+      "additionalProperties": false
     },
     "availability.AvailabilityUnionSchema": {
       "oneOf": [
@@ -524,7 +551,8 @@
         "availability": {
           "$ref": "#/definitions/availability.AvailabilityUnionSchema"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "encoding.ProtobufTypeSchema": {
       "type": "object",
@@ -535,7 +563,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "encoding.EncodingSchema": {
       "type": "object",
@@ -543,7 +572,8 @@
         "proto": {
           "$ref": "#/definitions/encoding.ProtobufTypeSchema"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "validation.StringValidationSchema": {
       "type": "object",
@@ -560,7 +590,8 @@
         "format": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "validation.NumberValidationSchema": {
       "type": "object",
@@ -580,7 +611,8 @@
         "multipleOf": {
           "type": "integer"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "validation.ValidationSchema": {
       "oneOf": [
@@ -619,7 +651,8 @@
         "validation": {
           "$ref": "#/definitions/validation.ValidationSchema"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "types.TypeReferenceDeclarationWithName": {
       "type": "object",
@@ -641,7 +674,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "service.TypeReferenceDeclarationWithEnvOverrideSchema": {
       "type": "object",
@@ -654,7 +688,8 @@
         "env": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "service.TypeReferenceDeclarationWithEnvOverride": {
       "oneOf": [
@@ -678,7 +713,8 @@
             "$ref": "#/definitions/service.HttpHeaderSchema"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "file.PropertyBasedErrorDiscrimination": {
       "type": "object",
@@ -693,7 +729,8 @@
       "required": [
         "strategy",
         "property-name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "file.StatusCodeBasedErrorDiscrimination": {
       "type": "object",
@@ -704,7 +741,8 @@
       },
       "required": [
         "strategy"
-      ]
+      ],
+      "additionalProperties": false
     },
     "file.ErrorDiscriminationSchema": {
       "oneOf": [
@@ -736,7 +774,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "types.TypeReferenceSchema": {
       "oneOf": [
@@ -765,7 +804,8 @@
       },
       "required": [
         "variable"
-      ]
+      ],
+      "additionalProperties": false
     },
     "service.HttpPathParameterSchema": {
       "oneOf": [
@@ -791,7 +831,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "variables.VariableDeclarationSchema": {
       "oneOf": [
@@ -820,7 +861,8 @@
         "cursor",
         "next_cursor",
         "results"
-      ]
+      ],
+      "additionalProperties": false
     },
     "pagination.OffsetPaginationSchema": {
       "type": "object",
@@ -841,7 +883,8 @@
       "required": [
         "offset",
         "results"
-      ]
+      ],
+      "additionalProperties": false
     },
     "pagination.PaginationSchema": {
       "oneOf": [
@@ -870,7 +913,8 @@
       },
       "required": [
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "versioning.VersionValue": {
       "oneOf": [
@@ -897,7 +941,8 @@
       },
       "required": [
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "versioning.VersionDeclarationHeaderSchema": {
       "oneOf": [
@@ -928,7 +973,8 @@
       "required": [
         "values",
         "header"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }
