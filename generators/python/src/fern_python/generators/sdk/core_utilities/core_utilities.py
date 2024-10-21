@@ -23,7 +23,10 @@ class CoreUtilities:
     SYNC_CLIENT_WRAPPER_CLASS_NAME = "SyncClientWrapper"
 
     def __init__(
-        self, has_paginated_endpoints: bool, project_module_path: AST.ModulePath, custom_config: SDKCustomConfig
+        self,
+        has_paginated_endpoints: bool,
+        project_module_path: AST.ModulePath,
+        custom_config: SDKCustomConfig,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -82,6 +85,7 @@ class CoreUtilities:
             ),
             exports={"RequestOptions"},
         )
+
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="file.py",

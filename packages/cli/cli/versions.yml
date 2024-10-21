@@ -1,5 +1,4 @@
 - changelogEntry:
-- changelogEntry:
     - summary: |
         Undiscriminated unions are now represented using `anyOf` in the generated JSON Schema
         Nullable properties are now correctly propagated to the JSON Schema
