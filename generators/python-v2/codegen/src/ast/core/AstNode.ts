@@ -4,14 +4,20 @@ import init, { format } from "@wasm-fmt/ruff_fmt";
 import { Reference } from "../Reference";
 
 export abstract class AstNode extends AbstractAstNode {
-    private references: Reference[] = [];
+    protected references: Reference[] = [];
 
     public addReference(reference: Reference): void {
         this.references.push(reference);
     }
 
-    public getReferences(): Reference[] {
-        return this.references;
+    public inheritReferences(astNode: AstNode | undefined): void {
+        if (astNode === undefined) {
+            return;
+        }
+
+        astNode.references.forEach((reference) => {
+            this.addReference(reference);
+        });
     }
 
     /**
