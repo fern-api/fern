@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.1
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The generator now writes the reference.md configuration correctly, using `.dict()` instead of `.json()`.
+
 - version: 4.3.0
   irVersion: 53
   changelogEntry:
