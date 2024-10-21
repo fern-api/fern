@@ -14,6 +14,12 @@ export abstract class AstNode extends AbstractAstNode {
         return this.references;
     }
 
+    public inheritReferences(astNode: AstNode): void {
+        astNode.getReferences().forEach((reference) => {
+            this.addReference(reference);
+        });
+    }
+
     /**
      * Writes the node to a string.
      */
