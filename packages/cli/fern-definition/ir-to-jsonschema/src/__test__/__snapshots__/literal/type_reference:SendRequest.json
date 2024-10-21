@@ -2,19 +2,13 @@
   "type": "object",
   "properties": {
     "prompt": {
-      "const": {
-        "string": "You are a helpful assistant",
-        "type": "string"
-      }
+      "const": "You are a helpful assistant"
     },
     "query": {
       "type": "string"
     },
     "stream": {
-      "const": {
-        "boolean": false,
-        "type": "boolean"
-      }
+      "const": false
     },
     "context": {
       "$ref": "#/definitions/reference.SomeLiteral"
@@ -35,25 +29,16 @@
   ],
   "definitions": {
     "reference.SomeLiteral": {
-      "const": {
-        "string": "You're super wise",
-        "type": "string"
-      }
+      "const": "You're super wise"
     },
     "reference.NestedObjectWithLiterals": {
       "type": "object",
       "properties": {
         "literal1": {
-          "const": {
-            "string": "literal1",
-            "type": "string"
-          }
+          "const": "literal1"
         },
         "literal2": {
-          "const": {
-            "string": "literal2",
-            "type": "string"
-          }
+          "const": "literal2"
         },
         "strProp": {
           "type": "string"

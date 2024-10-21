@@ -16,16 +16,10 @@
       "type": "object",
       "properties": {
         "literal1": {
-          "const": {
-            "string": "literal1",
-            "type": "string"
-          }
+          "const": "literal1"
         },
         "literal2": {
-          "const": {
-            "string": "literal2",
-            "type": "string"
-          }
+          "const": "literal2"
         },
         "strProp": {
           "type": "string"

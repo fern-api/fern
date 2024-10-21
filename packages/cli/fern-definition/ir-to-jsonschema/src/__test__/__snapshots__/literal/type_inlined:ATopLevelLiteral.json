@@ -13,10 +13,7 @@
       "type": "object",
       "properties": {
         "myLiteral": {
-          "const": {
-            "string": "How super cool",
-            "type": "string"
-          }
+          "const": "How super cool"
         }
       },
       "required": [

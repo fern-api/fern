@@ -14,12 +14,10 @@
   ],
   "definitions": {
     "a.aa.A": {
-      "type": "object",
-      "properties": {}
+      "type": "object"
     },
     "a.aa.B": {
-      "type": "object",
-      "properties": {}
+      "type": "object"
     }
   }
 }

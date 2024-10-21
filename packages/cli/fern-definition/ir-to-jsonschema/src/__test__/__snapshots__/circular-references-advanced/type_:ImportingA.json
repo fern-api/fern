@@ -6,9 +6,24 @@
     }
   },
   "definitions": {
+    "RootType": {
+      "type": "object",
+      "properties": {
+        "s": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "s"
+      ]
+    },
     "a.A": {
       "type": "object",
-      "properties": {}
+      "allOf": [
+        {
+          "$ref": "#/definitions/RootType"
+        }
+      ]
     }
   }
 }

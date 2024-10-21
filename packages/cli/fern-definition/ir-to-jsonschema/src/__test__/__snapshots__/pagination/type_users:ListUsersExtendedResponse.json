@@ -1,5 +1,10 @@
 {
   "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/users.UserPage"
+    }
+  ],
   "properties": {
     "total_count": {
       "type": "integer"
@@ -8,5 +13,50 @@
   "required": [
     "total_count"
   ],
-  "definitions": {}
+  "definitions": {
+    "users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ]
+    },
+    "users.UserListContainer": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/users.User"
+          }
+        }
+      },
+      "required": [
+        "users"
+      ]
+    },
+    "users.UserPage": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/users.UserListContainer"
+        },
+        "next": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "data"
+      ]
+    }
+  }
 }

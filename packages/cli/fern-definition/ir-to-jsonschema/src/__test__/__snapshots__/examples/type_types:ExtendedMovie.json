@@ -1,5 +1,10 @@
 {
   "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/types.Movie"
+    }
+  ],
   "properties": {
     "cast": {
       "type": "array",
@@ -11,5 +16,67 @@
   "required": [
     "cast"
   ],
-  "definitions": {}
+  "definitions": {
+    "types.MovieId": {
+      "type": "string"
+    },
+    "commons.types.Tag": {
+      "type": "string"
+    },
+    "types.Movie": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/types.MovieId"
+        },
+        "prequel": {
+          "$ref": "#/definitions/types.MovieId"
+        },
+        "title": {
+          "type": "string"
+        },
+        "from": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "number"
+        },
+        "type": {
+          "const": "movie"
+        },
+        "tag": {
+          "$ref": "#/definitions/commons.types.Tag"
+        },
+        "book": {
+          "type": "string"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        "revenue": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "from",
+        "rating",
+        "type",
+        "tag",
+        "metadata",
+        "revenue"
+      ]
+    }
+  }
 }

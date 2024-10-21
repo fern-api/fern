@@ -14,12 +14,14 @@
   "definitions": {
     "Script": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResource"
+        }
+      ],
       "properties": {
         "resource_type": {
-          "const": {
-            "string": "Script",
-            "type": "string"
-          }
+          "const": "Script"
         },
         "name": {
           "type": "string"
@@ -32,12 +34,14 @@
     },
     "Patient": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResource"
+        }
+      ],
       "properties": {
         "resource_type": {
-          "const": {
-            "string": "Patient",
-            "type": "string"
-          }
+          "const": "Patient"
         },
         "name": {
           "type": "string"
@@ -57,12 +61,14 @@
     },
     "Practitioner": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResource"
+        }
+      ],
       "properties": {
         "resource_type": {
-          "const": {
-            "string": "Practitioner",
-            "type": "string"
-          }
+          "const": "Practitioner"
         },
         "name": {
           "type": "string"
@@ -73,14 +79,68 @@
         "name"
       ]
     },
-    "Account": {
+    "ResourceList": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Account"
+        },
+        {
+          "$ref": "#/definitions/Patient"
+        },
+        {
+          "$ref": "#/definitions/Practitioner"
+        },
+        {
+          "$ref": "#/definitions/Script"
+        }
+      ]
+    },
+    "Memo": {
       "type": "object",
       "properties": {
-        "resource_type": {
-          "const": {
-            "string": "Account",
-            "type": "string"
+        "description": {
+          "type": "string"
+        },
+        "account": {
+          "$ref": "#/definitions/Account"
+        }
+      },
+      "required": [
+        "description"
+      ]
+    },
+    "BaseResource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "related_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceList"
           }
+        },
+        "memo": {
+          "$ref": "#/definitions/Memo"
+        }
+      },
+      "required": [
+        "id",
+        "related_resources",
+        "memo"
+      ]
+    },
+    "Account": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResource"
+        }
+      ],
+      "properties": {
+        "resource_type": {
+          "const": "Account"
         },
         "name": {
           "type": "string"

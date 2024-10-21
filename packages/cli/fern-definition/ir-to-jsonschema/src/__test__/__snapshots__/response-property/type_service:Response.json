@@ -1,5 +1,13 @@
 {
   "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/WithMetadata"
+    },
+    {
+      "$ref": "#/definitions/service.WithDocs"
+    }
+  ],
   "properties": {
     "data": {
       "$ref": "#/definitions/service.Movie"
@@ -9,6 +17,31 @@
     "data"
   ],
   "definitions": {
+    "WithMetadata": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "metadata"
+      ]
+    },
+    "service.WithDocs": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "docs"
+      ]
+    },
     "service.Movie": {
       "type": "object",
       "properties": {

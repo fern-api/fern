@@ -1,5 +1,10 @@
 {
   "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/playlist.PlaylistCreateRequest"
+    }
+  ],
   "properties": {
     "playlist_id": {
       "$ref": "#/definitions/playlist.PlaylistId"
@@ -13,6 +18,27 @@
     "owner-id"
   ],
   "definitions": {
+    "commons.ProblemId": {
+      "type": "string"
+    },
+    "playlist.PlaylistCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "problems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/commons.ProblemId"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "problems"
+      ]
+    },
     "playlist.PlaylistId": {
       "type": "string"
     },

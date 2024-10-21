@@ -29,11 +29,14 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/ir-sdk": "workspace:*",
-    "@fern-api/task-context": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
-    "@fern-api/project-loader": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
+    "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/project-loader": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
+    "@types/ajv": "^1.0.0",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
     "json-schema": "^0.4.0"
   },
   "devDependencies": {

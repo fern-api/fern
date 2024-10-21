@@ -31,9 +31,18 @@ export function convertContainerToJsonSchema({
                 uniqueItems: true
             };
         case "literal":
-            return {
-                const: container.literal
-            };
+            switch (container.literal.type) {
+                case "string":
+                    return {
+                        const: container.literal.string
+                    };
+                case "boolean":
+                    return {
+                        const: container.literal.boolean
+                    };
+                default:
+                    assertNever(container.literal);
+            }
         default:
             assertNever(container);
     }

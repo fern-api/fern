@@ -18,10 +18,7 @@
           "const": "fern"
         },
         "value": {
-          "const": {
-            "string": "fern",
-            "type": "string"
-          }
+          "const": "fern"
         }
       },
       "required": [

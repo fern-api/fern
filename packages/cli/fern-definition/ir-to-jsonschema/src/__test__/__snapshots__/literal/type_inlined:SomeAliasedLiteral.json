@@ -1,7 +1,4 @@
 {
-  "const": {
-    "string": "You're super wise",
-    "type": "string"
-  },
+  "const": "You're super wise",
   "definitions": {}
 }

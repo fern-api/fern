@@ -4,6 +4,8 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadApis } from "@fern-api/project-loader";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
 
 describe("convertIRtoJsonSchema", async () => {
     const TEST_DEFINITIONS_DIR = join(
@@ -47,6 +49,10 @@ describe("convertIRtoJsonSchema", async () => {
                         typeId,
                         context
                     });
+
+                    // Validate the JSON Schema
+                    const ajv = addFormats(new Ajv());
+                    ajv.compile(jsonschema);
 
                     const json = JSON.stringify(jsonschema, undefined, 2);
                     // eslint-disable-next-line jest/no-standalone-expect
