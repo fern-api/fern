@@ -7,7 +7,7 @@
   },
   "additionalProperties": false,
   "definitions": {
-    "RootType": {
+    "a.A": {
       "type": "object",
       "properties": {
         "s": {
@@ -16,15 +16,6 @@
       },
       "required": [
         "s"
-      ],
-      "additionalProperties": false
-    },
-    "a.A": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/RootType"
-        }
       ],
       "additionalProperties": false
     }

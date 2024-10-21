@@ -1,11 +1,46 @@
 {
   "type": "object",
-  "allOf": [
-    {
-      "$ref": "#/definitions/types.Movie"
-    }
-  ],
   "properties": {
+    "id": {
+      "$ref": "#/definitions/types.MovieId"
+    },
+    "prequel": {
+      "$ref": "#/definitions/types.MovieId"
+    },
+    "title": {
+      "type": "string"
+    },
+    "from": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number"
+    },
+    "type": {
+      "const": "movie"
+    },
+    "tag": {
+      "$ref": "#/definitions/commons.types.Tag"
+    },
+    "book": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    },
+    "revenue": {
+      "type": "integer"
+    },
     "cast": {
       "type": "array",
       "items": {
@@ -14,6 +49,14 @@
     }
   },
   "required": [
+    "id",
+    "title",
+    "from",
+    "rating",
+    "type",
+    "tag",
+    "metadata",
+    "revenue",
     "cast"
   ],
   "additionalProperties": false,
@@ -23,62 +66,6 @@
     },
     "commons.types.Tag": {
       "type": "string"
-    },
-    "types.Movie": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "$ref": "#/definitions/types.MovieId"
-        },
-        "prequel": {
-          "$ref": "#/definitions/types.MovieId"
-        },
-        "title": {
-          "type": "string"
-        },
-        "from": {
-          "type": "string"
-        },
-        "rating": {
-          "type": "number"
-        },
-        "type": {
-          "const": "movie"
-        },
-        "tag": {
-          "$ref": "#/definitions/commons.types.Tag"
-        },
-        "book": {
-          "type": "string"
-        },
-        "metadata": {
-          "type": "object",
-          "additionalProperties": {
-            "type": [
-              "string",
-              "number",
-              "boolean",
-              "object",
-              "array",
-              "null"
-            ]
-          }
-        },
-        "revenue": {
-          "type": "integer"
-        }
-      },
-      "required": [
-        "id",
-        "title",
-        "from",
-        "rating",
-        "type",
-        "tag",
-        "metadata",
-        "revenue"
-      ],
-      "additionalProperties": false
     }
   }
 }

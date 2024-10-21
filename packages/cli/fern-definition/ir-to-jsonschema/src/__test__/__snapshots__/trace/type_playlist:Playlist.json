@@ -1,11 +1,15 @@
 {
   "type": "object",
-  "allOf": [
-    {
-      "$ref": "#/definitions/playlist.PlaylistCreateRequest"
-    }
-  ],
   "properties": {
+    "name": {
+      "type": "string"
+    },
+    "problems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/commons.ProblemId"
+      }
+    },
     "playlist_id": {
       "$ref": "#/definitions/playlist.PlaylistId"
     },
@@ -14,6 +18,8 @@
     }
   },
   "required": [
+    "name",
+    "problems",
     "playlist_id",
     "owner-id"
   ],
@@ -21,25 +27,6 @@
   "definitions": {
     "commons.ProblemId": {
       "type": "string"
-    },
-    "playlist.PlaylistCreateRequest": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "problems": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/commons.ProblemId"
-          }
-        }
-      },
-      "required": [
-        "name",
-        "problems"
-      ],
-      "additionalProperties": false
     },
     "playlist.PlaylistId": {
       "type": "string"

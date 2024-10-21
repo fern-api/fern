@@ -1,16 +1,19 @@
 {
   "type": "object",
-  "allOf": [
-    {
-      "$ref": "#/definitions/users.UserPage"
-    }
-  ],
   "properties": {
+    "data": {
+      "$ref": "#/definitions/users.UserListContainer"
+    },
+    "next": {
+      "type": "string",
+      "format": "uuid"
+    },
     "total_count": {
       "type": "integer"
     }
   },
   "required": [
+    "data",
     "total_count"
   ],
   "additionalProperties": false,
@@ -43,22 +46,6 @@
       },
       "required": [
         "users"
-      ],
-      "additionalProperties": false
-    },
-    "users.UserPage": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "$ref": "#/definitions/users.UserListContainer"
-        },
-        "next": {
-          "type": "string",
-          "format": "uuid"
-        }
-      },
-      "required": [
-        "data"
       ],
       "additionalProperties": false
     }
