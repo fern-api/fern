@@ -11,7 +11,6 @@
   "required": [
     "parameters"
   ],
-  "additionalProperties": false,
   "definitions": {
     "v2.v3.problem.ParameterId": {
       "type": "string"
@@ -173,8 +172,7 @@
         "parameterId",
         "name",
         "variableType"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

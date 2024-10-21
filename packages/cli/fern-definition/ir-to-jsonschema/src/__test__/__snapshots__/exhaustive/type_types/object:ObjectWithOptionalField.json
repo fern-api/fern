@@ -56,6 +56,5 @@
       "pattern": "^-?[0-9]+$"
     }
   },
-  "additionalProperties": false,
   "definitions": {}
 }

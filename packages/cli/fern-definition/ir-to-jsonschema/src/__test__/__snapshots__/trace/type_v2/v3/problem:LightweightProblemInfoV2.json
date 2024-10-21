@@ -24,7 +24,6 @@
     "problemVersion",
     "variableTypes"
   ],
-  "additionalProperties": false,
   "definitions": {
     "commons.ProblemId": {
       "type": "string"

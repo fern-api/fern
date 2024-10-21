@@ -27,7 +27,6 @@
     "context",
     "containerObject"
   ],
-  "additionalProperties": false,
   "definitions": {
     "reference.SomeLiteral": {
       "const": "You're super wise"
@@ -49,8 +48,7 @@
         "literal1",
         "literal2",
         "strProp"
-      ],
-      "additionalProperties": false
+      ]
     },
     "reference.ContainerObject": {
       "type": "object",
@@ -64,8 +62,7 @@
       },
       "required": [
         "nestedObjects"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

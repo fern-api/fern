@@ -12,7 +12,6 @@
     "id",
     "name"
   ],
-  "additionalProperties": false,
   "definitions": {
     "user.UserId": {
       "type": "string"

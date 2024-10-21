@@ -12,7 +12,6 @@
     "nodeId",
     "fullList"
   ],
-  "additionalProperties": false,
   "definitions": {
     "commons.NodeId": {
       "type": "string"
@@ -33,8 +32,7 @@
       "required": [
         "nodeId",
         "val"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.SinglyLinkedListValue": {
       "type": "object",
@@ -51,8 +49,7 @@
       },
       "required": [
         "nodes"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

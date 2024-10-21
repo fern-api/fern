@@ -11,6 +11,5 @@
   "required": [
     "delta"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

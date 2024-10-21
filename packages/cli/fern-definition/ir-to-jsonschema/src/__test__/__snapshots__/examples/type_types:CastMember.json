@@ -24,8 +24,7 @@
       "required": [
         "name",
         "id"
-      ],
-      "additionalProperties": false
+      ]
     },
     "types.Actress": {
       "type": "object",
@@ -40,8 +39,7 @@
       "required": [
         "name",
         "id"
-      ],
-      "additionalProperties": false
+      ]
     },
     "types.StuntDouble": {
       "type": "object",
@@ -56,8 +54,7 @@
       "required": [
         "name",
         "actorOrActressId"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

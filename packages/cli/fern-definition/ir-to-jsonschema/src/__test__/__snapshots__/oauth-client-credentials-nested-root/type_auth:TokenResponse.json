@@ -15,6 +15,5 @@
     "access_token",
     "expires_in"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

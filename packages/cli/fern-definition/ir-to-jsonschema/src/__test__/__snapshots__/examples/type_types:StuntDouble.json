@@ -12,6 +12,5 @@
     "name",
     "actorOrActressId"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

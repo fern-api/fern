@@ -12,7 +12,6 @@
     "methodName",
     "signature"
   ],
-  "additionalProperties": false,
   "definitions": {
     "v2.problem.ParameterId": {
       "type": "string"
@@ -174,8 +173,7 @@
         "parameterId",
         "name",
         "variableType"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.problem.NonVoidFunctionSignature": {
       "type": "object",
@@ -193,8 +191,7 @@
       "required": [
         "parameters",
         "returnType"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

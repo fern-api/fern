@@ -14,7 +14,6 @@
       "$ref": "#/definitions/Usage"
     }
   },
-  "additionalProperties": false,
   "definitions": {
     "MetadataValue": {
       "oneOf": [
@@ -72,8 +71,7 @@
       "required": [
         "indices",
         "values"
-      ],
-      "additionalProperties": false
+      ]
     },
     "Column": {
       "type": "object",
@@ -97,8 +95,7 @@
       "required": [
         "id",
         "values"
-      ],
-      "additionalProperties": false
+      ]
     },
     "Usage": {
       "type": "object",
@@ -107,8 +104,7 @@
           "type": "integer",
           "minimum": 0
         }
-      },
-      "additionalProperties": false
+      }
     }
   }
 }

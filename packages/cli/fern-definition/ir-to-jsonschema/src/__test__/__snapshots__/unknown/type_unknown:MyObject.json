@@ -15,6 +15,5 @@
   "required": [
     "unknown"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

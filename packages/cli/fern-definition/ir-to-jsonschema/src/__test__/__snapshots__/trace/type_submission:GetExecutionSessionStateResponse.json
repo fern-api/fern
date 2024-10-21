@@ -21,7 +21,6 @@
     "states",
     "warmingSessionIds"
   ],
-  "additionalProperties": false,
   "definitions": {
     "commons.Language": {
       "type": "string",
@@ -69,8 +68,7 @@
         "isWarmInstance",
         "language",
         "status"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

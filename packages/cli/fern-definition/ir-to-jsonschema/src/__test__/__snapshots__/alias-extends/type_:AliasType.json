@@ -10,8 +10,7 @@
       },
       "required": [
         "parent"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

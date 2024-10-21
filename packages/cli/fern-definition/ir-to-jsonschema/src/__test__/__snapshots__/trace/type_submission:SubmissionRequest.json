@@ -154,8 +154,7 @@
         "directory",
         "filename",
         "contents"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

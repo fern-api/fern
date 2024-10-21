@@ -20,7 +20,6 @@
   "required": [
     "name"
   ],
-  "additionalProperties": false,
   "definitions": {
     "file.FileInfo": {
       "type": "string",
@@ -46,8 +45,7 @@
         "name",
         "contents",
         "info"
-      ],
-      "additionalProperties": false
+      ]
     },
     "file.directory.Directory": {
       "type": "object",
@@ -70,8 +68,7 @@
       },
       "required": [
         "name"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

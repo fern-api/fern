@@ -11,7 +11,6 @@
   "required": [
     "nestedObjects"
   ],
-  "additionalProperties": false,
   "definitions": {
     "reference.NestedObjectWithLiterals": {
       "type": "object",
@@ -30,8 +29,7 @@
         "literal1",
         "literal2",
         "strProp"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

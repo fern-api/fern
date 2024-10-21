@@ -12,6 +12,5 @@
     "name",
     "id"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

@@ -11,7 +11,6 @@
   "required": [
     "variables"
   ],
-  "additionalProperties": false,
   "definitions": {
     "commons.DebugKeyValuePairs": {
       "type": "object",
@@ -26,8 +25,7 @@
       "required": [
         "key",
         "value"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.NodeId": {
       "type": "string"
@@ -51,8 +49,7 @@
       "required": [
         "nodeId",
         "val"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.BinaryTreeValue": {
       "type": "object",
@@ -69,8 +66,7 @@
       },
       "required": [
         "nodes"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.SinglyLinkedListNodeValue": {
       "type": "object",
@@ -88,8 +84,7 @@
       "required": [
         "nodeId",
         "val"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.SinglyLinkedListValue": {
       "type": "object",
@@ -106,8 +101,7 @@
       },
       "required": [
         "nodes"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.DoublyLinkedListNodeValue": {
       "type": "object",
@@ -128,8 +122,7 @@
       "required": [
         "nodeId",
         "val"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.DoublyLinkedListValue": {
       "type": "object",
@@ -146,8 +139,7 @@
       },
       "required": [
         "nodes"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.DebugVariableValue": {
       "type": "object",

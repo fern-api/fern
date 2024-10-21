@@ -19,7 +19,6 @@
     "per_page",
     "total_page"
   ],
-  "additionalProperties": false,
   "definitions": {
     "users.NextPage": {
       "type": "object",
@@ -34,8 +33,7 @@
       "required": [
         "page",
         "starting_after"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

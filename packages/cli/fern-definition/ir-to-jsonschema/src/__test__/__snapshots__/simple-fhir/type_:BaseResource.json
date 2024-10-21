@@ -19,7 +19,6 @@
     "related_resources",
     "memo"
   ],
-  "additionalProperties": false,
   "definitions": {
     "Memo": {
       "type": "object",
@@ -33,10 +32,9 @@
       },
       "required": [
         "description"
-      ],
-      "additionalProperties": false
+      ]
     },
-    "BaseResource": {
+    "Script": {
       "type": "object",
       "properties": {
         "id": {
@@ -50,23 +48,7 @@
         },
         "memo": {
           "$ref": "#/definitions/Memo"
-        }
-      },
-      "required": [
-        "id",
-        "related_resources",
-        "memo"
-      ],
-      "additionalProperties": false
-    },
-    "Script": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/BaseResource"
-        }
-      ],
-      "properties": {
+        },
         "resource_type": {
           "const": "Script"
         },
@@ -77,17 +59,23 @@
       "required": [
         "resource_type",
         "name"
-      ],
-      "additionalProperties": false
+      ]
     },
     "Patient": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/BaseResource"
-        }
-      ],
       "properties": {
+        "id": {
+          "type": "string"
+        },
+        "related_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          }
+        },
+        "memo": {
+          "$ref": "#/definitions/Memo"
+        },
         "resource_type": {
           "const": "Patient"
         },
@@ -105,17 +93,23 @@
         "resource_type",
         "name",
         "scripts"
-      ],
-      "additionalProperties": false
+      ]
     },
     "Practitioner": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/BaseResource"
-        }
-      ],
       "properties": {
+        "id": {
+          "type": "string"
+        },
+        "related_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          }
+        },
+        "memo": {
+          "$ref": "#/definitions/Memo"
+        },
         "resource_type": {
           "const": "Practitioner"
         },
@@ -126,17 +120,23 @@
       "required": [
         "resource_type",
         "name"
-      ],
-      "additionalProperties": false
+      ]
     },
     "Account": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/BaseResource"
-        }
-      ],
       "properties": {
+        "id": {
+          "type": "string"
+        },
+        "related_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          }
+        },
+        "memo": {
+          "$ref": "#/definitions/Memo"
+        },
         "resource_type": {
           "const": "Account"
         },
@@ -153,8 +153,7 @@
       "required": [
         "resource_type",
         "name"
-      ],
-      "additionalProperties": false
+      ]
     },
     "ResourceList": {
       "oneOf": [

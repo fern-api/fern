@@ -8,7 +8,6 @@
   "required": [
     "status"
   ],
-  "additionalProperties": false,
   "definitions": {
     "submission.ExceptionInfo": {
       "type": "object",
@@ -27,8 +26,7 @@
         "exceptionType",
         "exceptionMessage",
         "exceptionStacktrace"
-      ],
-      "additionalProperties": false
+      ]
     },
     "submission.ErrorInfo": {
       "type": "object",

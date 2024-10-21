@@ -1,11 +1,13 @@
 {
   "type": "object",
-  "allOf": [
-    {
-      "$ref": "#/definitions/users.UserOptionalListPage"
-    }
-  ],
   "properties": {
+    "data": {
+      "$ref": "#/definitions/users.UserOptionalListContainer"
+    },
+    "next": {
+      "type": "string",
+      "format": "uuid"
+    },
     "total_count": {
       "type": "integer"
     }
@@ -13,7 +15,6 @@
   "required": [
     "total_count"
   ],
-  "additionalProperties": false,
   "definitions": {
     "users.User": {
       "type": "object",
@@ -28,8 +29,7 @@
       "required": [
         "name",
         "id"
-      ],
-      "additionalProperties": false
+      ]
     },
     "users.UserOptionalListContainer": {
       "type": "object",
@@ -40,24 +40,7 @@
             "$ref": "#/definitions/users.User"
           }
         }
-      },
-      "additionalProperties": false
-    },
-    "users.UserOptionalListPage": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "$ref": "#/definitions/users.UserOptionalListContainer"
-        },
-        "next": {
-          "type": "string",
-          "format": "uuid"
-        }
-      },
-      "required": [
-        "data"
-      ],
-      "additionalProperties": false
+      }
     }
   }
 }

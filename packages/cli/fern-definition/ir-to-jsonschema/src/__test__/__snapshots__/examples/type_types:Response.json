@@ -22,7 +22,6 @@
     "response",
     "identifiers"
   ],
-  "additionalProperties": false,
   "definitions": {
     "BasicType": {
       "type": "string",
@@ -66,8 +65,7 @@
         "type",
         "value",
         "label"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

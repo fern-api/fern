@@ -12,7 +12,6 @@
     "name",
     "user"
   ],
-  "additionalProperties": false,
   "definitions": {
     "user.User": {
       "type": "object",
@@ -30,8 +29,7 @@
       "required": [
         "name",
         "tags"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

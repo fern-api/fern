@@ -8,6 +8,5 @@
   "required": [
     "myLiteral"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

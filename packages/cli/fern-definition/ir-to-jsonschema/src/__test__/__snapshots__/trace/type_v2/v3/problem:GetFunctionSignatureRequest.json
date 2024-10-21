@@ -8,7 +8,6 @@
   "required": [
     "functionSignature"
   ],
-  "additionalProperties": false,
   "definitions": {
     "v2.v3.problem.ParameterId": {
       "type": "string"
@@ -170,8 +169,7 @@
         "parameterId",
         "name",
         "variableType"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.FunctionSignature": {
       "type": "object",

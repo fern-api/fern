@@ -12,6 +12,5 @@
     "start",
     "offset"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

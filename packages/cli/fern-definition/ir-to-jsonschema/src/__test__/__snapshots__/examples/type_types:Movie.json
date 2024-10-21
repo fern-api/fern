@@ -52,7 +52,6 @@
     "metadata",
     "revenue"
   ],
-  "additionalProperties": false,
   "definitions": {
     "types.MovieId": {
       "type": "string"

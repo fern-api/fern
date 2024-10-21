@@ -8,6 +8,5 @@
   "required": [
     "data"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

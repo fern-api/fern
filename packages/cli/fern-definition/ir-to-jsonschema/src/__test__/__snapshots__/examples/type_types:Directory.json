@@ -20,7 +20,6 @@
   "required": [
     "name"
   ],
-  "additionalProperties": false,
   "definitions": {
     "types.File": {
       "type": "object",
@@ -35,8 +34,7 @@
       "required": [
         "name",
         "contents"
-      ],
-      "additionalProperties": false
+      ]
     },
     "types.Directory": {
       "type": "object",
@@ -59,8 +57,7 @@
       },
       "required": [
         "name"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

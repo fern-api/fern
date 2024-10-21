@@ -1,11 +1,9 @@
 {
   "type": "object",
-  "allOf": [
-    {
-      "$ref": "#/definitions/Docs"
-    }
-  ],
   "properties": {
+    "docs": {
+      "type": "string"
+    },
     "name": {
       "type": "string"
     }
@@ -13,19 +11,5 @@
   "required": [
     "name"
   ],
-  "additionalProperties": false,
-  "definitions": {
-    "Docs": {
-      "type": "object",
-      "properties": {
-        "docs": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "docs"
-      ],
-      "additionalProperties": false
-    }
-  }
+  "definitions": {}
 }

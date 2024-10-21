@@ -15,6 +15,5 @@
     "name",
     "tags"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

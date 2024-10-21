@@ -11,7 +11,6 @@
       "type": "string"
     }
   },
-  "additionalProperties": false,
   "definitions": {
     "MetadataValue": {
       "oneOf": [
@@ -69,8 +68,7 @@
       "required": [
         "indices",
         "values"
-      ],
-      "additionalProperties": false
+      ]
     },
     "ScoredColumn": {
       "type": "object",
@@ -96,8 +94,7 @@
       },
       "required": [
         "id"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

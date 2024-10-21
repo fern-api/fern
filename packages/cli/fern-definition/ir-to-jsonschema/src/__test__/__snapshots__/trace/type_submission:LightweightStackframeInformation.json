@@ -12,6 +12,5 @@
     "numStackFrames",
     "topStackFrameMethodName"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

@@ -8,6 +8,5 @@
   "required": [
     "string"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

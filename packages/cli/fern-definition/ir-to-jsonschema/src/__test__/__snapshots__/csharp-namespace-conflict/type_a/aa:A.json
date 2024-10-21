@@ -1,5 +1,4 @@
 {
   "type": "object",
-  "additionalProperties": false,
   "definitions": {}
 }

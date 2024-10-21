@@ -11,7 +11,6 @@
   "required": [
     "updates"
   ],
-  "additionalProperties": false,
   "definitions": {
     "submission.RunningSubmissionState": {
       "type": "string",
@@ -89,8 +88,7 @@
         "exceptionType",
         "exceptionMessage",
         "exceptionStacktrace"
-      ],
-      "additionalProperties": false
+      ]
     },
     "submission.ErrorInfo": {
       "type": "object",
@@ -278,8 +276,7 @@
       "required": [
         "updateTime",
         "updateInfo"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

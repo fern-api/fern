@@ -16,7 +16,6 @@
     "title",
     "rating"
   ],
-  "additionalProperties": false,
   "definitions": {
     "imdb.MovieId": {
       "type": "string"

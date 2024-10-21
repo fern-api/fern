@@ -11,7 +11,6 @@
   "required": [
     "users"
   ],
-  "additionalProperties": false,
   "definitions": {
     "users.User": {
       "type": "object",
@@ -26,8 +25,7 @@
       "required": [
         "name",
         "id"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

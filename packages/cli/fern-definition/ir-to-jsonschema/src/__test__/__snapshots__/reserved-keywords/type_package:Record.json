@@ -15,6 +15,5 @@
     "foo",
     "3d"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

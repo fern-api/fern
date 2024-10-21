@@ -14,7 +14,6 @@
   "required": [
     "stdout"
   ],
-  "additionalProperties": false,
   "definitions": {
     "submission.ExceptionV2": {
       "type": "object",
@@ -82,8 +81,7 @@
         "exceptionType",
         "exceptionMessage",
         "exceptionStacktrace"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

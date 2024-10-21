@@ -75,8 +75,7 @@
         "exceptionType",
         "exceptionMessage",
         "exceptionStacktrace"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

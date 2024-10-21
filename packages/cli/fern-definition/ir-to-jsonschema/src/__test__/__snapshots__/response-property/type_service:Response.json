@@ -1,14 +1,15 @@
 {
   "type": "object",
-  "allOf": [
-    {
-      "$ref": "#/definitions/WithMetadata"
-    },
-    {
-      "$ref": "#/definitions/service.WithDocs"
-    }
-  ],
   "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "docs": {
+      "type": "string"
+    },
     "data": {
       "$ref": "#/definitions/service.Movie"
     }
@@ -16,35 +17,7 @@
   "required": [
     "data"
   ],
-  "additionalProperties": false,
   "definitions": {
-    "WithMetadata": {
-      "type": "object",
-      "properties": {
-        "metadata": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [
-        "metadata"
-      ],
-      "additionalProperties": false
-    },
-    "service.WithDocs": {
-      "type": "object",
-      "properties": {
-        "docs": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "docs"
-      ],
-      "additionalProperties": false
-    },
     "service.Movie": {
       "type": "object",
       "properties": {
@@ -58,8 +31,7 @@
       "required": [
         "id",
         "name"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

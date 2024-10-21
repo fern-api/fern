@@ -16,6 +16,5 @@
     "literal2",
     "strProp"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

@@ -5,7 +5,6 @@
       "$ref": "#/definitions/folder-b.common.Foo"
     }
   },
-  "additionalProperties": false,
   "definitions": {
     "folder-c.common.FolderCFoo": {
       "type": "object",
@@ -17,8 +16,7 @@
       },
       "required": [
         "bar_property"
-      ],
-      "additionalProperties": false
+      ]
     },
     "folder-b.common.Foo": {
       "type": "object",
@@ -26,8 +24,7 @@
         "foo": {
           "$ref": "#/definitions/folder-c.common.FolderCFoo"
         }
-      },
-      "additionalProperties": false
+      }
     }
   }
 }

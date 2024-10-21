@@ -12,7 +12,6 @@
     "testCaseId",
     "traceResponsesSize"
   ],
-  "additionalProperties": false,
   "definitions": {
     "v2.problem.TestCaseId": {
       "type": "string"

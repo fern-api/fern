@@ -12,15 +12,12 @@
     "a",
     "b"
   ],
-  "additionalProperties": false,
   "definitions": {
     "a.aa.A": {
-      "type": "object",
-      "additionalProperties": false
+      "type": "object"
     },
     "a.aa.B": {
-      "type": "object",
-      "additionalProperties": false
+      "type": "object"
     }
   }
 }

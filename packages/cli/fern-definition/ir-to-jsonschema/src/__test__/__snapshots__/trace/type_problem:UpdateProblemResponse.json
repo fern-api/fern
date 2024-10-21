@@ -8,6 +8,5 @@
   "required": [
     "problemVersion"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

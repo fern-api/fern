@@ -12,7 +12,6 @@
     "request",
     "cause"
   ],
-  "additionalProperties": false,
   "definitions": {
     "commons.ProblemId": {
       "type": "string"
@@ -46,8 +45,7 @@
         "directory",
         "filename",
         "contents"
-      ],
-      "additionalProperties": false
+      ]
     },
     "submission.SubmissionRequest": {
       "type": "object",

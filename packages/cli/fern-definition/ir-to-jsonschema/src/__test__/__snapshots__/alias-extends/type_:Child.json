@@ -1,11 +1,9 @@
 {
   "type": "object",
-  "allOf": [
-    {
-      "$ref": "#/definitions/Parent"
-    }
-  ],
   "properties": {
+    "parent": {
+      "type": "string"
+    },
     "child": {
       "type": "string"
     }
@@ -13,19 +11,5 @@
   "required": [
     "child"
   ],
-  "additionalProperties": false,
-  "definitions": {
-    "Parent": {
-      "type": "object",
-      "properties": {
-        "parent": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "parent"
-      ],
-      "additionalProperties": false
-    }
-  }
+  "definitions": {}
 }

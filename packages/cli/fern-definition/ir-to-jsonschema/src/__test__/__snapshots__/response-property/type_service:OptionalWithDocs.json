@@ -10,8 +10,7 @@
       },
       "required": [
         "docs"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

@@ -26,7 +26,6 @@
     "customTestCases",
     "status"
   ],
-  "additionalProperties": false,
   "definitions": {
     "commons.ProblemId": {
       "type": "string"
@@ -44,8 +43,7 @@
       "required": [
         "key",
         "value"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.NodeId": {
       "type": "string"
@@ -69,8 +67,7 @@
       "required": [
         "nodeId",
         "val"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.SinglyLinkedListNodeValue": {
       "type": "object",
@@ -88,8 +85,7 @@
       "required": [
         "nodeId",
         "val"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.DoublyLinkedListNodeValue": {
       "type": "object",
@@ -110,8 +106,7 @@
       "required": [
         "nodeId",
         "val"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.VariableValue": {
       "type": "object",
@@ -323,8 +318,7 @@
       "required": [
         "id",
         "params"
-      ],
-      "additionalProperties": false
+      ]
     },
     "submission.ExceptionInfo": {
       "type": "object",
@@ -343,8 +337,7 @@
         "exceptionType",
         "exceptionMessage",
         "exceptionStacktrace"
-      ],
-      "additionalProperties": false
+      ]
     },
     "submission.ErrorInfo": {
       "type": "object",
@@ -548,8 +541,7 @@
         "expectedResult",
         "actualResult",
         "passed"
-      ],
-      "additionalProperties": false
+      ]
     },
     "submission.TestCaseGrade": {
       "type": "object",
@@ -619,8 +611,7 @@
       "required": [
         "result",
         "stdout"
-      ],
-      "additionalProperties": false
+      ]
     },
     "submission.SubmissionStatusForTestCase": {
       "type": "object",

@@ -5,6 +5,5 @@
       "type": "string"
     }
   },
-  "additionalProperties": false,
   "definitions": {}
 }

@@ -11,6 +11,5 @@
   "required": [
     "metadata"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

@@ -8,7 +8,6 @@
   "required": [
     "cursor"
   ],
-  "additionalProperties": false,
   "definitions": {
     "UsernamePage": {
       "type": "object",
@@ -25,8 +24,7 @@
       },
       "required": [
         "data"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

@@ -15,7 +15,6 @@
     "name",
     "problems"
   ],
-  "additionalProperties": false,
   "definitions": {
     "commons.ProblemId": {
       "type": "string"

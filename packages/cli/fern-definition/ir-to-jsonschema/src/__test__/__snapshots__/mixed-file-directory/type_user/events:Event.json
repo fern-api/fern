@@ -12,7 +12,6 @@
     "id",
     "name"
   ],
-  "additionalProperties": false,
   "definitions": {
     "Id": {
       "type": "string"

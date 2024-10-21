@@ -12,7 +12,6 @@
   "required": [
     "data"
   ],
-  "additionalProperties": false,
   "definitions": {
     "users.User": {
       "type": "object",
@@ -27,8 +26,7 @@
       "required": [
         "name",
         "id"
-      ],
-      "additionalProperties": false
+      ]
     },
     "users.UserOptionalListContainer": {
       "type": "object",
@@ -39,8 +37,7 @@
             "$ref": "#/definitions/users.User"
           }
         }
-      },
-      "additionalProperties": false
+      }
     }
   }
 }

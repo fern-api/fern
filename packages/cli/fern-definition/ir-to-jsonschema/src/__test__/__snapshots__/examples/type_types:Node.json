@@ -20,7 +20,6 @@
   "required": [
     "name"
   ],
-  "additionalProperties": false,
   "definitions": {
     "types.Tree": {
       "type": "object",
@@ -31,8 +30,7 @@
             "$ref": "#/definitions/types.Node"
           }
         }
-      },
-      "additionalProperties": false
+      }
     },
     "types.Node": {
       "type": "object",
@@ -55,8 +53,7 @@
       },
       "required": [
         "name"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

@@ -1,23 +1,9 @@
 {
   "type": "object",
-  "allOf": [
-    {
-      "$ref": "#/definitions/RootType"
+  "properties": {
+    "s": {
+      "type": "string"
     }
-  ],
-  "additionalProperties": false,
-  "definitions": {
-    "RootType": {
-      "type": "object",
-      "properties": {
-        "s": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "s"
-      ],
-      "additionalProperties": false
-    }
-  }
+  },
+  "definitions": {}
 }

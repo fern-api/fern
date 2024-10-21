@@ -5,28 +5,14 @@
       "$ref": "#/definitions/a.A"
     }
   },
-  "additionalProperties": false,
   "definitions": {
-    "RootType": {
+    "a.A": {
       "type": "object",
       "properties": {
         "s": {
           "type": "string"
         }
-      },
-      "required": [
-        "s"
-      ],
-      "additionalProperties": false
-    },
-    "a.A": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/RootType"
-        }
-      ],
-      "additionalProperties": false
+      }
     }
   }
 }

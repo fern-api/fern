@@ -11,6 +11,5 @@
   "required": [
     "id"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

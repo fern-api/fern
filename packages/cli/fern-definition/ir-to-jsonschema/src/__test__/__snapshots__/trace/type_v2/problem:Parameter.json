@@ -16,7 +16,6 @@
     "name",
     "variableType"
   ],
-  "additionalProperties": false,
   "definitions": {
     "v2.problem.ParameterId": {
       "type": "string"

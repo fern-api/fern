@@ -15,7 +15,6 @@
     "file",
     "relatedTypes"
   ],
-  "additionalProperties": false,
   "definitions": {
     "v2.problem.FileInfoV2": {
       "type": "object",
@@ -38,8 +37,7 @@
         "directory",
         "contents",
         "editable"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.VariableType": {
       "type": "object",

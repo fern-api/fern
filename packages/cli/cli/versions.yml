@@ -1,17 +1,25 @@
 - changelogEntry:
     - summary: |
+        Improved JSON Schema generation for object inheritance:
+        - Removed the use of `allOf` for representing object extensions
+        - Properties from parent objects are now directly added to the child object in the JSON Schema
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc11
+
+- changelogEntry:
+    - summary: |
         Added support for `additionalProperties` on export to JSON Schema.
-      type: feat
+      type: fix
   irVersion: 53
   version: 0.45.0-rc10
-
 
 - changelogEntry: 
     - summary: | 
         Improved JSON Schema generation for object extensions and const values:
         - Object extensions are now properly represented using `allOf` in the JSON Schema
         - Literal values (string and boolean) are now correctly represented using `const` in the JSON Schema
-      type: internal
+      type: fix
   irVersion: 53
   version: 0.45.0-rc9
 

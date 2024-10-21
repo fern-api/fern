@@ -16,6 +16,5 @@
     "type",
     "stacktrace"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

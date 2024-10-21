@@ -12,7 +12,6 @@
     "expectedLanguage",
     "actualLanguage"
   ],
-  "additionalProperties": false,
   "definitions": {
     "commons.Language": {
       "type": "string",

@@ -15,7 +15,6 @@
     "submissionId",
     "traceResponsesSize"
   ],
-  "additionalProperties": false,
   "definitions": {
     "submission.SubmissionId": {
       "type": "string",

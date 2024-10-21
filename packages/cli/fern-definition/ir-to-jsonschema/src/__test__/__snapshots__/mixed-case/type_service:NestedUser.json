@@ -12,7 +12,6 @@
     "Name",
     "NestedUser"
   ],
-  "additionalProperties": false,
   "definitions": {
     "service.User": {
       "type": "object",
@@ -37,8 +36,7 @@
         "userName",
         "metadata_tags",
         "EXTRA_PROPERTIES"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

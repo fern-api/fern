@@ -8,6 +8,5 @@
   "required": [
     "docs"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

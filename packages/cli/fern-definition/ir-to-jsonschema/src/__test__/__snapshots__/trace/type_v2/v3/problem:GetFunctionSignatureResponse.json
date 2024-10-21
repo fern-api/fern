@@ -11,6 +11,5 @@
   "required": [
     "functionByLanguage"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

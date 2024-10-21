@@ -26,7 +26,6 @@
     "language",
     "status"
   ],
-  "additionalProperties": false,
   "definitions": {
     "commons.Language": {
       "type": "string",

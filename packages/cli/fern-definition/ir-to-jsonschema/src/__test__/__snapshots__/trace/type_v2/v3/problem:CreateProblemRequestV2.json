@@ -42,7 +42,6 @@
     "supportedLanguages",
     "isPublic"
   ],
-  "additionalProperties": false,
   "definitions": {
     "commons.KeyValuePair": {
       "type": "object",
@@ -57,8 +56,7 @@
       "required": [
         "key",
         "value"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.NodeId": {
       "type": "string"
@@ -82,8 +80,7 @@
       "required": [
         "nodeId",
         "val"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.SinglyLinkedListNodeValue": {
       "type": "object",
@@ -101,8 +98,7 @@
       "required": [
         "nodeId",
         "val"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.DoublyLinkedListNodeValue": {
       "type": "object",
@@ -123,8 +119,7 @@
       "required": [
         "nodeId",
         "val"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.VariableValue": {
       "type": "object",
@@ -389,8 +384,7 @@
       },
       "required": [
         "boards"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.ParameterId": {
       "type": "string"
@@ -552,8 +546,7 @@
         "parameterId",
         "name",
         "variableType"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.NonVoidFunctionSignature": {
       "type": "object",
@@ -571,8 +564,7 @@
       "required": [
         "parameters",
         "returnType"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.FileInfoV2": {
       "type": "object",
@@ -595,8 +587,7 @@
         "directory",
         "contents",
         "editable"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.Files": {
       "type": "object",
@@ -610,8 +601,7 @@
       },
       "required": [
         "files"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.TestCaseTemplateId": {
       "type": "string"
@@ -671,8 +661,7 @@
       },
       "required": [
         "boards"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.BasicTestCaseTemplate": {
       "type": "object",
@@ -695,8 +684,7 @@
         "name",
         "description",
         "expectedValueParameterId"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.CustomFiles": {
       "type": "object",
@@ -772,8 +760,7 @@
       },
       "required": [
         "impl"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.FunctionImplementationForMultipleLanguages": {
       "type": "object",
@@ -787,8 +774,7 @@
       },
       "required": [
         "codeByLanguage"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.NonVoidFunctionDefinition": {
       "type": "object",
@@ -803,8 +789,7 @@
       "required": [
         "signature",
         "code"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.AssertCorrectnessCheck": {
       "type": "object",
@@ -927,8 +912,7 @@
       "required": [
         "description",
         "function"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.TestCaseTemplate": {
       "type": "object",
@@ -947,8 +931,7 @@
         "templateId",
         "name",
         "implementation"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.TestCaseId": {
       "type": "string"
@@ -970,8 +953,7 @@
         "id",
         "name",
         "hidden"
-      ],
-      "additionalProperties": false
+      ]
     },
     "v2.v3.problem.TestCaseImplementationReference": {
       "type": "object",
@@ -1027,8 +1009,7 @@
         "expectedStdout": {
           "type": "string"
         }
-      },
-      "additionalProperties": false
+      }
     },
     "v2.v3.problem.TestCaseV2": {
       "type": "object",
@@ -1053,8 +1034,7 @@
         "metadata",
         "implementation",
         "arguments"
-      ],
-      "additionalProperties": false
+      ]
     },
     "commons.Language": {
       "type": "string",

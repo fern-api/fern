@@ -1,4 +1,4 @@
-import { ObjectTypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
+import { ObjectTypeDeclaration } from "@fern-api/ir-sdk";
 import { JSONSchema4 } from "json-schema";
 import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
 import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema";
@@ -15,16 +15,7 @@ export function convertObjectToJsonSchema({ object, context }: convertObjectToJs
         type: "object"
     };
 
-    if (object.extends.length > 0) {
-        schema.allOf = object.extends.map((extendedType) =>
-            convertTypeReferenceToJsonSchema({
-                typeReference: TypeReference.named({ ...extendedType, default: undefined, inline: undefined }),
-                context
-            })
-        );
-    }
-
-    const properties = object.properties.map((property) => {
+    const properties = [...(object.extendedProperties ?? []), ...object.properties].map((property) => {
         const propertyName = property.name.wireValue;
         const propertySchema = convertTypeReferenceToJsonSchema({
             typeReference: property.valueType,
@@ -44,8 +35,6 @@ export function convertObjectToJsonSchema({ object, context }: convertObjectToJs
     if (requiredProperties.length > 0) {
         schema.required = requiredProperties;
     }
-
-    schema.additionalProperties = object.extraProperties;
 
     return schema;
 }

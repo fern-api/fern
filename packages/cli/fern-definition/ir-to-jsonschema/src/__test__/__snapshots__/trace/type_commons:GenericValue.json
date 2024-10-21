@@ -11,6 +11,5 @@
   "required": [
     "stringifiedValue"
   ],
-  "additionalProperties": false,
   "definitions": {}
 }

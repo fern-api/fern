@@ -12,7 +12,6 @@
     "variableType",
     "name"
   ],
-  "additionalProperties": false,
   "definitions": {
     "commons.VariableType": {
       "type": "object",

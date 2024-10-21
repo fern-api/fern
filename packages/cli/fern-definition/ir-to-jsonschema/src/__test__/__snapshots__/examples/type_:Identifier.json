@@ -16,7 +16,6 @@
     "value",
     "label"
   ],
-  "additionalProperties": false,
   "definitions": {
     "BasicType": {
       "type": "string",
