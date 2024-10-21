@@ -1,0 +1,14 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.40.8
+        output:
+          location: local-file-system
+          path: ../../../packages/cli/generation/dynamic-snippets-ir/src/generated
+        config:
+          namespaceExport: DynamicSnippets
+          noSerdeLayer: true
+          outputSourceFiles: true
+          neverThrowErrors: true
