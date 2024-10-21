@@ -53,7 +53,7 @@ export function validateAgainstJsonSchema(
             }
             return {
                 success: false,
-                error: validate.errors?.[0] || {
+                error: {
                     message: "Failed to parse",
                     keyword: "unknown",
                     instancePath: "",

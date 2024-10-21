@@ -157,8 +157,8 @@ types:
     discriminated: false
     union: 
       - string
-      - SingleUnionTypeDetailedSchema
-
+      - SingleUnionTypeDetailedSchema  
+    
   SingleUnionTypeDetailedSchema: 
     extends: 
       - commons.WithDocsSchema

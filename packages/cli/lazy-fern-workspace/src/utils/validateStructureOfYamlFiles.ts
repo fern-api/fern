@@ -55,6 +55,7 @@ export function validateStructureOfYamlFiles({
         };
 
         if (relativeFilepath === ROOT_API_FILENAME) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const result = validateAgainstJsonSchema(parsedFileContents, RootApiFileJsonSchema as any);
             if (result.success) {
                 const contents = RawSchemas.serialization.RootApiFileSchema.parseOrThrow(parsedFileContents);
@@ -67,6 +68,7 @@ export function validateStructureOfYamlFiles({
                 addFailure(result);
             }
         } else if (path.basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const result = validateAgainstJsonSchema(parsedFileContents, PackageMarkerFileJsonSchema as any);
             if (result.success) {
                 const contents = RawSchemas.serialization.PackageMarkerFileSchema.parseOrThrow(parsedFileContents);
@@ -79,6 +81,7 @@ export function validateStructureOfYamlFiles({
                 addFailure(result);
             }
         } else {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const result = validateAgainstJsonSchema(parsedFileContents, DefinitionFileJsonSchema as any);
             if (result.success) {
                 const contents = RawSchemas.serialization.DefinitionFileSchema.parseOrThrow(parsedFileContents);

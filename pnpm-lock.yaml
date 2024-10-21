@@ -4299,9 +4299,6 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12
@@ -5768,6 +5765,9 @@ importers:
       ajv:
         specifier: ^8.17.1
         version: 8.17.1
+      json-schema:
+        specifier: ^0.4.0
+        version: 0.4.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
