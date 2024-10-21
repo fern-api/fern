@@ -115,29 +115,29 @@ export class Type extends AstNode {
     public static list(value: Type): Type {
         const listType = new Type({ type: "list", value });
         listType.addReference(python.reference({ name: "List", modulePath: ["typing"] }));
-        listType.maybeAddReference(value);
+        listType.inheritReferences(value);
         return listType;
     }
 
     public static set(value: Type): Type {
         const setType = new Type({ type: "set", value });
         setType.addReference(python.reference({ name: "Set", modulePath: ["typing"] }));
-        setType.maybeAddReference(value);
+        setType.inheritReferences(value);
         return setType;
     }
 
     public static tuple(values: Type[]): Type {
         const tupleType = new Type({ type: "tuple", values });
         tupleType.addReference(python.reference({ name: "Tuple", modulePath: ["typing"] }));
-        values.forEach((value) => tupleType.maybeAddReference(value));
+        values.forEach((value) => tupleType.inheritReferences(value));
         return tupleType;
     }
 
     public static dict(keyType: Type, valueType: Type): Type {
         const dictType = new Type({ type: "dict", keyType, valueType });
         dictType.addReference(python.reference({ name: "Dict", modulePath: ["typing"] }));
-        dictType.maybeAddReference(keyType);
-        dictType.maybeAddReference(valueType);
+        dictType.inheritReferences(keyType);
+        dictType.inheritReferences(valueType);
         return dictType;
     }
 
@@ -148,14 +148,14 @@ export class Type extends AstNode {
     public static optional(value: Type): Type {
         const optionalType = new Type({ type: "optional", value });
         optionalType.addReference(python.reference({ name: "Optional", modulePath: ["typing"] }));
-        optionalType.maybeAddReference(value);
+        optionalType.inheritReferences(value);
         return optionalType;
     }
 
     public static union(values: Type[]): Type {
         const unionType = new Type({ type: "union", values });
         unionType.addReference(python.reference({ name: "Union", modulePath: ["typing"] }));
-        values.forEach((value) => unionType.maybeAddReference(value));
+        values.forEach((value) => unionType.inheritReferences(value));
         return unionType;
     }
 
@@ -242,9 +242,5 @@ export class Type extends AstNode {
             default:
                 assertNever(this.internalType);
         }
-    }
-
-    private maybeAddReference(type: Type): void {
-        type.getReferences().forEach((reference) => this.addReference(reference));
     }
 }
