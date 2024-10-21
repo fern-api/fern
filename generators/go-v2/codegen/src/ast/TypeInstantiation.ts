@@ -333,7 +333,13 @@ export class TypeInstantiation extends AstNode {
         }
     }
 
-    private writeAnyArray({ writer, value }: { writer: Writer; value: any[] }): void {
+    private writeAnyArray({
+        writer,
+        value
+    }: {
+        writer: Writer;
+        value: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    }): void {
         writer.write("[]interface{}");
         if (value.length === 0) {
             writer.write("{}");
