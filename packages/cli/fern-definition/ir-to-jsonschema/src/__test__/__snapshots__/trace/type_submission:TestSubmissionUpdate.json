@@ -13,6 +13,7 @@
     "updateTime",
     "updateInfo"
   ],
+  "additionalProperties": false,
   "definitions": {
     "submission.RunningSubmissionState": {
       "type": "string",
@@ -41,7 +42,8 @@
         "exceptionType",
         "exceptionMessage",
         "exceptionStacktrace"
-      ]
+      ],
+      "additionalProperties": false
     },
     "submission.ErrorInfo": {
       "type": "object",
@@ -119,7 +121,8 @@
       "required": [
         "key",
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.NodeId": {
       "type": "string"
@@ -143,7 +146,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.SinglyLinkedListNodeValue": {
       "type": "object",
@@ -161,7 +165,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.DoublyLinkedListNodeValue": {
       "type": "object",
@@ -182,7 +187,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.VariableValue": {
       "type": "object",

@@ -12,5 +12,6 @@
     "title",
     "rating"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

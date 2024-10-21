@@ -12,6 +12,7 @@
     "id",
     "name"
   ],
+  "additionalProperties": false,
   "definitions": {
     "TypeId": {
       "type": "string"

@@ -12,5 +12,6 @@
     "name",
     "likesToWoof"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

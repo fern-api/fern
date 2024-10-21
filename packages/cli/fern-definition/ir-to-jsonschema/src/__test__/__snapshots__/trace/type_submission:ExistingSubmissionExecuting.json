@@ -8,6 +8,7 @@
   "required": [
     "submissionId"
   ],
+  "additionalProperties": false,
   "definitions": {
     "submission.SubmissionId": {
       "type": "string",

@@ -20,6 +20,7 @@
       "$ref": "#/definitions/Usage"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "MetadataValue": {
       "oneOf": [
@@ -77,7 +78,8 @@
       "required": [
         "indices",
         "values"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ScoredColumn": {
       "type": "object",
@@ -103,7 +105,8 @@
       },
       "required": [
         "id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "QueryResult": {
       "type": "object",
@@ -117,7 +120,8 @@
         "namespace": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "Usage": {
       "type": "object",
@@ -126,7 +130,8 @@
           "type": "integer",
           "minimum": 0
         }
-      }
+      },
+      "additionalProperties": false
     }
   }
 }

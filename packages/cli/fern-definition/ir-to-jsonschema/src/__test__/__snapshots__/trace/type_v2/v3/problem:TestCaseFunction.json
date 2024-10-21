@@ -214,7 +214,8 @@
         "parameterId",
         "name",
         "variableType"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.v3.problem.NonVoidFunctionSignature": {
       "type": "object",
@@ -232,7 +233,8 @@
       "required": [
         "parameters",
         "returnType"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.v3.problem.FunctionImplementation": {
       "type": "object",
@@ -246,7 +248,8 @@
       },
       "required": [
         "impl"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.v3.problem.FunctionImplementationForMultipleLanguages": {
       "type": "object",
@@ -260,7 +263,8 @@
       },
       "required": [
         "codeByLanguage"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.v3.problem.NonVoidFunctionDefinition": {
       "type": "object",
@@ -275,7 +279,8 @@
       "required": [
         "signature",
         "code"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.v3.problem.AssertCorrectnessCheck": {
       "type": "object",

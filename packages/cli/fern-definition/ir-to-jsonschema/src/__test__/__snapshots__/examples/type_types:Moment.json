@@ -19,5 +19,6 @@
     "date",
     "datetime"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

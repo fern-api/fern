@@ -8,5 +8,6 @@
   "required": [
     "radius"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

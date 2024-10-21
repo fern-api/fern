@@ -235,7 +235,8 @@
         "parameterId",
         "name",
         "variableType"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

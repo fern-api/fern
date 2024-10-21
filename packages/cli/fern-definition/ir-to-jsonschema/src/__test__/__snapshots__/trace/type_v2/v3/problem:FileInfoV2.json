@@ -20,5 +20,6 @@
     "contents",
     "editable"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

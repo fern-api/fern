@@ -8,6 +8,7 @@
   "required": [
     "missingSubmissionId"
   ],
+  "additionalProperties": false,
   "definitions": {
     "submission.SubmissionId": {
       "type": "string",

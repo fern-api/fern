@@ -16,5 +16,6 @@
     "status",
     "success"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

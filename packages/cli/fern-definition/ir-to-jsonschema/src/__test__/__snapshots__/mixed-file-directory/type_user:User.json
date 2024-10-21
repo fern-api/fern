@@ -16,6 +16,7 @@
     "name",
     "age"
   ],
+  "additionalProperties": false,
   "definitions": {
     "Id": {
       "type": "string"

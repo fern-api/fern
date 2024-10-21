@@ -15,6 +15,7 @@
     "parameters",
     "code"
   ],
+  "additionalProperties": false,
   "definitions": {
     "v2.problem.ParameterId": {
       "type": "string"
@@ -176,7 +177,8 @@
         "parameterId",
         "name",
         "variableType"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.problem.FunctionImplementation": {
       "type": "object",
@@ -190,7 +192,8 @@
       },
       "required": [
         "impl"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.problem.FunctionImplementationForMultipleLanguages": {
       "type": "object",
@@ -204,7 +207,8 @@
       },
       "required": [
         "codeByLanguage"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

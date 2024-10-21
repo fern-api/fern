@@ -11,6 +11,7 @@
   "required": [
     "problemId"
   ],
+  "additionalProperties": false,
   "definitions": {
     "commons.ProblemId": {
       "type": "string"

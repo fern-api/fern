@@ -16,6 +16,7 @@
     "contents",
     "info"
   ],
+  "additionalProperties": false,
   "definitions": {
     "file.FileInfo": {
       "type": "string",

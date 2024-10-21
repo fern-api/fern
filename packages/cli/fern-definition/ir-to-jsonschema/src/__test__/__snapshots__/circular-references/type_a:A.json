@@ -5,6 +5,7 @@
       "$ref": "#/definitions/RootType"
     }
   ],
+  "additionalProperties": false,
   "definitions": {
     "RootType": {
       "type": "object",
@@ -15,7 +16,8 @@
       },
       "required": [
         "s"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

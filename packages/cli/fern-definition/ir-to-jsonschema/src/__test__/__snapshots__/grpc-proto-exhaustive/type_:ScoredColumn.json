@@ -23,6 +23,7 @@
   "required": [
     "id"
   ],
+  "additionalProperties": false,
   "definitions": {
     "MetadataValue": {
       "oneOf": [
@@ -80,7 +81,8 @@
       "required": [
         "indices",
         "values"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

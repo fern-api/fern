@@ -12,6 +12,7 @@
     "name",
     "value"
   ],
+  "additionalProperties": false,
   "definitions": {
     "ast.FieldName": {
       "type": "string"

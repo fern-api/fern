@@ -12,6 +12,7 @@
     "submissionId",
     "runDetails"
   ],
+  "additionalProperties": false,
   "definitions": {
     "submission.SubmissionId": {
       "type": "string",
@@ -83,7 +84,8 @@
         "exceptionType",
         "exceptionMessage",
         "exceptionStacktrace"
-      ]
+      ],
+      "additionalProperties": false
     },
     "submission.WorkspaceRunDetails": {
       "type": "object",
@@ -100,7 +102,8 @@
       },
       "required": [
         "stdout"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

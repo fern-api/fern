@@ -8,5 +8,6 @@
   "required": [
     "status"
   ],
+  "additionalProperties": true,
   "definitions": {}
 }

@@ -12,6 +12,7 @@
     "description",
     "function"
   ],
+  "additionalProperties": false,
   "definitions": {
     "v2.problem.ParameterId": {
       "type": "string"
@@ -71,7 +72,8 @@
       },
       "required": [
         "boards"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.VariableType": {
       "type": "object",
@@ -230,7 +232,8 @@
         "parameterId",
         "name",
         "variableType"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.problem.NonVoidFunctionSignature": {
       "type": "object",
@@ -248,7 +251,8 @@
       "required": [
         "parameters",
         "returnType"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.problem.FunctionImplementation": {
       "type": "object",
@@ -262,7 +266,8 @@
       },
       "required": [
         "impl"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.problem.FunctionImplementationForMultipleLanguages": {
       "type": "object",
@@ -276,7 +281,8 @@
       },
       "required": [
         "codeByLanguage"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.problem.NonVoidFunctionDefinition": {
       "type": "object",
@@ -291,7 +297,8 @@
       "required": [
         "signature",
         "code"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.problem.AssertCorrectnessCheck": {
       "type": "object",

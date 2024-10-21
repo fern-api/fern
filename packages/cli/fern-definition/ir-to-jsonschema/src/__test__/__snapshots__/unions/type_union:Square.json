@@ -8,5 +8,6 @@
   "required": [
     "length"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

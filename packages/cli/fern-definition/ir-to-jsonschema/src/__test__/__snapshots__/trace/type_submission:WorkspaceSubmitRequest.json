@@ -22,6 +22,7 @@
     "language",
     "submissionFiles"
   ],
+  "additionalProperties": false,
   "definitions": {
     "submission.SubmissionId": {
       "type": "string",
@@ -52,7 +53,8 @@
         "directory",
         "filename",
         "contents"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

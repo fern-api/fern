@@ -12,6 +12,7 @@
     "name",
     "status"
   ],
+  "additionalProperties": false,
   "definitions": {
     "types.MigrationStatus": {
       "type": "string",

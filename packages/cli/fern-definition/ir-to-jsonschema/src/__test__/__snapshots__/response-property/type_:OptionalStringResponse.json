@@ -10,7 +10,8 @@
       },
       "required": [
         "data"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }
