@@ -6,7 +6,7 @@ groups:
         version: 0.40.8
         output:
           location: local-file-system
-          path: ../../../packages/cli/generation/dynamic-snippets-ir/src/generated
+          path: ../../../packages/cli/dynamic-snippets/src/generated
         config:
           namespaceExport: DynamicSnippets
           noSerdeLayer: true
