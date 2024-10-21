@@ -29,8 +29,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/ir-sdk": "workspace:*",
-    "zod": "^3.22.3"
+    "@fern-api/ir-sdk": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

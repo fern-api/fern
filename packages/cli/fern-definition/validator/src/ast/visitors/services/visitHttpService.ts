@@ -513,7 +513,9 @@ export async function visitPathParameters({
                     availability: noop,
                     encoding: noop,
                     default: noop,
-                    validation: noop
+                    validation: noop,
+                    name: noop,
+                    audiences: noop
                 });
             }
         }
