@@ -19,8 +19,15 @@
           "const": "date"
         },
         "value": {
-          "type": "string",
-          "format": "date"
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -33,8 +40,15 @@
           "const": "dateimte"
         },
         "value": {
-          "type": "string",
-          "format": "date-time"
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

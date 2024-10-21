@@ -5,7 +5,14 @@
       "$ref": "#/definitions/types.MovieId"
     },
     "prequel": {
-      "$ref": "#/definitions/types.MovieId"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.MovieId"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "title": {
       "type": "string"
@@ -23,7 +30,14 @@
       "$ref": "#/definitions/commons.types.Tag"
     },
     "book": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "metadata": {
       "type": "object",

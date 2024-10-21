@@ -23,7 +23,12 @@ export function convertContainerToJsonSchema({
                 additionalProperties: convertTypeReferenceToJsonSchema({ typeReference: container.valueType, context })
             };
         case "optional":
-            return convertTypeReferenceToJsonSchema({ typeReference: container.optional, context });
+            return {
+                oneOf: [
+                    convertTypeReferenceToJsonSchema({ typeReference: container.optional, context }),
+                    { type: "null" }
+                ]
+            };
         case "set":
             return {
                 type: "array",

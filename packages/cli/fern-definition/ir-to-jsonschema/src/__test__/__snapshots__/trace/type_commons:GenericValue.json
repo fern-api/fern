@@ -2,7 +2,14 @@
   "type": "object",
   "properties": {
     "stringifiedType": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "stringifiedValue": {
       "type": "string"

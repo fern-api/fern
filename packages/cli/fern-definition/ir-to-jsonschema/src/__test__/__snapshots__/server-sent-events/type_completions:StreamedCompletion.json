@@ -5,7 +5,14 @@
       "type": "string"
     },
     "tokens": {
-      "type": "integer"
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [

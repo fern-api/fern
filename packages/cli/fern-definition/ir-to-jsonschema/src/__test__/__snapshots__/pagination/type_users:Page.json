@@ -5,7 +5,14 @@
       "type": "integer"
     },
     "next": {
-      "$ref": "#/definitions/users.NextPage"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/users.NextPage"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "per_page": {
       "type": "integer"

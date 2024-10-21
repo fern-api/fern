@@ -5,16 +5,30 @@
       "type": "string"
     },
     "nodes": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/types.Node"
-      }
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.Node"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "trees": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/types.Tree"
-      }
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.Tree"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [
@@ -26,10 +40,17 @@
       "type": "object",
       "properties": {
         "nodes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/types.Node"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/types.Node"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -41,16 +62,30 @@
           "type": "string"
         },
         "nodes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/types.Node"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/types.Node"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "trees": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/types.Tree"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/types.Tree"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

@@ -2,7 +2,14 @@
   "type": "object",
   "properties": {
     "public_property": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "private_property": {
       "type": "integer"

@@ -61,7 +61,14 @@
               "const": "optional"
             },
             "value": {
-              "$ref": "#/definitions/ast.FieldValue"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/ast.FieldValue"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           },
           "required": [

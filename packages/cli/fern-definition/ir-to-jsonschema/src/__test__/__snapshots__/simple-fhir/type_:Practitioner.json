@@ -36,7 +36,14 @@
           "type": "string"
         },
         "account": {
-          "$ref": "#/definitions/Account"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Account"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -166,10 +173,24 @@
           "type": "string"
         },
         "patient": {
-          "$ref": "#/definitions/Patient"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Patient"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "practitioner": {
-          "$ref": "#/definitions/Practitioner"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Practitioner"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -182,7 +203,7 @@
       "additionalProperties": false
     },
     "ResourceList": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/Account"
         },

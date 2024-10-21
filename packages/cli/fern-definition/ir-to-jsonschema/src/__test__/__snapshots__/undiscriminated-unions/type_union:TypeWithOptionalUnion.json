@@ -2,13 +2,20 @@
   "type": "object",
   "properties": {
     "myUnion": {
-      "$ref": "#/definitions/union.MyUnion"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/union.MyUnion"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,
   "definitions": {
     "union.MyUnion": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },

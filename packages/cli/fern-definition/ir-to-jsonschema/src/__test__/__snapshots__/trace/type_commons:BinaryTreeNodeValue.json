@@ -8,10 +8,24 @@
       "type": "number"
     },
     "right": {
-      "$ref": "#/definitions/commons.NodeId"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "left": {
-      "$ref": "#/definitions/commons.NodeId"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [

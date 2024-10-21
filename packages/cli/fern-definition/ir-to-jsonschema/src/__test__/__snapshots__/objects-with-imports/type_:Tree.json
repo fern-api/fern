@@ -2,10 +2,17 @@
   "type": "object",
   "properties": {
     "nodes": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Node"
-      }
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Node"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,
@@ -17,10 +24,17 @@
           "type": "string"
         },
         "data": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -35,10 +49,24 @@
           "type": "string"
         },
         "label": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "metadata": {
-          "$ref": "#/definitions/commons.metadata.Metadata"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.metadata.Metadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

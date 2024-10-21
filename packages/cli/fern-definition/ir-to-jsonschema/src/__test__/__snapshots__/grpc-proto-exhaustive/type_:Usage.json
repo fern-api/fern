@@ -2,8 +2,15 @@
   "type": "object",
   "properties": {
     "units": {
-      "type": "integer",
-      "minimum": 0
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,

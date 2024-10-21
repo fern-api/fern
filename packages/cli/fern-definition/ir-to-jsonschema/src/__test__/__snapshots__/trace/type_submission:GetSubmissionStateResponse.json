@@ -2,8 +2,15 @@
   "type": "object",
   "properties": {
     "timeSubmitted": {
-      "type": "string",
-      "format": "date-time"
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "submission": {
       "type": "string"
@@ -62,10 +69,24 @@
           "type": "number"
         },
         "right": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "left": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -84,7 +105,14 @@
           "type": "number"
         },
         "next": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -103,10 +131,24 @@
           "type": "number"
         },
         "next": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "prev": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -243,7 +285,14 @@
               "const": "binaryTreeValue"
             },
             "root": {
-              "$ref": "#/definitions/commons.NodeId"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.NodeId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "nodes": {
               "type": "object",
@@ -263,7 +312,14 @@
               "const": "singlyLinkedListValue"
             },
             "head": {
-              "$ref": "#/definitions/commons.NodeId"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.NodeId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "nodes": {
               "type": "object",
@@ -283,7 +339,14 @@
               "const": "doublyLinkedListValue"
             },
             "head": {
-              "$ref": "#/definitions/commons.NodeId"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.NodeId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "nodes": {
               "type": "object",
@@ -591,10 +654,24 @@
               "type": "boolean"
             },
             "actualResult": {
-              "$ref": "#/definitions/commons.VariableValue"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.VariableValue"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "exception": {
-              "$ref": "#/definitions/submission.ExceptionV2"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.ExceptionV2"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "stdout": {
               "type": "string"
@@ -822,10 +899,24 @@
               "const": "ran"
             },
             "exceptionV2": {
-              "$ref": "#/definitions/submission.ExceptionV2"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.ExceptionV2"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "exception": {
-              "$ref": "#/definitions/submission.ExceptionInfo"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.ExceptionInfo"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "stdout": {
               "type": "string"
@@ -842,10 +933,24 @@
               "const": "traced"
             },
             "exceptionV2": {
-              "$ref": "#/definitions/submission.ExceptionV2"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.ExceptionV2"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "exception": {
-              "$ref": "#/definitions/submission.ExceptionInfo"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.ExceptionInfo"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "stdout": {
               "type": "string"

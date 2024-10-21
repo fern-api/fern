@@ -2,7 +2,14 @@
   "type": "object",
   "properties": {
     "offset": {
-      "type": "integer"
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,

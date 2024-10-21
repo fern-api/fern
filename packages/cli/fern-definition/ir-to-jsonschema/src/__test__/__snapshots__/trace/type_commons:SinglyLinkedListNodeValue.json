@@ -8,7 +8,14 @@
       "type": "number"
     },
     "next": {
-      "$ref": "#/definitions/commons.NodeId"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [

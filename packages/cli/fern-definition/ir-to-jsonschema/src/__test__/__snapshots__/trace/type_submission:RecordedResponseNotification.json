@@ -8,7 +8,14 @@
       "type": "integer"
     },
     "testCaseId": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [

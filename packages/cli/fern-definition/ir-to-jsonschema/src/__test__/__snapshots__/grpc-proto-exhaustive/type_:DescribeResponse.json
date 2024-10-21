@@ -2,21 +2,49 @@
   "type": "object",
   "properties": {
     "namespaces": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/NamespaceSummary"
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/NamespaceSummary"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "dimension": {
-      "type": "integer",
-      "minimum": 0
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "fullness": {
-      "type": "number"
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "totalCount": {
-      "type": "integer",
-      "minimum": 0
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,
@@ -25,8 +53,15 @@
       "type": "object",
       "properties": {
         "count": {
-          "type": "integer",
-          "minimum": 0
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

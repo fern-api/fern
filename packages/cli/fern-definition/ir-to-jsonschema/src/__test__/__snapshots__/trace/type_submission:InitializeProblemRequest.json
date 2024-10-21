@@ -5,7 +5,14 @@
       "$ref": "#/definitions/commons.ProblemId"
     },
     "problemVersion": {
-      "type": "integer"
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [

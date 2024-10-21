@@ -234,10 +234,24 @@
           "type": "number"
         },
         "right": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "left": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -256,7 +270,14 @@
           "type": "number"
         },
         "next": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -275,10 +296,24 @@
           "type": "number"
         },
         "next": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "prev": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -415,7 +450,14 @@
               "const": "binaryTreeValue"
             },
             "root": {
-              "$ref": "#/definitions/commons.NodeId"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.NodeId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "nodes": {
               "type": "object",
@@ -435,7 +477,14 @@
               "const": "singlyLinkedListValue"
             },
             "head": {
-              "$ref": "#/definitions/commons.NodeId"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.NodeId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "nodes": {
               "type": "object",
@@ -455,7 +504,14 @@
               "const": "doublyLinkedListValue"
             },
             "head": {
-              "$ref": "#/definitions/commons.NodeId"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.NodeId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "nodes": {
               "type": "object",
@@ -670,10 +726,24 @@
               "type": "boolean"
             },
             "actualResult": {
-              "$ref": "#/definitions/commons.VariableValue"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.VariableValue"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "exception": {
-              "$ref": "#/definitions/submission.ExceptionV2"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.ExceptionV2"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "stdout": {
               "type": "string"
@@ -691,10 +761,24 @@
       "type": "object",
       "properties": {
         "exceptionV2": {
-          "$ref": "#/definitions/submission.ExceptionV2"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/submission.ExceptionV2"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "exception": {
-          "$ref": "#/definitions/submission.ExceptionInfo"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/submission.ExceptionInfo"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "stdout": {
           "type": "string"
@@ -792,7 +876,14 @@
               "$ref": "#/definitions/commons.ProblemId"
             },
             "problemVersion": {
-              "type": "integer"
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           },
           "required": [
@@ -831,10 +922,24 @@
               "$ref": "#/definitions/commons.ProblemId"
             },
             "problemVersion": {
-              "type": "integer"
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "userId": {
-              "type": "string"
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           },
           "required": [
@@ -863,7 +968,14 @@
               }
             },
             "userId": {
-              "type": "string"
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           },
           "required": [
@@ -1118,7 +1230,14 @@
               "$ref": "#/definitions/submission.SubmissionId"
             },
             "testCaseId": {
-              "type": "string"
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "lineNumber": {
               "type": "integer"
@@ -1127,7 +1246,14 @@
               "$ref": "#/definitions/submission.LightweightStackframeInformation"
             },
             "tracedFile": {
-              "$ref": "#/definitions/submission.TracedFile"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.TracedFile"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           },
           "required": [
@@ -1149,7 +1275,14 @@
               "type": "integer"
             },
             "testCaseId": {
-              "type": "string"
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           },
           "required": [

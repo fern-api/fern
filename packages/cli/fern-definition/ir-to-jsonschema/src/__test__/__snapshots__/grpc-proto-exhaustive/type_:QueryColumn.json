@@ -8,17 +8,45 @@
       }
     },
     "topK": {
-      "type": "integer",
-      "minimum": 0
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "namespace": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "filter": {
-      "$ref": "#/definitions/Metadata"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Metadata"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "indexedData": {
-      "$ref": "#/definitions/IndexedData"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IndexedData"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [
@@ -27,7 +55,7 @@
   "additionalProperties": false,
   "definitions": {
     "MetadataValue": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "number"
         },
@@ -40,7 +68,7 @@
       ]
     },
     "Metadata": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "object",
           "additionalProperties": {

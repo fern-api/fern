@@ -50,10 +50,24 @@
           "type": "number"
         },
         "right": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "left": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -66,7 +80,14 @@
       "type": "object",
       "properties": {
         "root": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "nodes": {
           "type": "object",
@@ -90,7 +111,14 @@
           "type": "number"
         },
         "next": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -103,7 +131,14 @@
       "type": "object",
       "properties": {
         "head": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "nodes": {
           "type": "object",
@@ -127,10 +162,24 @@
           "type": "number"
         },
         "next": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "prev": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -143,7 +192,14 @@
       "type": "object",
       "properties": {
         "head": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "nodes": {
           "type": "object",
@@ -361,7 +417,14 @@
               "const": "genericValue"
             },
             "stringifiedType": {
-              "type": "string"
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "stringifiedValue": {
               "type": "string"

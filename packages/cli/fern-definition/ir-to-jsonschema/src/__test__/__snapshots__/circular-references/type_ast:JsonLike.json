@@ -1,5 +1,5 @@
 {
-  "oneOf": [
+  "anyOf": [
     {
       "type": "array",
       "items": {
@@ -24,7 +24,7 @@
   ],
   "definitions": {
     "ast.JsonLike": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "array",
           "items": {

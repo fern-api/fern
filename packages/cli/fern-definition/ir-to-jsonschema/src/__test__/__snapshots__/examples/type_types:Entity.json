@@ -30,7 +30,7 @@
       ]
     },
     "Type": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/BasicType"
         },

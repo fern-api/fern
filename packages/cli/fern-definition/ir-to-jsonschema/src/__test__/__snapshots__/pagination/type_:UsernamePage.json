@@ -2,7 +2,14 @@
   "type": "object",
   "properties": {
     "after": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "data": {
       "type": "array",

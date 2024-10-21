@@ -5,7 +5,14 @@
       "type": "string"
     },
     "executionSessionUrl": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "language": {
       "$ref": "#/definitions/commons.Language"

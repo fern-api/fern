@@ -1,5 +1,5 @@
 {
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "additionalProperties": {
@@ -22,7 +22,7 @@
   ],
   "definitions": {
     "MetadataValue": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "number"
         },

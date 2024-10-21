@@ -52,7 +52,14 @@
       }
     },
     "thirteen": {
-      "type": "integer"
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "fourteen": {
       "type": [
@@ -85,8 +92,15 @@
     "seventeen": {
       "type": "array",
       "items": {
-        "type": "string",
-        "format": "uuid"
+        "oneOf": [
+          {
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "type": "null"
+          }
+        ]
       }
     },
     "eighteen": {

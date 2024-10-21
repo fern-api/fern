@@ -50,10 +50,24 @@
           "type": "number"
         },
         "right": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "left": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -72,7 +86,14 @@
           "type": "number"
         },
         "next": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -91,10 +112,24 @@
           "type": "number"
         },
         "next": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "prev": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -231,7 +266,14 @@
               "const": "binaryTreeValue"
             },
             "root": {
-              "$ref": "#/definitions/commons.NodeId"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.NodeId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "nodes": {
               "type": "object",
@@ -251,7 +293,14 @@
               "const": "singlyLinkedListValue"
             },
             "head": {
-              "$ref": "#/definitions/commons.NodeId"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.NodeId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "nodes": {
               "type": "object",
@@ -271,7 +320,14 @@
               "const": "doublyLinkedListValue"
             },
             "head": {
-              "$ref": "#/definitions/commons.NodeId"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.NodeId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "nodes": {
               "type": "object",

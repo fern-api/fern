@@ -2,22 +2,43 @@
   "type": "object",
   "properties": {
     "columns": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/Column"
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/Column"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "namespace": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "usage": {
-      "$ref": "#/definitions/Usage"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Usage"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,
   "definitions": {
     "MetadataValue": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "number"
         },
@@ -30,7 +51,7 @@
       ]
     },
     "Metadata": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "object",
           "additionalProperties": {
@@ -88,10 +109,24 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/Metadata"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Metadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "indexedData": {
-          "$ref": "#/definitions/IndexedData"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/IndexedData"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -104,8 +139,15 @@
       "type": "object",
       "properties": {
         "units": {
-          "type": "integer",
-          "minimum": 0
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

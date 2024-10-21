@@ -15,7 +15,7 @@ export function convertUndiscriminatedUnionToJsonSchema({
     context
 }: convertUndiscriminatedUnionToJsonSchema.Args): JSONSchema4 {
     return {
-        oneOf: undiscriminatedUnion.members.map((member) => {
+        anyOf: undiscriminatedUnion.members.map((member) => {
             const jsonSchemaMember = convertTypeReferenceToJsonSchema({
                 typeReference: member.type,
                 context

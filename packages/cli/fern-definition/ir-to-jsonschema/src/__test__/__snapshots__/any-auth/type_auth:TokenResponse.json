@@ -8,7 +8,14 @@
       "type": "integer"
     },
     "refresh_token": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [

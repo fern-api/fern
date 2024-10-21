@@ -14,7 +14,14 @@
       "$ref": "#/definitions/reference.SomeLiteral"
     },
     "maybeContext": {
-      "$ref": "#/definitions/reference.SomeLiteral"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/reference.SomeLiteral"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "containerObject": {
       "$ref": "#/definitions/reference.ContainerObject"

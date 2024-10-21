@@ -5,7 +5,14 @@
       "$ref": "#/definitions/submission.SubmissionId"
     },
     "testCaseId": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "lineNumber": {
       "type": "integer"
@@ -14,7 +21,14 @@
       "$ref": "#/definitions/submission.LightweightStackframeInformation"
     },
     "tracedFile": {
-      "$ref": "#/definitions/submission.TracedFile"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/submission.TracedFile"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [

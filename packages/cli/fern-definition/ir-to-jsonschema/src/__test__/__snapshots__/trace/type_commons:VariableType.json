@@ -80,7 +80,14 @@
           "$ref": "#/definitions/commons.VariableType"
         },
         "isFixedLength": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -220,7 +227,14 @@
               "$ref": "#/definitions/commons.VariableType"
             },
             "isFixedLength": {
-              "type": "boolean"
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           },
           "required": [

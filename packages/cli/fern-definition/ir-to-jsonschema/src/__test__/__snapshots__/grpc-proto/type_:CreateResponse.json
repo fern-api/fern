@@ -2,13 +2,20 @@
   "type": "object",
   "properties": {
     "user": {
-      "$ref": "#/definitions/UserModel"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/UserModel"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,
   "definitions": {
     "MetadataValue": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "number"
         },
@@ -21,7 +28,7 @@
       ]
     },
     "Metadata": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "object",
           "additionalProperties": {
@@ -47,20 +54,55 @@
       "type": "object",
       "properties": {
         "username": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "email": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "age": {
-          "type": "integer",
-          "minimum": 0
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "weight": {
-          "type": "number"
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "metadata": {
-          "$ref": "#/definitions/Metadata"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Metadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

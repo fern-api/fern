@@ -139,7 +139,14 @@
               "$ref": "#/definitions/commons.VariableType"
             },
             "isFixedLength": {
-              "type": "boolean"
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           },
           "required": [
@@ -243,7 +250,14 @@
           "type": "string"
         },
         "imports": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

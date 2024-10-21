@@ -5,19 +5,47 @@
       "type": "string"
     },
     "score": {
-      "type": "number"
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "values": {
-      "type": "array",
-      "items": {
-        "type": "number"
-      }
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "metadata": {
-      "$ref": "#/definitions/Metadata"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Metadata"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "indexedData": {
-      "$ref": "#/definitions/IndexedData"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IndexedData"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [
@@ -26,7 +54,7 @@
   "additionalProperties": false,
   "definitions": {
     "MetadataValue": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "number"
         },
@@ -39,7 +67,7 @@
       ]
     },
     "Metadata": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "object",
           "additionalProperties": {

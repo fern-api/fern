@@ -2,10 +2,24 @@
   "type": "object",
   "properties": {
     "hasNextPage": {
-      "type": "boolean"
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "page": {
-      "$ref": "#/definitions/users.Page"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/users.Page"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "total_count": {
       "type": "integer"
@@ -46,7 +60,14 @@
           "type": "integer"
         },
         "next": {
-          "$ref": "#/definitions/users.NextPage"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/users.NextPage"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "per_page": {
           "type": "integer"

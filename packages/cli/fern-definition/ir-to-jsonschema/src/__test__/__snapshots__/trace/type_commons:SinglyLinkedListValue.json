@@ -2,7 +2,14 @@
   "type": "object",
   "properties": {
     "head": {
-      "$ref": "#/definitions/commons.NodeId"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "nodes": {
       "type": "object",
@@ -29,7 +36,14 @@
           "type": "number"
         },
         "next": {
-          "$ref": "#/definitions/commons.NodeId"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

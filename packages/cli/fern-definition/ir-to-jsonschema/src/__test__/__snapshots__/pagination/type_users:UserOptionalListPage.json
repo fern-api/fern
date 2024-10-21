@@ -5,8 +5,15 @@
       "$ref": "#/definitions/users.UserOptionalListContainer"
     },
     "next": {
-      "type": "string",
-      "format": "uuid"
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "uuid"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [
@@ -34,10 +41,17 @@
       "type": "object",
       "properties": {
         "users": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/users.User"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/users.User"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

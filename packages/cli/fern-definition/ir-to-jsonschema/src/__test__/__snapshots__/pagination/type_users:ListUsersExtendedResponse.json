@@ -5,8 +5,15 @@
       "$ref": "#/definitions/users.UserListContainer"
     },
     "next": {
-      "type": "string",
-      "format": "uuid"
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "uuid"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "total_count": {
       "type": "integer"

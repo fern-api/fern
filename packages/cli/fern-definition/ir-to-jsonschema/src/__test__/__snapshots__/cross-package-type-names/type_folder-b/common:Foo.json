@@ -2,7 +2,14 @@
   "type": "object",
   "properties": {
     "foo": {
-      "$ref": "#/definitions/folder-c.common.Foo"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/folder-c.common.Foo"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,

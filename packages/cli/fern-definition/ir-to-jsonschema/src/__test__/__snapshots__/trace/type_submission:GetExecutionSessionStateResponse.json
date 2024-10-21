@@ -8,7 +8,14 @@
       }
     },
     "numWarmingInstances": {
-      "type": "integer"
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "warmingSessionIds": {
       "type": "array",
@@ -46,7 +53,14 @@
       "type": "object",
       "properties": {
         "lastTimeContacted": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "sessionId": {
           "type": "string"
@@ -55,7 +69,14 @@
           "type": "boolean"
         },
         "awsTaskId": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "language": {
           "$ref": "#/definitions/commons.Language"

@@ -5,16 +5,30 @@
       "type": "string"
     },
     "files": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/types.File"
-      }
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.File"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "directories": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/types.Directory"
-      }
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.Directory"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [
@@ -45,16 +59,30 @@
           "type": "string"
         },
         "files": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/types.File"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/types.File"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "directories": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/types.Directory"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/types.Directory"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

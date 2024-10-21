@@ -1,5 +1,12 @@
 {
-  "$ref": "#/definitions/service.WithDocs",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/service.WithDocs"
+    },
+    {
+      "type": "null"
+    }
+  ],
   "definitions": {
     "service.WithDocs": {
       "type": "object",

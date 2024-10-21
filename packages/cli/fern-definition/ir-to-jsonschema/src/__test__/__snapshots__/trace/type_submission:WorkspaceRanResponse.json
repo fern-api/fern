@@ -91,10 +91,24 @@
       "type": "object",
       "properties": {
         "exceptionV2": {
-          "$ref": "#/definitions/submission.ExceptionV2"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/submission.ExceptionV2"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "exception": {
-          "$ref": "#/definitions/submission.ExceptionInfo"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/submission.ExceptionInfo"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "stdout": {
           "type": "string"

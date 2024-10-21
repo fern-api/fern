@@ -2,28 +2,56 @@
   "type": "object",
   "properties": {
     "results": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/QueryResult"
-      }
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryResult"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "matches": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ScoredColumn"
-      }
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ScoredColumn"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "namespace": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "usage": {
-      "$ref": "#/definitions/Usage"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Usage"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,
   "definitions": {
     "MetadataValue": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "number"
         },
@@ -36,7 +64,7 @@
       ]
     },
     "Metadata": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "object",
           "additionalProperties": {
@@ -88,19 +116,47 @@
           "type": "string"
         },
         "score": {
-          "type": "number"
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "values": {
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "metadata": {
-          "$ref": "#/definitions/Metadata"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Metadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "indexedData": {
-          "$ref": "#/definitions/IndexedData"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/IndexedData"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -112,13 +168,27 @@
       "type": "object",
       "properties": {
         "matches": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ScoredColumn"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ScoredColumn"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "namespace": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -127,8 +197,15 @@
       "type": "object",
       "properties": {
         "units": {
-          "type": "integer",
-          "minimum": 0
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

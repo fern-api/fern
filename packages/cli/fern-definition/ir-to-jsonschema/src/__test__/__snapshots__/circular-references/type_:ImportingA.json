@@ -2,7 +2,14 @@
   "type": "object",
   "properties": {
     "a": {
-      "$ref": "#/definitions/a.A"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/a.A"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,

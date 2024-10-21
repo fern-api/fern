@@ -2,19 +2,47 @@
   "type": "object",
   "properties": {
     "columns": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ListElement"
-      }
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ListElement"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "pagination": {
-      "$ref": "#/definitions/Pagination"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Pagination"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "namespace": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "usage": {
-      "$ref": "#/definitions/Usage"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Usage"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,
@@ -23,7 +51,14 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -32,7 +67,14 @@
       "type": "object",
       "properties": {
         "next": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -41,8 +83,15 @@
       "type": "object",
       "properties": {
         "units": {
-          "type": "integer",
-          "minimum": 0
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

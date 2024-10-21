@@ -2,10 +2,17 @@
   "type": "object",
   "properties": {
     "users": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/users.User"
-      }
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/users.User"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,
