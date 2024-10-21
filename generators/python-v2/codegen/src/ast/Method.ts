@@ -57,10 +57,7 @@ export class Method extends AstNode {
 
     public addStatement(statement: AstNode): void {
         this.statements.push(statement);
-
-        statement.getReferences().forEach((reference) => {
-            this.addReference(reference);
-        });
+        this.inheritReferences(statement);
     }
 
     public write(writer: Writer): void {
