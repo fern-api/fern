@@ -85,7 +85,7 @@ function handleWorkspaceParserFailureForFile({
                 logger.error(
                     formatLog({
                         title: error.message ?? "Unknown error",
-                        breadcrumbs: [relativeFilepath, ...error.instancePath.split(".")]
+                        breadcrumbs: [relativeFilepath, ...error.instancePath.split("/").filter((part) => part !== "")]
                     })
                 );
             }

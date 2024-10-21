@@ -16,33 +16,33 @@ types:
       - UndiscriminatedUnionSchema
       - AliasSchema
   
-  InlinedTypeDeclaration: 
-    discriminated: false
-    union: 
-      - InlinedObjectSchema
-      - InlinedEnumSchema
-      - InlinedDiscriminatedUnionSchema
-      - InlinedUndiscriminatedUnionSchema
+  # InlinedTypeDeclaration: 
+  #   discriminated: false
+  #   union: 
+  #     - InlinedObjectSchema
+  #     - InlinedEnumSchema
+  #     - InlinedDiscriminatedUnionSchema
+  #     - InlinedUndiscriminatedUnionSchema
   
-  InlinedObjectSchema: 
-    extends: ObjectSchema
-    properties:   
-      name: string
+  # InlinedObjectSchema: 
+  #   extends: ObjectSchema
+  #   properties:   
+  #     name: string
 
-  InlinedEnumSchema: 
-    extends: EnumSchema
-    properties:   
-      name: string
+  # InlinedEnumSchema: 
+  #   extends: EnumSchema
+  #   properties:   
+  #     name: string
   
-  InlinedDiscriminatedUnionSchema: 
-    extends: DiscriminatedUnionSchema
-    properties:   
-      name: string  
+  # InlinedDiscriminatedUnionSchema: 
+  #   extends: DiscriminatedUnionSchema
+  #   properties:   
+  #     name: string  
 
-  InlinedUndiscriminatedUnionSchema: 
-    extends: UndiscriminatedUnionSchema
-    properties:   
-      name: string  
+  # InlinedUndiscriminatedUnionSchema: 
+  #   extends: UndiscriminatedUnionSchema
+  #   properties:   
+  #     name: string  
 
   TypeReferenceSchema: 
     discriminated: false
@@ -128,9 +128,9 @@ types:
     extends: BaseTypeDeclarationSchema
     properties: 
       default: optional<string>
-      enum: list<EnumVaue>
+      enum: list<EnumValue>
   
-  EnumVaue:
+  EnumValue:
     discriminated: false
     union: 
       - string
