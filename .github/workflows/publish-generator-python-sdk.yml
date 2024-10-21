@@ -6,8 +6,8 @@ on:
     branches:
       - main
       -  dsinghvi/remove-poetry-shell
-    paths:
-      - "generators/python/sdk/versions.yml"
+    # paths:
+    #   - "generators/python/sdk/versions.yml"
   workflow_dispatch:
     inputs:
       version:
