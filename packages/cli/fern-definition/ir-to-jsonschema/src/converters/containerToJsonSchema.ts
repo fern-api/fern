@@ -43,6 +43,7 @@ export function convertContainerToJsonSchema({
                 default:
                     assertNever(container.literal);
             }
+        // eslint-disable-next-line no-fallthrough
         default:
             assertNever(container);
     }
