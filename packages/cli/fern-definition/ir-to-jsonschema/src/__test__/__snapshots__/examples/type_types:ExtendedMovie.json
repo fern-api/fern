@@ -16,6 +16,7 @@
   "required": [
     "cast"
   ],
+  "additionalProperties": false,
   "definitions": {
     "types.MovieId": {
       "type": "string"
@@ -76,7 +77,8 @@
         "tag",
         "metadata",
         "revenue"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

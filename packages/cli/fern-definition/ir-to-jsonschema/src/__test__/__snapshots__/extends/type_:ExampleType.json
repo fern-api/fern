@@ -13,6 +13,7 @@
   "required": [
     "name"
   ],
+  "additionalProperties": false,
   "definitions": {
     "Docs": {
       "type": "object",
@@ -23,7 +24,8 @@
       },
       "required": [
         "docs"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

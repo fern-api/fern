@@ -8,5 +8,6 @@
   "required": [
     "message"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

@@ -12,6 +12,7 @@
     "submissionId",
     "stderr"
   ],
+  "additionalProperties": false,
   "definitions": {
     "submission.SubmissionId": {
       "type": "string",

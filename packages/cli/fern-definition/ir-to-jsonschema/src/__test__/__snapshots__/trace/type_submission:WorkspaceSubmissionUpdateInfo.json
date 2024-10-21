@@ -186,7 +186,8 @@
         "exceptionType",
         "exceptionMessage",
         "exceptionStacktrace"
-      ]
+      ],
+      "additionalProperties": false
     },
     "submission.ErrorInfo": {
       "type": "object",

@@ -18,6 +18,7 @@
     "nodeId",
     "val"
   ],
+  "additionalProperties": false,
   "definitions": {
     "commons.NodeId": {
       "type": "string"

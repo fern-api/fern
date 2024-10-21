@@ -5,6 +5,7 @@
       "$ref": "#/definitions/types.object.OptionalAlias"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "types.object.OptionalAlias": {
       "type": "string"

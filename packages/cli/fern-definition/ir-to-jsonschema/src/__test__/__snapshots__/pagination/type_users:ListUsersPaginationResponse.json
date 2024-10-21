@@ -21,6 +21,7 @@
     "total_count",
     "data"
   ],
+  "additionalProperties": false,
   "definitions": {
     "users.NextPage": {
       "type": "object",
@@ -35,7 +36,8 @@
       "required": [
         "page",
         "starting_after"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users.Page": {
       "type": "object",
@@ -57,7 +59,8 @@
         "page",
         "per_page",
         "total_page"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users.User": {
       "type": "object",
@@ -72,7 +75,8 @@
       "required": [
         "name",
         "id"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

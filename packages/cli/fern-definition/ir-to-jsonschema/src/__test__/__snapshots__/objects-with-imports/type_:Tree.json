@@ -8,6 +8,7 @@
       }
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "commons.metadata.Metadata": {
       "type": "object",
@@ -24,7 +25,8 @@
       },
       "required": [
         "id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "Node": {
       "type": "object",
@@ -41,7 +43,8 @@
       },
       "required": [
         "id"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

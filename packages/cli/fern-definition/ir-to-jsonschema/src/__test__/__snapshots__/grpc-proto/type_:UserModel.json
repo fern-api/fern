@@ -18,6 +18,7 @@
       "$ref": "#/definitions/Metadata"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "MetadataValue": {
       "oneOf": [

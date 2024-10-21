@@ -8,6 +8,7 @@
   "required": [
     "nestedLiteral"
   ],
+  "additionalProperties": false,
   "definitions": {
     "inlined.ANestedLiteral": {
       "type": "object",
@@ -18,7 +19,8 @@
       },
       "required": [
         "myLiteral"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

@@ -41,6 +41,7 @@
     "testcases",
     "methodName"
   ],
+  "additionalProperties": false,
   "definitions": {
     "commons.KeyValuePair": {
       "type": "object",
@@ -55,7 +56,8 @@
       "required": [
         "key",
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.NodeId": {
       "type": "string"
@@ -79,7 +81,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.SinglyLinkedListNodeValue": {
       "type": "object",
@@ -97,7 +100,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.DoublyLinkedListNodeValue": {
       "type": "object",
@@ -118,7 +122,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.VariableValue": {
       "type": "object",
@@ -383,7 +388,8 @@
       },
       "required": [
         "boards"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.FileInfo": {
       "type": "object",
@@ -398,7 +404,8 @@
       "required": [
         "filename",
         "contents"
-      ]
+      ],
+      "additionalProperties": false
     },
     "problem.ProblemFiles": {
       "type": "object",
@@ -416,7 +423,8 @@
       "required": [
         "solutionFile",
         "readOnlyFiles"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.VariableType": {
       "type": "object",
@@ -571,7 +579,8 @@
       "required": [
         "variableType",
         "name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.TestCase": {
       "type": "object",
@@ -589,7 +598,8 @@
       "required": [
         "id",
         "params"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.TestCaseWithExpectedResult": {
       "type": "object",
@@ -604,7 +614,8 @@
       "required": [
         "testCase",
         "expectedResult"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

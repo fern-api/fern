@@ -12,6 +12,7 @@
     "result",
     "stdout"
   ],
+  "additionalProperties": false,
   "definitions": {
     "commons.KeyValuePair": {
       "type": "object",
@@ -26,7 +27,8 @@
       "required": [
         "key",
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.NodeId": {
       "type": "string"
@@ -50,7 +52,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.SinglyLinkedListNodeValue": {
       "type": "object",
@@ -68,7 +71,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.DoublyLinkedListNodeValue": {
       "type": "object",
@@ -89,7 +93,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.VariableValue": {
       "type": "object",
@@ -417,7 +422,8 @@
         "expectedResult",
         "actualResult",
         "passed"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

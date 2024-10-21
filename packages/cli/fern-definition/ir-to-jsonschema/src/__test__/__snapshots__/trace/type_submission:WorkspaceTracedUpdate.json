@@ -8,5 +8,6 @@
   "required": [
     "traceResponsesSize"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

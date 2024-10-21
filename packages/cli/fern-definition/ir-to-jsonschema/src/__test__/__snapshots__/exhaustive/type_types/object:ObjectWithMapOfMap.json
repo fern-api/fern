@@ -14,5 +14,6 @@
   "required": [
     "map"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

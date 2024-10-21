@@ -12,5 +12,6 @@
     "name",
     "contents"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

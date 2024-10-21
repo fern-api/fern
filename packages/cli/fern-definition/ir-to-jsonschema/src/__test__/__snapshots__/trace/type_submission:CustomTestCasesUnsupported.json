@@ -12,6 +12,7 @@
     "problemId",
     "submissionId"
   ],
+  "additionalProperties": false,
   "definitions": {
     "commons.ProblemId": {
       "type": "string"

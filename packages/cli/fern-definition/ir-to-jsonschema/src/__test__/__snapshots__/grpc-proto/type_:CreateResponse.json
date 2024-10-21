@@ -5,6 +5,7 @@
       "$ref": "#/definitions/UserModel"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "MetadataValue": {
       "oneOf": [
@@ -61,7 +62,8 @@
         "metadata": {
           "$ref": "#/definitions/Metadata"
         }
-      }
+      },
+      "additionalProperties": false
     }
   }
 }

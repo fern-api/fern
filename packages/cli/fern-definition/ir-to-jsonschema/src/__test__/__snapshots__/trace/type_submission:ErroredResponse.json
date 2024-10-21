@@ -12,6 +12,7 @@
     "submissionId",
     "errorInfo"
   ],
+  "additionalProperties": false,
   "definitions": {
     "submission.SubmissionId": {
       "type": "string",
@@ -34,7 +35,8 @@
         "exceptionType",
         "exceptionMessage",
         "exceptionStacktrace"
-      ]
+      ],
+      "additionalProperties": false
     },
     "submission.ErrorInfo": {
       "type": "object",

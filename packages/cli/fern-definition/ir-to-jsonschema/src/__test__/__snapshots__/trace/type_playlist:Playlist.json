@@ -17,6 +17,7 @@
     "playlist_id",
     "owner-id"
   ],
+  "additionalProperties": false,
   "definitions": {
     "commons.ProblemId": {
       "type": "string"
@@ -37,7 +38,8 @@
       "required": [
         "name",
         "problems"
-      ]
+      ],
+      "additionalProperties": false
     },
     "playlist.PlaylistId": {
       "type": "string"

@@ -19,6 +19,7 @@
     "name",
     "users"
   ],
+  "additionalProperties": false,
   "definitions": {
     "Id": {
       "type": "string"
@@ -40,7 +41,8 @@
         "id",
         "name",
         "age"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

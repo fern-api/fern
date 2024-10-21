@@ -17,6 +17,7 @@
     "resource_type",
     "name"
   ],
+  "additionalProperties": false,
   "definitions": {
     "Script": {
       "type": "object",
@@ -36,7 +37,8 @@
       "required": [
         "resource_type",
         "name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "Patient": {
       "type": "object",
@@ -63,7 +65,8 @@
         "resource_type",
         "name",
         "scripts"
-      ]
+      ],
+      "additionalProperties": false
     },
     "Practitioner": {
       "type": "object",
@@ -83,7 +86,8 @@
       "required": [
         "resource_type",
         "name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "Account": {
       "type": "object",
@@ -109,7 +113,8 @@
       "required": [
         "resource_type",
         "name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ResourceList": {
       "oneOf": [
@@ -139,7 +144,8 @@
       },
       "required": [
         "description"
-      ]
+      ],
+      "additionalProperties": false
     },
     "BaseResource": {
       "type": "object",
@@ -161,7 +167,8 @@
         "id",
         "related_resources",
         "memo"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

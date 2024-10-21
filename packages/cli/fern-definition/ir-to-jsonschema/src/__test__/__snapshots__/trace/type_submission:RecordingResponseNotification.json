@@ -22,6 +22,7 @@
     "lineNumber",
     "lightweightStackInfo"
   ],
+  "additionalProperties": false,
   "definitions": {
     "submission.SubmissionId": {
       "type": "string",
@@ -40,7 +41,8 @@
       "required": [
         "numStackFrames",
         "topStackFrameMethodName"
-      ]
+      ],
+      "additionalProperties": false
     },
     "submission.TracedFile": {
       "type": "object",
@@ -55,7 +57,8 @@
       "required": [
         "filename",
         "directory"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

@@ -45,5 +45,7 @@ export function convertObjectToJsonSchema({ object, context }: convertObjectToJs
         schema.required = requiredProperties;
     }
 
+    schema.additionalProperties = object.extraProperties;
+
     return schema;
 }

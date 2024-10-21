@@ -15,5 +15,6 @@
   "required": [
     "response"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

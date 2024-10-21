@@ -17,6 +17,7 @@
       "$ref": "#/definitions/Usage"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "ListElement": {
       "type": "object",
@@ -24,7 +25,8 @@
         "id": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "Pagination": {
       "type": "object",
@@ -32,7 +34,8 @@
         "next": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "Usage": {
       "type": "object",
@@ -41,7 +44,8 @@
           "type": "integer",
           "minimum": 0
         }
-      }
+      },
+      "additionalProperties": false
     }
   }
 }

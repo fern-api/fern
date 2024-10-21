@@ -9,5 +9,6 @@
   "required": [
     "bar_property"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

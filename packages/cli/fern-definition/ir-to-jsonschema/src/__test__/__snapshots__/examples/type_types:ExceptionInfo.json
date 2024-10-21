@@ -16,5 +16,6 @@
     "exceptionMessage",
     "exceptionStacktrace"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

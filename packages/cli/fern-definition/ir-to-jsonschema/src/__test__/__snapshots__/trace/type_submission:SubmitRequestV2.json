@@ -29,6 +29,7 @@
     "submissionFiles",
     "problemId"
   ],
+  "additionalProperties": false,
   "definitions": {
     "submission.SubmissionId": {
       "type": "string",
@@ -59,7 +60,8 @@
         "directory",
         "filename",
         "contents"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.ProblemId": {
       "type": "string"

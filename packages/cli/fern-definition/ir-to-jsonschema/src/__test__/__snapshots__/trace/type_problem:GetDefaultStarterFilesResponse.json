@@ -11,6 +11,7 @@
   "required": [
     "files"
   ],
+  "additionalProperties": false,
   "definitions": {
     "commons.FileInfo": {
       "type": "object",
@@ -25,7 +26,8 @@
       "required": [
         "filename",
         "contents"
-      ]
+      ],
+      "additionalProperties": false
     },
     "problem.ProblemFiles": {
       "type": "object",
@@ -43,7 +45,8 @@
       "required": [
         "solutionFile",
         "readOnlyFiles"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

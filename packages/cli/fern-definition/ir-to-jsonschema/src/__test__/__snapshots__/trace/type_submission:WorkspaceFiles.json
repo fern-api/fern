@@ -15,6 +15,7 @@
     "mainFile",
     "readOnlyFiles"
   ],
+  "additionalProperties": false,
   "definitions": {
     "commons.FileInfo": {
       "type": "object",
@@ -29,7 +30,8 @@
       "required": [
         "filename",
         "contents"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

@@ -8,5 +8,6 @@
   "required": [
     "foo"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

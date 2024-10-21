@@ -5,5 +5,6 @@
       "type": "integer"
     }
   },
+  "additionalProperties": false,
   "definitions": {}
 }
