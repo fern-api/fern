@@ -43,6 +43,9 @@ import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
+import { setGlobalDispatcher, Agent } from "undici";
+
+setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
 
 void runCli();
 
