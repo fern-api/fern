@@ -1,28 +1,41 @@
 {
   "type": "object",
-  "allOf": [
-    {
-      "$ref": "#/definitions/commons.WithDocsSchema"
-    },
-    {
-      "$ref": "#/definitions/commons.WithName"
-    },
-    {
-      "$ref": "#/definitions/commons.WithDisplayName"
-    },
-    {
-      "$ref": "#/definitions/environments.WithEnvironmentsSchema"
-    },
-    {
-      "$ref": "#/definitions/auth.WithAuthSchema"
-    },
-    {
-      "$ref": "#/definitions/file.WithHeadersSchema"
-    }
-  ],
   "properties": {
+    "docs": {
+      "type": "string"
+    },
     "name": {
       "type": "string"
+    },
+    "display-name": {
+      "type": "string"
+    },
+    "default-url": {
+      "type": "string"
+    },
+    "default-environment": {
+      "type": "string"
+    },
+    "environments": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/environments.EnvironmentSchema"
+      }
+    },
+    "auth": {
+      "$ref": "#/definitions/auth.ApiAuthSchema"
+    },
+    "auth-schemes": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/auth.AuthSchemeDeclarationSchema"
+      }
+    },
+    "headers": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/service.HttpHeaderSchema"
+      }
     },
     "imports": {
       "type": "object",
@@ -78,34 +91,7 @@
   ],
   "additionalProperties": false,
   "definitions": {
-    "commons.WithDocsSchema": {
-      "type": "object",
-      "properties": {
-        "docs": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "commons.WithName": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "commons.WithDisplayName": {
-      "type": "object",
-      "properties": {
-        "display-name": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "commons.WithAudiences": {
+    "environments.SingleBaseUrlEnvironmentSchema": {
       "type": "object",
       "properties": {
         "audiences": {
@@ -113,21 +99,10 @@
           "items": {
             "type": "string"
           }
-        }
-      },
-      "additionalProperties": false
-    },
-    "environments.SingleBaseUrlEnvironmentSchema": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/commons.WithAudiences"
         },
-        {
-          "$ref": "#/definitions/commons.WithDocsSchema"
-        }
-      ],
-      "properties": {
+        "docs": {
+          "type": "string"
+        },
         "url": {
           "type": "string"
         }
@@ -139,15 +114,16 @@
     },
     "environments.MultipleBaseUrlsEnvironmentSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/commons.WithAudiences"
-        },
-        {
-          "$ref": "#/definitions/commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "audiences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "docs": {
+          "type": "string"
+        },
         "urls": {
           "type": "object",
           "additionalProperties": {
@@ -173,32 +149,12 @@
         }
       ]
     },
-    "environments.WithEnvironmentsSchema": {
-      "type": "object",
-      "properties": {
-        "default-url": {
-          "type": "string"
-        },
-        "default-environment": {
-          "type": "string"
-        },
-        "environments": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/environments.EnvironmentSchema"
-          }
-        }
-      },
-      "additionalProperties": false
-    },
     "auth.AuthSchemeReferenceSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "docs": {
+          "type": "string"
+        },
         "scheme": {
           "type": "string"
         }
@@ -220,12 +176,10 @@
     },
     "auth.AnyAuthSchemesSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "docs": {
+          "type": "string"
+        },
         "any": {
           "type": "array",
           "items": {
@@ -346,12 +300,10 @@
     },
     "auth.OAuthSchemeSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "docs": {
+          "type": "string"
+        },
         "scheme": {
           "const": "oauth"
         },
@@ -387,29 +339,18 @@
       ],
       "additionalProperties": false
     },
-    "auth.WithEnvironmentVariable": {
+    "auth.HeaderAuthSchemeSchema": {
       "type": "object",
       "properties": {
         "env": {
           "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "auth.HeaderAuthSchemeSchema": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/auth.WithEnvironmentVariable"
         },
-        {
-          "$ref": "#/definitions/commons.WithName"
+        "name": {
+          "type": "string"
         },
-        {
-          "$ref": "#/definitions/commons.WithDocsSchema"
-        }
-      ],
-      "properties": {
+        "docs": {
+          "type": "string"
+        },
         "header": {
           "type": "string"
         },
@@ -427,24 +368,22 @@
     },
     "auth.AuthVariable": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/auth.WithEnvironmentVariable"
+      "properties": {
+        "env": {
+          "type": "string"
         },
-        {
-          "$ref": "#/definitions/commons.WithName"
+        "name": {
+          "type": "string"
         }
-      ],
+      },
       "additionalProperties": false
     },
     "auth.BasicAuthSchemeSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "docs": {
+          "type": "string"
+        },
         "scheme": {
           "const": "basic"
         },
@@ -462,12 +401,10 @@
     },
     "auth.BearerAuthSchemeSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "docs": {
+          "type": "string"
+        },
         "scheme": {
           "const": "bearer"
         },
@@ -495,64 +432,6 @@
           "$ref": "#/definitions/auth.BearerAuthSchemeSchema"
         }
       ]
-    },
-    "auth.WithAuthSchema": {
-      "type": "object",
-      "properties": {
-        "auth": {
-          "$ref": "#/definitions/auth.ApiAuthSchema"
-        },
-        "auth-schemes": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/auth.AuthSchemeDeclarationSchema"
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    "availability.AvailabilityStatusSchema": {
-      "type": "string",
-      "enum": [
-        "in-development",
-        "pre-release",
-        "deprecated",
-        "generally-available"
-      ]
-    },
-    "availability.AvailabilitySchema": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "$ref": "#/definitions/availability.AvailabilityStatusSchema"
-        },
-        "message": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "status"
-      ],
-      "additionalProperties": false
-    },
-    "availability.AvailabilityUnionSchema": {
-      "oneOf": [
-        {
-          "$ref": "#/definitions/availability.AvailabilityStatusSchema"
-        },
-        {
-          "$ref": "#/definitions/availability.AvailabilitySchema"
-        }
-      ]
-    },
-    "commons.WithAvailability": {
-      "type": "object",
-      "properties": {
-        "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
-        }
-      },
-      "additionalProperties": false
     },
     "encoding.ProtobufTypeSchema": {
       "type": "object",
@@ -624,17 +503,46 @@
         }
       ]
     },
-    "types.BaseTypeReferenceSchema": {
+    "availability.AvailabilityStatusSchema": {
+      "type": "string",
+      "enum": [
+        "in-development",
+        "pre-release",
+        "deprecated",
+        "generally-available"
+      ]
+    },
+    "availability.AvailabilitySchema": {
       "type": "object",
-      "allOf": [
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/availability.AvailabilityStatusSchema"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "availability.AvailabilityUnionSchema": {
+      "oneOf": [
         {
-          "$ref": "#/definitions/commons.WithDocsSchema"
+          "$ref": "#/definitions/availability.AvailabilityStatusSchema"
         },
         {
-          "$ref": "#/definitions/commons.WithAvailability"
+          "$ref": "#/definitions/availability.AvailabilitySchema"
         }
-      ],
+      ]
+    },
+    "service.TypeReferenceDeclarationWithEnvOverrideSchema": {
+      "type": "object",
       "properties": {
+        "type": {
+          "type": "string"
+        },
         "default": {
           "type": [
             "string",
@@ -650,45 +558,29 @@
         },
         "validation": {
           "$ref": "#/definitions/validation.ValidationSchema"
-        }
-      },
-      "additionalProperties": false
-    },
-    "types.TypeReferenceDeclarationWithName": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/types.BaseTypeReferenceSchema"
         },
-        {
-          "$ref": "#/definitions/commons.WithName"
+        "docs": {
+          "type": "string"
         },
-        {
-          "$ref": "#/definitions/commons.WithAudiences"
-        }
-      ],
-      "properties": {
-        "type": {
+        "availability": {
+          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+        },
+        "name": {
+          "type": "string"
+        },
+        "audiences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "env": {
           "type": "string"
         }
       },
       "required": [
         "type"
       ],
-      "additionalProperties": false
-    },
-    "service.TypeReferenceDeclarationWithEnvOverrideSchema": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/types.TypeReferenceDeclarationWithName"
-        }
-      ],
-      "properties": {
-        "env": {
-          "type": "string"
-        }
-      },
       "additionalProperties": false
     },
     "service.TypeReferenceDeclarationWithEnvOverride": {
@@ -703,18 +595,6 @@
     },
     "service.HttpHeaderSchema": {
       "$ref": "#/definitions/service.TypeReferenceDeclarationWithEnvOverride"
-    },
-    "file.WithHeadersSchema": {
-      "type": "object",
-      "properties": {
-        "headers": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/service.HttpHeaderSchema"
-          }
-        }
-      },
-      "additionalProperties": false
     },
     "file.PropertyBasedErrorDiscrimination": {
       "type": "object",
@@ -756,18 +636,38 @@
     },
     "types.TypeReferenceDetailedSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/types.BaseTypeReferenceSchema"
-        },
-        {
-          "$ref": "#/definitions/commons.WithName"
-        },
-        {
-          "$ref": "#/definitions/commons.WithAudiences"
-        }
-      ],
       "properties": {
+        "default": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ]
+        },
+        "encoding": {
+          "$ref": "#/definitions/encoding.EncodingSchema"
+        },
+        "validation": {
+          "$ref": "#/definitions/validation.ValidationSchema"
+        },
+        "docs": {
+          "type": "string"
+        },
+        "availability": {
+          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+        },
+        "name": {
+          "type": "string"
+        },
+        "audiences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "type": {
           "type": "string"
         }
@@ -789,15 +689,13 @@
     },
     "variables.VariableReferenceSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/commons.WithAvailability"
-        },
-        {
-          "$ref": "#/definitions/commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "availability": {
+          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+        },
+        "docs": {
+          "type": "string"
+        },
         "variable": {
           "type": "string"
         }
@@ -819,12 +717,10 @@
     },
     "variables.VariableDeclarationDetailed": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "docs": {
+          "type": "string"
+        },
         "type": {
           "type": "string"
         }
@@ -898,15 +794,13 @@
     },
     "versioning.VersionValueDetailed": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/commons.WithDocsSchema"
-        },
-        {
-          "$ref": "#/definitions/commons.WithName"
-        }
-      ],
       "properties": {
+        "docs": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
         "value": {
           "type": "string"
         }

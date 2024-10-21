@@ -93,8 +93,8 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1
       fern-api:
-        specifier: 0.45.0-rc10
-        version: 0.45.0-rc10
+        specifier: 0.45.0-rc11
+        version: 0.45.0-rc11
       husky:
         specifier: ^9.1.5
         version: 9.1.5
@@ -9693,8 +9693,8 @@ packages:
       picomatch:
         optional: true
 
-  fern-api@0.45.0-rc10:
-    resolution: {integrity: sha512-IiiWFQ/I7clXBDufKp+Xty7NofczP45VjrVaqnh8GbXJSqGv88ibJN4/69QiQJVlkQxi/uMqWSKqbU1y/DCKWg==}
+  fern-api@0.45.0-rc11:
+    resolution: {integrity: sha512-3jIFpRpfM8KIZMzkjnt9RM196I6qmBa8IESmLFZd5OpbRtCjDN6WHDgDWaKot/0OVCFuRgiUz/p2d+ta2yFMWg==}
     hasBin: true
 
   fetch-mock-jest@1.5.1:
@@ -17325,7 +17325,7 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.2
 
-  fern-api@0.45.0-rc10: {}
+  fern-api@0.45.0-rc11: {}
 
   fetch-mock-jest@1.5.1(node-fetch@2.7.0):
     dependencies:

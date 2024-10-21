@@ -11,7 +11,7 @@ export declare namespace validateAgainstJsonSchema {
 
     export interface ValidationFailure {
         success: false;
-        errors: JsonSchemaError[];
+        error: JsonSchemaError | undefined;
     }
 
     export type JsonSchemaError = ErrorObject;
@@ -32,36 +32,37 @@ export function validateAgainstJsonSchema(
             success: true,
             data: payload
         };
+    } else if (validate.errors?.[0] != null) {
+        try {
+            const aggregateAjvError = new AggregateAjvError(validate.errors ?? []);
+            return {
+                success: false,
+                error: {
+                    ...validate.errors?.[0],
+                    message: aggregateAjvError.message ?? validate.errors?.[0].message
+                }
+            };
+        } catch (error) {
+            // Handle "must NOT have additional properties" error
+            if (validate.errors?.[0].keyword === "additionalProperties") {
+                const additionalProp = validate.errors[0].params.additionalProperty;
+                return {
+                    success: false,
+                    error: {
+                        ...validate.errors[0],
+                        message: `Encountered unexpected property ${additionalProp}`
+                    }
+                };
+            }
+            return {
+                success: false,
+                error: validate.errors?.[0]
+            };
+        }
     } else {
         return {
             success: false,
-            errors: (validate.errors || []).map((error) => ({
-                ...error,
-                message: getHumanReadableErrorMessage(error)
-            }))
+            error: undefined
         };
     }
-}
-
-function getHumanReadableErrorMessage(error: ErrorObject): string {
-    if (error.keyword === "additionalProperties") {
-        const additionalProperty = error.params.additionalProperty;
-        return `Unknown property "${additionalProperty}" found.`;
-    }
-    if (error.keyword === "const" || error.keyword === "enum") {
-        const allowedValues = Array.isArray(error.schema) ? error.schema : [error.schema];
-        const quotedValues = allowedValues.map((value) => value === undefined ? "undefined" : `"${value}"`);
-
-        if (quotedValues.length === 1) {
-            return `Must be equal to ${quotedValues[0]}`;
-        } else if (quotedValues.length === 2) {
-            return `Must be equal to ${quotedValues[0]} or ${quotedValues[1]}`;
-        } else {
-            const lastValue = quotedValues.pop();
-            return `Must be equal to ${quotedValues.join(", ")}, or ${lastValue}`;
-        }
-    }
-
-    // For other error types, use the default message
-    return error.message != null ? capitalize(error.message) : "Unknown error";
 }

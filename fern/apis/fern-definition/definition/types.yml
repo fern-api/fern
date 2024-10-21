@@ -102,23 +102,10 @@ types:
   #### Objects ####
 
   ObjectSchema: 
-    discriminated: false
-    union: 
-      - ObjectSchemaWithExtends
-      - ObjectSchemaWithProperties
-  
-  ObjectSchemaWithExtends:
-    extends: BaseTypeDeclarationSchema
-    properties: 
-      extends: ObjectExtendsSchema
-      properties: optional<map<string, ObjectPropertySchema>>
-      extra-properties: optional<boolean>
-
-  ObjectSchemaWithProperties:
     extends: BaseTypeDeclarationSchema
     properties: 
       extends: optional<ObjectExtendsSchema>
-      properties: map<string, ObjectPropertySchema>
+      properties: optional<map<string, ObjectPropertySchema>>
       extra-properties: optional<boolean>
   
   ObjectPropertySchema: TypeReferenceDeclarationWithNameSchema

@@ -81,11 +81,14 @@ function handleWorkspaceParserFailureForFile({
             logger.error(`${failure.pathOfPackageMarker} has an export so it cannot define other keys.`);
             break;
         case WorkspaceLoaderFailureType.JSONSCHEMA_VALIDATION:
-            for (const error of failure.error.errors) {
+            if (failure.error.error != null) {
                 logger.error(
                     formatLog({
-                        title: error.message ?? "Unknown error",
-                        breadcrumbs: [relativeFilepath, ...error.instancePath.split("/").filter((part) => part !== "")]
+                        title: failure.error.error.message ?? "Unknown error",
+                        breadcrumbs: [
+                            relativeFilepath,
+                            ...failure.error.error.instancePath.split("/").filter((part) => part !== "")
+                        ]
                     })
                 );
             }

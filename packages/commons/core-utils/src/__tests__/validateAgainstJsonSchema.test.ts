@@ -29,14 +29,14 @@ describe("validateAgainstJsonSchema", () => {
     it("should return failure for invalid data", () => {
         const invalidData = {
             name: "Jane Doe",
-            age: "25", // age should be a number
+            age: "25" // age should be a number
         };
 
         const result = validateAgainstJsonSchema(invalidData, schema);
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.errors).toBeDefined();
-            expect(result.errors.length).toBeGreaterThan(0);
+            expect(result.error).toBeDefined();
+            expect(result.error?.message).toBeDefined();
         }
     });
 
@@ -49,9 +49,9 @@ describe("validateAgainstJsonSchema", () => {
         const result = validateAgainstJsonSchema(incompleteData, schema);
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.errors).toBeDefined();
-            expect(result.errors.length).toBeGreaterThan(0);
-            expect(result.errors[0]?.params.missingProperty).toBe("age");
+            expect(result.error).toBeDefined();
+            expect(result.error?.message).toBeDefined();
+            expect(result.error?.params?.missingProperty).toBe("age");
         }
     });
 });

@@ -49,15 +49,6 @@
   },
   "additionalProperties": false,
   "definitions": {
-    "fernDefinition.commons.WithDocsSchema": {
-      "type": "object",
-      "properties": {
-        "docs": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
     "fernDefinition.auth.OAuthAccessTokenRequestPropertiesSchema": {
       "type": "object",
       "properties": {
@@ -153,12 +144,10 @@
     },
     "fernDefinition.auth.OAuthSchemeSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "docs": {
+          "type": "string"
+        },
         "scheme": {
           "const": "oauth"
         },
@@ -194,38 +183,18 @@
       ],
       "additionalProperties": false
     },
-    "fernDefinition.auth.WithEnvironmentVariable": {
+    "fernDefinition.auth.HeaderAuthSchemeSchema": {
       "type": "object",
       "properties": {
         "env": {
           "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "fernDefinition.commons.WithName": {
-      "type": "object",
-      "properties": {
+        },
         "name": {
           "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "fernDefinition.auth.HeaderAuthSchemeSchema": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.auth.WithEnvironmentVariable"
         },
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithName"
+        "docs": {
+          "type": "string"
         },
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithDocsSchema"
-        }
-      ],
-      "properties": {
         "header": {
           "type": "string"
         },
@@ -243,24 +212,22 @@
     },
     "fernDefinition.auth.AuthVariable": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.auth.WithEnvironmentVariable"
+      "properties": {
+        "env": {
+          "type": "string"
         },
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithName"
+        "name": {
+          "type": "string"
         }
-      ],
+      },
       "additionalProperties": false
     },
     "fernDefinition.auth.BasicAuthSchemeSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "docs": {
+          "type": "string"
+        },
         "scheme": {
           "const": "basic"
         },
@@ -278,12 +245,10 @@
     },
     "fernDefinition.auth.BearerAuthSchemeSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "docs": {
+          "type": "string"
+        },
         "scheme": {
           "const": "bearer"
         },
@@ -454,49 +419,6 @@
       ],
       "additionalProperties": false
     },
-    "fernDefinition.availability.AvailabilityStatusSchema": {
-      "type": "string",
-      "enum": [
-        "in-development",
-        "pre-release",
-        "deprecated",
-        "generally-available"
-      ]
-    },
-    "fernDefinition.availability.AvailabilitySchema": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "$ref": "#/definitions/fernDefinition.availability.AvailabilityStatusSchema"
-        },
-        "message": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "status"
-      ],
-      "additionalProperties": false
-    },
-    "fernDefinition.availability.AvailabilityUnionSchema": {
-      "oneOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.availability.AvailabilityStatusSchema"
-        },
-        {
-          "$ref": "#/definitions/fernDefinition.availability.AvailabilitySchema"
-        }
-      ]
-    },
-    "fernDefinition.commons.WithAvailability": {
-      "type": "object",
-      "properties": {
-        "availability": {
-          "$ref": "#/definitions/fernDefinition.availability.AvailabilityUnionSchema"
-        }
-      },
-      "additionalProperties": false
-    },
     "fernDefinition.encoding.ProtobufTypeSchema": {
       "type": "object",
       "properties": {
@@ -567,17 +489,46 @@
         }
       ]
     },
-    "fernDefinition.types.BaseTypeReferenceSchema": {
+    "fernDefinition.availability.AvailabilityStatusSchema": {
+      "type": "string",
+      "enum": [
+        "in-development",
+        "pre-release",
+        "deprecated",
+        "generally-available"
+      ]
+    },
+    "fernDefinition.availability.AvailabilitySchema": {
       "type": "object",
-      "allOf": [
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/fernDefinition.availability.AvailabilityStatusSchema"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "fernDefinition.availability.AvailabilityUnionSchema": {
+      "oneOf": [
         {
-          "$ref": "#/definitions/fernDefinition.commons.WithDocsSchema"
+          "$ref": "#/definitions/fernDefinition.availability.AvailabilityStatusSchema"
         },
         {
-          "$ref": "#/definitions/fernDefinition.commons.WithAvailability"
+          "$ref": "#/definitions/fernDefinition.availability.AvailabilitySchema"
         }
-      ],
+      ]
+    },
+    "fernDefinition.service.TypeReferenceDeclarationWithEnvOverrideSchema": {
+      "type": "object",
       "properties": {
+        "type": {
+          "type": "string"
+        },
         "default": {
           "type": [
             "string",
@@ -593,57 +544,29 @@
         },
         "validation": {
           "$ref": "#/definitions/fernDefinition.validation.ValidationSchema"
-        }
-      },
-      "additionalProperties": false
-    },
-    "fernDefinition.commons.WithAudiences": {
-      "type": "object",
-      "properties": {
+        },
+        "docs": {
+          "type": "string"
+        },
+        "availability": {
+          "$ref": "#/definitions/fernDefinition.availability.AvailabilityUnionSchema"
+        },
+        "name": {
+          "type": "string"
+        },
         "audiences": {
           "type": "array",
           "items": {
             "type": "string"
           }
-        }
-      },
-      "additionalProperties": false
-    },
-    "fernDefinition.types.TypeReferenceDeclarationWithName": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.types.BaseTypeReferenceSchema"
         },
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithName"
-        },
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithAudiences"
-        }
-      ],
-      "properties": {
-        "type": {
+        "env": {
           "type": "string"
         }
       },
       "required": [
         "type"
       ],
-      "additionalProperties": false
-    },
-    "fernDefinition.service.TypeReferenceDeclarationWithEnvOverrideSchema": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.types.TypeReferenceDeclarationWithName"
-        }
-      ],
-      "properties": {
-        "env": {
-          "type": "string"
-        }
-      },
       "additionalProperties": false
     },
     "fernDefinition.service.TypeReferenceDeclarationWithEnvOverride": {
@@ -659,29 +582,18 @@
     "fernDefinition.service.HttpHeaderSchema": {
       "$ref": "#/definitions/fernDefinition.service.TypeReferenceDeclarationWithEnvOverride"
     },
-    "fernDefinition.file.WithHeadersSchema": {
-      "type": "object",
-      "properties": {
-        "headers": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/fernDefinition.service.HttpHeaderSchema"
-          }
-        }
-      },
-      "additionalProperties": false
-    },
     "fernDefinition.environments.SingleBaseUrlEnvironmentSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithAudiences"
-        },
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "audiences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "docs": {
+          "type": "string"
+        },
         "url": {
           "type": "string"
         }
@@ -693,15 +605,16 @@
     },
     "fernDefinition.environments.MultipleBaseUrlsEnvironmentSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithAudiences"
-        },
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "audiences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "docs": {
+          "type": "string"
+        },
         "urls": {
           "type": "object",
           "additionalProperties": {
@@ -727,32 +640,12 @@
         }
       ]
     },
-    "fernDefinition.environments.WithEnvironmentsSchema": {
-      "type": "object",
-      "properties": {
-        "default-url": {
-          "type": "string"
-        },
-        "default-environment": {
-          "type": "string"
-        },
-        "environments": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/fernDefinition.environments.EnvironmentSchema"
-          }
-        }
-      },
-      "additionalProperties": false
-    },
     "fernDefinition.auth.AuthSchemeReferenceSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "docs": {
+          "type": "string"
+        },
         "scheme": {
           "type": "string"
         }
@@ -774,12 +667,10 @@
     },
     "fernDefinition.auth.AnyAuthSchemesSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.commons.WithDocsSchema"
-        }
-      ],
       "properties": {
+        "docs": {
+          "type": "string"
+        },
         "any": {
           "type": "array",
           "items": {
@@ -920,15 +811,25 @@
     },
     "generators.APIConfigurationV2Schema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/fernDefinition.file.WithHeadersSchema"
-        },
-        {
-          "$ref": "#/definitions/fernDefinition.environments.WithEnvironmentsSchema"
-        }
-      ],
       "properties": {
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/fernDefinition.service.HttpHeaderSchema"
+          }
+        },
+        "default-url": {
+          "type": "string"
+        },
+        "default-environment": {
+          "type": "string"
+        },
+        "environments": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/fernDefinition.environments.EnvironmentSchema"
+          }
+        },
         "auth": {
           "$ref": "#/definitions/fernDefinition.auth.ApiAuthSchema"
         },
@@ -1093,12 +994,16 @@
     },
     "group.PypiOutputMetadataSchema": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/generators.OutputMetadataSchema"
-        }
-      ],
       "properties": {
+        "description": {
+          "type": "string"
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/generators.OutputMetadataAuthor"
+          }
+        },
         "keywords": {
           "type": "array",
           "items": {
