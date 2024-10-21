@@ -37,7 +37,7 @@
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
     "@types/multer": "^1.4.11",
-    "@types/node": "^18.7.18",
+    "@types/node": "18.7.18",
     "@types/node-fetch": "2.6.9",
     "@types/qs": "6.9.15",
     "@types/readable-stream": "^4.0.15",

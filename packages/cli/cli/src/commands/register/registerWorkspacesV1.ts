@@ -7,7 +7,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import { readFile } from "fs/promises";
 import path from "path";
-import tar from "tar";
+import { create as createTar } from "tar";
 import tmp from "tmp-promise";
 import { CliContext } from "../../cli-context/CliContext";
 
@@ -63,7 +63,7 @@ export async function registerWorkspacesV1({
                 const tarPath = path.join(tmpDir.path, "definition.tgz");
 
                 context.logger.debug(`Compressing definition at ${tmpDir.path}`);
-                await tar.create({ file: tarPath, cwd: resolvedWorkspace.absoluteFilePath }, ["."]);
+                await createTar({ file: tarPath, cwd: resolvedWorkspace.absoluteFilePath }, ["."]);
 
                 context.logger.info("Uploading definition...");
                 await axios.put(registerApiResponse.body.definitionS3UploadUrl, await readFile(tarPath));

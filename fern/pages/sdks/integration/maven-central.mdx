@@ -1,48 +1,50 @@
 ---
-title: Integrating Maven Central
+title: Integrating Maven
 ---
 
-To authenticate and integrate Maven Central within your Java SDK, you'll need to [create a Maven Central User Token](/learn/sdks/package-managers/maven-central#creating-a-maven-central-user-token) and [add it to your repository](/learn/sdks/package-managers/maven-central#adding-user-tokens-to-your-github-repository). 
+## Creating a Maven username and password
 
-## Creating a Maven Central User Token
 <Steps>
-### Log In
-Log into the Nexus Repository Manager web interface where you host your project. This is likely [oss.sonatype.org](https://oss.sonatype.org) or [s01.oss.sonatype.org](https://s01.oss.sonatype.org). 
+### Log In (or create account)
+Log into [s01.oss.sonatype.org](https://s01.oss.sonatype.org).
 
-<Info>
-If you don't have an existing Nexus Repository Manager, you can [log in or create a Maven Central account here](https://central.sonatype.org/publish/generate-token/)
-</Info>
-### Navigate to User Account
-Click on your username in the top-right corner and select **View Account**. 
-### Generate User Token
-- Click on **Generate User Token**. 
-<Note title='Save your User Token'>
-Be sure to save the generated username and password - they won't be accessible after you leave the page. 
-</Note>
-</Steps>
+### Navigate to your profile
 
-## Adding User Tokens to your GitHub repository
-<Info>
-Using GitLab? Follow [these steps](/learn/docs/developer-tools/gitlab#add-a-token-to-gitlab). 
-</Info>
-<Steps>
-### Open Repository
-Open your Fern repository in GitHub.
-### Navigate to Actions in Settings
-Click on the **Settings** tab in your repository. Then, under the **Security** section, open **Secrets and variables** > **Actions**. 
+Click on your username in the top-right corner and select **Profile**.
 
 <Frame>
-<img src="github-secret.png" alt="Adding GitHub Repository Secret" />
+  <img src="profile.png" alt="Profile selection" />
 </Frame>
 
-You can also use the url `https://github.com/<your-repo>/settings/secrets/actions`.
-### Add Secrets
-<Info>
-You'll need to store two repository secrets, one for the username and one for the password. 
+### Click on `User Token`
+
+Expand the dropdown and click on `User Token`.
 
 <Frame>
-<img src="maven-central.png" alt="Maven Central User Token" />
+  <img src="user-token.png" alt="Select user token" />
 </Frame>
+
+### Click on `Access User Token`
+
+There will be a lock icon followed by the text `Access User Token`. Click on `Access User Token`. You may
+need to re-authenticate to see the user token.
+
+<Frame>
+  <img src="username-password.png" alt="View your username and password" />
+</Frame>
+
+### Add GitHub Secrets
+
+You'll need to store two repository secrets in your **fern configuration repository** (**i.e. not the Java SDK repository**),
+one for the username and one for the password.
+
+<Frame>
+  <img src="github-secret.png" alt="Adding GitHub Repository Secret" />
+</Frame>
+
+<Info>
+  For each, select **New repository secret**. Name your secret (we recommend `MAVEN_USERNAME` and `MAVEN_PASSWORD`,
+  respectively), add the corresponding value, and click **Add secret**.
 </Info>
-For each, select **New repository secret**. Name your secret (we recommend `MAVEN_USERNAME` and `MAVEN_PASSWORD`, respectively), add the corresponding value, and click **Add secret**. 
+
 </Steps>

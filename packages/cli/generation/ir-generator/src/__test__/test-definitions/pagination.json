@@ -56,6 +56,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:UsernameCursor": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UsernameCursor",
@@ -161,6 +162,7 @@
             "docs": null
         },
         "type_:UsernamePage": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UsernamePage",
@@ -294,6 +296,7 @@
             "docs": null
         },
         "type_users:Order": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Order",
@@ -429,6 +432,7 @@
             "docs": null
         },
         "type_users:WithPage": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "WithPage",
@@ -557,6 +561,7 @@
             "docs": null
         },
         "type_users:WithCursor": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "WithCursor",
@@ -685,6 +690,7 @@
             "docs": null
         },
         "type_users:UserListContainer": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UserListContainer",
@@ -872,6 +878,7 @@
             "docs": null
         },
         "type_users:UserPage": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UserPage",
@@ -1093,6 +1100,7 @@
             "docs": null
         },
         "type_users:UserOptionalListContainer": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UserOptionalListContainer",
@@ -1286,6 +1294,7 @@
             "docs": null
         },
         "type_users:UserOptionalListPage": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UserOptionalListPage",
@@ -1507,6 +1516,7 @@
             "docs": null
         },
         "type_users:UsernameContainer": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "UsernameContainer",
@@ -1635,6 +1645,7 @@
             "docs": null
         },
         "type_users:ListUsersExtendedResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ListUsersExtendedResponse",
@@ -1961,6 +1972,7 @@
             "docs": null
         },
         "type_users:ListUsersExtendedOptionalListResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ListUsersExtendedOptionalListResponse",
@@ -2287,6 +2299,7 @@
             "docs": null
         },
         "type_users:ListUsersPaginationResponse": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ListUsersPaginationResponse",
@@ -2652,6 +2665,7 @@
             "docs": null
         },
         "type_users:Page": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Page",
@@ -2950,6 +2964,7 @@
             "docs": null
         },
         "type_users:NextPage": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "NextPage",
@@ -3109,6 +3124,7 @@
             "docs": null
         },
         "type_users:User": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "User",

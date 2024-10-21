@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import {
     fernConfigJson,
     generatorsYml,
@@ -40,6 +42,7 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
+import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
 
 void runCli();
 
@@ -154,6 +157,7 @@ async function tryRunCli(cliContext: CliContext) {
             cliContext.suppressUpgradeMessage();
         }
     });
+    addGenerateJsonschemaCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -903,6 +907,46 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 cliContext,
                 port,
                 bundlePath
+            });
+        }
+    );
+}
+
+function addGenerateJsonschemaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "jsonschema <path-to-output>",
+        "Generate JSON Schema for a specific type",
+        (yargs) =>
+            yargs
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                })
+                .positional("path-to-output", {
+                    type: "string",
+                    description: "Path to write JSON Schema",
+                    demandOption: true
+                })
+                .option("type", {
+                    string: true,
+                    demandOption: true,
+                    description: "The type to generate JSON Schema for (e.g. 'MySchema' or 'mypackage.MySchema')"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern jsonschema",
+                properties: {
+                    output: argv.output
+                }
+            });
+            await generateJsonschemaForWorkspaces({
+                typeLocator: argv.type,
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                }),
+                jsonschemaFilepath: resolve(cwd(), argv.pathToOutput),
+                cliContext
             });
         }
     );

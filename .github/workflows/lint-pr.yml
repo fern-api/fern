@@ -42,6 +42,8 @@ jobs:
             spring
             express
             openapi
+            deps
+            deps-dev
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

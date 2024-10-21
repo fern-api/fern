@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "properties": {
+    "lastTimeContacted": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "isWarmInstance": {
+      "type": "boolean"
+    },
+    "awsTaskId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "language": {
+      "$ref": "#/definitions/commons.Language"
+    },
+    "status": {
+      "$ref": "#/definitions/submission.ExecutionSessionStatus"
+    }
+  },
+  "required": [
+    "sessionId",
+    "isWarmInstance",
+    "language",
+    "status"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "commons.Language": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "submission.ExecutionSessionStatus": {
+      "type": "string",
+      "enum": [
+        "CREATING_CONTAINER",
+        "PROVISIONING_CONTAINER",
+        "PENDING_CONTAINER",
+        "RUNNING_CONTAINER",
+        "LIVE_CONTAINER",
+        "FAILED_TO_LAUNCH"
+      ]
+    }
+  }
+}

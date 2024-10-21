@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_commons:Imported": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Imported",
@@ -133,6 +134,7 @@
             "docs": null
         },
         "type_folder-a/service:Response": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Response",
@@ -399,6 +401,7 @@
             "docs": null
         },
         "type_folder-b/common:Foo": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Foo",
@@ -664,6 +667,7 @@
             "docs": null
         },
         "type_folder-c/common:Foo": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Foo",
@@ -821,6 +825,7 @@
             "docs": null
         },
         "type_folder-d/service:Response": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Response",
@@ -1087,6 +1092,7 @@
             "docs": null
         },
         "type_foo:ImportingType": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ImportingType",
@@ -1268,6 +1274,7 @@
             "docs": null
         },
         "type_foo:OptionalString": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "OptionalString",
