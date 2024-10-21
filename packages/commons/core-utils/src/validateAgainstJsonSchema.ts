@@ -41,10 +41,19 @@ export function validateAgainstJsonSchema(
                         message: `Encountered unexpected property ${additionalProp}`
                     }
                 };
+            } else if (validate.errors?.[0].keyword === "required") {
+                const missingProperty = validate.errors[0].params.missingProperty;
+                return {
+                    success: false,
+                    error: {
+                        ...validate.errors[0],
+                        message: `Missing required property '${missingProperty}'`
+                    }
+                };
             }
             return {
                 success: false,
-                error: {
+                error: validate.errors?.[0] || {
                     message: "Failed to parse",
                     keyword: "unknown",
                     instancePath: "",

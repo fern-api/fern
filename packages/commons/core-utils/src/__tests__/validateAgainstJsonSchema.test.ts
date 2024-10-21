@@ -49,6 +49,7 @@ describe("validateAgainstJsonSchema", () => {
         const result = validateAgainstJsonSchema(incompleteData, schema);
         expect(result.success).toBe(false);
         if (!result.success) {
+            console.log(result.error);  
             expect(result.error).toBeDefined();
             expect(result.error?.message).toBeDefined();
             expect(result.error?.params?.missingProperty).toBe("age");
