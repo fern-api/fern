@@ -2,6 +2,7 @@
 
 exports[`jsonschema > works with latest version 1`] = `
 {
+  "additionalProperties": false,
   "definitions": {
     "imdb.MovieId": {
       "type": "string",
