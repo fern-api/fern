@@ -88,9 +88,9 @@ function logViolationsSummary({
     }
 
     if (numErrors > 0) {
-        context.logger.error(message);
+        context.appendLog?.(message);
     } else if (numWarnings > 0) {
-        context.logger.warn(message);
+        context.appendLog?.(message);
     } else {
         context.appendLog?.(chalk.green("✓ All checks passed"));
     }

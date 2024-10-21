@@ -334,7 +334,8 @@ const addGenerator = async (
         await context.runInteractiveTask(
             { name: `Adding ${generator.displayName} generator...` },
             async (interactiveContext) => {
-                const repoName = `${organization}-${generator.generatorLanguage}-${generator.generatorType.type}`;
+                // const repoName = `${organization}-${generator.generatorLanguage}-${generator.generatorType.type}`;
+                const repoName = `${organization}-${generator.generatorLanguage}`;
                 repoUrl = await createGithubRepo({
                     app,
                     orgName: FERN_DEMO_ORG,
