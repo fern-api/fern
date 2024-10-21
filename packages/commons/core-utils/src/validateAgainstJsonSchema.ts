@@ -44,9 +44,10 @@ export function validateAgainstJsonSchema(
 }
 
 function getHumanReadableErrorMessage(error: ErrorObject): string {
+    // console.log(JSON.stringify(error, null, 2));
     if (error.keyword === "const" || error.keyword === "enum") {
         const allowedValues = Array.isArray(error.schema) ? error.schema : [error.schema];
-        const quotedValues = allowedValues.map((value) => `"${value}"`);
+        const quotedValues = allowedValues.map((value) => value === undefined ? "undefined" : `"${value}"`);
 
         if (quotedValues.length === 1) {
             return `Must be equal to ${quotedValues[0]}`;

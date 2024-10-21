@@ -1,5 +1,10 @@
 {
   "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/commons.WithDocsSchema"
+    }
+  ],
   "properties": {
     "imports": {
       "type": "object",
@@ -33,6 +38,182 @@
     }
   },
   "definitions": {
+    "commons.WithDocsSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "type": "string"
+        }
+      }
+    },
+    "availability.AvailabilityStatusSchema": {
+      "type": "string",
+      "enum": [
+        "in-development",
+        "pre-release",
+        "deprecated",
+        "generally-available"
+      ]
+    },
+    "availability.AvailabilitySchema": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/availability.AvailabilityStatusSchema"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ]
+    },
+    "availability.AvailabilityUnionSchema": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/availability.AvailabilityStatusSchema"
+        },
+        {
+          "$ref": "#/definitions/availability.AvailabilitySchema"
+        }
+      ]
+    },
+    "commons.WithAvailability": {
+      "type": "object",
+      "properties": {
+        "availability": {
+          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+        }
+      }
+    },
+    "commons.WithAudiences": {
+      "type": "object",
+      "properties": {
+        "audiences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "commons.WithName": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "examples.ExampleTypeValueSchema": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    },
+    "examples.ExampleTypeSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithName"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/examples.ExampleTypeValueSchema"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "encoding.ProtobufTypeSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "encoding.EncodingSchema": {
+      "type": "object",
+      "properties": {
+        "proto": {
+          "$ref": "#/definitions/encoding.ProtobufTypeSchema"
+        }
+      }
+    },
+    "source.OpenAPISourceSchema": {
+      "type": "object",
+      "properties": {
+        "openapi": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "openapi"
+      ]
+    },
+    "source.ProtobufSourceSchema": {
+      "type": "object",
+      "properties": {
+        "proto": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "proto"
+      ]
+    },
+    "source.SourceSchema": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/source.OpenAPISourceSchema"
+        },
+        {
+          "$ref": "#/definitions/source.ProtobufSourceSchema"
+        }
+      ]
+    },
+    "types.BaseTypeDeclarationSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithAvailability"
+        },
+        {
+          "$ref": "#/definitions/commons.WithAudiences"
+        }
+      ],
+      "properties": {
+        "examples": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/examples.ExampleTypeSchema"
+          }
+        },
+        "encoding": {
+          "$ref": "#/definitions/encoding.EncodingSchema"
+        },
+        "source": {
+          "$ref": "#/definitions/source.SourceSchema"
+        }
+      }
+    },
     "types.ObjectExtendsSchema": {
       "oneOf": [
         {
@@ -44,257 +225,6 @@
             "type": "string"
           }
         }
-      ]
-    },
-    "types.TypeReferenceDeclarationWithName": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "type"
-      ]
-    },
-    "types.TypeReferenceDeclarationWithNameSchema": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "$ref": "#/definitions/types.TypeReferenceDeclarationWithName"
-        }
-      ]
-    },
-    "types.ObjectPropertySchema": {
-      "$ref": "#/definitions/types.TypeReferenceDeclarationWithNameSchema"
-    },
-    "types.ObjectSchema": {
-      "type": "object",
-      "properties": {
-        "extends": {
-          "$ref": "#/definitions/types.ObjectExtendsSchema"
-        },
-        "properties": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/types.ObjectPropertySchema"
-          }
-        },
-        "extra-properties": {
-          "type": "boolean"
-        }
-      }
-    },
-    "types.CasingOverridesSchema": {
-      "type": "object",
-      "properties": {
-        "camel": {
-          "type": "string"
-        },
-        "snake": {
-          "type": "string"
-        },
-        "pascal": {
-          "type": "string"
-        },
-        "screaming-snake": {
-          "type": "string"
-        }
-      }
-    },
-    "types.EnumValueSchema": {
-      "type": "object",
-      "properties": {
-        "value": {
-          "type": "string"
-        },
-        "casing": {
-          "$ref": "#/definitions/types.CasingOverridesSchema"
-        }
-      },
-      "required": [
-        "value"
-      ]
-    },
-    "types.EnumVaue": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "$ref": "#/definitions/types.EnumValueSchema"
-        }
-      ]
-    },
-    "types.EnumSchema": {
-      "type": "object",
-      "properties": {
-        "default": {
-          "type": "string"
-        },
-        "enum": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/types.EnumVaue"
-          }
-        }
-      },
-      "required": [
-        "enum"
-      ]
-    },
-    "types.UnionDiscriminantSchema": {
-      "type": "object",
-      "properties": {
-        "value": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "value"
-      ]
-    },
-    "types.UnionDiscriminant": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "$ref": "#/definitions/types.UnionDiscriminantSchema"
-        }
-      ]
-    },
-    "types.TypeReferenceDetailedSchema": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "type"
-      ]
-    },
-    "types.TypeReferenceSchema": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "$ref": "#/definitions/types.TypeReferenceDetailedSchema"
-        }
-      ]
-    },
-    "types.SingleUnionTypeKeySchema": {
-      "type": "object",
-      "properties": {
-        "value": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "value"
-      ]
-    },
-    "types.SingleUnionTypeKey": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "$ref": "#/definitions/types.SingleUnionTypeKeySchema"
-        }
-      ]
-    },
-    "types.SingleUnionTypeDetailedSchema": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string"
-        },
-        "key": {
-          "$ref": "#/definitions/types.SingleUnionTypeKey"
-        }
-      }
-    },
-    "types.SingleUnionTypeSchema": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "$ref": "#/definitions/types.SingleUnionTypeDetailedSchema"
-        }
-      ]
-    },
-    "types.DiscriminatedUnionSchema": {
-      "type": "object",
-      "properties": {
-        "discriminant": {
-          "$ref": "#/definitions/types.UnionDiscriminant"
-        },
-        "extends": {
-          "$ref": "#/definitions/types.ObjectExtendsSchema"
-        },
-        "base-properties": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/types.TypeReferenceSchema"
-          }
-        },
-        "union": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/types.SingleUnionTypeSchema"
-          }
-        }
-      },
-      "required": [
-        "union"
-      ]
-    },
-    "types.SingleUndiscriminatedUnionTypeDetailedSchema": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "type"
-      ]
-    },
-    "types.SingleUndiscriminatedUnionTypeSchema": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "$ref": "#/definitions/types.SingleUndiscriminatedUnionTypeDetailedSchema"
-        }
-      ]
-    },
-    "types.UndiscriminatedUnionSchema": {
-      "type": "object",
-      "properties": {
-        "discriminated": {
-          "const": {
-            "boolean": false,
-            "type": "boolean"
-          }
-        },
-        "union": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/types.SingleUndiscriminatedUnionTypeSchema"
-          }
-        }
-      },
-      "required": [
-        "discriminated",
-        "union"
       ]
     },
     "validation.StringValidationSchema": {
@@ -344,8 +274,380 @@
         }
       ]
     },
+    "types.BaseTypeReferenceSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithAvailability"
+        }
+      ],
+      "properties": {
+        "default": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ]
+        },
+        "encoding": {
+          "$ref": "#/definitions/encoding.EncodingSchema"
+        },
+        "validation": {
+          "$ref": "#/definitions/validation.ValidationSchema"
+        }
+      }
+    },
+    "types.TypeReferenceDeclarationWithName": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/types.BaseTypeReferenceSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithName"
+        },
+        {
+          "$ref": "#/definitions/commons.WithAudiences"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "types.TypeReferenceDeclarationWithNameSchema": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/types.TypeReferenceDeclarationWithName"
+        }
+      ]
+    },
+    "types.ObjectPropertySchema": {
+      "$ref": "#/definitions/types.TypeReferenceDeclarationWithNameSchema"
+    },
+    "types.ObjectSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/types.BaseTypeDeclarationSchema"
+        }
+      ],
+      "properties": {
+        "extends": {
+          "$ref": "#/definitions/types.ObjectExtendsSchema"
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/types.ObjectPropertySchema"
+          }
+        },
+        "extra-properties": {
+          "type": "boolean"
+        }
+      }
+    },
+    "types.CasingOverridesSchema": {
+      "type": "object",
+      "properties": {
+        "camel": {
+          "type": "string"
+        },
+        "snake": {
+          "type": "string"
+        },
+        "pascal": {
+          "type": "string"
+        },
+        "screaming-snake": {
+          "type": "string"
+        }
+      }
+    },
+    "types.EnumValueSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithName"
+        }
+      ],
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "casing": {
+          "$ref": "#/definitions/types.CasingOverridesSchema"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "types.EnumValue": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/types.EnumValueSchema"
+        }
+      ]
+    },
+    "types.EnumSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/types.BaseTypeDeclarationSchema"
+        }
+      ],
+      "properties": {
+        "default": {
+          "type": "string"
+        },
+        "enum": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.EnumValue"
+          }
+        }
+      },
+      "required": [
+        "enum"
+      ]
+    },
+    "types.UnionDiscriminantSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithName"
+        }
+      ],
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "types.UnionDiscriminant": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/types.UnionDiscriminantSchema"
+        }
+      ]
+    },
+    "types.TypeReferenceDetailedSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/types.BaseTypeReferenceSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithName"
+        },
+        {
+          "$ref": "#/definitions/commons.WithAudiences"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "types.TypeReferenceSchema": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/types.TypeReferenceDetailedSchema"
+        }
+      ]
+    },
+    "commons.WithDisplayName": {
+      "type": "object",
+      "properties": {
+        "display-name": {
+          "type": "string"
+        }
+      }
+    },
+    "types.SingleUnionTypeKeySchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithName"
+        }
+      ],
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "types.SingleUnionTypeKey": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/types.SingleUnionTypeKeySchema"
+        }
+      ]
+    },
+    "types.SingleUnionTypeDetailedSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithName"
+        },
+        {
+          "$ref": "#/definitions/commons.WithAvailability"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDisplayName"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "key": {
+          "$ref": "#/definitions/types.SingleUnionTypeKey"
+        }
+      }
+    },
+    "types.SingleUnionTypeSchema": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/types.SingleUnionTypeDetailedSchema"
+        }
+      ]
+    },
+    "types.DiscriminatedUnionSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/types.BaseTypeDeclarationSchema"
+        }
+      ],
+      "properties": {
+        "discriminant": {
+          "$ref": "#/definitions/types.UnionDiscriminant"
+        },
+        "extends": {
+          "$ref": "#/definitions/types.ObjectExtendsSchema"
+        },
+        "base-properties": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/types.TypeReferenceSchema"
+          }
+        },
+        "union": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/types.SingleUnionTypeSchema"
+          }
+        }
+      },
+      "required": [
+        "union"
+      ]
+    },
+    "types.SingleUndiscriminatedUnionTypeDetailedSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDisplayName"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "types.SingleUndiscriminatedUnionTypeSchema": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/types.SingleUndiscriminatedUnionTypeDetailedSchema"
+        }
+      ]
+    },
+    "types.UndiscriminatedUnionSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/types.BaseTypeDeclarationSchema"
+        }
+      ],
+      "properties": {
+        "discriminated": {
+          "const": false
+        },
+        "union": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.SingleUndiscriminatedUnionTypeSchema"
+          }
+        }
+      },
+      "required": [
+        "discriminated",
+        "union"
+      ]
+    },
     "types.AliasSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/types.BaseTypeDeclarationSchema"
+        }
+      ],
       "properties": {
         "type": {
           "type": "string"
@@ -380,6 +682,17 @@
         }
       ]
     },
+    "commons.DeclarationWithoutDocsSchema": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithAvailability"
+        },
+        {
+          "$ref": "#/definitions/commons.WithAudiences"
+        }
+      ]
+    },
     "service.GrpcTransport": {
       "type": "object",
       "properties": {
@@ -399,35 +712,17 @@
         }
       }
     },
-    "source.OpenAPISourceSchema": {
+    "commons.DeclarationSchema": {
       "type": "object",
-      "properties": {
-        "openapi": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "openapi"
-      ]
-    },
-    "source.ProtobufSourceSchema": {
-      "type": "object",
-      "properties": {
-        "proto": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "proto"
-      ]
-    },
-    "source.SourceSchema": {
-      "oneOf": [
+      "allOf": [
         {
-          "$ref": "#/definitions/source.OpenAPISourceSchema"
+          "$ref": "#/definitions/commons.WithDocsSchema"
         },
         {
-          "$ref": "#/definitions/source.ProtobufSourceSchema"
+          "$ref": "#/definitions/commons.WithAvailability"
+        },
+        {
+          "$ref": "#/definitions/commons.WithAudiences"
         }
       ]
     },
@@ -443,6 +738,14 @@
     },
     "variables.VariableReferenceSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithAvailability"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
       "properties": {
         "variable": {
           "type": "string"
@@ -464,6 +767,11 @@
     },
     "service.QueryParameterTypeReferenceDetailed": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/types.TypeReferenceDeclarationWithName"
+        }
+      ],
       "properties": {
         "allow-multiple": {
           "type": "boolean"
@@ -482,6 +790,11 @@
     },
     "service.TypeReferenceDeclarationWithEnvOverrideSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/types.TypeReferenceDeclarationWithName"
+        }
+      ],
       "properties": {
         "env": {
           "type": "string"
@@ -503,6 +816,11 @@
     },
     "service.HttpReferencedRequestBodySchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
       "properties": {
         "type": {
           "type": "string"
@@ -514,6 +832,11 @@
     },
     "service.TypeReferenceDeclarationWithContentTypeSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/types.TypeReferenceDeclarationWithName"
+        }
+      ],
       "properties": {
         "content-type": {
           "type": "string"
@@ -562,6 +885,14 @@
     },
     "service.HttpRequestSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithName"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
       "properties": {
         "content-type": {
           "type": "string"
@@ -595,6 +926,11 @@
     },
     "service.HttpResponseSchemaDetailed": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
       "properties": {
         "type": {
           "type": "string"
@@ -629,6 +965,11 @@
     },
     "service.HttpResponseStreamSchemaDetailed": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
       "properties": {
         "type": {
           "type": "string"
@@ -656,6 +997,11 @@
     },
     "service.ResponseErrorWithDocsSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
       "properties": {
         "error": {
           "type": "string"
@@ -782,6 +1128,14 @@
     },
     "examples.ExampleCodeSampleSchemaSdk": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithName"
+        }
+      ],
       "properties": {
         "sdk": {
           "$ref": "#/definitions/examples.SupportedSdkLanguageSchema"
@@ -797,6 +1151,14 @@
     },
     "examples.ExampleCodeSampleSchemaLanguage": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithName"
+        }
+      ],
       "properties": {
         "language": {
           "type": "string"
@@ -825,6 +1187,14 @@
     },
     "examples.ExampleEndpointCallSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithName"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
       "properties": {
         "id": {
           "type": "string"
@@ -923,6 +1293,14 @@
     },
     "service.HttpEndpointSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDisplayName"
+        },
+        {
+          "$ref": "#/definitions/commons.DeclarationSchema"
+        }
+      ],
       "properties": {
         "method": {
           "$ref": "#/definitions/service.HttpMethodSchema"
@@ -979,6 +1357,14 @@
     },
     "service.HttpServiceSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.DeclarationWithoutDocsSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDisplayName"
+        }
+      ],
       "properties": {
         "auth": {
           "type": "boolean"
@@ -1023,29 +1409,13 @@
         "endpoints"
       ]
     },
-    "examples.ExampleTypeValueSchema": {
-      "type": [
-        "string",
-        "number",
-        "boolean",
-        "object",
-        "array",
-        "null"
-      ]
-    },
-    "examples.ExampleTypeSchema": {
-      "type": "object",
-      "properties": {
-        "value": {
-          "$ref": "#/definitions/examples.ExampleTypeValueSchema"
-        }
-      },
-      "required": [
-        "value"
-      ]
-    },
     "errors.ErrorDeclarationSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
       "properties": {
         "status-code": {
           "type": "integer"
@@ -1073,6 +1443,11 @@
     },
     "webhooks.WebhookReferencedPayloadSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
       "properties": {
         "type": {
           "type": "string"
@@ -1117,6 +1492,14 @@
     },
     "examples.ExampleWebhookCallSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithName"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
       "properties": {
         "id": {
           "type": "string"
@@ -1131,6 +1514,20 @@
     },
     "webhooks.WebhookSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithAvailability"
+        },
+        {
+          "$ref": "#/definitions/commons.WithAudiences"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDisplayName"
+        }
+      ],
       "properties": {
         "method": {
           "$ref": "#/definitions/webhooks.WebhookMethodSchema"
@@ -1165,6 +1562,11 @@
     },
     "websocket.WebSocketChannelReferencedMessageSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
       "properties": {
         "type": {
           "type": "string"
@@ -1209,6 +1611,14 @@
     },
     "websocket.WebSocketChannelMessageSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.DeclarationSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDisplayName"
+        }
+      ],
       "properties": {
         "origin": {
           "$ref": "#/definitions/websocket.WebSocketOrigin"
@@ -1246,6 +1656,14 @@
     },
     "examples.ExampleWebSocketSession": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.WithName"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDocsSchema"
+        }
+      ],
       "properties": {
         "path-parameters": {
           "type": "object",
@@ -1278,6 +1696,14 @@
     },
     "websocket.WebSocketChannelSchema": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/commons.DeclarationSchema"
+        },
+        {
+          "$ref": "#/definitions/commons.WithDisplayName"
+        }
+      ],
       "properties": {
         "auth": {
           "type": "boolean"
