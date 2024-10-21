@@ -1,7 +1,9 @@
 import { Availability } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-export function convertAvailability(availability: Availability | undefined): RawSchemas.AvailabilityUnionSchema | undefined {
+export function convertAvailability(
+    availability: Availability | undefined
+): RawSchemas.AvailabilityUnionSchema | undefined {
     switch (availability) {
         case Availability.Deprecated:
             return "deprecated";

@@ -4,10 +4,7 @@ export { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 export { GeneratorName } from "./GeneratorName";
 export * from "./utils";
 export * from "./schemas";
-export {
-    GenerationLanguage,
-    getPackageName
-} from "./GeneratorsConfiguration";
+export { GenerationLanguage, getPackageName } from "./GeneratorsConfiguration";
 export { getGeneratorNameOrThrow } from "./getGeneratorName";
 export { getLatestGeneratorVersion } from "./getGeneratorVersions";
 export { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";

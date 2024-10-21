@@ -1,9 +1,6 @@
 import { TaskContext } from "@fern-api/task-context";
 import { GeneratorGroupSchema } from "./schemas";
-import {
-    DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
-    GeneratorsConfigurationSchema
-} from "./schemas";
+import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, GeneratorsConfigurationSchema } from "./schemas";
 
 export async function updateGeneratorGroup({
     generatorsConfiguration,
