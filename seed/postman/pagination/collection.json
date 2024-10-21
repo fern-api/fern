@@ -89,7 +89,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -167,7 +167,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -229,7 +229,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -307,7 +307,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -369,7 +369,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -431,7 +431,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -617,7 +617,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"cursor\": {\n        \"data\": [\n            \"data\",\n            \"data\"\n        ]\n    }\n}",
+              "body": "{\n    \"cursor\": {\n        \"after\": \"after\",\n        \"data\": [\n            \"data\",\n            \"data\"\n        ]\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]

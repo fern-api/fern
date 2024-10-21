@@ -683,7 +683,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"id\": \"id\",\n    \"title\": \"title\",\n    \"from\": \"from\",\n    \"rating\": 1.1,\n    \"type\": \"movie\",\n    \"tag\": \"tag\",\n    \"metadata\": {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"revenue\": 1000000\n}",
+              "body": "{\n    \"id\": \"id\",\n    \"prequel\": \"prequel\",\n    \"title\": \"title\",\n    \"from\": \"from\",\n    \"rating\": 1.1,\n    \"type\": \"movie\",\n    \"tag\": \"tag\",\n    \"book\": \"book\",\n    \"metadata\": {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"revenue\": 1000000\n}",
               "_postman_previewlanguage": "json"
             }
           ]

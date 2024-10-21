@@ -167,7 +167,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"age\": 1\n}",
               "_postman_previewlanguage": "json"
             }
           ]

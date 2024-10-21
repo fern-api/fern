@@ -1,4 +1,8 @@
+using System.Threading.Tasks;
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -8,10 +12,17 @@ namespace SeedTrace.Test.Unit.MockServer;
 public class UpdatePlaylistTest : BaseMockServerTest
 {
     [Test]
-    public void MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
 
+            """;
+
+        const string mockResponse = """
+            {
+              "playlist_id": "playlist_id",
+              "owner-id": "owner-id"
+            }
             """;
 
         Server
@@ -22,11 +33,22 @@ public class UpdatePlaylistTest : BaseMockServerTest
                     .UsingPut()
                     .WithBody(requestJson)
             )
-            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Playlist.UpdatePlaylistAsync(1, "playlistId", null, RequestOptions)
+        var response = await Client.Playlist.UpdatePlaylistAsync(
+            1,
+            "playlistId",
+            null,
+            RequestOptions
         );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

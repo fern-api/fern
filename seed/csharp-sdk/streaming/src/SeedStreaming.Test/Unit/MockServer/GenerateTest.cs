@@ -24,7 +24,8 @@ public class GenerateTest : BaseMockServerTest
 
         const string mockResponse = """
             {
-              "id": "id"
+              "id": "id",
+              "name": "name"
             }
             """;
 

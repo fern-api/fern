@@ -131,7 +131,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"id\": \"id\"\n}",
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]

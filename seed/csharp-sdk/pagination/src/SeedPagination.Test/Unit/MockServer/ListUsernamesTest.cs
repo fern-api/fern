@@ -18,6 +18,7 @@ public class ListUsernamesTest : BaseMockServerTest
         const string mockResponse = """
             {
               "cursor": {
+                "after": "after",
                 "data": [
                   "data",
                   "data"

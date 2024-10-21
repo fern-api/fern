@@ -131,7 +131,7 @@
                 }
               },
               "description": "OK",
-              "body": "{}",
+              "body": "{\n    \"count\": 1\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -373,7 +373,7 @@
                 }
               },
               "description": "OK",
-              "body": "{}",
+              "body": "{\n    \"namespaces\": {\n        \"namespaces\": {\n            \"count\": 1\n        }\n    },\n    \"dimension\": 1,\n    \"fullness\": 1.1,\n    \"totalCount\": 1\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -470,7 +470,7 @@
                 "body": null
               },
               "description": "OK",
-              "body": "{}",
+              "body": "{\n    \"columns\": {\n        \"columns\": {\n            \"id\": \"id\",\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        }\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -567,7 +567,7 @@
                 "body": null
               },
               "description": "OK",
-              "body": "{}",
+              "body": "{\n    \"columns\": [\n        {\n            \"id\": \"id\"\n        },\n        {\n            \"id\": \"id\"\n        }\n    ],\n    \"pagination\": {\n        \"next\": \"next\"\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -688,7 +688,7 @@
                 }
               },
               "description": "OK",
-              "body": "{}",
+              "body": "{\n    \"results\": [\n        {\n            \"matches\": [\n                {\n                    \"id\": \"id\",\n                    \"score\": 1.1,\n                    \"values\": [\n                        1.1,\n                        1.1\n                    ],\n                    \"metadata\": {},\n                    \"indexedData\": {\n                        \"indices\": [\n                            1,\n                            1\n                        ],\n                        \"values\": [\n                            1.1,\n                            1.1\n                        ]\n                    }\n                },\n                {\n                    \"id\": \"id\",\n                    \"score\": 1.1,\n                    \"values\": [\n                        1.1,\n                        1.1\n                    ],\n                    \"metadata\": {},\n                    \"indexedData\": {\n                        \"indices\": [\n                            1,\n                            1\n                        ],\n                        \"values\": [\n                            1.1,\n                            1.1\n                        ]\n                    }\n                }\n            ],\n            \"namespace\": \"namespace\"\n        },\n        {\n            \"matches\": [\n                {\n                    \"id\": \"id\",\n                    \"score\": 1.1,\n                    \"values\": [\n                        1.1,\n                        1.1\n                    ],\n                    \"metadata\": {},\n                    \"indexedData\": {\n                        \"indices\": [\n                            1,\n                            1\n                        ],\n                        \"values\": [\n                            1.1,\n                            1.1\n                        ]\n                    }\n                },\n                {\n                    \"id\": \"id\",\n                    \"score\": 1.1,\n                    \"values\": [\n                        1.1,\n                        1.1\n                    ],\n                    \"metadata\": {},\n                    \"indexedData\": {\n                        \"indices\": [\n                            1,\n                            1\n                        ],\n                        \"values\": [\n                            1.1,\n                            1.1\n                        ]\n                    }\n                }\n            ],\n            \"namespace\": \"namespace\"\n        }\n    ],\n    \"matches\": [\n        {\n            \"id\": \"id\",\n            \"score\": 1.1,\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        },\n        {\n            \"id\": \"id\",\n            \"score\": 1.1,\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        }\n    ],\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]

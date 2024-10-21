@@ -15,7 +15,13 @@ public class GetDirectThreadTest : BaseMockServerTest
     public async Task MockServerTest()
     {
         const string mockResponse = """
-            {}
+            {
+              "foo": {
+                "foo": {
+                  "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                }
+              }
+            }
             """;
 
         Server
