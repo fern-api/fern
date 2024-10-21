@@ -1,0 +1,174 @@
+imports: 
+  reviewers: ./reviewers.yml
+  generators: ./generators.yml
+  license: ./license.yml
+
+types: 
+  GeneratorGroupSchema:
+    properties:
+      audiences:
+        type: optional<list<string>>
+      generators:
+        type: list<GeneratorInvocationSchema>
+      metadata:
+        type: optional<generators.OutputMetadataSchema>
+      reviewers:
+        type: optional<reviewers.ReviewersSchema>
+  
+  GeneratorInvocationSchema:
+    properties:
+      name: string
+      version: string
+      output: optional<GeneratorOutputSchema>
+      github: optional<GithubConfigurationSchema>
+      config: unknown
+      metadata: optional<GeneratorPublishMetadataSchema>
+      keywords: 
+        type: optional<list<string>>
+        docs: Overrides the keywords that require safe name variants.
+      snippets: 
+        type: optional<GeneratorSnippetsSchema>
+        docs: Configures snippets for a particular generator.
+      ir-version: 
+        type: optional<string>
+        docs: Overrides the version of the IR used by the generator.
+      smart-casing: 
+        type: optional<boolean>
+        docs: Feature flag used to enable better IR naming.
+      api: 
+        type: optional<GeneratorAPISettingsSchema>
+        docs: Override API import settings (this is applied across all specs)
+      disable-examples: 
+        type: optional<boolean>
+        docs: Temporary way to unblock example serialization.
+      publish-metadata: 
+        type: optional<GeneratorPublishMetadataSchema>
+        docs: Deprecated, use `metadata` on the output block instead.
+
+  GeneratorAPISettingsSchema:
+    properties:
+      settings: optional<generators.APIDefinitionSettingsSchema>
+
+  GeneratorOutputSchema:
+    discriminant: location
+    union:
+      npm: NpmOutputLocationSchema
+      maven: MavenOutputLocationSchema
+      pypi: PypiOutputLocationSchema
+      postman: PostmanOutputLocationSchema
+      local-file-system: LocalFileSystemOutputLocationSchema
+      nuget: NugetOutputLocationSchema
+      rubygems: RubyGemsOutputLocationSchema
+  
+  GithubConfigurationSchema:
+    discriminated: false
+    union:
+      - GithubCommitAndReleaseSchema
+      - GithubPullRequestSchema
+      - GithubPushSchema
+
+  GeneratorSnippetsSchema:
+    properties:
+      path:
+        type: string
+        docs: The path to the generated snippets file.
+  
+  GeneratorPublishMetadataSchema:
+    properties:
+      package-description: optional<string>
+      email: optional<string>
+      reference-url: optional<string>
+      author: optional<string>
+      license: optional<license.GithubLicenseSchema>
+
+  GithubCommitAndReleaseSchema:
+    properties:
+      repository: string
+      license: optional<license.GithubLicenseSchema>
+      mode: optional<GithubCommitAndReleaseMode>
+      # Add properties for commit and release configuration
+  
+  GithubCommitAndReleaseMode:
+    enum:
+      - commit
+      - release
+
+  GithubPullRequestSchema:
+    properties:
+      repository: string
+      branch: optional<string>
+      license: optional<license.GithubLicenseSchema>
+      mode: literal<"pull-request">
+      reviewers: optional<reviewers.ReviewersSchema>
+      # Add properties for pull request configuration
+
+  GithubPushSchema:
+    properties:
+      repository: string
+      license: optional<license.GithubLicenseSchema>
+      mode: literal<"push">
+      branch: optional<string>
+      # Add properties for push configuration
+  
+  NpmOutputLocationSchema:
+    properties:
+      url: optional<string>
+      package-name: string
+      token: optional<string>
+
+  MavenOutputLocationSchema:
+    properties:
+      url: optional<string>
+      coordinate: string
+      username: optional<string>
+      password: optional<string>
+      signature: optional<MavenOutputSignatureSchema>
+
+  MavenOutputSignatureSchema:
+    properties:
+      keyId: string
+      password: string
+      secretKey: string
+
+  PypiOutputLocationSchema:
+    properties:
+      url: optional<string>
+      package-name: string
+      token: optional<string>
+      username: optional<string>
+      password: optional<string>
+      metadata: optional<PypiOutputMetadataSchema>
+
+  PypiOutputMetadataSchema:
+    extends: generators.OutputMetadataSchema
+    properties:
+      keywords: optional<list<string>>
+      documentation-link: optional<string>
+      homepage-link: optional<string>
+
+  PostmanOutputLocationSchema:
+    properties:
+      api-key: string
+      workspace-id: string
+      collection-id: optional<string>
+  
+  LocalFileSystemOutputLocationSchema:
+    properties:
+      path: string
+  
+  NugetOutputLocationSchema:
+    properties:
+      url: optional<string>
+      package-name: string
+      api-key: optional<string>
+
+  RubyGemsOutputLocationSchema:
+    docs: |
+      It is worth noting that RubyGems API keys need to have the "Push rubygem" permission.
+      Ideally it is also permissioned with index and yank rubygem permissions.
+      Additionally if the creator of the API key has MFA enabled, they must be sure to update their MFA
+      settings to not require MFA for API key usage ("UI and gem signin").
+    properties:
+      url: optional<string>
+      package-name: string
+      api-key: optional<string>

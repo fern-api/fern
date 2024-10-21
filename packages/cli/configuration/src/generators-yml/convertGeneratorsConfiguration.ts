@@ -13,11 +13,11 @@ import {
     GeneratorsConfiguration
 } from "./GeneratorsConfiguration";
 import { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
-import { APIConfigurationSchemaInternal, APIConfigurationV2Schema } from "./schemas/APIConfigurationSchema";
-import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
-import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
-import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
-import { isApiConfigurationV2Schema, isConjureSchema, isOpenAPISchema } from "./schemas/utils";
+import { ApiConfigurationSchemaInternal, ApiConfigurationV2Schema } from "./schemas";
+import { GeneratorGroupSchema } from "./schemas";
+import { GeneratorInvocationSchema } from "./schemas";
+import { GeneratorOutputSchema } from "./schemas";
+import { isApiConfigurationV2Schema, isConjureSchema, isNamespacedApiConfiguration, isOpenAPISchema } from "./utils";
 import {
     API_ORIGIN_LOCATION_KEY,
     API_SETTINGS_KEY,
@@ -25,14 +25,14 @@ import {
     GeneratorsConfigurationSchema,
     OPENAPI_LOCATION_KEY,
     OPENAPI_OVERRIDES_LOCATION_KEY
-} from "./schemas/GeneratorsConfigurationSchema";
-import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
-import { GithubPullRequestSchema } from "./schemas/GithubPullRequestSchema";
-import { MavenOutputLocationSchema } from "./schemas/MavenOutputLocationSchema";
-import { OutputMetadataSchema } from "./schemas/OutputMetadataSchema";
-import { PypiOutputMetadataSchema } from "./schemas/PypiOutputMetadataSchema";
-import { ReadmeSchema } from "./schemas/ReadmeSchema";
-import { ReviewersSchema } from "./schemas/ReviewersSchema";
+} from "./schemas";
+import { GithubLicenseSchema } from "./schemas";
+import { GithubPullRequestSchema } from "./schemas";
+import { MavenOutputLocationSchema } from "./schemas";
+import { OutputMetadataSchema } from "./schemas";
+import { PypiOutputMetadataSchema } from "./schemas";
+import { ReadmeSchema } from "./schemas";
+import { ReviewersSchema } from "./schemas";
 import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 
 export async function convertGeneratorsConfiguration({
@@ -76,7 +76,7 @@ export async function convertGeneratorsConfiguration({
 }
 
 async function parseAPIConfigurationToApiLocations(
-    apiConfiguration: APIConfigurationSchemaInternal | undefined,
+    apiConfiguration: ApiConfigurationSchemaInternal | undefined,
     rawConfiguration: GeneratorsConfigurationSchema
 ): Promise<APIDefinitionLocation[]> {
     const apiDefinitions: APIDefinitionLocation[] = [];
@@ -262,7 +262,7 @@ async function parseApiConfigurationV2Schema({
     apiConfiguration,
     rawConfiguration
 }: {
-    apiConfiguration: APIConfigurationV2Schema;
+    apiConfiguration: ApiConfigurationV2Schema;
     rawConfiguration: GeneratorsConfigurationSchema;
 }): Promise<APIDefinition> {
     const partialConfig = {
@@ -352,7 +352,7 @@ async function parseAPIConfiguration(
         return parseApiConfigurationV2Schema({ apiConfiguration, rawConfiguration: rawGeneratorsConfiguration });
     }
 
-    if (isPlainObject(apiConfiguration) && "namespaces" in apiConfiguration) {
+    if (apiConfiguration != null && isNamespacedApiConfiguration(apiConfiguration)) {
         const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
         for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaces)) {
             namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(

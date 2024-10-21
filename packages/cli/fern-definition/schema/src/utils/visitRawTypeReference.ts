@@ -1,7 +1,7 @@
 import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-api/ir-sdk";
-import { NumberValidationSchema } from "../schemas/NumberValidationSchema";
-import { StringValidationSchema } from "../schemas/StringValidationSchema";
-import { ValidationSchema } from "../schemas/ValidationSchema";
+import { NumberValidationSchema } from "../schemas";
+import { StringValidationSchema } from "../schemas";
+import { ValidationSchema } from "../schemas";
 import { RawPrimitiveType } from "./RawPrimitiveType";
 
 export const FernContainerRegex = {

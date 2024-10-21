@@ -92,6 +92,9 @@ importers:
       execa:
         specifier: ^5.1.1
         version: 5.1.1
+      fern-api:
+        specifier: 0.45.0-rc12
+        version: 0.45.0-rc12
       husky:
         specifier: ^9.1.5
         version: 9.1.5
@@ -4296,9 +4299,6 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12
@@ -5762,6 +5762,12 @@ importers:
 
   packages/commons/core-utils:
     dependencies:
+      ajv:
+        specifier: ^8.17.1
+        version: 8.17.1
+      json-schema:
+        specifier: ^0.4.0
+        version: 0.4.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -5778,6 +5784,12 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
+      '@types/ajv':
+        specifier: ^1.0.0
+        version: 1.0.0
+      '@types/json-schema':
+        specifier: ^7.0.15
+        version: 7.0.15
       '@types/lodash':
         specifier: ^4.17.4
         version: 4.17.4
@@ -6001,78 +6013,6 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/scripts:
-    devDependencies:
-      '@fern-api/fern-definition-schema':
-        specifier: workspace:*
-        version: link:../cli/fern-definition/schema
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/js-yaml':
-        specifier: ^4.0.8
-        version: 4.0.8
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
-      '@types/node':
-        specifier: 18.7.18
-        version: 18.7.18
-      '@types/yargs':
-        specifier: ^17.0.28
-        version: 17.0.28
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      execa:
-        specifier: ^5.1.1
-        version: 5.1.1
-      immer:
-        specifier: ^9.0.15
-        version: 9.0.15
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      ts-node:
-        specifier: ^10.9.2
-        version: 10.9.2(@types/node@18.7.18)(typescript@4.6.4)
-      tsup:
-        specifier: ^8.0.2
-        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-      yargs:
-        specifier: ^17.4.1
-        version: 17.7.2
-      zod-to-json-schema:
-        specifier: 3.23.3
-        version: 3.23.3(zod@3.23.8)
 
   packages/seed:
     devDependencies:
@@ -9742,6 +9682,10 @@ packages:
       picomatch:
         optional: true
 
+  fern-api@0.45.0-rc12:
+    resolution: {integrity: sha512-4ghX8cA/hNycZFPgU+Zgu1xPkVyrvIS2KGWMmH8WX7/U8QLyKa0Drm6FTTngnf+SIYkgPDbh52dN0/o7wCWPRg==}
+    hasBin: true
+
   fetch-mock-jest@1.5.1:
     resolution: {integrity: sha512-+utwzP8C+Pax1GSka3nFXILWMY3Er2L+s090FOgqVNrNCPp0fDqgXnAHAJf12PLHi0z4PhcTaZNTz8e7K3fjqQ==}
     engines: {node: '>=8.0.0'}
@@ -13229,11 +13173,6 @@ packages:
   yocto-queue@1.0.0:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
-
-  zod-to-json-schema@3.23.3:
-    resolution: {integrity: sha512-TYWChTxKQbRJp5ST22o/Irt9KC5nj7CdBKYB/AosCRdj/wxEMvv4NNaj9XVUHDOIp53ZxArGhnw5HMZziPFjog==}
-    peerDependencies:
-      zod: ^3.23.3
 
   zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
@@ -17370,6 +17309,8 @@ snapshots:
   fdir@6.4.0(picomatch@4.0.2):
     optionalDependencies:
       picomatch: 4.0.2
+
+  fern-api@0.45.0-rc12: {}
 
   fetch-mock-jest@1.5.1(node-fetch@2.7.0):
     dependencies:
@@ -21721,10 +21662,6 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   yocto-queue@1.0.0: {}
-
-  zod-to-json-schema@3.23.3(zod@3.23.8):
-    dependencies:
-      zod: 3.23.8
 
   zod@3.22.4: {}
 

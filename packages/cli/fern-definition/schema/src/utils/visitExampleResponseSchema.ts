@@ -4,7 +4,7 @@ import {
     ExampleResponseSchema,
     ExampleSseResponseSchema,
     ExampleStreamResponseSchema
-} from "../schemas/ExampleResponseSchema";
+} from "../schemas";
 import { isSimpleStreamResponseSchema } from "./isSimpleStreamResponseSchema";
 import { isSseStsreamResponseSchema } from "./isSseStreamResponseSchema";
 
