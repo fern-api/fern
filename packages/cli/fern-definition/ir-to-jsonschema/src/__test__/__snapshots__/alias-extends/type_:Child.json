@@ -1,5 +1,10 @@
 {
   "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/Parent"
+    }
+  ],
   "properties": {
     "child": {
       "type": "string"
@@ -8,5 +13,17 @@
   "required": [
     "child"
   ],
-  "definitions": {}
+  "definitions": {
+    "Parent": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "parent"
+      ]
+    }
+  }
 }

@@ -17,10 +17,7 @@
       "type": "number"
     },
     "type": {
-      "const": {
-        "string": "movie",
-        "type": "string"
-      }
+      "const": "movie"
     },
     "tag": {
       "$ref": "#/definitions/commons.types.Tag"

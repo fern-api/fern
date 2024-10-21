@@ -8,10 +8,7 @@
       "type": "integer"
     },
     "success": {
-      "const": {
-        "boolean": true,
-        "type": "boolean"
-      }
+      "const": true
     }
   },
   "required": [

@@ -4,10 +4,7 @@
       "$ref": "#/definitions/union.KeyType"
     },
     {
-      "const": {
-        "string": "default",
-        "type": "string"
-      }
+      "const": "default"
     }
   ],
   "definitions": {

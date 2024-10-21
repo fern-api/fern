@@ -1,5 +1,14 @@
 - changelogEntry: 
     - summary: | 
+        Improved JSON Schema generation for object extensions and const values:
+        - Object extensions are now properly represented using `allOf` in the JSON Schema
+        - Literal values (string and boolean) are now correctly represented using `const` in the JSON Schema
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc9
+
+- changelogEntry: 
+    - summary: | 
         Add `#!/usr/bin/env node` to the CLI to prevent runtime errors.
       type: internal
   irVersion: 53

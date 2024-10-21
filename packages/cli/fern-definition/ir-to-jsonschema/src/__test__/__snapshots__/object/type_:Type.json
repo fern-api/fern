@@ -90,10 +90,7 @@
       }
     },
     "eighteen": {
-      "const": {
-        "string": "eighteen",
-        "type": "string"
-      }
+      "const": "eighteen"
     },
     "nineteen": {
       "$ref": "#/definitions/Name"

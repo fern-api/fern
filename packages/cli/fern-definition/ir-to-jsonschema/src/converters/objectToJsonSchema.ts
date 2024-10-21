@@ -1,4 +1,4 @@
-import { ObjectTypeDeclaration } from "@fern-api/ir-sdk";
+import { ObjectTypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
 import { JSONSchema4 } from "json-schema";
 import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
 import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema";
@@ -11,6 +11,19 @@ export declare namespace convertObjectToJsonSchema {
 }
 
 export function convertObjectToJsonSchema({ object, context }: convertObjectToJsonSchema.Args): JSONSchema4 {
+    const schema: JSONSchema4 = {
+        type: "object"
+    };
+
+    if (object.extends.length > 0) {
+        schema.allOf = object.extends.map((extendedType) =>
+            convertTypeReferenceToJsonSchema({
+                typeReference: TypeReference.named({ ...extendedType, default: undefined, inline: undefined }),
+                context
+            })
+        );
+    }
+
     const properties = object.properties.map((property) => {
         const propertyName = property.name.wireValue;
         const propertySchema = convertTypeReferenceToJsonSchema({
@@ -24,9 +37,13 @@ export function convertObjectToJsonSchema({ object, context }: convertObjectToJs
         .filter((property) => !context.isOptional(property.valueType))
         .map((property) => property.name.wireValue);
 
-    return {
-        type: "object",
-        properties: Object.fromEntries(properties),
-        required: requiredProperties.length > 0 ? requiredProperties : undefined
-    };
+    if (properties.length > 0) {
+        schema.properties = Object.fromEntries(properties);
+    }
+
+    if (requiredProperties.length > 0) {
+        schema.required = requiredProperties;
+    }
+
+    return schema;
 }

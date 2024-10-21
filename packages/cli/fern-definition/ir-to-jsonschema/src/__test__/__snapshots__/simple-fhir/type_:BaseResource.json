@@ -20,14 +20,52 @@
     "memo"
   ],
   "definitions": {
-    "Script": {
+    "Memo": {
       "type": "object",
       "properties": {
-        "resource_type": {
-          "const": {
-            "string": "Script",
-            "type": "string"
+        "description": {
+          "type": "string"
+        },
+        "account": {
+          "$ref": "#/definitions/Account"
+        }
+      },
+      "required": [
+        "description"
+      ]
+    },
+    "BaseResource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "related_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceList"
           }
+        },
+        "memo": {
+          "$ref": "#/definitions/Memo"
+        }
+      },
+      "required": [
+        "id",
+        "related_resources",
+        "memo"
+      ]
+    },
+    "Script": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResource"
+        }
+      ],
+      "properties": {
+        "resource_type": {
+          "const": "Script"
         },
         "name": {
           "type": "string"
@@ -40,12 +78,14 @@
     },
     "Patient": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResource"
+        }
+      ],
       "properties": {
         "resource_type": {
-          "const": {
-            "string": "Patient",
-            "type": "string"
-          }
+          "const": "Patient"
         },
         "name": {
           "type": "string"
@@ -65,12 +105,14 @@
     },
     "Practitioner": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResource"
+        }
+      ],
       "properties": {
         "resource_type": {
-          "const": {
-            "string": "Practitioner",
-            "type": "string"
-          }
+          "const": "Practitioner"
         },
         "name": {
           "type": "string"
@@ -83,12 +125,14 @@
     },
     "Account": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResource"
+        }
+      ],
       "properties": {
         "resource_type": {
-          "const": {
-            "string": "Account",
-            "type": "string"
-          }
+          "const": "Account"
         },
         "name": {
           "type": "string"
@@ -119,20 +163,6 @@
         {
           "$ref": "#/definitions/Script"
         }
-      ]
-    },
-    "Memo": {
-      "type": "object",
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "account": {
-          "$ref": "#/definitions/Account"
-        }
-      },
-      "required": [
-        "description"
       ]
     }
   }

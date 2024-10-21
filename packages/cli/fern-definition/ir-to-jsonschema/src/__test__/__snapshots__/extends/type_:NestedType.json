@@ -1,5 +1,10 @@
 {
   "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/JSON"
+    }
+  ],
   "properties": {
     "name": {
       "type": "string"
@@ -8,5 +13,33 @@
   "required": [
     "name"
   ],
-  "definitions": {}
+  "definitions": {
+    "Docs": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "docs"
+      ]
+    },
+    "JSON": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Docs"
+        }
+      ],
+      "properties": {
+        "raw": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "raw"
+      ]
+    }
+  }
 }

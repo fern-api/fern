@@ -1,5 +1,10 @@
 {
   "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/users.UserOptionalListPage"
+    }
+  ],
   "properties": {
     "total_count": {
       "type": "integer"
@@ -8,5 +13,47 @@
   "required": [
     "total_count"
   ],
-  "definitions": {}
+  "definitions": {
+    "users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ]
+    },
+    "users.UserOptionalListContainer": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/users.User"
+          }
+        }
+      }
+    },
+    "users.UserOptionalListPage": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/users.UserOptionalListContainer"
+        },
+        "next": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "data"
+      ]
+    }
+  }
 }
