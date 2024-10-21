@@ -13,6 +13,7 @@
     "updateTime",
     "updateInfo"
   ],
+  "additionalProperties": false,
   "definitions": {
     "submission.RunningSubmissionState": {
       "type": "string",
@@ -90,7 +91,8 @@
         "exceptionType",
         "exceptionMessage",
         "exceptionStacktrace"
-      ]
+      ],
+      "additionalProperties": false
     },
     "submission.ErrorInfo": {
       "type": "object",

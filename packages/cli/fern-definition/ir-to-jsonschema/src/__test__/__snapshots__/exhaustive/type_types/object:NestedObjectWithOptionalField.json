@@ -8,6 +8,7 @@
       "$ref": "#/definitions/types.object.ObjectWithOptionalField"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "types.object.ObjectWithOptionalField": {
       "type": "object",
@@ -66,7 +67,8 @@
           "type": "string",
           "pattern": "^-?[0-9]+$"
         }
-      }
+      },
+      "additionalProperties": false
     }
   }
 }

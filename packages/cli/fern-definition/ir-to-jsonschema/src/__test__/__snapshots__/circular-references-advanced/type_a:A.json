@@ -8,5 +8,6 @@
   "required": [
     "s"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

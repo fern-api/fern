@@ -19,6 +19,7 @@
       "minimum": 0
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "NamespaceSummary": {
       "type": "object",
@@ -27,7 +28,8 @@
           "type": "integer",
           "minimum": 0
         }
-      }
+      },
+      "additionalProperties": false
     }
   }
 }

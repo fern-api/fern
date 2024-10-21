@@ -19,6 +19,7 @@
     "docs",
     "data"
   ],
+  "additionalProperties": false,
   "definitions": {
     "service.Movie": {
       "type": "object",
@@ -33,7 +34,8 @@
       "required": [
         "id",
         "name"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

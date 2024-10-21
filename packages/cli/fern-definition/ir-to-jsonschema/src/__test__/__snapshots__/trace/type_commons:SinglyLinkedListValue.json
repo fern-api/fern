@@ -14,6 +14,7 @@
   "required": [
     "nodes"
   ],
+  "additionalProperties": false,
   "definitions": {
     "commons.NodeId": {
       "type": "string"
@@ -34,7 +35,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

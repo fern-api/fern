@@ -11,5 +11,6 @@
   "required": [
     "private_property"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

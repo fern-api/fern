@@ -8,6 +8,7 @@
   "required": [
     "imported"
   ],
+  "additionalProperties": false,
   "definitions": {
     "commons.Imported": {
       "type": "string"

@@ -12,5 +12,6 @@
     "name",
     "likesToMeow"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

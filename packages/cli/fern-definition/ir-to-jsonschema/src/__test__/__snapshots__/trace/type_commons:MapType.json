@@ -12,6 +12,7 @@
     "keyType",
     "valueType"
   ],
+  "additionalProperties": false,
   "definitions": {
     "commons.VariableType": {
       "type": "object",

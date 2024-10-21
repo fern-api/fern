@@ -275,7 +275,8 @@
         "exceptionType",
         "exceptionMessage",
         "exceptionStacktrace"
-      ]
+      ],
+      "additionalProperties": false
     },
     "submission.ErrorInfo": {
       "type": "object",
@@ -350,7 +351,8 @@
       "required": [
         "key",
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.NodeId": {
       "type": "string"
@@ -374,7 +376,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.SinglyLinkedListNodeValue": {
       "type": "object",
@@ -392,7 +395,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.DoublyLinkedListNodeValue": {
       "type": "object",
@@ -413,7 +417,8 @@
       "required": [
         "nodeId",
         "val"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.VariableValue": {
       "type": "object",
@@ -741,7 +746,8 @@
         "expectedResult",
         "actualResult",
         "passed"
-      ]
+      ],
+      "additionalProperties": false
     },
     "submission.TestCaseResultWithStdout": {
       "type": "object",
@@ -756,7 +762,8 @@
       "required": [
         "result",
         "stdout"
-      ]
+      ],
+      "additionalProperties": false
     },
     "submission.TestCaseGrade": {
       "type": "object",
@@ -828,7 +835,8 @@
       },
       "required": [
         "stdout"
-      ]
+      ],
+      "additionalProperties": false
     },
     "submission.LightweightStackframeInformation": {
       "type": "object",
@@ -843,7 +851,8 @@
       "required": [
         "numStackFrames",
         "topStackFrameMethodName"
-      ]
+      ],
+      "additionalProperties": false
     },
     "submission.TracedFile": {
       "type": "object",
@@ -858,7 +867,8 @@
       "required": [
         "filename",
         "directory"
-      ]
+      ],
+      "additionalProperties": false
     },
     "commons.ProblemId": {
       "type": "string"
@@ -888,7 +898,8 @@
         "directory",
         "filename",
         "contents"
-      ]
+      ],
+      "additionalProperties": false
     },
     "submission.SubmissionRequest": {
       "type": "object",

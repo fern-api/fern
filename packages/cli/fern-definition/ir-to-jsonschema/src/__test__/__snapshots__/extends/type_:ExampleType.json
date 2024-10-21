@@ -12,5 +12,6 @@
     "docs",
     "name"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

@@ -12,5 +12,6 @@
     "docs",
     "raw"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

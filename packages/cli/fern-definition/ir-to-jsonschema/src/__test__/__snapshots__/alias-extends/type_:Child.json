@@ -12,5 +12,6 @@
     "parent",
     "child"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

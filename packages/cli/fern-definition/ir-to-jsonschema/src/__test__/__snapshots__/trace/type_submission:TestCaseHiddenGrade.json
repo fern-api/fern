@@ -8,5 +8,6 @@
   "required": [
     "passed"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

@@ -16,6 +16,7 @@
     "name",
     "hidden"
   ],
+  "additionalProperties": false,
   "definitions": {
     "v2.v3.problem.TestCaseId": {
       "type": "string"

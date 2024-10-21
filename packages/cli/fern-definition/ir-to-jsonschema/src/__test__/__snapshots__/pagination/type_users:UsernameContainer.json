@@ -11,5 +11,6 @@
   "required": [
     "results"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

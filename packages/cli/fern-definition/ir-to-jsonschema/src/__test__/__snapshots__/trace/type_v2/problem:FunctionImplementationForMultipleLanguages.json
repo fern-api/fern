@@ -11,6 +11,7 @@
   "required": [
     "codeByLanguage"
   ],
+  "additionalProperties": false,
   "definitions": {
     "v2.problem.FunctionImplementation": {
       "type": "object",
@@ -24,7 +25,8 @@
       },
       "required": [
         "impl"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

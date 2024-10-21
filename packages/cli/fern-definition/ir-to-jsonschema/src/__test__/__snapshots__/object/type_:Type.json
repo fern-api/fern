@@ -135,6 +135,7 @@
     "twentytwo",
     "twentythree"
   ],
+  "additionalProperties": false,
   "definitions": {
     "Name": {
       "type": "object",
@@ -149,7 +150,8 @@
       "required": [
         "id",
         "value"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

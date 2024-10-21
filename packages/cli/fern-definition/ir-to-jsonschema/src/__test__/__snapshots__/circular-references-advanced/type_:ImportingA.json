@@ -5,6 +5,7 @@
       "$ref": "#/definitions/a.A"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "a.A": {
       "type": "object",
@@ -15,7 +16,8 @@
       },
       "required": [
         "s"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

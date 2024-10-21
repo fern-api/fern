@@ -12,6 +12,7 @@
     "type",
     "name"
   ],
+  "additionalProperties": false,
   "definitions": {
     "BasicType": {
       "type": "string",

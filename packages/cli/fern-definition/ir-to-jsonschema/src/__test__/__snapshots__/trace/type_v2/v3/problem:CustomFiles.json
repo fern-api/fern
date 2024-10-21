@@ -220,7 +220,8 @@
         "parameterId",
         "name",
         "variableType"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.v3.problem.NonVoidFunctionSignature": {
       "type": "object",
@@ -238,7 +239,8 @@
       "required": [
         "parameters",
         "returnType"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.v3.problem.FileInfoV2": {
       "type": "object",
@@ -261,7 +263,8 @@
         "directory",
         "contents",
         "editable"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.v3.problem.Files": {
       "type": "object",
@@ -275,7 +278,8 @@
       },
       "required": [
         "files"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.v3.problem.TestCaseTemplateId": {
       "type": "string"
@@ -335,7 +339,8 @@
       },
       "required": [
         "boards"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.v3.problem.BasicTestCaseTemplate": {
       "type": "object",
@@ -358,7 +363,8 @@
         "name",
         "description",
         "expectedValueParameterId"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

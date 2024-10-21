@@ -5,6 +5,7 @@
       "$ref": "#/definitions/union.MyUnion"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "union.MyUnion": {
       "oneOf": [

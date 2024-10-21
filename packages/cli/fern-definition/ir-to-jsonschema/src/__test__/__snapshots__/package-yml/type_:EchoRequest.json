@@ -12,5 +12,6 @@
     "name",
     "size"
   ],
+  "additionalProperties": false,
   "definitions": {}
 }

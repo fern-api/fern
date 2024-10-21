@@ -11,6 +11,7 @@
   "required": [
     "filesByLanguage"
   ],
+  "additionalProperties": false,
   "definitions": {
     "v2.problem.FileInfoV2": {
       "type": "object",
@@ -33,7 +34,8 @@
         "directory",
         "contents",
         "editable"
-      ]
+      ],
+      "additionalProperties": false
     },
     "v2.problem.Files": {
       "type": "object",
@@ -47,7 +49,8 @@
       },
       "required": [
         "files"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

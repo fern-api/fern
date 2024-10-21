@@ -16,6 +16,7 @@
     "data",
     "total_count"
   ],
+  "additionalProperties": false,
   "definitions": {
     "users.User": {
       "type": "object",
@@ -30,7 +31,8 @@
       "required": [
         "name",
         "id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users.UserListContainer": {
       "type": "object",
@@ -44,7 +46,8 @@
       },
       "required": [
         "users"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }
