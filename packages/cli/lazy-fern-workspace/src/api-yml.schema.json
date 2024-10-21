@@ -2,88 +2,214 @@
   "type": "object",
   "properties": {
     "docs": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "display-name": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "default-url": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "default-environment": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "environments": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/environments.EnvironmentSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "auth": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/auth.ApiAuthSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "auth-schemes": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/auth.AuthSchemeDeclarationSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "headers": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/service.HttpHeaderSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "name": {
       "type": "string"
     },
-    "display-name": {
-      "type": "string"
-    },
-    "default-url": {
-      "type": "string"
-    },
-    "default-environment": {
-      "type": "string"
-    },
-    "environments": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/environments.EnvironmentSchema"
-      }
-    },
-    "auth": {
-      "$ref": "#/definitions/auth.ApiAuthSchema"
-    },
-    "auth-schemes": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/auth.AuthSchemeDeclarationSchema"
-      }
-    },
-    "headers": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/service.HttpHeaderSchema"
-      }
-    },
     "imports": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "error-discrimination": {
-      "$ref": "#/definitions/file.ErrorDiscriminationSchema"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/file.ErrorDiscriminationSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "audiences": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "errors": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "base-path": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "path-parameters": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/service.HttpPathParameterSchema"
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/service.HttpPathParameterSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "idempotency-headers": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/service.HttpHeaderSchema"
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/service.HttpHeaderSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "variables": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/variables.VariableDeclarationSchema"
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/variables.VariableDeclarationSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "pagination": {
-      "$ref": "#/definitions/pagination.PaginationSchema"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/pagination.PaginationSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "version": {
-      "$ref": "#/definitions/versioning.VersionDeclarationSchema"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/versioning.VersionDeclarationSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [
@@ -95,13 +221,27 @@
       "type": "object",
       "properties": {
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "url": {
           "type": "string"
@@ -116,13 +256,27 @@
       "type": "object",
       "properties": {
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "urls": {
           "type": "object",
@@ -137,7 +291,7 @@
       "additionalProperties": false
     },
     "environments.EnvironmentSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -153,7 +307,14 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "scheme": {
           "type": "string"
@@ -165,7 +326,7 @@
       "additionalProperties": false
     },
     "auth.AnyAuthItem": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -178,7 +339,14 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "any": {
           "type": "array",
@@ -193,7 +361,7 @@
       "additionalProperties": false
     },
     "auth.ApiAuthSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -209,13 +377,34 @@
       "type": "object",
       "properties": {
         "client-id": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "client-secret": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "scopes": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -224,13 +413,34 @@
       "type": "object",
       "properties": {
         "access-token": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "expires-in": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "refresh-token": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -242,10 +452,24 @@
           "type": "string"
         },
         "request-properties": {
-          "$ref": "#/definitions/auth.OAuthAccessTokenRequestPropertiesSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthAccessTokenRequestPropertiesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "response-properties": {
-          "$ref": "#/definitions/auth.OAuthAccessTokenResponsePropertiesSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthAccessTokenResponsePropertiesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -269,13 +493,34 @@
       "type": "object",
       "properties": {
         "access-token": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "expires-in": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "refresh-token": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -287,10 +532,24 @@
           "type": "string"
         },
         "request-properties": {
-          "$ref": "#/definitions/auth.OAuthRefreshTokenRequestPropertiesSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthRefreshTokenRequestPropertiesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "response-properties": {
-          "$ref": "#/definitions/auth.OAuthRefreshTokenResponsePropertiesSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthRefreshTokenResponsePropertiesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -302,7 +561,14 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "scheme": {
           "const": "oauth"
@@ -311,25 +577,60 @@
           "const": "client-credentials"
         },
         "scopes": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "client-id-env": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "client-secret-env": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "token-prefix": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "get-token": {
           "$ref": "#/definitions/auth.OAuthGetTokenEndpointSchema"
         },
         "refresh-token": {
-          "$ref": "#/definitions/auth.OAuthRefreshTokenEndpointSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthRefreshTokenEndpointSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -343,22 +644,57 @@
       "type": "object",
       "properties": {
         "env": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "header": {
           "type": "string"
         },
         "type": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "prefix": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -370,10 +706,24 @@
       "type": "object",
       "properties": {
         "env": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -382,16 +732,37 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "scheme": {
           "const": "basic"
         },
         "username": {
-          "$ref": "#/definitions/auth.AuthVariable"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.AuthVariable"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "password": {
-          "$ref": "#/definitions/auth.AuthVariable"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.AuthVariable"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -403,13 +774,27 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "scheme": {
           "const": "bearer"
         },
         "token": {
-          "$ref": "#/definitions/auth.AuthVariable"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.AuthVariable"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -418,7 +803,7 @@
       "additionalProperties": false
     },
     "auth.AuthSchemeDeclarationSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/auth.OAuthSchemeSchema"
         },
@@ -449,7 +834,14 @@
       "type": "object",
       "properties": {
         "proto": {
-          "$ref": "#/definitions/encoding.ProtobufTypeSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.ProtobufTypeSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -458,16 +850,44 @@
       "type": "object",
       "properties": {
         "minLength": {
-          "type": "integer"
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "maxLength": {
-          "type": "integer"
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "pattern": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "format": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -476,25 +896,60 @@
       "type": "object",
       "properties": {
         "min": {
-          "type": "integer"
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "max": {
-          "type": "integer"
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "exclusiveMin": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "exclusiveMax": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "multipleOf": {
-          "type": "integer"
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
     },
     "validation.ValidationSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/validation.StringValidationSchema"
         },
@@ -519,7 +974,14 @@
           "$ref": "#/definitions/availability.AvailabilityStatusSchema"
         },
         "message": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -528,7 +990,7 @@
       "additionalProperties": false
     },
     "availability.AvailabilityUnionSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/availability.AvailabilityStatusSchema"
         },
@@ -544,38 +1006,94 @@
           "type": "string"
         },
         "default": {
-          "type": [
-            "string",
-            "number",
-            "boolean",
-            "object",
-            "array",
-            "null"
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "encoding": {
-          "$ref": "#/definitions/encoding.EncodingSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "validation": {
-          "$ref": "#/definitions/validation.ValidationSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/validation.ValidationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "env": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -584,7 +1102,7 @@
       "additionalProperties": false
     },
     "service.TypeReferenceDeclarationWithEnvOverride": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -625,7 +1143,7 @@
       "additionalProperties": false
     },
     "file.ErrorDiscriminationSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/file.PropertyBasedErrorDiscrimination"
         },
@@ -638,35 +1156,84 @@
       "type": "object",
       "properties": {
         "default": {
-          "type": [
-            "string",
-            "number",
-            "boolean",
-            "object",
-            "array",
-            "null"
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "encoding": {
-          "$ref": "#/definitions/encoding.EncodingSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "validation": {
-          "$ref": "#/definitions/validation.ValidationSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/validation.ValidationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "type": {
           "type": "string"
@@ -678,7 +1245,7 @@
       "additionalProperties": false
     },
     "types.TypeReferenceSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -691,10 +1258,24 @@
       "type": "object",
       "properties": {
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "variable": {
           "type": "string"
@@ -706,7 +1287,7 @@
       "additionalProperties": false
     },
     "service.HttpPathParameterSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/types.TypeReferenceSchema"
         },
@@ -719,7 +1300,14 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "type": {
           "type": "string"
@@ -731,7 +1319,7 @@
       "additionalProperties": false
     },
     "variables.VariableDeclarationSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -770,10 +1358,24 @@
           "type": "string"
         },
         "step": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "has-next-page": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -783,7 +1385,7 @@
       "additionalProperties": false
     },
     "pagination.PaginationSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/pagination.CursorPaginationSchema"
         },
@@ -796,10 +1398,24 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "value": {
           "type": "string"
@@ -811,7 +1427,7 @@
       "additionalProperties": false
     },
     "versioning.VersionValue": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -824,10 +1440,24 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "env": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "value": {
           "type": "string"
@@ -839,7 +1469,7 @@
       "additionalProperties": false
     },
     "versioning.VersionDeclarationHeaderSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -852,7 +1482,14 @@
       "type": "object",
       "properties": {
         "default": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "values": {
           "type": "array",

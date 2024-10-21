@@ -7,9 +7,9 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { EnumValueSchema } from "./EnumValueSchema";
 
-export const EnumVaue: core.serialization.Schema<serializers.EnumVaue.Raw, FernDefinition.EnumVaue> =
+export const EnumValue: core.serialization.Schema<serializers.EnumValue.Raw, FernDefinition.EnumValue> =
     core.serialization.undiscriminatedUnion([core.serialization.string(), EnumValueSchema]);
 
-export declare namespace EnumVaue {
+export declare namespace EnumValue {
     type Raw = string | EnumValueSchema.Raw;
 }

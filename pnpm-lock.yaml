@@ -93,8 +93,8 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1
       fern-api:
-        specifier: 0.45.0-rc11
-        version: 0.45.0-rc11
+        specifier: 0.45.0-rc12
+        version: 0.45.0-rc12
       husky:
         specifier: ^9.1.5
         version: 9.1.5
@@ -5765,9 +5765,6 @@ importers:
 
   packages/commons/core-utils:
     dependencies:
-      '@segment/ajv-human-errors':
-        specifier: ^2.14.0
-        version: 2.14.0(ajv@8.17.1)
       ajv:
         specifier: ^8.17.1
         version: 8.17.1
@@ -5811,9 +5808,6 @@ importers:
       '@types/whatwg-mimetype':
         specifier: ^3.0.2
         version: 3.0.2
-      ajv-human-errors:
-        specifier: link:@types/segment/ajv-human-errors
-        version: link:@types/segment/ajv-human-errors
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -7830,11 +7824,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@segment/ajv-human-errors@2.14.0':
-    resolution: {integrity: sha512-vaURfRwGRWXz4wimWHX2Gy7Qs5toJzICQ3ecphlQJK1UDVe11zWOz+0UyJ3fmYLV8+z4Skwcu1vZPXoMBFXWhQ==}
-    peerDependencies:
-      ajv: ^8.0.0
-
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
 
@@ -9693,8 +9682,8 @@ packages:
       picomatch:
         optional: true
 
-  fern-api@0.45.0-rc11:
-    resolution: {integrity: sha512-3jIFpRpfM8KIZMzkjnt9RM196I6qmBa8IESmLFZd5OpbRtCjDN6WHDgDWaKot/0OVCFuRgiUz/p2d+ta2yFMWg==}
+  fern-api@0.45.0-rc12:
+    resolution: {integrity: sha512-4ghX8cA/hNycZFPgU+Zgu1xPkVyrvIS2KGWMmH8WX7/U8QLyKa0Drm6FTTngnf+SIYkgPDbh52dN0/o7wCWPRg==}
     hasBin: true
 
   fetch-mock-jest@1.5.1:
@@ -15008,10 +14997,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.14.1':
     optional: true
 
-  '@segment/ajv-human-errors@2.14.0(ajv@8.17.1)':
-    dependencies:
-      ajv: 8.17.1
-
   '@sinclair/typebox@0.27.8': {}
 
   '@sinonjs/commons@3.0.0':
@@ -17325,7 +17310,7 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.2
 
-  fern-api@0.45.0-rc11: {}
+  fern-api@0.45.0-rc12: {}
 
   fetch-mock-jest@1.5.1(node-fetch@2.7.0):
     dependencies:

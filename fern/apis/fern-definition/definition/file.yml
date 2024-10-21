@@ -62,7 +62,6 @@ types:
   RootApiFileSchema: 
     extends: 
       - commons.WithDocsSchema
-      - commons.WithName
       - commons.WithDisplayName
       - environments.WithEnvironmentsSchema
       - auth.WithAuthSchema

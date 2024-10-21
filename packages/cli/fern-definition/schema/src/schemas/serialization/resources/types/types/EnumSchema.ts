@@ -5,20 +5,20 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { EnumVaue } from "./EnumVaue";
+import { EnumValue } from "./EnumValue";
 import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 
 export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.Raw, FernDefinition.EnumSchema> =
     core.serialization
         .object({
             default: core.serialization.string().optional(),
-            enum: core.serialization.list(EnumVaue),
+            enum: core.serialization.list(EnumValue),
         })
         .extend(BaseTypeDeclarationSchema);
 
 export declare namespace EnumSchema {
     interface Raw extends BaseTypeDeclarationSchema.Raw {
         default?: string | null;
-        enum: EnumVaue.Raw[];
+        enum: EnumValue.Raw[];
     }
 }

@@ -2,37 +2,86 @@
   "type": "object",
   "properties": {
     "docs": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "imports": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "types": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/types.TypeDeclarationSchema"
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/types.TypeDeclarationSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "service": {
-      "$ref": "#/definitions/service.HttpServiceSchema"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/service.HttpServiceSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "errors": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/errors.ErrorDeclarationSchema"
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/errors.ErrorDeclarationSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "webhooks": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/webhooks.WebhookSchema"
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/webhooks.WebhookSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "channel": {
-      "$ref": "#/definitions/websocket.WebSocketChannelSchema"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/websocket.WebSocketChannelSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,
@@ -51,10 +100,24 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "value": {
           "$ref": "#/definitions/examples.ExampleTypeValueSchema"
@@ -81,7 +144,14 @@
       "type": "object",
       "properties": {
         "proto": {
-          "$ref": "#/definitions/encoding.ProtobufTypeSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.ProtobufTypeSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -111,7 +181,7 @@
       "additionalProperties": false
     },
     "source.SourceSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/source.OpenAPISourceSchema"
         },
@@ -136,7 +206,14 @@
           "$ref": "#/definitions/availability.AvailabilityStatusSchema"
         },
         "message": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -145,7 +222,7 @@
       "additionalProperties": false
     },
     "availability.AvailabilityUnionSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/availability.AvailabilityStatusSchema"
         },
@@ -155,7 +232,7 @@
       ]
     },
     "types.ObjectExtendsSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -171,16 +248,44 @@
       "type": "object",
       "properties": {
         "minLength": {
-          "type": "integer"
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "maxLength": {
-          "type": "integer"
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "pattern": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "format": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -189,25 +294,60 @@
       "type": "object",
       "properties": {
         "min": {
-          "type": "integer"
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "max": {
-          "type": "integer"
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "exclusiveMin": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "exclusiveMax": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "multipleOf": {
-          "type": "integer"
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
     },
     "validation.ValidationSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/validation.StringValidationSchema"
         },
@@ -220,35 +360,84 @@
       "type": "object",
       "properties": {
         "default": {
-          "type": [
-            "string",
-            "number",
-            "boolean",
-            "object",
-            "array",
-            "null"
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "encoding": {
-          "$ref": "#/definitions/encoding.EncodingSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "validation": {
-          "$ref": "#/definitions/validation.ValidationSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/validation.ValidationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "type": {
           "type": "string"
@@ -260,7 +449,7 @@
       "additionalProperties": false
     },
     "types.TypeReferenceDeclarationWithNameSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -276,40 +465,103 @@
       "type": "object",
       "properties": {
         "examples": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/examples.ExampleTypeSchema"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/examples.ExampleTypeSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "encoding": {
-          "$ref": "#/definitions/encoding.EncodingSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "source": {
-          "$ref": "#/definitions/source.SourceSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "extends": {
-          "$ref": "#/definitions/types.ObjectExtendsSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.ObjectExtendsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "properties": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/types.ObjectPropertySchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/types.ObjectPropertySchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "extra-properties": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -318,16 +570,44 @@
       "type": "object",
       "properties": {
         "camel": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "snake": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "pascal": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "screaming-snake": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -336,16 +616,37 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "value": {
           "type": "string"
         },
         "casing": {
-          "$ref": "#/definitions/types.CasingOverridesSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.CasingOverridesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -354,7 +655,7 @@
       "additionalProperties": false
     },
     "types.EnumValue": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -367,31 +668,80 @@
       "type": "object",
       "properties": {
         "examples": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/examples.ExampleTypeSchema"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/examples.ExampleTypeSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "encoding": {
-          "$ref": "#/definitions/encoding.EncodingSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "source": {
-          "$ref": "#/definitions/source.SourceSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "default": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "enum": {
           "type": "array",
@@ -409,7 +759,14 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "value": {
           "type": "string"
@@ -421,7 +778,7 @@
       "additionalProperties": false
     },
     "types.UnionDiscriminant": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -434,35 +791,84 @@
       "type": "object",
       "properties": {
         "default": {
-          "type": [
-            "string",
-            "number",
-            "boolean",
-            "object",
-            "array",
-            "null"
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "encoding": {
-          "$ref": "#/definitions/encoding.EncodingSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "validation": {
-          "$ref": "#/definitions/validation.ValidationSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/validation.ValidationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "type": {
           "type": "string"
@@ -474,7 +880,7 @@
       "additionalProperties": false
     },
     "types.TypeReferenceSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -487,7 +893,14 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "value": {
           "type": "string"
@@ -499,7 +912,7 @@
       "additionalProperties": false
     },
     "types.SingleUnionTypeKey": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -512,28 +925,70 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "display-name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "type": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "key": {
-          "$ref": "#/definitions/types.SingleUnionTypeKey"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.SingleUnionTypeKey"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
     },
     "types.SingleUnionTypeSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -546,40 +1001,103 @@
       "type": "object",
       "properties": {
         "examples": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/examples.ExampleTypeSchema"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/examples.ExampleTypeSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "encoding": {
-          "$ref": "#/definitions/encoding.EncodingSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "source": {
-          "$ref": "#/definitions/source.SourceSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "discriminant": {
-          "$ref": "#/definitions/types.UnionDiscriminant"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.UnionDiscriminant"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "extends": {
-          "$ref": "#/definitions/types.ObjectExtendsSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.ObjectExtendsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "base-properties": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/types.TypeReferenceSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/types.TypeReferenceSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "union": {
           "type": "object",
@@ -597,10 +1115,24 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "display-name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "type": {
           "type": "string"
@@ -612,7 +1144,7 @@
       "additionalProperties": false
     },
     "types.SingleUndiscriminatedUnionTypeSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -625,28 +1157,70 @@
       "type": "object",
       "properties": {
         "examples": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/examples.ExampleTypeSchema"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/examples.ExampleTypeSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "encoding": {
-          "$ref": "#/definitions/encoding.EncodingSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "source": {
-          "$ref": "#/definitions/source.SourceSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "discriminated": {
           "const": false
@@ -668,34 +1242,83 @@
       "type": "object",
       "properties": {
         "examples": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/examples.ExampleTypeSchema"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/examples.ExampleTypeSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "encoding": {
-          "$ref": "#/definitions/encoding.EncodingSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "source": {
-          "$ref": "#/definitions/source.SourceSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "type": {
           "type": "string"
         },
         "validation": {
-          "$ref": "#/definitions/validation.ValidationSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/validation.ValidationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -704,7 +1327,7 @@
       "additionalProperties": false
     },
     "types.TypeDeclarationSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -741,7 +1364,14 @@
       "type": "object",
       "properties": {
         "grpc": {
-          "$ref": "#/definitions/service.GrpcTransport"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.GrpcTransport"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -760,10 +1390,24 @@
       "type": "object",
       "properties": {
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "variable": {
           "type": "string"
@@ -775,7 +1419,7 @@
       "additionalProperties": false
     },
     "service.HttpPathParameterSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/types.TypeReferenceSchema"
         },
@@ -791,38 +1435,94 @@
           "type": "string"
         },
         "default": {
-          "type": [
-            "string",
-            "number",
-            "boolean",
-            "object",
-            "array",
-            "null"
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "encoding": {
-          "$ref": "#/definitions/encoding.EncodingSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "validation": {
-          "$ref": "#/definitions/validation.ValidationSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/validation.ValidationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "allow-multiple": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -831,7 +1531,7 @@
       "additionalProperties": false
     },
     "service.HttpQueryParameterSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -847,38 +1547,94 @@
           "type": "string"
         },
         "default": {
-          "type": [
-            "string",
-            "number",
-            "boolean",
-            "object",
-            "array",
-            "null"
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "encoding": {
-          "$ref": "#/definitions/encoding.EncodingSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "validation": {
-          "$ref": "#/definitions/validation.ValidationSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/validation.ValidationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "env": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -887,7 +1643,7 @@
       "additionalProperties": false
     },
     "service.TypeReferenceDeclarationWithEnvOverride": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -903,7 +1659,14 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "type": {
           "type": "string"
@@ -921,38 +1684,94 @@
           "type": "string"
         },
         "default": {
-          "type": [
-            "string",
-            "number",
-            "boolean",
-            "object",
-            "array",
-            "null"
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "encoding": {
-          "$ref": "#/definitions/encoding.EncodingSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "validation": {
-          "$ref": "#/definitions/validation.ValidationSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/validation.ValidationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "content-type": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -961,7 +1780,7 @@
       "additionalProperties": false
     },
     "service.HttpInlineRequestBodyPropertySchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -974,22 +1793,43 @@
       "type": "object",
       "properties": {
         "extends": {
-          "$ref": "#/definitions/types.ObjectExtendsSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.ObjectExtendsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "extra-properties": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "properties": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/service.HttpInlineRequestBodyPropertySchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/service.HttpInlineRequestBodyPropertySchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
     },
     "service.HttpRequestBodySchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -1005,34 +1845,76 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "content-type": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "query-parameters": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/service.HttpQueryParameterSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/service.HttpQueryParameterSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "headers": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/service.HttpHeaderSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/service.HttpHeaderSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "body": {
-          "$ref": "#/definitions/service.HttpRequestBodySchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.HttpRequestBodySchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
     },
     "service.HttpRequest": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -1045,16 +1927,37 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "type": {
           "type": "string"
         },
         "property": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "status-code": {
-          "type": "integer"
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1063,7 +1966,7 @@
       "additionalProperties": false
     },
     "service.HttpResponseSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -1083,16 +1986,37 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "type": {
           "type": "string"
         },
         "format": {
-          "$ref": "#/definitions/service.StreamFormat"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.StreamFormat"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "terminator": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1101,7 +2025,7 @@
       "additionalProperties": false
     },
     "service.HttpResponseStreamSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -1114,7 +2038,14 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "error": {
           "type": "string"
@@ -1126,7 +2057,7 @@
       "additionalProperties": false
     },
     "service.ResponseError": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -1155,10 +2086,24 @@
       "type": "object",
       "properties": {
         "error": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "body": {
-          "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -1185,7 +2130,14 @@
           "type": "string"
         },
         "data": {
-          "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1209,7 +2161,7 @@
       "additionalProperties": false
     },
     "examples.ExampleResponseSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/examples.ExampleBodyResponseSchema"
         },
@@ -1248,10 +2200,24 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "sdk": {
           "$ref": "#/definitions/examples.SupportedSdkLanguageSchema"
@@ -1270,10 +2236,24 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "language": {
           "type": "string"
@@ -1282,7 +2262,14 @@
           "type": "string"
         },
         "install": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1292,7 +2279,7 @@
       "additionalProperties": false
     },
     "examples.ExampleCodeSampleSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/examples.ExampleCodeSampleSchemaSdk"
         },
@@ -1305,43 +2292,106 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "id": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "path-parameters": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "query-parameters": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "headers": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "request": {
-          "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "response": {
-          "$ref": "#/definitions/examples.ExampleResponseSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/examples.ExampleResponseSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "code-samples": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/examples.ExampleCodeSampleSchema"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/examples.ExampleCodeSampleSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -1376,10 +2426,24 @@
           "type": "string"
         },
         "step": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "has-next-page": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1389,7 +2453,7 @@
       "additionalProperties": false
     },
     "pagination.PaginationSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/pagination.CursorPaginationSchema"
         },
@@ -1399,7 +2463,7 @@
       ]
     },
     "service.Pagination": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/pagination.PaginationSchema"
         },
@@ -1412,67 +2476,186 @@
       "type": "object",
       "properties": {
         "display-name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "method": {
-          "$ref": "#/definitions/service.HttpMethodSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.HttpMethodSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "base-path": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "path": {
           "type": "string"
         },
         "url": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "path-parameters": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/service.HttpPathParameterSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/service.HttpPathParameterSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "auth": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "idempotent": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "stream-condition": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "request": {
-          "$ref": "#/definitions/service.HttpRequest"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.HttpRequest"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "response": {
-          "$ref": "#/definitions/service.HttpResponseSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.HttpResponseSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "response-stream": {
-          "$ref": "#/definitions/service.HttpResponseStreamSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.HttpResponseStreamSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "errors": {
-          "$ref": "#/definitions/service.ResponseErrorsSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.ResponseErrorsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "examples": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/examples.ExampleEndpointCallSchema"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/examples.ExampleEndpointCallSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "pagination": {
-          "$ref": "#/definitions/service.Pagination"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.Pagination"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1484,46 +2667,109 @@
       "type": "object",
       "properties": {
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "display-name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "auth": {
           "type": "boolean"
         },
         "url": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "base-path": {
           "type": "string"
         },
         "path-parameters": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "idempotent": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "headers": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/types.TypeReferenceSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/types.TypeReferenceSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "transport": {
-          "$ref": "#/definitions/service.ServiceTransport"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.ServiceTransport"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "source": {
-          "$ref": "#/definitions/source.SourceSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "endpoints": {
           "type": "object",
@@ -1543,19 +2789,40 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "status-code": {
           "type": "integer"
         },
         "type": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "examples": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/examples.ExampleTypeSchema"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/examples.ExampleTypeSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1574,7 +2841,14 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "type": {
           "type": "string"
@@ -1592,13 +2866,27 @@
           "type": "string"
         },
         "extends": {
-          "$ref": "#/definitions/types.ObjectExtendsSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.ObjectExtendsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "properties": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/types.ObjectPropertySchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/types.ObjectPropertySchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1607,7 +2895,7 @@
       "additionalProperties": false
     },
     "webhooks.WebhookPayloadSchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -1623,13 +2911,34 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "id": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "payload": {
           "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
@@ -1644,37 +2953,79 @@
       "type": "object",
       "properties": {
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "display-name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "method": {
           "$ref": "#/definitions/webhooks.WebhookMethodSchema"
         },
         "headers": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/service.HttpHeaderSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/service.HttpHeaderSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "payload": {
           "$ref": "#/definitions/webhooks.WebhookPayloadSchema"
         },
         "examples": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/examples.ExampleWebhookCallSchema"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/examples.ExampleWebhookCallSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1694,7 +3045,14 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "type": {
           "type": "string"
@@ -1712,13 +3070,27 @@
           "type": "string"
         },
         "extends": {
-          "$ref": "#/definitions/types.ObjectExtendsSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.ObjectExtendsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "properties": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/types.ObjectPropertySchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/types.ObjectPropertySchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1727,7 +3099,7 @@
       "additionalProperties": false
     },
     "websocket.WebSocketChannelMessageBodySchema": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string"
         },
@@ -1743,19 +3115,47 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "display-name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "origin": {
           "$ref": "#/definitions/websocket.WebSocketOrigin"
@@ -1797,28 +3197,63 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "path-parameters": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "query-parameters": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "headers": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "messages": {
           "type": "array",
@@ -1836,19 +3271,47 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "availability": {
-          "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "audiences": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "display-name": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "auth": {
           "type": "boolean"
@@ -1857,34 +3320,69 @@
           "type": "string"
         },
         "headers": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/service.HttpHeaderSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/service.HttpHeaderSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "path-parameters": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/service.HttpPathParameterSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/service.HttpPathParameterSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "query-parameters": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/service.HttpQueryParameterSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/service.HttpQueryParameterSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "messages": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/websocket.WebSocketChannelMessageSchema"
-          }
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/websocket.WebSocketChannelMessageSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "examples": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/examples.ExampleWebSocketSession"
-          }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/examples.ExampleWebSocketSession"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

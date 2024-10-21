@@ -1,7 +1,5 @@
 import Ajv, { ErrorObject } from "ajv";
 import { JSONSchema4 } from "json-schema";
-import { AggregateAjvError } from "@segment/ajv-human-errors";
-import { capitalize } from "lodash-es";
 
 export declare namespace validateAgainstJsonSchema {
     export interface ValidationSuccess {
@@ -34,16 +32,6 @@ export function validateAgainstJsonSchema(
         };
     } else if (validate.errors?.[0] != null) {
         try {
-            const aggregateAjvError = new AggregateAjvError(validate.errors ?? []);
-            return {
-                success: false,
-                error: {
-                    ...validate.errors?.[0],
-                    message: aggregateAjvError.message ?? validate.errors?.[0].message
-                }
-            };
-        } catch (error) {
-            // Handle "must NOT have additional properties" error
             if (validate.errors?.[0].keyword === "additionalProperties") {
                 const additionalProp = validate.errors[0].params.additionalProperty;
                 return {
@@ -56,7 +44,24 @@ export function validateAgainstJsonSchema(
             }
             return {
                 success: false,
-                error: validate.errors?.[0]
+                error: {
+                    message: "Failed to parse",
+                    keyword: "unknown",
+                    instancePath: "",
+                    schemaPath: "",
+                    params: {}
+                }
+            };
+        } catch (error) {
+            return {
+                success: false,
+                error: {
+                    message: "Failed to parse",
+                    keyword: "unknown",
+                    instancePath: "",
+                    schemaPath: "",
+                    params: {}
+                }
             };
         }
     } else {

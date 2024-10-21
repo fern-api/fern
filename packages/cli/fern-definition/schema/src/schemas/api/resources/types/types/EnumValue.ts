@@ -4,6 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface InlinedUndiscriminatedUnionSchema extends FernDefinition.UndiscriminatedUnionSchema {
-    name: string;
-}
+export type EnumValue = string | FernDefinition.EnumValueSchema;

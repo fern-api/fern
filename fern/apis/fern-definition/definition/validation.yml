@@ -14,9 +14,9 @@ types:
   
   NumberValidationSchema: 
     properties: 
-      min: optional<integer>
-      max: optional<integer>
+      min: optional<double>
+      max: optional<double>
       exclusiveMin: optional<boolean>
       exclusiveMax: optional<boolean>
-      multipleOf: optional<integer>
+      multipleOf: optional<double>
     
