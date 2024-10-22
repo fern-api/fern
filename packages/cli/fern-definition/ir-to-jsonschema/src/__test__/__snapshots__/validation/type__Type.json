@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "decimal": {
+      "type": "number"
+    },
+    "even": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "shape": {
+      "$ref": "#/definitions/Shape"
+    }
+  },
+  "required": [
+    "decimal",
+    "even",
+    "name",
+    "shape"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Shape": {
+      "type": "string",
+      "enum": [
+        "SQUARE",
+        "CIRCLE",
+        "TRIANGLE"
+      ]
+    }
+  }
+}
