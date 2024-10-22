@@ -39,7 +39,7 @@ export function method(args: Method.Args): Method {
     return new Method(args);
 }
 
-export function methodInvocation(args: MethodInvocation.Args): MethodInvocation {
+export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
     return new MethodInvocation(args);
 }
 
