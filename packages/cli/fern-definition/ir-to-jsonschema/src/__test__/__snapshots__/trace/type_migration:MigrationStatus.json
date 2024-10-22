@@ -1,9 +1,0 @@
-{
-  "type": "string",
-  "enum": [
-    "RUNNING",
-    "FAILED",
-    "FINISHED"
-  ],
-  "definitions": {}
-}

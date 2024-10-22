@@ -1,8 +1,0 @@
-{
-  "type": "string",
-  "enum": [
-    "ACTIVE",
-    "INACTIVE"
-  ],
-  "definitions": {}
-}
