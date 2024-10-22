@@ -229,7 +229,7 @@ function getRequestHandler(endpoints: HttpEndpoint[]): RequestHandler {
             return;
         }
         res.status(404).send({
-            message: `Failed to match request with example`,
+            message: "Failed to match request with example",
             request: {
                 url: req.url,
                 headers: req.headers,
