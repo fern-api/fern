@@ -596,6 +596,12 @@ function addGenerateCommands(cli: Argv) {
                                     "Path to write the changelog to, if not provided, will write to cwd. Note this should be a directory, not a filename.",
                                 string: true,
                                 demandOption: false
+                            })
+                            .option("clean-directory", {
+                                type: "boolean",
+                                demandOption: false,
+                                description:
+                                    "If true, we will delete the contents of the output directory before generating the changelog."
                             }),
                     async (argv) => {
                         const taskContextFactory = new TaskContextFactory(argv["log-level"]);
@@ -607,7 +613,8 @@ function addGenerateCommands(cli: Argv) {
                         await generateCliChangelog({
                             context,
                             outputPath: argv.output,
-                            fdrClient
+                            fdrClient,
+                            cleanOutputDirectory: argv.cleanDirectory ?? false
                         });
                     }
                 )
@@ -633,6 +640,12 @@ function addGenerateCommands(cli: Argv) {
                             .option("log-level", {
                                 default: LogLevel.Info,
                                 choices: LOG_LEVELS
+                            })
+                            .option("clean-directory", {
+                                type: "boolean",
+                                demandOption: false,
+                                description:
+                                    "If true, we will delete the contents of the output directory before generating the changelog."
                             }),
                     async (argv) => {
                         const generators = await loadGeneratorWorkspaces();
@@ -663,7 +676,8 @@ function addGenerateCommands(cli: Argv) {
                                 context,
                                 generator,
                                 outputPath,
-                                fdrClient
+                                fdrClient,
+                                cleanOutputDirectory: argv.cleanDirectory ?? false
                             });
                         }
                     }

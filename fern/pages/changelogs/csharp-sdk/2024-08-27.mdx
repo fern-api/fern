@@ -1,0 +1,15 @@
+## 1.5.0
+**`(feat):`** Add support for service-level headers.
+
+**`(feat):`** Generate `snippet.json` file containing usage snippets for each endpoint.
+
+**`(feat):`** Apply the timeout configured on the `ClientOptions` and `RequestOptions` type.
+
+**`(feat):`** Add exponential backoff retrier, which acts upon `MaxRetries` configuration option specified on the `ClientOptions` and `RequestOptions`.
+
+**`(feat):`** Generate the `RawClientTests.cs` file which includes retry logic tests.
+
+**`(internal):`** Refactor the `RawClient` with additional helper methods so that it's easier to follow.
+
+**`(fix):`** Fix a bug where `OneOf` used directly as request or response types fail serialization.
+

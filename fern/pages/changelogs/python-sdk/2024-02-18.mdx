@@ -1,7 +1,6 @@
-## 0.10.2
-**`(fix):`** The SDK always sends the enum wire value instead of the name of the enum.
+## 0.10.3
+**`(fix):`** Several bugfixes were made to related to literal properties
 
 ### What's been fixed
-- The SDK always sends the enum wire value instead of the name of the enum.
-- Revert #2719 which introduced additional issues with circular references within our Python types.
+- Several bugfixes were made to related to literal properties. If a literal is used as a query parameeter, header, path parameter, or request parameter, the user no longer has to explicitly pass it in.
 

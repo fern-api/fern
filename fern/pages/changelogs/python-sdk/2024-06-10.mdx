@@ -1,7 +1,7 @@
-## 2.9.5
-**`(fix):`** Unions with elements that specify no properties are generated correctly.
+## 2.9.6
+**`(fix):`** Offset based pagination is now 1-based, as opposed to 0 based
 
 ### What's been fixed
-- Unions with elements that specify no properties are generated correctly.
-- Unions with a single type now have a valid type alias (rather than an invalid `typing.Union`).
+- Offset based pagination is now 1-based, as opposed to 0 based
+- The HTTP client now passes in additional body properties from the request options, even if the body is empty (regression from the client migration in 2.8.0)
 

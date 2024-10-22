@@ -1,6 +1,9 @@
-## 1.3.0
-**`(internal):`** Generator code now uses Pydantic V2, no changes to generated code.
+## 1.4.0
+**`(fix):`** Auto-completion for unions leveraging union utils now works as expected.
+
+### What's been fixed
+- Partial classes created for validation now appropriately ignore the universal root model and only create partials off true extended classes.
 
 ### What's changed
-- The generator has now been upgraded to use Pydantic V2 internally. Note that there is no change to the generated code, however by leveraging Pydantic V2 you should notice an improvement in `fern generate` times.
+- The root type for unions with visitors now has it's parent typed correctly. This allows auto-complete to work once again on the union when it's nested within other pydantic models.
 
