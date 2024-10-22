@@ -1,6 +1,5 @@
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { dynamic as DynamicSnippets, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { DynamicSnippetsConverter } from "./DynamicSnippetsConverter";
-import { DynamicSnippets } from "./generated";
 
 export async function convertIrToDynamicSnippetsIr(
     ir: IntermediateRepresentation

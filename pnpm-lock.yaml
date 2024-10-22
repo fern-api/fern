@@ -4171,6 +4171,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
     devDependencies:
       '@types/node':
         specifier: 18.7.18

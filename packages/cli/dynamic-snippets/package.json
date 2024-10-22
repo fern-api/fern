@@ -32,7 +32,8 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-api/task-context": "workspace:*"
+    "@fern-api/task-context": "workspace:*",
+    "url-join": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "18.7.18",

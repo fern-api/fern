@@ -2,6 +2,8 @@ import { assertNever } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
     ContainerType,
+    dynamic as DynamicSnippets,
+    EndpointId,
     EnumTypeDeclaration,
     FernFilepath,
     HttpEndpoint,
@@ -22,7 +24,7 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
-import { DynamicSnippets } from "./generated";
+import urlJoin from "url-join";
 
 interface EndpointWithFilepath extends HttpEndpoint {
     fernFilepath: FernFilepath;
@@ -39,6 +41,7 @@ export class DynamicSnippetsConverter {
 
     public convert(): DynamicSnippets.DynamicIntermediateRepresentation {
         return {
+            version: "1.0.0",
             types: this.convertNamedTypes(),
             endpoints: this.convertEndpoints(),
             headers: [] // TOOD: Implement me!
@@ -54,36 +57,35 @@ export class DynamicSnippetsConverter {
         );
     }
 
-    private convertEndpoints(): Record<DynamicSnippets.EndpointId, DynamicSnippets.Endpoint> {
+    private convertEndpoints(): Record<EndpointId, DynamicSnippets.Endpoint> {
         const endpoints = this.getAllHttpEndpoints();
         return Object.fromEntries(endpoints.map((endpoint) => [endpoint.id, this.convertEndpoint(endpoint)]));
     }
 
     private convertEndpoint(endpoint: EndpointWithFilepath): DynamicSnippets.Endpoint {
         return {
+            auth: undefined, // TODO: Implement me!
             declaration: this.convertDeclaration({ name: endpoint.name, fernFilepath: endpoint.fernFilepath }),
-            request: this.convertRequest({ endpoint })
+            location: this.convertEndpointLocation({ endpoint }),
+            request: this.convertRequest({ endpoint }),
+            response: DynamicSnippets.Response.unary()
         };
     }
 
     private convertRequest({ endpoint }: { endpoint: EndpointWithFilepath }): DynamicSnippets.Request {
         const pathParameters = this.convertPathParameters({ pathParameters: endpoint.allPathParameters });
         if (endpoint.sdkRequest == null && endpoint.requestBody == null) {
-            return {
-                type: "body",
-                pathParameters
-            };
+            return DynamicSnippets.Request.body({ pathParameters, body: undefined });
         }
         if (endpoint.sdkRequest == null) {
             throw new Error(`Internal error; endpoint "${endpoint.id}" has a request body but no SDK request`);
         }
         switch (endpoint.sdkRequest.shape.type) {
             case "justRequestBody":
-                return {
-                    type: "body",
+                return DynamicSnippets.Request.body({
                     pathParameters,
                     body: this.convertReferencedRequestBodyType({ body: endpoint.sdkRequest.shape.value })
-                };
+                });
             case "wrapper":
                 return this.convertInlinedRequest({
                     fernFilepath: endpoint.fernFilepath,
@@ -105,9 +107,11 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.ReferencedRequestBodyType {
         switch (body.type) {
             case "bytes":
-                return { type: "bytes" };
+                return DynamicSnippets.ReferencedRequestBodyType.bytes();
             case "typeReference":
-                return { type: "typeReference", value: this.convertTypeReference(body.requestBodyType) };
+                return DynamicSnippets.ReferencedRequestBodyType.typeReference(
+                    this.convertTypeReference(body.requestBodyType)
+                );
             default:
                 assertNever(body);
         }
@@ -128,14 +132,13 @@ export class DynamicSnippetsConverter {
         headers: DynamicSnippets.NamedParameter[];
         body: HttpRequestBody | undefined;
     }): DynamicSnippets.Request {
-        return {
-            type: "inlined",
+        return DynamicSnippets.Request.inlined({
             declaration: this.convertDeclaration({ name: wrapper.wrapperName, fernFilepath }),
             pathParameters,
             queryParameters,
             headers,
             body: body != null ? this.convertInlinedRequestBody({ wrapper, body }) : undefined
-        };
+        });
     }
 
     private convertInlinedRequestBody({
@@ -148,31 +151,29 @@ export class DynamicSnippetsConverter {
         switch (body.type) {
             case "inlinedRequestBody": {
                 const properties = [...(body.extendedProperties ?? []), ...body.properties];
-                return {
-                    type: "properties",
-                    value: properties.map((property) => ({
+                return DynamicSnippets.InlinedRequestBody.properties(
+                    properties.map((property) => ({
                         name: property.name,
                         typeReference: this.convertTypeReference(property.valueType)
                     }))
-                };
+                );
             }
             case "reference":
-                return {
-                    type: "referenced",
+                return DynamicSnippets.InlinedRequestBody.referenced({
                     bodyKey: wrapper.bodyKey,
-                    bodyType: { type: "typeReference", value: this.convertTypeReference(body.requestBodyType) }
-                };
+                    bodyType: DynamicSnippets.ReferencedRequestBodyType.typeReference(
+                        this.convertTypeReference(body.requestBodyType)
+                    )
+                });
             case "bytes":
-                return {
-                    type: "referenced",
+                return DynamicSnippets.InlinedRequestBody.referenced({
                     bodyKey: wrapper.bodyKey,
-                    bodyType: { type: "bytes" }
-                };
+                    bodyType: DynamicSnippets.ReferencedRequestBodyType.bytes()
+                });
             case "fileUpload":
-                return {
-                    type: "fileUpload",
+                return DynamicSnippets.InlinedRequestBody.fileUpload({
                     properties: [] // TODO: Implement me!
-                };
+                });
             default:
                 assertNever(body);
         }
@@ -224,41 +225,25 @@ export class DynamicSnippetsConverter {
     private convertContainerType(container: ContainerType): DynamicSnippets.TypeReference {
         switch (container.type) {
             case "list":
-                return {
-                    _type: "list",
-                    value: this.convertTypeReference(container.list)
-                };
+                return DynamicSnippets.TypeReference.list(this.convertTypeReference(container.list));
             case "map":
-                return {
-                    _type: "map",
+                return DynamicSnippets.TypeReference.map({
                     key: this.convertTypeReference(container.keyType),
                     value: this.convertTypeReference(container.valueType)
-                };
+                });
             case "optional":
-                return {
-                    _type: "optional",
-                    value: this.convertTypeReference(container.optional)
-                };
+                return DynamicSnippets.TypeReference.optional(this.convertTypeReference(container.optional));
             case "set":
-                return {
-                    _type: "set",
-                    value: this.convertTypeReference(container.set)
-                };
+                return DynamicSnippets.TypeReference.set(this.convertTypeReference(container.set));
             case "literal":
-                return {
-                    _type: "literal",
-                    value: this.convertLiteral(container.literal)
-                };
+                return DynamicSnippets.TypeReference.literal(this.convertLiteral(container.literal));
             default:
                 assertNever(container);
         }
     }
 
     private convertNamedType(named: NamedType): DynamicSnippets.TypeReference {
-        return {
-            _type: "named",
-            value: named.typeId
-        };
+        return DynamicSnippets.TypeReference.named(named.typeId);
     }
 
     private convertTypeDeclaration(typeDeclaration: TypeDeclaration): DynamicSnippets.NamedType {
@@ -286,11 +271,10 @@ export class DynamicSnippetsConverter {
         declaration: DynamicSnippets.Declaration;
         alias: AliasTypeDeclaration;
     }): DynamicSnippets.NamedType {
-        return {
-            type: "alias",
+        return DynamicSnippets.NamedType.alias({
             declaration,
             typeReference: this.convertTypeReference(alias.aliasOf)
-        };
+        });
     }
 
     private convertEnum({
@@ -300,11 +284,10 @@ export class DynamicSnippetsConverter {
         declaration: DynamicSnippets.Declaration;
         enum_: EnumTypeDeclaration;
     }): DynamicSnippets.NamedType {
-        return {
-            type: "enum",
+        return DynamicSnippets.NamedType.enum({
             declaration,
             values: enum_.values.map((value) => value.name)
-        };
+        });
     }
 
     private convertObject({
@@ -315,14 +298,13 @@ export class DynamicSnippetsConverter {
         object: ObjectTypeDeclaration;
     }): DynamicSnippets.NamedType {
         const properties = [...(object.extendedProperties ?? []), ...object.properties];
-        return {
-            type: "object",
+        return DynamicSnippets.NamedType.object({
             declaration,
             properties: properties.map((property) => ({
                 name: property.name,
                 typeReference: this.convertTypeReference(property.valueType)
             }))
-        };
+        });
     }
 
     private convertDiscriminatedUnion({
@@ -333,12 +315,11 @@ export class DynamicSnippetsConverter {
         union: UnionTypeDeclaration;
     }): DynamicSnippets.NamedType {
         // TODO: Convert types and include base + extended properties.
-        return {
-            type: "discriminatedUnion",
+        return DynamicSnippets.NamedType.discriminatedUnion({
             declaration,
             discriminant: union.discriminant,
             types: {}
-        };
+        });
     }
 
     private convertUndiscriminatedUnion({
@@ -348,36 +329,29 @@ export class DynamicSnippetsConverter {
         declaration: DynamicSnippets.Declaration;
         union: UndiscriminatedUnionTypeDeclaration;
     }): DynamicSnippets.NamedType {
-        return {
-            type: "undiscriminatedUnion",
+        return DynamicSnippets.NamedType.undiscriminatedUnion({
             declaration,
             types: union.members.map((member) => this.convertTypeReference(member.type))
-        };
+        });
     }
 
     private convertLiteral(literal: Literal): DynamicSnippets.LiteralType {
         switch (literal.type) {
             case "boolean":
-                return {
-                    type: "boolean",
-                    value: literal.boolean
-                };
+                return DynamicSnippets.LiteralType.boolean(literal.boolean);
             case "string":
-                return {
-                    type: "string",
-                    value: literal.string
-                };
+                return DynamicSnippets.LiteralType.string(literal.string);
             default:
                 assertNever(literal);
         }
     }
 
     private convertPrimitiveType(primitive: PrimitiveType): DynamicSnippets.TypeReference {
-        return { _type: "primitive", value: primitive.v1 };
+        return DynamicSnippets.TypeReference.primitive(primitive.v1);
     }
 
     private convertUnknownType(): DynamicSnippets.TypeReference {
-        return { _type: "unknown" };
+        return DynamicSnippets.TypeReference.unknown();
     }
 
     private convertDeclaration({
@@ -393,6 +367,13 @@ export class DynamicSnippetsConverter {
         };
     }
 
+    private convertEndpointLocation({ endpoint }: { endpoint: HttpEndpoint }): DynamicSnippets.EndpointLocation {
+        return {
+            method: endpoint.method,
+            path: this.getFullPathForEndpoint(endpoint)
+        };
+    }
+
     private getAllHttpEndpoints(): EndpointWithFilepath[] {
         return Object.values(this.ir.services).flatMap((service) =>
             service.endpoints.map((endpoint) => ({
@@ -400,5 +381,19 @@ export class DynamicSnippetsConverter {
                 fernFilepath: service.name.fernFilepath
             }))
         );
+    }
+
+    private getFullPathForEndpoint(endpoint: HttpEndpoint): string {
+        let url = "";
+        if (endpoint.fullPath.head.length > 0) {
+            url = urlJoin(url, endpoint.fullPath.head);
+        }
+        for (const part of endpoint.fullPath.parts) {
+            url = urlJoin(url, "{" + part.pathParameter + "}");
+            if (part.tail.length > 0) {
+                url = urlJoin(url, part.tail);
+            }
+        }
+        return url.startsWith("/") ? url : `/${url}`;
     }
 }
