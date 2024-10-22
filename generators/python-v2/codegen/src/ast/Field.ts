@@ -1,4 +1,3 @@
-import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
@@ -15,16 +14,16 @@ export declare namespace Field {
      */
     export type Args = BaseArgs &
         (
-            | { type: Type; initializer?: CodeBlock }
-            | { type?: Type; initializer: CodeBlock }
-            | { type: Type; initializer: CodeBlock }
+            | { type: Type; initializer?: AstNode }
+            | { type?: Type; initializer: AstNode }
+            | { type: Type; initializer: AstNode }
         );
 }
 
 export class Field extends AstNode {
     public readonly name: string;
     public readonly type: Type | undefined;
-    public readonly initializer: CodeBlock | undefined;
+    public readonly initializer: AstNode | undefined;
 
     constructor({ name, type, initializer }: Field.Args) {
         super();

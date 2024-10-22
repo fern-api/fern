@@ -1,5 +1,10 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`MethodInvocation > should write a method invocation with a parent 1`] = `
+"parent_object.test_method("arg1", kwarg=42)
+"
+`;
+
 exports[`MethodInvocation > should write a method invocation with multiple positional and kwarg args 1`] = `
 "test_method(42, "hello", key1=True, key2=[1, 2, 3])
 "

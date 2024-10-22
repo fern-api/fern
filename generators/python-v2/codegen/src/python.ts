@@ -1,4 +1,15 @@
-import { Class, Field, Reference, CodeBlock, Method, Parameter, MethodArgument, PythonFile, Decorator } from "./ast";
+import {
+    Class,
+    Field,
+    Reference,
+    CodeBlock,
+    Method,
+    Parameter,
+    MethodArgument,
+    PythonFile,
+    Decorator,
+    MethodInvocation
+} from "./ast";
 
 export function file(args: PythonFile.Args): PythonFile {
     return new PythonFile(args);
@@ -26,6 +37,10 @@ export function codeBlock(args: CodeBlock.Arg): CodeBlock {
 
 export function method(args: Method.Args): Method {
     return new Method(args);
+}
+
+export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
+    return new MethodInvocation(args);
 }
 
 export function parameter(args: Parameter.Args): Parameter {
