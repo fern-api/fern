@@ -8,5 +8,5 @@ export interface DiscriminatedUnionType {
     declaration: FernIr.dynamic.Declaration;
     discriminant: FernIr.NameAndWireValue;
     /** Map from the discriminant value (e.g. "user") to the type (e.g. User). */
-    types: Record<string, FernIr.dynamic.TypeReference>;
+    types: Record<string, FernIr.dynamic.SingleDiscriminatedUnionType>;
 }

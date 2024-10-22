@@ -8,14 +8,12 @@ types:
       basic: BasicAuth
       bearer: BearerAuth
       header: HeaderAuth
-      oauth: OAuth
 
   AuthValues:
     union:
       basic: BasicAuthValues
       bearer: BearerAuthValues
       header: HeaderAuthValues
-      oauth: OAuthValues
 
   BasicAuth:
     properties:
@@ -42,13 +40,3 @@ types:
   HeaderAuthValues:
     properties:
       value: unknown
-
-  OAuth:
-    properties:
-      clientId: commons.Name
-      clientSecret: commons.Name
-
-  OAuthValues:
-    properties:
-      clientId: string
-      clientSecret: string

@@ -7,6 +7,7 @@ import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { Declaration } from "../../declaration/types/Declaration";
 import { NameAndWireValue } from "../../../../commons/types/NameAndWireValue";
+import { SingleDiscriminatedUnionType } from "./SingleDiscriminatedUnionType";
 
 export const DiscriminatedUnionType: core.serialization.ObjectSchema<
     serializers.dynamic.DiscriminatedUnionType.Raw,
@@ -14,16 +15,13 @@ export const DiscriminatedUnionType: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     declaration: Declaration,
     discriminant: NameAndWireValue,
-    types: core.serialization.record(
-        core.serialization.string(),
-        core.serialization.lazy(() => serializers.dynamic.TypeReference)
-    ),
+    types: core.serialization.record(core.serialization.string(), SingleDiscriminatedUnionType),
 });
 
 export declare namespace DiscriminatedUnionType {
     interface Raw {
         declaration: Declaration.Raw;
         discriminant: NameAndWireValue.Raw;
-        types: Record<string, serializers.dynamic.TypeReference.Raw>;
+        types: Record<string, SingleDiscriminatedUnionType.Raw>;
     }
 }

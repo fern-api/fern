@@ -6,5 +6,3 @@ export * from "./BearerAuth";
 export * from "./BearerAuthValues";
 export * from "./HeaderAuth";
 export * from "./HeaderAuthValues";
-export * from "./OAuth";
-export * from "./OAuthValues";

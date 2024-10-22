@@ -59,7 +59,39 @@ types:
       types:
         docs: |
           Map from the discriminant value (e.g. "user") to the type (e.g. User).
-        type: map<string, TypeReference>
+        type: map<string, SingleDiscriminatedUnionType>
+
+  SingleDiscriminatedUnionType:
+    union:
+      samePropertiesAsObject: SingleDiscriminatedUnionTypeObject
+      singleProperty: SingleDiscriminatedUnionTypeSingleProperty
+      noProperties: SingleDiscriminatedUnionTypeNoProperties
+
+  SingleDiscriminatedUnionTypeObject:
+    properties:
+      typeId: commons.TypeId
+      discriminantValue: commons.NameAndWireValue
+      properties:
+        docs: |
+            Includes the object properties, as well as any base and/or extended properties from the union.
+        type: list<NamedParameter>
+
+  SingleDiscriminatedUnionTypeSingleProperty:
+    properties:
+      typeReference: TypeReference
+      discriminantValue: commons.NameAndWireValue
+      properties:
+        docs: |
+          Any properties included here are the base and/or extended properties from the union.
+        type: optional<list<NamedParameter>>
+
+  SingleDiscriminatedUnionTypeNoProperties:
+    properties:
+      discriminantValue: commons.NameAndWireValue
+      properties:
+        docs: |
+          Any properties included here are the base and/or extended properties from the union.
+        type: optional<list<NamedParameter>>
 
   UndiscriminatedUnionType:
     properties:
