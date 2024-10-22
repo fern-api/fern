@@ -20,7 +20,6 @@ docs: |
 service:
   auth: false
   base-path: ''
-  display-name: Trips
   endpoints:
     get-trips:
       auth: true

@@ -133,9 +133,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     ): void {
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.service == null) {
+            // Set to default values if service is null
             fernFile.service = {
-                auth: auth ?? false,
-                "base-path": basePath ?? "",
+                auth: false,
+                "base-path": "",
                 endpoints: {}
             };
         }

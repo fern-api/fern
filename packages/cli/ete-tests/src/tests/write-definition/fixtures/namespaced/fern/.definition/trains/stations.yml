@@ -20,7 +20,6 @@ docs: |
 service:
   auth: false
   base-path: ''
-  display-name: Stations
   endpoints:
     get-stations:
       auth: true

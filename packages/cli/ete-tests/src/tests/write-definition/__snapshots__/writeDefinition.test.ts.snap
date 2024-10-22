@@ -906,7 +906,6 @@ docs: |
 service:
   auth: false
   base-path: ''
-  display-name: Bookings
   endpoints:
     create-booking:
       auth: true
@@ -1054,7 +1053,6 @@ docs: |
 service:
   auth: false
   base-path: ''
-  display-name: Payments
   endpoints:
     create-booking-payment:
       auth: true
@@ -1258,7 +1256,6 @@ docs: |
 service:
   auth: false
   base-path: ''
-  display-name: Stations
   endpoints:
     get-stations:
       auth: true
@@ -1369,7 +1366,6 @@ docs: |
 service:
   auth: false
   base-path: ''
-  display-name: Trips
   endpoints:
     get-trips:
       auth: true
