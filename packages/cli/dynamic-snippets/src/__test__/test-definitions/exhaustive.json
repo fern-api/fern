@@ -2464,7 +2464,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/container.getAndReturnListOfObjects": {
@@ -2612,7 +2612,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/container.getAndReturnSetOfPrimitives": {
@@ -2760,7 +2760,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/container.getAndReturnSetOfObjects": {
@@ -2908,7 +2908,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/container.getAndReturnMapPrimToPrim": {
@@ -3060,7 +3060,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/container.getAndReturnMapOfPrimToObject": {
@@ -3212,7 +3212,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/container.getAndReturnOptional": {
@@ -3360,7 +3360,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/enum.getAndReturnEnum": {
@@ -3505,7 +3505,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/http-methods.testGet": {
@@ -3673,7 +3673,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/http-methods.testPost": {
@@ -3818,7 +3818,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/http-methods.testPut": {
@@ -3992,7 +3992,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/http-methods.testPatch": {
@@ -4166,7 +4166,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/http-methods.testDelete": {
@@ -4334,7 +4334,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/object.getAndReturnWithOptionalField": {
@@ -4479,7 +4479,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/object.getAndReturnWithRequiredField": {
@@ -4624,7 +4624,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/object.getAndReturnWithMapOfMap": {
@@ -4769,7 +4769,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/object.getAndReturnNestedWithOptionalField": {
@@ -4914,7 +4914,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/object.getAndReturnNestedWithRequiredField": {
@@ -5088,7 +5088,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList": {
@@ -5236,7 +5236,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/params.getWithPath": {
@@ -5404,7 +5404,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/params.getWithQuery": {
@@ -5705,7 +5705,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/params.getWithAllowMultipleQuery": {
@@ -6006,7 +6006,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/params.getWithPathAndQuery": {
@@ -6308,7 +6308,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/params.modifyWithPath": {
@@ -6482,7 +6482,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/primitive.getAndReturnString": {
@@ -6627,7 +6627,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/primitive.getAndReturnInt": {
@@ -6772,7 +6772,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/primitive.getAndReturnLong": {
@@ -6917,7 +6917,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/primitive.getAndReturnDouble": {
@@ -7062,7 +7062,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/primitive.getAndReturnBool": {
@@ -7207,7 +7207,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/primitive.getAndReturnDatetime": {
@@ -7352,7 +7352,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/primitive.getAndReturnDate": {
@@ -7497,7 +7497,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/primitive.getAndReturnUUID": {
@@ -7642,7 +7642,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/primitive.getAndReturnBase64": {
@@ -7787,7 +7787,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_endpoints/union.getAndReturnUnion": {
@@ -7932,7 +7932,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_inlined-requests.postWithObjectBodyandResponse": {
@@ -8186,7 +8186,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_no-auth.postWithNoAuth": {
@@ -8291,7 +8291,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_no-req-body.getWithNoRequestBody": {
@@ -8391,7 +8391,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_no-req-body.postWithNoRequestBody": {
@@ -8491,7 +8491,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_req-with-headers.getWithCustomHeader": {
@@ -8714,7 +8714,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         }
     }

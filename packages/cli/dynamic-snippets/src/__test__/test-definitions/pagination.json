@@ -2252,7 +2252,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_users.listWithBodyCursorPagination": {
@@ -2453,7 +2453,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_users.listWithOffsetPagination": {
@@ -2744,7 +2744,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_users.listWithBodyOffsetPagination": {
@@ -2945,7 +2945,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_users.listWithOffsetStepPagination": {
@@ -3205,7 +3205,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_users.listWithOffsetPaginationHasNextPage": {
@@ -3465,7 +3465,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_users.listWithExtendedResults": {
@@ -3663,7 +3663,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_users.listWithExtendedResultsAndOptionalData": {
@@ -3861,7 +3861,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_users.listUsernames": {
@@ -4059,7 +4059,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_users.listWithGlobalConfig": {
@@ -4257,7 +4257,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         }
     }

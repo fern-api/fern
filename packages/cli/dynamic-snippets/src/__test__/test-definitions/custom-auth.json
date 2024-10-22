@@ -207,7 +207,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_custom-auth.postWithCustomAuth": {
@@ -321,7 +321,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         }
     }

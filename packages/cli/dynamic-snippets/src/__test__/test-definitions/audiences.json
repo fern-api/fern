@@ -1039,7 +1039,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_folder-d/service.getDirectThread": {
@@ -1157,7 +1157,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_foo.find": {
@@ -1397,7 +1397,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         }
     }

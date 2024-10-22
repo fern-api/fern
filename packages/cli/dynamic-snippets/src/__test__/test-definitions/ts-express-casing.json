@@ -479,7 +479,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_imdb.get_movie": {
@@ -608,7 +608,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         }
     }

@@ -9,9 +9,9 @@ import { EndpointLocation } from "../../endpoints/types/EndpointLocation";
 import { AuthValues } from "../../auth/types/AuthValues";
 import { Values } from "./Values";
 
-export const SnippetRequest: core.serialization.ObjectSchema<
-    serializers.dynamic.SnippetRequest.Raw,
-    FernIr.dynamic.SnippetRequest
+export const EndpointSnippetRequest: core.serialization.ObjectSchema<
+    serializers.dynamic.EndpointSnippetRequest.Raw,
+    FernIr.dynamic.EndpointSnippetRequest
 > = core.serialization.objectWithoutOptionalProperties({
     endpoint: EndpointLocation,
     auth: AuthValues.optional(),
@@ -21,7 +21,7 @@ export const SnippetRequest: core.serialization.ObjectSchema<
     requestBody: core.serialization.unknown().optional(),
 });
 
-export declare namespace SnippetRequest {
+export declare namespace EndpointSnippetRequest {
     interface Raw {
         endpoint: EndpointLocation.Raw;
         auth?: AuthValues.Raw | null;

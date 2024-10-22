@@ -169,7 +169,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_service.getWithHeader": {
@@ -373,7 +373,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         }
     }

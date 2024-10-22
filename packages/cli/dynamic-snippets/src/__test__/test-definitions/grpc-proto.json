@@ -648,7 +648,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         }
     }

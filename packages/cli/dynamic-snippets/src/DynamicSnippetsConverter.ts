@@ -84,7 +84,7 @@ export class DynamicSnippetsConverter {
             declaration: this.convertDeclaration({ name: endpoint.name, fernFilepath: endpoint.fernFilepath }),
             location: this.convertEndpointLocation({ endpoint }),
             request: this.convertRequest({ endpoint }),
-            response: DynamicSnippets.Response.unary()
+            response: DynamicSnippets.Response.json()
         };
     }
 

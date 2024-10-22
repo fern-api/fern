@@ -39864,7 +39864,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_admin.updateTestSubmissionStatus": {
@@ -39999,7 +39999,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_admin.sendTestSubmissionUpdate": {
@@ -40134,7 +40134,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_admin.updateWorkspaceSubmissionStatus": {
@@ -40269,7 +40269,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_admin.sendWorkspaceSubmissionUpdate": {
@@ -40404,7 +40404,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_admin.storeTracedTestCase": {
@@ -40690,7 +40690,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_admin.storeTracedTestCaseV2": {
@@ -40856,7 +40856,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_admin.storeTracedWorkspace": {
@@ -41114,7 +41114,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_admin.storeTracedWorkspaceV2": {
@@ -41252,7 +41252,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_homepage.getHomepageProblems": {
@@ -41352,7 +41352,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_homepage.setHomepageProblems": {
@@ -41461,7 +41461,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_migration.getAttemptedMigrations": {
@@ -41656,7 +41656,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_playlist.createPlaylist": {
@@ -41939,7 +41939,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_playlist.getPlaylists": {
@@ -42281,7 +42281,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_playlist.getPlaylist": {
@@ -42438,7 +42438,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_playlist.updatePlaylist": {
@@ -42604,7 +42604,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_playlist.deletePlaylist": {
@@ -42761,7 +42761,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_problem.createProblem": {
@@ -42867,7 +42867,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_problem.updateProblem": {
@@ -43002,7 +43002,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_problem.deleteProblem": {
@@ -43131,7 +43131,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_problem.getDefaultStarterFiles": {
@@ -43388,7 +43388,7 @@
                 }
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_submission.createExecutionSession": {
@@ -43517,7 +43517,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_submission.getExecutionSession": {
@@ -43646,7 +43646,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_submission.stopExecutionSession": {
@@ -43775,7 +43775,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_submission.getExecutionSessionsState": {
@@ -43875,7 +43875,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_sysprop.setNumWarmInstances": {
@@ -44032,7 +44032,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_sysprop.getNumWarmInstances": {
@@ -44132,7 +44132,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_v2/problem.getLightweightProblems": {
@@ -44271,7 +44271,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_v2/problem.getProblems": {
@@ -44410,7 +44410,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_v2/problem.getLatestProblem": {
@@ -44578,7 +44578,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_v2/problem.getProblemVersion": {
@@ -44774,7 +44774,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_v2/v3/problem.getLightweightProblems": {
@@ -44951,7 +44951,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_v2/v3/problem.getProblems": {
@@ -45128,7 +45128,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_v2/v3/problem.getLatestProblem": {
@@ -45334,7 +45334,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         },
         "endpoint_v2/v3/problem.getProblemVersion": {
@@ -45568,7 +45568,7 @@
                 "body": null
             },
             "response": {
-                "type": "unary"
+                "type": "json"
             }
         }
     }

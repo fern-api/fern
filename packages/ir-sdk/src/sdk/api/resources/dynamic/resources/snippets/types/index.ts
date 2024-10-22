@@ -1,2 +1,3 @@
 export * from "./Values";
-export * from "./SnippetRequest";
+export * from "./EndpointSnippetRequest";
+export * from "./EndpointSnippetResponse";

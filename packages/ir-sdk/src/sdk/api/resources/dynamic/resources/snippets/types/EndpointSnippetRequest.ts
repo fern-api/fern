@@ -7,7 +7,7 @@ import * as FernIr from "../../../../../index";
 /**
  * The user-facing request type used to generate a dynamic snippet.
  */
-export interface SnippetRequest {
+export interface EndpointSnippetRequest {
     endpoint: FernIr.dynamic.EndpointLocation;
     auth: FernIr.dynamic.AuthValues | undefined;
     pathParameters: FernIr.dynamic.Values | undefined;

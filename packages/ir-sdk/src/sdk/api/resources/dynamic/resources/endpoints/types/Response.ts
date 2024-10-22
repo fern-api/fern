@@ -7,15 +7,15 @@ import * as FernIr from "../../../../../index";
 /**
  * Reperesents the response returned by a specific endpoint.
  *
- * For now, we only support unary responses, but this is set up to support a
+ * For now, we only support json responses, but this is set up to support a
  * variety of other endpoint response types (e.g. file download, pagination,
  * streaming, etc).
  */
-export type Response = FernIr.dynamic.Response.Unary;
+export type Response = FernIr.dynamic.Response.Json;
 
 export declare namespace Response {
-    interface Unary extends _Utils {
-        type: "unary";
+    interface Json extends _Utils {
+        type: "json";
     }
 
     interface _Utils {
@@ -23,17 +23,17 @@ export declare namespace Response {
     }
 
     interface _Visitor<_Result> {
-        unary: () => _Result;
+        json: () => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
 
 export const Response = {
-    unary: (): FernIr.dynamic.Response.Unary => {
+    json: (): FernIr.dynamic.Response.Json => {
         return {
-            type: "unary",
+            type: "json",
             _visit <_Result>(
-                this: FernIr.dynamic.Response.Unary,
+                this: FernIr.dynamic.Response.Json,
                 visitor: FernIr.dynamic.Response._Visitor<_Result>
             ) {
                 return FernIr.dynamic.Response._visit(this, visitor);
@@ -43,8 +43,8 @@ export const Response = {
 
     _visit: <_Result>(value: FernIr.dynamic.Response, visitor: FernIr.dynamic.Response._Visitor<_Result>): _Result => {
         switch (value.type) {
-            case "unary":
-                return visitor.unary();
+            case "json":
+                return visitor.json();
             default:
                 return visitor._other(value as any);
         }

@@ -9,13 +9,13 @@ import * as core from "../../../../../../core";
 export const Response: core.serialization.Schema<serializers.dynamic.Response.Raw, FernIr.dynamic.Response> =
     core.serialization
         .union("type", {
-            unary: core.serialization.object({}),
+            json: core.serialization.object({}),
         })
         .transform<FernIr.dynamic.Response>({
             transform: (value) => {
                 switch (value.type) {
-                    case "unary":
-                        return FernIr.dynamic.Response.unary();
+                    case "json":
+                        return FernIr.dynamic.Response.json();
                     default:
                         return value as FernIr.dynamic.Response;
                 }
@@ -24,9 +24,9 @@ export const Response: core.serialization.Schema<serializers.dynamic.Response.Ra
         });
 
 export declare namespace Response {
-    type Raw = Response.Unary;
+    type Raw = Response.Json;
 
-    interface Unary {
-        type: "unary";
+    interface Json {
+        type: "json";
     }
 }

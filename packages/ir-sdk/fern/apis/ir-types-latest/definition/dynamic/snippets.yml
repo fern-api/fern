@@ -11,7 +11,7 @@ types:
       the name will match the parameter name.
     type: map<string, unknown>
 
-  SnippetRequest:
+  EndpointSnippetRequest:
     docs: |
       The user-facing request type used to generate a dynamic snippet.
     properties:
@@ -21,3 +21,9 @@ types:
       queryParameters: optional<Values>
       headers: optional<Values>
       requestBody: optional<unknown>
+  
+  EndpointSnippetResponse:
+    docs: |
+      The user-facing response type containing the generated snippet.
+    properties:
+      snippet: string
