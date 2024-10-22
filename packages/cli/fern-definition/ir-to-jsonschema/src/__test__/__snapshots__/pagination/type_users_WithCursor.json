@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "cursor": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {}
+}

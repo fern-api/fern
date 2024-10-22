@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "solutionFileByLanguage": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/v2.problem.FileInfoV2"
+      }
+    }
+  },
+  "required": [
+    "solutionFileByLanguage"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "v2.problem.FileInfoV2": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "editable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "filename",
+        "directory",
+        "contents",
+        "editable"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

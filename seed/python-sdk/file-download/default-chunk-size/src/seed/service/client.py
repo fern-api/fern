@@ -29,7 +29,7 @@ class ServiceClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else None
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
                     for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
@@ -63,7 +63,7 @@ class AsyncServiceClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else None
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
                     async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return

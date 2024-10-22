@@ -1,0 +1,15 @@
+## 4.3.1
+**`(feat):`** Requests for file download will now allow users to pass in a `chunk_size` option that allows them to receive chunks of a specific size
+from the resultant `iter_bytes` invocation on the response byte stream.
+
+Concretely, a user would leverage the following:
+```python
+client.download(
+  ...,
+  request_options={
+    "chunk_size": 1024    # 1MB
+  }
+)
+```
+
+

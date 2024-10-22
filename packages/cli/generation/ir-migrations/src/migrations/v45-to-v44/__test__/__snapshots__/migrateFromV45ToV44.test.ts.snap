@@ -744,7 +744,7 @@ exports[`migrateFromV45ToV44 > snapshot 1`] = `
                     "wireValue": "big",
                   },
                   "value": {
-                    "jsonExample": 1000000,
+                    "jsonExample": "1000000",
                     "shape": {
                       "primitive": {
                         "string": {

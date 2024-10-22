@@ -228,17 +228,6 @@ fixtures:
           skip_validation: true
       outputFolder: skip-pydantic-validation
 scripts:
-  # We need to run in 3.8, but the image won't be updated until this is merged to main, so adding
-  # a 3rd script here to ensure we're testing on 3.8
-  - docker: mwalbeck/python-poetry:1.7-3.8
-    commands:
-      # Tests now run a mock server, you can always run seed with --skip-scripts to save time
-      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
-      - export HOME="$(pwd)/"
-      - poetry config virtualenvs.path .
-      - poetry install
-      - poetry run mypy ./src ./tests
-
   # Test Pydantic V2
   - docker: fernapi/python-seed
     commands:
@@ -250,7 +239,7 @@ scripts:
       - poetry lock
       - poetry install
       - poetry run mypy ./src ./tests
-      - fern test --command "poetry run pytest -rP ."
+      - FERN_NO_VERSION_REDIRECTION=true node /fern/cli.cjs test --command "poetry run pytest -rP ."
   # Test Pydantic V1
   - docker: fernapi/python-seed
     commands:
@@ -261,7 +250,7 @@ scripts:
       - poetry lock
       - poetry install
       - poetry run mypy ./src ./tests
-      - fern test --command "poetry run pytest -rP ."
+      - FERN_NO_VERSION_REDIRECTION=true node /fern/cli.cjs test --command "poetry run pytest -rP ."
 allowedFailures:
   # This is the only one that should always fail
   - exhaustive:additional_init_exports

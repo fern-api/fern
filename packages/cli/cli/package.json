@@ -55,6 +55,7 @@
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/ir-to-jsonschema": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
     "@fern-api/logger": "workspace:*",
@@ -74,7 +75,6 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
-    "@fern-api/ir-to-jsonschema": "workspace:*",
     "@types/axios": "^0.14.0",
     "@types/boxen": "^3.0.1",
     "@types/get-port": "^4.2.0",
@@ -107,9 +107,10 @@
     "tmp-promise": "^3.0.3",
     "tsup": "^8.0.2",
     "typescript": "4.6.4",
+    "undici": "^6.20.1",
     "validate-npm-package-name": "^5.0.1",
     "vitest": "^2.0.5",
     "yaml": "^2.4.5",
     "yargs": "^17.4.1"
-  }
+  } 
 }

@@ -239,9 +239,10 @@ class EndpointResponseCodeWriter:
 
     def _handle_success_file_download(self, *, writer: AST.NodeWriter) -> None:
         maybe_chunk_size_default = self._context.custom_config.default_bytes_stream_chunk_size
+        defaulted_chunk_size_default = maybe_chunk_size_default if maybe_chunk_size_default is not None else "None"
         chunk_size_variable = "_chunk_size"
         writer.write_line(
-            f'{chunk_size_variable} = request_options.get("chunk_size", {maybe_chunk_size_default if maybe_chunk_size_default is not None else "None"}) if request_options is not None else None'
+            f'{chunk_size_variable} = request_options.get("chunk_size", {defaulted_chunk_size_default}) if request_options is not None else {defaulted_chunk_size_default}'
         )
         if self._is_async:
             writer.write("async ")

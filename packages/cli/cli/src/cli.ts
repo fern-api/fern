@@ -44,6 +44,9 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
+import { setGlobalDispatcher, Agent } from "undici";
+
+setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
 
 void runCli();
 
