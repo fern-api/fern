@@ -18,7 +18,7 @@ export function requestEqual({ request, example }: requestEqual.Args): EqualResp
         request,
         example
     });
-    if (pathParameterResponse.type == "notEqual") {
+    if (pathParameterResponse.type === "notEqual") {
         return pathParameterResponse;
     }
 
@@ -26,7 +26,7 @@ export function requestEqual({ request, example }: requestEqual.Args): EqualResp
         request,
         example
     });
-    if (queryParametersResponse.type == "notEqual") {
+    if (queryParametersResponse.type === "notEqual") {
         return queryParametersResponse;
     }
 
@@ -34,7 +34,7 @@ export function requestEqual({ request, example }: requestEqual.Args): EqualResp
         request,
         example
     });
-    if (headersResponse.type == "notEqual") {
+    if (headersResponse.type === "notEqual") {
         return headersResponse;
     }
 
@@ -42,7 +42,7 @@ export function requestEqual({ request, example }: requestEqual.Args): EqualResp
         request,
         example
     });
-    if (bodyResponse.type == "notEqual") {
+    if (bodyResponse.type === "notEqual") {
         return bodyResponse;
     }
 
