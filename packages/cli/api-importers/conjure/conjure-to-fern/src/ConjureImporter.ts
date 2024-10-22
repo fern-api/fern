@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, relativize, getFilename } from "@fern-api/fs-utils";
 import { DefinitionFile } from "@fern-api/conjure-sdk";
-import { APIDefinitionImporter, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
+import { APIDefinitionImporter, FernDefinitionBuilderImpl, HttpServiceInfo } from "@fern-api/importer-commons";
 import { visitConjureTypeDeclaration } from "./utils/visitConjureTypeDeclaration";
 import { parseEndpointLocator, removeSuffix } from "@fern-api/core-utils";
 import { listConjureFiles } from "./utils/listConjureFiles";
@@ -99,6 +99,15 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
             for (const [serviceName, serviceDeclaration] of Object.entries(definition.services)) {
                 const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: "Service" });
                 const fernFilePath = RelativeFilePath.of(`${unsuffixedServiceName}/__package__.yml`);
+
+                const httpServiceInfo: HttpServiceInfo = {};
+                if (serviceDeclaration.basePath != null) {
+                    httpServiceInfo["base-path"] = serviceDeclaration.basePath;
+                }
+                if (serviceDeclaration.docs != null) {
+                    httpServiceInfo.docs = serviceDeclaration.docs;
+                }
+                this.fernDefinitionBuilder.setServiceInfo(fernFilePath, httpServiceInfo);
 
                 this.importAllTypes({ conjureFile: definition, fernFilePath });
 
