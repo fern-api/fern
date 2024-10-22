@@ -88,7 +88,10 @@ export interface FernDefinitionBuilder {
 
     addChannelExample(file: RelativeFilePath, { example }: { example: RawSchemas.ExampleWebSocketSession }): void;
 
-    setServiceInfo(file: RelativeFilePath, { displayName, docs }: { displayName?: string; docs?: string }): void;
+    setServiceInfo(
+        file: RelativeFilePath,
+        { auth, "base-path": basePath, "display-name": displayName, docs }: HttpServiceInfo
+    ): void;
 
     addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void;
 

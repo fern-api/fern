@@ -18,6 +18,7 @@ docs: |
 service:
   auth: false
   base-path: ''
+  display-name: Payments
   endpoints:
     create-booking-payment:
       auth: true

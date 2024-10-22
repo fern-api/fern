@@ -45,7 +45,7 @@ export function buildServices(context: OpenApiIrConverterContext): {
         });
         if (irTag?.id != null || irTag?.description != null) {
             context.builder.setServiceInfo(file, {
-                displayName: group?.summary ?? irTag?.id,
+                "display-name": group?.summary ?? irTag?.id,
                 docs: group?.description ?? irTag?.description ?? undefined
             });
         }
