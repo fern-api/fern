@@ -1,0 +1,6 @@
+## 0.10.1
+**`(feat):`** Add support for a RequestOptions object for each generated function within Python SDKs
+
+### What's changed
+- Add support for a RequestOptions object for each generated function within Python SDKs. This parameter is an optional final parameter that allows for configuring timeout, as well as pass in arbitrary data through to the request. RequestOptions is a TypedDict, with optional fields, so there's no need to instantiate an object, just pass in the relevant keys within a dict!
+
