@@ -24,6 +24,8 @@ export async function generateCliChangelog({
             ? AbsoluteFilePath.of(outputPath)
             : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(outputPath));
 
+    await mkdir(resolvedOutputPath, { recursive: true });
+
     if (cleanOutputDirectory) {
         const files = await readdir(resolvedOutputPath, { withFileTypes: true });
         for (const file of files) {
@@ -36,8 +38,6 @@ export async function generateCliChangelog({
             }
         }
     }
-
-    await mkdir(resolvedOutputPath, { recursive: true });
 
     const cliWorkspace = await loadCliWorkspace();
     if (cliWorkspace == null) {

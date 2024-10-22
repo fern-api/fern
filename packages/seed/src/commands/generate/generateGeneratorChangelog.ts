@@ -25,6 +25,9 @@ export async function generateGeneratorChangelog({
             : outputPath.startsWith("/")
             ? AbsoluteFilePath.of(outputPath)
             : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(outputPath));
+
+    await mkdir(resolvedOutputPath, { recursive: true });
+
     if (cleanOutputDirectory) {
         const files = await readdir(resolvedOutputPath, { withFileTypes: true });
         for (const file of files) {
@@ -37,8 +40,6 @@ export async function generateGeneratorChangelog({
             }
         }
     }
-
-    await mkdir(resolvedOutputPath, { recursive: true });
 
     const generatorConfig = generator.workspaceConfig;
     if (generatorConfig.changelogLocation == null) {
