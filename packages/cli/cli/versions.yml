@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The Conjure importer now correctly imports base-path and docs from your conjure definition.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc15
+
+- changelogEntry:
+    - summary: |
         The Fern CLI now uses a longer timeout to make HTTP requests, which should fix some flakyness with the docs registration process.
       type: fix
   irVersion: 53
