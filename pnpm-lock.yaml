@@ -3474,6 +3474,9 @@ importers:
       '@fern-api/docs-validator':
         specifier: workspace:*
         version: link:../yaml/docs-validator
+      '@fern-api/dynamic-snippets':
+        specifier: workspace:*
+        version: link:../dynamic-snippets
       '@fern-api/fern-definition-formatter':
         specifier: workspace:*
         version: link:../fern-definition/formatter
