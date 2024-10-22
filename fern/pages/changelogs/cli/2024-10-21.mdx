@@ -1,2 +1,6 @@
-## 0.45.0-rc13
-**`(fix):`** fetch timeout has been increased to 5 seconds, which should fix some flakyness with the docs registration process. 
+## 0.45.0-rc9
+**`(fix):`** Improved JSON Schema generation for object extensions and const values:
+- Object extensions are now properly represented using `allOf` in the JSON Schema
+- Literal values (string and boolean) are now correctly represented using `const` in the JSON Schema
+
+
