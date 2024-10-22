@@ -5,15 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.41.0-rc2] - 2024-10-08
+
+- Improvement: Generated READMEs now include improved usage snippets for pagination and streaming endpoints.
+
+## [0.41.0-rc1] - 2024-10-08
+
+- Fix: Fixes a broken unit test introduced in 0.41.0-rc0.
+
+## [0.41.0-rc0] - 2024-10-08
+
+- Feat: The generated SDK now supports bytes (`application/octet-stream`) requests.
+
+## [0.40.8] - 2024-09-28
+
+- Fix: File array uploads now call `request.appendFile` instead of `request.append` which
+  was causing form data to be in a corrupted state.
+
 ## [0.40.7] - 2024-09-28
 
 - Fix: The generated README will now have a section that links to the generated
-  SDK Reference (in `reference.md`). 
-  
+  SDK Reference (in `reference.md`).
+
   ```md
   ## Reference
 
-  A full reference for this library can be found [here](./reference.md). 
+  A full reference for this library can be found [here](./reference.md).
   ```
 
 ## [0.40.6] - 2024-09-18
