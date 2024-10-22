@@ -403,7 +403,7 @@
                 }
               },
               "description": null,
-              "body": "",
+              "body": "{\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -481,7 +481,7 @@
                 }
               },
               "description": null,
-              "body": "",
+              "body": "{\n    \"docs\": \"docs\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -559,7 +559,7 @@
                 }
               },
               "description": null,
-              "body": "",
+              "body": "{\n    \"data\": \"data\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]

@@ -17,6 +17,16 @@ public class ListWithOffsetPaginationHasNextPageTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
+              "hasNextPage": true,
+              "page": {
+                "page": 1,
+                "next": {
+                  "page": 1,
+                  "starting_after": "starting_after"
+                },
+                "per_page": 1,
+                "total_page": 1
+              },
               "total_count": 1,
               "data": [
                 {

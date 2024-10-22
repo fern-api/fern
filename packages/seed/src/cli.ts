@@ -115,7 +115,11 @@ function addTestCommand(cli: Argv) {
                     continue;
                 }
                 let testRunner;
-                const scriptRunner = new ScriptRunner(generator, argv.skipScripts);
+                const scriptRunner = new ScriptRunner(
+                    generator,
+                    argv.skipScripts,
+                    taskContextFactory.create("script-runner")
+                );
                 if (argv.local && generator.workspaceConfig.test.local != null) {
                     testRunner = new LocalTestRunner({
                         generator,

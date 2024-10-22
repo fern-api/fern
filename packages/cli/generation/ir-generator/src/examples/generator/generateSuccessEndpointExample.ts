@@ -247,13 +247,13 @@ export function generateEndpointExample({
                     maxDepth: 10,
                     typeDeclarations,
                     typeReference: endpoint.response.body.value.responseBodyType,
-                    skipOptionalProperties: skipOptionalRequestProperties
+                    skipOptionalProperties: false
                 });
                 if (generatedExample.type === "failure") {
                     return generatedExample;
                 }
-                const { example } = generatedExample;
-                result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body(example));
+                const { example, jsonExample } = generatedExample;
+                result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }));
                 break;
             }
             case "streamParameter":

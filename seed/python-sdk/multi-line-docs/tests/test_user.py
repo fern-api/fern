@@ -20,8 +20,8 @@ async def test_get_user(client: SeedMultiLineDocs, async_client: AsyncSeedMultiL
 
 
 async def test_create_user(client: SeedMultiLineDocs, async_client: AsyncSeedMultiLineDocs) -> None:
-    expected_response: typing.Any = {"id": "id", "name": "name"}
-    expected_types: typing.Any = {"id": None, "name": None, "age": None}
+    expected_response: typing.Any = {"id": "id", "name": "name", "age": 1}
+    expected_types: typing.Any = {"id": None, "name": None, "age": "integer"}
     response = client.user.create_user(name="name")
     validate_response(response, expected_response, expected_types)
 
