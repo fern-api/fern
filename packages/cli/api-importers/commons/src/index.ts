@@ -1,2 +1,2 @@
 export { APIDefinitionImporter } from "./APIDefinitionImporter";
-export { type FernDefinitionBuilder, FernDefinitionBuilderImpl, type FernDefinition } from "./FernDefnitionBuilder";
+export { type FernDefinitionBuilder, FernDefinitionBuilderImpl, type FernDefinition, type HttpServiceInfo } from "./FernDefnitionBuilder";
