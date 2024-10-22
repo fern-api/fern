@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "3d": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "foo",
+    "3d"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "_type": {
+      "type": "string",
+      "enum": [
+        "generic"
+      ]
+    }
+  },
+  "required": [
+    "_type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "_type": {
+          "const": "generic"
+        },
+        "message": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "stacktrace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "_type",
+        "message",
+        "type",
+        "stacktrace"
+      ]
+    }
+  ],
+  "definitions": {}
+}

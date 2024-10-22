@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "testCaseId": {
+      "$ref": "#/definitions/v2.problem.TestCaseId"
+    },
+    "traceResponsesSize": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "testCaseId",
+    "traceResponsesSize"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "v2.problem.TestCaseId": {
+      "type": "string"
+    }
+  }
+}
