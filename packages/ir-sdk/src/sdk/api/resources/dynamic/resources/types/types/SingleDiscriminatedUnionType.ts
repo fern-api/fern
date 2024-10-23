@@ -41,7 +41,7 @@ export const SingleDiscriminatedUnionType = {
         return {
             ...value,
             type: "samePropertiesAsObject",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.SingleDiscriminatedUnionType.SamePropertiesAsObject,
                 visitor: FernIr.dynamic.SingleDiscriminatedUnionType._Visitor<_Result>
             ) {
@@ -56,7 +56,7 @@ export const SingleDiscriminatedUnionType = {
         return {
             ...value,
             type: "singleProperty",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.SingleDiscriminatedUnionType.SingleProperty,
                 visitor: FernIr.dynamic.SingleDiscriminatedUnionType._Visitor<_Result>
             ) {
@@ -71,7 +71,7 @@ export const SingleDiscriminatedUnionType = {
         return {
             ...value,
             type: "noProperties",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.SingleDiscriminatedUnionType.NoProperties,
                 visitor: FernIr.dynamic.SingleDiscriminatedUnionType._Visitor<_Result>
             ) {

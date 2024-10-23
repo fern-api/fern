@@ -38,9 +38,9 @@ export declare namespace InlinedRequestBody {
 export const InlinedRequestBody = {
     properties: (value: FernIr.dynamic.NamedParameter[]): FernIr.dynamic.InlinedRequestBody.Properties => {
         return {
-            value,
+            value: value,
             type: "properties",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.InlinedRequestBody.Properties,
                 visitor: FernIr.dynamic.InlinedRequestBody._Visitor<_Result>
             ) {
@@ -53,7 +53,7 @@ export const InlinedRequestBody = {
         return {
             ...value,
             type: "referenced",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.InlinedRequestBody.Referenced,
                 visitor: FernIr.dynamic.InlinedRequestBody._Visitor<_Result>
             ) {
@@ -66,7 +66,7 @@ export const InlinedRequestBody = {
         return {
             ...value,
             type: "fileUpload",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.InlinedRequestBody.FileUpload,
                 visitor: FernIr.dynamic.InlinedRequestBody._Visitor<_Result>
             ) {

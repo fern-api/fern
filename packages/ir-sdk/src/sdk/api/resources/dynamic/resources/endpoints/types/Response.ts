@@ -32,7 +32,7 @@ export const Response = {
     json: (): FernIr.dynamic.Response.Json => {
         return {
             type: "json",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.Response.Json,
                 visitor: FernIr.dynamic.Response._Visitor<_Result>
             ) {

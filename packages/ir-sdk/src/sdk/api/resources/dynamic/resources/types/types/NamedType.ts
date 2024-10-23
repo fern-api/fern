@@ -54,7 +54,7 @@ export const NamedType = {
         return {
             ...value,
             type: "alias",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.NamedType.Alias,
                 visitor: FernIr.dynamic.NamedType._Visitor<_Result>
             ) {
@@ -67,7 +67,7 @@ export const NamedType = {
         return {
             ...value,
             type: "enum",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.NamedType.Enum,
                 visitor: FernIr.dynamic.NamedType._Visitor<_Result>
             ) {
@@ -80,7 +80,7 @@ export const NamedType = {
         return {
             ...value,
             type: "object",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.NamedType.Object_,
                 visitor: FernIr.dynamic.NamedType._Visitor<_Result>
             ) {
@@ -93,7 +93,7 @@ export const NamedType = {
         return {
             ...value,
             type: "discriminatedUnion",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.NamedType.DiscriminatedUnion,
                 visitor: FernIr.dynamic.NamedType._Visitor<_Result>
             ) {
@@ -108,7 +108,7 @@ export const NamedType = {
         return {
             ...value,
             type: "undiscriminatedUnion",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.NamedType.UndiscriminatedUnion,
                 visitor: FernIr.dynamic.NamedType._Visitor<_Result>
             ) {

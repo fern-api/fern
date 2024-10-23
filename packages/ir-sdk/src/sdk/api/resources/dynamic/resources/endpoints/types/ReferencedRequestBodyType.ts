@@ -33,7 +33,7 @@ export const ReferencedRequestBodyType = {
     bytes: (): FernIr.dynamic.ReferencedRequestBodyType.Bytes => {
         return {
             type: "bytes",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.ReferencedRequestBodyType.Bytes,
                 visitor: FernIr.dynamic.ReferencedRequestBodyType._Visitor<_Result>
             ) {
@@ -44,9 +44,9 @@ export const ReferencedRequestBodyType = {
 
     typeReference: (value: FernIr.dynamic.TypeReference): FernIr.dynamic.ReferencedRequestBodyType.TypeReference => {
         return {
-            value,
+            value: value,
             type: "typeReference",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.ReferencedRequestBodyType.TypeReference,
                 visitor: FernIr.dynamic.ReferencedRequestBodyType._Visitor<_Result>
             ) {

@@ -39,7 +39,7 @@ export const FileUploadRequestBodyProperty = {
         return {
             ...value,
             type: "file",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.FileUploadRequestBodyProperty.File_,
                 visitor: FernIr.dynamic.FileUploadRequestBodyProperty._Visitor<_Result>
             ) {
@@ -52,7 +52,7 @@ export const FileUploadRequestBodyProperty = {
         return {
             ...value,
             type: "fileArray",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.FileUploadRequestBodyProperty.FileArray,
                 visitor: FernIr.dynamic.FileUploadRequestBodyProperty._Visitor<_Result>
             ) {
@@ -65,7 +65,7 @@ export const FileUploadRequestBodyProperty = {
         return {
             ...value,
             type: "bodyProperty",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.FileUploadRequestBodyProperty.BodyProperty,
                 visitor: FernIr.dynamic.FileUploadRequestBodyProperty._Visitor<_Result>
             ) {

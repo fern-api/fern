@@ -34,7 +34,7 @@ export const Request = {
         return {
             ...value,
             type: "body",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.Request.Body,
                 visitor: FernIr.dynamic.Request._Visitor<_Result>
             ) {
@@ -47,7 +47,7 @@ export const Request = {
         return {
             ...value,
             type: "inlined",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.Request.Inlined,
                 visitor: FernIr.dynamic.Request._Visitor<_Result>
             ) {

@@ -39,7 +39,7 @@ export const AuthValues = {
         return {
             ...value,
             type: "basic",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.AuthValues.Basic,
                 visitor: FernIr.dynamic.AuthValues._Visitor<_Result>
             ) {
@@ -52,7 +52,7 @@ export const AuthValues = {
         return {
             ...value,
             type: "bearer",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.AuthValues.Bearer,
                 visitor: FernIr.dynamic.AuthValues._Visitor<_Result>
             ) {
@@ -65,7 +65,7 @@ export const AuthValues = {
         return {
             ...value,
             type: "header",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.AuthValues.Header,
                 visitor: FernIr.dynamic.AuthValues._Visitor<_Result>
             ) {

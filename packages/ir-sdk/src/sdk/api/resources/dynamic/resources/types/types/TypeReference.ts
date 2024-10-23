@@ -73,9 +73,9 @@ export declare namespace TypeReference {
 export const TypeReference = {
     list: (value: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference.List => {
         return {
-            value,
+            value: value,
             type: "list",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.TypeReference.List,
                 visitor: FernIr.dynamic.TypeReference._Visitor<_Result>
             ) {
@@ -86,9 +86,9 @@ export const TypeReference = {
 
     literal: (value: FernIr.dynamic.LiteralType): FernIr.dynamic.TypeReference.Literal => {
         return {
-            value,
+            value: value,
             type: "literal",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.TypeReference.Literal,
                 visitor: FernIr.dynamic.TypeReference._Visitor<_Result>
             ) {
@@ -101,7 +101,7 @@ export const TypeReference = {
         return {
             ...value,
             type: "map",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.TypeReference.Map,
                 visitor: FernIr.dynamic.TypeReference._Visitor<_Result>
             ) {
@@ -112,9 +112,9 @@ export const TypeReference = {
 
     named: (value: FernIr.TypeId): FernIr.dynamic.TypeReference.Named => {
         return {
-            value,
+            value: value,
             type: "named",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.TypeReference.Named,
                 visitor: FernIr.dynamic.TypeReference._Visitor<_Result>
             ) {
@@ -125,9 +125,9 @@ export const TypeReference = {
 
     optional: (value: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference.Optional => {
         return {
-            value,
+            value: value,
             type: "optional",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.TypeReference.Optional,
                 visitor: FernIr.dynamic.TypeReference._Visitor<_Result>
             ) {
@@ -138,9 +138,9 @@ export const TypeReference = {
 
     primitive: (value: FernIr.PrimitiveTypeV1): FernIr.dynamic.TypeReference.Primitive => {
         return {
-            value,
+            value: value,
             type: "primitive",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.TypeReference.Primitive,
                 visitor: FernIr.dynamic.TypeReference._Visitor<_Result>
             ) {
@@ -151,9 +151,9 @@ export const TypeReference = {
 
     set: (value: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference.Set => {
         return {
-            value,
+            value: value,
             type: "set",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.TypeReference.Set,
                 visitor: FernIr.dynamic.TypeReference._Visitor<_Result>
             ) {
@@ -165,7 +165,7 @@ export const TypeReference = {
     unknown: (): FernIr.dynamic.TypeReference.Unknown => {
         return {
             type: "unknown",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.TypeReference.Unknown,
                 visitor: FernIr.dynamic.TypeReference._Visitor<_Result>
             ) {

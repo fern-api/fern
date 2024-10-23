@@ -31,9 +31,9 @@ export declare namespace LiteralType {
 export const LiteralType = {
     boolean: (value: boolean): FernIr.dynamic.LiteralType.Boolean => {
         return {
-            value,
+            value: value,
             type: "boolean",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.LiteralType.Boolean,
                 visitor: FernIr.dynamic.LiteralType._Visitor<_Result>
             ) {
@@ -44,9 +44,9 @@ export const LiteralType = {
 
     string: (value: string): FernIr.dynamic.LiteralType.String => {
         return {
-            value,
+            value: value,
             type: "string",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.dynamic.LiteralType.String,
                 visitor: FernIr.dynamic.LiteralType._Visitor<_Result>
             ) {
