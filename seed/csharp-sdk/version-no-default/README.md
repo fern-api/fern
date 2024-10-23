@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedVersion;
 
 var client = new SeedVersionClient();
-await client.User.GetUserAsync("string");
+await client.User.GetUserAsync("userId");
 ```
 
 ## Exception Handling

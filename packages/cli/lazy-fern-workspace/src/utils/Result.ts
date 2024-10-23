@@ -3,6 +3,7 @@ import { ZodError } from "zod";
 import { OSSWorkspace } from "../OSSWorkspace";
 import { LazyFernWorkspace } from "../LazyFernWorkspace";
 import { ConjureWorkspace } from "../ConjureWorkspace";
+import { validateAgainstJsonSchema } from "@fern-api/core-utils";
 
 export declare namespace WorkspaceLoader {
     export type Result = SuccessfulResult | FailedResult;
@@ -22,7 +23,8 @@ export declare namespace WorkspaceLoader {
         | FileParseFailure
         | MissingFileFailure
         | StructureValidationFailure
-        | DependencyFailure;
+        | DependencyFailure
+        | JsonSchemaValidationFailure;
 
     export interface FileReadFailure {
         type: WorkspaceLoaderFailureType.FILE_READ;
@@ -73,6 +75,11 @@ export declare namespace WorkspaceLoader {
         type: WorkspaceLoaderFailureType.EXPORTING_PACKAGE_MARKER_OTHER_KEYS;
         pathOfPackageMarker: RelativeFilePath;
     }
+
+    export interface JsonSchemaValidationFailure {
+        type: WorkspaceLoaderFailureType.JSONSCHEMA_VALIDATION;
+        error: validateAgainstJsonSchema.ValidationFailure;
+    }
 }
 
 export enum WorkspaceLoaderFailureType {
@@ -80,6 +87,7 @@ export enum WorkspaceLoaderFailureType {
     FILE_PARSE = "FILE_PARSE",
     FILE_MISSING = "FILE_MISSING",
     STRUCTURE_VALIDATION = "STRUCTURE_VALIDATION",
+    JSONSCHEMA_VALIDATION = "JSONSCHEMA_VALIDATION",
     DEPENDENCY_NOT_LISTED = "DEPENDENCY_NOT_LISTED",
     FAILED_TO_LOAD_DEPENDENCY = "FAILED_TO_LOAD_DEPENDENCY",
     EXPORTING_PACKAGE_MARKER_OTHER_KEYS = "EXPORTING_PACKAGE_MARKER_OTHER_KEYS",

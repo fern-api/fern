@@ -13,11 +13,11 @@ import {
     GeneratorsConfiguration
 } from "./GeneratorsConfiguration";
 import { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
-import { APIConfigurationSchemaInternal, APIConfigurationV2Schema } from "./schemas/APIConfigurationSchema";
-import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
-import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
-import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
-import { isApiConfigurationV2Schema, isConjureSchema, isOpenAPISchema } from "./schemas/utils";
+import { ApiConfigurationSchemaInternal, ApiConfigurationV2Schema } from "./schemas";
+import { GeneratorGroupSchema } from "./schemas";
+import { GeneratorInvocationSchema } from "./schemas";
+import { GeneratorOutputSchema } from "./schemas";
+import { isApiConfigurationV2Schema, isConjureSchema, isNamespacedApiConfiguration, isOpenAPISchema } from "./utils";
 import {
     API_ORIGIN_LOCATION_KEY,
     API_SETTINGS_KEY,
@@ -25,14 +25,14 @@ import {
     GeneratorsConfigurationSchema,
     OPENAPI_LOCATION_KEY,
     OPENAPI_OVERRIDES_LOCATION_KEY
-} from "./schemas/GeneratorsConfigurationSchema";
-import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
-import { GithubPullRequestSchema } from "./schemas/GithubPullRequestSchema";
-import { MavenOutputLocationSchema } from "./schemas/MavenOutputLocationSchema";
-import { OutputMetadataSchema } from "./schemas/OutputMetadataSchema";
-import { PypiOutputMetadataSchema } from "./schemas/PypiOutputMetadataSchema";
-import { ReadmeSchema } from "./schemas/ReadmeSchema";
-import { ReviewersSchema } from "./schemas/ReviewersSchema";
+} from "./schemas";
+import { GithubLicenseSchema } from "./schemas";
+import { GithubPullRequestSchema } from "./schemas";
+import { MavenOutputLocationSchema } from "./schemas";
+import { OutputMetadataSchema } from "./schemas";
+import { PypiOutputMetadataSchema } from "./schemas";
+import { ReadmeSchema } from "./schemas";
+import { ReviewersSchema } from "./schemas";
 import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 
 export async function convertGeneratorsConfiguration({
@@ -76,7 +76,7 @@ export async function convertGeneratorsConfiguration({
 }
 
 async function parseAPIConfigurationToApiLocations(
-    apiConfiguration: APIConfigurationSchemaInternal | undefined,
+    apiConfiguration: ApiConfigurationSchemaInternal | undefined,
     rawConfiguration: GeneratorsConfigurationSchema
 ): Promise<APIDefinitionLocation[]> {
     const apiDefinitions: APIDefinitionLocation[] = [];
@@ -95,7 +95,8 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseTitleAsName: undefined,
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                     asyncApiMessageNaming: undefined,
-                    shouldUseOptionalAdditionalProperties: undefined
+                    shouldUseOptionalAdditionalProperties: undefined,
+                    coerceEnumsToLiterals: undefined
                 }
             });
         } else if (isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
@@ -113,7 +114,8 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseTitleAsName: undefined,
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                     asyncApiMessageNaming: undefined,
-                    shouldUseOptionalAdditionalProperties: undefined
+                    shouldUseOptionalAdditionalProperties: undefined,
+                    coerceEnumsToLiterals: undefined
                 }
             });
         } else if (Array.isArray(apiConfiguration)) {
@@ -131,7 +133,8 @@ async function parseAPIConfigurationToApiLocations(
                             shouldUseTitleAsName: undefined,
                             shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                             asyncApiMessageNaming: undefined,
-                            shouldUseOptionalAdditionalProperties: undefined
+                            shouldUseOptionalAdditionalProperties: undefined,
+                            coerceEnumsToLiterals: undefined
                         }
                     });
                 } else if (isRawProtobufAPIDefinitionSchema(definition)) {
@@ -149,7 +152,8 @@ async function parseAPIConfigurationToApiLocations(
                             shouldUseTitleAsName: undefined,
                             shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                             asyncApiMessageNaming: undefined,
-                            shouldUseOptionalAdditionalProperties: undefined
+                            shouldUseOptionalAdditionalProperties: undefined,
+                            coerceEnumsToLiterals: undefined
                         }
                     });
                 } else {
@@ -165,7 +169,8 @@ async function parseAPIConfigurationToApiLocations(
                             shouldUseTitleAsName: definition.settings?.["use-title"],
                             shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1",
                             asyncApiMessageNaming: definition.settings?.["message-naming"],
-                            shouldUseOptionalAdditionalProperties: undefined
+                            shouldUseOptionalAdditionalProperties: undefined,
+                            coerceEnumsToLiterals: undefined
                         }
                     });
                 }
@@ -183,7 +188,8 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1",
                     asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"],
-                    shouldUseOptionalAdditionalProperties: undefined
+                    shouldUseOptionalAdditionalProperties: undefined,
+                    coerceEnumsToLiterals: undefined
                 }
             });
         }
@@ -206,7 +212,8 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseTitleAsName: settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
                     asyncApiMessageNaming: undefined,
-                    shouldUseOptionalAdditionalProperties: undefined
+                    shouldUseOptionalAdditionalProperties: undefined,
+                    coerceEnumsToLiterals: undefined
                 }
             });
         } else if (openapi != null) {
@@ -222,7 +229,8 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseTitleAsName: openapi.settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1",
                     asyncApiMessageNaming: undefined,
-                    shouldUseOptionalAdditionalProperties: undefined
+                    shouldUseOptionalAdditionalProperties: undefined,
+                    coerceEnumsToLiterals: undefined
                 }
             });
         }
@@ -240,7 +248,8 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseTitleAsName: settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
                     asyncApiMessageNaming: settings?.["message-naming"],
-                    shouldUseOptionalAdditionalProperties: undefined
+                    shouldUseOptionalAdditionalProperties: undefined,
+                    coerceEnumsToLiterals: undefined
                 }
             });
         }
@@ -253,46 +262,9 @@ async function parseApiConfigurationV2Schema({
     apiConfiguration,
     rawConfiguration
 }: {
-    apiConfiguration: APIConfigurationV2Schema;
+    apiConfiguration: ApiConfigurationV2Schema;
     rawConfiguration: GeneratorsConfigurationSchema;
 }): Promise<APIDefinition> {
-    if (isConjureSchema(apiConfiguration.specs)) {
-        return {
-            type: "conjure",
-            pathToConjureDefinition: apiConfiguration.specs.conjure
-        };
-    }
-
-    const rootDefinitions: APIDefinitionLocation[] = [];
-    const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
-
-    for (const spec of apiConfiguration.specs ?? []) {
-        if (isOpenAPISchema(spec)) {
-            const definitionLocation: APIDefinitionLocation = {
-                schema: {
-                    type: "oss",
-                    path: spec.openapi
-                },
-                origin: undefined,
-                overrides: spec.overrides,
-                audiences: [],
-                settings: {
-                    shouldUseTitleAsName: spec.settings?.["title-as-schema-name"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                    asyncApiMessageNaming: undefined,
-                    shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true
-                }
-            };
-            if (spec.namespace == null) {
-                rootDefinitions.push(definitionLocation);
-            } else {
-                namespacedDefinitions[spec.namespace] ??= [];
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                namespacedDefinitions[spec.namespace]!.push(definitionLocation);
-            }
-        }
-    }
-
     const partialConfig = {
         "auth-schemes":
             apiConfiguration.auth != null
@@ -314,6 +286,45 @@ async function parseApiConfigurationV2Schema({
                 : undefined,
         ...apiConfiguration
     };
+
+    if (isConjureSchema(apiConfiguration.specs)) {
+        return {
+            type: "conjure",
+            pathToConjureDefinition: apiConfiguration.specs.conjure,
+            ...partialConfig
+        };
+    }
+
+    const rootDefinitions: APIDefinitionLocation[] = [];
+    const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
+
+    for (const spec of apiConfiguration.specs ?? []) {
+        if (isOpenAPISchema(spec)) {
+            const definitionLocation: APIDefinitionLocation = {
+                schema: {
+                    type: "oss",
+                    path: spec.openapi
+                },
+                origin: spec.origin,
+                overrides: spec.overrides,
+                audiences: [],
+                settings: {
+                    shouldUseTitleAsName: spec.settings?.["title-as-schema-name"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                    asyncApiMessageNaming: undefined,
+                    shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true,
+                    coerceEnumsToLiterals: spec.settings?.["coerce-enums-to-literals"]
+                }
+            };
+            if (spec.namespace == null) {
+                rootDefinitions.push(definitionLocation);
+            } else {
+                namespacedDefinitions[spec.namespace] ??= [];
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                namespacedDefinitions[spec.namespace]!.push(definitionLocation);
+            }
+        }
+    }
 
     // No namespaces
     if (Object.keys(namespacedDefinitions).length === 0) {
@@ -341,7 +352,7 @@ async function parseAPIConfiguration(
         return parseApiConfigurationV2Schema({ apiConfiguration, rawConfiguration: rawGeneratorsConfiguration });
     }
 
-    if (isPlainObject(apiConfiguration) && "namespaces" in apiConfiguration) {
+    if (apiConfiguration != null && isNamespacedApiConfiguration(apiConfiguration)) {
         const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
         for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaces)) {
             namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(

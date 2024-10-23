@@ -5,11 +5,14 @@ changelogLocation: ../../generators/csharp/sdk/versions.yml
 
 buildScripts:
   preInstallScript:
-    - dotnet tool restore
+    commands:
+      - dotnet tool restore
   compileScript:
-    - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
+    commands:
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
   testScript:
-    - dotnet test src
+    commands:
+      - dotnet test src
 
 publish:
   preBuildCommands:
@@ -26,7 +29,7 @@ test:
     workingDirectory: generators/csharp
     buildCommand:
       - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
-    runCommand: node sdk/dist/bundle.cjs
+    runCommand: node sdk/dist/cli.cjs
 
 language: csharp
 generatorType: SDK

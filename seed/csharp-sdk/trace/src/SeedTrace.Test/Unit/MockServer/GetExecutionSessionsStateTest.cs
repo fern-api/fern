@@ -17,18 +17,19 @@ public class GetExecutionSessionsStateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "states": {
-                "string": {
-                  "lastTimeContacted": "string",
-                  "sessionId": "string",
+                "states": {
+                  "lastTimeContacted": "lastTimeContacted",
+                  "sessionId": "sessionId",
                   "isWarmInstance": true,
-                  "awsTaskId": "string",
+                  "awsTaskId": "awsTaskId",
                   "language": "JAVA",
                   "status": "CREATING_CONTAINER"
                 }
               },
               "numWarmingInstances": 1,
               "warmingSessionIds": [
-                "string"
+                "warmingSessionIds",
+                "warmingSessionIds"
               ]
             }
             """;

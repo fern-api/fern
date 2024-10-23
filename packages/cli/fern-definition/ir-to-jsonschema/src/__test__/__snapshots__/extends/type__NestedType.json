@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "raw": {
+      "type": "string"
+    },
+    "docs": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "raw",
+    "docs",
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

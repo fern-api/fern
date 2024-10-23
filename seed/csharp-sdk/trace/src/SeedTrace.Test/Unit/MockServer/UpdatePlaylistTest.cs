@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedTrace;
 using SeedTrace.Core;
 
 #nullable enable
@@ -16,22 +15,13 @@ public class UpdatePlaylistTest : BaseMockServerTest
     public async Task MockServerTest()
     {
         const string requestJson = """
-            {
-              "name": "string",
-              "problems": [
-                "string"
-              ]
-            }
+
             """;
 
         const string mockResponse = """
             {
-              "playlist_id": "string",
-              "owner-id": "string",
-              "name": "string",
-              "problems": [
-                "string"
-              ]
+              "playlist_id": "playlist_id",
+              "owner-id": "owner-id"
             }
             """;
 
@@ -39,9 +29,9 @@ public class UpdatePlaylistTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/v2/playlist/1/string")
+                    .WithPath("/v2/playlist/1/playlistId")
                     .UsingPut()
-                    .WithBodyAsJson(requestJson)
+                    .WithBody(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -52,12 +42,8 @@ public class UpdatePlaylistTest : BaseMockServerTest
 
         var response = await Client.Playlist.UpdatePlaylistAsync(
             1,
-            "string",
-            new UpdatePlaylistRequest
-            {
-                Name = "string",
-                Problems = new List<string>() { "string" },
-            },
+            "playlistId",
+            null,
             RequestOptions
         );
         JToken

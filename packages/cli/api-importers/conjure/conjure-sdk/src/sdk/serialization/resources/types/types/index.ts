@@ -5,6 +5,8 @@ export * from "./ConjureAliasDeclaration";
 export * from "./ConjureUnionDeclaration";
 export * from "./ConjureObjectDeclaration";
 export * from "./ConjureEnumDeclaration";
+export * from "./ConjureEnumVariant";
+export * from "./ConjureEnumWithDocs";
 export * from "./ConjureTypeReference";
 export * from "./ConjureType";
 export * from "./ConjureTypeWithDocs";

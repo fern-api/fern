@@ -20,12 +20,12 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/ts-express-casing";
+import { SeedApiClient, SeedApi } from "@fern/ts-express-casing";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.imdb.createMovie({
-    id: "string",
-    movieTitle: "string",
+    id: "id",
+    movieTitle: "movie_title",
     movieRating: 1.1,
 });
 ```

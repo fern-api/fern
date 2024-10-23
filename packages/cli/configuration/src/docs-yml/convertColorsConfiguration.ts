@@ -120,8 +120,10 @@ export function convertThemedColorConfig(
             context,
             "card-background",
             theme
-        )?.toRgb()
+        )?.toRgb(),
         // NOTE: logo and backgroundImage filepaths need to be resolved in publishDocs.ts and not here.
+        logo: undefined,
+        backgroundImage: undefined
     };
 }
 

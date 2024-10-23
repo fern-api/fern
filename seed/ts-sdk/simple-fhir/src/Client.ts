@@ -31,7 +31,7 @@ export class SeedApiClient {
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.getAccount("string")
+     *     await client.getAccount("account_id")
      */
     public async getAccount(
         accountId: string,

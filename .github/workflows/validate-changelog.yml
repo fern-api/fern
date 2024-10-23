@@ -1,4 +1,4 @@
-name: Validate Changelogs
+name: Validate Changelog
 
 on:
   push:
@@ -13,7 +13,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  cli-validate:
+  validate-fern-cli:
+    name: Fern CLI
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
@@ -28,7 +29,7 @@ jobs:
         run: |
           pnpm seed:local validate cli --log-level debug
 
-  generator-validate:
+  validate-generators:
     strategy:
       matrix:
         generator: [
@@ -48,7 +49,7 @@ jobs:
             php-sdk,
             php-model
           ]
-
+    name: ${{ matrix.generator }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref

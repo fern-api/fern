@@ -1,17 +1,4 @@
 {
     "types": {},
-    "endpoints": [
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/",
-                "method": "POST",
-                "identifier_override": "endpoint_service.downloadFile"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "using SeedFileDownload;\n\nvar client = new SeedFileDownloadClient();\nawait client.Service.DownloadFileAsync();\n"
-            }
-        }
-    ]
+    "endpoints": []
 }

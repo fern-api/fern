@@ -72,6 +72,7 @@ class PydanticModelGenerator(AbstractGenerator):
             skip_formatting=custom_config.skip_formatting,
             union_naming_version=custom_config.union_naming,
             use_pydantic_field_aliases=custom_config.use_pydantic_field_aliases,
+            pydantic_compatibility=custom_config.version,
         )
         snippet_registry = SnippetRegistry(source_file_factory=context.source_file_factory)
         snippet_writer = self._build_snippet_writer(

@@ -40,7 +40,7 @@ class UnionClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.union.get(
-            id="string",
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -85,7 +85,6 @@ class UnionClient:
         )
         client.union.update(
             request=CircleShape(
-                id="string",
                 radius=1.1,
             ),
         )
@@ -141,7 +140,7 @@ class AsyncUnionClient:
 
         async def main() -> None:
             await client.union.get(
-                id="string",
+                id="id",
             )
 
 
@@ -194,7 +193,6 @@ class AsyncUnionClient:
         async def main() -> None:
             await client.union.update(
                 request=CircleShape(
-                    id="string",
                     radius=1.1,
                 ),
             )

@@ -17,9 +17,7 @@ public class SendListTest : BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/query-list")
                     .WithParam("operand", ">")
-                    .WithParam("maybeOperand", ">")
                     .WithParam("operandOrColor", "red")
-                    .WithParam("maybeOperandOrColor", "red")
                     .UsingPost()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
@@ -30,9 +28,7 @@ public class SendListTest : BaseMockServerTest
                     new SendEnumListAsQueryParamRequest
                     {
                         Operand = [Operand.GreaterThan],
-                        MaybeOperand = [Operand.GreaterThan],
                         OperandOrColor = [Color.Red],
-                        MaybeOperandOrColor = [Color.Red],
                     },
                     RequestOptions
                 )

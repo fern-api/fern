@@ -1,0 +1,316 @@
+{
+  "types": {
+    "type_:Type": {
+      "description": "Exercises all of the built-in types.",
+      "name": "Type",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "one",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "key": "two",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
+            }
+          },
+          {
+            "key": "three",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "four",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          },
+          {
+            "key": "five",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "long",
+                "default": 0
+              }
+            }
+          },
+          {
+            "key": "six",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime",
+                "default": "1970-01-01T00:00:00.000Z"
+              }
+            }
+          },
+          {
+            "key": "seven",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "date",
+                "default": "1970-01-01T00:00:00.000Z"
+              }
+            }
+          },
+          {
+            "key": "eight",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "uuid"
+              }
+            }
+          },
+          {
+            "key": "nine",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "base64",
+                "default": "0"
+              }
+            }
+          },
+          {
+            "key": "ten",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "eleven",
+            "valueType": {
+              "type": "set",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            }
+          },
+          {
+            "key": "twelve",
+            "valueType": {
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+          },
+          {
+            "key": "thirteen",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long",
+                  "default": 0
+                }
+              }
+            }
+          },
+          {
+            "key": "fourteen",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
+            "key": "fifteen",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "sixteen",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "seventeen",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "uuid"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "eighteen",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "eighteen"
+              }
+            }
+          },
+          {
+            "key": "nineteen",
+            "valueType": {
+              "type": "id",
+              "value": "type_:Name"
+            }
+          },
+          {
+            "key": "twenty",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "uint"
+              }
+            }
+          },
+          {
+            "key": "twentyone",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "uint64"
+              }
+            }
+          },
+          {
+            "key": "twentytwo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "double",
+                "minimum": 2.2250738585072014e-308,
+                "maximum": 1.7976931348623157e+308,
+                "default": 0
+              }
+            }
+          },
+          {
+            "key": "twentythree",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "bigInteger",
+                "default": "0"
+              }
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:Name": {
+      "name": "Name",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "type_:Type",
+      "type_:Name"
+    ],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

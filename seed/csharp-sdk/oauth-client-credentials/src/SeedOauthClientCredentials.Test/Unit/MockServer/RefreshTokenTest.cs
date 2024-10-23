@@ -17,20 +17,19 @@ public class RefreshTokenTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "client_id": "string",
-              "client_secret": "string",
-              "refresh_token": "string",
+              "client_id": "client_id",
+              "client_secret": "client_secret",
+              "refresh_token": "refresh_token",
               "audience": "https://api.example.com",
-              "grant_type": "refresh_token",
-              "scope": "string"
+              "grant_type": "refresh_token"
             }
             """;
 
         const string mockResponse = """
             {
-              "access_token": "string",
+              "access_token": "access_token",
               "expires_in": 1,
-              "refresh_token": "string"
+              "refresh_token": "refresh_token"
             }
             """;
 
@@ -52,12 +51,12 @@ public class RefreshTokenTest : BaseMockServerTest
         var response = await Client.Auth.RefreshTokenAsync(
             new RefreshTokenRequest
             {
-                ClientId = "string",
-                ClientSecret = "string",
-                RefreshToken = "string",
+                ClientId = "client_id",
+                ClientSecret = "client_secret",
+                RefreshToken = "refresh_token",
                 Audience = "https://api.example.com",
                 GrantType = "refresh_token",
-                Scope = "string",
+                Scope = null,
             },
             RequestOptions
         );

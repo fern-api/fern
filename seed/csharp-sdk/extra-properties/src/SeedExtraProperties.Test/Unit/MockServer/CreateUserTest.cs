@@ -19,13 +19,13 @@ public class CreateUserTest : BaseMockServerTest
             {
               "_type": "CreateUserRequest",
               "_version": "v1",
-              "name": "string"
+              "name": "name"
             }
             """;
 
         const string mockResponse = """
             {
-              "name": "string"
+              "name": "name"
             }
             """;
 
@@ -49,7 +49,7 @@ public class CreateUserTest : BaseMockServerTest
             {
                 Type = "CreateUserRequest",
                 Version = "v1",
-                Name = "string",
+                Name = "name",
             },
             RequestOptions
         );

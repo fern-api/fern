@@ -44,7 +44,7 @@ class UserClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.get_user(
-            user_id="string",
+            user_id="userId",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -94,8 +94,7 @@ class UserClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.create_user(
-            name="string",
-            age=1,
+            name="name",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -158,7 +157,7 @@ class AsyncUserClient:
 
         async def main() -> None:
             await client.user.get_user(
-                user_id="string",
+                user_id="userId",
             )
 
 
@@ -216,8 +215,7 @@ class AsyncUserClient:
 
         async def main() -> None:
             await client.user.create_user(
-                name="string",
-                age=1,
+                name="name",
             )
 
 

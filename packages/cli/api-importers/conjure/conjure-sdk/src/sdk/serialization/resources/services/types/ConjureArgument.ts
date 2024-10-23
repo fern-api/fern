@@ -5,12 +5,11 @@
 import * as serializers from "../../../index";
 import * as FernConjure from "../../../../api/index";
 import * as core from "../../../../core";
-import { ConjureTypeReference } from "../../types/types/ConjureTypeReference";
 import { ConjureArgumentWithParamType } from "./ConjureArgumentWithParamType";
 
 export const ConjureArgument: core.serialization.Schema<serializers.ConjureArgument.Raw, FernConjure.ConjureArgument> =
-    core.serialization.undiscriminatedUnion([ConjureTypeReference, ConjureArgumentWithParamType]);
+    core.serialization.undiscriminatedUnion([core.serialization.string(), ConjureArgumentWithParamType]);
 
 export declare namespace ConjureArgument {
-    type Raw = ConjureTypeReference.Raw | ConjureArgumentWithParamType.Raw;
+    type Raw = string | ConjureArgumentWithParamType.Raw;
 }

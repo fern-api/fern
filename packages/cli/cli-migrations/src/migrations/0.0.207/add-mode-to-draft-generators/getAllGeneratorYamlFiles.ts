@@ -1,12 +1,13 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { findUp } from "find-up";
-import glob from "glob-promise";
+import { glob } from "glob";
 
 const FERN_DIRECTORY = "fern";
 
 export async function getAllGeneratorYamlFiles(context: TaskContext): Promise<AbsoluteFilePath[]> {
     const fernDirectory = await getFernDirectory();
+    const alphasort = (a: string, b: string) => a.localeCompare(b, "en");
     if (fernDirectory == null) {
         context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
     }

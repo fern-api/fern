@@ -8,8 +8,8 @@ from .utilities import validate_response
 
 async def test_create_execution_session(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = {
-        "sessionId": "string",
-        "executionSessionUrl": "string",
+        "sessionId": "sessionId",
+        "executionSessionUrl": "executionSessionUrl",
         "language": "JAVA",
         "status": "CREATING_CONTAINER",
     }
@@ -23,28 +23,28 @@ async def test_create_execution_session(client: SeedTrace, async_client: AsyncSe
 
 async def test_get_execution_session(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = {
-        "sessionId": "string",
-        "executionSessionUrl": "string",
+        "sessionId": "sessionId",
+        "executionSessionUrl": "executionSessionUrl",
         "language": "JAVA",
         "status": "CREATING_CONTAINER",
     }
     expected_types: typing.Any = {"sessionId": None, "executionSessionUrl": None, "language": None, "status": None}
-    response = client.submission.get_execution_session(session_id="string")
+    response = client.submission.get_execution_session(session_id="sessionId")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.submission.get_execution_session(session_id="string")
+    async_response = await async_client.submission.get_execution_session(session_id="sessionId")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_stop_execution_session(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.submission.stop_execution_session(session_id="string")  # type: ignore[func-returns-value]
+        client.submission.stop_execution_session(session_id="sessionId")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.submission.stop_execution_session(session_id="string")  # type: ignore[func-returns-value]
+        await async_client.submission.stop_execution_session(session_id="sessionId")  # type: ignore[func-returns-value]
         is None
     )
 
@@ -52,17 +52,17 @@ async def test_stop_execution_session(client: SeedTrace, async_client: AsyncSeed
 async def test_get_execution_sessions_state(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = {
         "states": {
-            "string": {
-                "lastTimeContacted": "string",
-                "sessionId": "string",
+            "states": {
+                "lastTimeContacted": "lastTimeContacted",
+                "sessionId": "sessionId",
                 "isWarmInstance": True,
-                "awsTaskId": "string",
+                "awsTaskId": "awsTaskId",
                 "language": "JAVA",
                 "status": "CREATING_CONTAINER",
             }
         },
         "numWarmingInstances": 1,
-        "warmingSessionIds": ["string"],
+        "warmingSessionIds": ["warmingSessionIds", "warmingSessionIds"],
     }
     expected_types: typing.Any = {
         "states": (
@@ -82,7 +82,7 @@ async def test_get_execution_sessions_state(client: SeedTrace, async_client: Asy
             },
         ),
         "numWarmingInstances": "integer",
-        "warmingSessionIds": ("list", {0: None}),
+        "warmingSessionIds": ("list", {0: None, 1: None}),
     }
     response = client.submission.get_execution_sessions_state()
     validate_response(response, expected_response, expected_types)

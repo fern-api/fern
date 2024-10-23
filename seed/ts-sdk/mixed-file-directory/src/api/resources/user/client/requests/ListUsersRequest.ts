@@ -4,9 +4,7 @@
 
 /**
  * @example
- *     {
- *         limit: 1
- *     }
+ *     {}
  */
 export interface ListUsersRequest {
     /**

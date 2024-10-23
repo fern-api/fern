@@ -8,17 +8,43 @@ import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
 import path from "path";
 import { convertIrToFdrApi } from "../convertIrToFdrApi";
+import { readdir } from "fs/promises";
 
-describe("fdr test definitions", async () => {
+describe("fdr", async () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions");
-    const apiWorkspaces = await loadApis({
-        fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
-        context: createMockTaskContext(),
-        cliVersion: "0.0.0",
-        cliName: "fern",
-        commandLineApiWorkspace: undefined,
-        defaultToAllApiWorkspaces: true
-    });
+    const FIXTURES_DIR = path.join(__dirname, "./fixtures");
+    const apiWorkspaces = [
+        ...(await loadApis({
+            fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
+            context: createMockTaskContext(),
+            cliVersion: "0.0.0",
+            cliName: "fern",
+            commandLineApiWorkspace: undefined,
+            defaultToAllApiWorkspaces: true
+        })),
+        ...(
+            await Promise.all(
+                (
+                    await readdir(FIXTURES_DIR, { withFileTypes: true })
+                )
+                    .filter((fixture) => fixture.isDirectory())
+                    .flatMap(async (fixture) => {
+                        return await loadApis({
+                            fernDirectory: join(
+                                AbsoluteFilePath.of(FIXTURES_DIR),
+                                RelativeFilePath.of(fixture.name),
+                                RelativeFilePath.of("fern")
+                            ),
+                            context: createMockTaskContext(),
+                            cliVersion: "0.0.0",
+                            cliName: "fern",
+                            commandLineApiWorkspace: undefined,
+                            defaultToAllApiWorkspaces: true
+                        });
+                    })
+            )
+        ).flat()
+    ];
 
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
@@ -40,10 +66,23 @@ describe("fdr test definitions", async () => {
                 context
             });
 
-            const fdr = convertIrToFdrApi({ ir, snippetsConfig: {} });
+            const fdr = convertIrToFdrApi({
+                ir,
+                snippetsConfig: {
+                    typescriptSdk: undefined,
+                    pythonSdk: undefined,
+                    javaSdk: undefined,
+                    rubySdk: undefined,
+                    goSdk: undefined
+                }
+            });
 
             it(workspace.workspaceName ?? "", () => {
-                expect(fdr).toMatchSnapshot();
+                expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(
+                    `./__snapshots__/${
+                        workspace.workspaceName ?? workspace.absoluteFilePath.split("/").reverse()[1]
+                    }.json`
+                );
             });
         })
     );

@@ -1,0 +1,98 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "upload-file": {
+              "auth": false,
+              "display-name": "Upload a file",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/upload-with-content-type",
+              "request": {
+                "body": {
+                  "properties": {
+                    "file": {
+                      "content-type": "application/octet-stream",
+                      "docs": "The file to upload",
+                      "type": "file",
+                    },
+                    "maybe_file": "optional<file>",
+                    "metadata": {
+                      "content-type": "application/json",
+                      "docs": "This is a metadata field",
+                      "type": "optional<map<string, unknown>>",
+                    },
+                  },
+                },
+                "content-type": "multipart/form-data",
+                "headers": undefined,
+                "name": "UploadFileRequest",
+                "query-parameters": undefined,
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    upload-file:
+      path: /upload-with-content-type
+      method: POST
+      auth: false
+      display-name: Upload a file
+      request:
+        name: UploadFileRequest
+        body:
+          properties:
+            file:
+              type: file
+              docs: The file to upload
+              content-type: application/octet-stream
+            maybe_file: optional<file>
+            metadata:
+              type: optional<map<string, unknown>>
+              docs: This is a metadata field
+              content-type: application/json
+        content-type: multipart/form-data
+      examples:
+        - request: {}
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test file upload",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test file upload
+",
+  },
+}

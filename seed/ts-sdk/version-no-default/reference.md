@@ -15,7 +15,7 @@
 <dd>
 
 ```typescript
-await client.user.getUser("string");
+await client.user.getUser("userId");
 ```
 
 </dd>

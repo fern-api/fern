@@ -107,7 +107,8 @@ export function getSdkJustRequestBodyType({
     if (rawBytes != null) {
         return SdkRequestBodyType.bytes({
             isOptional: rawBytes.isOptional,
-            contentType
+            contentType,
+            docs: undefined
         });
     }
     return SdkRequestBodyType.typeReference(

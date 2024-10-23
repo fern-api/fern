@@ -1,0 +1,12 @@
+types:
+  UndiscriminatedUnion:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - integer
+      - list<list<integer>>
+
+errors:
+  BadRequestError:
+    status-code: 400

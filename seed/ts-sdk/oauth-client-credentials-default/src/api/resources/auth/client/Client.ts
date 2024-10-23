@@ -33,8 +33,8 @@ export class Auth {
      *
      * @example
      *     await client.auth.getToken({
-     *         clientId: "string",
-     *         clientSecret: "string"
+     *         clientId: "client_id",
+     *         clientSecret: "client_secret"
      *     })
      */
     public async getToken(

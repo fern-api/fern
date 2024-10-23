@@ -95,6 +95,12 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                         ? singleUnionType.type
                                         : undefined;
 
+                                // if the union type has a key, we don't need to check for conflicts
+                                // because the variant is nested under the key
+                                if (typeof singleUnionType === "object" && singleUnionType.key != null) {
+                                    continue;
+                                }
+
                                 if (specifiedType != null) {
                                     const resolvedType = typeResolver.resolveType({
                                         type: specifiedType,

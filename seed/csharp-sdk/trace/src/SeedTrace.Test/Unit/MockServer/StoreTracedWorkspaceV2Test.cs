@@ -17,29 +17,23 @@ public class StoreTracedWorkspaceV2Test : BaseMockServerTest
                 "submissionId": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 "lineNumber": 1,
                 "file": {
-                  "filename": "string",
-                  "directory": "string"
-                },
-                "returnValue": {
-                  "type": "integerValue"
-                },
-                "expressionLocation": {
-                  "start": 1,
-                  "offset": 1
+                  "filename": "filename",
+                  "directory": "directory"
                 },
                 "stack": {
-                  "numStackFrames": 1,
-                  "topStackFrame": {
-                    "methodName": "string",
-                    "lineNumber": 1,
-                    "scopes": [
-                      {
-                        "variables": {}
-                      }
-                    ]
-                  }
+                  "numStackFrames": 1
+                }
+              },
+              {
+                "submissionId": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                "lineNumber": 1,
+                "file": {
+                  "filename": "filename",
+                  "directory": "directory"
                 },
-                "stdout": "string"
+                "stack": {
+                  "numStackFrames": 1
+                }
               }
             ]
             """;
@@ -66,26 +60,37 @@ public class StoreTracedWorkspaceV2Test : BaseMockServerTest
                         {
                             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                             LineNumber = 1,
-                            File = new TracedFile { Filename = "string", Directory = "string" },
-                            ReturnValue = 1,
-                            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                            File = new TracedFile
+                            {
+                                Filename = "filename",
+                                Directory = "directory",
+                            },
+                            ReturnValue = null,
+                            ExpressionLocation = null,
                             Stack = new StackInformation
                             {
                                 NumStackFrames = 1,
-                                TopStackFrame = new StackFrame
-                                {
-                                    MethodName = "string",
-                                    LineNumber = 1,
-                                    Scopes = new List<Scope>()
-                                    {
-                                        new Scope
-                                        {
-                                            Variables = new Dictionary<string, object>() { },
-                                        },
-                                    },
-                                },
+                                TopStackFrame = null,
                             },
-                            Stdout = "string",
+                            Stdout = null,
+                        },
+                        new TraceResponseV2
+                        {
+                            SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                            LineNumber = 1,
+                            File = new TracedFile
+                            {
+                                Filename = "filename",
+                                Directory = "directory",
+                            },
+                            ReturnValue = null,
+                            ExpressionLocation = null,
+                            Stack = new StackInformation
+                            {
+                                NumStackFrames = 1,
+                                TopStackFrame = null,
+                            },
+                            Stdout = null,
                         },
                     },
                     RequestOptions

@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithCursorPaginationAsync(\n    new ListUsersCursorPaginationRequest\n    {\n        Page = 1,\n        PerPage = 1,\n        Order = Order.Asc,\n        StartingAfter = \"string\",\n    }\n);\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithCursorPaginationAsync(new ListUsersCursorPaginationRequest());\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithBodyCursorPaginationAsync(\n    new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = \"string\" } }\n);\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithBodyCursorPaginationAsync(\n    new ListUsersBodyCursorPaginationRequest { Pagination = null }\n);\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithOffsetPaginationAsync(\n    new ListUsersOffsetPaginationRequest\n    {\n        Page = 1,\n        PerPage = 1,\n        Order = Order.Asc,\n        StartingAfter = \"string\",\n    }\n);\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithOffsetPaginationAsync(new ListUsersOffsetPaginationRequest());\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithBodyOffsetPaginationAsync(\n    new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } }\n);\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithBodyOffsetPaginationAsync(\n    new ListUsersBodyOffsetPaginationRequest { Pagination = null }\n);\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithOffsetStepPaginationAsync(\n    new ListUsersOffsetStepPaginationRequest\n    {\n        Page = 1,\n        Limit = 1,\n        Order = Order.Asc,\n    }\n);\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithOffsetStepPaginationAsync(new ListUsersOffsetStepPaginationRequest());\n"
             }
         },
         {
@@ -70,7 +70,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithOffsetPaginationHasNextPageAsync(\n    new ListWithOffsetPaginationHasNextPageRequest\n    {\n        Page = 1,\n        Limit = 1,\n        Order = Order.Asc,\n    }\n);\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithOffsetPaginationHasNextPageAsync(\n    new ListWithOffsetPaginationHasNextPageRequest()\n);\n"
             }
         },
         {
@@ -82,7 +82,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithExtendedResultsAsync(\n    new ListUsersExtendedRequest { Cursor = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\" }\n);\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithExtendedResultsAsync(new ListUsersExtendedRequest());\n"
             }
         },
         {
@@ -94,7 +94,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithExtendedResultsAndOptionalDataAsync(\n    new ListUsersExtendedRequestForOptionalData { Cursor = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\" }\n);\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithExtendedResultsAndOptionalDataAsync(\n    new ListUsersExtendedRequestForOptionalData()\n);\n"
             }
         },
         {
@@ -106,7 +106,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListUsernamesAsync(new ListUsernamesRequest { StartingAfter = \"string\" });\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListUsernamesAsync(new ListUsernamesRequest());\n"
             }
         },
         {
@@ -118,7 +118,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 });\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest());\n"
             }
         }
     ]

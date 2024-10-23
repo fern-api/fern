@@ -13,15 +13,7 @@
 <dd>
 
 ```csharp
-await client.Users.ListWithCursorPaginationAsync(
-    new ListUsersCursorPaginationRequest
-    {
-        Page = 1,
-        PerPage = 1,
-        Order = Order.Asc,
-        StartingAfter = "string",
-    }
-);
+await client.Users.ListWithCursorPaginationAsync(new ListUsersCursorPaginationRequest());
 ```
 </dd>
 </dl>
@@ -62,7 +54,7 @@ await client.Users.ListWithCursorPaginationAsync(
 
 ```csharp
 await client.Users.ListWithBodyCursorPaginationAsync(
-    new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = "string" } }
+    new ListUsersBodyCursorPaginationRequest { Pagination = null }
 );
 ```
 </dd>
@@ -103,15 +95,7 @@ await client.Users.ListWithBodyCursorPaginationAsync(
 <dd>
 
 ```csharp
-await client.Users.ListWithOffsetPaginationAsync(
-    new ListUsersOffsetPaginationRequest
-    {
-        Page = 1,
-        PerPage = 1,
-        Order = Order.Asc,
-        StartingAfter = "string",
-    }
-);
+await client.Users.ListWithOffsetPaginationAsync(new ListUsersOffsetPaginationRequest());
 ```
 </dd>
 </dl>
@@ -152,7 +136,7 @@ await client.Users.ListWithOffsetPaginationAsync(
 
 ```csharp
 await client.Users.ListWithBodyOffsetPaginationAsync(
-    new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } }
+    new ListUsersBodyOffsetPaginationRequest { Pagination = null }
 );
 ```
 </dd>
@@ -193,14 +177,7 @@ await client.Users.ListWithBodyOffsetPaginationAsync(
 <dd>
 
 ```csharp
-await client.Users.ListWithOffsetStepPaginationAsync(
-    new ListUsersOffsetStepPaginationRequest
-    {
-        Page = 1,
-        Limit = 1,
-        Order = Order.Asc,
-    }
-);
+await client.Users.ListWithOffsetStepPaginationAsync(new ListUsersOffsetStepPaginationRequest());
 ```
 </dd>
 </dl>
@@ -241,12 +218,7 @@ await client.Users.ListWithOffsetStepPaginationAsync(
 
 ```csharp
 await client.Users.ListWithOffsetPaginationHasNextPageAsync(
-    new ListWithOffsetPaginationHasNextPageRequest
-    {
-        Page = 1,
-        Limit = 1,
-        Order = Order.Asc,
-    }
+    new ListWithOffsetPaginationHasNextPageRequest()
 );
 ```
 </dd>
@@ -287,9 +259,7 @@ await client.Users.ListWithOffsetPaginationHasNextPageAsync(
 <dd>
 
 ```csharp
-await client.Users.ListWithExtendedResultsAsync(
-    new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
-);
+await client.Users.ListWithExtendedResultsAsync(new ListUsersExtendedRequest());
 ```
 </dd>
 </dl>
@@ -330,7 +300,7 @@ await client.Users.ListWithExtendedResultsAsync(
 
 ```csharp
 await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
-    new ListUsersExtendedRequestForOptionalData { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
+    new ListUsersExtendedRequestForOptionalData()
 );
 ```
 </dd>
@@ -371,7 +341,7 @@ await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
 <dd>
 
 ```csharp
-await client.Users.ListUsernamesAsync(new ListUsernamesRequest { StartingAfter = "string" });
+await client.Users.ListUsernamesAsync(new ListUsernamesRequest());
 ```
 </dd>
 </dl>
@@ -411,7 +381,7 @@ await client.Users.ListUsernamesAsync(new ListUsernamesRequest { StartingAfter =
 <dd>
 
 ```csharp
-await client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 });
+await client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest());
 ```
 </dd>
 </dl>

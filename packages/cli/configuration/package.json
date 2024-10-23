@@ -25,15 +25,14 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck",
-    "generate": "fern generate --local"
+    "depcheck": "depcheck"
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.108.0-dcb0f740c",
+    "@fern-fern/fdr-cjs-sdk": "0.0.5833",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
     "find-up": "^6.3.0",
@@ -47,7 +46,7 @@
     "@types/jest": "^29.5.12",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "^18.7.18",
+    "@types/node": "18.7.18",
     "@types/semver": "^7.5.8",
     "@types/tinycolor2": "^1.4.6",
     "depcheck": "^1.4.6",

@@ -38,7 +38,7 @@ class MetadataClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.events.metadata.get_metadata(
-            id="string",
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -96,7 +96,7 @@ class AsyncMetadataClient:
 
         async def main() -> None:
             await client.user.events.metadata.get_metadata(
-                id="string",
+                id="id",
             )
 
 

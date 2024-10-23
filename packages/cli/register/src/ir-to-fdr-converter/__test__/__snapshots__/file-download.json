@@ -1,0 +1,68 @@
+{
+  "types": {},
+  "subpackages": {
+    "subpackage_service": {
+      "subpackageId": "subpackage_service",
+      "name": "service",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "downloadFile",
+          "originalEndpointId": "endpoint_service.downloadFile",
+          "name": "Download File",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "fileDownload"
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "responseBodyV3": {
+                "type": "filename",
+                "value": "<bytes>"
+              },
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": [
+      "subpackage_service"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

@@ -4,4 +4,4 @@
 
 import * as FernConjure from "../../../index";
 
-export type ConjureArgument = FernConjure.ConjureTypeReference | FernConjure.ConjureArgumentWithParamType;
+export type ConjureArgument = string | FernConjure.ConjureArgumentWithParamType;

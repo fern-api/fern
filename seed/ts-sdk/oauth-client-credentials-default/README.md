@@ -20,7 +20,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedOauthClientCredentialsDefaultClient } from "@fern/oauth-client-credentials-default";
+import {
+    SeedOauthClientCredentialsDefaultClient,
+    SeedOauthClientCredentialsDefault,
+} from "@fern/oauth-client-credentials-default";
 
 const client = new SeedOauthClientCredentialsDefaultClient({
     environment: "YOUR_BASE_URL",
@@ -28,8 +31,8 @@ const client = new SeedOauthClientCredentialsDefaultClient({
     clientSecret: "YOUR_CLIENT_SECRET",
 });
 await client.auth.getToken({
-    clientId: "string",
-    clientSecret: "string",
+    clientId: "client_id",
+    clientSecret: "client_secret",
 });
 ```
 

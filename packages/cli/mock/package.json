@@ -18,8 +18,8 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "vitest --run",
-    "test:update": "vitest --run -u",
+    "test": "vitest --passWithNoTests --run",
+    "test:update": "vitest --passWithNoTests --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
@@ -32,14 +32,14 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@types/lodash-es": "^4.17.12",
-    "express": "^4.19.2",
+    "express": "^4.20.0",
     "get-port": "^7.1.0",
     "lodash-es": "^4.17.21",
     "url-join": "^5.0.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
-    "@types/node": "^18.7.18",
+    "@types/node": "18.7.18",
     "@types/url-join": "4.0.1",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

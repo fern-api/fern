@@ -1,0 +1,103 @@
+{
+  "type": "object",
+  "properties": {
+    "hasNextPage": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "page": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/users.Page"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "total_count": {
+      "type": "integer"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/users.User"
+      }
+    }
+  },
+  "required": [
+    "total_count",
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "users.NextPage": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "starting_after": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "page",
+        "starting_after"
+      ],
+      "additionalProperties": false
+    },
+    "users.Page": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "next": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/users.NextPage"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "per_page": {
+          "type": "integer"
+        },
+        "total_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "page",
+        "per_page",
+        "total_page"
+      ],
+      "additionalProperties": false
+    },
+    "users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

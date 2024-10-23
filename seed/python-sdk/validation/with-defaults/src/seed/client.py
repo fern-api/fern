@@ -98,7 +98,7 @@ class SeedValidation:
         client.create(
             decimal=1.1,
             even=1,
-            name="string",
+            name="name",
             shape="SQUARE",
         )
         """
@@ -162,7 +162,7 @@ class SeedValidation:
         client.get(
             decimal=1.1,
             even=1,
-            name="string",
+            name="name",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -277,7 +277,7 @@ class AsyncSeedValidation:
             await client.create(
                 decimal=1.1,
                 even=1,
-                name="string",
+                name="name",
                 shape="SQUARE",
             )
 
@@ -349,7 +349,7 @@ class AsyncSeedValidation:
             await client.get(
                 decimal=1.1,
                 even=1,
-                name="string",
+                name="name",
             )
 
 

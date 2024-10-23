@@ -5,7 +5,8 @@ image: fernapi/fern-java-model
 
 buildScripts:
   compileScript:
-    - ./gradlew compileJava
+    commands:
+      - ./gradlew compileJava
 
 publish:
   workingDirectory: generators/java

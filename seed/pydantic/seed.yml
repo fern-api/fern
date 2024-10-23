@@ -5,10 +5,12 @@ changelogLocation: ../../generators/python/pydantic/versions.yml
 
 buildScripts:
   installScript:
-    - poetry shell
-    - poetry install
+    commands:
+      - poetry shell
+      - poetry install
   compileScript:
-    - poetry run mypy .
+    commands:
+      - poetry run mypy .
 
 publish:
   workingDirectory: generators/python

@@ -5,9 +5,11 @@ image: fernapi/fern-typescript-express
 
 buildScripts:
   installScript:
-    - yarn install
+    commands:
+      - yarn install
   compileScript:
-    - yarn build
+    commands:
+      - yarn build
 
 publish:
   versionSubstitution: "$VERSION"

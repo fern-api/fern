@@ -20,7 +20,9 @@ public partial class ContainerClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(new List<string>() { "string" });
+    /// await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
+    ///     new List<string>() { "string", "string" }
+    /// );
     /// </code>
     /// </example>
     public async Task<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
@@ -63,7 +65,11 @@ public partial class ContainerClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
-    ///     new List<ObjectWithRequiredField>() { new ObjectWithRequiredField { String = "string" } }
+    ///     new List<ObjectWithRequiredField>()
+    ///     {
+    ///         new ObjectWithRequiredField { String = "string" },
+    ///         new ObjectWithRequiredField { String = "string" },
+    ///     }
     /// );
     /// </code>
     /// </example>
@@ -292,9 +298,7 @@ public partial class ContainerClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.Container.GetAndReturnOptionalAsync(
-    ///     new ObjectWithRequiredField { String = "string" }
-    /// );
+    /// await client.Endpoints.Container.GetAndReturnOptionalAsync(null);
     /// </code>
     /// </example>
     public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(

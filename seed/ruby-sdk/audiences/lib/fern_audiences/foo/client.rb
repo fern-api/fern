@@ -23,11 +23,7 @@ module SeedAudiencesClient
     # @return [SeedAudiencesClient::Foo::ImportingType]
     # @example
     #  audiences = SeedAudiencesClient::Client.new(base_url: "https://api.example.com")
-    #  audiences.foo.find(
-    #    optional_string: "string",
-    #    public_property: "string",
-    #    private_property: 1
-    #  )
+    #  audiences.foo.find
     def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -68,11 +64,7 @@ module SeedAudiencesClient
     # @return [SeedAudiencesClient::Foo::ImportingType]
     # @example
     #  audiences = SeedAudiencesClient::Client.new(base_url: "https://api.example.com")
-    #  audiences.foo.find(
-    #    optional_string: "string",
-    #    public_property: "string",
-    #    private_property: 1
-    #  )
+    #  audiences.foo.find
     def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

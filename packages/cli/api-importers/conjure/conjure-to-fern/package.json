@@ -31,11 +31,13 @@
     "@fern-api/conjure-sdk": "workspace:*",
     "@fern-api/importer-commons": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.8",
-    "@types/node": "^18.7.18",
+    "@types/node": "18.7.18",
     "depcheck": "^1.4.6",
     "globals": "link:@types/vitest/globals",
     "organize-imports-cli": "^0.10.0",

@@ -3,10 +3,10 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Audiences } from "../commons";
-import { APIDefinitionSettingsSchema } from "./schemas/APIConfigurationSchema";
-import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
-import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
-import { ReadmeSchema } from "./schemas/ReadmeSchema";
+import { ApiDefinitionSettingsSchema } from "./schemas";
+import { GeneratorInvocationSchema } from "./schemas";
+import { GeneratorsConfigurationSchema } from "./schemas";
+import { ReadmeSchema } from "./schemas";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
@@ -51,6 +51,7 @@ export interface APIDefinitionSettings {
     shouldUseUndiscriminatedUnionsWithLiterals: boolean | undefined;
     asyncApiMessageNaming: "v1" | "v2" | undefined;
     shouldUseOptionalAdditionalProperties: boolean | undefined;
+    coerceEnumsToLiterals: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {
@@ -109,7 +110,7 @@ export interface GeneratorInvocation {
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
     readme: ReadmeSchema | undefined;
-    settings: APIDefinitionSettingsSchema | undefined;
+    settings: ApiDefinitionSettingsSchema | undefined;
 }
 
 export const GenerationLanguage = {

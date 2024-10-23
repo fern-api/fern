@@ -16,8 +16,8 @@ public class GetExecutionSessionTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "sessionId": "string",
-              "executionSessionUrl": "string",
+              "sessionId": "sessionId",
+              "executionSessionUrl": "executionSessionUrl",
               "language": "JAVA",
               "status": "CREATING_CONTAINER"
             }
@@ -25,7 +25,7 @@ public class GetExecutionSessionTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/sessions/string").UsingGet()
+                WireMock.RequestBuilders.Request.Create().WithPath("/sessions/sessionId").UsingGet()
             )
             .RespondWith(
                 WireMock
@@ -34,7 +34,10 @@ public class GetExecutionSessionTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Submission.GetExecutionSessionAsync("string", RequestOptions);
+        var response = await Client.Submission.GetExecutionSessionAsync(
+            "sessionId",
+            RequestOptions
+        );
         JToken
             .Parse(mockResponse)
             .Should()

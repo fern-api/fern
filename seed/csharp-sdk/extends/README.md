@@ -19,14 +19,7 @@ Instantiate and use the client with the following:
 using SeedExtends;
 
 var client = new SeedExtendsClient();
-await client.ExtendedInlineRequestBodyAsync(
-    new Inlined
-    {
-        Unique = "string",
-        Name = "string",
-        Docs = "string",
-    }
-);
+await client.ExtendedInlineRequestBodyAsync(new Inlined { Unique = "unique" });
 ```
 
 ## Exception Handling
