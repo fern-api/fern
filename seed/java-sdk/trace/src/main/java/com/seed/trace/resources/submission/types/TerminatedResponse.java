@@ -4,9 +4,16 @@
 package com.seed.trace.resources.submission.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
 import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
+@JsonDeserialize(builder = TerminatedResponse.Builder.class)
 public final class TerminatedResponse {
     private final Map<String, Object> additionalProperties;
 
@@ -28,5 +35,25 @@ public final class TerminatedResponse {
     @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static final class Builder {
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
+        private Builder() {}
+
+        public Builder from(TerminatedResponse other) {
+            return this;
+        }
+
+        public TerminatedResponse build() {
+            return new TerminatedResponse(additionalProperties);
+        }
     }
 }

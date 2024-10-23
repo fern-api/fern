@@ -26,6 +26,8 @@ module SeedExamplesClient
       attr_reader :book
       # @return [Hash{String => Object}]
       attr_reader :metadata
+      # @return [Long]
+      attr_reader :revenue
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
       # @return [Object]
@@ -44,9 +46,10 @@ module SeedExamplesClient
       # @param tag [String]
       # @param book [String]
       # @param metadata [Hash{String => Object}]
+      # @param revenue [Long]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::ExtendedMovie]
-      def initialize(cast:, id:, title:, from:, rating:, type:, tag:, metadata:, prequel: OMIT, book: OMIT,
+      def initialize(cast:, id:, title:, from:, rating:, type:, tag:, metadata:, revenue:, prequel: OMIT, book: OMIT,
                      additional_properties: nil)
         @cast = cast
         @id = id
@@ -58,6 +61,7 @@ module SeedExamplesClient
         @tag = tag
         @book = book if book != OMIT
         @metadata = metadata
+        @revenue = revenue
         @additional_properties = additional_properties
         @_field_set = {
           "cast": cast,
@@ -69,7 +73,8 @@ module SeedExamplesClient
           "type": type,
           "tag": tag,
           "book": book,
-          "metadata": metadata
+          "metadata": metadata,
+          "revenue": revenue
         }.reject do |_k, v|
           v == OMIT
         end
@@ -81,16 +86,18 @@ module SeedExamplesClient
       # @return [SeedExamplesClient::Types::ExtendedMovie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        cast = struct["cast"]
-        id = struct["id"]
-        prequel = struct["prequel"]
-        title = struct["title"]
-        from = struct["from"]
-        rating = struct["rating"]
-        type = struct["type"]
-        tag = struct["tag"]
-        book = struct["book"]
-        metadata = struct["metadata"]
+        parsed_json = JSON.parse(json_object)
+        cast = parsed_json["cast"]
+        id = parsed_json["id"]
+        prequel = parsed_json["prequel"]
+        title = parsed_json["title"]
+        from = parsed_json["from"]
+        rating = parsed_json["rating"]
+        type = parsed_json["type"]
+        tag = parsed_json["tag"]
+        book = parsed_json["book"]
+        metadata = parsed_json["metadata"]
+        revenue = parsed_json["revenue"]
         new(
           cast: cast,
           id: id,
@@ -102,6 +109,7 @@ module SeedExamplesClient
           tag: tag,
           book: book,
           metadata: metadata,
+          revenue: revenue,
           additional_properties: struct
         )
       end
@@ -130,6 +138,7 @@ module SeedExamplesClient
         obj.tag.is_a?(String) != false || raise("Passed value for field obj.tag is not the expected type, validation failed.")
         obj.book&.is_a?(String) != false || raise("Passed value for field obj.book is not the expected type, validation failed.")
         obj.metadata.is_a?(Hash) != false || raise("Passed value for field obj.metadata is not the expected type, validation failed.")
+        obj.revenue.is_a?(Long) != false || raise("Passed value for field obj.revenue is not the expected type, validation failed.")
       end
     end
   end

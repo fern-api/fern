@@ -7,7 +7,7 @@ export class BaseCoreUtilitiesImpl extends CoreUtility implements BaseCoreUtilit
     public readonly MANIFEST = {
         name: "base-core-utilities",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/core-utilities/base/src")
+            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/base/src")
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/base-core-utilities"),
         pathInCoreUtilities: [{ nameOnDisk: "utils", exportDeclaration: { exportAll: true } }]

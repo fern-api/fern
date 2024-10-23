@@ -3,10 +3,12 @@
  */
 package com.seed.fileDownload.resources.service;
 
-import com.seed.fileDownload.core.ApiError;
 import com.seed.fileDownload.core.ClientOptions;
 import com.seed.fileDownload.core.ObjectMappers;
 import com.seed.fileDownload.core.RequestOptions;
+import com.seed.fileDownload.core.ResponseBodyInputStream;
+import com.seed.fileDownload.core.SeedFileDownloadApiException;
+import com.seed.fileDownload.core.SeedFileDownloadException;
 import java.io.IOException;
 import java.io.InputStream;
 import okhttp3.Headers;
@@ -15,6 +17,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class ServiceClient {
     protected final ClientOptions clientOptions;
@@ -37,20 +40,23 @@ public class ServiceClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
         try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return response.body().byteStream();
+                return new ResponseBodyInputStream(response);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedFileDownloadApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedFileDownloadException("Network error executing HTTP request", e);
         }
     }
 }

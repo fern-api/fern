@@ -37,7 +37,11 @@ export const V32_TO_V31_MIGRATION: IrMigration<
         [GeneratorName.RUBY_MODEL]: "0.0.0",
         [GeneratorName.RUBY_SDK]: "0.0.0",
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.CSHARP_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.CSHARP_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.SWIFT_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V31.IntermediateRepresentation.jsonOrThrow(ir, {

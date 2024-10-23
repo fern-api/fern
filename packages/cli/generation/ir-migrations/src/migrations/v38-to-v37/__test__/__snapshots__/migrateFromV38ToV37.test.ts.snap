@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`migrateFromV38ToV37 snapshot 1`] = `
+exports[`migrateFromV38ToV37 > snapshot 1`] = `
 {
-  "apiDisplayName": undefined,
-  "apiDocs": undefined,
+  "apiDisplayName": null,
+  "apiDocs": null,
   "apiName": {
     "camelCase": {
       "safeName": "serverSentEvents",
@@ -24,11 +24,11 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
     },
   },
   "auth": {
-    "docs": undefined,
+    "docs": null,
     "requirement": "ALL",
     "schemes": [],
   },
-  "basePath": undefined,
+  "basePath": null,
   "constants": {
     "errorInstanceIdKey": {
       "name": {
@@ -53,9 +53,8 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
       "wireValue": "errorInstanceId",
     },
   },
-  "environments": undefined,
+  "environments": null,
   "errorDiscriminationStrategy": {
-    "_visit": [Function],
     "type": "statusCode",
   },
   "errors": {},
@@ -63,22 +62,22 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
   "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
-    "docs": undefined,
+    "docs": null,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
-      "file": undefined,
+      "file": null,
       "packagePath": [],
     },
     "hasEndpointsInTree": true,
-    "navigationConfig": undefined,
-    "service": undefined,
+    "navigationConfig": null,
+    "service": null,
     "subpackages": [
       "subpackage_completions",
     ],
     "types": [],
-    "webhooks": undefined,
-    "websocket": undefined,
+    "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -100,376 +99,22 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
   },
   "services": {
     "service_completions": {
-      "availability": undefined,
+      "availability": null,
       "basePath": {
         "head": "",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": null,
       "endpoints": [
         {
           "allPathParameters": [],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
-          "examples": [
-            {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
-              "endpointHeaders": [],
-              "endpointPathParameters": [],
-              "exampleType": "generated",
-              "name": undefined,
-              "queryParameters": [],
-              "request": {
-                "_visit": [Function],
-                "jsonExample": {
-                  "query": "string",
-                },
-                "properties": [
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "query",
-                          "unsafeName": "query",
-                        },
-                        "originalName": "query",
-                        "pascalCase": {
-                          "safeName": "Query",
-                          "unsafeName": "Query",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "QUERY",
-                          "unsafeName": "QUERY",
-                        },
-                        "snakeCase": {
-                          "safeName": "query",
-                          "unsafeName": "query",
-                        },
-                      },
-                      "wireValue": "query",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "string",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                ],
-                "type": "inlinedRequestBody",
-              },
-              "response": {
-                "_visit": [Function],
-                "body": {
-                  "jsonExample": {
-                    "delta": "string",
-                    "tokens": 1,
-                  },
-                  "shape": {
-                    "_visit": [Function],
-                    "shape": {
-                      "_visit": [Function],
-                      "properties": [
-                        {
-                          "name": {
-                            "name": {
-                              "camelCase": {
-                                "safeName": "delta",
-                                "unsafeName": "delta",
-                              },
-                              "originalName": "delta",
-                              "pascalCase": {
-                                "safeName": "Delta",
-                                "unsafeName": "Delta",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "DELTA",
-                                "unsafeName": "DELTA",
-                              },
-                              "snakeCase": {
-                                "safeName": "delta",
-                                "unsafeName": "delta",
-                              },
-                            },
-                            "wireValue": "delta",
-                          },
-                          "originalTypeDeclaration": {
-                            "fernFilepath": {
-                              "allParts": [
-                                {
-                                  "camelCase": {
-                                    "safeName": "completions",
-                                    "unsafeName": "completions",
-                                  },
-                                  "originalName": "completions",
-                                  "pascalCase": {
-                                    "safeName": "Completions",
-                                    "unsafeName": "Completions",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "COMPLETIONS",
-                                    "unsafeName": "COMPLETIONS",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "completions",
-                                    "unsafeName": "completions",
-                                  },
-                                },
-                              ],
-                              "file": {
-                                "camelCase": {
-                                  "safeName": "completions",
-                                  "unsafeName": "completions",
-                                },
-                                "originalName": "completions",
-                                "pascalCase": {
-                                  "safeName": "Completions",
-                                  "unsafeName": "Completions",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "COMPLETIONS",
-                                  "unsafeName": "COMPLETIONS",
-                                },
-                                "snakeCase": {
-                                  "safeName": "completions",
-                                  "unsafeName": "completions",
-                                },
-                              },
-                              "packagePath": [],
-                            },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "streamedCompletion",
-                                "unsafeName": "streamedCompletion",
-                              },
-                              "originalName": "StreamedCompletion",
-                              "pascalCase": {
-                                "safeName": "StreamedCompletion",
-                                "unsafeName": "StreamedCompletion",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "STREAMED_COMPLETION",
-                                "unsafeName": "STREAMED_COMPLETION",
-                              },
-                              "snakeCase": {
-                                "safeName": "streamed_completion",
-                                "unsafeName": "streamed_completion",
-                              },
-                            },
-                            "typeId": "type_completions:StreamedCompletion",
-                          },
-                          "value": {
-                            "jsonExample": "string",
-                            "shape": {
-                              "_visit": [Function],
-                              "primitive": {
-                                "_visit": [Function],
-                                "string": {
-                                  "original": "string",
-                                },
-                                "type": "string",
-                              },
-                              "type": "primitive",
-                            },
-                          },
-                        },
-                        {
-                          "name": {
-                            "name": {
-                              "camelCase": {
-                                "safeName": "tokens",
-                                "unsafeName": "tokens",
-                              },
-                              "originalName": "tokens",
-                              "pascalCase": {
-                                "safeName": "Tokens",
-                                "unsafeName": "Tokens",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "TOKENS",
-                                "unsafeName": "TOKENS",
-                              },
-                              "snakeCase": {
-                                "safeName": "tokens",
-                                "unsafeName": "tokens",
-                              },
-                            },
-                            "wireValue": "tokens",
-                          },
-                          "originalTypeDeclaration": {
-                            "fernFilepath": {
-                              "allParts": [
-                                {
-                                  "camelCase": {
-                                    "safeName": "completions",
-                                    "unsafeName": "completions",
-                                  },
-                                  "originalName": "completions",
-                                  "pascalCase": {
-                                    "safeName": "Completions",
-                                    "unsafeName": "Completions",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "COMPLETIONS",
-                                    "unsafeName": "COMPLETIONS",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "completions",
-                                    "unsafeName": "completions",
-                                  },
-                                },
-                              ],
-                              "file": {
-                                "camelCase": {
-                                  "safeName": "completions",
-                                  "unsafeName": "completions",
-                                },
-                                "originalName": "completions",
-                                "pascalCase": {
-                                  "safeName": "Completions",
-                                  "unsafeName": "Completions",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "COMPLETIONS",
-                                  "unsafeName": "COMPLETIONS",
-                                },
-                                "snakeCase": {
-                                  "safeName": "completions",
-                                  "unsafeName": "completions",
-                                },
-                              },
-                              "packagePath": [],
-                            },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "streamedCompletion",
-                                "unsafeName": "streamedCompletion",
-                              },
-                              "originalName": "StreamedCompletion",
-                              "pascalCase": {
-                                "safeName": "StreamedCompletion",
-                                "unsafeName": "StreamedCompletion",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "STREAMED_COMPLETION",
-                                "unsafeName": "STREAMED_COMPLETION",
-                              },
-                              "snakeCase": {
-                                "safeName": "streamed_completion",
-                                "unsafeName": "streamed_completion",
-                              },
-                            },
-                            "typeId": "type_completions:StreamedCompletion",
-                          },
-                          "value": {
-                            "jsonExample": 1,
-                            "shape": {
-                              "_visit": [Function],
-                              "primitive": {
-                                "_visit": [Function],
-                                "integer": 1,
-                                "type": "integer",
-                              },
-                              "type": "primitive",
-                            },
-                          },
-                        },
-                      ],
-                      "type": "object",
-                    },
-                    "type": "named",
-                    "typeName": {
-                      "_visit": [Function],
-                      "fernFilepath": {
-                        "allParts": [
-                          {
-                            "camelCase": {
-                              "safeName": "completions",
-                              "unsafeName": "completions",
-                            },
-                            "originalName": "completions",
-                            "pascalCase": {
-                              "safeName": "Completions",
-                              "unsafeName": "Completions",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "COMPLETIONS",
-                              "unsafeName": "COMPLETIONS",
-                            },
-                            "snakeCase": {
-                              "safeName": "completions",
-                              "unsafeName": "completions",
-                            },
-                          },
-                        ],
-                        "file": {
-                          "camelCase": {
-                            "safeName": "completions",
-                            "unsafeName": "completions",
-                          },
-                          "originalName": "completions",
-                          "pascalCase": {
-                            "safeName": "Completions",
-                            "unsafeName": "Completions",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "COMPLETIONS",
-                            "unsafeName": "COMPLETIONS",
-                          },
-                          "snakeCase": {
-                            "safeName": "completions",
-                            "unsafeName": "completions",
-                          },
-                        },
-                        "packagePath": [],
-                      },
-                      "name": {
-                        "camelCase": {
-                          "safeName": "streamedCompletion",
-                          "unsafeName": "streamedCompletion",
-                        },
-                        "originalName": "StreamedCompletion",
-                        "pascalCase": {
-                          "safeName": "StreamedCompletion",
-                          "unsafeName": "StreamedCompletion",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "STREAMED_COMPLETION",
-                          "unsafeName": "STREAMED_COMPLETION",
-                        },
-                        "snakeCase": {
-                          "safeName": "streamed_completion",
-                          "unsafeName": "streamed_completion",
-                        },
-                      },
-                      "type": "named",
-                      "typeId": "type_completions:StreamedCompletion",
-                    },
-                  },
-                },
-                "type": "ok",
-              },
-              "rootPathParameters": [],
-              "serviceHeaders": [],
-              "servicePathParameters": [],
-              "url": "/stream",
-            },
-          ],
+          "examples": [],
           "fullPath": {
             "head": "stream",
             "parts": [],
@@ -497,7 +142,7 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
               "unsafeName": "stream",
             },
           },
-          "pagination": undefined,
+          "pagination": null,
           "path": {
             "head": "/stream",
             "parts": [],
@@ -505,8 +150,7 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "requestBody": {
-            "_visit": [Function],
-            "contentType": undefined,
+            "contentType": null,
             "extends": [],
             "name": {
               "camelCase": {
@@ -529,7 +173,7 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
             },
             "properties": [
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -553,15 +197,14 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
                   "wireValue": "query",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "primitive",
                   "primitive": "STRING",
-                  "type": "primitive",
                 },
               },
             ],
             "type": "inlinedRequestBody",
           },
-          "response": undefined,
+          "response": null,
           "sdkRequest": {
             "requestParameterName": {
               "camelCase": {
@@ -583,7 +226,6 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -678,7 +320,7 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
   },
   "subpackages": {
     "subpackage_completions": {
-      "docs": undefined,
+      "docs": null,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -743,20 +385,20 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
           "unsafeName": "completions",
         },
       },
-      "navigationConfig": undefined,
+      "navigationConfig": null,
       "service": "service_completions",
       "subpackages": [],
       "types": [
         "type_completions:StreamedCompletion",
       ],
-      "webhooks": undefined,
-      "websocket": undefined,
+      "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
     "type_completions:StreamedCompletion": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -823,14 +465,14 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
         },
         "typeId": "type_completions:StreamedCompletion",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": [],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -854,14 +496,13 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
               "wireValue": "delta",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "STRING",
-              "type": "primitive",
             },
           },
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -885,21 +526,17 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
               "wireValue": "tokens",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "container",
               "container": {
-                "_visit": [Function],
+                "_type": "optional",
                 "optional": {
-                  "_visit": [Function],
+                  "_type": "primitive",
                   "primitive": "INTEGER",
-                  "type": "primitive",
                 },
-                "type": "optional",
               },
-              "type": "container",
             },
           },
         ],
-        "type": "object",
       },
     },
   },

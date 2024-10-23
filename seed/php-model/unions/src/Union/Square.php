@@ -1,0 +1,26 @@
+<?php
+
+namespace Seed\Union;
+
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+
+class Square extends JsonSerializableType
+{
+    /**
+     * @var float $length
+     */
+    #[JsonProperty('length')]
+    public float $length;
+
+    /**
+     * @param array{
+     *   length: float,
+     * } $values
+     */
+    public function __construct(
+        array $values,
+    ) {
+        $this->length = $values['length'];
+    }
+}

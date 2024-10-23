@@ -12,7 +12,12 @@ type Organization struct {
 	Id   string `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (o *Organization) GetExtraProperties() map[string]interface{} {
+	return o.extraProperties
 }
 
 func (o *Organization) UnmarshalJSON(data []byte) error {
@@ -22,6 +27,13 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = Organization(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+
 	o._rawJSON = json.RawMessage(data)
 	return nil
 }

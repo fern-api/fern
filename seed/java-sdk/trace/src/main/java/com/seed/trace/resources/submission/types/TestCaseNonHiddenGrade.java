@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TestCaseNonHiddenGrade.Builder.class)
 public final class TestCaseNonHiddenGrade {
     private final boolean passed;
@@ -103,7 +104,7 @@ public final class TestCaseNonHiddenGrade {
     }
 
     public interface StdoutStage {
-        _FinalStage stdout(String stdout);
+        _FinalStage stdout(@NotNull String stdout);
     }
 
     public interface _FinalStage {
@@ -151,14 +152,14 @@ public final class TestCaseNonHiddenGrade {
 
         @java.lang.Override
         @JsonSetter("stdout")
-        public _FinalStage stdout(String stdout) {
-            this.stdout = stdout;
+        public _FinalStage stdout(@NotNull String stdout) {
+            this.stdout = Objects.requireNonNull(stdout, "stdout must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage exception(ExceptionV2 exception) {
-            this.exception = Optional.of(exception);
+            this.exception = Optional.ofNullable(exception);
             return this;
         }
 
@@ -171,7 +172,7 @@ public final class TestCaseNonHiddenGrade {
 
         @java.lang.Override
         public _FinalStage actualResult(VariableValue actualResult) {
-            this.actualResult = Optional.of(actualResult);
+            this.actualResult = Optional.ofNullable(actualResult);
             return this;
         }
 

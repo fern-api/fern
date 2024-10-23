@@ -1,4 +1,6 @@
-using SeedBasicAuthEnvironmentVariables;
+using SeedBasicAuthEnvironmentVariables.Core;
+
+#nullable enable
 
 namespace SeedBasicAuthEnvironmentVariables;
 
@@ -6,31 +8,48 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
 {
     private RawClient _client;
 
-    public SeedBasicAuthEnvironmentVariablesClient (string username, string password, ClientOptions clientOptions) {
-        username = username ?? GetFromEnvironmentOrThrow(
+    public SeedBasicAuthEnvironmentVariablesClient(
+        string? username = null,
+        string? password = null,
+        ClientOptions? clientOptions = null
+    )
+    {
+        username ??= GetFromEnvironmentOrThrow(
             "USERNAME",
             "Please pass in username or set the environment variable USERNAME."
-        password = password ?? GetFromEnvironmentOrThrow(
+        );
+        password ??= GetFromEnvironmentOrThrow(
             "PASSWORD",
             "Please pass in password or set the environment variable PASSWORD."
-        _client = 
-        new RawClient(
-            new Dictionary<string, string> {
-                { "X-Fern-Language", "C#" }, 
-            }, clientOptions ?? new ClientOptions());
-        BasicAuth = 
-        new BasicAuthClient(
-            _client);
-    }
-
-    public BasicAuthClient BasicAuth { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message) {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null) {
-            throw new Exception(message);
+        );
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedBasicAuthEnvironmentVariables" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernbasic-auth-environment-variables/0.0.1" },
+            }
+        );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
         }
-        return value;
+        _client = new RawClient(clientOptions);
+        BasicAuth = new BasicAuthClient(_client);
+        Errors = new ErrorsClient(_client);
     }
 
+    public BasicAuthClient BasicAuth { get; init; }
+
+    public ErrorsClient Errors { get; init; }
+
+    private static string GetFromEnvironmentOrThrow(string env, string message)
+    {
+        return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);
+    }
 }

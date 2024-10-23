@@ -34,12 +34,51 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "GET",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "GET request that always throws an error",
+                "url": {
+                  "raw": "{{baseUrl}}/property-based-error",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "property-based-error"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "\"string\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

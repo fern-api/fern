@@ -24,15 +24,21 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:nestedId",
+              "raw": "{{baseUrl}}/:id/:nestedId",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                ":id",
                 ":nestedId"
               ],
               "query": [],
               "variable": [
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "id-a2ijs82"
+                },
                 {
                   "key": "nestedId",
                   "description": null,
@@ -59,19 +65,69 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:nestedId",
+                  "raw": "{{baseUrl}}/:id/:nestedId",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
+                    ":id",
                     ":nestedId"
                   ],
                   "query": [],
                   "variable": [
                     {
+                      "key": "id",
+                      "description": null,
+                      "value": "id-a2ijs82"
+                    },
+                    {
                       "key": "nestedId",
                       "description": null,
                       "value": "id-219xca8"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/:id/:nestedId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ":id",
+                    ":nestedId"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "id"
+                    },
+                    {
+                      "key": "nestedId",
+                      "description": null,
+                      "value": "nestedId"
                     }
                   ]
                 },
@@ -100,13 +156,21 @@
       "request": {
         "description": null,
         "url": {
-          "raw": "{{baseUrl}}",
+          "raw": "{{baseUrl}}/:id",
           "host": [
             "{{baseUrl}}"
           ],
-          "path": [],
+          "path": [
+            ":id"
+          ],
           "query": [],
-          "variable": []
+          "variable": [
+            {
+              "key": "id",
+              "description": null,
+              "value": "id-ksfd9c1"
+            }
+          ]
         },
         "header": [
           {
@@ -119,7 +183,7 @@
         "auth": null,
         "body": {
           "mode": "raw",
-          "raw": "\"Hello world!\"",
+          "raw": "{\n    \"name\": \"Hello world!\",\n    \"size\": 20\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -135,13 +199,21 @@
           "originalRequest": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}",
+              "raw": "{{baseUrl}}/:id",
               "host": [
                 "{{baseUrl}}"
               ],
-              "path": [],
+              "path": [
+                ":id"
+              ],
               "query": [],
-              "variable": []
+              "variable": [
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "id-ksfd9c1"
+                }
+              ]
             },
             "header": [
               {
@@ -154,7 +226,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "\"Hello world!\"",
+              "raw": "{\n    \"name\": \"Hello world!\",\n    \"size\": 20\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -164,6 +236,52 @@
           },
           "description": null,
           "body": "\"Hello world!\"",
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ":id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"name\",\n    \"size\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": null,
+          "body": "\"string\"",
           "_postman_previewlanguage": "json"
         }
       ]

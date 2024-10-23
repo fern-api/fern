@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`fern init init docs 1`] = `
+exports[`fern init > init docs 1`] = `
 [
   {
     "contents": [
@@ -110,10 +110,10 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
+        version: 0.39.3
         output:
           location: local-file-system
-          path: ../generated/sdks/typescript
+          path: ../sdks/typescript
 ",
         "name": "generators.yml",
         "type": "file",
@@ -125,7 +125,7 @@ groups:
 ]
 `;
 
-exports[`fern init init openapi 1`] = `
+exports[`fern init > init openapi 1`] = `
 [
   {
     "contents": [
@@ -143,10 +143,12 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
+        version: 0.39.3
         output:
           location: local-file-system
-          path: ../generated/sdks/typescript
+          path: ../sdks/typescript
+api:
+  path: openapi/petstore-openapi.yml
 ",
         "name": "generators.yml",
         "type": "file",
@@ -282,7 +284,7 @@ components:
 ]
 `;
 
-exports[`fern init no existing fern directory 1`] = `
+exports[`fern init > no existing fern directory 1`] = `
 [
   {
     "contents": [
@@ -377,10 +379,10 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
+        version: 0.39.3
         output:
           location: local-file-system
-          path: ../generated/sdks/typescript
+          path: ../sdks/typescript
 ",
     "name": "generators.yml",
     "type": "file",

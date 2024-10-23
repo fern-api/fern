@@ -1,9 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedBasicAuthEnvironmentVariables.Core;
+
+#nullable enable
 
 namespace SeedBasicAuthEnvironmentVariables;
 
-public class UnauthorizedRequestErrorBody
+public record UnauthorizedRequestErrorBody
 {
     [JsonPropertyName("message")]
-    public string Message { get; init; }
+    public required string Message { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,15 +1,61 @@
-using SeedSingleUrlEnvironmentDefault;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading;
+using SeedSingleUrlEnvironmentDefault.Core;
+
+#nullable enable
 
 namespace SeedSingleUrlEnvironmentDefault;
 
-public class DummyClient
+public partial class DummyClient
 {
     private RawClient _client;
 
-    public DummyClient(RawClient client)
+    internal DummyClient(RawClient client)
     {
         _client = client;
     }
 
-    public async void GetDummyAsync() { }
+    /// <example>
+    /// <code>
+    /// await client.Dummy.GetDummyAsync();
+    /// </code>
+    /// </example>
+    public async Task<string> GetDummyAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "dummy",
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedSingleUrlEnvironmentDefaultException(
+                    "Failed to deserialize response",
+                    e
+                );
+            }
+        }
+
+        throw new SeedSingleUrlEnvironmentDefaultApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
 }

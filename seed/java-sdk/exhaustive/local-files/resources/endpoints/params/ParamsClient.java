@@ -4,19 +4,19 @@
 
 package com.fern.sdk.resources.endpoints.params;
 
-import com.fern.sdk.core.ApiError;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.SeedExhaustiveApiException;
+import com.fern.sdk.core.SeedExhaustiveException;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithMultipleQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithQuery;
 import java.io.IOException;
-import java.lang.Exception;
 import java.lang.Integer;
 import java.lang.Object;
-import java.lang.RuntimeException;
 import java.lang.String;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -24,6 +24,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class ParamsClient {
   protected final ClientOptions clientOptions;
@@ -54,19 +55,20 @@ public class ParamsClient {
       .headers(Headers.of(clientOptions.headers(requestOptions)))
       .addHeader("Content-Type", "application/json")
       .build();
-    try {
-      OkHttpClient client = clientOptions.httpClient();
-      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-        client = clientOptions.httpClientWithTimeout(requestOptions);
-      }
-      Response response = client.newCall(okhttpRequest).execute();
+    OkHttpClient client = clientOptions.httpClient();
+    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+      client = clientOptions.httpClientWithTimeout(requestOptions);
+    }
+    try (Response response = client.newCall(okhttpRequest).execute()) {
+      ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), String.class);
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new SeedExhaustiveException("Network error executing HTTP request", e);
     }
   }
 
@@ -90,19 +92,20 @@ public class ParamsClient {
         .method("GET", null)
         .headers(Headers.of(clientOptions.headers(requestOptions)));
       Request okhttpRequest = _requestBuilder.build();
-      try {
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-          client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        Response response = client.newCall(okhttpRequest).execute();
+      OkHttpClient client = clientOptions.httpClient();
+      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+        client = clientOptions.httpClientWithTimeout(requestOptions);
+      }
+      try (Response response = client.newCall(okhttpRequest).execute()) {
+        ResponseBody responseBody = response.body();
         if (response.isSuccessful()) {
           return;
         }
-        throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
       }
       catch (IOException e) {
-        throw new RuntimeException(e);
+        throw new SeedExhaustiveException("Network error executing HTTP request", e);
       }
     }
 
@@ -127,19 +130,20 @@ public class ParamsClient {
           .method("GET", null)
           .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
-        try {
-          OkHttpClient client = clientOptions.httpClient();
-          if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-          }
-          Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+          client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+          ResponseBody responseBody = response.body();
           if (response.isSuccessful()) {
             return;
           }
-          throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         }
         catch (IOException e) {
-          throw new RuntimeException(e);
+          throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }
       }
 
@@ -164,19 +168,20 @@ public class ParamsClient {
             .method("GET", null)
             .headers(Headers.of(clientOptions.headers(requestOptions)));
           Request okhttpRequest = _requestBuilder.build();
-          try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-              client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+          OkHttpClient client = clientOptions.httpClient();
+          if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+          }
+          try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
               return;
             }
-            throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
           }
           catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedExhaustiveException("Network error executing HTTP request", e);
           }
         }
 
@@ -200,8 +205,8 @@ public class ParamsClient {
           try {
             body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
           }
-          catch(Exception e) {
-            throw new RuntimeException(e);
+          catch(JsonProcessingException e) {
+            throw new SeedExhaustiveException("Failed to serialize request", e);
           }
           Request okhttpRequest = new Request.Builder()
             .url(httpUrl)
@@ -209,19 +214,20 @@ public class ParamsClient {
             .headers(Headers.of(clientOptions.headers(requestOptions)))
             .addHeader("Content-Type", "application/json")
             .build();
-          try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-              client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+          OkHttpClient client = clientOptions.httpClient();
+          if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+          }
+          try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-              return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), String.class);
+              return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
-            throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
           }
           catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedExhaustiveException("Network error executing HTTP request", e);
           }
         }
       }

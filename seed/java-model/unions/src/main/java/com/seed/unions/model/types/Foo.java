@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.unions.core.ObjectMappers;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Foo.Builder.class)
 public final class Foo {
     private final String name;
@@ -74,7 +74,7 @@ public final class Foo {
         @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

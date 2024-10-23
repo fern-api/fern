@@ -15,9 +15,7 @@ module SeedLiteralClient
       @request_client = request_client
     end
 
-    # @param prompt [String]
     # @param query [String]
-    # @param stream [Boolean]
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     # @example
@@ -26,12 +24,8 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(
-    #    prompt: "You are a helpful assistant",
-    #    query: "What is the weather today",
-    #    stream: false
-    #  )
-    def send(prompt:, query:, stream:, request_options: nil)
+    #  literal.query.send(query: "What is the weather today")
+    def send(query:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
@@ -39,13 +33,20 @@ module SeedLiteralClient
           req.headers["X-API-Enable-Audit-Logging"] =
             request_options.audit_logging
         end
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.params = {
           **(request_options&.additional_query_parameters || {}),
-          "prompt": prompt,
-          "query": query,
-          "stream": stream
+          "prompt": "You are a helpful assistant",
+          "stream": false,
+          "query": query
         }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/query"
       end
       SeedLiteralClient::SendResponse.from_json(json_object: response.body)
@@ -62,9 +63,7 @@ module SeedLiteralClient
       @request_client = request_client
     end
 
-    # @param prompt [String]
     # @param query [String]
-    # @param stream [Boolean]
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     # @example
@@ -73,12 +72,8 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(
-    #    prompt: "You are a helpful assistant",
-    #    query: "What is the weather today",
-    #    stream: false
-    #  )
-    def send(prompt:, query:, stream:, request_options: nil)
+    #  literal.query.send(query: "What is the weather today")
+    def send(query:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -87,13 +82,20 @@ module SeedLiteralClient
             req.headers["X-API-Enable-Audit-Logging"] =
               request_options.audit_logging
           end
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.params = {
             **(request_options&.additional_query_parameters || {}),
-            "prompt": prompt,
-            "query": query,
-            "stream": stream
+            "prompt": "You are a helpful assistant",
+            "stream": false,
+            "query": query
           }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/query"
         end
         SeedLiteralClient::SendResponse.from_json(json_object: response.body)

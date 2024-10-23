@@ -22,6 +22,26 @@ paths:
         content:
           application/json:
             schema: {}
+  /with-object:
+    post:
+      operationId: unknown_postObject
+      tags:
+        - Unknown
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MyObject'
 components:
   schemas:
     MyAlias:

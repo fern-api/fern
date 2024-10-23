@@ -1,0 +1,65 @@
+name: Validate Changelog
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-fern-cli:
+    name: Fern CLI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo at current ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Validate changelog
+        run: |
+          pnpm seed:local validate cli --log-level debug
+
+  validate-generators:
+    strategy:
+      matrix:
+        generator: [
+            fastapi,
+            pydantic,
+            python-sdk,
+            go-sdk,
+            ruby-sdk,
+            postman,
+            openapi,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-express,
+            csharp-sdk,
+            csharp-model
+            php-sdk,
+            php-model
+          ]
+    name: ${{ matrix.generator }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo at current ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Validate changelog
+        run: |
+          pnpm seed:local validate generator ${{ matrix.generator }} --log-level debug

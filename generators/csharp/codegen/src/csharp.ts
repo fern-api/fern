@@ -1,4 +1,5 @@
 import {
+    And,
     Annotation,
     Class,
     ClassInstantiation,
@@ -7,16 +8,27 @@ import {
     CoreClassReference,
     Dictionary,
     Enum,
+    EnumInstantiation,
     Field,
+    Interface,
+    List,
     Method,
+    MethodInvocation,
+    Or,
     Parameter,
-    Type
+    Set,
+    Switch,
+    Ternary,
+    TestClass
 } from "./ast";
-import { Interface } from "./ast/Interface";
-import { MethodInvocation } from "./ast/MethodInvocation";
+import { ReadOnlyMemory } from "./ast/ReadOnlymemory";
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
+}
+
+export function testClass(args: TestClass.Args): TestClass {
+    return new TestClass(args);
 }
 
 export function annotation(args: Annotation.Args): Annotation {
@@ -67,5 +79,56 @@ export function dictionary(args: Dictionary.Args): Dictionary {
     return new Dictionary(args);
 }
 
-export const Types = Type;
-export { Annotation, Class, ClassReference, CodeBlock, Dictionary, Enum, Method, Parameter, Type } from "./ast";
+export function list(args: List.Args): List {
+    return new List(args);
+}
+
+export function readOnlyMemory(args: ReadOnlyMemory.Args): ReadOnlyMemory {
+    return new ReadOnlyMemory(args);
+}
+
+export function set(args: Set.Args): Set {
+    return new Set(args);
+}
+
+export function switch_(args: Switch.Args): Switch {
+    return new Switch(args);
+}
+
+export function ternary(args: Ternary.Args): Ternary {
+    return new Ternary(args);
+}
+
+export function and(args: And.Args): And {
+    return new And(args);
+}
+
+export function or(args: Or.Args): Or {
+    return new Or(args);
+}
+
+export function enumInstantiation(args: EnumInstantiation.Args): EnumInstantiation {
+    return new EnumInstantiation(args);
+}
+
+export {
+    Annotation,
+    Class,
+    ClassInstantiation,
+    ClassReference,
+    CodeBlock,
+    Dictionary,
+    Enum,
+    Field,
+    InstantiatedPrimitive,
+    Method,
+    MethodInvocation,
+    MethodType,
+    Parameter,
+    Type,
+    Type as Types,
+    Writer,
+    VALID_READ_ONLY_MEMORY_TYPES,
+    convertReadOnlyPrimitiveTypes
+} from "./ast";
+export { AstNode } from "./ast/core/AstNode";

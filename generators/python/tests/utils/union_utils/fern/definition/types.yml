@@ -1,0 +1,28 @@
+types:
+  Color:
+    enum:
+      - red
+      - blue
+
+  UndiscriminatedShape:
+    discriminated: false
+    union:
+      - Circle
+      - Square
+
+  Shape:
+    base-properties:
+      id: string
+    union:
+      circle: Circle
+      square: Square
+
+  Circle:
+    properties:
+      radius: double
+      name: optional<string>
+      surname: optional<string>
+
+  Square:
+    properties:
+      length: double

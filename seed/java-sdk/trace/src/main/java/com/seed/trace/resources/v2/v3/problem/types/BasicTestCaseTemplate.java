@@ -14,8 +14,9 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BasicTestCaseTemplate.Builder.class)
 public final class BasicTestCaseTemplate {
     private final String templateId;
@@ -94,21 +95,21 @@ public final class BasicTestCaseTemplate {
     }
 
     public interface TemplateIdStage {
-        NameStage templateId(String templateId);
+        NameStage templateId(@NotNull String templateId);
 
         Builder from(BasicTestCaseTemplate other);
     }
 
     public interface NameStage {
-        DescriptionStage name(String name);
+        DescriptionStage name(@NotNull String name);
     }
 
     public interface DescriptionStage {
-        ExpectedValueParameterIdStage description(TestCaseImplementationDescription description);
+        ExpectedValueParameterIdStage description(@NotNull TestCaseImplementationDescription description);
     }
 
     public interface ExpectedValueParameterIdStage {
-        _FinalStage expectedValueParameterId(String expectedValueParameterId);
+        _FinalStage expectedValueParameterId(@NotNull String expectedValueParameterId);
     }
 
     public interface _FinalStage {
@@ -142,29 +143,30 @@ public final class BasicTestCaseTemplate {
 
         @java.lang.Override
         @JsonSetter("templateId")
-        public NameStage templateId(String templateId) {
-            this.templateId = templateId;
+        public NameStage templateId(@NotNull String templateId) {
+            this.templateId = Objects.requireNonNull(templateId, "templateId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public DescriptionStage name(String name) {
-            this.name = name;
+        public DescriptionStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("description")
-        public ExpectedValueParameterIdStage description(TestCaseImplementationDescription description) {
-            this.description = description;
+        public ExpectedValueParameterIdStage description(@NotNull TestCaseImplementationDescription description) {
+            this.description = Objects.requireNonNull(description, "description must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("expectedValueParameterId")
-        public _FinalStage expectedValueParameterId(String expectedValueParameterId) {
-            this.expectedValueParameterId = expectedValueParameterId;
+        public _FinalStage expectedValueParameterId(@NotNull String expectedValueParameterId) {
+            this.expectedValueParameterId =
+                    Objects.requireNonNull(expectedValueParameterId, "expectedValueParameterId must not be null");
             return this;
         }
 

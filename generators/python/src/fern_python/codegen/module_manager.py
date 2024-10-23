@@ -17,6 +17,10 @@ class ModuleExport(pydantic.BaseModel):
     from_: str = pydantic.Field(alias="from")
     imports: List[str]
 
+    class Config:
+        populate_by_name = True
+        allow_population_by_field_name = True
+
 
 @dataclass
 class ModuleInfo:
@@ -41,9 +45,8 @@ class ModuleManager:
 
     _module_infos: DefaultDict[AST.ModulePath, ModuleInfo]
 
-    def __init__(self, *, should_format: bool, sorted_modules: Optional[Sequence[str]] = None) -> None:
+    def __init__(self, *, sorted_modules: Optional[Sequence[str]] = None) -> None:
         self._module_infos = defaultdict(create_empty_module_info)
-        self._should_format = should_format
         self._sorted_modules = sorted_modules or []
 
     def register_additional_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
@@ -91,7 +94,8 @@ class ModuleManager:
     def write_modules(self, base_filepath: str, filepath: str) -> None:
         for module, module_info in self._module_infos.items():
             writer = WriterImpl(
-                should_format=self._should_format,
+                # will be formatted at the end via ruff
+                should_format=False,
                 # don't sort imports in __init__.py because the import order is
                 # controlled to avoid issues with circular imports
                 should_sort_imports=False,

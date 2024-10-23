@@ -1,4 +1,9 @@
-using SeedAlias;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using SeedAlias.Core;
+
+#nullable enable
 
 namespace SeedAlias;
 
@@ -6,21 +11,58 @@ public partial class SeedAliasClient
 {
     private RawClient _client;
 
-    public SeedAliasClient(ClientOptions clientOptions)
+    public SeedAliasClient(ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedAlias" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernalias/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
     }
 
-    private string GetFromEnvironmentOrThrow(string env, string message)
+    /// <example>
+    /// <code>
+    /// await client.GetAsync("typeId");
+    /// </code>
+    /// </example>
+    public async Task GetAsync(
+        string typeId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = $"/{typeId}",
+                Options = options,
+            },
+            cancellationToken
+        );
+        if (response.StatusCode is >= 200 and < 400)
         {
-            throw new Exception(message);
+            return;
         }
-        return value;
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedAliasApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

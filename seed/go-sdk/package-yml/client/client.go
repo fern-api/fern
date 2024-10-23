@@ -4,7 +4,7 @@ package client
 
 import (
 	context "context"
-	fmt "fmt"
+	fern "github.com/package-yml/fern"
 	core "github.com/package-yml/fern/core"
 	option "github.com/package-yml/fern/option"
 	service "github.com/package-yml/fern/service"
@@ -37,7 +37,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 func (c *Client) Echo(
 	ctx context.Context,
 	id string,
-	request string,
+	request *fern.EchoRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)
@@ -49,7 +49,7 @@ func (c *Client) Echo(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"%v/", id)
+	endpointURL := core.EncodeURL(baseURL+"/%v/", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -57,13 +57,15 @@ func (c *Client) Echo(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     request,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
 		},
 	); err != nil {
 		return "", err

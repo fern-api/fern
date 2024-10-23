@@ -16,6 +16,7 @@
 
 package com.fern.java.client.generators.endpoint;
 
+import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.HttpMethod;
 import com.fern.ir.model.http.HttpService;
@@ -32,6 +33,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterSpec;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.Request;
@@ -46,7 +48,8 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             ClientGeneratorContext clientGeneratorContext,
             FieldSpec clientOptionsField,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
-            GeneratedClientOptions generatedClientOptions) {
+            GeneratedClientOptions generatedClientOptions,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 httpService,
                 httpEndpoint,
@@ -54,7 +57,8 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 clientGeneratorContext,
                 clientOptionsField,
                 generatedClientOptions,
-                generatedEnvironmentsClass);
+                generatedEnvironmentsClass,
+                generatedErrors);
     }
 
     @Override
@@ -70,6 +74,11 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
     @Override
     public List<ParameterSpec> additionalParameters() {
         return Collections.emptyList();
+    }
+
+    @Override
+    public Optional<ParameterSpec> requestParameterSpec() {
+        return Optional.empty();
     }
 
     @Override

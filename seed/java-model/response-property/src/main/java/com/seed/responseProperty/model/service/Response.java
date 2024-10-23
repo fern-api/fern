@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Response.Builder.class)
 public final class Response implements IWithMetadata, IWithDocs {
     private final Map<String, String> metadata;
@@ -112,14 +112,14 @@ public final class Response implements IWithMetadata, IWithDocs {
         @java.lang.Override
         @JsonSetter("docs")
         public DataStage docs(String docs) {
-            this.docs = docs;
+            this.docs = Objects.requireNonNull(docs, "docs must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("data")
         public _FinalStage data(Movie data) {
-            this.data = data;
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 

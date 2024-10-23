@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/apiKey",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithBearerToken"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/bearer-token-environment-variable/fern/client\"\n\toption \"github.com/bearer-token-environment-variable/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.GetWithBearerToken(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

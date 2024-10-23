@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
     path = "/"
 )
 public interface PackageService {
-  @PostMapping("")
+  @PostMapping(
+      value = "",
+      produces = "application/json"
+  )
   void test(@RequestParam("for") String for_);
 }

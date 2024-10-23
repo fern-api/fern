@@ -52,7 +52,7 @@ public final class RequestOptions {
 
         private String xRandomHeader = null;
 
-        private Optional<Integer> timeout = null;
+        private Optional<Integer> timeout = Optional.empty();
 
         private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
 

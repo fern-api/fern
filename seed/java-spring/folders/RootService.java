@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
     path = "/"
 )
 public interface RootService {
-  @PostMapping("")
+  @PostMapping(
+      value = "",
+      produces = "application/json"
+  )
   void foo();
 }

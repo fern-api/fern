@@ -7,23 +7,30 @@ import {
     ROOT_API_FILENAME
 } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { formatDefinitionFile } from "@fern-api/yaml-formatter";
-import { RootApiFileSchema } from "@fern-api/yaml-schema";
+import { TaskContext } from "@fern-api/task-context";
+import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
+import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { SAMPLE_IMDB_API } from "./sampleImdbApi";
 
 export async function createFernWorkspace({
-    directoryOfWorkspace
+    directoryOfWorkspace,
+    cliVersion,
+    context
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
+    cliVersion: string;
+    context: TaskContext;
 }): Promise<void> {
     if (!(await doesPathExist(directoryOfWorkspace))) {
         await mkdir(directoryOfWorkspace);
     }
     await writeGeneratorsConfiguration({
-        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))
+        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
+        cliVersion,
+        context
     });
     const directoryOfDefinition = join(directoryOfWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
     await writeSampleApiDefinition({
@@ -33,44 +40,95 @@ export async function createFernWorkspace({
 
 export async function createOpenAPIWorkspace({
     directoryOfWorkspace,
-    openAPIFilePath
+    openAPIFilePath,
+    cliVersion,
+    context
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
     openAPIFilePath: AbsoluteFilePath;
+    cliVersion: string;
+    context: TaskContext;
 }): Promise<void> {
     if (!(await doesPathExist(directoryOfWorkspace))) {
         await mkdir(directoryOfWorkspace);
     }
+    const openAPIfilename = path.basename(openAPIFilePath);
     await writeGeneratorsConfiguration({
-        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))
+        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
+        cliVersion,
+        context,
+        apiConfiguration: {
+            path: join(RelativeFilePath.of(OPENAPI_DIRECTORY), RelativeFilePath.of(openAPIfilename))
+        }
     });
     const openapiDirectory = join(directoryOfWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     await mkdir(openapiDirectory);
     const openAPIContents = await readFile(openAPIFilePath);
-    const openAPIfilename = path.basename(openAPIFilePath);
     await writeFile(join(openapiDirectory, RelativeFilePath.of(openAPIfilename)), openAPIContents);
 }
 
-const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
-    "default-group": DEFAULT_GROUP_NAME,
-    groups: {
-        [DEFAULT_GROUP_NAME]: {
-            generators: [
-                {
-                    name: "fernapi/fern-typescript-node-sdk",
-                    version: "0.9.5",
-                    output: {
-                        location: "local-file-system",
-                        path: "../generated/sdks/typescript"
-                    }
-                }
-            ]
-        }
-    }
-};
+async function getDefaultGeneratorsConfiguration({
+    cliVersion,
+    context,
+    apiConfiguration
+}: {
+    cliVersion: string;
+    context: TaskContext;
+    apiConfiguration?: generatorsYml.ApiConfigurationSchema;
+}): Promise<generatorsYml.GeneratorsConfigurationSchema> {
+    const defaultGeneratorName = "fernapi/fern-typescript-node-sdk";
+    const fallbackInvocation = generatorsYml.GENERATOR_INVOCATIONS[defaultGeneratorName];
 
-async function writeGeneratorsConfiguration({ filepath }: { filepath: AbsoluteFilePath }): Promise<void> {
-    await writeFile(filepath, yaml.dump(GENERATORS_CONFIGURATION));
+    let version = fallbackInvocation.version;
+    const versionFromDB = await generatorsYml.getLatestGeneratorVersion({
+        cliVersion,
+        generatorName: defaultGeneratorName,
+        channel: undefined
+    });
+
+    if (versionFromDB != null) {
+        // Version found from FDR, using it
+        version = versionFromDB;
+    } else {
+        context.logger.debug(
+            `Failed to get latest version for ${defaultGeneratorName} that is compatible with CLI ${cliVersion}, falling back to preset version ${version}`
+        );
+    }
+    const config: generatorsYml.GeneratorsConfigurationSchema = {
+        "default-group": DEFAULT_GROUP_NAME,
+        groups: {
+            [DEFAULT_GROUP_NAME]: {
+                generators: [
+                    {
+                        name: defaultGeneratorName,
+                        ...fallbackInvocation,
+                        version
+                    }
+                ]
+            }
+        }
+    };
+    if (apiConfiguration != null) {
+        config.api = apiConfiguration;
+    }
+    return config;
+}
+
+async function writeGeneratorsConfiguration({
+    filepath,
+    cliVersion,
+    context,
+    apiConfiguration
+}: {
+    filepath: AbsoluteFilePath;
+    cliVersion: string;
+    context: TaskContext;
+    apiConfiguration?: generatorsYml.ApiConfigurationSchema;
+}): Promise<void> {
+    await writeFile(
+        filepath,
+        yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }))
+    );
 }
 
 const ROOT_API: RootApiFileSchema = {

@@ -14,8 +14,9 @@ import com.seed.nurseryApi.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Package.Builder.class)
 public final class Package {
     private final String name;
@@ -62,7 +63,7 @@ public final class Package {
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(Package other);
     }
@@ -88,8 +89,8 @@ public final class Package {
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
-            this.name = name;
+        public _FinalStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

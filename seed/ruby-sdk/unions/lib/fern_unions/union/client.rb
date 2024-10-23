@@ -19,10 +19,23 @@ module SeedUnionsClient
     # @param id [String]
     # @param request_options [SeedUnionsClient::RequestOptions]
     # @return [SeedUnionsClient::Union::Shape]
+    # @example
+    #  unions = SeedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  unions.union.get(id: "id")
     def get(id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/#{id}"
       end
       SeedUnionsClient::Union::Shape.from_json(json_object: response.body)
@@ -31,10 +44,20 @@ module SeedUnionsClient
     # @param request [SeedUnionsClient::Union::Shape]
     # @param request_options [SeedUnionsClient::RequestOptions]
     # @return [Boolean]
+    # @example
+    #  unions = SeedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  unions.union.update
     def update(request:, request_options: nil)
       response = @request_client.conn.patch do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
@@ -55,11 +78,24 @@ module SeedUnionsClient
     # @param id [String]
     # @param request_options [SeedUnionsClient::RequestOptions]
     # @return [SeedUnionsClient::Union::Shape]
+    # @example
+    #  unions = SeedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  unions.union.get(id: "id")
     def get(id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/#{id}"
         end
         SeedUnionsClient::Union::Shape.from_json(json_object: response.body)
@@ -69,11 +105,21 @@ module SeedUnionsClient
     # @param request [SeedUnionsClient::Union::Shape]
     # @param request_options [SeedUnionsClient::RequestOptions]
     # @return [Boolean]
+    # @example
+    #  unions = SeedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  unions.union.update
     def update(request:, request_options: nil)
       Async do
         response = @request_client.conn.patch do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/"
         end

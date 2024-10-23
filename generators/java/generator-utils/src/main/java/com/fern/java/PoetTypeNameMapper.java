@@ -8,6 +8,7 @@ import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.MapType;
 import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.ResolvedNamedType;
 import com.fern.ir.model.types.ResolvedTypeReference;
 import com.fern.ir.model.types.TypeDeclaration;
@@ -16,6 +17,7 @@ import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
+import java.math.BigInteger;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
@@ -76,9 +78,9 @@ public final class PoetTypeNameMapper {
         @Override
         public TypeName visitPrimitive(PrimitiveType primitiveType) {
             if (primitiveAllowed) {
-                return primitiveType.visit(PrimitiveToTypeNameConverter.PRIMITIVE_ALLOWED_CONVERTER);
+                return primitiveType.getV1().visit(PrimitiveToTypeNameConverter.PRIMITIVE_ALLOWED_CONVERTER);
             }
-            return primitiveType.visit(PrimitiveToTypeNameConverter.PRIMITIVE_DISALLOWED_CONVERTER);
+            return primitiveType.getV1().visit(PrimitiveToTypeNameConverter.PRIMITIVE_DISALLOWED_CONVERTER);
         }
 
         @Override
@@ -100,7 +102,7 @@ public final class PoetTypeNameMapper {
         }
     }
 
-    private static final class PrimitiveToTypeNameConverter implements PrimitiveType.Visitor<TypeName> {
+    private static final class PrimitiveToTypeNameConverter implements PrimitiveTypeV1.Visitor<TypeName> {
 
         private static final PrimitiveToTypeNameConverter PRIMITIVE_ALLOWED_CONVERTER =
                 new PrimitiveToTypeNameConverter(true);
@@ -155,6 +157,11 @@ public final class PoetTypeNameMapper {
         @Override
         public TypeName visitBase64() {
             return ArrayTypeName.of(byte.class);
+        }
+
+        @Override
+        public TypeName visitBigInteger() {
+            return ClassName.get(BigInteger.class);
         }
 
         @Override

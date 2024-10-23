@@ -1,0 +1,85 @@
+types:
+  Primitive:
+    default: BOOLEAN
+    enum:
+      - INTEGER
+      - DOUBLE
+      - STRING
+
+  Object:
+    docs: |
+      Defines properties with default values and validation rules.
+    properties:
+      enabled:
+        docs: |
+          Booleans don't support validation rules.
+        type: boolean
+        default: true
+        validation:
+          min: 26.2
+          max: 26.2
+      id:
+        docs: |
+          UUIDs don't support defaults or validation.
+        type: uuid
+        validation:
+          minLength: 26
+          maxLength: 26
+      value:
+        docs: |
+          Integers can't have double defaults or validation rules,
+        type: integer
+        default: 26.2
+        validation:
+          min: 26.2
+          max: 26.2
+      name:
+        docs: |
+          Strings can't have integer defaults or validation rules,
+        type: integer
+        default: 42
+        validation:
+          min: 42
+          max: 42
+      longNumber:
+        docs: |
+          Long types don't support validation rules yet.
+        type: long
+        default: 42
+        validation:
+          min: 42
+          max: 42
+      bigInteger:
+        docs: |
+          Big integer types don't support validation rules yet.
+        type: bigint
+        default: "9007199254740991"
+        validation:
+          min: 42
+          max: 42
+      bigIntegerWithInvalidDefault:
+        docs: |
+          Big integers must be valid numbers.
+        type: bigint
+        default: "hello"
+      enumWithInvalidDefault:
+        docs: |
+          Enums must have valid default values.
+        type: Primitive
+        default: INVALID
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    create:
+      path: /create
+      method: POST
+      request:
+        name: CreateRequest
+        body:
+          properties:
+            decimal:
+              type: boolean
+              default: true
+      response: Object

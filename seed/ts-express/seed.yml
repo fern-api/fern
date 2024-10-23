@@ -1,10 +1,46 @@
-irVersion: v37
-docker: fernapi/fern-typescript-express:local
-dockerCommand: yarn workspace @fern-typescript/express-generator-cli dockerTagLocal
+irVersion: v53
+displayName: TypeScript Express
+changelogLocation: ../../generators/typescript/express/versions.yml
+image: fernapi/fern-typescript-express
+
+buildScripts:
+  installScript:
+    commands:
+      - yarn install
+  compileScript:
+    commands:
+      - yarn build
+
+publish:
+  versionSubstitution: "$VERSION"
+  command:
+    - pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"
+    - docker push fernapi/fern-typescript-express:"$VERSION"
+test:
+  docker:
+    image: fernapi/fern-typescript-express:local
+    command: pnpm --filter @fern-typescript/express-generator-cli dockerTagLocal
+  local:
+    workingDirectory: generators/typescript
+    buildCommand:
+      - pnpm --filter @fern-typescript/express-generator-cli compile
+      - pnpm --filter @fern-typescript/express-generator-cli build
+    runCommand: node express/cli/dist/cli.cjs
+    env:
+      NODE_ENV: test
+
 language: typescript
 generatorType: Server
 defaultOutputMode: local_files
+defaultCustomConfig:
+  outputSourceFiles: true
 fixtures:
+  ts-express-casing:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-serde-layer
   trace:
     - customConfig: null
       outputFolder: no-custom-config
@@ -15,14 +51,26 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        outputSourceFiles: true
-      outputFolder: output-source-files
+        outputSourceFiles: false
+      outputFolder: output-compiled
+    - customConfig:
+        skipRequestValidation: true
+      outputFolder: skip-request-validation
+    - customConfig:
+        skipResponseValidation: true
+      outputFolder: skip-response-validation
+    - customConfig:
+        requestValidationStatusCode: 400
+      outputFolder: validation-status-code
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
+    - customConfig:
+        noOptionalProperties: true
+      outputFolder: no-optional-properties
     - customConfig:
         allowExtraFields: true
       outputFolder: allow-extra-fields
@@ -44,5 +92,6 @@ allowedFailures:
   - file-upload
   - plain-text
   - streaming
-
-
+  - streaming-parameter
+  - server-sent-events
+  - server-sent-event-examples

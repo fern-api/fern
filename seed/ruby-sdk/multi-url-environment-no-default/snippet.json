@@ -1,0 +1,49 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/ec2/boot",
+                "method": "POST",
+                "identifierOverride": "endpoint_ec2.bootInstance"
+            },
+            "snippet": {
+                "client": "require \"fern_multi_url_environment_no_default\"\n\nmulti_url_environment_no_default = SeedMultiUrlEnvironmentNoDefaultClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nmulti_url_environment_no_default.ec_2.boot_instance(size: \"size\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/ec2/boot",
+                "method": "POST",
+                "identifierOverride": "endpoint_ec2.bootInstance"
+            },
+            "snippet": {
+                "client": "require \"fern_multi_url_environment_no_default\"\n\nmulti_url_environment_no_default = SeedMultiUrlEnvironmentNoDefaultClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nmulti_url_environment_no_default.ec_2.boot_instance(size: \"size\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/s3/presigned-url",
+                "method": "POST",
+                "identifierOverride": "endpoint_s3.getPresignedUrl"
+            },
+            "snippet": {
+                "client": "require \"fern_multi_url_environment_no_default\"\n\nmulti_url_environment_no_default = SeedMultiUrlEnvironmentNoDefaultClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nmulti_url_environment_no_default.s_3.get_presigned_url(s_3_key: \"s3Key\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/s3/presigned-url",
+                "method": "POST",
+                "identifierOverride": "endpoint_s3.getPresignedUrl"
+            },
+            "snippet": {
+                "client": "require \"fern_multi_url_environment_no_default\"\n\nmulti_url_environment_no_default = SeedMultiUrlEnvironmentNoDefaultClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nmulti_url_environment_no_default.s_3.get_presigned_url(s_3_key: \"s3Key\")",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

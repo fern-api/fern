@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SinglyLinkedListValue.Builder.class)
 public final class SinglyLinkedListValue {
     private final Optional<String> head;
@@ -99,7 +99,7 @@ public final class SinglyLinkedListValue {
         }
 
         public Builder head(String head) {
-            this.head = Optional.of(head);
+            this.head = Optional.ofNullable(head);
             return this;
         }
 

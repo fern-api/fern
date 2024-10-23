@@ -14,8 +14,9 @@ import com.seed.queryParameters.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = NestedUser.Builder.class)
 public final class NestedUser {
     private final String name;
@@ -70,13 +71,13 @@ public final class NestedUser {
     }
 
     public interface NameStage {
-        UserStage name(String name);
+        UserStage name(@NotNull String name);
 
         Builder from(NestedUser other);
     }
 
     public interface UserStage {
-        _FinalStage user(User user);
+        _FinalStage user(@NotNull User user);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class NestedUser {
 
         @java.lang.Override
         @JsonSetter("name")
-        public UserStage name(String name) {
-            this.name = name;
+        public UserStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user")
-        public _FinalStage user(User user) {
-            this.user = user;
+        public _FinalStage user(@NotNull User user) {
+            this.user = Objects.requireNonNull(user, "user must not be null");
             return this;
         }
 

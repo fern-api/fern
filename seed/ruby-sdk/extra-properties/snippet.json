@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/user",
+                "method": "POST",
+                "identifierOverride": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "client": "require \"fern_extra_properties\"\n\nextra_properties = SeedExtraPropertiesClient::Client.new(base_url: \"https://api.example.com\")\nextra_properties.user.create_user(name: \"name\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/user",
+                "method": "POST",
+                "identifierOverride": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "client": "require \"fern_extra_properties\"\n\nextra_properties = SeedExtraPropertiesClient::Client.new(base_url: \"https://api.example.com\")\nextra_properties.user.create_user(name: \"name\")",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

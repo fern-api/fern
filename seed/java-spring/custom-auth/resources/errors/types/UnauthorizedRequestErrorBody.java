@@ -13,8 +13,9 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = UnauthorizedRequestErrorBody.Builder.class
 )
@@ -55,7 +56,7 @@ public final class UnauthorizedRequestErrorBody {
   }
 
   public interface MessageStage {
-    _FinalStage message(String message);
+    _FinalStage message(@NotNull String message);
 
     Builder from(UnauthorizedRequestErrorBody other);
   }
@@ -81,8 +82,8 @@ public final class UnauthorizedRequestErrorBody {
 
     @java.lang.Override
     @JsonSetter("message")
-    public _FinalStage message(String message) {
-      this.message = message;
+    public _FinalStage message(@NotNull String message) {
+      this.message = Objects.requireNonNull(message, "message must not be null");
       return this;
     }
 

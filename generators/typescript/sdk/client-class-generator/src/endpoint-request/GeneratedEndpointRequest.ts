@@ -5,10 +5,11 @@ import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 export interface GeneratedEndpointRequest {
     getBuildRequestStatements: (context: SdkContext) => ts.Statement[];
+    getRequestParameter(context: SdkContext): ts.TypeNode | undefined;
     getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[];
     getFetcherRequestArgs: (
         context: SdkContext
-    ) => Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType">;
+    ) => Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType">;
     getReferenceToRequestBody: (context: SdkContext) => ts.Expression | undefined;
     getReferenceToQueryParameter: (queryParameterKey: string, context: SdkContext) => ts.Expression;
     getExampleEndpointParameters({

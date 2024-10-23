@@ -37,9 +37,9 @@ module SeedTraceClient
                  when "running"
                    json_object.value
                  when "testCaseIdToState"
-                   json_object.value&.transform_values do |v|
-                     v = v.to_json
-                     SeedTraceClient::Submission::SubmissionStatusForTestCase.from_json(json_object: v)
+                   json_object.value&.transform_values do |value|
+                     value = value.to_json
+                     SeedTraceClient::Submission::SubmissionStatusForTestCase.from_json(json_object: value)
                    end
                  else
                    json_object

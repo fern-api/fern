@@ -11,7 +11,12 @@ import (
 type UnauthorizedRequestErrorBody struct {
 	Message string `json:"message" url:"message"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (u *UnauthorizedRequestErrorBody) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
 }
 
 func (u *UnauthorizedRequestErrorBody) UnmarshalJSON(data []byte) error {
@@ -21,6 +26,13 @@ func (u *UnauthorizedRequestErrorBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UnauthorizedRequestErrorBody(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
 	u._rawJSON = json.RawMessage(data)
 	return nil
 }

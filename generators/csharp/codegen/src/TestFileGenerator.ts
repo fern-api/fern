@@ -24,7 +24,11 @@ export class TestFileGenerator extends FileGenerator<
         });
         return new CSharpFile({
             clazz: testClass,
-            directory: RelativeFilePath.of("")
+            directory: RelativeFilePath.of(""),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 }

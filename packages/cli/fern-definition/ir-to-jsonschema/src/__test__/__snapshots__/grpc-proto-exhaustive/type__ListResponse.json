@@ -1,0 +1,100 @@
+{
+  "type": "object",
+  "properties": {
+    "columns": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ListElement"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pagination": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Pagination"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "namespace": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "usage": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Usage"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ListElement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Pagination": {
+      "type": "object",
+      "properties": {
+        "next": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Usage": {
+      "type": "object",
+      "properties": {
+        "units": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

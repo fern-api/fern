@@ -64,13 +64,57 @@
                 "value": "{{apiKey}}",
                 "type": "string",
                 "description": null
+              },
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
               }
             ],
             "method": "GET",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "GET request with custom api key",
+                "url": {
+                  "raw": "{{baseUrl}}/apiKey",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "apiKey"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "X-FERN-API-KEY",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "\"string\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "_type": "endpoint",
@@ -99,14 +143,64 @@
                 "key": "X-Endpoint-Header",
                 "description": "Specifies the endpoint key.",
                 "type": "text",
-                "value": "\"example\""
+                "value": "\"X-Endpoint-Header\""
+              },
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
               }
             ],
             "method": "GET",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "GET request with custom api key",
+                "url": {
+                  "raw": "{{baseUrl}}/apiKeyInHeader",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "apiKeyInHeader"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "X-FERN-API-KEY",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
+                    "key": "X-Endpoint-Header",
+                    "description": "Specifies the endpoint key.",
+                    "type": "text",
+                    "value": "\"X-Endpoint-Header\""
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "\"string\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

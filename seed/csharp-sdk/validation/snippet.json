@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/create",
+                "method": "POST",
+                "identifier_override": "endpoint_.create"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedValidation;\n\nvar client = new SeedValidationClient();\nawait client.CreateAsync(\n    new CreateRequest\n    {\n        Decimal = 1.1,\n        Even = 1,\n        Name = \"name\",\n        Shape = Shape.Square,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_.get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedValidation;\n\nvar client = new SeedValidationClient();\nawait client.GetAsync(\n    new GetRequest\n    {\n        Decimal = 1.1,\n        Even = 1,\n        Name = \"name\",\n    }\n);\n"
+            }
+        }
+    ]
+}

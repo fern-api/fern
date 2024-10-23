@@ -21,10 +21,17 @@ module SeedAudiencesClient
     # @param private_property [Integer]
     # @param request_options [SeedAudiencesClient::RequestOptions]
     # @return [SeedAudiencesClient::Foo::ImportingType]
+    # @example
+    #  audiences = SeedAudiencesClient::Client.new(base_url: "https://api.example.com")
+    #  audiences.foo.find
     def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.params = {
           **(request_options&.additional_query_parameters || {}),
           "optionalString": optional_string
@@ -55,11 +62,18 @@ module SeedAudiencesClient
     # @param private_property [Integer]
     # @param request_options [SeedAudiencesClient::RequestOptions]
     # @return [SeedAudiencesClient::Foo::ImportingType]
+    # @example
+    #  audiences = SeedAudiencesClient::Client.new(base_url: "https://api.example.com")
+    #  audiences.foo.find
     def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.params = {
             **(request_options&.additional_query_parameters || {}),
             "optionalString": optional_string

@@ -1,0 +1,26 @@
+types:
+  Error:
+    properties:
+      code: integer
+      message: string
+    source:
+      openapi: openapi/petstore/openapi.yml
+  Pet:
+    properties:
+      id: long
+      messages: optional<V2ChatMessages>
+      name: string
+      tag: optional<string>
+    source:
+      openapi: openapi/petstore/openapi.yml
+  Pets: list<Pet>
+  V2ChatMessages:
+    docs: >
+      A list of chat messages in chronological order, representing a
+      conversation between the user and the model.
+
+
+      Messages can be from `User`, `Assistant`, `Tool` and `System` roles. Learn
+      more about messages and roles in [the Chat API
+      guide](https://docs.cohere.com/docs/chat-api).
+    type: list<unknown>

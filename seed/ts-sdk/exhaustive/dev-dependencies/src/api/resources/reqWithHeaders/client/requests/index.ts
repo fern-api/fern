@@ -1,1 +1,1 @@
-export { ReqWithHeaders } from "./ReqWithHeaders";
+export { type ReqWithHeaders } from "./ReqWithHeaders";

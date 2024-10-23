@@ -13,14 +13,22 @@ export declare namespace User {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
 export class User {
     constructor(protected readonly _options: User.Options) {}
 
+    /**
+     * @param {SeedQueryParameters.GetUsersRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     */
     public async getUsername(
         request: SeedQueryParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions
@@ -32,6 +40,8 @@ export class User {
             deadline,
             bytes,
             user,
+            userList,
+            optionalDeadline,
             keyValue,
             optionalString,
             nestedUser,
@@ -46,6 +56,11 @@ export class User {
         _queryParams["deadline"] = deadline;
         _queryParams["bytes"] = bytes;
         _queryParams["user"] = user;
+        _queryParams["userList"] = JSON.stringify(userList);
+        if (optionalDeadline != null) {
+            _queryParams["optionalDeadline"] = optionalDeadline;
+        }
+
         _queryParams["keyValue"] = JSON.stringify(keyValue);
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;
@@ -75,13 +90,16 @@ export class User {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/query-parameters",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/query-parameters/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as SeedQueryParameters.User;

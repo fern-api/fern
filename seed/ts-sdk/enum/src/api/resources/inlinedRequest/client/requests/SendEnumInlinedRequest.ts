@@ -7,14 +7,8 @@ import * as SeedEnum from "../../../../index";
 /**
  * @example
  *     {
- *         operand: SeedEnum.Operand.GreaterThan,
- *         operandOrColor: SeedEnum.Color.Red
- *     }
- *
- * @example
- *     {
- *         operand: SeedEnum.Operand.GreaterThan,
- *         operandOrColor: SeedEnum.Color.Red
+ *         operand: ">",
+ *         operandOrColor: "red"
  *     }
  */
 export interface SendEnumInlinedRequest {

@@ -1,0 +1,3 @@
+name: ir-v40
+docs: |
+ Add support for extra properties on objects and in-lined requests.

@@ -14,14 +14,25 @@ export declare namespace Service {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getMovie("string")
+     */
     public async getMovie(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -33,16 +44,19 @@ export class Service {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/response-property",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.service.getMovie.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.service.getMovie.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Response.parseOrThrow(_response.body, {
+            return serializers.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -72,6 +86,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getMovieDocs("string")
+     */
     public async getMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -83,18 +104,19 @@ export class Service {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/response-property",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.service.getMovieDocs.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            requestType: "json",
+            body: serializers.service.getMovieDocs.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Response.parseOrThrow(_response.body, {
+            return serializers.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -124,6 +146,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getMovieName("string")
+     */
     public async getMovieName(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -135,18 +164,19 @@ export class Service {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/response-property",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.service.getMovieName.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            requestType: "json",
+            body: serializers.service.getMovieName.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.StringResponse.parseOrThrow(_response.body, {
+            return serializers.StringResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -176,6 +206,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getMovieMetadata("string")
+     */
     public async getMovieMetadata(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -187,18 +224,21 @@ export class Service {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/response-property",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.service.getMovieMetadata.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.service.getMovieMetadata.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Response.parseOrThrow(_response.body, {
+            return serializers.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -228,6 +268,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getOptionalMovie("string")
+     */
     public async getOptionalMovie(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -239,18 +286,21 @@ export class Service {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/response-property",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.service.getOptionalMovie.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.service.getOptionalMovie.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.service.getOptionalMovie.Response.parseOrThrow(_response.body, {
+            return serializers.service.getOptionalMovie.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -280,6 +330,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getOptionalMovieDocs("string")
+     */
     public async getOptionalMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -291,18 +348,21 @@ export class Service {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/response-property",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.service.getOptionalMovieDocs.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.service.getOptionalMovieDocs.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.OptionalWithDocs.parseOrThrow(_response.body, {
+            return serializers.OptionalWithDocs.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -332,6 +392,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getOptionalMovieName("string")
+     */
     public async getOptionalMovieName(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -343,18 +410,21 @@ export class Service {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/response-property",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.service.getOptionalMovieName.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.service.getOptionalMovieName.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.OptionalStringResponse.parseOrThrow(_response.body, {
+            return serializers.OptionalStringResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

@@ -10,7 +10,7 @@ export const FontConfig: core.serialization.ObjectSchema<serializers.FontConfig.
     core.serialization.object({
         name: core.serialization.string().optional(),
         path: core.serialization.string().optional(),
-        weight: core.serialization.string().optional(),
+        weight: core.serialization.lazy(async () => (await import("../../..")).FontWeight).optional(),
         style: core.serialization.lazy(async () => (await import("../../..")).FontStyle).optional(),
         paths: core.serialization
             .list(core.serialization.lazy(async () => (await import("../../..")).FontConfigPath))
@@ -27,7 +27,7 @@ export declare namespace FontConfig {
     interface Raw {
         name?: string | null;
         path?: string | null;
-        weight?: string | null;
+        weight?: serializers.FontWeight.Raw | null;
         style?: serializers.FontStyle.Raw | null;
         paths?: serializers.FontConfigPath.Raw[] | null;
         display?: serializers.FontDisplay.Raw | null;

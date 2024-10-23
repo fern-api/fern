@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedCodeSamples;
 
-public class MyResponse
+public record MyResponse
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("name")]
-    public List<string?> Name { get; init; }
+    public string? Name { get; set; }
 }

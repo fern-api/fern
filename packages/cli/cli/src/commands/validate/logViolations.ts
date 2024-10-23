@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { formatLog, LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
-import { ValidationViolation } from "@fern-api/validator";
+import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import chalk from "chalk";
 
 export interface LogViolationsResponse {
@@ -11,14 +11,18 @@ export interface LogViolationsResponse {
 export function logViolations({
     context,
     violations,
-    logWarnings
+    logWarnings,
+    logSummary = true
 }: {
     context: TaskContext;
     violations: ValidationViolation[];
     logWarnings: boolean;
+    logSummary?: boolean;
 }): LogViolationsResponse {
     const stats = getViolationStats(violations);
-    logViolationsSummary({ context, stats, logWarnings });
+    if (logSummary) {
+        logViolationsSummary({ context, stats, logWarnings });
+    }
 
     violations.forEach((violation) => {
         if (violation.severity === "error") {

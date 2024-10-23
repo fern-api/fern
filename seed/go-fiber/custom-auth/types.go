@@ -3,12 +3,36 @@
 package customauth
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/custom-auth/fern/core"
 )
 
 type UnauthorizedRequestErrorBody struct {
 	Message string `json:"message" url:"message"`
+
+	extraProperties map[string]interface{}
+}
+
+func (u *UnauthorizedRequestErrorBody) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UnauthorizedRequestErrorBody) UnmarshalJSON(data []byte) error {
+	type unmarshaler UnauthorizedRequestErrorBody
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UnauthorizedRequestErrorBody(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	return nil
 }
 
 func (u *UnauthorizedRequestErrorBody) String() string {

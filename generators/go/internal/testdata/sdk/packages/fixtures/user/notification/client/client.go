@@ -4,7 +4,6 @@ package client
 
 import (
 	context "context"
-	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
 	notification "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user/notification"
@@ -50,7 +49,11 @@ func (c *Client) GetUserNotification(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/notifications/%v", userId, notificationId)
+	endpointURL := core.EncodeURL(
+		baseURL+"/users/%v/notifications/%v",
+		userId,
+		notificationId,
+	)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -58,12 +61,14 @@ func (c *Client) GetUserNotification(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return nil, err

@@ -1,0 +1,42 @@
+---
+title: Delete Encrypted Key
+subtitle: >-
+  Disable an encrypted key for a Twilio account integration. See [Enterprise
+  Twilio Integration](/enterprise-features/custom-twilio) for more information.
+slug: api-v1/post/accounts-delete
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+<ParamField header="encrypted_key" type="string" required>
+  The `encrypted_key` to delete.
+</ParamField>
+
+### Response
+
+<ResponseField body="status" type="string">
+    The status of the request.
+
+    - `success` - The encrypted key was successfully deleted.
+    - `error` - There was an error deleting the encrypted key.
+
+</ResponseField>
+
+<ResponseField body="message" type="string">
+  Special messages: - `Error deleting Twilio credentials` - The encrypted key could not be deleted or already has been
+  deleted. - `Missing encrypted key` - The `encrypted_key` parameter is missing. - none - The encrypted key was
+  successfully deleted.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "status": "success"
+}
+```
+</ResponseExample>

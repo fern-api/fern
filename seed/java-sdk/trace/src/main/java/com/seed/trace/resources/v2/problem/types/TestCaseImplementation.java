@@ -14,8 +14,9 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TestCaseImplementation.Builder.class)
 public final class TestCaseImplementation {
     private final TestCaseImplementationDescription description;
@@ -73,13 +74,13 @@ public final class TestCaseImplementation {
     }
 
     public interface DescriptionStage {
-        FunctionStage description(TestCaseImplementationDescription description);
+        FunctionStage description(@NotNull TestCaseImplementationDescription description);
 
         Builder from(TestCaseImplementation other);
     }
 
     public interface FunctionStage {
-        _FinalStage function(TestCaseFunction function);
+        _FinalStage function(@NotNull TestCaseFunction function);
     }
 
     public interface _FinalStage {
@@ -106,15 +107,15 @@ public final class TestCaseImplementation {
 
         @java.lang.Override
         @JsonSetter("description")
-        public FunctionStage description(TestCaseImplementationDescription description) {
-            this.description = description;
+        public FunctionStage description(@NotNull TestCaseImplementationDescription description) {
+            this.description = Objects.requireNonNull(description, "description must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("function")
-        public _FinalStage function(TestCaseFunction function) {
-            this.function = function;
+        public _FinalStage function(@NotNull TestCaseFunction function) {
+            this.function = Objects.requireNonNull(function, "function must not be null");
             return this;
         }
 

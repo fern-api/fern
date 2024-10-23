@@ -12,7 +12,12 @@ type CreateMovieRequest struct {
 	Title  string  `json:"title" url:"title"`
 	Rating float64 `json:"rating" url:"rating"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (c *CreateMovieRequest) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
 }
 
 func (c *CreateMovieRequest) UnmarshalJSON(data []byte) error {
@@ -22,6 +27,13 @@ func (c *CreateMovieRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = CreateMovieRequest(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+
 	c._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -44,7 +56,12 @@ type Movie struct {
 	// The rating scale is one to five stars
 	Rating float64 `json:"rating" url:"rating"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (m *Movie) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
 }
 
 func (m *Movie) UnmarshalJSON(data []byte) error {
@@ -54,6 +71,13 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Movie(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
 	m._rawJSON = json.RawMessage(data)
 	return nil
 }

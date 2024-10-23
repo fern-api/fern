@@ -5,6 +5,7 @@ import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.BasicAuthScheme;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.AbstractGeneratedJavaFile;
@@ -33,10 +34,11 @@ public final class AuthToSpringParameterSpecConverter {
 
     public List<ParameterSpec> getAuthParameters(HttpEndpoint httpEndpoint) {
         ApiAuth apiAuth = generatorContext.getIr().getAuth();
-        if (!httpEndpoint.getAuth() || apiAuth.getSchemes().isEmpty()) {
+        List<AuthScheme> schemes = generatorContext.getResolvedAuthSchemes();
+        if (!httpEndpoint.getAuth() || schemes.isEmpty()) {
             return Collections.emptyList();
-        } else if (apiAuth.getSchemes().size() == 1) {
-            AuthScheme authScheme = apiAuth.getSchemes().get(0);
+        } else if (schemes.size() == 1) {
+            AuthScheme authScheme = schemes.get(0);
             ParameterSpec parameterSpec =
                     authScheme.visit(new AuthSchemeParameterSpec(generatedAuthFiles, "auth", false));
             return Collections.singletonList(parameterSpec);
@@ -80,6 +82,15 @@ public final class AuthToSpringParameterSpecConverter {
             return ParameterSpec.builder(getTypeName(), parameterName)
                     .addAnnotation(AnnotationSpec.builder(RequestHeader.class)
                             .addMember("value", "$S", value.getName().getWireValue())
+                            .build())
+                    .build();
+        }
+
+        @Override
+        public ParameterSpec visitOauth(OAuthScheme oauth) {
+            return ParameterSpec.builder(getTypeName(), parameterName)
+                    .addAnnotation(AnnotationSpec.builder(RequestHeader.class)
+                            .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
                             .build())
                     .build();
         }

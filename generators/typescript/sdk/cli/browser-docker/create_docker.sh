@@ -10,13 +10,18 @@ ROOT_DIR="$DOCKER_DIR/../../../../.."
 
 export GENERATOR_VERSION="$TAG"
 
-yarn install
-yarn run compile
-yarn build:browser
+pnpm install
+pnpm run compile
+pnpm build:browser
 rm -rf "$DOCKER_DIR/dist"
 mv "$DOCKER_DIR/../dist" "$DOCKER_DIR/dist"
 
-docker build -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" "$ROOT_DIR"
+is_not_rc=true
+if [[ $TAG == *"-rc"* ]]; then
+  is_not_rc=false
+fi
+
+docker build -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" ${is_not_rc:+-t "fernapi/fern-typescript-browser-sdk:latest"} "$ROOT_DIR" --label "version=$TAG"
 
 echo
 echo "Built docker: $DOCKER_NAME"

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.object.core.ObjectMappers;
+import java.math.BigInteger;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +24,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Type.Builder.class)
 public final class Type {
     private final int one;
@@ -63,6 +65,14 @@ public final class Type {
 
     private final Name nineteen;
 
+    private final int twenty;
+
+    private final long twentyone;
+
+    private final double twentytwo;
+
+    private final BigInteger twentythree;
+
     private final Map<String, Object> additionalProperties;
 
     private Type(
@@ -84,6 +94,10 @@ public final class Type {
             List<Map<String, Integer>> sixteen,
             List<Optional<UUID>> seventeen,
             Name nineteen,
+            int twenty,
+            long twentyone,
+            double twentytwo,
+            BigInteger twentythree,
             Map<String, Object> additionalProperties) {
         this.one = one;
         this.two = two;
@@ -103,6 +117,10 @@ public final class Type {
         this.sixteen = sixteen;
         this.seventeen = seventeen;
         this.nineteen = nineteen;
+        this.twenty = twenty;
+        this.twentyone = twentyone;
+        this.twentytwo = twentytwo;
+        this.twentythree = twentythree;
         this.additionalProperties = additionalProperties;
     }
 
@@ -201,6 +219,26 @@ public final class Type {
         return nineteen;
     }
 
+    @JsonProperty("twenty")
+    public int getTwenty() {
+        return twenty;
+    }
+
+    @JsonProperty("twentyone")
+    public long getTwentyone() {
+        return twentyone;
+    }
+
+    @JsonProperty("twentytwo")
+    public double getTwentytwo() {
+        return twentytwo;
+    }
+
+    @JsonProperty("twentythree")
+    public BigInteger getTwentythree() {
+        return twentythree;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -230,7 +268,11 @@ public final class Type {
                 && fifteen.equals(other.fifteen)
                 && sixteen.equals(other.sixteen)
                 && seventeen.equals(other.seventeen)
-                && nineteen.equals(other.nineteen);
+                && nineteen.equals(other.nineteen)
+                && twenty == other.twenty
+                && twentyone == other.twentyone
+                && twentytwo == other.twentytwo
+                && twentythree.equals(other.twentythree);
     }
 
     @java.lang.Override
@@ -253,7 +295,11 @@ public final class Type {
                 this.fifteen,
                 this.sixteen,
                 this.seventeen,
-                this.nineteen);
+                this.nineteen,
+                this.twenty,
+                this.twentyone,
+                this.twentytwo,
+                this.twentythree);
     }
 
     @java.lang.Override
@@ -276,7 +322,7 @@ public final class Type {
     }
 
     public interface ThreeStage {
-        FourStage three(String three);
+        FourStage three(@NotNull String three);
     }
 
     public interface FourStage {
@@ -288,19 +334,19 @@ public final class Type {
     }
 
     public interface SixStage {
-        SevenStage six(OffsetDateTime six);
+        SevenStage six(@NotNull OffsetDateTime six);
     }
 
     public interface SevenStage {
-        EightStage seven(String seven);
+        EightStage seven(@NotNull String seven);
     }
 
     public interface EightStage {
-        NineStage eight(UUID eight);
+        NineStage eight(@NotNull UUID eight);
     }
 
     public interface NineStage {
-        FourteenStage nine(byte[] nine);
+        FourteenStage nine(@NotNull byte[] nine);
     }
 
     public interface FourteenStage {
@@ -308,7 +354,23 @@ public final class Type {
     }
 
     public interface NineteenStage {
-        _FinalStage nineteen(Name nineteen);
+        TwentyStage nineteen(@NotNull Name nineteen);
+    }
+
+    public interface TwentyStage {
+        TwentyoneStage twenty(int twenty);
+    }
+
+    public interface TwentyoneStage {
+        TwentytwoStage twentyone(long twentyone);
+    }
+
+    public interface TwentytwoStage {
+        TwentythreeStage twentytwo(double twentytwo);
+    }
+
+    public interface TwentythreeStage {
+        _FinalStage twentythree(@NotNull BigInteger twentythree);
     }
 
     public interface _FinalStage {
@@ -368,6 +430,10 @@ public final class Type {
                     NineStage,
                     FourteenStage,
                     NineteenStage,
+                    TwentyStage,
+                    TwentyoneStage,
+                    TwentytwoStage,
+                    TwentythreeStage,
                     _FinalStage {
         private int one;
 
@@ -390,6 +456,14 @@ public final class Type {
         private Object fourteen;
 
         private Name nineteen;
+
+        private int twenty;
+
+        private long twentyone;
+
+        private double twentytwo;
+
+        private BigInteger twentythree;
 
         private List<Optional<UUID>> seventeen = new ArrayList<>();
 
@@ -430,6 +504,10 @@ public final class Type {
             sixteen(other.getSixteen());
             seventeen(other.getSeventeen());
             nineteen(other.getNineteen());
+            twenty(other.getTwenty());
+            twentyone(other.getTwentyone());
+            twentytwo(other.getTwentytwo());
+            twentythree(other.getTwentythree());
             return this;
         }
 
@@ -449,8 +527,8 @@ public final class Type {
 
         @java.lang.Override
         @JsonSetter("three")
-        public FourStage three(String three) {
-            this.three = three;
+        public FourStage three(@NotNull String three) {
+            this.three = Objects.requireNonNull(three, "three must not be null");
             return this;
         }
 
@@ -470,29 +548,29 @@ public final class Type {
 
         @java.lang.Override
         @JsonSetter("six")
-        public SevenStage six(OffsetDateTime six) {
-            this.six = six;
+        public SevenStage six(@NotNull OffsetDateTime six) {
+            this.six = Objects.requireNonNull(six, "six must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("seven")
-        public EightStage seven(String seven) {
-            this.seven = seven;
+        public EightStage seven(@NotNull String seven) {
+            this.seven = Objects.requireNonNull(seven, "seven must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("eight")
-        public NineStage eight(UUID eight) {
-            this.eight = eight;
+        public NineStage eight(@NotNull UUID eight) {
+            this.eight = Objects.requireNonNull(eight, "eight must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("nine")
-        public FourteenStage nine(byte[] nine) {
-            this.nine = nine;
+        public FourteenStage nine(@NotNull byte[] nine) {
+            this.nine = Objects.requireNonNull(nine, "nine must not be null");
             return this;
         }
 
@@ -505,8 +583,36 @@ public final class Type {
 
         @java.lang.Override
         @JsonSetter("nineteen")
-        public _FinalStage nineteen(Name nineteen) {
-            this.nineteen = nineteen;
+        public TwentyStage nineteen(@NotNull Name nineteen) {
+            this.nineteen = Objects.requireNonNull(nineteen, "nineteen must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("twenty")
+        public TwentyoneStage twenty(int twenty) {
+            this.twenty = twenty;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("twentyone")
+        public TwentytwoStage twentyone(long twentyone) {
+            this.twentyone = twentyone;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("twentytwo")
+        public TwentythreeStage twentytwo(double twentytwo) {
+            this.twentytwo = twentytwo;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("twentythree")
+        public _FinalStage twentythree(@NotNull BigInteger twentythree) {
+            this.twentythree = Objects.requireNonNull(twentythree, "twentythree must not be null");
             return this;
         }
 
@@ -572,7 +678,7 @@ public final class Type {
 
         @java.lang.Override
         public _FinalStage thirteen(Long thirteen) {
-            this.thirteen = Optional.of(thirteen);
+            this.thirteen = Optional.ofNullable(thirteen);
             return this;
         }
 
@@ -664,6 +770,10 @@ public final class Type {
                     sixteen,
                     seventeen,
                     nineteen,
+                    twenty,
+                    twentyone,
+                    twentytwo,
+                    twentythree,
                     additionalProperties);
         }
     }

@@ -16,9 +16,10 @@ import java.lang.String;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import resources.file.types.File;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Directory.Builder.class
 )
@@ -76,7 +77,7 @@ public final class Directory {
   }
 
   public interface NameStage {
-    _FinalStage name(String name);
+    _FinalStage name(@NotNull String name);
 
     Builder from(Directory other);
   }
@@ -116,14 +117,14 @@ public final class Directory {
 
     @java.lang.Override
     @JsonSetter("name")
-    public _FinalStage name(String name) {
-      this.name = name;
+    public _FinalStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 
     @java.lang.Override
     public _FinalStage directories(List<Directory> directories) {
-      this.directories = Optional.of(directories);
+      this.directories = Optional.ofNullable(directories);
       return this;
     }
 
@@ -139,7 +140,7 @@ public final class Directory {
 
     @java.lang.Override
     public _FinalStage files(List<File> files) {
-      this.files = Optional.of(files);
+      this.files = Optional.ofNullable(files);
       return this;
     }
 

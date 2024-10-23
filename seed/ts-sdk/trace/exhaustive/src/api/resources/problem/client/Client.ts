@@ -12,12 +12,19 @@ export declare namespace Problem {
     interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
@@ -27,37 +34,52 @@ export class Problem {
     /**
      * Creates a problem
      *
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await seedTrace.problem.createProblem({
-     *         problemName: "string",
+     *     await client.problem.createProblem({
+     *         problemName: "problemName",
      *         problemDescription: {
-     *             boards: [SeedTrace.ProblemDescriptionBoard.html("string")]
+     *             boards: [SeedTrace.ProblemDescriptionBoard.html("boards"), SeedTrace.ProblemDescriptionBoard.html("boards")]
      *         },
      *         files: {
-     *             [SeedTrace.Language.Java]: {
+     *             ["JAVA"]: {
      *                 solutionFile: {
-     *                     filename: "string",
-     *                     contents: "string"
+     *                     filename: "filename",
+     *                     contents: "contents"
      *                 },
      *                 readOnlyFiles: [{
-     *                         filename: "string",
-     *                         contents: "string"
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }, {
+     *                         filename: "filename",
+     *                         contents: "contents"
      *                     }]
      *             }
      *         },
      *         inputParams: [{
      *                 variableType: SeedTrace.VariableType.integerType(),
-     *                 name: "string"
+     *                 name: "name"
+     *             }, {
+     *                 variableType: SeedTrace.VariableType.integerType(),
+     *                 name: "name"
      *             }],
      *         outputType: SeedTrace.VariableType.integerType(),
      *         testcases: [{
      *                 testCase: {
-     *                     id: "string",
-     *                     params: [SeedTrace.VariableValue.integerValue(1)]
+     *                     id: "id",
+     *                     params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)]
+     *                 },
+     *                 expectedResult: SeedTrace.VariableValue.integerValue(1)
+     *             }, {
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)]
      *                 },
      *                 expectedResult: SeedTrace.VariableValue.integerValue(1)
      *             }],
-     *         methodName: "string"
+     *         methodName: "methodName"
      *     })
      */
     public async createProblem(
@@ -79,19 +101,22 @@ export class Problem {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.CreateProblemRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.CreateProblemRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.CreateProblemResponse.parseOrThrow(_response.body, {
+                body: serializers.CreateProblemResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -109,37 +134,53 @@ export class Problem {
     /**
      * Updates a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await seedTrace.problem.updateProblem(SeedTrace.ProblemId("string"), {
-     *         problemName: "string",
+     *     await client.problem.updateProblem(SeedTrace.ProblemId("problemId"), {
+     *         problemName: "problemName",
      *         problemDescription: {
-     *             boards: [SeedTrace.ProblemDescriptionBoard.html("string")]
+     *             boards: [SeedTrace.ProblemDescriptionBoard.html("boards"), SeedTrace.ProblemDescriptionBoard.html("boards")]
      *         },
      *         files: {
-     *             [SeedTrace.Language.Java]: {
+     *             ["JAVA"]: {
      *                 solutionFile: {
-     *                     filename: "string",
-     *                     contents: "string"
+     *                     filename: "filename",
+     *                     contents: "contents"
      *                 },
      *                 readOnlyFiles: [{
-     *                         filename: "string",
-     *                         contents: "string"
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }, {
+     *                         filename: "filename",
+     *                         contents: "contents"
      *                     }]
      *             }
      *         },
      *         inputParams: [{
      *                 variableType: SeedTrace.VariableType.integerType(),
-     *                 name: "string"
+     *                 name: "name"
+     *             }, {
+     *                 variableType: SeedTrace.VariableType.integerType(),
+     *                 name: "name"
      *             }],
      *         outputType: SeedTrace.VariableType.integerType(),
      *         testcases: [{
      *                 testCase: {
-     *                     id: "string",
-     *                     params: [SeedTrace.VariableValue.integerValue(1)]
+     *                     id: "id",
+     *                     params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)]
+     *                 },
+     *                 expectedResult: SeedTrace.VariableValue.integerValue(1)
+     *             }, {
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)]
      *                 },
      *                 expectedResult: SeedTrace.VariableValue.integerValue(1)
      *             }],
-     *         methodName: "string"
+     *         methodName: "methodName"
      *     })
      */
     public async updateProblem(
@@ -150,7 +191,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${await serializers.ProblemId.jsonOrThrow(problemId)}`
+                `/problem-crud/update/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "POST",
             headers: {
@@ -162,19 +203,22 @@ export class Problem {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.CreateProblemRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.CreateProblemRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.UpdateProblemResponse.parseOrThrow(_response.body, {
+                body: serializers.UpdateProblemResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -192,8 +236,11 @@ export class Problem {
     /**
      * Soft deletes a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await seedTrace.problem.deleteProblem(SeedTrace.ProblemId("string"))
+     *     await client.problem.deleteProblem(SeedTrace.ProblemId("problemId"))
      */
     public async deleteProblem(
         problemId: SeedTrace.ProblemId,
@@ -202,7 +249,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${await serializers.ProblemId.jsonOrThrow(problemId)}`
+                `/problem-crud/delete/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "DELETE",
             headers: {
@@ -214,13 +261,16 @@ export class Problem {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -238,14 +288,20 @@ export class Problem {
     /**
      * Returns default starter files for problem
      *
+     * @param {SeedTrace.GetDefaultStarterFilesRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await seedTrace.problem.getDefaultStarterFiles({
+     *     await client.problem.getDefaultStarterFiles({
      *         inputParams: [{
      *                 variableType: SeedTrace.VariableType.integerType(),
-     *                 name: "string"
+     *                 name: "name"
+     *             }, {
+     *                 variableType: SeedTrace.VariableType.integerType(),
+     *                 name: "name"
      *             }],
      *         outputType: SeedTrace.VariableType.integerType(),
-     *         methodName: "string"
+     *         methodName: "methodName"
      *     })
      */
     public async getDefaultStarterFiles(
@@ -269,21 +325,22 @@ export class Problem {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.GetDefaultStarterFilesRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            requestType: "json",
+            body: serializers.GetDefaultStarterFilesRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.GetDefaultStarterFilesResponse.parseOrThrow(_response.body, {
+                body: serializers.GetDefaultStarterFilesResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

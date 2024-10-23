@@ -3,7 +3,7 @@ name: preview-docs
 on:
   pull_request:
     paths:
-      - "fern/docs/**"
+      - "fern/**"
       - "fern/apis/public-api/**"
       - "fern/docs.yml"
     branches:
@@ -23,15 +23,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Fern
-        run: npm install -g fern-api
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Generate preview URL
         id: generate-docs
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
-          OUTPUT=$(fern generate --docs --preview 2>&1) || true
+          pnpm --filter @fern-api/cli dist:cli:prod
+          cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs" 
+          OUTPUT=$(node $cli_path generate --docs --preview --instance fern.docs.buildwithfern.com/learn 2>&1) || true
           echo "$OUTPUT"
           URL=$(echo "$OUTPUT" | grep -oP 'Published docs to \K.*(?= \()')
           echo "Preview URL: $URL"
@@ -41,3 +46,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2.4.3
         with:
           filePath: preview_url.txt
+          comment_tag: docs-preview-link

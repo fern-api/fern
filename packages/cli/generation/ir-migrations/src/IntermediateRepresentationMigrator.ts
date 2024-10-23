@@ -34,8 +34,23 @@ import { V35_TO_V34_MIGRATION } from "./migrations/v35-to-v34/migrateFromV35ToV3
 import { V36_TO_V35_MIGRATION } from "./migrations/v36-to-v35/migrateFromV36ToV35";
 import { V37_TO_V36_MIGRATION } from "./migrations/v37-to-v36/migrateFromV37ToV36";
 import { V38_TO_V37_MIGRATION } from "./migrations/v38-to-v37/migrateFromV38ToV37";
+import { V39_TO_V38_MIGRATION } from "./migrations/v39-to-v38/migrateFromV39ToV38";
 import { V4_TO_V3_MIGRATION } from "./migrations/v4-to-v3/migrateFromV4ToV3";
+import { V40_TO_V39_MIGRATION } from "./migrations/v40-to-v39/migrateFromV40ToV39";
+import { V41_TO_V40_MIGRATION } from "./migrations/v41-to-v40/migrateFromV41ToV40";
+import { V42_TO_V41_MIGRATION } from "./migrations/v42-to-v41/migrateFromV42ToV41";
+import { V43_TO_V42_MIGRATION } from "./migrations/v43-to-v42/migrateFromV43ToV42";
+import { V44_TO_V43_MIGRATION } from "./migrations/v44-to-v43/migrateFromV44ToV43";
+import { V45_TO_V44_MIGRATION } from "./migrations/v45-to-v44/migrateFromV45ToV44";
+import { V46_TO_V45_MIGRATION } from "./migrations/v46-to-v45/migrateFromV46ToV45";
+import { V47_TO_V46_MIGRATION } from "./migrations/v47-to-v46/migrateFromV47ToV46";
+import { V48_TO_V47_MIGRATION } from "./migrations/v48-to-v47/migrateFromV48ToV47";
+import { V49_TO_V48_MIGRATION } from "./migrations/v49-to-v48/migrateFromV49ToV48";
 import { V5_TO_V4_MIGRATION } from "./migrations/v5-to-v4/migrateFromV5ToV4";
+import { V50_TO_V49_MIGRATION } from "./migrations/v50-to-v49/migrateFromV50ToV49";
+import { V51_TO_V50_MIGRATION } from "./migrations/v51-to-v50/migrateFromV51ToV50";
+import { V52_TO_V51_MIGRATION } from "./migrations/v52-to-v51/migrateFromV52ToV51";
+import { V53_TO_V52_MIGRATION } from "./migrations/v53-to-v52/migrateFromV53ToV52";
 import { V6_TO_V5_MIGRATION } from "./migrations/v6-to-v5/migrateFromV6ToV5";
 import { V7_TO_V6_MIGRATION } from "./migrations/v7-to-v6/migrateFromV7ToV6";
 import { V8_TO_V7_MIGRATION } from "./migrations/v8-to-v7/migrateFromV8ToV7";
@@ -205,10 +220,11 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         targetGenerator: GeneratorNameAndVersion | undefined;
     }): MigratedIntermediateMigration<Migrated> {
         let migrated: unknown = intermediateRepresentation;
-        let jsonify: () => Promise<unknown> = () =>
-            IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
+        let jsonify: () => Promise<unknown> = async () => {
+            return await IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
                 unrecognizedObjectKeys: "strip"
             });
+        };
         for (const migration of this.migrations) {
             if (!shouldMigrate(migration)) {
                 break;
@@ -263,6 +279,21 @@ const IntermediateRepresentationMigrator = {
 
 const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
+    .withMigration(V53_TO_V52_MIGRATION)
+    .withMigration(V52_TO_V51_MIGRATION)
+    .withMigration(V51_TO_V50_MIGRATION)
+    .withMigration(V50_TO_V49_MIGRATION)
+    .withMigration(V49_TO_V48_MIGRATION)
+    .withMigration(V48_TO_V47_MIGRATION)
+    .withMigration(V47_TO_V46_MIGRATION)
+    .withMigration(V46_TO_V45_MIGRATION)
+    .withMigration(V45_TO_V44_MIGRATION)
+    .withMigration(V44_TO_V43_MIGRATION)
+    .withMigration(V43_TO_V42_MIGRATION)
+    .withMigration(V42_TO_V41_MIGRATION)
+    .withMigration(V41_TO_V40_MIGRATION)
+    .withMigration(V40_TO_V39_MIGRATION)
+    .withMigration(V39_TO_V38_MIGRATION)
     .withMigration(V38_TO_V37_MIGRATION)
     .withMigration(V37_TO_V36_MIGRATION)
     .withMigration(V36_TO_V35_MIGRATION)

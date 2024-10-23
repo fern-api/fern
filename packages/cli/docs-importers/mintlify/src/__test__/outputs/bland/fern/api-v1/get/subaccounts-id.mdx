@@ -1,0 +1,47 @@
+---
+title: List Subaccount Details
+subtitle: View a subaccount's details.
+slug: api-v1/get/subaccounts-id
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="subaccount_id" type="string" required>
+  The unique identifier of the subaccount.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Whether the subaccount creation succeeded.
+</ResponseField>
+
+<ResponseField name="subaccount_id" type="string">
+  The affected subaccount's unique identifier.
+</ResponseField>
+
+<ResponseField name="api_key" type="string">
+  The new API key for the subaccount.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "status": "success",
+    "subaccount": {
+        "subaccount_id": "1234567890",
+        "first_name": "John",
+        "last_name": "Doe",
+        "balance": 150,
+        "api_key": "sub-sk-1234567890"
+    }
+}
+```
+</ResponseExample>

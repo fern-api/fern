@@ -15,7 +15,8 @@ module SeedBasicAuthEnvironmentVariablesClient
     # @param username [String]
     # @param password [String]
     # @return [SeedBasicAuthEnvironmentVariablesClient::Client]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, username: nil, password: nil)
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, username: ENV["USERNAME"],
+                   password: ENV["PASSWORD"])
       @request_client = SeedBasicAuthEnvironmentVariablesClient::RequestClient.new(
         base_url: base_url,
         max_retries: max_retries,
@@ -37,7 +38,8 @@ module SeedBasicAuthEnvironmentVariablesClient
     # @param username [String]
     # @param password [String]
     # @return [SeedBasicAuthEnvironmentVariablesClient::AsyncClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, username: nil, password: nil)
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, username: ENV["USERNAME"],
+                   password: ENV["PASSWORD"])
       @async_request_client = SeedBasicAuthEnvironmentVariablesClient::AsyncRequestClient.new(
         base_url: base_url,
         max_retries: max_retries,

@@ -1,0 +1,45 @@
+types:
+  UsernameCursor:
+    properties:
+      cursor: UsernamePage
+  
+  UsernamePage:
+    properties:
+      usernames: list<string>
+      next: optional<string>
+
+  SearchRequest:
+    properties:
+      pagination: optional<StartingAfterPaging>
+
+  StartingAfterPaging:
+    properties:
+      per_page:
+        type: optional<integer>
+        docs: The number of results to fetch per page.
+      starting_after:
+        type: optional<string>
+        docs: The cursor to use in the next request to get the next page of results.
+
+  ResultList:
+    properties:
+      data:
+        type: optional<list<string>>
+        docs: The list of objects
+      total_count:
+        type: optional<integer>
+        docs: A count of the total number of objects.
+      pages: optional<CursorPages>
+
+  CursorPages:
+    properties:
+      page:
+        type: optional<integer>
+        docs: The current page
+      next: optional<StartingAfterPaging>
+      per_page:
+        type: optional<integer>
+        docs: Number of results per page
+      total_pages:
+        type: optional<integer>
+        docs: Total number of pages

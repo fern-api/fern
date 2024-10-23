@@ -17,9 +17,25 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSc
     }
 
     protected doGenerate(): CSharpFile {
+        const serializerAnnotation = csharp.annotation({
+            reference: csharp.classReference({
+                name: "JsonConverter",
+                namespace: "System.Text.Json.Serialization"
+            }),
+            argument: csharp.codeblock((writer) => {
+                writer.write("typeof(");
+                writer.writeNode(csharp.classReference(this.context.getStringEnumSerializerClassReference()));
+                writer.write("<");
+                writer.writeNode(this.classReference);
+                writer.write(">");
+                writer.write(")");
+            })
+        });
+
         const enum_ = csharp.enum_({
             ...this.classReference,
-            access: "public"
+            access: "public",
+            annotations: [serializerAnnotation]
         });
 
         this.enumDeclaration.values.forEach((member) =>
@@ -28,7 +44,11 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSc
 
         return new CSharpFile({
             clazz: enum_,
-            directory: this.context.getDirectoryForTypeId(this.typeDeclaration.name.typeId)
+            directory: this.context.getDirectoryForTypeId(this.typeDeclaration.name.typeId),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 

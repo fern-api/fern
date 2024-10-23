@@ -34,10 +34,13 @@ export const FieldsetProperty = new Property({
     type: GenericClassReference,
     isOptional: true
 });
+
 export declare namespace SerializableObject {
     export type Init = Omit<Class_.Init, "functions" | "includeInitializer" | "expressions">;
 }
 export class SerializableObject extends Class_ {
+    public static INTERNAL_FIELDS = [AdditionalPropertiesProperty.name, FieldsetProperty.name];
+
     constructor(init: SerializableObject.Init) {
         super({
             ...init,
@@ -222,9 +225,12 @@ export class SerializableObject extends Class_ {
 
                     return toJsonIfPresent;
                 } else {
+                    functionUsesParsedJson = true;
                     return new Expression({
                         leftSide: prop.name,
-                        rightSide: parsedJsonVariable.fromJson() ?? structVariable,
+                        // If there's no fromJson on the value, then let's return parsed JSON, as that would remain a hash,
+                        // as opposed to returning the struct, which is what you almost always want.
+                        rightSide: parsedJsonVariable.fromJson() ?? parsedJsonVariable,
                         isAssignment: true
                     });
                 }

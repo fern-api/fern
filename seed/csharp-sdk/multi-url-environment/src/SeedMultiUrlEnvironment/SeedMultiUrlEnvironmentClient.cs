@@ -1,4 +1,7 @@
-using SeedMultiUrlEnvironment;
+using System;
+using SeedMultiUrlEnvironment.Core;
+
+#nullable enable
 
 namespace SeedMultiUrlEnvironment;
 
@@ -6,31 +9,22 @@ public partial class SeedMultiUrlEnvironmentClient
 {
     private RawClient _client;
 
-    public SeedMultiUrlEnvironmentClient(string token, ClientOptions clientOptions)
+    public SeedMultiUrlEnvironmentClient(string? token = null, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>
+            new Dictionary<string, string>()
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
             },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Ec2 = new Ec2Client(_client);
         S3 = new S3Client(_client);
     }
 
-    public Ec2Client Ec2 { get; }
+    public Ec2Client Ec2 { get; init; }
 
-    public S3Client S3 { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public S3Client S3 { get; init; }
 }

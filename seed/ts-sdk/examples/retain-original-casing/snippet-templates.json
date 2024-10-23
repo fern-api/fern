@@ -1,0 +1,1039 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/examples",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "POST",
+            "identifierOverride": "endpoint_.echo"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.echo(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/examples",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/file/notification/{notificationId}",
+            "method": "GET",
+            "identifierOverride": "endpoint_file/notification/service.getException"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.file.notification.service.getException(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "notificationId",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/examples",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/file/{filename}",
+            "method": "GET",
+            "identifierOverride": "endpoint_file/service.getFile"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.file.service.getFile(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "filename",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/examples",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/check/{id}",
+            "method": "GET",
+            "identifierOverride": "endpoint_health/service.check"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.health.service.check(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "id",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/examples",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/ping",
+            "method": "GET",
+            "identifierOverride": "endpoint_health/service.ping"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.health.service.ping()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/examples",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/movie/{movieId}",
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getMovie"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.service.getMovie(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "movieId",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/examples",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/movie",
+            "method": "POST",
+            "identifierOverride": "endpoint_service.createMovie"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.service.createMovie(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t",
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "id: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "id",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "prequel: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "prequel",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "title: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "title",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "from: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "from",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "rating: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "rating",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "tag: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "tag",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "book: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "book",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "metadata: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                    "delimiter": ",\n\t\t\t\t",
+                                                    "keyValueSeparator": ": ",
+                                                    "keyTemplate": {
+                                                        "imports": [],
+                                                        "templateString": "$FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "valueTemplate": {
+                                                        "imports": [],
+                                                        "templateString": "$FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "BODY",
+                                                        "path": "metadata",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "dict"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "revenue: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "revenue",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/examples",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/metadata",
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getMetadata"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.service.getMetadata(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "shallow: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "shallow",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "tag: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "tag",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "X-API-Version: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "HEADERS",
+                                                "path": "X-API-Version",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/examples",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/response",
+            "method": "POST",
+            "identifierOverride": "endpoint_service.getResponse"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.service.getResponse()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

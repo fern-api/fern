@@ -3,6 +3,7 @@
 package api
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/model/custom/fixtures/core"
 	uuid "github.com/google/uuid"
@@ -11,6 +12,29 @@ import (
 type Bar struct {
 	// This is a Foo field.
 	Foo *Foo `json:"foo,omitempty" url:"foo,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (b *Bar) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *Bar) UnmarshalJSON(data []byte) error {
+	type unmarshaler Bar
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Bar(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
+	return nil
 }
 
 func (b *Bar) String() string {
@@ -24,6 +48,29 @@ func (b *Bar) String() string {
 type Foo struct {
 	Id   uuid.UUID `json:"id" url:"id"`
 	Name string    `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (f *Foo) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *Foo) UnmarshalJSON(data []byte) error {
+	type unmarshaler Foo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Foo(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
+	return nil
 }
 
 func (f *Foo) String() string {

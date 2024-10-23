@@ -14,8 +14,12 @@ export declare namespace InlinedRequests {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -25,25 +29,27 @@ export class InlinedRequests {
     /**
      * POST with custom object in request body, response is an object
      *
+     * @param {Fiddle.PostWithObjectBody} request
+     * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await fiddle.inlinedRequests.postWithObjectBodyandResponse({
+     *     await client.inlinedRequests.postWithObjectBodyandResponse({
      *         string: "string",
      *         integer: 1,
      *         nestedObject: {
-     *             string: "string",
-     *             integer: 1,
-     *             long: 1000000,
-     *             double: 1.1,
-     *             bool: true,
-     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
-     *             date: "2023-01-15",
-     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *             base64: "SGVsbG8gd29ybGQh",
-     *             list: ["string"],
-     *             set: new Set(["string"]),
-     *             map: {
-     *                 1: "string"
-     *             }
+     *             string: undefined,
+     *             integer: undefined,
+     *             long: undefined,
+     *             double: undefined,
+     *             bool: undefined,
+     *             datetime: undefined,
+     *             date: undefined,
+     *             uuid: undefined,
+     *             base64: undefined,
+     *             list: undefined,
+     *             set: undefined,
+     *             map: undefined,
+     *             bigint: undefined
      *         }
      *     })
      */
@@ -64,18 +70,21 @@ export class InlinedRequests {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.PostWithObjectBody.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.PostWithObjectBody.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -90,7 +99,7 @@ export class InlinedRequests {
                     return {
                         ok: false,
                         error: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error.badRequestBody(
-                            await serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
+                            serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
                                 unrecognizedObjectKeys: "passthrough",
                                 allowUnrecognizedUnionMembers: true,
                                 allowUnrecognizedEnumValues: true,

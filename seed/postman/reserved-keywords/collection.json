@@ -24,7 +24,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}?for=",
+              "raw": "{{baseUrl}}?for=for",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -32,18 +32,61 @@
               "query": [
                 {
                   "key": "for",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "for"
                 }
               ],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}?for=for",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [],
+                  "query": [
+                    {
+                      "key": "for",
+                      "description": null,
+                      "value": "for"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

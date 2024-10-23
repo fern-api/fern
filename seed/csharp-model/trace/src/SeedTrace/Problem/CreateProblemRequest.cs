@@ -1,28 +1,38 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class CreateProblemRequest
+public record CreateProblemRequest
 {
     [JsonPropertyName("problemName")]
-    public string ProblemName { get; init; }
+    public required string ProblemName { get; set; }
 
     [JsonPropertyName("problemDescription")]
-    public ProblemDescription ProblemDescription { get; init; }
+    public required ProblemDescription ProblemDescription { get; set; }
 
     [JsonPropertyName("files")]
-    public List<Dictionary<Language, ProblemFiles>> Files { get; init; }
+    public Dictionary<Language, ProblemFiles> Files { get; set; } =
+        new Dictionary<Language, ProblemFiles>();
 
     [JsonPropertyName("inputParams")]
-    public List<List<VariableTypeAndName>> InputParams { get; init; }
+    public IEnumerable<VariableTypeAndName> InputParams { get; set; } =
+        new List<VariableTypeAndName>();
 
     [JsonPropertyName("outputType")]
-    public VariableType OutputType { get; init; }
+    public required object OutputType { get; set; }
 
     [JsonPropertyName("testcases")]
-    public List<List<TestCaseWithExpectedResult>> Testcases { get; init; }
+    public IEnumerable<TestCaseWithExpectedResult> Testcases { get; set; } =
+        new List<TestCaseWithExpectedResult>();
 
     [JsonPropertyName("methodName")]
-    public string MethodName { get; init; }
+    public required string MethodName { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -14,8 +14,12 @@ export declare namespace Params {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -25,32 +29,41 @@ export class Params {
     /**
      * GET with path param
      *
+     * @param {string} param
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await fiddle.endpoints.params.getWithPath("string")
+     *     await client.endpoints.params.getWithPath("param")
      */
     public async getWithPath(
         param: string,
         requestOptions?: Params.RequestOptions
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.getWithPath.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path/${param}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/params/path/${encodeURIComponent(param)}`
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.params.getWithPath.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.params.getWithPath.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -68,9 +81,12 @@ export class Params {
     /**
      * GET with query param
      *
+     * @param {Fiddle.endpoints.GetWithQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await fiddle.endpoints.params.getWithQuery({
-     *         query: "string",
+     *     await client.endpoints.params.getWithQuery({
+     *         query: "query",
      *         number: 1
      *     })
      */
@@ -90,13 +106,16 @@ export class Params {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -114,9 +133,12 @@ export class Params {
     /**
      * GET with multiple of same query param
      *
+     * @param {Fiddle.endpoints.GetWithMultipleQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await fiddle.endpoints.params.getWithAllowMultipleQuery({
-     *         query: "string",
+     *     await client.endpoints.params.getWithAllowMultipleQuery({
+     *         query: "query",
      *         numer: 1
      *     })
      */
@@ -146,13 +168,16 @@ export class Params {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -170,9 +195,13 @@ export class Params {
     /**
      * GET with path and query params
      *
+     * @param {string} param
+     * @param {Fiddle.endpoints.GetWithPathAndQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await fiddle.endpoints.params.getWithPathAndQuery("string", {
-     *         query: "string"
+     *     await client.endpoints.params.getWithPathAndQuery("param", {
+     *         query: "query"
      *     })
      */
     public async getWithPathAndQuery(
@@ -184,20 +213,26 @@ export class Params {
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["query"] = query;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path-query/${param}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/params/path-query/${encodeURIComponent(param)}`
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -215,8 +250,12 @@ export class Params {
     /**
      * PUT to update with path param
      *
+     * @param {string} param
+     * @param {string} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await fiddle.endpoints.params.modifyWithPath("string", "string")
+     *     await client.endpoints.params.modifyWithPath("param", "string")
      */
     public async modifyWithPath(
         param: string,
@@ -224,27 +263,33 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithPath.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path/${param}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/params/path/${encodeURIComponent(param)}`
+            ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.params.modifyWithPath.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.params.modifyWithPath.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.params.modifyWithPath.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.params.modifyWithPath.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

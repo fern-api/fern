@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import resources.types.types.Metadata;
 import resources.types.types.Movie;
 import resources.types.types.MovieId;
+import resources.types.types.Response;
 
 @RequestMapping(
     path = "/"
@@ -42,4 +43,10 @@ public interface ServiceService {
   Metadata getMetadata(@RequestHeader("X-API-Version") String xApiVersion,
       @RequestParam("shallow") Optional<Boolean> shallow,
       @RequestParam("tag") Optional<String> tag);
+
+  @PostMapping(
+      value = "/response",
+      produces = "application/json"
+  )
+  Response getResponse();
 }

@@ -1,9 +1,40 @@
-irVersion: v31
-docker: fernapi/fern-java-spring:latest
-dockerCommand: 
-  - cd generators/java
-  - ./gradlew :spring:distTar
-  - docker build -f spring/Dockerfile -t fernapi/fern-java-spring:latest spring/
+irVersion: v46
+displayName: Java Spring
+changelogLocation: ../../generators/java/spring/versions.yml
+image: fernapi/fern-java-spring
+publish:
+  workingDirectory: generators/java
+  preBuildCommands:
+    - cd generators/java
+    - ./gradlew :spring:distTar
+  docker: 
+    file: ./generators/java/spring/Dockerfile
+    image: fernapi/fern-java-spring
+    context: ./generators/java/spring
+test:
+  docker:
+    image: fernapi/fern-java-spring:latest
+    command: 
+      - cd generators/java
+      - ./gradlew :spring:distTar
+      - docker build -f spring/Dockerfile -t fernapi/fern-java-spring:latest spring/
+  local:
+    workingDirectory: generators/java
+    buildCommand:
+      - ./gradlew :spring:distTar
+      - chmod +x install-gradle.sh && ./install-gradle.sh
+      - cd spring
+      - tar -xvf build/distributions/spring.tar -C .
+    runCommand: cd spring/spring && java -cp spring.jar:lib/* com.fern.java.spring.Cli
+    env: {}
+fixtures:
+  imdb:
+    - customConfig:
+        enable-public-constructors: true
+      outputFolder: enable-public-constructors
+    - customConfig:
+        disable-required-property-builder-checks: true
+      outputFolder: disable-required-property-builder-checks
 language: java
 generatorType: Server
 defaultOutputMode: local_files
@@ -14,4 +45,7 @@ allowedFailures:
   - plain-text
   - response-property
   - streaming
-
+  - server-sent-events
+  - server-sent-event-examples
+  - alias-extends
+  - any-auth

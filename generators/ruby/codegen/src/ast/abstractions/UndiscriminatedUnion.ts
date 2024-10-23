@@ -63,7 +63,7 @@ export class UndiscriminatedUnion extends Class_ {
                         new ConditionalStatement({
                             if_: {
                                 leftSide: new FunctionInvocation({
-                                    onObject: jsonObjectParameter.name,
+                                    onObject: "struct",
                                     baseFunction: new Function_({
                                         name: "nil?",
                                         functionBody: []
@@ -74,7 +74,7 @@ export class UndiscriminatedUnion extends Class_ {
                                 expressions: [
                                     new Expression({
                                         leftSide: "return",
-                                        rightSide: sc.fromJson(jsonObjectParameter.name) ?? jsonObjectParameter.name,
+                                        rightSide: sc.fromJson("struct") ?? "struct",
                                         isAssignment: false
                                     })
                                 ]

@@ -1,19 +1,21 @@
 import { assertNever } from "@fern-api/core-utils";
 import { Pagination } from "@fern-api/ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
-import { TypeResolver } from "../../resolvers/TypeResolver";
+import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { convertCursorPagination } from "./convertCursorPagination";
 import { convertOffsetPagination } from "./convertOffsetPagination";
 import { getPaginationPropertyComponents } from "./convertPaginationUtils";
 
 export async function convertPagination({
-    typeResolver,
+    propertyResolver,
     file,
+    endpointName,
     endpointSchema
 }: {
-    typeResolver: TypeResolver;
+    propertyResolver: PropertyResolver;
     file: FernFileContext;
+    endpointName: string;
     endpointSchema: RawSchemas.HttpEndpointSchema;
 }): Promise<Pagination | undefined> {
     const endpointPagination =
@@ -25,15 +27,17 @@ export async function convertPagination({
     switch (paginationPropertyComponents.type) {
         case "cursor":
             return await convertCursorPagination({
-                typeResolver,
+                propertyResolver,
                 file,
+                endpointName,
                 endpointSchema,
                 paginationPropertyComponents
             });
         case "offset":
             return convertOffsetPagination({
-                typeResolver,
+                propertyResolver,
                 file,
+                endpointName,
                 endpointSchema,
                 paginationPropertyComponents
             });

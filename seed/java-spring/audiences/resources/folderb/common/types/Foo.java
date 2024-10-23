@@ -15,20 +15,21 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import resources.folderc.common.types.FolderCFoo;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Foo.Builder.class
 )
 public final class Foo {
-  private final Optional<resources.folderc.common.types.Foo> foo;
+  private final Optional<FolderCFoo> foo;
 
-  private Foo(Optional<resources.folderc.common.types.Foo> foo) {
+  private Foo(Optional<FolderCFoo> foo) {
     this.foo = foo;
   }
 
   @JsonProperty("foo")
-  public Optional<resources.folderc.common.types.Foo> getFoo() {
+  public Optional<FolderCFoo> getFoo() {
     return foo;
   }
 
@@ -60,7 +61,7 @@ public final class Foo {
       ignoreUnknown = true
   )
   public static final class Builder {
-    private Optional<resources.folderc.common.types.Foo> foo = Optional.empty();
+    private Optional<FolderCFoo> foo = Optional.empty();
 
     private Builder() {
     }
@@ -74,13 +75,13 @@ public final class Foo {
         value = "foo",
         nulls = Nulls.SKIP
     )
-    public Builder foo(Optional<resources.folderc.common.types.Foo> foo) {
+    public Builder foo(Optional<FolderCFoo> foo) {
       this.foo = foo;
       return this;
     }
 
-    public Builder foo(resources.folderc.common.types.Foo foo) {
-      this.foo = Optional.of(foo);
+    public Builder foo(FolderCFoo foo) {
+      this.foo = Optional.ofNullable(foo);
       return this;
     }
 

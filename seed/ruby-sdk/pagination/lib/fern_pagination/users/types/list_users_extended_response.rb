@@ -43,14 +43,14 @@ module SeedPaginationClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        total_count = struct["total_count"]
+        total_count = parsed_json["total_count"]
         if parsed_json["data"].nil?
           data = nil
         else
           data = parsed_json["data"].to_json
           data = SeedPaginationClient::Users::UserListContainer.from_json(json_object: data)
         end
-        next_ = struct["next"]
+        next_ = parsed_json["next"]
         new(
           total_count: total_count,
           data: data,

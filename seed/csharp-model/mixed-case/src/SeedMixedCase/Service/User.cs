@@ -1,15 +1,24 @@
 using System.Text.Json.Serialization;
+using SeedMixedCase.Core;
+
+#nullable enable
 
 namespace SeedMixedCase;
 
-public class User
+public record User
 {
     [JsonPropertyName("userName")]
-    public string UserName { get; init; }
+    public required string UserName { get; set; }
 
     [JsonPropertyName("metadata_tags")]
-    public List<List<string>> MetadataTags { get; init; }
+    public IEnumerable<string> MetadataTags { get; set; } = new List<string>();
 
     [JsonPropertyName("EXTRA_PROPERTIES")]
-    public List<Dictionary<string, string>> ExtraProperties { get; init; }
+    public Dictionary<string, string> ExtraProperties { get; set; } =
+        new Dictionary<string, string>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

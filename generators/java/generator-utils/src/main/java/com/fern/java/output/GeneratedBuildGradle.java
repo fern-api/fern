@@ -5,7 +5,6 @@ import com.fern.generator.exec.model.config.CustomLicense;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.generator.exec.model.config.LicenseConfig;
-import com.fern.generator.exec.model.config.OutputMode;
 import com.fern.generator.exec.model.config.PublishingMetadata;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradlePlugin;
@@ -17,8 +16,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import org.immutables.value.Value;
-
-import javax.swing.text.html.Option;
 
 @Value.Immutable
 public abstract class GeneratedBuildGradle extends GeneratedFile {
@@ -133,8 +130,8 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         }
         GeneratorConfig config = generatorConfig().get();
 
-        Optional<String> license = config.getLicense().map(licenseConfig -> licenseConfig.visit(
-                new LicenseConfig.Visitor<String>(){
+        Optional<String> license = config.getLicense()
+                .map(licenseConfig -> licenseConfig.visit(new LicenseConfig.Visitor<String>() {
                     @Override
                     public String visitBasic(BasicLicense basicLicense) {
                         return basicLicense.getId().toString();
@@ -149,22 +146,31 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                     public String visitUnknown(String s) {
                         return null;
                     }
-                }
-        ));
+                }));
 
         Optional<PublishingMetadata> pm = config.getOutput().getPublishingMetadata();
         String organizationName = config.getOrganization();
-        String githubUrl = config.getOutput().getMode().getGithub().map(GithubOutputMode::getRepoUrl).orElseGet(() -> "https://github.com/YOUR-ORG/YOUR-REPO");
+        String githubUrl = config.getOutput()
+                .getMode()
+                .getGithub()
+                .map(GithubOutputMode::getRepoUrl)
+                .orElseGet(() -> "https://github.com/YOUR-ORG/YOUR-REPO");
 
         writer.beginControlFlow("pom");
         if (pm.isPresent() && pm.get().getPublisherName().isPresent() || shouldSignPackage()) {
-            writer.addLine("name = '" + pm.flatMap(PublishingMetadata::getPublisherName).orElseGet(() -> organizationName) + "'");
+            writer.addLine("name = '"
+                    + pm.flatMap(PublishingMetadata::getPublisherName).orElseGet(() -> organizationName) + "'");
         }
         if (pm.isPresent() && pm.get().getPackageDescription().isPresent() || shouldSignPackage()) {
-            writer.addLine("description = '" + pm.flatMap(PublishingMetadata::getPackageDescription).orElseGet(() -> "The official SDK of " + organizationName) + "'");
+            writer.addLine("description = '"
+                    + pm.flatMap(PublishingMetadata::getPackageDescription)
+                            .orElseGet(() -> "The official SDK of " + organizationName)
+                    + "'");
         }
         if (pm.isPresent() && pm.get().getReferenceUrl().isPresent() || shouldSignPackage()) {
-            writer.addLine("url = '" + pm.flatMap(PublishingMetadata::getReferenceUrl).orElseGet(() -> "https://buildwithfern.com") + "'");
+            writer.addLine("url = '"
+                    + pm.flatMap(PublishingMetadata::getReferenceUrl).orElseGet(() -> "https://buildwithfern.com")
+                    + "'");
         }
 
         if (license.isPresent()) {
@@ -175,11 +181,18 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
             writer.endControlFlow();
         }
 
-        if (pm.isPresent() && (pm.get().getPublisherName().isPresent() || pm.get().getPublisherEmail().isPresent()) || shouldSignPackage()) {
+        if (pm.isPresent()
+                        && (pm.get().getPublisherName().isPresent()
+                                || pm.get().getPublisherEmail().isPresent())
+                || shouldSignPackage()) {
             writer.beginControlFlow("developers");
             writer.beginControlFlow("developer");
-            writer.addLine("name = '" + pm.flatMap(PublishingMetadata::getPublisherName).orElseGet(() -> organizationName) + "'");
-            writer.addLine("email = '" + pm.flatMap(PublishingMetadata::getPublisherEmail).orElseGet(() -> "developers@" + organizationName + ".com") + "'");
+            writer.addLine("name = '"
+                    + pm.flatMap(PublishingMetadata::getPublisherName).orElseGet(() -> organizationName) + "'");
+            writer.addLine("email = '"
+                    + pm.flatMap(PublishingMetadata::getPublisherEmail)
+                            .orElseGet(() -> "developers@" + organizationName + ".com")
+                    + "'");
             writer.endControlFlow();
             writer.endControlFlow();
         }

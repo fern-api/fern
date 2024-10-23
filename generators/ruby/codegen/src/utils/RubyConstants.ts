@@ -1,5 +1,6 @@
 export const SERVICES_DIRECTORY = "service";
 export const TYPES_DIRECTORY = "types";
+export const TYPES_MODULE = "Types";
 
 export const BLOCK_END = "end";
 // Expected at the beginning of all files

@@ -1,13 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class GradedTestCaseUpdate
+public record GradedTestCaseUpdate
 {
     [JsonPropertyName("testCaseId")]
-    public string TestCaseId { get; init; }
+    public required string TestCaseId { get; set; }
 
     [JsonPropertyName("grade")]
-    public TestCaseGrade Grade { get; init; }
+    public required object Grade { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

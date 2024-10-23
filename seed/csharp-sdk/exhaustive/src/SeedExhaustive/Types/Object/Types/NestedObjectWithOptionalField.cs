@@ -1,13 +1,15 @@
 using System.Text.Json.Serialization;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive.Types;
 
-public class NestedObjectWithOptionalField
+public record NestedObjectWithOptionalField
 {
     [JsonPropertyName("string")]
-    public List<string?> String { get; init; }
+    public string? String { get; }
 
     [JsonPropertyName("NestedObject")]
-    public List<ObjectWithOptionalField?> NestedObject { get; init; }
+    public ObjectWithOptionalField? NestedObject { get; }
 }

@@ -10,13 +10,15 @@ export function buildUrl({
     generatedClientClass,
     context,
     includeSerdeLayer,
-    retainOriginalCasing
+    retainOriginalCasing,
+    omitUndefined
 }: {
     endpoint: HttpEndpoint;
     generatedClientClass: GeneratedSdkClientClassImpl;
     context: SdkContext;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
+    omitUndefined: boolean;
 }): ts.Expression | undefined {
     if (endpoint.allPathParameters.length === 0) {
         if (endpoint.fullPath.head.length === 0) {
@@ -51,12 +53,15 @@ export function buildUrl({
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
-                        breadcrumbsPrefix: []
+                        breadcrumbsPrefix: [],
+                        omitUndefined
                     });
             }
 
             return ts.factory.createTemplateSpan(
-                referenceToPathParameterValue,
+                ts.factory.createCallExpression(ts.factory.createIdentifier("encodeURIComponent"), undefined, [
+                    referenceToPathParameterValue
+                ]),
                 index === endpoint.fullPath.parts.length - 1
                     ? ts.factory.createTemplateTail(part.tail)
                     : ts.factory.createTemplateMiddle(part.tail)

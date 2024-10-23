@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/inlined",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_inlined-request.send"
             },
             "snippet": {
                 "type": "go",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_path-param.send"
             },
             "snippet": {
                 "type": "go",
@@ -22,8 +24,20 @@
         },
         {
             "id": {
+                "path": "/query-list",
+                "method": "POST",
+                "identifier_override": "endpoint_query-param.sendList"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.QueryParam.SendList(\n\tcontext.TODO(),\n\t\u0026fern.SendEnumListAsQueryParamRequest{\n\t\tOperand: []fern.Operand{\n\t\t\tfern.OperandGreaterThan,\n\t\t},\n\t\tOperandOrColor: []*fern.ColorOrOperand{\n\t\t\tfern.NewColorOrOperandFromColor(\n\t\t\t\tfern.ColorRed,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/query",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_query-param.send"
             },
             "snippet": {
                 "type": "go",

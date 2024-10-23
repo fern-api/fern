@@ -1,24 +1,24 @@
-import { isPlainObject } from "@fern-api/core-utils";
+import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import {
-    ExampleCodeSample,
     ExampleEndpointCall,
+    ExampleEndpointSuccessResponse,
     ExampleHeader,
     ExampleInlinedRequestBodyProperty,
     ExamplePathParameter,
+    ExampleQueryParameterShape,
     ExampleRequestBody,
     ExampleResponse,
-    HttpEndpointExample,
-    Name,
-    SupportedSdkLanguage
+    Name
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import {
     isInlineRequestBody,
     parseBytesRequest,
     parseRawFileType,
     RawSchemas,
-    visitExampleCodeSampleSchema
-} from "@fern-api/yaml-schema";
+    visitExampleResponseSchema
+} from "@fern-api/fern-definition-schema";
+import crypto from "crypto";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -32,6 +32,12 @@ import {
 import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
 import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService";
 import { getQueryParameterName } from "./convertQueryParameter";
+import urlJoin from "url-join";
+
+function hashJSON(obj: unknown): string {
+    const jsonString = JSON.stringify(obj);
+    return crypto.createHash("sha256").update(jsonString).digest("hex");
+}
 
 export function convertExampleEndpointCall({
     service,
@@ -53,7 +59,7 @@ export function convertExampleEndpointCall({
     variableResolver: VariableResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): HttpEndpointExample {
+}): ExampleEndpointCall {
     const convertedPathParameters = convertPathParameters({
         service,
         endpoint,
@@ -64,10 +70,11 @@ export function convertExampleEndpointCall({
         file,
         workspace
     });
-    return HttpEndpointExample.userProvided({
+    return {
+        id: example.name ?? hashJSON(example),
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
-        url: buildUrl({ service, endpoint, example, pathParams: convertedPathParameters }),
+        url: buildUrl({ file, service, endpoint, example, pathParams: convertedPathParameters }),
         ...convertedPathParameters,
         ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file, workspace }),
         queryParameters:
@@ -99,7 +106,8 @@ export function convertExampleEndpointCall({
                               fileContainingRawTypeReference: file,
                               fileContainingExample: file,
                               workspace
-                          })
+                          }),
+                          shape: getQueryParamaterDeclationShape({ queryParameter: queryParameterDeclaration })
                       };
                   })
                 : [],
@@ -112,53 +120,16 @@ export function convertExampleEndpointCall({
             exampleResolver,
             file,
             workspace
-        }),
-        codeSamples: example["code-samples"]?.map((codeSample) => {
-            return visitExampleCodeSampleSchema<ExampleCodeSample>(codeSample, {
-                language: (languageScheme) =>
-                    ExampleCodeSample.language({
-                        name:
-                            languageScheme.name != null
-                                ? file.casingsGenerator.generateName(languageScheme.name)
-                                : undefined,
-                        docs: languageScheme.docs,
-                        language: languageScheme.language,
-                        code: languageScheme.code,
-                        install: languageScheme.install
-                    }),
-                sdk: (sdkScheme) =>
-                    ExampleCodeSample.sdk({
-                        name: sdkScheme.name != null ? file.casingsGenerator.generateName(sdkScheme.name) : undefined,
-                        docs: sdkScheme.docs,
-                        sdk: removeSdkAlias(sdkScheme.sdk),
-                        code: sdkScheme.code
-                    })
-            });
         })
-    });
+    };
 }
 
-function removeSdkAlias(sdk: RawSchemas.SupportedSdkLanguageSchema): SupportedSdkLanguage {
-    switch (sdk) {
-        case "js":
-            return "javascript";
-        case "node":
-            return "javascript";
-        case "ts":
-            return "typescript";
-        case "nodets":
-            return "typescript";
-        case "golang":
-            return "go";
-        case "dotnet":
-            return "csharp";
-        case "c#":
-            return "csharp";
-        case "jvm":
-            return "java";
-        default:
-            return sdk;
-    }
+function getQueryParamaterDeclationShape({ queryParameter }: { queryParameter: RawSchemas.HttpQueryParameterSchema }) {
+    const isAllowMultiple =
+        typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
+            ? queryParameter["allow-multiple"]
+            : false;
+    return isAllowMultiple ? ExampleQueryParameterShape.exploded() : ExampleQueryParameterShape.single();
 }
 
 function convertPathParameters({
@@ -319,7 +290,7 @@ function convertHeaders({
                     })
                 });
             } else {
-                throw new Error(`Heder ${wireKey} does not exist`);
+                throw new Error(`Header ${wireKey} does not exist`);
             }
         }
     }
@@ -464,30 +435,95 @@ function convertExampleResponse({
     file: FernFileContext;
     workspace: FernWorkspace;
 }): ExampleResponse {
-    if (example.response?.error != null) {
-        const errorDeclaration = errorResolver.getDeclarationOrThrow(example.response.error, file);
-        return ExampleResponse.error({
-            error: parseErrorName({
-                errorName: example.response.error,
-                file
-            }),
-            body:
-                errorDeclaration.declaration.type != null
-                    ? convertTypeReferenceExample({
-                          example: example.response.body,
-                          rawTypeBeingExemplified: errorDeclaration.declaration.type,
-                          typeResolver,
-                          exampleResolver,
-                          fileContainingRawTypeReference: errorDeclaration.file,
-                          fileContainingExample: file,
-                          workspace
-                      })
-                    : undefined
-        });
+    if (example.response == null) {
+        return ExampleResponse.ok(ExampleEndpointSuccessResponse.body(undefined));
     }
+    return visitExampleResponseSchema(endpoint, example.response, {
+        body: (example) => {
+            if (example.error != null) {
+                const errorDeclaration = errorResolver.getDeclarationOrThrow(example.error, file);
+                return ExampleResponse.error({
+                    error: parseErrorName({
+                        errorName: example.error,
+                        file
+                    }),
+                    body:
+                        errorDeclaration.declaration.type != null
+                            ? convertTypeReferenceExample({
+                                  example: example.body,
+                                  rawTypeBeingExemplified: errorDeclaration.declaration.type,
+                                  typeResolver,
+                                  exampleResolver,
+                                  fileContainingRawTypeReference: errorDeclaration.file,
+                                  fileContainingExample: file,
+                                  workspace
+                              })
+                            : undefined
+                });
+            }
 
-    return ExampleResponse.ok({
-        body: convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file, workspace })
+            return ExampleResponse.ok(
+                ExampleEndpointSuccessResponse.body(
+                    convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file, workspace })
+                )
+            );
+        },
+        stream: (example) => {
+            const rawTypeBeingExemplified =
+                typeof endpoint["response-stream"] === "string"
+                    ? endpoint["response-stream"]
+                    : endpoint["response-stream"]?.type;
+            return ExampleResponse.ok(
+                ExampleEndpointSuccessResponse.stream(
+                    example.stream
+                        .map((data) => {
+                            if (rawTypeBeingExemplified == null) {
+                                return undefined;
+                            }
+
+                            return convertTypeReferenceExample({
+                                example: data,
+                                rawTypeBeingExemplified,
+                                typeResolver,
+                                exampleResolver,
+                                fileContainingRawTypeReference: file,
+                                fileContainingExample: file,
+                                workspace
+                            });
+                        })
+                        .filter(isNonNullish)
+                )
+            );
+        },
+        events: (example) => {
+            const rawTypeBeingExemplified =
+                typeof endpoint["response-stream"] === "string"
+                    ? endpoint["response-stream"]
+                    : endpoint["response-stream"]?.type;
+            return ExampleResponse.ok(
+                ExampleEndpointSuccessResponse.sse(
+                    example.stream
+                        .map(({ event, data }) => {
+                            if (rawTypeBeingExemplified == null) {
+                                return undefined;
+                            }
+
+                            const convertedExample = convertTypeReferenceExample({
+                                example: data,
+                                rawTypeBeingExemplified,
+                                typeResolver,
+                                exampleResolver,
+                                fileContainingRawTypeReference: file,
+                                fileContainingExample: file,
+                                workspace
+                            });
+
+                            return { event, data: convertedExample };
+                        })
+                        .filter(isNonNullish)
+                )
+            );
+        }
     });
 }
 
@@ -500,7 +536,7 @@ function convertExampleResponseBody({
     workspace
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
-    example: RawSchemas.ExampleEndpointCallSchema;
+    example: RawSchemas.ExampleBodyResponseSchema;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     file: FernFileContext;
@@ -510,11 +546,11 @@ function convertExampleResponseBody({
     if (responseBodyType == null) {
         return undefined;
     }
-    if (example.response?.body == null) {
+    if (example.body == null) {
         return undefined;
     }
     return convertTypeReferenceExample({
-        example: example.response.body,
+        example: example.body,
         rawTypeBeingExemplified: responseBodyType,
         typeResolver,
         exampleResolver,
@@ -525,17 +561,19 @@ function convertExampleResponseBody({
 }
 
 function buildUrl({
+    file,
     service,
     endpoint,
     example,
     pathParams
 }: {
+    file: FernFileContext;
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
     pathParams: Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters">;
 }): string {
-    let url = service["base-path"] + endpoint.path;
+    let url = urlJoin(file.rootApiFile["base-path"] ?? "", service["base-path"], endpoint.path);
     if (example["path-parameters"] != null) {
         for (const parameter of [
             ...pathParams.endpointPathParameters,
@@ -545,6 +583,12 @@ function buildUrl({
             // TODO: should we URL encode the value?
             url = url.replaceAll(`{${parameter.name.originalName}}`, `${parameter.value.jsonExample}`);
         }
+    }
+    // urlJoin has some bugs where it may miss forward slash concatting https://github.com/jfromaniello/url-join/issues/42
+    url = url.replaceAll("//", "/");
+    // for backwards compatiblity we always make sure that the url stats with a slash
+    if (!url.startsWith("/")) {
+        url = `/${url}`;
     }
     return url;
 }

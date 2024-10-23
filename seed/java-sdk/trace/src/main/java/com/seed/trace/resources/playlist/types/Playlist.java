@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Playlist.Builder.class)
 public final class Playlist implements IPlaylistCreateRequest {
     private final String name;
@@ -99,17 +100,17 @@ public final class Playlist implements IPlaylistCreateRequest {
     }
 
     public interface NameStage {
-        PlaylistIdStage name(String name);
+        PlaylistIdStage name(@NotNull String name);
 
         Builder from(Playlist other);
     }
 
     public interface PlaylistIdStage {
-        OwnerIdStage playlistId(String playlistId);
+        OwnerIdStage playlistId(@NotNull String playlistId);
     }
 
     public interface OwnerIdStage {
-        _FinalStage ownerId(String ownerId);
+        _FinalStage ownerId(@NotNull String ownerId);
     }
 
     public interface _FinalStage {
@@ -148,22 +149,22 @@ public final class Playlist implements IPlaylistCreateRequest {
 
         @java.lang.Override
         @JsonSetter("name")
-        public PlaylistIdStage name(String name) {
-            this.name = name;
+        public PlaylistIdStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("playlist_id")
-        public OwnerIdStage playlistId(String playlistId) {
-            this.playlistId = playlistId;
+        public OwnerIdStage playlistId(@NotNull String playlistId) {
+            this.playlistId = Objects.requireNonNull(playlistId, "playlistId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("owner-id")
-        public _FinalStage ownerId(String ownerId) {
-            this.ownerId = ownerId;
+        public _FinalStage ownerId(@NotNull String ownerId) {
+            this.ownerId = Objects.requireNonNull(ownerId, "ownerId must not be null");
             return this;
         }
 

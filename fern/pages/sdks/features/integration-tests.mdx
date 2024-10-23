@@ -1,6 +1,6 @@
 ---
 title: Integration Tests
-excerpt: Test your SDK against a mock server
+description: Test your SDK against a mock server
 ---
 
 <Warning title='Pro Feature'>
@@ -53,7 +53,7 @@ if no tests fail.
 
 ### Adding additional tests
 
-If you would like to add additional tests, you can do so by commiting them 
+If you would like to add additional tests, you can do so by committing them 
 directly to the generated SDK repositories. Note that you will need to 
 add the test files to your `.fernignore` file to prevent them from being
 overwritten by Fern.
@@ -81,10 +81,10 @@ overwritten by Fern.
       ```
 
       ### `.fernignore` your test file
-      ```yaml .fernignore
+      ```yaml .fernignore {3}
       # Specify any files that shouldn't be modified by Fern
 
-      + tests/custom.test.ts
+      tests/custom.test.ts
       ```
     </Steps>
   </Tab>
@@ -107,10 +107,50 @@ overwritten by Fern.
           ```
 
           ### `.fernignore` your test file
-          ```yaml .fernignore
+          ```yaml .fernignore {3}
             # Specify any files that shouldn't be modified by Fern
-          + tests/test_custom.py
+            
+          tests/test_custom.py
           ```
         </Steps>
   </Tab>
+      <Tab title="Java">
+      <Steps>
+          ### Create `src/test/java/com/example/MyClientTest.java`
+
+          ```java
+          package com.example;
+
+          import static org.junit.jupiter.api.Assertions.assertEquals;
+          import org.junit.jupiter.api.Test;
+          import com.example.MyClient;
+
+          public class MyClientTest {
+
+            @Test
+            public void testSomething() {
+              MyClient client = new MyClient();
+              var response = client.getResource().get();
+              assertEquals("something", response.getSomething());
+            }
+
+          }
+          ```
+
+          ### Run your test
+
+          ```bash
+          ./gradlew test --tests com.example.MyClientTest
+          ```
+
+          ### `.fernignore` your test file
+          
+          ```yaml .fernignore {3}
+          # Specify any files that shouldn't be modified by Fern
+          
+          src/test/java/com/example/MyClientTest.java
+          ```
+        </Steps>
+  </Tab>
+  
 </Tabs>

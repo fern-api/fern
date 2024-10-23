@@ -16,9 +16,10 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.ProblemId;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = InitializeProblemRequest.Builder.class
 )
@@ -67,7 +68,7 @@ public final class InitializeProblemRequest {
   }
 
   public interface ProblemIdStage {
-    _FinalStage problemId(ProblemId problemId);
+    _FinalStage problemId(@NotNull ProblemId problemId);
 
     Builder from(InitializeProblemRequest other);
   }
@@ -100,14 +101,14 @@ public final class InitializeProblemRequest {
 
     @java.lang.Override
     @JsonSetter("problemId")
-    public _FinalStage problemId(ProblemId problemId) {
-      this.problemId = problemId;
+    public _FinalStage problemId(@NotNull ProblemId problemId) {
+      this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
       return this;
     }
 
     @java.lang.Override
     public _FinalStage problemVersion(Integer problemVersion) {
-      this.problemVersion = Optional.of(problemVersion);
+      this.problemVersion = Optional.ofNullable(problemVersion);
       return this;
     }
 

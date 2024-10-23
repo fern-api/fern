@@ -14,8 +14,9 @@ import com.seed.mixedCase.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListResourcesRequest.Builder.class)
 public final class ListResourcesRequest {
     private final int pageLimit;
@@ -76,7 +77,7 @@ public final class ListResourcesRequest {
     }
 
     public interface BeforeDateStage {
-        _FinalStage beforeDate(String beforeDate);
+        _FinalStage beforeDate(@NotNull String beforeDate);
     }
 
     public interface _FinalStage {
@@ -110,8 +111,8 @@ public final class ListResourcesRequest {
 
         @java.lang.Override
         @JsonSetter("beforeDate")
-        public _FinalStage beforeDate(String beforeDate) {
-            this.beforeDate = beforeDate;
+        public _FinalStage beforeDate(@NotNull String beforeDate) {
+            this.beforeDate = Objects.requireNonNull(beforeDate, "beforeDate must not be null");
             return this;
         }
 

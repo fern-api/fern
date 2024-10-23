@@ -16,9 +16,10 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.VariableType;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = VoidFunctionSignatureThatTakesActualResult.Builder.class
 )
@@ -68,7 +69,7 @@ public final class VoidFunctionSignatureThatTakesActualResult {
   }
 
   public interface ActualResultTypeStage {
-    _FinalStage actualResultType(VariableType actualResultType);
+    _FinalStage actualResultType(@NotNull VariableType actualResultType);
 
     Builder from(VoidFunctionSignatureThatTakesActualResult other);
   }
@@ -103,8 +104,8 @@ public final class VoidFunctionSignatureThatTakesActualResult {
 
     @java.lang.Override
     @JsonSetter("actualResultType")
-    public _FinalStage actualResultType(VariableType actualResultType) {
-      this.actualResultType = actualResultType;
+    public _FinalStage actualResultType(@NotNull VariableType actualResultType) {
+      this.actualResultType = Objects.requireNonNull(actualResultType, "actualResultType must not be null");
       return this;
     }
 

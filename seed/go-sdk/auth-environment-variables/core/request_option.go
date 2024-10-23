@@ -5,6 +5,8 @@ package core
 import (
 	fmt "fmt"
 	http "net/http"
+	url "net/url"
+	os "os"
 )
 
 // RequestOption adapts the behavior of the client or an individual request.
@@ -17,12 +19,15 @@ type RequestOption interface {
 // This type is primarily used by the generated code and is not meant
 // to be used directly; use the option package instead.
 type RequestOptions struct {
-	BaseURL        string
-	HTTPClient     HTTPClient
-	HTTPHeader     http.Header
-	MaxAttempts    uint
-	ApiKey         string
-	XAnotherHeader string
+	BaseURL         string
+	HTTPClient      HTTPClient
+	HTTPHeader      http.Header
+	BodyProperties  map[string]interface{}
+	QueryParameters url.Values
+	MaxAttempts     uint
+	ApiKey          string
+	XAnotherHeader  string
+	XApiVersion     string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -31,7 +36,9 @@ type RequestOptions struct {
 // to be used directly; use RequestOption instead.
 func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 	options := &RequestOptions{
-		HTTPHeader: make(http.Header),
+		HTTPHeader:      make(http.Header),
+		BodyProperties:  make(map[string]interface{}),
+		QueryParameters: make(url.Values),
 	}
 	for _, opt := range opts {
 		opt.applyRequestOptions(options)
@@ -47,6 +54,11 @@ func (r *RequestOptions) ToHeader() http.Header {
 		header.Set("X-FERN-API-KEY", fmt.Sprintf("%v", r.ApiKey))
 	}
 	header.Set("X-Another-Header", fmt.Sprintf("%v", r.XAnotherHeader))
+	xApiVersion := fmt.Sprintf("%v", "01-01-2000")
+	if envValue := os.Getenv("VERSION"); envValue != "" {
+		xApiVersion = envValue
+	}
+	header.Set("X-API-Version", xApiVersion)
 	return header
 }
 
@@ -85,6 +97,24 @@ func (h *HTTPHeaderOption) applyRequestOptions(opts *RequestOptions) {
 	opts.HTTPHeader = h.HTTPHeader
 }
 
+// BodyPropertiesOption implements the RequestOption interface.
+type BodyPropertiesOption struct {
+	BodyProperties map[string]interface{}
+}
+
+func (b *BodyPropertiesOption) applyRequestOptions(opts *RequestOptions) {
+	opts.BodyProperties = b.BodyProperties
+}
+
+// QueryParametersOption implements the RequestOption interface.
+type QueryParametersOption struct {
+	QueryParameters url.Values
+}
+
+func (q *QueryParametersOption) applyRequestOptions(opts *RequestOptions) {
+	opts.QueryParameters = q.QueryParameters
+}
+
 // MaxAttemptsOption implements the RequestOption interface.
 type MaxAttemptsOption struct {
 	MaxAttempts uint
@@ -110,4 +140,13 @@ type XAnotherHeaderOption struct {
 
 func (x *XAnotherHeaderOption) applyRequestOptions(opts *RequestOptions) {
 	opts.XAnotherHeader = x.XAnotherHeader
+}
+
+// XApiVersionOption implements the RequestOption interface.
+type XApiVersionOption struct {
+	XApiVersion string
+}
+
+func (x *XApiVersionOption) applyRequestOptions(opts *RequestOptions) {
+	opts.XApiVersion = x.XApiVersion
 }

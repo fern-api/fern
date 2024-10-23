@@ -3,13 +3,15 @@
  */
 package com.seed.fileUpload.resources.service;
 
-import com.seed.fileUpload.core.ApiError;
 import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.ObjectMappers;
 import com.seed.fileUpload.core.RequestOptions;
+import com.seed.fileUpload.core.SeedFileUploadApiException;
+import com.seed.fileUpload.core.SeedFileUploadException;
 import com.seed.fileUpload.resources.service.requests.JustFileRequet;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequet;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
+import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,6 +24,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class ServiceClient {
     protected final ClientOptions clientOptions;
@@ -53,29 +56,31 @@ public class ServiceClient {
             }
             body.addFormDataPart("integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getInteger()));
             String fileMimeType = Files.probeContentType(file.toPath());
-            MediaType fileMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMediaType, file));
+            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
             String fileListMimeType = Files.probeContentType(fileList.toPath());
-            MediaType fileListMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
-            body.addFormDataPart("fileList", fileList.getName(), RequestBody.create(fileListMediaType, fileList));
+            MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
+            body.addFormDataPart(
+                    "fileList", fileList.getName(), RequestBody.create(fileListMimeTypeMediaType, fileList));
             if (maybeFile.isPresent()) {
                 String maybeFileMimeType =
                         Files.probeContentType(maybeFile.get().toPath());
-                MediaType maybeFileMediaType = maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
+                MediaType maybeFileMimeTypeMediaType =
+                        maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
                 body.addFormDataPart(
                         "maybeFile",
                         maybeFile.get().getName(),
-                        RequestBody.create(maybeFileMediaType, maybeFile.get()));
+                        RequestBody.create(maybeFileMimeTypeMediaType, maybeFile.get()));
             }
             if (maybeFileList.isPresent()) {
                 String maybeFileListMimeType =
                         Files.probeContentType(maybeFileList.get().toPath());
-                MediaType maybeFileListMediaType =
+                MediaType maybeFileListMimeTypeMediaType =
                         maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
                 body.addFormDataPart(
                         "maybeFileList",
                         maybeFileList.get().getName(),
-                        RequestBody.create(maybeFileListMediaType, maybeFileList.get()));
+                        RequestBody.create(maybeFileListMimeTypeMediaType, maybeFileList.get()));
             }
             if (request.getMaybeInteger().isPresent()) {
                 body.addFormDataPart(
@@ -88,6 +93,20 @@ public class ServiceClient {
             }
             body.addFormDataPart(
                     "listOfObjects", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getListOfObjects()));
+            if (request.getOptionalMetadata().isPresent()) {
+                body.addFormDataPart(
+                        "optionalMetadata",
+                        ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalMetadata()));
+            }
+            if (request.getOptionalObjectType().isPresent()) {
+                body.addFormDataPart(
+                        "optionalObjectType",
+                        ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalObjectType()));
+            }
+            if (request.getOptionalId().isPresent()) {
+                body.addFormDataPart(
+                        "optionalId", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalId()));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -96,20 +115,22 @@ public class ServiceClient {
                 .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return;
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedFileUploadApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
     }
 
@@ -125,8 +146,8 @@ public class ServiceClient {
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             String fileMimeType = Files.probeContentType(file.toPath());
-            MediaType fileMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMediaType, file));
+            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -135,20 +156,22 @@ public class ServiceClient {
                 .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return;
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedFileUploadApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
     }
 
@@ -177,8 +200,8 @@ public class ServiceClient {
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             String fileMimeType = Files.probeContentType(file.toPath());
-            MediaType fileMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMediaType, file));
+            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -187,20 +210,65 @@ public class ServiceClient {
                 .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return;
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedFileUploadApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
+            throw new SeedFileUploadException("Network error executing HTTP request", e);
+        }
+    }
+
+    public void withContentType(File file, WithContentTypeRequest request) {
+        withContentType(file, request, null);
+    }
+
+    public void withContentType(File file, WithContentTypeRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("with-content-type")
+                .build();
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        try {
+            String fileMimeType = Files.probeContentType(file.toPath());
+            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
+            body.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
+        } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body.build())
+                .headers(Headers.of(clientOptions.headers(requestOptions)));
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return;
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedFileUploadApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
     }
 }

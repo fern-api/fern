@@ -1,19 +1,26 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class TestSubmissionState
+public record TestSubmissionState
 {
     [JsonPropertyName("problemId")]
-    public string ProblemId { get; init; }
+    public required string ProblemId { get; set; }
 
     [JsonPropertyName("defaultTestCases")]
-    public List<List<TestCase>> DefaultTestCases { get; init; }
+    public IEnumerable<TestCase> DefaultTestCases { get; set; } = new List<TestCase>();
 
     [JsonPropertyName("customTestCases")]
-    public List<List<TestCase>> CustomTestCases { get; init; }
+    public IEnumerable<TestCase> CustomTestCases { get; set; } = new List<TestCase>();
 
     [JsonPropertyName("status")]
-    public TestSubmissionStatus Status { get; init; }
+    public required object Status { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-api/core-utils";
-import { FernWorkspace } from "@fern-api/workspace-loader";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { getUnionDiscriminant } from "../converters/type-declarations/convertDiscriminatedUnionTypeDeclaration";
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
@@ -17,7 +17,8 @@ export function validateUnionExample({
     typeResolver,
     exampleResolver,
     file,
-    workspace
+    workspace,
+    breadcrumbs
 }: {
     typeName: string;
     rawUnion: RawSchemas.DiscriminatedUnionSchema;
@@ -26,6 +27,7 @@ export function validateUnionExample({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
+    breadcrumbs: string[];
 }): ExampleViolation[] {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");
@@ -85,7 +87,8 @@ export function validateUnionExample({
             example: nonDiscriminantPropertyExamples,
             typeResolver,
             exampleResolver,
-            workspace
+            workspace,
+            breadcrumbs
         });
     }
 
@@ -114,7 +117,8 @@ export function validateUnionExample({
                 typeResolver,
                 exampleResolver,
                 file,
-                workspace
+                workspace,
+                breadcrumbs
             })
         );
     }

@@ -1,9 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace.V2.V3;
 
-public class TestCaseExpects
+public record TestCaseExpects
 {
     [JsonPropertyName("expectedStdout")]
-    public List<string?> ExpectedStdout { get; init; }
+    public string? ExpectedStdout { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

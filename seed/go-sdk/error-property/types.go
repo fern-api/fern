@@ -11,7 +11,12 @@ import (
 type PropertyBasedErrorTestBody struct {
 	Message string `json:"message" url:"message"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (p *PropertyBasedErrorTestBody) GetExtraProperties() map[string]interface{} {
+	return p.extraProperties
 }
 
 func (p *PropertyBasedErrorTestBody) UnmarshalJSON(data []byte) error {
@@ -21,6 +26,13 @@ func (p *PropertyBasedErrorTestBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = PropertyBasedErrorTestBody(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+
 	p._rawJSON = json.RawMessage(data)
 	return nil
 }

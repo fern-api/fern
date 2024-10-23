@@ -1,0 +1,22 @@
+{
+    "types": {
+        "type_:AliasType": "from seed import Parent\n\nParent(\n    parent=\"Property from the parent\",\n)\n",
+        "type_:Parent": "from seed import Parent\n\nParent(\n    parent=\"Property from the parent\",\n)\n",
+        "type_:Child": "from seed import Child\n\nChild(\n    parent=\"Property from the parent\",\n    child=\"Property from the child\",\n)\n"
+    },
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/extends/extended-inline-request-body",
+                "method": "POST",
+                "identifier_override": "endpoint_.extendedInlineRequestBody"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedAliasExtends\n\nclient = SeedAliasExtends(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.extended_inline_request_body(\n    child=\"child\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAliasExtends\n\nclient = AsyncSeedAliasExtends(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.extended_inline_request_body(\n        child=\"child\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

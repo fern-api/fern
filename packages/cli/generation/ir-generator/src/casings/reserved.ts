@@ -1,6 +1,74 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { upperFirst } from "lodash-es";
 
 export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<string>> = {
+    [generatorsYml.GenerationLanguage.PHP]: new Set(
+        [
+            "abstract",
+            "and",
+            "as",
+            "break",
+            "callable",
+            "case",
+            "catch",
+            "class",
+            "clone",
+            "const",
+            "continue",
+            "declare",
+            "default",
+            "do",
+            "echo",
+            "else",
+            "elseif",
+            "enddeclare",
+            "endfor",
+            "endforeach",
+            "endif",
+            "endswitch",
+            "endwhile",
+            "extends",
+            "final",
+            "finally",
+            "fn",
+            "for",
+            "foreach",
+            "function",
+            "global",
+            "goto",
+            "if",
+            "implements",
+            "include",
+            "include_once",
+            "instanceof",
+            "insteadof",
+            "interface",
+            "match",
+            "namespace",
+            "new",
+            "or",
+            "parent",
+            "Parent",
+            "print",
+            "private",
+            "protected",
+            "public",
+            "readonly",
+            "require",
+            "require_once",
+            "return",
+            "static",
+            "switch",
+            "throw",
+            "trait",
+            "try",
+            "use",
+            "var",
+            "while",
+            "xor",
+            "yield"
+        ].flatMap((str) => [str, upperFirst(str)])
+    ),
     [generatorsYml.GenerationLanguage.TYPESCRIPT]: new Set([
         "any",
         "as",
@@ -262,7 +330,11 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "until",
         "when",
         "while",
-        "yield"
+        "yield",
+        "Object",
+        "JSON",
+        "Date",
+        "DateTime"
     ]),
     [generatorsYml.GenerationLanguage.CSHARP]: new Set([
         "abstract",
@@ -385,5 +457,7 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "where",
         "with",
         "yield"
-    ])
+    ]),
+    // TODO(mikemilla): add reserved keywords for Swift
+    [generatorsYml.GenerationLanguage.SWIFT]: new Set([])
 };

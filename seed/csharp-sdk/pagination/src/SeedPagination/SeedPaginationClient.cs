@@ -1,4 +1,6 @@
-using SeedPagination;
+using SeedPagination.Core;
+
+#nullable enable
 
 namespace SeedPagination;
 
@@ -6,24 +8,28 @@ public partial class SeedPaginationClient
 {
     private RawClient _client;
 
-    public SeedPaginationClient(string token, ClientOptions clientOptions)
+    public SeedPaginationClient(string token, ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedPagination" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernpagination/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         Users = new UsersClient(_client);
     }
 
-    public UsersClient Users { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public UsersClient Users { get; init; }
 }

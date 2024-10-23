@@ -1,12 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedAlias.Core;
+
+#nullable enable
 
 namespace SeedAlias;
 
-public class Type
+public record Type
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

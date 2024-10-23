@@ -1,0 +1,85 @@
+---
+title: Live transfer
+slug: tutorials/live-transfer
+---
+
+
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/livetransfer.jpg" />
+
+## Introduction
+
+Implementing live transfer in your AI-powered phone calls enhances flexibility and customer experience. This guide will explain how to set up a live transfer during a call using Bland AI.
+
+## Step 1: Understand Live Transfer
+
+Live transfer allows the AI agent to transfer the call to a human representative under certain conditions. This is crucial for scenarios where human intervention is preferred.
+
+## Step 2: Setup Your Authorization
+
+Before initiating a live transfer, ensure your API key is ready. Obtain your key from the [developer portal](https://app.bland.ai) if you haven't already.
+
+## Step 3: Configure the Transfer Settings
+
+Include the `transfer_phone_number` parameter in your call data. This is the number the AI will transfer to. Additionally, define the conditions for transfer in the task parameter.
+
+Example:
+
+```javascript
+{
+    "phone_number": "+11233456789",
+    "transfer_phone_number": "+19876543210",
+    "task": "If the caller requests to speak with a human, transfer the call to the representative."
+}
+```
+
+## Step 4: Send the API Request
+
+Make the API request using the JavaScript or Python code snippet provided, ensuring the `transfer_phone_number` and conditions are included.
+
+## Step 5: Test and Monitor
+
+After setting up the live transfer, test the functionality to ensure it works as expected. Monitor the calls to adjust the transfer conditions as necessary.
+
+## Conclusion
+
+Setting up a live transfer offers a seamless experience for situations where AI needs to hand over to a human. You're now ready to integrate this feature into your AI-powered calls with Bland AI.
+
+Maintain a balance between automated and human interactions to optimize customer satisfaction. Happy calling!
+
+<RequestExample>
+
+```javascript LiveTransfer.js
+// Headers
+const headers = {
+  authorization: "YOUR-API-KEY-HERE",
+};
+
+// Data
+const data = {
+  phone_number: "+11233456789",
+  transfer_phone_number: "+19876543210",
+  task: "If the caller requests to speak with a human, transfer the call to the representative.",
+};
+
+// API request
+await axios.post("https://api.bland.ai/v1/calls", data, { headers });
+```
+
+```python LiveTransfer.py
+# Headers
+headers = {
+    'authorization': 'YOUR-API-KEY-HERE'
+}
+
+# Data
+data = {
+    'phone_number': '+11233456789',
+    'transfer_phone_number': '+19876543210',
+    'task': 'If the caller requests to speak with a human, transfer the call to the representative.'
+}
+
+# API request
+response = requests.post('https://api.bland.ai/v1/calls', json=data, headers=headers)
+```
+
+</RequestExample>

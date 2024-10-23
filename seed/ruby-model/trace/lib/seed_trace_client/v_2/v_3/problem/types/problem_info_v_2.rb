@@ -88,15 +88,15 @@ module SeedTraceClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
-            problem_id = struct["problemId"]
+            problem_id = parsed_json["problemId"]
             if parsed_json["problemDescription"].nil?
               problem_description = nil
             else
               problem_description = parsed_json["problemDescription"].to_json
               problem_description = SeedTraceClient::Problem::ProblemDescription.from_json(json_object: problem_description)
             end
-            problem_name = struct["problemName"]
-            problem_version = struct["problemVersion"]
+            problem_name = parsed_json["problemName"]
+            problem_version = parsed_json["problemVersion"]
             if parsed_json["supportedLanguages"].nil?
               supported_languages = nil
             else
@@ -115,15 +115,15 @@ module SeedTraceClient
               generated_files = parsed_json["generatedFiles"].to_json
               generated_files = SeedTraceClient::V2::V3::Problem::GeneratedFiles.from_json(json_object: generated_files)
             end
-            custom_test_case_templates = parsed_json["customTestCaseTemplates"]&.map do |v|
-              v = v.to_json
-              SeedTraceClient::V2::V3::Problem::TestCaseTemplate.from_json(json_object: v)
+            custom_test_case_templates = parsed_json["customTestCaseTemplates"]&.map do |item|
+              item = item.to_json
+              SeedTraceClient::V2::V3::Problem::TestCaseTemplate.from_json(json_object: item)
             end
-            testcases = parsed_json["testcases"]&.map do |v|
-              v = v.to_json
-              SeedTraceClient::V2::V3::Problem::TestCaseV2.from_json(json_object: v)
+            testcases = parsed_json["testcases"]&.map do |item|
+              item = item.to_json
+              SeedTraceClient::V2::V3::Problem::TestCaseV2.from_json(json_object: item)
             end
-            is_public = struct["isPublic"]
+            is_public = parsed_json["isPublic"]
             new(
               problem_id: problem_id,
               problem_description: problem_description,

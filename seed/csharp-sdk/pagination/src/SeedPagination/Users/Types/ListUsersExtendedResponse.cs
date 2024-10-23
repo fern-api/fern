@@ -1,19 +1,26 @@
 using System.Text.Json.Serialization;
-using SeedPagination;
+using SeedPagination.Core;
+
+#nullable enable
 
 namespace SeedPagination;
 
-public class ListUsersExtendedResponse
+public record ListUsersExtendedResponse
 {
     /// <summary>
     /// The totall number of /users
     /// </summary>
     [JsonPropertyName("total_count")]
-    public int TotalCount { get; init; }
+    public required int TotalCount { get; set; }
 
     [JsonPropertyName("data")]
-    public UserListContainer Data { get; init; }
+    public required UserListContainer Data { get; set; }
 
     [JsonPropertyName("next")]
-    public List<Guid?> Next { get; init; }
+    public string? Next { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

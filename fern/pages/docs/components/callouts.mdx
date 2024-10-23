@@ -1,0 +1,83 @@
+---
+title: 'Callouts'
+subtitle: 'A built-in component to show important information to the reader'
+icon: 'circle-exclamation'
+---
+
+## Callout properties
+
+Customize your Callouts using the `title` and `icon` properties. 
+
+<ParamField path="title" type="string" required={false}>
+The title of your Callout
+</ParamField>
+<ParamField path="icon" type="string | element" required={false}>
+The icon of your Callout. Can be a [Font Awesome](https://fontawesome.com/icons) icon name or an HTML element. 
+</ParamField>
+
+<br />
+
+<Tabs>
+<Tab title="Callout">
+<Tip title="Example Callout" icon="leaf">
+This Callout uses a title and a custom icon. 
+</Tip>
+</Tab>
+<Tab title="Markdown">
+```markdown
+<Tip title="Example Callout" icon="leaf">
+This Callout uses a title and a custom icon. 
+</Tip>
+```
+</Tab>
+</Tabs>
+
+## Callout varieties
+
+### Note callouts
+
+<Note>This adds a note in the content</Note>
+
+```jsx
+<Note>This adds a note in the content</Note>
+```
+
+### Warning callouts
+
+<Warning>This raises a warning to watch out for</Warning>
+
+```jsx
+<Warning>This raises a warning to watch out for</Warning>
+```
+
+### Error callouts
+
+<Error>This indicates a potential error</Error>
+
+```jsx
+<Error>This indicates a potential error</Error>
+```
+
+### Info callouts
+
+<Info>This draws attention to important information</Info>
+
+```jsx
+<Info>This draws attention to important information</Info>
+```
+
+### Tip callouts
+
+<Tip>This suggests a helpful tip</Tip>
+
+```jsx
+<Tip>This suggests a helpful tip</Tip>
+```
+
+### Check callouts
+
+<Check>This brings us a checked status</Check>
+
+```jsx
+<Check>This brings us a checked status</Check>
+```

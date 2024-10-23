@@ -13,8 +13,9 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = SinglyLinkedListNodeAndListValue.Builder.class
 )
@@ -63,13 +64,13 @@ public final class SinglyLinkedListNodeAndListValue {
   }
 
   public interface NodeIdStage {
-    FullListStage nodeId(NodeId nodeId);
+    FullListStage nodeId(@NotNull NodeId nodeId);
 
     Builder from(SinglyLinkedListNodeAndListValue other);
   }
 
   public interface FullListStage {
-    _FinalStage fullList(SinglyLinkedListValue fullList);
+    _FinalStage fullList(@NotNull SinglyLinkedListValue fullList);
   }
 
   public interface _FinalStage {
@@ -96,15 +97,15 @@ public final class SinglyLinkedListNodeAndListValue {
 
     @java.lang.Override
     @JsonSetter("nodeId")
-    public FullListStage nodeId(NodeId nodeId) {
-      this.nodeId = nodeId;
+    public FullListStage nodeId(@NotNull NodeId nodeId) {
+      this.nodeId = Objects.requireNonNull(nodeId, "nodeId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("fullList")
-    public _FinalStage fullList(SinglyLinkedListValue fullList) {
-      this.fullList = fullList;
+    public _FinalStage fullList(@NotNull SinglyLinkedListValue fullList) {
+      this.fullList = Objects.requireNonNull(fullList, "fullList must not be null");
       return this;
     }
 

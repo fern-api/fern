@@ -15,9 +15,10 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.DebugVariableValue;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = TraceResponse.Builder.class
 )
@@ -100,7 +101,7 @@ public final class TraceResponse {
   }
 
   public interface SubmissionIdStage {
-    LineNumberStage submissionId(SubmissionId submissionId);
+    LineNumberStage submissionId(@NotNull SubmissionId submissionId);
 
     Builder from(TraceResponse other);
   }
@@ -110,7 +111,7 @@ public final class TraceResponse {
   }
 
   public interface StackStage {
-    _FinalStage stack(StackInformation stack);
+    _FinalStage stack(@NotNull StackInformation stack);
   }
 
   public interface _FinalStage {
@@ -161,8 +162,8 @@ public final class TraceResponse {
 
     @java.lang.Override
     @JsonSetter("submissionId")
-    public LineNumberStage submissionId(SubmissionId submissionId) {
-      this.submissionId = submissionId;
+    public LineNumberStage submissionId(@NotNull SubmissionId submissionId) {
+      this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
       return this;
     }
 
@@ -175,14 +176,14 @@ public final class TraceResponse {
 
     @java.lang.Override
     @JsonSetter("stack")
-    public _FinalStage stack(StackInformation stack) {
-      this.stack = stack;
+    public _FinalStage stack(@NotNull StackInformation stack) {
+      this.stack = Objects.requireNonNull(stack, "stack must not be null");
       return this;
     }
 
     @java.lang.Override
     public _FinalStage stdout(String stdout) {
-      this.stdout = Optional.of(stdout);
+      this.stdout = Optional.ofNullable(stdout);
       return this;
     }
 
@@ -198,7 +199,7 @@ public final class TraceResponse {
 
     @java.lang.Override
     public _FinalStage expressionLocation(ExpressionLocation expressionLocation) {
-      this.expressionLocation = Optional.of(expressionLocation);
+      this.expressionLocation = Optional.ofNullable(expressionLocation);
       return this;
     }
 
@@ -214,7 +215,7 @@ public final class TraceResponse {
 
     @java.lang.Override
     public _FinalStage returnValue(DebugVariableValue returnValue) {
-      this.returnValue = Optional.of(returnValue);
+      this.returnValue = Optional.ofNullable(returnValue);
       return this;
     }
 

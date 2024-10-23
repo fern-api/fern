@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`migrateFromV30ToV29 snapshot 1`] = `
+exports[`migrateFromV30ToV29 > snapshot 1`] = `
 {
-  "apiDisplayName": undefined,
-  "apiDocs": undefined,
+  "apiDisplayName": null,
+  "apiDocs": null,
   "apiName": {
     "camelCase": {
       "safeName": "simpleAPI",
@@ -24,11 +24,11 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
     },
   },
   "auth": {
-    "docs": undefined,
+    "docs": null,
     "requirement": "ALL",
     "schemes": [],
   },
-  "basePath": undefined,
+  "basePath": null,
   "constants": {
     "errorInstanceIdKey": {
       "name": {
@@ -53,32 +53,30 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
       "wireValue": "errorInstanceId",
     },
   },
-  "environments": undefined,
+  "environments": null,
   "errorDiscriminationStrategy": {
-    "_visit": [Function],
     "type": "statusCode",
   },
   "errors": {},
   "headers": [],
   "pathParameters": [],
   "rootPackage": {
-    "docs": undefined,
+    "docs": null,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
-      "file": undefined,
+      "file": null,
       "packagePath": [],
     },
     "hasEndpointsInTree": true,
-    "navigationConfig": undefined,
-    "service": undefined,
+    "navigationConfig": null,
+    "service": null,
     "subpackages": [
       "subpackage_service",
       "subpackage_types",
     ],
     "types": [],
-    "webhooks": undefined,
-    "websocket": undefined,
+    "webhooks": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -100,18 +98,17 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
   },
   "services": {
     "service_service": {
-      "availability": undefined,
+      "availability": null,
       "basePath": {
         "head": "/",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": null,
       "endpoints": [
         {
           "allPathParameters": [
             {
-              "availability": undefined,
-              "docs": undefined,
+              "docs": null,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -133,32 +130,27 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 },
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
-              "variable": undefined,
+              "variable": null,
             },
           ],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "docs": null,
               "endpointHeaders": [
                 {
                   "value": {
                     "jsonExample": "0.0.1",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "string": "0.0.1",
                         "type": "string",
                       },
@@ -174,9 +166,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                   "value": {
                     "jsonExample": "id-2sdx82h",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "string": "id-2sdx82h",
                         "type": "string",
                       },
@@ -185,16 +175,13 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                   },
                 },
               ],
-              "exampleType": "userProvided",
-              "name": undefined,
+              "name": null,
               "queryParameters": [
                 {
                   "value": {
                     "jsonExample": "reverse",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "string": "reverse",
                         "type": "string",
                       },
@@ -204,16 +191,15 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                   "wireKey": "filter",
                 },
               ],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
-                "body": undefined,
+                "body": null,
                 "type": "ok",
               },
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "//check/id-2sdx82h",
+              "url": "/check/id-2sdx82h",
             },
           ],
           "fullPath": {
@@ -227,9 +213,8 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
           },
           "headers": [
             {
-              "availability": undefined,
-              "docs": undefined,
-              "env": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -253,9 +238,8 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 "wireValue": "X-API-Version",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
             },
           ],
@@ -291,8 +275,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
           },
           "pathParameters": [
             {
-              "availability": undefined,
-              "docs": undefined,
+              "docs": null,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -314,18 +297,17 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 },
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
-              "variable": undefined,
+              "variable": null,
             },
           ],
           "queryParameters": [
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -349,14 +331,13 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 "wireValue": "filter",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
             },
           ],
-          "requestBody": undefined,
-          "response": undefined,
+          "requestBody": null,
+          "response": null,
           "sdkRequest": {
             "requestParameterName": {
               "camelCase": {
@@ -378,7 +359,6 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -473,7 +453,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
   },
   "subpackages": {
     "subpackage_service": {
-      "docs": undefined,
+      "docs": null,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -538,15 +518,14 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
           "unsafeName": "service",
         },
       },
-      "navigationConfig": undefined,
+      "navigationConfig": null,
       "service": "service_service",
       "subpackages": [],
       "types": [],
-      "webhooks": undefined,
-      "websocket": undefined,
+      "webhooks": null,
     },
     "subpackage_types": {
-      "docs": undefined,
+      "docs": null,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -611,25 +590,24 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
           "unsafeName": "types",
         },
       },
-      "navigationConfig": undefined,
-      "service": undefined,
+      "navigationConfig": null,
+      "service": null,
       "subpackages": [],
       "types": [
         "type_types:Exception",
         "type_types:ExceptionInfo",
         "type_types:ExceptionStatus",
       ],
-      "webhooks": undefined,
-      "websocket": undefined,
+      "webhooks": null,
     },
   },
   "types": {
     "type_types:Exception": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [
         {
-          "docs": undefined,
+          "docs": null,
           "jsonExample": {
             "exceptionMessage": "This component is unavailable!",
             "exceptionStacktrace": "<logs>",
@@ -656,35 +634,10 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
             },
           },
           "shape": {
-            "_visit": [Function],
             "properties": {
-              "_visit": [Function],
               "shape": {
-                "_visit": [Function],
                 "properties": [
                   {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "exceptionType",
-                          "unsafeName": "exceptionType",
-                        },
-                        "originalName": "exceptionType",
-                        "pascalCase": {
-                          "safeName": "ExceptionType",
-                          "unsafeName": "ExceptionType",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "EXCEPTION_TYPE",
-                          "unsafeName": "EXCEPTION_TYPE",
-                        },
-                        "snakeCase": {
-                          "safeName": "exception_type",
-                          "unsafeName": "exception_type",
-                        },
-                      },
-                      "wireValue": "exceptionType",
-                    },
                     "originalTypeDeclaration": {
                       "fernFilepath": {
                         "allParts": [
@@ -753,9 +706,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                     "value": {
                       "jsonExample": "Unavailable",
                       "shape": {
-                        "_visit": [Function],
                         "primitive": {
-                          "_visit": [Function],
                           "string": "Unavailable",
                           "type": "string",
                         },
@@ -765,28 +716,6 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                     "wireKey": "exceptionType",
                   },
                   {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "exceptionMessage",
-                          "unsafeName": "exceptionMessage",
-                        },
-                        "originalName": "exceptionMessage",
-                        "pascalCase": {
-                          "safeName": "ExceptionMessage",
-                          "unsafeName": "ExceptionMessage",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "EXCEPTION_MESSAGE",
-                          "unsafeName": "EXCEPTION_MESSAGE",
-                        },
-                        "snakeCase": {
-                          "safeName": "exception_message",
-                          "unsafeName": "exception_message",
-                        },
-                      },
-                      "wireValue": "exceptionMessage",
-                    },
                     "originalTypeDeclaration": {
                       "fernFilepath": {
                         "allParts": [
@@ -855,9 +784,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                     "value": {
                       "jsonExample": "This component is unavailable!",
                       "shape": {
-                        "_visit": [Function],
                         "primitive": {
-                          "_visit": [Function],
                           "string": "This component is unavailable!",
                           "type": "string",
                         },
@@ -867,28 +794,6 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                     "wireKey": "exceptionMessage",
                   },
                   {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "exceptionStacktrace",
-                          "unsafeName": "exceptionStacktrace",
-                        },
-                        "originalName": "exceptionStacktrace",
-                        "pascalCase": {
-                          "safeName": "ExceptionStacktrace",
-                          "unsafeName": "ExceptionStacktrace",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "EXCEPTION_STACKTRACE",
-                          "unsafeName": "EXCEPTION_STACKTRACE",
-                        },
-                        "snakeCase": {
-                          "safeName": "exception_stacktrace",
-                          "unsafeName": "exception_stacktrace",
-                        },
-                      },
-                      "wireValue": "exceptionStacktrace",
-                    },
                     "originalTypeDeclaration": {
                       "fernFilepath": {
                         "allParts": [
@@ -957,9 +862,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                     "value": {
                       "jsonExample": "<logs>",
                       "shape": {
-                        "_visit": [Function],
                         "primitive": {
-                          "_visit": [Function],
                           "string": "<logs>",
                           "type": "string",
                         },
@@ -1108,12 +1011,12 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
         },
         "typeId": "type_types:Exception",
       },
-      "referencedTypes": Set {
+      "referencedTypes": [
         "type_types:ExceptionInfo",
         "type_types:ExceptionStatus",
-      },
+      ],
       "shape": {
-        "_visit": [Function],
+        "_type": "union",
         "baseProperties": [],
         "discriminant": {
           "name": {
@@ -1138,7 +1041,6 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
           "wireValue": "type",
         },
         "extends": [],
-        "type": "union",
         "types": [
           {
             "discriminantValue": {
@@ -1163,9 +1065,9 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
               },
               "wireValue": "info",
             },
-            "docs": undefined,
+            "docs": null,
             "shape": {
-              "_visit": [Function],
+              "_type": "samePropertiesAsObject",
               "fernFilepath": {
                 "allParts": [
                   {
@@ -1228,8 +1130,6 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                   "unsafeName": "exception_info",
                 },
               },
-              "propertiesType": "samePropertiesAsObject",
-              "type": "named",
               "typeId": "type_types:ExceptionInfo",
             },
           },
@@ -1256,9 +1156,9 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
               },
               "wireValue": "status",
             },
-            "docs": undefined,
+            "docs": null,
             "shape": {
-              "_visit": [Function],
+              "_type": "singleProperty",
               "name": {
                 "name": {
                   "camelCase": {
@@ -1281,9 +1181,8 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 },
                 "wireValue": "status",
               },
-              "propertiesType": "singleProperty",
               "type": {
-                "_visit": [Function],
+                "_type": "named",
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -1346,7 +1245,6 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                     "unsafeName": "exception_status",
                   },
                 },
-                "type": "named",
                 "typeId": "type_types:ExceptionStatus",
               },
             },
@@ -1355,11 +1253,11 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
       },
     },
     "type_types:ExceptionInfo": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [
         {
-          "docs": undefined,
+          "docs": null,
           "jsonExample": {
             "exceptionMessage": "This component is unavailable!",
             "exceptionStacktrace": "<logs>",
@@ -1385,31 +1283,8 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
             },
           },
           "shape": {
-            "_visit": [Function],
             "properties": [
               {
-                "name": {
-                  "name": {
-                    "camelCase": {
-                      "safeName": "exceptionType",
-                      "unsafeName": "exceptionType",
-                    },
-                    "originalName": "exceptionType",
-                    "pascalCase": {
-                      "safeName": "ExceptionType",
-                      "unsafeName": "ExceptionType",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "EXCEPTION_TYPE",
-                      "unsafeName": "EXCEPTION_TYPE",
-                    },
-                    "snakeCase": {
-                      "safeName": "exception_type",
-                      "unsafeName": "exception_type",
-                    },
-                  },
-                  "wireValue": "exceptionType",
-                },
                 "originalTypeDeclaration": {
                   "fernFilepath": {
                     "allParts": [
@@ -1478,9 +1353,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 "value": {
                   "jsonExample": "Unavailable",
                   "shape": {
-                    "_visit": [Function],
                     "primitive": {
-                      "_visit": [Function],
                       "string": "Unavailable",
                       "type": "string",
                     },
@@ -1490,28 +1363,6 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 "wireKey": "exceptionType",
               },
               {
-                "name": {
-                  "name": {
-                    "camelCase": {
-                      "safeName": "exceptionMessage",
-                      "unsafeName": "exceptionMessage",
-                    },
-                    "originalName": "exceptionMessage",
-                    "pascalCase": {
-                      "safeName": "ExceptionMessage",
-                      "unsafeName": "ExceptionMessage",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "EXCEPTION_MESSAGE",
-                      "unsafeName": "EXCEPTION_MESSAGE",
-                    },
-                    "snakeCase": {
-                      "safeName": "exception_message",
-                      "unsafeName": "exception_message",
-                    },
-                  },
-                  "wireValue": "exceptionMessage",
-                },
                 "originalTypeDeclaration": {
                   "fernFilepath": {
                     "allParts": [
@@ -1580,9 +1431,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 "value": {
                   "jsonExample": "This component is unavailable!",
                   "shape": {
-                    "_visit": [Function],
                     "primitive": {
-                      "_visit": [Function],
                       "string": "This component is unavailable!",
                       "type": "string",
                     },
@@ -1592,28 +1441,6 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 "wireKey": "exceptionMessage",
               },
               {
-                "name": {
-                  "name": {
-                    "camelCase": {
-                      "safeName": "exceptionStacktrace",
-                      "unsafeName": "exceptionStacktrace",
-                    },
-                    "originalName": "exceptionStacktrace",
-                    "pascalCase": {
-                      "safeName": "ExceptionStacktrace",
-                      "unsafeName": "ExceptionStacktrace",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "EXCEPTION_STACKTRACE",
-                      "unsafeName": "EXCEPTION_STACKTRACE",
-                    },
-                    "snakeCase": {
-                      "safeName": "exception_stacktrace",
-                      "unsafeName": "exception_stacktrace",
-                    },
-                  },
-                  "wireValue": "exceptionStacktrace",
-                },
                 "originalTypeDeclaration": {
                   "fernFilepath": {
                     "allParts": [
@@ -1682,9 +1509,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 "value": {
                   "jsonExample": "<logs>",
                   "shape": {
-                    "_visit": [Function],
                     "primitive": {
-                      "_visit": [Function],
                       "string": "<logs>",
                       "type": "string",
                     },
@@ -1763,14 +1588,14 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
         },
         "typeId": "type_types:ExceptionInfo",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": [],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -1794,14 +1619,13 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
               "wireValue": "exceptionType",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "STRING",
-              "type": "primitive",
             },
           },
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -1825,14 +1649,13 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
               "wireValue": "exceptionMessage",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "STRING",
-              "type": "primitive",
             },
           },
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -1856,21 +1679,19 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
               "wireValue": "exceptionStacktrace",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "STRING",
-              "type": "primitive",
             },
           },
         ],
-        "type": "object",
       },
     },
     "type_types:ExceptionStatus": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [
         {
-          "docs": undefined,
+          "docs": null,
           "jsonExample": "INTERNAL",
           "name": {
             "camelCase": {
@@ -1892,13 +1713,12 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
             },
           },
           "shape": {
-            "_visit": [Function],
             "type": "enum",
             "wireValue": "INTERNAL",
           },
         },
         {
-          "docs": undefined,
+          "docs": null,
           "jsonExample": "USER",
           "name": {
             "camelCase": {
@@ -1920,7 +1740,6 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
             },
           },
           "shape": {
-            "_visit": [Function],
             "type": "enum",
             "wireValue": "USER",
           },
@@ -1991,13 +1810,12 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
         },
         "typeId": "type_types:ExceptionStatus",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": [],
       "shape": {
-        "_visit": [Function],
-        "type": "enum",
+        "_type": "enum",
         "values": [
           {
-            "availability": undefined,
+            "availability": null,
             "docs": "There was an internal exception.",
             "name": {
               "name": {
@@ -2023,7 +1841,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
             },
           },
           {
-            "availability": undefined,
+            "availability": null,
             "docs": "There was a user-influenced exception.",
             "name": {
               "name": {

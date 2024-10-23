@@ -14,8 +14,9 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TestCaseWithActualResultImplementation.Builder.class)
 public final class TestCaseWithActualResultImplementation {
     private final NonVoidFunctionDefinition getActualResult;
@@ -75,13 +76,13 @@ public final class TestCaseWithActualResultImplementation {
     }
 
     public interface GetActualResultStage {
-        AssertCorrectnessCheckStage getActualResult(NonVoidFunctionDefinition getActualResult);
+        AssertCorrectnessCheckStage getActualResult(@NotNull NonVoidFunctionDefinition getActualResult);
 
         Builder from(TestCaseWithActualResultImplementation other);
     }
 
     public interface AssertCorrectnessCheckStage {
-        _FinalStage assertCorrectnessCheck(AssertCorrectnessCheck assertCorrectnessCheck);
+        _FinalStage assertCorrectnessCheck(@NotNull AssertCorrectnessCheck assertCorrectnessCheck);
     }
 
     public interface _FinalStage {
@@ -108,15 +109,16 @@ public final class TestCaseWithActualResultImplementation {
 
         @java.lang.Override
         @JsonSetter("getActualResult")
-        public AssertCorrectnessCheckStage getActualResult(NonVoidFunctionDefinition getActualResult) {
-            this.getActualResult = getActualResult;
+        public AssertCorrectnessCheckStage getActualResult(@NotNull NonVoidFunctionDefinition getActualResult) {
+            this.getActualResult = Objects.requireNonNull(getActualResult, "getActualResult must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("assertCorrectnessCheck")
-        public _FinalStage assertCorrectnessCheck(AssertCorrectnessCheck assertCorrectnessCheck) {
-            this.assertCorrectnessCheck = assertCorrectnessCheck;
+        public _FinalStage assertCorrectnessCheck(@NotNull AssertCorrectnessCheck assertCorrectnessCheck) {
+            this.assertCorrectnessCheck =
+                    Objects.requireNonNull(assertCorrectnessCheck, "assertCorrectnessCheck must not be null");
             return this;
         }
 

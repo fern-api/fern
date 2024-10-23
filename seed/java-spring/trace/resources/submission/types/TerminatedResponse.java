@@ -4,10 +4,17 @@
 
 package resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
+@JsonDeserialize(
+    builder = TerminatedResponse.Builder.class
+)
 public final class TerminatedResponse {
   private TerminatedResponse() {
   }
@@ -21,5 +28,25 @@ public final class TerminatedResponse {
   @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  public static final class Builder {
+    private Builder() {
+    }
+
+    public Builder from(TerminatedResponse other) {
+      return this;
+    }
+
+    public TerminatedResponse build() {
+      return new TerminatedResponse();
+    }
   }
 }

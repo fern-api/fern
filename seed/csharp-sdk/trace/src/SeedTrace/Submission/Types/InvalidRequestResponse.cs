@@ -1,13 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class InvalidRequestResponse
+public record InvalidRequestResponse
 {
     [JsonPropertyName("request")]
-    public SubmissionRequest Request { get; init; }
+    public required object Request { get; set; }
 
     [JsonPropertyName("cause")]
-    public InvalidRequestCause Cause { get; init; }
+    public required object Cause { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

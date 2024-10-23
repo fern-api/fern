@@ -64,6 +64,10 @@ types:
       date: optional<date>
       dateimte: optional<datetime>
 
+  UnionWithSingleElement:
+    union:
+      foo: Foo
+
   Foo:
     properties:
       name: string

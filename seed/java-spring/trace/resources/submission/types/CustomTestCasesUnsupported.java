@@ -13,9 +13,10 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.ProblemId;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = CustomTestCasesUnsupported.Builder.class
 )
@@ -64,13 +65,13 @@ public final class CustomTestCasesUnsupported {
   }
 
   public interface ProblemIdStage {
-    SubmissionIdStage problemId(ProblemId problemId);
+    SubmissionIdStage problemId(@NotNull ProblemId problemId);
 
     Builder from(CustomTestCasesUnsupported other);
   }
 
   public interface SubmissionIdStage {
-    _FinalStage submissionId(SubmissionId submissionId);
+    _FinalStage submissionId(@NotNull SubmissionId submissionId);
   }
 
   public interface _FinalStage {
@@ -97,15 +98,15 @@ public final class CustomTestCasesUnsupported {
 
     @java.lang.Override
     @JsonSetter("problemId")
-    public SubmissionIdStage problemId(ProblemId problemId) {
-      this.problemId = problemId;
+    public SubmissionIdStage problemId(@NotNull ProblemId problemId) {
+      this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("submissionId")
-    public _FinalStage submissionId(SubmissionId submissionId) {
-      this.submissionId = submissionId;
+    public _FinalStage submissionId(@NotNull SubmissionId submissionId) {
+      this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
       return this;
     }
 

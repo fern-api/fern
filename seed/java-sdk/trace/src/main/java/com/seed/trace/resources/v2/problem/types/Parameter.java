@@ -15,8 +15,9 @@ import com.seed.trace.resources.commons.types.VariableType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Parameter.Builder.class)
 public final class Parameter {
     private final String parameterId;
@@ -82,17 +83,17 @@ public final class Parameter {
     }
 
     public interface ParameterIdStage {
-        NameStage parameterId(String parameterId);
+        NameStage parameterId(@NotNull String parameterId);
 
         Builder from(Parameter other);
     }
 
     public interface NameStage {
-        VariableTypeStage name(String name);
+        VariableTypeStage name(@NotNull String name);
     }
 
     public interface VariableTypeStage {
-        _FinalStage variableType(VariableType variableType);
+        _FinalStage variableType(@NotNull VariableType variableType);
     }
 
     public interface _FinalStage {
@@ -122,22 +123,22 @@ public final class Parameter {
 
         @java.lang.Override
         @JsonSetter("parameterId")
-        public NameStage parameterId(String parameterId) {
-            this.parameterId = parameterId;
+        public NameStage parameterId(@NotNull String parameterId) {
+            this.parameterId = Objects.requireNonNull(parameterId, "parameterId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public VariableTypeStage name(String name) {
-            this.name = name;
+        public VariableTypeStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("variableType")
-        public _FinalStage variableType(VariableType variableType) {
-            this.variableType = variableType;
+        public _FinalStage variableType(@NotNull VariableType variableType) {
+            this.variableType = Objects.requireNonNull(variableType, "variableType must not be null");
             return this;
         }
 

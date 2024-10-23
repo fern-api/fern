@@ -13,8 +13,9 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = ErroredResponse.Builder.class
 )
@@ -63,13 +64,13 @@ public final class ErroredResponse {
   }
 
   public interface SubmissionIdStage {
-    ErrorInfoStage submissionId(SubmissionId submissionId);
+    ErrorInfoStage submissionId(@NotNull SubmissionId submissionId);
 
     Builder from(ErroredResponse other);
   }
 
   public interface ErrorInfoStage {
-    _FinalStage errorInfo(ErrorInfo errorInfo);
+    _FinalStage errorInfo(@NotNull ErrorInfo errorInfo);
   }
 
   public interface _FinalStage {
@@ -96,15 +97,15 @@ public final class ErroredResponse {
 
     @java.lang.Override
     @JsonSetter("submissionId")
-    public ErrorInfoStage submissionId(SubmissionId submissionId) {
-      this.submissionId = submissionId;
+    public ErrorInfoStage submissionId(@NotNull SubmissionId submissionId) {
+      this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("errorInfo")
-    public _FinalStage errorInfo(ErrorInfo errorInfo) {
-      this.errorInfo = errorInfo;
+    public _FinalStage errorInfo(@NotNull ErrorInfo errorInfo) {
+      this.errorInfo = Objects.requireNonNull(errorInfo, "errorInfo must not be null");
       return this;
     }
 

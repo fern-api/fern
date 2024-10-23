@@ -1,0 +1,34 @@
+api:
+  path: ./openapi/openapi.json
+  origin: https://bump.sh/bump-examples/doc/train-travel-api.json
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 0.0.1
+        output:
+          location: local-file-system
+          path: ../generated/sdks/java
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 3.0.0
+        smart-casing: true
+        config:
+          inline_request_params: false
+          extra_dev_dependencies:
+            parameterized: "^0.9.0"
+          extra_dependencies:
+            fastavro: "^1.9.4"
+            requests: "^2.0.0"
+            types-requests: "^2.0.0"
+            tokenizers: ">=0.15,<1"
+            httpx-sse: ^0.4.0
+            boto3: ^1.34.0
+            parameterized: "^0.9.0"
+          improved_imports: true
+  shouldnt-upgrade:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 2.16.0
+default-group: local

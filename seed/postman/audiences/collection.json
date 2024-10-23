@@ -7,7 +7,7 @@
   "variable": [
     {
       "key": "baseUrl",
-      "value": "",
+      "value": "https://api.example.a.com",
       "type": "string"
     }
   ],
@@ -37,12 +37,125 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "GET",
                 "auth": null,
                 "body": null
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "{\n    \"foo\": {\n        \"foo\": {\n            \"bar_property\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n        }\n    }\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Folder D",
+      "item": [
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Service",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get Direct Thread",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/partner-path",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "partner-path"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/partner-path",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "partner-path"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "{\n    \"foo\": \"foo\"\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             }
           ]
         }
@@ -59,26 +172,26 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}?optionalString=",
+              "raw": "{{baseUrl}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [],
-              "query": [
-                {
-                  "key": "optionalString",
-                  "value": "",
-                  "description": null
-                }
-              ],
+              "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"publicProperty\": \"example\",\n    \"privateProperty\": 0\n}",
+              "raw": "{}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -86,7 +199,46 @@
               }
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"imported\": \"imported\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

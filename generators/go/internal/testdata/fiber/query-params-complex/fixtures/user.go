@@ -3,6 +3,7 @@
 package api
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/fiber/query-params-complex/fixtures/core"
 	uuid "github.com/google/uuid"
@@ -23,6 +24,29 @@ type GetUsersRequest struct {
 type User struct {
 	Name string   `json:"name" url:"name"`
 	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (u *User) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *User) UnmarshalJSON(data []byte) error {
+	type unmarshaler User
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = User(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	return nil
 }
 
 func (u *User) String() string {

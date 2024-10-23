@@ -1,7 +1,12 @@
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
+[JsonConverter(typeof(StringEnumSerializer<MigrationStatus>))]
 public enum MigrationStatus
 {
     [EnumMember(Value = "RUNNING")]
@@ -11,5 +16,5 @@ public enum MigrationStatus
     Failed,
 
     [EnumMember(Value = "FINISHED")]
-    Finished
+    Finished,
 }

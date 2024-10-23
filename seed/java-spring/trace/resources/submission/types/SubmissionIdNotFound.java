@@ -13,8 +13,9 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = SubmissionIdNotFound.Builder.class
 )
@@ -55,7 +56,7 @@ public final class SubmissionIdNotFound {
   }
 
   public interface MissingSubmissionIdStage {
-    _FinalStage missingSubmissionId(SubmissionId missingSubmissionId);
+    _FinalStage missingSubmissionId(@NotNull SubmissionId missingSubmissionId);
 
     Builder from(SubmissionIdNotFound other);
   }
@@ -81,8 +82,8 @@ public final class SubmissionIdNotFound {
 
     @java.lang.Override
     @JsonSetter("missingSubmissionId")
-    public _FinalStage missingSubmissionId(SubmissionId missingSubmissionId) {
-      this.missingSubmissionId = missingSubmissionId;
+    public _FinalStage missingSubmissionId(@NotNull SubmissionId missingSubmissionId) {
+      this.missingSubmissionId = Objects.requireNonNull(missingSubmissionId, "missingSubmissionId must not be null");
       return this;
     }
 

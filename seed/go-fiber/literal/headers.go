@@ -7,7 +7,7 @@ import (
 )
 
 type SendLiteralsInHeadersRequest struct {
-	Query           string `json:"query" url:"query"`
+	Query           string `json:"query" url:"-"`
 	endpointVersion string
 	async           bool
 }

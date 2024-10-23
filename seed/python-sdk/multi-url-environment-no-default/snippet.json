@@ -1,0 +1,31 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/ec2/boot",
+                "method": "POST",
+                "identifier_override": "endpoint_ec2.bootInstance"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment\n\nclient = SeedMultiUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\nclient.ec_2.boot_instance(\n    size=\"size\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment\n\nclient = AsyncSeedMultiUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.ec_2.boot_instance(\n        size=\"size\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/s3/presigned-url",
+                "method": "POST",
+                "identifier_override": "endpoint_s3.getPresignedUrl"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment\n\nclient = SeedMultiUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\nclient.s_3.get_presigned_url(\n    s_3_key=\"s3Key\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment\n\nclient = AsyncSeedMultiUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.s_3.get_presigned_url(\n        s_3_key=\"s3Key\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

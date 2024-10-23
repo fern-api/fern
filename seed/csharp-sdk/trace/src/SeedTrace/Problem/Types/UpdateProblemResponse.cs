@@ -1,9 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class UpdateProblemResponse
+public record UpdateProblemResponse
 {
     [JsonPropertyName("problemVersion")]
-    public int ProblemVersion { get; init; }
+    public required int ProblemVersion { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

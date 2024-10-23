@@ -15,10 +15,11 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import types.ColorOrOperand;
 import types.Operand;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = SendEnumInlinedRequest.Builder.class
 )
@@ -84,13 +85,13 @@ public final class SendEnumInlinedRequest {
   }
 
   public interface OperandStage {
-    OperandOrColorStage operand(Operand operand);
+    OperandOrColorStage operand(@NotNull Operand operand);
 
     Builder from(SendEnumInlinedRequest other);
   }
 
   public interface OperandOrColorStage {
-    _FinalStage operandOrColor(ColorOrOperand operandOrColor);
+    _FinalStage operandOrColor(@NotNull ColorOrOperand operandOrColor);
   }
 
   public interface _FinalStage {
@@ -131,21 +132,21 @@ public final class SendEnumInlinedRequest {
 
     @java.lang.Override
     @JsonSetter("operand")
-    public OperandOrColorStage operand(Operand operand) {
-      this.operand = operand;
+    public OperandOrColorStage operand(@NotNull Operand operand) {
+      this.operand = Objects.requireNonNull(operand, "operand must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("operandOrColor")
-    public _FinalStage operandOrColor(ColorOrOperand operandOrColor) {
-      this.operandOrColor = operandOrColor;
+    public _FinalStage operandOrColor(@NotNull ColorOrOperand operandOrColor) {
+      this.operandOrColor = Objects.requireNonNull(operandOrColor, "operandOrColor must not be null");
       return this;
     }
 
     @java.lang.Override
     public _FinalStage maybeOperandOrColor(ColorOrOperand maybeOperandOrColor) {
-      this.maybeOperandOrColor = Optional.of(maybeOperandOrColor);
+      this.maybeOperandOrColor = Optional.ofNullable(maybeOperandOrColor);
       return this;
     }
 
@@ -161,7 +162,7 @@ public final class SendEnumInlinedRequest {
 
     @java.lang.Override
     public _FinalStage maybeOperand(Operand maybeOperand) {
-      this.maybeOperand = Optional.of(maybeOperand);
+      this.maybeOperand = Optional.ofNullable(maybeOperand);
       return this;
     }
 

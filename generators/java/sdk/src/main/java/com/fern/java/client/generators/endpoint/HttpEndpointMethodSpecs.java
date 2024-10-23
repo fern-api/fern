@@ -24,14 +24,20 @@ public final class HttpEndpointMethodSpecs {
     private final MethodSpec nonRequestOptionsMethodSpec;
     private final MethodSpec requestOptionsMethodSpec;
     private final MethodSpec noRequestBodyMethodSpec;
+    private final MethodSpec byteArrayMethodSpec;
+    private final MethodSpec nonRequestOptionsByteArrayMethodSpec;
 
     public HttpEndpointMethodSpecs(
             MethodSpec requestOptionsMethodSpec,
             MethodSpec nonRequestOptionsMethodSpec,
-            MethodSpec noRequestBodyMethodSpec) {
+            MethodSpec noRequestBodyMethodSpec,
+            MethodSpec byteArrayMethodSpec,
+            MethodSpec nonRequestOptionsByteArrayMethodSpec) {
         this.nonRequestOptionsMethodSpec = nonRequestOptionsMethodSpec;
         this.requestOptionsMethodSpec = requestOptionsMethodSpec;
         this.noRequestBodyMethodSpec = noRequestBodyMethodSpec;
+        this.byteArrayMethodSpec = byteArrayMethodSpec;
+        this.nonRequestOptionsByteArrayMethodSpec = nonRequestOptionsByteArrayMethodSpec;
     }
 
     public MethodSpec getNonRequestOptionsMethodSpec() {
@@ -44,5 +50,13 @@ public final class HttpEndpointMethodSpecs {
 
     public Optional<MethodSpec> getNoRequestBodyMethodSpec() {
         return Optional.ofNullable(noRequestBodyMethodSpec);
+    }
+
+    public Optional<MethodSpec> getByteArrayMethodSpec() {
+        return Optional.ofNullable(byteArrayMethodSpec);
+    }
+
+    public Optional<MethodSpec> getNonRequestOptionsByteArrayMethodSpec() {
+        return Optional.ofNullable(nonRequestOptionsByteArrayMethodSpec);
     }
 }

@@ -8,6 +8,7 @@ export interface FixtureConfigurations {
     publishConfig?: unknown;
     publishMetadata?: unknown;
     customConfig?: unknown;
+    readmeConfig?: FernSeedConfig.ReadmeConfig;
     audiences?: string[];
     outputFolder: string;
     outputVersion?: string;

@@ -14,14 +14,25 @@ export declare namespace Primitive {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Primitive {
     constructor(protected readonly _options: Primitive.Options) {}
 
+    /**
+     * @param {string} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnString("string")
+     */
     public async getAndReturnString(request: string, requestOptions?: Primitive.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/string"),
@@ -31,18 +42,21 @@ export class Primitive {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnString.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.primitive.getAndReturnString.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.primitive.getAndReturnString.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.primitive.getAndReturnString.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -72,6 +86,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {number} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnInt(1)
+     */
     public async getAndReturnInt(request: number, requestOptions?: Primitive.RequestOptions): Promise<number> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/integer"),
@@ -81,18 +102,21 @@ export class Primitive {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnInt.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.primitive.getAndReturnInt.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.primitive.getAndReturnInt.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.primitive.getAndReturnInt.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -122,6 +146,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {number} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnLong(1000000)
+     */
     public async getAndReturnLong(request: number, requestOptions?: Primitive.RequestOptions): Promise<number> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/long"),
@@ -131,18 +162,21 @@ export class Primitive {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnLong.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.primitive.getAndReturnLong.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.primitive.getAndReturnLong.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.primitive.getAndReturnLong.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -172,6 +206,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {number} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnDouble(1.1)
+     */
     public async getAndReturnDouble(request: number, requestOptions?: Primitive.RequestOptions): Promise<number> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/double"),
@@ -181,18 +222,21 @@ export class Primitive {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnDouble.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.primitive.getAndReturnDouble.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.primitive.getAndReturnDouble.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.primitive.getAndReturnDouble.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -222,6 +266,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {boolean} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnBool(true)
+     */
     public async getAndReturnBool(request: boolean, requestOptions?: Primitive.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/boolean"),
@@ -231,18 +282,21 @@ export class Primitive {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnBool.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.primitive.getAndReturnBool.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.primitive.getAndReturnBool.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.primitive.getAndReturnBool.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -272,6 +326,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {Date} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
+     */
     public async getAndReturnDatetime(request: Date, requestOptions?: Primitive.RequestOptions): Promise<Date> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/datetime"),
@@ -281,18 +342,21 @@ export class Primitive {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnDatetime.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.primitive.getAndReturnDatetime.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.primitive.getAndReturnDatetime.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.primitive.getAndReturnDatetime.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -322,6 +386,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
+     */
     public async getAndReturnDate(request: string, requestOptions?: Primitive.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/date"),
@@ -331,18 +402,21 @@ export class Primitive {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnDate.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.primitive.getAndReturnDate.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.primitive.getAndReturnDate.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.primitive.getAndReturnDate.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -372,6 +446,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     */
     public async getAndReturnUuid(request: string, requestOptions?: Primitive.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/uuid"),
@@ -381,18 +462,21 @@ export class Primitive {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnUuid.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.primitive.getAndReturnUuid.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.primitive.getAndReturnUuid.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.primitive.getAndReturnUuid.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -422,6 +506,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
+     */
     public async getAndReturnBase64(request: string, requestOptions?: Primitive.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/base64"),
@@ -431,18 +522,21 @@ export class Primitive {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnBase64.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.primitive.getAndReturnBase64.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.primitive.getAndReturnBase64.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.primitive.getAndReturnBase64.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

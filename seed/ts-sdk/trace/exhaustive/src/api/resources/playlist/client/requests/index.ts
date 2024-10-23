@@ -1,2 +1,2 @@
-export { CreatePlaylistRequest } from "./CreatePlaylistRequest";
-export { GetPlaylistsRequest } from "./GetPlaylistsRequest";
+export { type CreatePlaylistRequest } from "./CreatePlaylistRequest";
+export { type GetPlaylistsRequest } from "./GetPlaylistsRequest";

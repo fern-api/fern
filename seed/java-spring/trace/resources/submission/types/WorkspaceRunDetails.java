@@ -15,8 +15,9 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = WorkspaceRunDetails.Builder.class
 )
@@ -74,7 +75,7 @@ public final class WorkspaceRunDetails {
   }
 
   public interface StdoutStage {
-    _FinalStage stdout(String stdout);
+    _FinalStage stdout(@NotNull String stdout);
 
     Builder from(WorkspaceRunDetails other);
   }
@@ -114,14 +115,14 @@ public final class WorkspaceRunDetails {
 
     @java.lang.Override
     @JsonSetter("stdout")
-    public _FinalStage stdout(String stdout) {
-      this.stdout = stdout;
+    public _FinalStage stdout(@NotNull String stdout) {
+      this.stdout = Objects.requireNonNull(stdout, "stdout must not be null");
       return this;
     }
 
     @java.lang.Override
     public _FinalStage exception(ExceptionInfo exception) {
-      this.exception = Optional.of(exception);
+      this.exception = Optional.ofNullable(exception);
       return this;
     }
 
@@ -137,7 +138,7 @@ public final class WorkspaceRunDetails {
 
     @java.lang.Override
     public _FinalStage exceptionV2(ExceptionV2 exceptionV2) {
-      this.exceptionV2 = Optional.of(exceptionV2);
+      this.exceptionV2 = Optional.ofNullable(exceptionV2);
       return this;
     }
 

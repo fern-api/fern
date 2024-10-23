@@ -1,12 +1,13 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
 import { createFiddleService } from "@fern-api/core";
 import { Project } from "@fern-api/project-loader";
-import { YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { YAML_SCHEMA_VERSION } from "@fern-api/fern-definition-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import { readFile } from "fs/promises";
 import path from "path";
-import tar from "tar";
+import { create as createTar } from "tar";
 import tmp from "tmp-promise";
 import { CliContext } from "../../cli-context/CliContext";
 
@@ -35,12 +36,13 @@ export async function registerWorkspacesV1({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "oss") {
+                if (workspace instanceof OSSWorkspace) {
                     context.failWithoutThrowing("Registering from OpenAPI not currently supported.");
                     return;
                 }
+                const resolvedWorkspace = await workspace.toFernWorkspace({ context });
                 const registerApiResponse = await fiddle.definitionRegistry.registerUsingOrgToken({
-                    apiId: FernFiddle.ApiId(workspace.definition.rootApiFile.contents.name),
+                    apiId: FernFiddle.ApiId(resolvedWorkspace.definition.rootApiFile.contents.name),
                     version,
                     cliVersion: cliContext.environment.packageVersion,
                     yamlSchemaVersion: `${YAML_SCHEMA_VERSION}`
@@ -61,13 +63,13 @@ export async function registerWorkspacesV1({
                 const tarPath = path.join(tmpDir.path, "definition.tgz");
 
                 context.logger.debug(`Compressing definition at ${tmpDir.path}`);
-                await tar.create({ file: tarPath, cwd: workspace.absoluteFilepath }, ["."]);
+                await createTar({ file: tarPath, cwd: resolvedWorkspace.absoluteFilePath }, ["."]);
 
                 context.logger.info("Uploading definition...");
                 await axios.put(registerApiResponse.body.definitionS3UploadUrl, await readFile(tarPath));
 
                 context.logger.info(
-                    `Registered @${project.config.organization}/${workspace.definition.rootApiFile.contents.name}:${registerApiResponse.body.version}`
+                    `Registered @${project.config.organization}/${resolvedWorkspace.definition.rootApiFile.contents.name}:${registerApiResponse.body.version}`
                 );
             });
         })

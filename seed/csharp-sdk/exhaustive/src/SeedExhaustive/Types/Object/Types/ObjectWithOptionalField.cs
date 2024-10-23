@@ -1,42 +1,50 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedExhaustive.Types;
 
-public class ObjectWithOptionalField
+public record ObjectWithOptionalField
 {
+    /// <summary>
+    /// This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+    /// </summary>
     [JsonPropertyName("string")]
-    public List<string?> String { get; init; }
+    public string? String { get; }
 
     [JsonPropertyName("integer")]
-    public List<int?> Integer { get; init; }
+    public int? Integer { get; }
 
     [JsonPropertyName("long")]
-    public List<long?> Long { get; init; }
+    public long? Long { get; }
 
     [JsonPropertyName("double")]
-    public List<double?> Double { get; init; }
+    public double? Double { get; }
 
     [JsonPropertyName("bool")]
-    public List<bool?> Bool { get; init; }
+    public bool? Bool { get; }
 
     [JsonPropertyName("datetime")]
-    public List<DateTime?> Datetime { get; init; }
+    public DateTime? Datetime { get; }
 
     [JsonPropertyName("date")]
-    public List<DateOnly?> Date { get; init; }
+    public DateOnly? Date { get; }
 
     [JsonPropertyName("uuid")]
-    public List<Guid?> Uuid { get; init; }
+    public string? Uuid { get; }
 
     [JsonPropertyName("base64")]
-    public List<string?> Base64 { get; init; }
+    public string? Base64 { get; }
 
     [JsonPropertyName("list")]
-    public List<List<List<string>>?> List { get; init; }
+    public IEnumerable<string>? List { get; }
 
     [JsonPropertyName("set")]
-    public List<List<HashSet<string>>?> Set { get; init; }
+    public HashSet<string>? Set { get; }
 
     [JsonPropertyName("map")]
-    public List<List<Dictionary<int, string>>?> Map { get; init; }
+    public Dictionary<int, string>? Map { get; }
+
+    [JsonPropertyName("bigint")]
+    public int? Bigint { get; }
 }

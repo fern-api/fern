@@ -1,9 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedNurseryApi.Core;
+
+#nullable enable
 
 namespace SeedNurseryApi;
 
-public class Package
+public record Package
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

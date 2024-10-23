@@ -16,7 +16,8 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && jest --passWithNoTests",
+    "test": "jest --passWithNoTests",
+    "test:update": "jest --passWithNoTests -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../../shared/.prettierignore \"**\"",
@@ -25,20 +26,34 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "form-data": "4.0.0",
+    "form-data-encoder": "^4.0.2",
+    "formdata-node": "^6.0.3",
+    "jest-fetch-mock": "^3.0.3",
     "node-fetch": "2.7.0",
-    "qs": "6.11.2"
+    "qs": "6.12.1",
+    "readable-stream": "^4.5.2"
   },
   "devDependencies": {
-    "@types/jest": "^29.0.3",
-    "@types/node": "^18.7.18",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/multer": "^1.4.11",
+    "@types/node": "18.7.18",
     "@types/node-fetch": "2.6.9",
-    "@types/qs": "6.9.8",
+    "@types/qs": "6.9.15",
+    "@types/readable-stream": "^4.0.15",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
+    "express": "^4.20.0",
+    "fetch-mock-jest": "^1.5.1",
+    "form-data": "4.0.0",
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "multer": "^1.4.5-lts.1",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
-    "typescript": "4.6.4"
+    "ts-jest": "^29.2.4",
+    "ts-loader": "^9.3.1",
+    "typescript": "4.6.4",
+    "webpack": "^5.94.0"
   }
 }

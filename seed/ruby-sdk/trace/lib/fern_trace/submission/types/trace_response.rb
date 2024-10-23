@@ -65,8 +65,8 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        submission_id = struct["submissionId"]
-        line_number = struct["lineNumber"]
+        submission_id = parsed_json["submissionId"]
+        line_number = parsed_json["lineNumber"]
         if parsed_json["returnValue"].nil?
           return_value = nil
         else
@@ -85,7 +85,7 @@ module SeedTraceClient
           stack = parsed_json["stack"].to_json
           stack = SeedTraceClient::Submission::StackInformation.from_json(json_object: stack)
         end
-        stdout = struct["stdout"]
+        stdout = parsed_json["stdout"]
         new(
           submission_id: submission_id,
           line_number: line_number,

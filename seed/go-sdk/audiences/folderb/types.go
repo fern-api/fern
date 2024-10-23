@@ -10,9 +10,14 @@ import (
 )
 
 type Foo struct {
-	Foo *folderc.Foo `json:"foo,omitempty" url:"foo,omitempty"`
+	Foo *folderc.FolderCFoo `json:"foo,omitempty" url:"foo,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (f *Foo) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
 }
 
 func (f *Foo) UnmarshalJSON(data []byte) error {
@@ -22,6 +27,13 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = Foo(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
 	f._rawJSON = json.RawMessage(data)
 	return nil
 }

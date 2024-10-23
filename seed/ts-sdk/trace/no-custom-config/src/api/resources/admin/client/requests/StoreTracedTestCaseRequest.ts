@@ -8,19 +8,42 @@ import * as SeedTrace from "../../../../index";
  * @example
  *     {
  *         result: {
- *             result: {},
- *             stdout: "string"
+ *             result: {
+ *                 expectedResult: {
+ *                     type: "integerValue",
+ *                     value: 1
+ *                 },
+ *                 actualResult: {
+ *                     type: "value",
+ *                     value: {
+ *                         type: "integerValue",
+ *                         value: 1
+ *                     }
+ *                 },
+ *                 passed: true
+ *             },
+ *             stdout: "stdout"
  *         },
  *         traceResponses: [{
  *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
  *                 lineNumber: 1,
- *                 returnValue: {
- *                     type: "integerValue",
- *                     value: 1
+ *                 returnValue: undefined,
+ *                 expressionLocation: undefined,
+ *                 stack: {
+ *                     numStackFrames: 1,
+ *                     topStackFrame: undefined
  *                 },
- *                 expressionLocation: {},
- *                 stack: {},
- *                 stdout: "string"
+ *                 stdout: undefined
+ *             }, {
+ *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+ *                 lineNumber: 1,
+ *                 returnValue: undefined,
+ *                 expressionLocation: undefined,
+ *                 stack: {
+ *                     numStackFrames: 1,
+ *                     topStackFrame: undefined
+ *                 },
+ *                 stdout: undefined
  *             }]
  *     }
  */

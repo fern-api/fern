@@ -1,10 +1,17 @@
 using System.Text.Json.Serialization;
-using SeedTrace.V2.V3;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace.V2.V3;
 
-public class TestCaseImplementationDescription
+public record TestCaseImplementationDescription
 {
     [JsonPropertyName("boards")]
-    public List<List<TestCaseImplementationDescriptionBoard>> Boards { get; init; }
+    public IEnumerable<object> Boards { get; set; } = new List<object>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

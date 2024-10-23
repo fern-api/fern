@@ -34,21 +34,21 @@ class HttpX:
     @staticmethod
     def make_request(
         *,
-        url: AST.Expression,
+        path: Optional[AST.Expression],
+        url: Optional[AST.Expression],
         method: str,
         query_parameters: Optional[AST.Expression],
         request_body: Optional[AST.Expression],
         headers: Optional[AST.Expression],
         files: Optional[AST.Expression],
         content: Optional[AST.Expression],
-        auth: Optional[AST.Expression],
-        timeout: AST.Expression,
         response_variable_name: str,
+        request_options_variable_name: str,
         is_async: bool,
         is_streaming: bool,
         response_code_writer: AST.CodeWriter,
         reference_to_client: AST.Expression,
-        max_retries: AST.Expression,
+        is_default_body_parameter_used: bool,
     ) -> AST.Expression:
         def add_request_params(*, writer: AST.NodeWriter) -> None:
             if query_parameters is not None:
@@ -76,21 +76,10 @@ class HttpX:
                 writer.write_node(headers)
                 writer.write_line(",")
 
-            if auth is not None:
-                writer.write("auth=")
-                writer.write_node(auth)
-                writer.write_line(",")
+            writer.write(f"request_options={request_options_variable_name},")
 
-            writer.write("timeout=")
-            writer.write_node(timeout)
-            writer.write_line(",")
-
-            writer.write("retries=0")
-            writer.write_line(",")
-
-            writer.write("max_retries=")
-            writer.write_node(max_retries)
-            writer.write_line(",  # type: ignore")
+            if is_default_body_parameter_used:
+                writer.write_line("omit=OMIT,")
 
         def write_non_streaming_call(
             *,
@@ -107,10 +96,17 @@ class HttpX:
             if is_async:
                 writer.write("await ")
             writer.write_node(reference_to_client)
-            writer.write(f'.request("{method}", ')
-            writer.write_node(url)
-            writer.write(", ")
+            writer.write_line(f".request(")
+
             with writer.indent():
+                if path is not None:
+                    writer.write_node(path)
+                    writer.write(",")
+                if url is not None:
+                    writer.write("base_url=")
+                    writer.write_node(url)
+                    writer.write(",")
+                writer.write_line(f'method="{method}",')
                 add_request_params(writer=writer)
             writer.write_line(")")
 
@@ -119,10 +115,17 @@ class HttpX:
                 writer.write("async ")
             writer.write("with ")
             writer.write_node(reference_to_client)
-            writer.write(f'.stream("{method}", ')
-            writer.write_node(url)
-            writer.write(", ")
+            writer.write(f".stream(")
+
             with writer.indent():
+                if path is not None:
+                    writer.write_node(path)
+                    writer.write(",")
+                if url is not None:
+                    writer.write("base_url=")
+                    writer.write_node(url)
+                    writer.write(",")
+                writer.write_line(f'method="{method}",')
                 add_request_params(writer=writer)
             writer.write_line(f") as {response_variable_name}:")
 

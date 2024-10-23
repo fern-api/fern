@@ -1,13 +1,21 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class BinaryTreeValue
+public record BinaryTreeValue
 {
     [JsonPropertyName("root")]
-    public List<string?> Root { get; init; }
+    public string? Root { get; set; }
 
     [JsonPropertyName("nodes")]
-    public List<Dictionary<string, BinaryTreeNodeValue>> Nodes { get; init; }
+    public Dictionary<string, BinaryTreeNodeValue> Nodes { get; set; } =
+        new Dictionary<string, BinaryTreeNodeValue>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -87,10 +87,10 @@ class WriterImpl(AST.Writer):
 
         return IndentableWriterImpl(writer=self)
 
-    def to_str(self) -> str:
+    def to_str(self, should_format_override: Optional[bool] = None) -> str:
         content = self._content
 
-        if self._should_format:
+        if self._should_format and (should_format_override is None or should_format_override):
             import black
             import isort
 

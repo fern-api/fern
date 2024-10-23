@@ -16,10 +16,11 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.submission.types.TestCaseResultWithStdout;
 import resources.submission.types.TraceResponse;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = StoreTracedTestCaseRequest.Builder.class
 )
@@ -69,7 +70,7 @@ public final class StoreTracedTestCaseRequest {
   }
 
   public interface ResultStage {
-    _FinalStage result(TestCaseResultWithStdout result);
+    _FinalStage result(@NotNull TestCaseResultWithStdout result);
 
     Builder from(StoreTracedTestCaseRequest other);
   }
@@ -104,8 +105,8 @@ public final class StoreTracedTestCaseRequest {
 
     @java.lang.Override
     @JsonSetter("result")
-    public _FinalStage result(TestCaseResultWithStdout result) {
-      this.result = result;
+    public _FinalStage result(@NotNull TestCaseResultWithStdout result) {
+      this.result = Objects.requireNonNull(result, "result must not be null");
       return this;
     }
 

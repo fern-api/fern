@@ -3,11 +3,23 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_unknown.post"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnknownAsAnyClient } from \"@fern/unknown\";\n\nconst seedUnknownAsAny = new SeedUnknownAsAnyClient;\nawait seedUnknownAsAny.unknown.post({\n    \"key\": \"value\"\n});\n"
+                "client": "import { SeedUnknownAsAnyClient } from \"@fern/unknown\";\n\nconst client = new SeedUnknownAsAnyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.unknown.post({\n    \"key\": \"value\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/with-object",
+                "method": "POST",
+                "identifier_override": "endpoint_unknown.postObject"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUnknownAsAnyClient } from \"@fern/unknown\";\n\nconst client = new SeedUnknownAsAnyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.unknown.postObject({\n    unknown: {\n        \"key\": \"value\"\n    }\n});\n"
             }
         }
     ],

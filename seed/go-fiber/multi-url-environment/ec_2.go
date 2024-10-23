@@ -3,5 +3,5 @@
 package multiurlenvironment
 
 type BootInstanceRequest struct {
-	Size string `json:"size" url:"size"`
+	Size string `json:"size" url:"-"`
 }

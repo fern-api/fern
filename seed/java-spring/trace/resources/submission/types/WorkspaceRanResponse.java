@@ -13,8 +13,9 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = WorkspaceRanResponse.Builder.class
 )
@@ -63,13 +64,13 @@ public final class WorkspaceRanResponse {
   }
 
   public interface SubmissionIdStage {
-    RunDetailsStage submissionId(SubmissionId submissionId);
+    RunDetailsStage submissionId(@NotNull SubmissionId submissionId);
 
     Builder from(WorkspaceRanResponse other);
   }
 
   public interface RunDetailsStage {
-    _FinalStage runDetails(WorkspaceRunDetails runDetails);
+    _FinalStage runDetails(@NotNull WorkspaceRunDetails runDetails);
   }
 
   public interface _FinalStage {
@@ -96,15 +97,15 @@ public final class WorkspaceRanResponse {
 
     @java.lang.Override
     @JsonSetter("submissionId")
-    public RunDetailsStage submissionId(SubmissionId submissionId) {
-      this.submissionId = submissionId;
+    public RunDetailsStage submissionId(@NotNull SubmissionId submissionId) {
+      this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("runDetails")
-    public _FinalStage runDetails(WorkspaceRunDetails runDetails) {
-      this.runDetails = runDetails;
+    public _FinalStage runDetails(@NotNull WorkspaceRunDetails runDetails) {
+      this.runDetails = Objects.requireNonNull(runDetails, "runDetails must not be null");
       return this;
     }
 

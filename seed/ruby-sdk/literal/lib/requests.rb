@@ -6,8 +6,6 @@ require "async/http/faraday"
 
 module SeedLiteralClient
   class RequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
@@ -21,7 +19,7 @@ module SeedLiteralClient
     # @return [SeedLiteralClient::RequestClient]
     def initialize(version:, audit_logging:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_literal", "X-Fern-SDK-Version": "0.0.1" }
+      @headers = {}
       @headers["X-API-Version"] = version unless version.nil?
       @headers["X-API-Enable-Audit-Logging"] = audit_logging unless audit_logging.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -37,11 +35,14 @@ module SeedLiteralClient
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
     end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_literal", "X-Fern-SDK-Version": "0.0.1" }
+    end
   end
 
   class AsyncRequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
@@ -55,7 +56,7 @@ module SeedLiteralClient
     # @return [SeedLiteralClient::AsyncRequestClient]
     def initialize(version:, audit_logging:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_literal", "X-Fern-SDK-Version": "0.0.1" }
+      @headers = {}
       @headers["X-API-Version"] = version unless version.nil?
       @headers["X-API-Enable-Audit-Logging"] = audit_logging unless audit_logging.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -71,6 +72,11 @@ module SeedLiteralClient
     # @return [String]
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
+    end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_literal", "X-Fern-SDK-Version": "0.0.1" }
     end
   end
 

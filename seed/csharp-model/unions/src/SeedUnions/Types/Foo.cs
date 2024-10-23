@@ -1,9 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedUnions.Core;
+
+#nullable enable
 
 namespace SeedUnions;
 
-public class Foo
+public record Foo
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

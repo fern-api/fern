@@ -6,3 +6,4 @@ export * from "./WebhookPayloadReference";
 export * from "./InlinedWebhookPayload";
 export * from "./InlinedWebhookPayloadProperty";
 export * from "./WebhookHttpMethod";
+export * from "./ExampleWebhookCall";

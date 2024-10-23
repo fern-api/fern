@@ -35,17 +35,62 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "id"
                 }
               ]
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "GET",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"type\": \"circle\",\n    \"radius\": 1.1\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "_type": "endpoint",
@@ -61,12 +106,18 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "PATCH",
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"type\": \"circle\",\n    \"radius\": 0\n}",
+              "raw": "{\n    \"type\": \"circle\",\n    \"radius\": 1.1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -74,7 +125,46 @@
               }
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"type\": \"circle\",\n    \"radius\": 1.1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "true",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

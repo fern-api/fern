@@ -5,6 +5,7 @@ import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressGenerator } from "@fern-typescript/express-generator";
 import { camelCase, upperFirst } from "lodash-es";
+import { custom } from "zod";
 import { ExpressCustomConfig } from "./custom-config/ExpressCustomConfig";
 import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomConfigSchema";
 
@@ -20,10 +21,15 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             noSerdeLayer,
+            requestValidationStatusCode: parsed?.requestValidationStatusCode ?? 422,
             outputEsm: parsed?.outputEsm ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? false,
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
-            allowExtraFields: parsed?.allowExtraFields ?? false
+            allowExtraFields: parsed?.allowExtraFields ?? false,
+            skipRequestValidation: parsed?.skipRequestValidation ?? false,
+            skipResponseValidation: parsed?.skipResponseValidation ?? false,
+            useBigInt: parsed?.useBigInt ?? false,
+            noOptionalProperties: parsed?.noOptionalProperties ?? false
         };
     }
 
@@ -57,14 +63,20 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 includeSerdeLayer: !customConfig.noSerdeLayer,
                 outputEsm: customConfig.outputEsm,
                 retainOriginalCasing: customConfig.retainOriginalCasing,
-                allowExtraFields: customConfig.allowExtraFields
+                allowExtraFields: customConfig.allowExtraFields,
+                skipRequestValidation: customConfig.skipRequestValidation,
+                skipResponseValidation: customConfig.skipResponseValidation,
+                requestValidationStatusCode: customConfig.requestValidationStatusCode,
+                useBigInt: customConfig.useBigInt,
+                noOptionalProperties: customConfig.noOptionalProperties
             }
         });
 
         const typescriptProject = await expressGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
         await expressGenerator.copyCoreUtilities({
-            pathToSrc: persistedTypescriptProject.getSrcDirectory()
+            pathToSrc: persistedTypescriptProject.getSrcDirectory(),
+            pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
 
         return persistedTypescriptProject;
@@ -79,6 +91,10 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
     }
 
     protected shouldTolerateRepublish(customConfig: ExpressCustomConfig): boolean {
+        return false;
+    }
+
+    protected publishToJsr(customConfig: ExpressCustomConfig): boolean {
         return false;
     }
 }

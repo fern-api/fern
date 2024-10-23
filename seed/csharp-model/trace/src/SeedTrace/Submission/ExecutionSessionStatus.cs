@@ -1,7 +1,12 @@
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
+[JsonConverter(typeof(StringEnumSerializer<ExecutionSessionStatus>))]
 public enum ExecutionSessionStatus
 {
     [EnumMember(Value = "CREATING_CONTAINER")]
@@ -20,5 +25,5 @@ public enum ExecutionSessionStatus
     LiveContainer,
 
     [EnumMember(Value = "FAILED_TO_LAUNCH")]
-    FailedToLaunch
+    FailedToLaunch,
 }

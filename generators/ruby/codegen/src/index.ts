@@ -32,3 +32,4 @@ export * from "./utils/GeneratedRubyFile";
 export * from "./utils/LocationGenerator";
 export * from "./utils/RubyConstants";
 export * from "./utils/RubyUtilities";
+export { BaseGeneratorConfigSchema, ExtraDependenciesSchema } from "./BaseGeneratorConfig";

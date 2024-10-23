@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GenericValue.Builder.class)
 public final class GenericValue {
     private final Optional<String> stringifiedType;
@@ -73,7 +74,7 @@ public final class GenericValue {
     }
 
     public interface StringifiedValueStage {
-        _FinalStage stringifiedValue(String stringifiedValue);
+        _FinalStage stringifiedValue(@NotNull String stringifiedValue);
 
         Builder from(GenericValue other);
     }
@@ -106,14 +107,14 @@ public final class GenericValue {
 
         @java.lang.Override
         @JsonSetter("stringifiedValue")
-        public _FinalStage stringifiedValue(String stringifiedValue) {
-            this.stringifiedValue = stringifiedValue;
+        public _FinalStage stringifiedValue(@NotNull String stringifiedValue) {
+            this.stringifiedValue = Objects.requireNonNull(stringifiedValue, "stringifiedValue must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage stringifiedType(String stringifiedType) {
-            this.stringifiedType = Optional.of(stringifiedType);
+            this.stringifiedType = Optional.ofNullable(stringifiedType);
             return this;
         }
 

@@ -17,6 +17,7 @@
 package com.fern.java;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import org.immutables.value.Value;
 
 public interface ICustomConfig {
@@ -37,5 +38,39 @@ public interface ICustomConfig {
     @JsonProperty("generate-unknown-as-json-node")
     default Boolean generateUnknownAsJsonNode() {
         return false;
+    }
+
+    @Value.Default
+    @JsonProperty("json-include")
+    default JsonInclude jsonInclude() {
+        return JsonInclude.NON_ABSENT;
+    }
+
+    @Value.Default
+    @JsonProperty("enable-public-constructors")
+    default Boolean enablePublicConstructors() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("disable-required-property-builder-checks")
+    default Boolean disableRequiredPropertyBuilderChecks() {
+        return false;
+    }
+
+    enum JsonInclude {
+        NON_EMPTY("non-empty"),
+        NON_ABSENT("non-absent");
+
+        private final String value;
+
+        JsonInclude(String value) {
+            this.value = value;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return value;
+        }
     }
 }

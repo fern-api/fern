@@ -1,12 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedServerSentEvents.Core;
+
+#nullable enable
 
 namespace SeedServerSentEvents;
 
-public class StreamedCompletion
+public record StreamedCompletion
 {
     [JsonPropertyName("delta")]
-    public string Delta { get; init; }
+    public required string Delta { get; set; }
 
     [JsonPropertyName("tokens")]
-    public List<int?> Tokens { get; init; }
+    public int? Tokens { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

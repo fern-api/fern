@@ -1,3 +1,6 @@
+import { GeneratorNotificationService } from "@fern-api/generator-commons";
+import { Logger } from "@fern-api/logger";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilitiesManager,
@@ -30,7 +33,6 @@ import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlin
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { camelCase } from "lodash-es";
 import { SourceFile, ts } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
@@ -41,6 +43,8 @@ import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErr
 import { SdkInlinedRequestBodyDeclarationReferencer } from "../declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
 import { TimeoutSdkErrorDeclarationReferencer } from "../declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
+import { VersionDeclarationReferencer } from "../declaration-referencers/VersionDeclarationReferencer";
+import { VersionGenerator } from "../version/VersionGenerator";
 import { EndpointErrorUnionContextImpl } from "./endpoint-error-union/EndpointErrorUnionContextImpl";
 import { EnvironmentsContextImpl } from "./environments/EnvironmentsContextImpl";
 import { GenericAPISdkErrorContextImpl } from "./generic-api-sdk-error/GenericAPISdkErrorContextImpl";
@@ -53,15 +57,24 @@ import { SdkInlinedRequestBodySchemaContextImpl } from "./sdk-inlined-request-bo
 import { TimeoutSdkErrorContextImpl } from "./timeout-sdk-error/TimeoutSdkErrorContextImpl";
 import { TypeSchemaContextImpl } from "./type-schema/TypeSchemaContextImpl";
 import { TypeContextImpl } from "./type/TypeContextImpl";
+import { VersionContextImpl } from "./version/VersionContextImpl";
+
+const ROOT_CLIENT_VARIABLE_NAME = "client";
 
 export declare namespace SdkContextImpl {
     export interface Init {
+        logger: Logger;
+        version: string | undefined;
+        ir: IntermediateRepresentation;
+        config: FernGeneratorExec.GeneratorConfig;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
         dependencyManager: DependencyManager;
         coreUtilitiesManager: CoreUtilitiesManager;
         fernConstants: Constants;
         intermediateRepresentation: IntermediateRepresentation;
+        versionGenerator: VersionGenerator;
+        versionDeclarationReferencer: VersionDeclarationReferencer;
         typeGenerator: TypeGenerator;
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
@@ -96,10 +109,18 @@ export declare namespace SdkContextImpl {
         npmPackage: NpmPackage | undefined;
         targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
+        generateOAuthClients: boolean;
+        inlineFileProperties: boolean;
+        omitUndefined: boolean;
+        useBigInt: boolean;
     }
 }
 
 export class SdkContextImpl implements SdkContext {
+    public readonly logger: Logger;
+    public readonly ir: IntermediateRepresentation;
+    public readonly config: FernGeneratorExec.GeneratorConfig;
+    public readonly generatorNotificationService: GeneratorNotificationService;
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
@@ -108,9 +129,11 @@ export class SdkContextImpl implements SdkContext {
     public readonly npmPackage: NpmPackage | undefined;
     public readonly type: TypeContextImpl;
     public readonly typeSchema: TypeSchemaContextImpl;
-    public readonly namespaceExport: string | undefined;
+    public readonly namespaceExport: string;
+    public readonly rootClientVariableName: string;
     public readonly sdkInstanceReferenceForSnippet: ts.Identifier;
 
+    public readonly versionContext: VersionContextImpl;
     public readonly sdkError: SdkErrorContextImpl;
     public readonly sdkErrorSchema: SdkErrorSchemaContextImpl;
     public readonly endpointErrorUnion: EndpointErrorUnionContextImpl;
@@ -124,11 +147,19 @@ export class SdkContextImpl implements SdkContext {
     public readonly targetRuntime: JavaScriptRuntime;
     public readonly includeSerdeLayer: boolean;
     public readonly retainOriginalCasing: boolean;
+    public readonly inlineFileProperties: boolean;
+    public readonly generateOAuthClients: boolean;
+    public readonly omitUndefined: boolean;
 
     constructor({
+        logger,
+        ir,
+        config,
         npmPackage,
         isForSnippet,
         intermediateRepresentation,
+        versionGenerator,
+        versionDeclarationReferencer,
         typeGenerator,
         typeResolver,
         typeDeclarationReferencer,
@@ -165,15 +196,25 @@ export class SdkContextImpl implements SdkContext {
         fernConstants,
         includeSerdeLayer,
         retainOriginalCasing,
-        targetRuntime
+        targetRuntime,
+        inlineFileProperties,
+        generateOAuthClients,
+        omitUndefined,
+        useBigInt
     }: SdkContextImpl.Init) {
+        this.logger = logger;
+        this.ir = ir;
+        this.config = config;
+        this.generatorNotificationService = new GeneratorNotificationService(config.environment);
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
+        this.inlineFileProperties = inlineFileProperties;
         this.targetRuntime = targetRuntime;
-        this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(
-            camelCase(typeDeclarationReferencer.namespaceExport)
-        );
+        this.generateOAuthClients = generateOAuthClients;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
+        this.rootClientVariableName = ROOT_CLIENT_VARIABLE_NAME;
+        this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(this.rootClientVariableName);
         this.sourceFile = sourceFile;
         this.npmPackage = npmPackage;
         this.externalDependencies = createExternalDependencies({
@@ -186,6 +227,13 @@ export class SdkContextImpl implements SdkContext {
         });
         this.fernConstants = fernConstants;
 
+        this.versionContext = new VersionContextImpl({
+            intermediateRepresentation,
+            versionGenerator,
+            versionDeclarationReferencer,
+            importsManager,
+            sourceFile
+        });
         this.type = new TypeContextImpl({
             npmPackage,
             isForSnippet,
@@ -197,7 +245,8 @@ export class SdkContextImpl implements SdkContext {
             typeReferenceExampleGenerator,
             treatUnknownAsAny,
             includeSerdeLayer,
-            retainOriginalCasing
+            retainOriginalCasing,
+            useBigInt
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
@@ -210,7 +259,8 @@ export class SdkContextImpl implements SdkContext {
             typeSchemaGenerator,
             treatUnknownAsAny,
             includeSerdeLayer,
-            retainOriginalCasing
+            retainOriginalCasing,
+            useBigInt
         });
         this.sdkError = new SdkErrorContextImpl({
             sourceFile,
@@ -241,7 +291,8 @@ export class SdkContextImpl implements SdkContext {
             sourceFile: this.sourceFile,
             importsManager,
             includeSerdeLayer,
-            retainOriginalCasing
+            retainOriginalCasing,
+            inlineFileProperties
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,
@@ -284,4 +335,5 @@ export class SdkContextImpl implements SdkContext {
             timeoutSdkErrorGenerator
         });
     }
+    version: string | undefined;
 }

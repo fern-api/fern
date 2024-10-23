@@ -14,8 +14,9 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TestCaseWithExpectedResult.Builder.class)
 public final class TestCaseWithExpectedResult {
     private final TestCase testCase;
@@ -71,13 +72,13 @@ public final class TestCaseWithExpectedResult {
     }
 
     public interface TestCaseStage {
-        ExpectedResultStage testCase(TestCase testCase);
+        ExpectedResultStage testCase(@NotNull TestCase testCase);
 
         Builder from(TestCaseWithExpectedResult other);
     }
 
     public interface ExpectedResultStage {
-        _FinalStage expectedResult(VariableValue expectedResult);
+        _FinalStage expectedResult(@NotNull VariableValue expectedResult);
     }
 
     public interface _FinalStage {
@@ -104,15 +105,15 @@ public final class TestCaseWithExpectedResult {
 
         @java.lang.Override
         @JsonSetter("testCase")
-        public ExpectedResultStage testCase(TestCase testCase) {
-            this.testCase = testCase;
+        public ExpectedResultStage testCase(@NotNull TestCase testCase) {
+            this.testCase = Objects.requireNonNull(testCase, "testCase must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("expectedResult")
-        public _FinalStage expectedResult(VariableValue expectedResult) {
-            this.expectedResult = expectedResult;
+        public _FinalStage expectedResult(@NotNull VariableValue expectedResult) {
+            this.expectedResult = Objects.requireNonNull(expectedResult, "expectedResult must not be null");
             return this;
         }
 

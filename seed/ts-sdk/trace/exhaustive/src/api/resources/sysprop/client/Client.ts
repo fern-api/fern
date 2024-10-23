@@ -12,18 +12,33 @@ export declare namespace Sysprop {
     interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
 export class Sysprop {
     constructor(protected readonly _options: Sysprop.Options = {}) {}
 
+    /**
+     * @param {SeedTrace.Language} language
+     * @param {number} numWarmInstances
+     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.sysprop.setNumWarmInstances("JAVA", 1)
+     */
     public async setNumWarmInstances(
         language: SeedTrace.Language,
         numWarmInstances: number,
@@ -32,7 +47,9 @@ export class Sysprop {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sysprop/num-warm-instances/${await serializers.Language.jsonOrThrow(language)}/${numWarmInstances}`
+                `/sysprop/num-warm-instances/${encodeURIComponent(
+                    serializers.Language.jsonOrThrow(language)
+                )}/${encodeURIComponent(numWarmInstances)}`
             ),
             method: "PUT",
             headers: {
@@ -44,13 +61,16 @@ export class Sysprop {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -65,6 +85,12 @@ export class Sysprop {
         };
     }
 
+    /**
+     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.sysprop.getNumWarmInstances()
+     */
     public async getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions
     ): Promise<
@@ -85,18 +111,21 @@ export class Sysprop {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
+                body: serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

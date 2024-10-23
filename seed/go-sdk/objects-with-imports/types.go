@@ -14,7 +14,12 @@ type Node struct {
 	Label    *string           `json:"label,omitempty" url:"label,omitempty"`
 	Metadata *commons.Metadata `json:"metadata,omitempty" url:"metadata,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (n *Node) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
 }
 
 func (n *Node) UnmarshalJSON(data []byte) error {
@@ -24,6 +29,13 @@ func (n *Node) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = Node(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
 	n._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -43,7 +55,12 @@ func (n *Node) String() string {
 type Tree struct {
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (t *Tree) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
 }
 
 func (t *Tree) UnmarshalJSON(data []byte) error {
@@ -53,6 +70,13 @@ func (t *Tree) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = Tree(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
 	t._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -72,9 +96,14 @@ func (t *Tree) String() string {
 type File struct {
 	Name     string   `json:"name" url:"name"`
 	Contents string   `json:"contents" url:"contents"`
-	Info     FileInfo `json:"info,omitempty" url:"info,omitempty"`
+	Info     FileInfo `json:"info" url:"info"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (f *File) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
 }
 
 func (f *File) UnmarshalJSON(data []byte) error {
@@ -84,6 +113,13 @@ func (f *File) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = File(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
 	f._rawJSON = json.RawMessage(data)
 	return nil
 }

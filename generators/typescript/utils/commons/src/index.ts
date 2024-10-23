@@ -1,3 +1,4 @@
+export { getExampleEndpointCalls } from "./codegen-utils/getExampleEndpointCalls";
 export { getPropertyKey } from "./codegen-utils/getPropertyKey";
 export { getSchemaOptions } from "./codegen-utils/getSchemaOptions";
 export { getTextOfTsKeyword } from "./codegen-utils/getTextOfTsKeyword";

@@ -36,7 +36,10 @@ public interface SubmissionService {
       @RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
       @PathVariable("sessionId") String sessionId);
 
-  @DeleteMapping("/stop/{sessionId}")
+  @DeleteMapping(
+      value = "/stop/{sessionId}",
+      produces = "application/json"
+  )
   void stopExecutionSession(@RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
       @PathVariable("sessionId") String sessionId);
 

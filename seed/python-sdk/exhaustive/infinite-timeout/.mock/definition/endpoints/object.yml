@@ -30,8 +30,10 @@ service:
       response: objects.NestedObjectWithOptionalField
 
     getAndReturnNestedWithRequiredField:
-      path: /get-and-return-nested-with-required-field
+      path: /get-and-return-nested-with-required-field/{string}
       method: POST
+      path-parameters:
+        string: string
       request: objects.NestedObjectWithRequiredField
       response: objects.NestedObjectWithRequiredField
 

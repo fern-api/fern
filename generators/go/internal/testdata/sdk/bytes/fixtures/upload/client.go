@@ -48,7 +48,7 @@ func (c *Client) Upload(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"upload/%v", id)
+	endpointURL := core.EncodeURL(baseURL+"/upload/%v", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Set("Content-Type", "application/custom-format")
@@ -59,13 +59,15 @@ func (c *Client) Upload(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     requestBuffer,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         requestBuffer,
+			Response:        &response,
 		},
 	); err != nil {
 		return false, err
@@ -88,7 +90,7 @@ func (c *Client) UploadOptional(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"upload/optional/%v", id)
+	endpointURL := core.EncodeURL(baseURL+"/upload/optional/%v", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Set("Content-Type", "application/custom-format")
@@ -102,13 +104,15 @@ func (c *Client) UploadOptional(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     requestBuffer,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         requestBuffer,
+			Response:        &response,
 		},
 	); err != nil {
 		return false, err
@@ -131,7 +135,7 @@ func (c *Client) UploadWithHeader(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"upload_with_header/%v", id)
+	endpointURL := core.EncodeURL(baseURL+"/upload_with_header/%v", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Upload-File-Size", fmt.Sprintf("%v", request.XUploadFileSize))
@@ -143,13 +147,15 @@ func (c *Client) UploadWithHeader(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     requestBuffer,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         requestBuffer,
+			Response:        &response,
 		},
 	); err != nil {
 		return false, err
@@ -172,7 +178,7 @@ func (c *Client) UploadOptionalWithHeader(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"upload_with_header/optional/%v", id)
+	endpointURL := core.EncodeURL(baseURL+"/upload_with_header/optional/%v", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Upload-File-Size", fmt.Sprintf("%v", request.XUploadFileSize))
@@ -187,13 +193,15 @@ func (c *Client) UploadOptionalWithHeader(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     requestBuffer,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         requestBuffer,
+			Response:        &response,
 		},
 	); err != nil {
 		return false, err

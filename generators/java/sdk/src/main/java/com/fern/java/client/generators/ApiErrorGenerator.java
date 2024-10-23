@@ -16,7 +16,10 @@
 
 package com.fern.java.client.generators;
 
+import static com.fern.java.utils.PoetUtils.createGetter;
+
 import com.fern.java.ObjectMethodFactory;
+import com.fern.java.ObjectMethodFactory.ToStringSpec;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
@@ -30,52 +33,66 @@ import javax.lang.model.element.Modifier;
 
 public final class ApiErrorGenerator extends AbstractFileGenerator {
 
-    public static final FieldSpec STATUS_CODE_FIELD_SPEC = FieldSpec.builder(
+    private static final String MESSAGE_FIELD_NAME = "message";
+
+    private static final FieldSpec STATUS_CODE_FIELD_SPEC = FieldSpec.builder(
                     int.class, "statusCode", Modifier.PRIVATE, Modifier.FINAL)
+            .addJavadoc("The error code of the response that triggered the exception.")
             .build();
 
-    public static final FieldSpec BODY_FIELD_SPEC = FieldSpec.builder(
+    private static final FieldSpec BODY_FIELD_SPEC = FieldSpec.builder(
                     Object.class, "body", Modifier.PRIVATE, Modifier.FINAL)
+            .addJavadoc("The body of the response that triggered the exception.")
             .build();
 
-    public ApiErrorGenerator(ClientGeneratorContext clientGeneratorContext) {
-        super(clientGeneratorContext.getPoetClassNameFactory().getApiErrorClassName(), clientGeneratorContext);
+    private final GeneratedJavaFile generatedBaseErrorFile;
+
+    public ApiErrorGenerator(ClientGeneratorContext generatorContext, GeneratedJavaFile generatedBaseErrorFile) {
+        super(
+                generatorContext
+                        .getPoetClassNameFactory()
+                        .getApiErrorClassName(
+                                generatorContext.getGeneratorConfig().getOrganization(),
+                                generatorContext.getGeneratorConfig().getWorkspaceName(),
+                                generatorContext.getCustomConfig()),
+                generatorContext);
+        this.generatedBaseErrorFile = generatedBaseErrorFile;
     }
 
     @Override
     public GeneratedJavaFile generateFile() {
         TypeSpec apiErrorTypeSpec = TypeSpec.classBuilder(className)
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .superclass(RuntimeException.class)
+                .addJavadoc("This exception type will be thrown for any non-2XX API responses.")
+                .addModifiers(Modifier.PUBLIC)
+                .superclass(generatedBaseErrorFile.getClassName())
                 .addField(STATUS_CODE_FIELD_SPEC)
                 .addField(BODY_FIELD_SPEC)
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PUBLIC)
+                        .addParameter(ParameterSpec.builder(String.class, MESSAGE_FIELD_NAME)
+                                .build())
                         .addParameter(ParameterSpec.builder(STATUS_CODE_FIELD_SPEC.type, STATUS_CODE_FIELD_SPEC.name)
                                 .build())
                         .addParameter(ParameterSpec.builder(BODY_FIELD_SPEC.type, BODY_FIELD_SPEC.name)
                                 .build())
+                        .addStatement("super($L)", MESSAGE_FIELD_NAME)
                         .addStatement("this.$L = $L", STATUS_CODE_FIELD_SPEC.name, STATUS_CODE_FIELD_SPEC.name)
                         .addStatement("this.$L = $L", BODY_FIELD_SPEC.name, BODY_FIELD_SPEC.name)
                         .build())
                 .addMethod(createGetter(STATUS_CODE_FIELD_SPEC))
                 .addMethod(createGetter(BODY_FIELD_SPEC))
                 .addMethod(ObjectMethodFactory.createToStringMethod(
-                        className, List.of(STATUS_CODE_FIELD_SPEC, BODY_FIELD_SPEC)))
+                        className,
+                        List.of(
+                                ToStringSpec.of("message", "getMessage"),
+                                ToStringSpec.of(STATUS_CODE_FIELD_SPEC),
+                                ToStringSpec.of(BODY_FIELD_SPEC))))
                 .build();
         JavaFile apiErrorFile =
                 JavaFile.builder(className.packageName(), apiErrorTypeSpec).build();
         return GeneratedJavaFile.builder()
                 .className(className)
                 .javaFile(apiErrorFile)
-                .build();
-    }
-
-    private static MethodSpec createGetter(FieldSpec fieldSpec) {
-        return MethodSpec.methodBuilder(fieldSpec.name)
-                .addModifiers(Modifier.PUBLIC)
-                .returns(fieldSpec.type)
-                .addStatement("return this.$L", fieldSpec.name)
                 .build();
     }
 }

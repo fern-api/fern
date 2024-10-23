@@ -2,6 +2,7 @@ package generator
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -394,9 +395,15 @@ func (s *SnippetWriter) getSnippetForUnknown(
 			keys   = make([]ast.Expr, 0, len(v))
 			values = make([]ast.Expr, 0, len(v))
 		)
-		for key, value := range v {
+		// Sort the map keys for deterministic results.
+		sortedKeys := make([]string, 0, len(v))
+		for key := range v {
+			sortedKeys = append(sortedKeys, key)
+		}
+		sort.Slice(sortedKeys, func(i, j int) bool { return sortedKeys[i] < sortedKeys[j] })
+		for _, key := range sortedKeys {
 			keys = append(keys, s.getSnippetForUnknown(key))
-			values = append(values, s.getSnippetForUnknown(value))
+			values = append(values, s.getSnippetForUnknown(v[key]))
 		}
 		return &ast.MapLit{
 			Type: &ast.MapType{
@@ -456,7 +463,7 @@ func (s *SnippetWriter) getSnippetForPrimitive(
 		}
 	case "long":
 		return &ast.BasicLit{
-			Value: strconv.FormatInt(exampleTypeReference.Long, 64),
+			Value: strconv.FormatInt(exampleTypeReference.Long, 10),
 		}
 	case "datetime":
 		return &ast.CallExpr{

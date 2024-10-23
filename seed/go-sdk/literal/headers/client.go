@@ -45,7 +45,7 @@ func (c *Client) Send(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "headers"
+	endpointURL := baseURL + "/headers"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Version", fmt.Sprintf("%v", "02-12-2024"))
@@ -55,13 +55,15 @@ func (c *Client) Send(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     request,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
 		},
 	); err != nil {
 		return nil, err

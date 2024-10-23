@@ -1,0 +1,4 @@
+api:
+  specs:
+    - openapi: ../openapi.yml
+    - openapi: ../swagger.yml

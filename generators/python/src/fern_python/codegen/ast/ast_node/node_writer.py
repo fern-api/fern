@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from abc import abstractmethod
+from typing import Optional
 
 from ..references import Reference
 from .writer import Writer
@@ -8,7 +9,7 @@ from .writer import Writer
 
 class NodeWriter(Writer):
     @abstractmethod
-    def write_node(self, node: AstNode) -> None:
+    def write_node(self, node: AstNode, should_write_as_snippet: Optional[bool] = None) -> None:
         ...
 
     @abstractmethod

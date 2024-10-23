@@ -1,58 +1,48 @@
 import { Pagination } from "@fern-api/ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import {
-    getNestedObjectPropertyFromResolvedType,
-    maybeFileFromResolvedType,
-    OffsetPaginationPropertyComponents,
-    resolveResponseType
-} from "./convertPaginationUtils";
-import { convertQueryParameter } from "./convertQueryParameter";
+import { PropertyResolver } from "../../resolvers/PropertyResolver";
+import { OffsetPaginationPropertyComponents } from "./convertPaginationUtils";
 
 export async function convertOffsetPagination({
-    typeResolver,
+    propertyResolver,
     file,
+    endpointName,
     endpointSchema,
     paginationPropertyComponents
 }: {
-    typeResolver: TypeResolver;
+    propertyResolver: PropertyResolver;
     file: FernFileContext;
+    endpointName: string;
     endpointSchema: RawSchemas.HttpEndpointSchema;
     paginationPropertyComponents: OffsetPaginationPropertyComponents;
 }): Promise<Pagination | undefined> {
-    const queryParameterSchema =
-        typeof endpointSchema.request !== "string" && endpointSchema.request?.["query-parameters"] != null
-            ? endpointSchema?.request?.["query-parameters"]?.[paginationPropertyComponents.offset]
-            : undefined;
-    if (queryParameterSchema == null) {
-        return undefined;
-    }
-    const resolvedResponseType = resolveResponseType({
-        typeResolver,
-        file,
-        endpoint: endpointSchema
-    });
-    const resultsObjectProperty = await getNestedObjectPropertyFromResolvedType({
-        typeResolver,
-        file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
-        resolvedType: resolvedResponseType,
-        propertyComponents: paginationPropertyComponents.results
-    });
-    if (resultsObjectProperty == null) {
-        return undefined;
-    }
     return Pagination.offset({
-        page: await convertQueryParameter({
+        page: await propertyResolver.resolveRequestPropertyOrThrow({
             file,
-            queryParameterKey: paginationPropertyComponents.offset,
-            queryParameter: queryParameterSchema
+            endpoint: endpointName,
+            propertyComponents: paginationPropertyComponents.offset
         }),
-        results: {
-            propertyPath: paginationPropertyComponents.results.map((property) =>
-                file.casingsGenerator.generateName(property)
-            ),
-            property: resultsObjectProperty
-        }
+        results: await propertyResolver.resolveResponsePropertyOrThrow({
+            file,
+            endpoint: endpointName,
+            propertyComponents: paginationPropertyComponents.results
+        }),
+        step:
+            paginationPropertyComponents.step != null
+                ? await propertyResolver.resolveRequestPropertyOrThrow({
+                      file,
+                      endpoint: endpointName,
+                      propertyComponents: paginationPropertyComponents.step
+                  })
+                : undefined,
+        hasNextPage:
+            paginationPropertyComponents.hasNextPage != null
+                ? await propertyResolver.resolveResponsePropertyOrThrow({
+                      file,
+                      endpoint: endpointName,
+                      propertyComponents: paginationPropertyComponents.hasNextPage
+                  })
+                : undefined
     });
 }

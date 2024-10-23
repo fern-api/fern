@@ -1,0 +1,40 @@
+---
+title: Purchase Outbound number
+subtitle: >-
+  Purchase and configure a new inbound phone number. ($15/mo. subscription using
+  your stored payment method).
+slug: api-v1/post/outbound-purchase
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Body
+
+<ParamField body="area_code" default="415" type="string">
+  Choose a three-digit area code for your phone number. If set as a parameter, a number will only be purchased by exact
+  match if available.
+</ParamField>
+
+### Response
+
+<ResponseField name="phone_number" type="string">
+  The created phone number, will be in the following format: `+1XXXXXXXXXX`
+
+Example: `+18582814611`
+
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "phone_number": "+18582814611"
+}
+```
+
+</ResponseExample>

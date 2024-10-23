@@ -1,5 +1,5 @@
 import { ObjectProperty, Type } from "@fern-api/ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
@@ -13,7 +13,9 @@ export async function convertObjectTypeDeclaration({
 }): Promise<Type> {
     return Type.object({
         extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
-        properties: await getObjectPropertiesFromRawObjectSchema(object, file)
+        properties: await getObjectPropertiesFromRawObjectSchema(object, file),
+        extraProperties: object["extra-properties"] ?? false,
+        extendedProperties: undefined
     });
 }
 

@@ -9,27 +9,39 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
+import com.seed.examples.types.Identifier;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Response.Builder.class)
 public final class Response {
     private final Object response;
 
+    private final List<Identifier> identifiers;
+
     private final Map<String, Object> additionalProperties;
 
-    private Response(Object response, Map<String, Object> additionalProperties) {
+    private Response(Object response, List<Identifier> identifiers, Map<String, Object> additionalProperties) {
         this.response = response;
+        this.identifiers = identifiers;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("response")
     public Object getResponse() {
         return response;
+    }
+
+    @JsonProperty("identifiers")
+    public List<Identifier> getIdentifiers() {
+        return identifiers;
     }
 
     @java.lang.Override
@@ -44,12 +56,12 @@ public final class Response {
     }
 
     private boolean equalTo(Response other) {
-        return response.equals(other.response);
+        return response.equals(other.response) && identifiers.equals(other.identifiers);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.response);
+        return Objects.hash(this.response, this.identifiers);
     }
 
     @java.lang.Override
@@ -69,11 +81,19 @@ public final class Response {
 
     public interface _FinalStage {
         Response build();
+
+        _FinalStage identifiers(List<Identifier> identifiers);
+
+        _FinalStage addIdentifiers(Identifier identifiers);
+
+        _FinalStage addAllIdentifiers(List<Identifier> identifiers);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements ResponseStage, _FinalStage {
         private Object response;
+
+        private List<Identifier> identifiers = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -83,6 +103,7 @@ public final class Response {
         @java.lang.Override
         public Builder from(Response other) {
             response(other.getResponse());
+            identifiers(other.getIdentifiers());
             return this;
         }
 
@@ -94,8 +115,28 @@ public final class Response {
         }
 
         @java.lang.Override
+        public _FinalStage addAllIdentifiers(List<Identifier> identifiers) {
+            this.identifiers.addAll(identifiers);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addIdentifiers(Identifier identifiers) {
+            this.identifiers.add(identifiers);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "identifiers", nulls = Nulls.SKIP)
+        public _FinalStage identifiers(List<Identifier> identifiers) {
+            this.identifiers.clear();
+            this.identifiers.addAll(identifiers);
+            return this;
+        }
+
+        @java.lang.Override
         public Response build() {
-            return new Response(response, additionalProperties);
+            return new Response(response, identifiers, additionalProperties);
         }
     }
 }

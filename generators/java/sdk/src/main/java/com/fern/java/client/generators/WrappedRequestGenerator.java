@@ -33,6 +33,7 @@ import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.RequestBodyUtils;
 import com.fern.java.client.ClientGeneratorContext;
@@ -110,6 +111,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 .map(httpRequestBody -> httpRequestBody.visit(requestBodyPropertiesComputer))
                 .orElseGet(Collections::emptyList);
         ObjectTypeDeclaration objectTypeDeclaration = ObjectTypeDeclaration.builder()
+                .extraProperties(false)
                 .addAllExtends(extendedInterfaces)
                 .addAllProperties(headerObjectProperties)
                 .addAllProperties(queryParameterObjectProperties)
@@ -124,8 +126,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                         .collect(Collectors.toList()),
                 generatorContext,
                 allGeneratedInterfaces,
-                className,
-                false);
+                className);
         GeneratedObject generatedObject = objectGenerator.generateFile();
         RequestBodyGetterFactory requestBodyGetterFactory =
                 new RequestBodyGetterFactory(objectProperties, generatedObject);
@@ -264,6 +265,8 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
 
         @Override
         public List<ObjectProperty> visitBytes(BytesRequest bytes) {
+            TypeReference base64TypeReference = TypeReference.primitive(
+                    PrimitiveType.builder().v1(PrimitiveTypeV1.BASE_64).build());
             return List.of(ObjectProperty.builder()
                     .name(NameAndWireValue.builder()
                             .wireValue(sdkRequestWrapper.getBodyKey().getOriginalName())
@@ -278,9 +281,8 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                             .build())
                     .valueType(
                             bytes.getIsOptional()
-                                    ? TypeReference.container(
-                                            ContainerType.optional(TypeReference.primitive(PrimitiveType.BASE_64)))
-                                    : TypeReference.primitive(PrimitiveType.BASE_64))
+                                    ? TypeReference.container(ContainerType.optional(base64TypeReference))
+                                    : base64TypeReference)
                     .build());
         }
 

@@ -9,7 +9,7 @@ describe("migrateFromV2ToV1", () => {
         const migrated = await runMigration({
             pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
-        expect(migrated.errors[0]?.discriminantValue).toEqual({
+        expect(migrated.ir.errors[0]?.discriminantValue).toEqual({
             camelCase: "blogNotFoundError",
             originalValue: "BlogNotFoundError",
             pascalCase: "BlogNotFoundError",
@@ -17,6 +17,6 @@ describe("migrateFromV2ToV1", () => {
             snakeCase: "blog_not_found_error",
             wireValue: "BlogNotFoundError"
         });
-        expect(migrated.services.http[0]?.name.name).toBe("BlogService");
+        expect(migrated.ir.services.http[0]?.name.name).toBe("BlogService");
     });
 });

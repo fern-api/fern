@@ -7,11 +7,14 @@ package resources.user;
 import java.lang.Integer;
 import java.lang.String;
 import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import resources.user.types.NestedUser;
 import resources.user.types.User;
 
 @RequestMapping(
@@ -24,11 +27,12 @@ public interface UserService {
   )
   User getUsername(@RequestParam("limit") Integer limit, @RequestParam("id") UUID id,
       @RequestParam("date") String date, @RequestParam("deadline") OffsetDateTime deadline,
-      @RequestParam("bytes") byte[] bytes, @RequestParam("user") Optional<String> user,
-      @RequestParam("keyValue") Optional<String> keyValue,
+      @RequestParam("bytes") byte[] bytes, @RequestParam("user") User user,
+      @RequestParam("userList") List<User> userList,
+      @RequestParam("optionalDeadline") Optional<OffsetDateTime> optionalDeadline,
+      @RequestParam("keyValue") Map<String, String> keyValue,
       @RequestParam("optionalString") Optional<String> optionalString,
-      @RequestParam("nestedUser") Optional<String> nestedUser,
-      @RequestParam("optionalUser") Optional<String> optionalUser,
-      @RequestParam("excludeUser") Optional<String> excludeUser,
-      @RequestParam("filter") String filter);
+      @RequestParam("nestedUser") NestedUser nestedUser,
+      @RequestParam("optionalUser") Optional<User> optionalUser,
+      @RequestParam("excludeUser") User excludeUser, @RequestParam("filter") String filter);
 }

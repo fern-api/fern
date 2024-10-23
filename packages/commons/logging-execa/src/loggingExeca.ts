@@ -7,6 +7,8 @@ export declare namespace loggingExeca {
         secrets?: string[];
         substitutions?: Record<string, string>;
     }
+
+    export type ReturnValue = ExecaReturnValue;
 }
 
 export async function loggingExeca(

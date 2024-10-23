@@ -13,8 +13,9 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = TracedTestCase.Builder.class
 )
@@ -63,7 +64,7 @@ public final class TracedTestCase {
   }
 
   public interface ResultStage {
-    TraceResponsesSizeStage result(TestCaseResultWithStdout result);
+    TraceResponsesSizeStage result(@NotNull TestCaseResultWithStdout result);
 
     Builder from(TracedTestCase other);
   }
@@ -96,8 +97,8 @@ public final class TracedTestCase {
 
     @java.lang.Override
     @JsonSetter("result")
-    public TraceResponsesSizeStage result(TestCaseResultWithStdout result) {
-      this.result = result;
+    public TraceResponsesSizeStage result(@NotNull TestCaseResultWithStdout result) {
+      this.result = Objects.requireNonNull(result, "result must not be null");
       return this;
     }
 

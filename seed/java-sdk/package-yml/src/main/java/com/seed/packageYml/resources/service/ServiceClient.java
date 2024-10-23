@@ -3,16 +3,18 @@
  */
 package com.seed.packageYml.resources.service;
 
-import com.seed.packageYml.core.ApiError;
 import com.seed.packageYml.core.ClientOptions;
 import com.seed.packageYml.core.ObjectMappers;
 import com.seed.packageYml.core.RequestOptions;
+import com.seed.packageYml.core.SeedPackageYmlApiException;
+import com.seed.packageYml.core.SeedPackageYmlException;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class ServiceClient {
     protected final ClientOptions clientOptions;
@@ -35,20 +37,22 @@ public class ServiceClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return;
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPackageYmlApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedPackageYmlException("Network error executing HTTP request", e);
         }
     }
 }

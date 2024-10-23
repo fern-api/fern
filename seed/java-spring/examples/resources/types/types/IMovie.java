@@ -28,4 +28,6 @@ public interface IMovie {
   Optional<String> getBook();
 
   Map<String, Object> getMetadata();
+
+  long getRevenue();
 }

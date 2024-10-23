@@ -1,0 +1,23 @@
+types:
+  ContainerValue:
+    union:
+      list: list<FieldValue>
+      optional: optional<FieldValue>
+  PrimitiveValue:
+    enum:
+      - STRING
+      - NUMBER
+  ObjectValue:
+    properties: {}
+  FieldName: string
+  FieldValue:
+    union:
+      primitive_value: PrimitiveValue
+      object_value: ObjectValue
+      container_value: ContainerValue
+  ObjectFieldValue:
+    docs: This type allows us to test a circular reference with a union type (see FieldValue).
+    properties:
+      name: FieldName
+      value: FieldValue
+

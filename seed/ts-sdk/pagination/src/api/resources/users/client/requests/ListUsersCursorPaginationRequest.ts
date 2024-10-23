@@ -6,12 +6,7 @@ import * as SeedPagination from "../../../../index";
 
 /**
  * @example
- *     {
- *         page: 1,
- *         perPage: 1,
- *         order: SeedPagination.Order.Asc,
- *         startingAfter: "string"
- *     }
+ *     {}
  */
 export interface ListUsersCursorPaginationRequest {
     /**

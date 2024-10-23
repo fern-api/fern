@@ -10,6 +10,29 @@ import (
 
 type Docs struct {
 	Docs string `json:"docs" url:"docs"`
+
+	extraProperties map[string]interface{}
+}
+
+func (d *Docs) GetExtraProperties() map[string]interface{} {
+	return d.extraProperties
+}
+
+func (d *Docs) UnmarshalJSON(data []byte) error {
+	type unmarshaler Docs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Docs(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+
+	return nil
 }
 
 func (d *Docs) String() string {
@@ -22,6 +45,29 @@ func (d *Docs) String() string {
 type ExampleType struct {
 	Docs string `json:"docs" url:"docs"`
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (e *ExampleType) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
+}
+
+func (e *ExampleType) UnmarshalJSON(data []byte) error {
+	type unmarshaler ExampleType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = ExampleType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+
+	return nil
 }
 
 func (e *ExampleType) String() string {
@@ -34,6 +80,29 @@ func (e *ExampleType) String() string {
 type Json struct {
 	Docs string `json:"docs" url:"docs"`
 	Raw  string `json:"raw" url:"raw"`
+
+	extraProperties map[string]interface{}
+}
+
+func (j *Json) GetExtraProperties() map[string]interface{} {
+	return j.extraProperties
+}
+
+func (j *Json) UnmarshalJSON(data []byte) error {
+	type unmarshaler Json
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*j = Json(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *j)
+	if err != nil {
+		return err
+	}
+	j.extraProperties = extraProperties
+
+	return nil
 }
 
 func (j *Json) String() string {
@@ -47,6 +116,29 @@ type NestedType struct {
 	Docs string `json:"docs" url:"docs"`
 	Raw  string `json:"raw" url:"raw"`
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (n *NestedType) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
+}
+
+func (n *NestedType) UnmarshalJSON(data []byte) error {
+	type unmarshaler NestedType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NestedType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
+	return nil
 }
 
 func (n *NestedType) String() string {
@@ -79,6 +171,9 @@ func (n *NestedUnion) UnmarshalJSON(data []byte) error {
 	n.Type = unmarshaler.Type
 	n.Docs = unmarshaler.Docs
 	n.Raw = unmarshaler.Raw
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", n)
+	}
 	switch unmarshaler.Type {
 	case "one":
 		value := new(ExampleType)
@@ -95,18 +190,7 @@ func (n NestedUnion) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", n.Type, n)
 	case "one":
-		var marshaler = struct {
-			Type string `json:"type"`
-			Docs string `json:"docs" url:"docs"`
-			Raw  string `json:"raw" url:"raw"`
-			*ExampleType
-		}{
-			Type:        "one",
-			Docs:        n.Docs,
-			Raw:         n.Raw,
-			ExampleType: n.One,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(n.One, "type", "one")
 	}
 }
 
@@ -143,6 +227,9 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 	}
 	u.Type = unmarshaler.Type
 	u.Docs = unmarshaler.Docs
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "one":
 		value := new(ExampleType)
@@ -159,16 +246,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "one":
-		var marshaler = struct {
-			Type string `json:"type"`
-			Docs string `json:"docs" url:"docs"`
-			*ExampleType
-		}{
-			Type:        "one",
-			Docs:        u.Docs,
-			ExampleType: u.One,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.One, "type", "one")
 	}
 }
 

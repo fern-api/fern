@@ -14,8 +14,9 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DoublyLinkedListNodeAndListValue.Builder.class)
 public final class DoublyLinkedListNodeAndListValue {
     private final String nodeId;
@@ -71,13 +72,13 @@ public final class DoublyLinkedListNodeAndListValue {
     }
 
     public interface NodeIdStage {
-        FullListStage nodeId(String nodeId);
+        FullListStage nodeId(@NotNull String nodeId);
 
         Builder from(DoublyLinkedListNodeAndListValue other);
     }
 
     public interface FullListStage {
-        _FinalStage fullList(DoublyLinkedListValue fullList);
+        _FinalStage fullList(@NotNull DoublyLinkedListValue fullList);
     }
 
     public interface _FinalStage {
@@ -104,15 +105,15 @@ public final class DoublyLinkedListNodeAndListValue {
 
         @java.lang.Override
         @JsonSetter("nodeId")
-        public FullListStage nodeId(String nodeId) {
-            this.nodeId = nodeId;
+        public FullListStage nodeId(@NotNull String nodeId) {
+            this.nodeId = Objects.requireNonNull(nodeId, "nodeId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("fullList")
-        public _FinalStage fullList(DoublyLinkedListValue fullList) {
-            this.fullList = fullList;
+        public _FinalStage fullList(@NotNull DoublyLinkedListValue fullList) {
+            this.fullList = Objects.requireNonNull(fullList, "fullList must not be null");
             return this;
         }
 

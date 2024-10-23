@@ -13,9 +13,10 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.payment.types.Currency;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = CreatePaymentRequest.Builder.class
 )
@@ -70,7 +71,7 @@ public final class CreatePaymentRequest {
   }
 
   public interface CurrencyStage {
-    _FinalStage currency(Currency currency);
+    _FinalStage currency(@NotNull Currency currency);
   }
 
   public interface _FinalStage {
@@ -104,8 +105,8 @@ public final class CreatePaymentRequest {
 
     @java.lang.Override
     @JsonSetter("currency")
-    public _FinalStage currency(Currency currency) {
-      this.currency = currency;
+    public _FinalStage currency(@NotNull Currency currency) {
+      this.currency = Objects.requireNonNull(currency, "currency must not be null");
       return this;
     }
 

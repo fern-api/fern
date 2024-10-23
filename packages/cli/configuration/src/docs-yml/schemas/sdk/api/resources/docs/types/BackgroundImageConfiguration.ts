@@ -4,4 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
+/**
+ * This background image is used to customize the appearance of your docs site.
+ */
 export type BackgroundImageConfiguration = string | FernDocsConfig.BackgroundImageThemedConfig;

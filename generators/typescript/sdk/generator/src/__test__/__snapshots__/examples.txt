@@ -7,6 +7,7 @@ module.exports = { preset: "ts-jest", testEnvironment: "node" };
 
 
 /// File: /src/api/index.ts
+export * from "./types";
 export * from "./resources";
 
 
@@ -260,9 +261,16 @@ export class Service {
     constructor(protected readonly _options: Service.Options) {
     }
 
+    /**
+     * @param {string} notificationId
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.file.notification.service.getException("notification-hsy129x")
+     */
     public async getException(notificationId: string, requestOptions?: Service.RequestOptions): Promise<TestSdk.Exception> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), \`/file/notification/\${notificationId}\`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), \`/file/notification/\${encodeURIComponent(notificationId)}\`),
             method: "GET",
             headers: {
                 "Authorization": await this._getAuthorizationHeader(),
@@ -348,22 +356,22 @@ export class Service {
 
     /**
      * This endpoint returns a file by its name.
+     *
+     * @param {string} filename - This is a filename
+     * @param {TestSdk.file.GetFileRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link TestSdk.NotFoundError}
      *
      * @example
      *     await testSdk.file.service.getFile("file.txt", {
      *         xFileApiVersion: "0.0.2"
      *     })
-     *
-     * @example
-     *     await testSdk.file.service.getFile("string", {
-     *         xFileApiVersion: "string"
-     *     })
      */
     public async getFile(filename: string, request: TestSdk.file.GetFileRequest, requestOptions?: Service.RequestOptions): Promise<TestSdk.File_> {
         const { xFileApiVersion } = request;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), \`/file/\${filename}\`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), \`/file/\${encodeURIComponent(filename)}\`),
             method: "GET",
             headers: {
                 "Authorization": await this._getAuthorizationHeader(),
@@ -429,16 +437,6 @@ export * from "./requests";
  *     {
  *         xFileApiVersion: "0.0.2"
  *     }
- *
- * @example
- *     {
- *         xFileApiVersion: "string"
- *     }
- *
- * @example
- *     {
- *         xFileApiVersion: "string"
- *     }
  */
 export interface GetFileRequest {
     "xFileApiVersion": string;
@@ -446,7 +444,7 @@ export interface GetFileRequest {
 
 
 /// File: /src/api/resources/file/resources/service/client/requests/index.ts
-export { GetFileRequest } from "./GetFileRequest";
+export { type GetFileRequest } from "./GetFileRequest";
 
 
 /// File: /src/api/resources/file/resources/service/index.ts
@@ -546,15 +544,15 @@ export class Service {
     /**
      * This endpoint checks the health of a resource.
      *
-     * @example
-     *     await testSdk.health.service.check("id-2sdx82h")
+     * @param {string} id - The id to check
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await testSdk.health.service.check("string")
+     *     await testSdk.health.service.check("id-2sdx82h")
      */
     public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), \`/check/\${id}\`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), \`/check/\${encodeURIComponent(id)}\`),
             method: "GET",
             headers: {
                 "Authorization": await this._getAuthorizationHeader(),
@@ -593,6 +591,8 @@ export class Service {
 
     /**
      * This endpoint checks the health of the service.
+     *
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await testSdk.health.service.ping()
@@ -694,9 +694,16 @@ export class Service {
     constructor(protected readonly _options: Service.Options) {
     }
 
+    /**
+     * @param {TestSdk.MovieId} movieId
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.service.getMovie("movie-c06a4ad7")
+     */
     public async getMovie(movieId: TestSdk.MovieId, requestOptions?: Service.RequestOptions): Promise<TestSdk.Movie> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), \`/movie/\${await serializers.MovieId.jsonOrThrow(movieId)}\`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), \`/movie/\${encodeURIComponent(await serializers.MovieId.jsonOrThrow(movieId))}\`),
             method: "GET",
             headers: {
                 "Authorization": await this._getAuthorizationHeader(),
@@ -733,6 +740,33 @@ export class Service {
         }
     }
 
+    /**
+     * @param {TestSdk.Movie} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.service.createMovie({
+     *         id: "movie-c06a4ad7",
+     *         prequel: "movie-cv9b914f",
+     *         title: "The Boy and the Heron",
+     *         from: "Hayao Miyazaki",
+     *         rating: 8,
+     *         type: "movie",
+     *         tag: "tag-wf9as23d",
+     *         metadata: {
+     *             "actors": [
+     *                 "Christian Bale",
+     *                 "Florence Pugh",
+     *                 "Willem Dafoe"
+     *             ],
+     *             "releaseDate": "2023-12-08",
+     *             "ratings": {
+     *                 "rottenTomatoes": 97,
+     *                 "imdb": 7.6
+     *             }
+     *         }
+     *     })
+     */
     public async createMovie(request: TestSdk.Movie, requestOptions?: Service.RequestOptions): Promise<TestSdk.MovieId> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/movie"),
@@ -773,6 +807,17 @@ export class Service {
         }
     }
 
+    /**
+     * @param {TestSdk.GetMetadataRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.service.getMetadata({
+     *         xApiVersion: "0.0.1",
+     *         shallow: false,
+     *         tag: "development"
+     *     })
+     */
     public async getMetadata(request: TestSdk.GetMetadataRequest, requestOptions?: Service.RequestOptions): Promise<TestSdk.Metadata> {
         const { shallow, tag, xApiVersion } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -829,6 +874,51 @@ export class Service {
         }
     }
 
+    /**
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.service.getResponse()
+     */
+    public async getResponse(requestOptions?: Service.RequestOptions): Promise<TestSdk.Response> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/response"),
+            method: "POST",
+            headers: {
+                "Authorization": await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@test/sdk",
+                "X-Fern-SDK-Version": "1.0.0",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : 60000,
+            maxRetries: requestOptions?.maxRetries
+        });
+        if (_response.ok) {
+            return await serializers.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.TestSdkError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json": throw new errors.TestSdkError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody
+            });
+            case "timeout": throw new errors.TestSdkTimeoutError;
+            case "unknown": throw new errors.TestSdkError({
+                message: _response.error.errorMessage
+            });
+        }
+    }
+
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
@@ -856,13 +946,6 @@ export * from "./requests";
  *         shallow: false,
  *         tag: "development"
  *     }
- *
- * @example
- *     {
- *         xApiVersion: "string",
- *         shallow: true,
- *         tag: "string"
- *     }
  */
 export interface GetMetadataRequest {
     "shallow"?: boolean;
@@ -872,7 +955,7 @@ export interface GetMetadataRequest {
 
 
 /// File: /src/api/resources/service/client/requests/index.ts
-export { GetMetadataRequest } from "./GetMetadataRequest";
+export { type GetMetadataRequest } from "./GetMetadataRequest";
 
 
 /// File: /src/api/resources/service/index.ts
@@ -990,6 +1073,26 @@ export interface Directory {
     "name": string;
     "files"?: TestSdk.File_[];
     "directories"?: TestSdk.Directory[];
+}
+
+
+/// File: /src/api/resources/types/types/Entity.ts
+/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as TestSdk from "../../../index";
+
+/**
+ * @example
+ *     {
+ *         type: TestSdk.ComplexType.Unknown,
+ *         name: "unknown"
+ *     }
+ */
+export interface Entity {
+    "type": TestSdk.Type;
+    "name": string;
 }
 
 
@@ -1120,7 +1223,9 @@ export * from "./MigrationStatus";
 export * from "./Migration";
 export * from "./Request";
 export * from "./Response";
+export * from "./ResponseType";
 export * from "./Test";
+export * from "./Entity";
 
 
 /// File: /src/api/resources/types/types/Metadata.ts
@@ -1347,14 +1452,38 @@ export interface Request {
  * This file was auto-generated by Fern from our API Definition.
  */
 
+import * as TestSdk from "../../../index";
+
 /**
  * @example
  *     {
- *         response: "Initializing..."
+ *         response: "Initializing...",
+ *         identifiers: [{
+ *                 type: TestSdk.BasicType.Primitive,
+ *                 value: "example",
+ *                 label: "Primitive"
+ *             }, {
+ *                 type: TestSdk.ComplexType.Unknown,
+ *                 value: "{}",
+ *                 label: "Unknown"
+ *             }]
  *     }
  */
 export interface Response {
     "response"?: unknown;
+    "identifiers": TestSdk.Identifier[];
+}
+
+
+/// File: /src/api/resources/types/types/ResponseType.ts
+/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as TestSdk from "../../../index";
+
+export interface ResponseType {
+    "type": TestSdk.Type;
 }
 
 
@@ -1428,6 +1557,71 @@ export interface Tree {
 }
 
 
+/// File: /src/api/types/BasicType.ts
+/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+export type BasicType = 
+    | "primitive"
+    | "literal";
+
+export const BasicType = {
+        Primitive: "primitive",
+        Literal: "literal"
+    } as const;
+
+
+/// File: /src/api/types/ComplexType.ts
+/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+export type ComplexType = 
+    | "object"
+    | "union"
+    | "unknown";
+
+export const ComplexType = {
+        Object: "object",
+        Union: "union",
+        Unknown: "unknown"
+    } as const;
+
+
+/// File: /src/api/types/Identifier.ts
+/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as TestSdk from "../index";
+
+export interface Identifier {
+    "type": TestSdk.Type;
+    "value": string;
+    "label": string;
+}
+
+
+/// File: /src/api/types/index.ts
+export * from "./Type";
+export * from "./Identifier";
+export * from "./BasicType";
+export * from "./ComplexType";
+
+
+/// File: /src/api/types/Type.ts
+/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as TestSdk from "../index";
+
+export type Type = 
+    | TestSdk.BasicType
+    | TestSdk.ComplexType;
+
+
 /// File: /src/Client.ts
 /**
  * This file was auto-generated by Fern from our API Definition.
@@ -1457,6 +1651,13 @@ export class TestSdkClient {
     constructor(protected readonly _options: TestSdkClient.Options) {
     }
 
+    /**
+     * @param {string} request
+     * @param {TestSdkClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.echo("Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines")
+     */
     public async echo(request: string, requestOptions?: TestSdkClient.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
@@ -1648,6 +1849,7 @@ export * as echo from "./echo";
 
 /// File: /src/serialization/index.ts
 export * from "./resources";
+export * from "./types";
 export * from "./client";
 
 
@@ -1969,6 +2171,29 @@ export declare namespace Directory {
 }
 
 
+/// File: /src/serialization/resources/types/types/Entity.ts
+/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as serializers from "../../../index";
+import * as TestSdk from "../../../../api/index";
+import * as core from "../../../../core";
+import { Type } from "../../../types/Type";
+
+export const Entity: core.serialization.ObjectSchema<serializers.Entity.Raw, TestSdk.Entity> = core.serialization.object({
+        "type": Type,
+        "name": core.serialization.string()
+    });
+
+export declare namespace Entity {
+    interface Raw {
+        "type": Type.Raw;
+        "name": string;
+    }
+}
+
+
 /// File: /src/serialization/resources/types/types/Exception.ts
 /**
  * This file was auto-generated by Fern from our API Definition.
@@ -2087,7 +2312,9 @@ export * from "./MigrationStatus";
 export * from "./Migration";
 export * from "./Request";
 export * from "./Response";
+export * from "./ResponseType";
 export * from "./Test";
+export * from "./Entity";
 
 
 /// File: /src/serialization/resources/types/types/Metadata.ts
@@ -2304,14 +2531,38 @@ export declare namespace Request {
 import * as serializers from "../../../index";
 import * as TestSdk from "../../../../api/index";
 import * as core from "../../../../core";
+import { Identifier } from "../../../types/Identifier";
 
 export const Response: core.serialization.ObjectSchema<serializers.Response.Raw, TestSdk.Response> = core.serialization.object({
-        "response": core.serialization.unknown()
+        "response": core.serialization.unknown(),
+        "identifiers": core.serialization.list(Identifier)
     });
 
 export declare namespace Response {
     interface Raw {
         "response"?: unknown;
+        "identifiers": Identifier.Raw[];
+    }
+}
+
+
+/// File: /src/serialization/resources/types/types/ResponseType.ts
+/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as serializers from "../../../index";
+import * as TestSdk from "../../../../api/index";
+import * as core from "../../../../core";
+import { Type } from "../../../types/Type";
+
+export const ResponseType: core.serialization.ObjectSchema<serializers.ResponseType.Raw, TestSdk.ResponseType> = core.serialization.object({
+        "type": Type
+    });
+
+export declare namespace ResponseType {
+    interface Raw {
+        "type": Type.Raw;
     }
 }
 
@@ -2391,6 +2642,88 @@ export declare namespace Tree {
     interface Raw {
         "nodes"?: serializers.Node.Raw[] | null;
     }
+}
+
+
+/// File: /src/serialization/types/BasicType.ts
+/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as serializers from "../index";
+import * as TestSdk from "../../api/index";
+import * as core from "../../core";
+
+export const BasicType: core.serialization.Schema<serializers.BasicType.Raw, TestSdk.BasicType> = core.serialization.enum_(["primitive", "literal"]);
+
+export declare namespace BasicType {
+    type Raw = "primitive" | "literal";
+}
+
+
+/// File: /src/serialization/types/ComplexType.ts
+/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as serializers from "../index";
+import * as TestSdk from "../../api/index";
+import * as core from "../../core";
+
+export const ComplexType: core.serialization.Schema<serializers.ComplexType.Raw, TestSdk.ComplexType> = core.serialization.enum_(["object", "union", "unknown"]);
+
+export declare namespace ComplexType {
+    type Raw = "object" | "union" | "unknown";
+}
+
+
+/// File: /src/serialization/types/Identifier.ts
+/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as serializers from "../index";
+import * as TestSdk from "../../api/index";
+import * as core from "../../core";
+import { Type } from "./Type";
+
+export const Identifier: core.serialization.ObjectSchema<serializers.Identifier.Raw, TestSdk.Identifier> = core.serialization.object({
+        "type": Type,
+        "value": core.serialization.string(),
+        "label": core.serialization.string()
+    });
+
+export declare namespace Identifier {
+    interface Raw {
+        "type": Type.Raw;
+        "value": string;
+        "label": string;
+    }
+}
+
+
+/// File: /src/serialization/types/index.ts
+export * from "./Type";
+export * from "./Identifier";
+export * from "./BasicType";
+export * from "./ComplexType";
+
+
+/// File: /src/serialization/types/Type.ts
+/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as serializers from "../index";
+import * as TestSdk from "../../api/index";
+import * as core from "../../core";
+import { BasicType } from "./BasicType";
+import { ComplexType } from "./ComplexType";
+
+export const Type: core.serialization.Schema<serializers.Type.Raw, TestSdk.Type> = core.serialization.undiscriminatedUnion([BasicType, ComplexType]);
+
+export declare namespace Type {
+    type Raw = BasicType.Raw | ComplexType.Raw;
 }
 
 
@@ -2539,6 +2872,18 @@ describe("Service", () => {
             "extra": { "version": "0.0.1", "tenancy": "test" },
             "tags": ["development", "public"],
             "value": "<head>...</head>",
+        });
+    });
+
+    test("getResponse", async () => {
+        const response = await client.service.getResponse();
+        expect(response).toEqual({
+            "response": "Initializing...",
+            "identifiers": [{ "type": "primitive", "value": "example", "label": "Primitive" }, {
+                "type": "unknown",
+                "value": "{}",
+                "label": "Unknown",
+            }],
         });
     });
 });

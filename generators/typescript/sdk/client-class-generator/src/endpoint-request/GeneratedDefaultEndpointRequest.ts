@@ -95,6 +95,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         });
     }
 
+    public getRequestParameter(context: SdkContext): ts.TypeNode | undefined {
+        return this.requestParameter?.getType(context);
+    }
+
     public getEndpointParameters(
         context: SdkContext
     ): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] {
@@ -172,12 +176,13 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
     public getFetcherRequestArgs(
         context: SdkContext
-    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType"> {
+    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType"> {
         return {
             headers: this.getHeaders(context),
             queryParameters: this.queryParams.getReferenceTo(context),
             body: this.getSerializedRequestBodyWithNullCheck(context),
-            contentType: "application/json"
+            contentType: this.requestBody?.contentType ?? "application/json",
+            requestType: "json"
         };
     }
 

@@ -1,10 +1,18 @@
 using System.Text.Json.Serialization;
+using SeedAudiences.Core;
 using SeedAudiences.FolderB;
+
+#nullable enable
 
 namespace SeedAudiences.FolderA;
 
-public class Response
+public record Response
 {
     [JsonPropertyName("foo")]
-    public List<Foo?> Foo { get; init; }
+    public Foo? Foo { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,13 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace.V2;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace.V2;
 
-public class TestCaseImplementation
+public record TestCaseImplementation
 {
     [JsonPropertyName("description")]
-    public TestCaseImplementationDescription Description { get; init; }
+    public required TestCaseImplementationDescription Description { get; set; }
 
     [JsonPropertyName("function")]
-    public TestCaseFunction Function { get; init; }
+    public required object Function { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

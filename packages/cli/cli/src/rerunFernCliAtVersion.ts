@@ -27,7 +27,7 @@ export async function rerunFernCliAtVersion({
         ].join("\n")
     );
 
-    const { failed } = await loggingExeca(cliContext.logger, "npx", ["--quiet", ...commandLineArgs], {
+    const { failed, stdout, stderr } = await loggingExeca(cliContext.logger, "npx", ["--quiet", ...commandLineArgs], {
         stdio: "inherit",
         reject: false,
         env: {
@@ -35,6 +35,13 @@ export async function rerunFernCliAtVersion({
             [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd()
         }
     });
+    if (stdout?.includes("code EEXIST") || stderr?.includes("code EEXIST")) {
+        // try again if there is a npx conflict
+        return await rerunFernCliAtVersion({
+            version,
+            cliContext
+        });
+    }
 
     if (failed) {
         cliContext.failWithoutThrowing();

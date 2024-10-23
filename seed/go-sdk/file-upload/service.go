@@ -17,17 +17,27 @@ type JustFileWithQueryParamsRequet struct {
 }
 
 type MyRequest struct {
-	MaybeString           *string     `json:"maybeString,omitempty" url:"maybeString,omitempty"`
-	Integer               int         `json:"integer" url:"integer"`
-	MaybeInteger          *int        `json:"maybeInteger,omitempty" url:"maybeInteger,omitempty"`
-	OptionalListOfStrings []string    `json:"optionalListOfStrings,omitempty" url:"optionalListOfStrings,omitempty"`
-	ListOfObjects         []*MyObject `json:"listOfObjects,omitempty" url:"listOfObjects,omitempty"`
+	MaybeString           *string     `json:"maybeString,omitempty" url:"-"`
+	Integer               int         `json:"integer" url:"-"`
+	MaybeInteger          *int        `json:"maybeInteger,omitempty" url:"-"`
+	OptionalListOfStrings []string    `json:"optionalListOfStrings,omitempty" url:"-"`
+	ListOfObjects         []*MyObject `json:"listOfObjects,omitempty" url:"-"`
+	OptionalMetadata      interface{} `json:"optionalMetadata,omitempty" url:"-"`
+	OptionalObjectType    *ObjectType `json:"optionalObjectType,omitempty" url:"-"`
+	OptionalId            *Id         `json:"optionalId,omitempty" url:"-"`
 }
+
+type Id = string
 
 type MyObject struct {
 	Foo string `json:"foo" url:"foo"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (m *MyObject) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
 }
 
 func (m *MyObject) UnmarshalJSON(data []byte) error {
@@ -37,6 +47,13 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = MyObject(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
 	m._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -51,4 +68,31 @@ func (m *MyObject) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
+}
+
+type ObjectType string
+
+const (
+	ObjectTypeFoo ObjectType = "FOO"
+	ObjectTypeBar ObjectType = "BAR"
+)
+
+func NewObjectTypeFromString(s string) (ObjectType, error) {
+	switch s {
+	case "FOO":
+		return ObjectTypeFoo, nil
+	case "BAR":
+		return ObjectTypeBar, nil
+	}
+	var t ObjectType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o ObjectType) Ptr() *ObjectType {
+	return &o
+}
+
+type WithContentTypeRequest struct {
+	Foo string    `json:"foo" url:"-"`
+	Bar *MyObject `json:"bar,omitempty" url:"-"`
 }

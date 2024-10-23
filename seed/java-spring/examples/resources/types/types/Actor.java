@@ -13,8 +13,9 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Actor.Builder.class
 )
@@ -63,13 +64,13 @@ public final class Actor {
   }
 
   public interface NameStage {
-    IdStage name(String name);
+    IdStage name(@NotNull String name);
 
     Builder from(Actor other);
   }
 
   public interface IdStage {
-    _FinalStage id(String id);
+    _FinalStage id(@NotNull String id);
   }
 
   public interface _FinalStage {
@@ -96,15 +97,15 @@ public final class Actor {
 
     @java.lang.Override
     @JsonSetter("name")
-    public IdStage name(String name) {
-      this.name = name;
+    public IdStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("id")
-    public _FinalStage id(String id) {
-      this.id = id;
+    public _FinalStage id(@NotNull String id) {
+      this.id = Objects.requireNonNull(id, "id must not be null");
       return this;
     }
 

@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`migrateFromV28ToV27 snapshot 1`] = `
+exports[`migrateFromV28ToV27 > snapshot 1`] = `
 {
-  "apiDisplayName": undefined,
-  "apiDocs": undefined,
+  "apiDisplayName": null,
+  "apiDocs": null,
   "apiName": {
     "camelCase": {
       "safeName": "simpleAPI",
@@ -24,11 +24,11 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
     },
   },
   "auth": {
-    "docs": undefined,
+    "docs": null,
     "requirement": "ALL",
     "schemes": [],
   },
-  "basePath": undefined,
+  "basePath": null,
   "constants": {
     "errorInstanceIdKey": {
       "name": {
@@ -53,31 +53,29 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
       "wireValue": "errorInstanceId",
     },
   },
-  "environments": undefined,
+  "environments": null,
   "errorDiscriminationStrategy": {
-    "_visit": [Function],
     "type": "statusCode",
   },
   "errors": {},
   "headers": [],
   "pathParameters": [],
   "rootPackage": {
-    "docs": undefined,
+    "docs": null,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
-      "file": undefined,
+      "file": null,
       "packagePath": [],
     },
     "hasEndpointsInTree": true,
-    "navigationConfig": undefined,
-    "service": undefined,
+    "navigationConfig": null,
+    "service": null,
     "subpackages": [
       "subpackage_service",
     ],
     "types": [],
-    "webhooks": undefined,
-    "websocket": undefined,
+    "webhooks": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -99,20 +97,20 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
   },
   "services": {
     "service_service": {
-      "availability": undefined,
+      "availability": null,
       "basePath": {
         "head": "/",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": null,
       "endpoints": [
         {
           "allPathParameters": [],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -148,8 +146,7 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "requestBody": {
-            "_visit": [Function],
-            "contentType": undefined,
+            "contentType": null,
             "extends": [],
             "name": {
               "camelCase": {
@@ -172,7 +169,7 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
             },
             "properties": [
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -196,22 +193,19 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
                   "wireValue": "authorized",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "primitive",
                   "primitive": "BOOLEAN",
-                  "type": "primitive",
                 },
               },
             ],
             "type": "inlinedRequestBody",
           },
           "response": {
-            "_visit": [Function],
             "type": "json",
             "value": {
-              "_visit": [Function],
-              "docs": undefined,
+              "docs": null,
               "responseBodyType": {
-                "_visit": [Function],
+                "_type": "named",
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -274,7 +268,6 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
                     "unsafeName": "unauthorized_user",
                   },
                 },
-                "type": "named",
                 "typeId": "type_service:UnauthorizedUser",
               },
               "type": "response",
@@ -301,7 +294,6 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -396,7 +388,7 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
   },
   "subpackages": {
     "subpackage_service": {
-      "docs": undefined,
+      "docs": null,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -461,20 +453,19 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
           "unsafeName": "service",
         },
       },
-      "navigationConfig": undefined,
+      "navigationConfig": null,
       "service": "service_service",
       "subpackages": [],
       "types": [
         "type_service:UnauthorizedUser",
       ],
-      "webhooks": undefined,
-      "websocket": undefined,
+      "webhooks": null,
     },
   },
   "types": {
     "type_service:UnauthorizedUser": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -543,12 +534,12 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
       },
       "referencedTypes": [],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -572,14 +563,13 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
               "wireValue": "id",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "STRING",
-              "type": "primitive",
             },
           },
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -603,14 +593,13 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
               "wireValue": "name",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "STRING",
-              "type": "primitive",
             },
           },
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -634,13 +623,11 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
               "wireValue": "authorized",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "BOOLEAN",
-              "type": "primitive",
             },
           },
         ],
-        "type": "object",
       },
     },
   },

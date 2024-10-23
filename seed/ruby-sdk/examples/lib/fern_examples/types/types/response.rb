@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "../identifier"
 require "ostruct"
 require "json"
 
@@ -8,6 +9,8 @@ module SeedExamplesClient
     class Response
       # @return [Object]
       attr_reader :response
+      # @return [Array<SeedExamplesClient::Identifier>]
+      attr_reader :identifiers
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
       # @return [Object]
@@ -17,12 +20,14 @@ module SeedExamplesClient
       OMIT = Object.new
 
       # @param response [Object]
+      # @param identifiers [Array<SeedExamplesClient::Identifier>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::Response]
-      def initialize(response:, additional_properties: nil)
+      def initialize(response:, identifiers:, additional_properties: nil)
         @response = response
+        @identifiers = identifiers
         @additional_properties = additional_properties
-        @_field_set = { "response": response }
+        @_field_set = { "response": response, "identifiers": identifiers }
       end
 
       # Deserialize a JSON object to an instance of Response
@@ -31,8 +36,17 @@ module SeedExamplesClient
       # @return [SeedExamplesClient::Types::Response]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        response = struct["response"]
-        new(response: response, additional_properties: struct)
+        parsed_json = JSON.parse(json_object)
+        response = parsed_json["response"]
+        identifiers = parsed_json["identifiers"]&.map do |item|
+          item = item.to_json
+          SeedExamplesClient::Identifier.from_json(json_object: item)
+        end
+        new(
+          response: response,
+          identifiers: identifiers,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of Response to a JSON object
@@ -50,6 +64,7 @@ module SeedExamplesClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.response.is_a?(Object) != false || raise("Passed value for field obj.response is not the expected type, validation failed.")
+        obj.identifiers.is_a?(Array) != false || raise("Passed value for field obj.identifiers is not the expected type, validation failed.")
       end
     end
   end

@@ -17,6 +17,10 @@ generators/**/dist
 generators/**/tsconfig*tsbuildinfo
 seed/**/tsconfig*tsbuildinfo
 generators/**/out
+seed/**/gradlew
+seed/**/gradlew.bat
+seed/**/gradle
+generators/csharp/playground/**/obj/
 
 # don't ignore the ruby lib within the playground
 !generators/ruby/playground/lib
@@ -52,3 +56,11 @@ packages/**/generated
 .vercel
 
 **/.idea/*
+vitest.workspace.ts
+**.code-workspace
+
+.python-version
+
+# This file is too large to be included in the repository without LFS
+seed/python-sdk/trace/snippet-templates.json
+seed/python-sdk/**/output.prof

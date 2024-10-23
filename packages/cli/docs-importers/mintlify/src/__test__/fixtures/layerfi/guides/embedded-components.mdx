@@ -1,0 +1,213 @@
+---
+title: "Overview"
+description: "Using Layer's prebuilt components to build bookkeeping directly into your app"
+---
+
+Layer publishes pre-built UI components to npm that can be dropped into any existing React app. These components handle all integration with Layer’s API with the exception of authentication, which must be done on your backend to avoid exposing credentials in your client-side apps.
+
+Currently available embedded components include:
+* Bank Transaction Review and Categorization
+* Profit & Loss Reports
+  * Month over month revenue & expense chart
+  * Monthly revenue & expense breakdowns
+  * Monthly expandable P&L table
+
+## React setup
+
+<Steps>
+
+  <Step title="Install Layer components">
+    The first step of using Layer's embedded components is to install the `layerfi/components` package via npm and your preferred package manager.
+
+    ```bash
+    npm install @layerfi/components --save
+    ```
+
+    ```bash
+    yarn install @layerfi/components
+    ```
+  </Step>
+  <Step title="Set up LayerProvider context">
+    Next, set up the `LayerProvider` context, which serves as the configuration for fetching data for an individual business. All individual UX components must be rendered within this context.
+
+    **For local testing**, you can use your Layer staging credentials (`APP_ID` and `APP_SECRET`).
+
+    ```tsx
+    import { LayerProvider } from "@layerfi/components";
+
+      <LayerProvider
+        businessId={process.env.REACT_APP_BUSINESS_ID ?? ''}
+        environment={process.env.REACT_APP_ENVIRONMENT ?? ''}
+        appId={process.env.REACT_APP_APP_ID ?? ''}
+        appSecret={process.env.REACT_APP_APP_SECRECT ?? ''}
+      >
+      {...}
+    </LayerProvider>
+    ```
+
+    **In production**, you should use access tokens scoped to a specific business.
+    See the backend configuration section below for steps to retrieve scoped tokens:
+
+    ```tsx
+    import { LayerProvider } from "@layerfi/components";
+
+      <LayerProvider
+        businessId={process.env.REACT_APP_BUSINESS_ID ?? ''}
+        environment={process.env.REACT_APP_ENVIRONMENT ?? ''}
+        businessAccessToken={'<scoped business token>'}
+      >
+      {...}
+    </LayerProvider>
+    ```
+  </Step>
+
+  <Step title="Modify component styles to align with your brand">
+    **Option 1: Set primary colors in theme configuration**
+
+    You can set a dark and light theme color for all components.
+    We recommend starting with simple customization like this using rgb, hsl or hex colors.
+    ```tsx
+      <LayerProvider
+        businessId={process.env.REACT_APP_BUSINESS_ID ?? ''}
+        environment={process.env.REACT_APP_ENVIRONMENT ?? ''}
+        appId={process.env.REACT_APP_APP_ID ?? ''}
+        appSecret={process.env.REACT_APP_APP_SECRECT ?? ''}
+        theme={{
+          dark: { r: '28', g: '26%', b: '11%' },
+          light: { hex: '#F9A171'},
+        }}
+      >
+      {...}
+    </LayerProvider>
+    ```
+
+    **Option 2: Customize CSS variables**
+
+    For more flexible customization, CSS variables are exposed to allow you to set colors and styles for the embedded components.
+    We recommend setting these variables within a scoped container to isolate the scope to Layer components.
+    In this example, we've set variables within the `.layer-container` class.
+
+
+    ```css
+      body .layer-container {
+        --color-black: #1a1a1a;
+        --color-white: white;
+        --color-neutral: #666666;
+        --color-neutral-50: #fafcfc;
+        --color-neutral-200: #eef0ef;
+        --color-neutral-700: #636665;
+        --color-red: #e46362;
+        --color-info-green: #29bc9b;
+
+        --color-primary: var(--color-black);
+        --color-accent: var(--color-white);
+        --color-secondary: var(--color-neutral);
+        --color-success: var(--color-info-green);
+        --color-danger: var(--color-red);
+        --text-color-primary: var(--color-black);
+        --text-color-secondary: var(--color-neutral-700);
+        --bg-element-focus: var(--color-neutral-50);
+
+        --font-family: "InterVariable", "Inter", sans-serif;
+        --font-family-numeric: "InterVariable", "Inter", sans-serif;
+        --text-sm: 12px;
+        --text-md: 14px;
+        --text-heading: 24px;
+        --font-weight-normal: 460;
+        --font-weight-bold: 580;
+        --spacing-sm: 12px;
+        --spacing-md: 16px;
+        --spacing-2xl: 36px;
+        --border-color: var(--color-neutral-200);
+      }
+    ```
+  </Step>
+
+  <Step title="Add components to your pages">
+    Finally, add components to your pages as you would any React component.
+
+    ```tsx
+    <BankTransactions />
+    ```
+
+    Some components have multiple sub components which can be optionally included for composition and layout customization.
+
+    ```tsx
+    <ProfitAndLoss>
+      <div className='profit-and-loss__chart-container'>
+        <ProfitAndLoss.Chart />
+      </div>
+      <ProfitAndLoss.Summaries />
+      <div className='profit-and-loss__date-picker-container'>
+        <ProfitAndLoss.DatePicker />
+      </div>
+      <ProfitAndLoss.Table />
+    </ProfitAndLoss>
+    ```
+
+    Type definitions are available for all components to assist with discovering options & subcomponents.
+  </Step>
+
+</Steps>
+
+
+
+## Backend setup
+
+To ensure an end user can only access their own data, the Layer component must be provided with a scoped access token which limits access to a specific business. This is a two step process.
+
+<Steps>
+  <Step title="Obtain your platform-wide access token">
+
+    Use your Layer-provided `client_id` and `client_secret` to obtain a platform-wide access token. See [Authentication](/authentication) for more information on this process.
+    This should be done server-side to avoid exposing your credentials in your client-side application.
+
+    <CodeGroup>
+
+      ```bash curl
+      curl -X POST https://auth.layerfi.com/oauth2/token  \
+        -u <client_id>:<client_secret>  \
+        -H "Content-Type: application/x-www-form-urlencoded" \
+        --data-urlencode "grant_type=client_credentials" \
+        --data-urlencode "scope=https://sandbox.layerfi.com/sandbox" \
+        --data-urlencode "client_id=<client_id>"
+      ```
+
+      ```tsx typescript
+      const clientId = "<your_client_id>";
+      const clientSecret = "<your_client_secret>";
+
+      const url = "https://auth.layerfi.com/oauth2/token";
+
+      axios.post(url, null, {
+        params: {
+          grant_type: "client_credentials",
+          scope: "https://sandbox.layerfi.com/sandbox",
+          client_id: clientId,
+        },
+        auth: {
+          username: clientId,
+          password: clientSecret,
+        },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+      ```
+    </CodeGroup>
+  </Step>
+  <Step title="Populate access token in LayerProvider context">
+    Finally, send this access token to the frontend and populate it in the `businessAccessToken` field of the `LayerProvider`context:
+
+    ```tsx
+    <LayerProvider
+      businessId="<layer_business_id>"
+      businessAccessToken="<access_token>"
+      environment={'staging'}
+    >
+      {...}
+    </LayerProvider>
+    ```
+
+  </Step>
+</Steps>

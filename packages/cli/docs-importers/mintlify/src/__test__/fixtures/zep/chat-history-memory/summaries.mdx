@@ -1,0 +1,31 @@
+A summary for the last or trailing `N` messages is generated on every new message added to a Session. `N` is the
+configured
+`Message Window` for your [Zep Project](/getting-started/projects). The first summary is generated after the first `N` messages are
+added to a Session.
+
+<Note>
+**Summaries are generated asynchronously.**
+
+Zep uses a proprietary, low-latency summarization model to generate dialog summaries asynchronously. This means that
+summary generation does not delay your requests to retrieve Memories from Zep.
+
+</Note>
+
+<Frame>
+  <img alt="List of Summaries" src="/images/summaries.png" />
+</Frame>
+
+## Accessing Summaries
+
+Summaries are added to Memory responses when you retrieve a Session's [Memory](memories), enabling your prompt to be
+populated with both the most recent messages and a summary the more distant history.
+
+### Perpetual Memory
+
+Zep searches for summaries relevant to the current conversation, summaries high-scoring summaries that are returned from
+search and includes this summary in your Memory request.
+
+### Message Window Buffer Memory
+
+Zep automatically determines which summary to add to a response based on your configured `Message Window` and the number
+of messages in the Session.

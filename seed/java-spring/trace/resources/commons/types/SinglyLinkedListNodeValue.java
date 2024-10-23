@@ -15,8 +15,9 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = SinglyLinkedListNodeValue.Builder.class
 )
@@ -73,7 +74,7 @@ public final class SinglyLinkedListNodeValue {
   }
 
   public interface NodeIdStage {
-    ValStage nodeId(NodeId nodeId);
+    ValStage nodeId(@NotNull NodeId nodeId);
 
     Builder from(SinglyLinkedListNodeValue other);
   }
@@ -113,8 +114,8 @@ public final class SinglyLinkedListNodeValue {
 
     @java.lang.Override
     @JsonSetter("nodeId")
-    public ValStage nodeId(NodeId nodeId) {
-      this.nodeId = nodeId;
+    public ValStage nodeId(@NotNull NodeId nodeId) {
+      this.nodeId = Objects.requireNonNull(nodeId, "nodeId must not be null");
       return this;
     }
 
@@ -127,7 +128,7 @@ public final class SinglyLinkedListNodeValue {
 
     @java.lang.Override
     public _FinalStage next(NodeId next) {
-      this.next = Optional.of(next);
+      this.next = Optional.ofNullable(next);
       return this;
     }
 

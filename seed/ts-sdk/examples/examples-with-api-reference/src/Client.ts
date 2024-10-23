@@ -17,14 +17,25 @@ export declare namespace SeedExamplesClient {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
 export class SeedExamplesClient {
     constructor(protected readonly _options: SeedExamplesClient.Options) {}
 
+    /**
+     * @param {string} request
+     * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
+     */
     public async echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
@@ -34,16 +45,19 @@ export class SeedExamplesClient {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/examples",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/examples/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.echo.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.echo.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.echo.Response.parseOrThrow(_response.body, {
+            return serializers.echo.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

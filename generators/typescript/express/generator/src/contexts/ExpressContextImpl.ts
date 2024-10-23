@@ -77,6 +77,7 @@ export declare namespace ExpressContextImpl {
         expressErrorSchemaGenerator: ExpressErrorSchemaGenerator;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        useBigInt: boolean;
     }
 }
 
@@ -85,6 +86,7 @@ export class ExpressContextImpl implements ExpressContext {
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
     public readonly fernConstants: Constants;
+    public readonly includeSerdeLayer: boolean;
 
     public readonly type: TypeContextImpl;
     public readonly typeSchema: TypeSchemaContextImpl;
@@ -129,8 +131,10 @@ export class ExpressContextImpl implements ExpressContext {
         expressErrorSchemaDeclarationReferencer,
         expressErrorSchemaGenerator,
         includeSerdeLayer,
-        retainOriginalCasing
+        retainOriginalCasing,
+        useBigInt
     }: ExpressContextImpl.Init) {
+        this.includeSerdeLayer = includeSerdeLayer;
         this.sourceFile = sourceFile;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
@@ -151,7 +155,8 @@ export class ExpressContextImpl implements ExpressContext {
             typeReferenceExampleGenerator,
             treatUnknownAsAny,
             includeSerdeLayer,
-            retainOriginalCasing
+            retainOriginalCasing,
+            useBigInt
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
@@ -164,7 +169,8 @@ export class ExpressContextImpl implements ExpressContext {
             typeSchemaGenerator,
             treatUnknownAsAny,
             includeSerdeLayer,
-            retainOriginalCasing
+            retainOriginalCasing,
+            useBigInt
         });
 
         this.expressInlinedRequestBody = new ExpressInlinedRequestBodyContextImpl({
@@ -173,7 +179,8 @@ export class ExpressContextImpl implements ExpressContext {
             packageResolver,
             sourceFile: this.sourceFile,
             importsManager,
-            retainOriginalCasing
+            retainOriginalCasing,
+            includeSerdeLayer
         });
         this.expressInlinedRequestBodySchema = new ExpressInlinedRequestBodySchemaContextImpl({
             packageResolver,

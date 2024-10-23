@@ -1,78 +1,50 @@
+import { AbstractWriter } from "@fern-api/generator-commons";
 import { ClassReference } from "..";
+import { csharp } from "../..";
+import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { AstNode } from "./AstNode";
 
+type Alias = string;
 type Namespace = string;
-
-const TAB_SIZE = 4;
 
 export declare namespace Writer {
     interface Args {
         /* The namespace that is being written to */
-        namespace?: string;
+        namespace: string;
+        /* All base namespaces in the project */
+        allNamespaceSegments: Set<string>;
+        /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
+        allTypeClassReferences: Map<string, Set<Namespace>>;
+        /* The root namespace of the project */
+        rootNamespace: string;
+        /* Custom generator config */
+        customConfig: BaseCsharpCustomConfigSchema;
     }
 }
 
-export class Writer {
-    /* The contents being written */
-    private buffer = "";
-    /* Indentation level (multiple of 4) */
-    private indentLevel = 0;
-    /* Whether anything has been written to the buffer */
-    private hasWrittenAnything = false;
-    /* Whether the last character written was a newline */
-    private lastCharacterIsNewline = false;
-    /* The current line number */
+export class Writer extends AbstractWriter {
+    /* Import statements */
     private references: Record<Namespace, ClassReference[]> = {};
     /* The namespace that is being written to */
-    private namespace: string | undefined;
+    private namespace: string;
+    /* The set of namespace aliases */
+    private namespaceAliases: Record<Alias, Namespace> = {};
+    /* All base namespaces in the project */
+    private allNamespaceSegments: Set<string>;
+    /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
+    private allTypeClassReferences: Map<string, Set<Namespace>>;
+    /* The root namespace of the project */
+    private rootNamespace: string;
+    /* Whether or not dictionary<string, object?> should be simplified to just objects */
+    private customConfig: BaseCsharpCustomConfigSchema;
 
-    constructor({ namespace }: Writer.Args) {
+    constructor({ namespace, allNamespaceSegments, allTypeClassReferences, rootNamespace, customConfig }: Writer.Args) {
+        super();
         this.namespace = namespace;
-    }
-
-    public write(text: string): void {
-        const textEndsInNewline = text.length > 0 && text.endsWith("\n");
-        // temporarily remove the trailing newline, since we don't want to add the indent prefix after it
-        const textWithoutNewline = textEndsInNewline ? text.substring(0, text.length - 1) : text;
-
-        const indent = this.getIndentString();
-        let indentedText = textWithoutNewline.replace("\n", `\n${indent}`);
-        if (this.isAtStartOfLine()) {
-            indentedText = indent + indentedText;
-        }
-        if (textEndsInNewline) {
-            indentedText += "\n";
-        }
-        this.writeInternal(indentedText);
-    }
-
-    public writeNode(node: AstNode): void {
-        node.write(this);
-    }
-
-    /* Only writes a newline if last line in the buffer is not a newline */
-    public writeLine(text = ""): void {
-        this.write(text);
-        this.writeNewLineIfLastLineNot();
-    }
-
-    /* Always writes newline */
-    public newLine(): void {
-        this.writeInternal("\n");
-    }
-
-    public writeNewLineIfLastLineNot(): void {
-        if (!this.lastCharacterIsNewline) {
-            this.writeInternal("\n");
-        }
-    }
-
-    public indent(): void {
-        this.indentLevel++;
-    }
-
-    public dedent(): void {
-        this.indentLevel--;
+        this.allNamespaceSegments = allNamespaceSegments;
+        this.allTypeClassReferences = allTypeClassReferences;
+        this.rootNamespace = rootNamespace;
+        this.customConfig = customConfig;
     }
 
     public addReference(reference: ClassReference): void {
@@ -87,41 +59,88 @@ export class Writer {
         }
     }
 
-    public toString(): string {
-        const imports = this.stringifyImports();
-        if (imports.length > 0) {
-            return `${imports}\n\n${this.buffer}`;
+    public addNamespace(namespace: string): void {
+        const foundNamespace = this.references[namespace];
+        if (foundNamespace == null) {
+            this.references[namespace] = [];
+        }
+    }
+
+    public addNamespaceAlias(alias: string, namespace: string): void {
+        this.namespaceAliases[alias] = namespace;
+    }
+
+    public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
+        return this.allTypeClassReferences;
+    }
+
+    public getAllNamespaceSegments(): Set<string> {
+        return this.allNamespaceSegments;
+    }
+
+    public getRootNamespace(): string {
+        return this.rootNamespace;
+    }
+
+    public getNamespace(): string {
+        return this.namespace;
+    }
+
+    public getCustomConfig(): BaseCsharpCustomConfigSchema {
+        return this.customConfig;
+    }
+
+    public getSimplifyObjectDictionaries(): boolean {
+        return this.customConfig["simplify-object-dictionaries"] ?? true;
+    }
+
+    public toString(skipImports = false): string {
+        if (!skipImports) {
+            const imports = this.stringifyImports();
+            if (imports.length > 0) {
+                return `${imports}
+    #nullable enable
+    
+    ${this.buffer}`;
+            }
         }
         return this.buffer;
+    }
+
+    public importsToString(): string | undefined {
+        const imports = this.stringifyImports();
+        return imports.length > 0 ? imports : undefined;
+    }
+
+    public isReadOnlyMemoryType(type: string): boolean {
+        return this.customConfig["read-only-memory-types"]?.includes(type) ?? false;
     }
 
     /*******************************
      * Helper Methods
      *******************************/
 
-    private writeInternal(text: string): string {
-        if (text.length > 0) {
-            this.hasWrittenAnything = true;
-            this.lastCharacterIsNewline = text.endsWith("\n");
-        }
-        return (this.buffer += text);
-    }
-
-    private isAtStartOfLine(): boolean {
-        return this.lastCharacterIsNewline || !this.hasWrittenAnything;
-    }
-
-    private getIndentString(): string {
-        return " ".repeat(this.indentLevel * TAB_SIZE);
-    }
-
     private stringifyImports(): string {
-        return (
-            Object.keys(this.references)
-                // filter out the current namespace
-                .filter((referenceNamespace) => referenceNamespace !== this.namespace)
-                .map((ref) => `using ${ref};`)
-                .join("\n")
-        );
+        const referenceKeys = Object.keys(this.references);
+        const namespaceAliasEntries = Object.entries(this.namespaceAliases);
+        if (referenceKeys.length === 0 && namespaceAliasEntries.length === 0) {
+            return "";
+        }
+
+        let result = referenceKeys
+            // Filter out the current namespace.
+            .filter((referenceNamespace) => referenceNamespace !== this.namespace)
+            .map((ref) => `using ${ref};`)
+            .join("\n");
+
+        if (result.length > 0) {
+            result += "\n";
+        }
+
+        for (const [alias, namespace] of namespaceAliasEntries) {
+            result += `using ${alias} = ${namespace};\n`;
+        }
+
+        return result;
     }
 }

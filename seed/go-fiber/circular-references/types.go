@@ -10,6 +10,29 @@ import (
 
 type ImportingA struct {
 	A *A `json:"a,omitempty" url:"a,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (i *ImportingA) GetExtraProperties() map[string]interface{} {
+	return i.extraProperties
+}
+
+func (i *ImportingA) UnmarshalJSON(data []byte) error {
+	type unmarshaler ImportingA
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*i = ImportingA(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+
+	return nil
 }
 
 func (i *ImportingA) String() string {
@@ -21,6 +44,29 @@ func (i *ImportingA) String() string {
 
 type RootType struct {
 	S string `json:"s" url:"s"`
+
+	extraProperties map[string]interface{}
+}
+
+func (r *RootType) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *RootType) UnmarshalJSON(data []byte) error {
+	type unmarshaler RootType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RootType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
+	return nil
 }
 
 func (r *RootType) String() string {
@@ -32,6 +78,29 @@ func (r *RootType) String() string {
 
 type A struct {
 	S string `json:"s" url:"s"`
+
+	extraProperties map[string]interface{}
+}
+
+func (a *A) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *A) UnmarshalJSON(data []byte) error {
+	type unmarshaler A
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = A(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+
+	return nil
 }
 
 func (a *A) String() string {
@@ -63,6 +132,9 @@ func (c *ContainerValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", c)
+	}
 	switch unmarshaler.Type {
 	case "list":
 		var valueUnmarshaler struct {
@@ -152,10 +224,13 @@ func (f *FieldValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	f.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", f)
+	}
 	switch unmarshaler.Type {
 	case "primitive_value":
 		var valueUnmarshaler struct {
-			PrimitiveValue PrimitiveValue `json:"value,omitempty"`
+			PrimitiveValue PrimitiveValue `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -186,21 +261,14 @@ func (f FieldValue) MarshalJSON() ([]byte, error) {
 	case "primitive_value":
 		var marshaler = struct {
 			Type           string         `json:"type"`
-			PrimitiveValue PrimitiveValue `json:"value,omitempty"`
+			PrimitiveValue PrimitiveValue `json:"value"`
 		}{
 			Type:           "primitive_value",
 			PrimitiveValue: f.PrimitiveValue,
 		}
 		return json.Marshal(marshaler)
 	case "object_value":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ObjectValue
-		}{
-			Type:        "object_value",
-			ObjectValue: f.ObjectValue,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(f.ObjectValue, "type", "object_value")
 	case "container_value":
 		var marshaler = struct {
 			Type           string          `json:"type"`
@@ -232,7 +300,132 @@ func (f *FieldValue) Accept(visitor FieldValueVisitor) error {
 	}
 }
 
+type JsonLike struct {
+	JsonLikeList      []*JsonLike
+	StringJsonLikeMap map[string]*JsonLike
+	String            string
+	Integer           int
+	Boolean           bool
+}
+
+func NewJsonLikeFromJsonLikeList(value []*JsonLike) *JsonLike {
+	return &JsonLike{JsonLikeList: value}
+}
+
+func NewJsonLikeFromStringJsonLikeMap(value map[string]*JsonLike) *JsonLike {
+	return &JsonLike{StringJsonLikeMap: value}
+}
+
+func NewJsonLikeFromString(value string) *JsonLike {
+	return &JsonLike{String: value}
+}
+
+func NewJsonLikeFromInteger(value int) *JsonLike {
+	return &JsonLike{Integer: value}
+}
+
+func NewJsonLikeFromBoolean(value bool) *JsonLike {
+	return &JsonLike{Boolean: value}
+}
+
+func (j *JsonLike) UnmarshalJSON(data []byte) error {
+	var valueJsonLikeList []*JsonLike
+	if err := json.Unmarshal(data, &valueJsonLikeList); err == nil {
+		j.JsonLikeList = valueJsonLikeList
+		return nil
+	}
+	var valueStringJsonLikeMap map[string]*JsonLike
+	if err := json.Unmarshal(data, &valueStringJsonLikeMap); err == nil {
+		j.StringJsonLikeMap = valueStringJsonLikeMap
+		return nil
+	}
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		j.String = valueString
+		return nil
+	}
+	var valueInteger int
+	if err := json.Unmarshal(data, &valueInteger); err == nil {
+		j.Integer = valueInteger
+		return nil
+	}
+	var valueBoolean bool
+	if err := json.Unmarshal(data, &valueBoolean); err == nil {
+		j.Boolean = valueBoolean
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, j)
+}
+
+func (j JsonLike) MarshalJSON() ([]byte, error) {
+	if j.JsonLikeList != nil {
+		return json.Marshal(j.JsonLikeList)
+	}
+	if j.StringJsonLikeMap != nil {
+		return json.Marshal(j.StringJsonLikeMap)
+	}
+	if j.String != "" {
+		return json.Marshal(j.String)
+	}
+	if j.Integer != 0 {
+		return json.Marshal(j.Integer)
+	}
+	if j.Boolean != false {
+		return json.Marshal(j.Boolean)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", j)
+}
+
+type JsonLikeVisitor interface {
+	VisitJsonLikeList([]*JsonLike) error
+	VisitStringJsonLikeMap(map[string]*JsonLike) error
+	VisitString(string) error
+	VisitInteger(int) error
+	VisitBoolean(bool) error
+}
+
+func (j *JsonLike) Accept(visitor JsonLikeVisitor) error {
+	if j.JsonLikeList != nil {
+		return visitor.VisitJsonLikeList(j.JsonLikeList)
+	}
+	if j.StringJsonLikeMap != nil {
+		return visitor.VisitStringJsonLikeMap(j.StringJsonLikeMap)
+	}
+	if j.String != "" {
+		return visitor.VisitString(j.String)
+	}
+	if j.Integer != 0 {
+		return visitor.VisitInteger(j.Integer)
+	}
+	if j.Boolean != false {
+		return visitor.VisitBoolean(j.Boolean)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", j)
+}
+
 type ObjectValue struct {
+	extraProperties map[string]interface{}
+}
+
+func (o *ObjectValue) GetExtraProperties() map[string]interface{} {
+	return o.extraProperties
+}
+
+func (o *ObjectValue) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectValue(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+
+	return nil
 }
 
 func (o *ObjectValue) String() string {

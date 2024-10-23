@@ -1,4 +1,9 @@
-import { AbsoluteFilePath, doesPathExist, getDirectoryContents } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    doesPathExist,
+    getDirectoryContents,
+    getDirectoryContentsForSnapshot
+} from "@fern-api/fs-utils";
 import { rm } from "fs/promises";
 import path from "path";
 import { runFernCli } from "../../utils/runFernCli";
@@ -7,6 +12,18 @@ const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("validate", () => {
     itFixture("petstore");
+});
+
+describe("validate namespaced API", () => {
+    itFixture("namespaced");
+});
+
+describe("validate namespaced API from Cohere", () => {
+    itFixture("namespaced-fleshedout");
+});
+
+describe("validate header overrides", () => {
+    itFixture("header-overrides");
 });
 
 function itFixture(fixtureName: string) {
@@ -24,7 +41,11 @@ function itFixture(fixtureName: string) {
                 cwd: fixturePath
             });
 
-            expect(await getDirectoryContents(AbsoluteFilePath.of(definitionOutputPath))).toMatchSnapshot();
+            expect(await getDirectoryContentsForSnapshot(AbsoluteFilePath.of(definitionOutputPath))).toMatchSnapshot();
+
+            await runFernCli(["check", "--log-level", "debug"], {
+                cwd: fixturePath
+            });
         },
         90_000
     );

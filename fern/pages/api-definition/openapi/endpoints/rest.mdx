@@ -1,0 +1,66 @@
+---
+title: HTTP JSON Endpoints
+subtitle: Document HTTP JSON APIs with the `application/json` content type
+---
+
+Endpoints in OpenAPI are defined underneath the `paths` key. Below is an example of defining 
+a single endpoint: 
+
+```yml title="openapi.yml" maxLines=0 {2-18}
+paths:
+  /pets:
+    post:
+      summary: Create a new pet
+      description: Creates a new pet with the provided information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+      responses:
+        '200':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+```
+
+## Examples
+
+You can provide examples of requests and responses by using the `examples` key.   
+
+```yaml title="openapi.yml" {12-17,25-30}
+paths:
+  /pets:
+    post:
+      summary: Create a new pet
+      description: Creates a new pet with the provided information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+            examples:
+              PetExample:
+                summary: This is an example of a Pet
+                value: 
+                  name: Markley
+                  id: 44
+      responses:
+        '200':
+          description: A Pet object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+              examples:
+                PetExample:
+                  summary: This is an example of a Pet
+                  value: 
+                    name: Markley
+                    id: 44
+```
+

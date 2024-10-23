@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Response.Builder.class)
 public final class Response {
     private final Optional<Foo> foo;
@@ -85,7 +85,7 @@ public final class Response {
         }
 
         public Builder foo(Foo foo) {
-            this.foo = Optional.of(foo);
+            this.foo = Optional.ofNullable(foo);
             return this;
         }
 

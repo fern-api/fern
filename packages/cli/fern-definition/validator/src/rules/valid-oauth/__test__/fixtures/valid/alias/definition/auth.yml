@@ -1,0 +1,26 @@
+types:
+  ClientID: string
+  ClientSecret: string
+  AccessToken: string
+
+  TokenResponse:
+    docs: |
+      An OAuth token response.
+    properties:
+      access_token: AccessToken
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getToken:
+      path: /token
+      method: POST
+      request:
+        name: GetTokenRequest
+        body:
+          properties:
+            client_id: ClientID
+            client_secret: ClientSecret
+            grant_type: literal<"client_credentials">
+      response: TokenResponse

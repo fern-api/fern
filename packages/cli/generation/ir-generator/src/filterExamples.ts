@@ -1,19 +1,22 @@
+import { isNonNullish } from "@fern-api/core-utils";
 import {
     ExampleContainer,
+    ExampleEndpointCall,
+    ExampleEndpointSuccessResponse,
+    ExampleHeader,
     ExampleInlinedRequestBodyProperty,
     ExampleKeyValuePair,
     ExampleNamedType,
     ExampleObjectProperty,
     ExamplePathParameter,
+    ExampleQueryParameter,
     ExampleRequestBody,
     ExampleResponse,
     ExampleSingleUnionTypeProperties,
     ExampleType,
     ExampleTypeReference,
     ExampleTypeReferenceShape,
-    ExampleTypeShape,
-    HttpEndpointExample,
-    NameAndWireValue
+    ExampleTypeShape
 } from "@fern-api/ir-sdk";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 
@@ -71,38 +74,48 @@ function filterExampleTypeReference({
                 list: (l) => ({
                     ...exampleTypeReference,
                     shape: ExampleTypeReferenceShape.container(
-                        ExampleContainer.list(
-                            l
+                        ExampleContainer.list({
+                            ...l,
+                            list: l.list
                                 .map((t) => filterExampleTypeReference({ filteredIr, exampleTypeReference: t }))
                                 .filter((t): t is ExampleTypeReference => t !== undefined)
-                        )
+                        })
                     )
                 }),
                 set: (s) => ({
                     ...exampleTypeReference,
                     shape: ExampleTypeReferenceShape.container(
-                        ExampleContainer.set(
-                            s
+                        ExampleContainer.set({
+                            ...s,
+                            set: s.set
                                 .map((t) => filterExampleTypeReference({ filteredIr, exampleTypeReference: t }))
                                 .filter((t): t is ExampleTypeReference => t !== undefined)
-                        )
+                        })
                     )
                 }),
                 optional: (o) => {
-                    const innerOption =
-                        o !== undefined ? filterExampleTypeReference({ filteredIr, exampleTypeReference: o }) : o;
-                    return innerOption !== undefined
+                    const filteredOptionalTypReference =
+                        o.optional != null
+                            ? filterExampleTypeReference({ filteredIr, exampleTypeReference: o.optional })
+                            : undefined;
+                    return filteredOptionalTypReference != null
                         ? {
                               ...exampleTypeReference,
-                              shape: ExampleTypeReferenceShape.container(ExampleContainer.optional(innerOption))
+                              shape: ExampleTypeReferenceShape.container(
+                                  ExampleContainer.optional({
+                                      optional: filteredOptionalTypReference,
+                                      valueType: o.valueType
+                                  })
+                              )
                           }
                         : undefined;
                 },
                 map: (m) => ({
                     ...exampleTypeReference,
                     shape: ExampleTypeReferenceShape.container(
-                        ExampleContainer.map(
-                            m
+                        ExampleContainer.map({
+                            ...m,
+                            map: m.map
                                 .map((v) => {
                                     const filteredKey = filterExampleTypeReference({
                                         filteredIr,
@@ -117,9 +130,11 @@ function filterExampleTypeReference({
                                         : undefined;
                                 })
                                 .filter((t): t is ExampleKeyValuePair => t !== undefined)
-                        )
+                        })
                     )
                 }),
+                // This is just a primitive, don't do anything
+                literal: () => exampleTypeReference,
                 _other: () => {
                     throw new Error("Received unknown type for example.");
                 }
@@ -235,18 +250,36 @@ function filterExamplePathParameters({
         .filter((param): param is ExamplePathParameter => param !== undefined);
 }
 
-interface ExampleHeaderOrQuery {
-    name: NameAndWireValue;
-    value: ExampleTypeReference;
+function filterExampleQueryParameters({
+    filteredIr,
+    queryParameters
+}: {
+    filteredIr: FilteredIr;
+    queryParameters: ExampleQueryParameter[];
+}): ExampleQueryParameter[] {
+    return queryParameters
+        .map((queryParameter) => {
+            const filteredQueryParameter = filterExampleTypeReference({
+                filteredIr,
+                exampleTypeReference: queryParameter.value
+            });
+            return filteredQueryParameter !== undefined
+                ? {
+                      ...queryParameter,
+                      value: filteredQueryParameter
+                  }
+                : undefined;
+        })
+        .filter((queryParameter): queryParameter is ExampleQueryParameter => queryParameter !== undefined);
 }
 
-function filterExampleHeaderOrQuery({
+function filterExampleHeader({
     filteredIr,
     headers
 }: {
     filteredIr: FilteredIr;
-    headers: ExampleHeaderOrQuery[];
-}): ExampleHeaderOrQuery[] {
+    headers: ExampleHeader[];
+}): ExampleHeader[] {
     return headers
         .map((header) => {
             const filteredHeader = filterExampleTypeReference({ filteredIr, exampleTypeReference: header.value });
@@ -257,7 +290,7 @@ function filterExampleHeaderOrQuery({
                   }
                 : undefined;
         })
-        .filter((header): header is ExampleHeaderOrQuery => header !== undefined);
+        .filter((header): header is ExampleHeader => header !== undefined);
 }
 
 function filterExampleRequestBody({
@@ -309,13 +342,54 @@ function filterExampleResponse({
     filteredIr: FilteredIr;
     response: ExampleResponse;
 }): ExampleResponse {
-    return {
-        ...response,
-        body:
-            response.body !== undefined
-                ? filterExampleTypeReference({ filteredIr, exampleTypeReference: response.body })
-                : undefined
-    };
+    return response._visit<ExampleResponse>({
+        ok: (ok) =>
+            ok._visit<ExampleResponse>({
+                body: (exampleTypeReference) =>
+                    ExampleResponse.ok(
+                        ExampleEndpointSuccessResponse.body(
+                            exampleTypeReference != null
+                                ? filterExampleTypeReference({ filteredIr, exampleTypeReference })
+                                : undefined
+                        )
+                    ),
+                stream: (stream) =>
+                    ExampleResponse.ok(
+                        ExampleEndpointSuccessResponse.stream(
+                            stream
+                                .map((exampleTypeReference) =>
+                                    filterExampleTypeReference({ filteredIr, exampleTypeReference })
+                                )
+                                .filter(isNonNullish)
+                        )
+                    ),
+                sse: (events) =>
+                    ExampleResponse.ok(
+                        ExampleEndpointSuccessResponse.sse(
+                            events
+                                .map(({ event, data }) => {
+                                    const filteredData = filterExampleTypeReference({
+                                        filteredIr,
+                                        exampleTypeReference: data
+                                    });
+                                    return filteredData !== undefined ? { event, data: filteredData } : undefined;
+                                })
+                                .filter(isNonNullish)
+                        )
+                    ),
+                _other: ({ type }) => {
+                    throw new Error(`Received unknown type for OK example: ${type}`);
+                }
+            }),
+        error: ({ error, body }) =>
+            ExampleResponse.error({
+                error,
+                body: body != null ? filterExampleTypeReference({ filteredIr, exampleTypeReference: body }) : undefined
+            }),
+        _other: ({ type }) => {
+            throw new Error(`Received unknown type for example: ${type}`);
+        }
+    });
 }
 
 export function filterEndpointExample({
@@ -323,8 +397,8 @@ export function filterEndpointExample({
     example
 }: {
     filteredIr: FilteredIr;
-    example: HttpEndpointExample;
-}): HttpEndpointExample {
+    example: ExampleEndpointCall;
+}): ExampleEndpointCall {
     return {
         ...example,
         rootPathParameters: filterExamplePathParameters({ filteredIr, pathParameters: example.rootPathParameters }),
@@ -336,9 +410,9 @@ export function filterEndpointExample({
             filteredIr,
             pathParameters: example.endpointPathParameters
         }),
-        serviceHeaders: filterExampleHeaderOrQuery({ filteredIr, headers: example.serviceHeaders }),
-        endpointHeaders: filterExampleHeaderOrQuery({ filteredIr, headers: example.endpointHeaders }),
-        queryParameters: filterExampleHeaderOrQuery({ filteredIr, headers: example.queryParameters }),
+        serviceHeaders: filterExampleHeader({ filteredIr, headers: example.serviceHeaders }),
+        endpointHeaders: filterExampleHeader({ filteredIr, headers: example.endpointHeaders }),
+        queryParameters: filterExampleQueryParameters({ filteredIr, queryParameters: example.queryParameters }),
         request:
             example.request !== undefined
                 ? filterExampleRequestBody({ filteredIr, requestBody: example.request })

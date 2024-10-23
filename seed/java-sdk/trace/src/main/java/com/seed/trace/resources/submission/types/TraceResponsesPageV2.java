@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TraceResponsesPageV2.Builder.class)
 public final class TraceResponsesPageV2 {
     private final Optional<Integer> offset;
@@ -102,7 +102,7 @@ public final class TraceResponsesPageV2 {
         }
 
         public Builder offset(Integer offset) {
-            this.offset = Optional.of(offset);
+            this.offset = Optional.ofNullable(offset);
             return this;
         }
 

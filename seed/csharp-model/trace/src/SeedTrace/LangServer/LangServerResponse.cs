@@ -1,9 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class LangServerResponse
+public record LangServerResponse
 {
     [JsonPropertyName("response")]
-    public object Response { get; init; }
+    public required object Response { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

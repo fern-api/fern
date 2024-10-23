@@ -1,11 +1,20 @@
 import { SchemaOptions } from "@fern-typescript/zurg";
 
-export function getSchemaOptions({ allowExtraFields }: { allowExtraFields: boolean }): Required<SchemaOptions> {
+export function getSchemaOptions({
+    allowExtraFields,
+    skipValidation,
+    omitUndefined
+}: {
+    allowExtraFields: boolean;
+    omitUndefined: boolean;
+    skipValidation?: boolean;
+}): Required<SchemaOptions> {
     return {
         unrecognizedObjectKeys: allowExtraFields ? "passthrough" : "strip",
         allowUnrecognizedUnionMembers: allowExtraFields,
         allowUnrecognizedEnumValues: allowExtraFields,
-        skipValidation: false,
-        breadcrumbsPrefix: []
+        skipValidation: skipValidation ?? false,
+        breadcrumbsPrefix: [],
+        omitUndefined
     };
 }

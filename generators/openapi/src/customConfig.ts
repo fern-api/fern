@@ -3,11 +3,13 @@ import { GeneratorConfig } from "@fern-api/generator-commons";
 export interface FernOpenapiCustomConfig {
     format: "yaml" | "json";
     customOverrides: Record<string, unknown>;
+    filename?: string;
 }
 
 const DEFAULT_FERN_OPENAPI_CUSTOM_CONFIG: FernOpenapiCustomConfig = {
     format: "yaml",
-    customOverrides: {}
+    customOverrides: {},
+    filename: "openapi.yml"
 };
 
 export function getCustomConfig(generatorConfig: GeneratorConfig): FernOpenapiCustomConfig {

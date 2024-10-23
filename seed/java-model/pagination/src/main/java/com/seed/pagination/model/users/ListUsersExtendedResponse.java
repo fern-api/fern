@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListUsersExtendedResponse.Builder.class)
 public final class ListUsersExtendedResponse implements IUserPage {
     private final UserListContainer data;
@@ -112,7 +112,7 @@ public final class ListUsersExtendedResponse implements IUserPage {
         @java.lang.Override
         @JsonSetter("data")
         public TotalCountStage data(UserListContainer data) {
-            this.data = data;
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 
@@ -129,7 +129,7 @@ public final class ListUsersExtendedResponse implements IUserPage {
 
         @java.lang.Override
         public _FinalStage next(UUID next) {
-            this.next = Optional.of(next);
+            this.next = Optional.ofNullable(next);
             return this;
         }
 

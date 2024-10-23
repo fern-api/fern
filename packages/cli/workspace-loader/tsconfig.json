@@ -5,12 +5,15 @@
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
+    { "path": "../../commons/logging-execa" },
     { "path": "../../core" },
     { "path": "../configuration" },
-    { "path": "../openapi-ir-to-fern" },
-    { "path": "../openapi-parser" },
+    { "path": "../logger" },
+    { "path": "../api-importers/openapi/openapi-ir-parser" },
     { "path": "../semver-utils" },
     { "path": "../task-context" },
-    { "path": "../yaml/yaml-schema" }
+    { "path": "../workspace-commons" },
+    { "path": "../fern-definition/schema" }, 
+    { "path": "../lazy-fern-workspace"}
   ]
 }

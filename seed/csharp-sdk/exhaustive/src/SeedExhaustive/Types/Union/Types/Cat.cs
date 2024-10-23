@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedExhaustive.Types;
 
-public class Cat
+public record Cat
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; }
 
     [JsonPropertyName("likesToMeow")]
-    public bool LikesToMeow { get; init; }
+    public required bool LikesToMeow { get; }
 }

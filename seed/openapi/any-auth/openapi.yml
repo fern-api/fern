@@ -1,0 +1,98 @@
+openapi: 3.0.1
+info:
+  title: any-auth
+  version: ''
+paths:
+  /token:
+    post:
+      operationId: auth_getToken
+      tags:
+        - Auth
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                audience:
+                  type: string
+                  const: https://api.example.com
+                grant_type:
+                  type: string
+                  const: client_credentials
+                scope:
+                  type: string
+                  nullable: true
+              required:
+                - client_id
+                - client_secret
+                - audience
+                - grant_type
+  /users:
+    post:
+      operationId: user_get
+      tags:
+        - User
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+        - BearerAuth: []
+components:
+  schemas:
+    TokenResponse:
+      title: TokenResponse
+      type: object
+      description: An OAuth token response.
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        refresh_token:
+          type: string
+          nullable: true
+      required:
+        - access_token
+        - expires_in
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key

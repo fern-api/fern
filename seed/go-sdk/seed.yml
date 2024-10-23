@@ -1,10 +1,38 @@
-irVersion: v35
-docker: fernapi/fern-go-sdk:latest
-dockerCommand: docker build -f ./generators/go/docker/Dockerfile.sdk -t fernapi/fern-go-sdk:latest ./generators/go
+irVersion: v40
+displayName: Go SDK
+image: fernapi/fern-go-sdk
+changelogLocation: ../../generators/go/sdk/versions.yml
+
+buildScripts:
+  compileScript:
+    commands:
+      - go build -v ./...
+  testScript:
+    commands:
+      - go test -v ./...
+
+publish:
+  workingDirectory: generators/go
+  preBuildCommands:
+    - go build ./...
+  docker:
+    file: ./generators/go/sdk/Dockerfile
+    image: fernapi/fern-go-sdk
+    context: ./generators/go
+test:
+  docker:
+    image: fernapi/fern-go-sdk:latest
+    command: docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest ./generators/go
 language: go
 generatorType: sdk
 defaultOutputMode: github
 fixtures:
+  examples:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: always-send-required-properties
+      customConfig:
+        alwaysSendRequiredProperties: true
   undiscriminated-unions:
     - outputFolder: .
       outputVersion: 0.0.1
@@ -40,7 +68,9 @@ scripts:
   - docker: golang:1.18-alpine
     commands:
       - CGO_ENABLED=0 go test ./...
-allowedFailures: 
+allowedFailures:
   - exhaustive
   - reserved-keywords
+  - server-sent-events
   - trace
+  - alias-extends

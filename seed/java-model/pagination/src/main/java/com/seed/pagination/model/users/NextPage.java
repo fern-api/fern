@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.pagination.core.ObjectMappers;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = NextPage.Builder.class)
 public final class NextPage {
     private final int page;
@@ -96,7 +96,7 @@ public final class NextPage {
         @java.lang.Override
         @JsonSetter("starting_after")
         public _FinalStage startingAfter(String startingAfter) {
-            this.startingAfter = startingAfter;
+            this.startingAfter = Objects.requireNonNull(startingAfter, "startingAfter must not be null");
             return this;
         }
 

@@ -46,11 +46,20 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             includeContentHeadersOnFileDownloadResponse: parsed?.includeContentHeadersOnFileDownloadResponse ?? false,
             noSerdeLayer,
+            extraPeerDependencies: parsed?.extraPeerDependencies ?? {},
+            extraPeerDependenciesMeta: parsed?.extraPeerDependenciesMeta ?? {},
             noOptionalProperties: parsed?.noOptionalProperties ?? false,
             includeApiReference: parsed?.includeApiReference ?? false,
             tolerateRepublish: parsed?.tolerateRepublish ?? false,
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
-            allowExtraFields: parsed?.allowExtraFields ?? false
+            allowExtraFields: parsed?.allowExtraFields ?? false,
+            inlineFileProperties: parsed?.inlineFileProperties ?? false,
+            packageJson: parsed?.packageJson,
+            publishToJsr: parsed?.publishToJsr ?? false,
+            omitUndefined: parsed?.omitUndefined ?? false,
+            generateWireTests: parsed?.generateWireTests ?? false,
+            noScripts: parsed?.noScripts ?? false,
+            useBigInt: parsed?.useBigInt ?? false
         };
     }
 
@@ -77,11 +86,24 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             context: generatorContext,
             npmPackage,
             generateJestTests: config.output.mode.type === "github",
+            rawConfig: config,
             config: {
+                runScripts: !customConfig.noScripts,
+                organization: config.organization,
+                apiName: intermediateRepresentation.apiName.originalName,
                 whitelabel: config.whitelabel,
+                generateOAuthClients: config.generateOauthClients,
+                originalReadmeFilepath:
+                    config.originalReadmeFilepath != null
+                        ? AbsoluteFilePath.of(config.originalReadmeFilepath)
+                        : undefined,
                 snippetFilepath:
                     config.output.snippetFilepath != null
                         ? AbsoluteFilePath.of(config.output.snippetFilepath)
+                        : undefined,
+                snippetTemplateFilepath:
+                    config.output.snippetTemplateFilepath != null
+                        ? AbsoluteFilePath.of(config.output.snippetTemplateFilepath)
                         : undefined,
                 shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
                 isPackagePrivate: customConfig.isPackagePrivate,
@@ -98,21 +120,29 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 targetRuntime: this.targetRuntime,
                 extraDevDependencies: customConfig.extraDevDependencies,
                 extraDependencies: customConfig.extraDependencies,
+                extraPeerDependencies: customConfig.extraPeerDependencies ?? {},
+                extraPeerDependenciesMeta: customConfig.extraPeerDependenciesMeta ?? {},
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
                 retainOriginalCasing: customConfig.retainOriginalCasing ?? false,
                 noOptionalProperties: customConfig.noOptionalProperties,
-                includeApiReference: customConfig.includeApiReference ?? false,
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,
-                writeUnitTests: config.writeUnitTests
+                inlineFileProperties: customConfig.inlineFileProperties ?? false,
+                writeUnitTests: customConfig.generateWireTests ?? config.writeUnitTests,
+                executionEnvironment: this.exectuionEnvironment(config),
+                packageJson: customConfig.packageJson,
+                outputJsr: customConfig.publishToJsr ?? false,
+                omitUndefined: customConfig.omitUndefined ?? false,
+                useBigInt: customConfig.useBigInt ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
         await sdkGenerator.copyCoreUtilities({
-            pathToSrc: persistedTypescriptProject.getSrcDirectory()
+            pathToSrc: persistedTypescriptProject.getSrcDirectory(),
+            pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
 
         return persistedTypescriptProject;
@@ -128,5 +158,17 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected shouldTolerateRepublish(customConfig: SdkCustomConfig): boolean {
         return customConfig.tolerateRepublish;
+    }
+
+    protected publishToJsr(customConfig: SdkCustomConfig): boolean {
+        return customConfig.publishToJsr ?? false;
+    }
+
+    protected exectuionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {
+        return config.environment.type === "local"
+            ? "local"
+            : config.environment.coordinatorUrlV2.endsWith("dev2.buildwithfern.com")
+            ? "dev"
+            : "prod";
     }
 }

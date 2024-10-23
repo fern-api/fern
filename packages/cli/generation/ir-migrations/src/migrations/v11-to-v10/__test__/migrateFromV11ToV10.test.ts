@@ -11,7 +11,7 @@ describe("migrateFromV11ToV10", () => {
         const migrated = await runMigration({
             pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
-        expect(migrated.auth).toEqual({
+        expect(migrated.ir.auth).toEqual({
             docs: undefined,
             requirement: "ALL",
             schemes: [

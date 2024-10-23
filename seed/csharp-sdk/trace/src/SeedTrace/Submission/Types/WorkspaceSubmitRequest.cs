@@ -1,19 +1,27 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class WorkspaceSubmitRequest
+public record WorkspaceSubmitRequest
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("language")]
-    public Language Language { get; init; }
+    public required Language Language { get; set; }
 
     [JsonPropertyName("submissionFiles")]
-    public List<List<SubmissionFileInfo>> SubmissionFiles { get; init; }
+    public IEnumerable<SubmissionFileInfo> SubmissionFiles { get; set; } =
+        new List<SubmissionFileInfo>();
 
     [JsonPropertyName("userId")]
-    public List<string?> UserId { get; init; }
+    public string? UserId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

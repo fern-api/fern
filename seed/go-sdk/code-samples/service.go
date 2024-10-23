@@ -9,14 +9,19 @@ import (
 )
 
 type MyRequest struct {
-	NumEvents int `json:"num_events" url:"num_events"`
+	NumEvents int `json:"num_events" url:"-"`
 }
 
 type MyResponse struct {
 	Id   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (m *MyResponse) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
 }
 
 func (m *MyResponse) UnmarshalJSON(data []byte) error {
@@ -26,6 +31,13 @@ func (m *MyResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = MyResponse(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
 	m._rawJSON = json.RawMessage(data)
 	return nil
 }

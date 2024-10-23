@@ -12,7 +12,7 @@ export const ObjectFieldValue: core.serialization.ObjectSchema<
     SeedApi.ObjectFieldValue
 > = core.serialization.object({
     name: FieldName,
-    value: core.serialization.lazy(async () => (await import("../../..")).FieldValue),
+    value: core.serialization.lazy(() => serializers.FieldValue),
 });
 
 export declare namespace ObjectFieldValue {

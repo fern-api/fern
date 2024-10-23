@@ -16,7 +16,8 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && jest --passWithNoTests",
+    "test": "jest --passWithNoTests",
+    "test:update": "jest --passWithNoTests -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../../shared/.prettierignore \"**\"",
@@ -25,8 +26,8 @@
     "depcheck": "depcheck"
   },
   "devDependencies": {
-    "@types/jest": "^29.0.3",
-    "@types/node": "^18.7.18",
+    "@types/jest": "^29.5.12",
+    "@types/node": "18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",

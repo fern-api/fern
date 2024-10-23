@@ -3,16 +3,18 @@
  */
 package com.seed.bearerTokenEnvironmentVariable.resources.service;
 
-import com.seed.bearerTokenEnvironmentVariable.core.ApiError;
 import com.seed.bearerTokenEnvironmentVariable.core.ClientOptions;
 import com.seed.bearerTokenEnvironmentVariable.core.ObjectMappers;
 import com.seed.bearerTokenEnvironmentVariable.core.RequestOptions;
+import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableApiException;
+import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableException;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class ServiceClient {
     protected final ClientOptions clientOptions;
@@ -42,20 +44,22 @@ public class ServiceClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), String.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedBearerTokenEnvironmentVariableApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedBearerTokenEnvironmentVariableException("Network error executing HTTP request", e);
         }
     }
 }

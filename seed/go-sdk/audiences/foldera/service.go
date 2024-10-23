@@ -12,7 +12,12 @@ import (
 type Response struct {
 	Foo *folderb.Foo `json:"foo,omitempty" url:"foo,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (r *Response) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
 }
 
 func (r *Response) UnmarshalJSON(data []byte) error {
@@ -22,6 +27,13 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = Response(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
 	r._rawJSON = json.RawMessage(data)
 	return nil
 }

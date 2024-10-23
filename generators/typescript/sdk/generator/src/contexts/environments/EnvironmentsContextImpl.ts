@@ -51,6 +51,13 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
         });
     }
 
+    public getReferenceToFirstEnvironmentEnum(): Reference | undefined {
+        return this.environmentsDeclarationReferencer.getReferenceToFirstEnvironmentEnum({
+            importsManager: this.importsManager,
+            sourceFile: this.sourceFile
+        });
+    }
+
     public getReferenceToEnvironmentUrls(): Reference {
         return this.environmentsDeclarationReferencer.getReferenceToEnvironmentUrls({
             importsManager: this.importsManager,

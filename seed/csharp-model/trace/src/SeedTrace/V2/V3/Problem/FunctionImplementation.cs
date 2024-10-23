@@ -1,12 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace.V2.V3;
 
-public class FunctionImplementation
+public record FunctionImplementation
 {
     [JsonPropertyName("impl")]
-    public string Impl { get; init; }
+    public required string Impl { get; set; }
 
     [JsonPropertyName("imports")]
-    public List<string?> Imports { get; init; }
+    public string? Imports { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

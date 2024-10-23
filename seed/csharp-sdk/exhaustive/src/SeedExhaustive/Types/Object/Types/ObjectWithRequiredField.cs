@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedExhaustive.Types;
 
-public class ObjectWithRequiredField
+public record ObjectWithRequiredField
 {
     [JsonPropertyName("string")]
-    public string String { get; init; }
+    public required string String { get; }
 }

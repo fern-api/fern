@@ -1,4 +1,10 @@
-import { ExampleEndpointCall, Name, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleEndpointCall,
+    ExampleTypeReferenceShape,
+    HttpRequestBody,
+    Name,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -9,6 +15,7 @@ export declare namespace GeneratedRequestWrapperExampleImpl {
         example: ExampleEndpointCall;
         packageId: PackageId;
         endpointName: Name;
+        requestBody: HttpRequestBody | undefined;
     }
 }
 
@@ -17,12 +24,20 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     private example: ExampleEndpointCall;
     private packageId: PackageId;
     private endpointName: Name;
+    private requestBody: HttpRequestBody | undefined;
 
-    constructor({ bodyPropertyName, example, packageId, endpointName }: GeneratedRequestWrapperExampleImpl.Init) {
+    constructor({
+        bodyPropertyName,
+        example,
+        packageId,
+        endpointName,
+        requestBody
+    }: GeneratedRequestWrapperExampleImpl.Init) {
         this.bodyPropertyName = bodyPropertyName;
         this.example = example;
         this.packageId = packageId;
         this.endpointName = endpointName;
+        this.requestBody = requestBody;
     }
 
     public build(context: SdkContext, opts: GetReferenceOpts): ts.Expression {
@@ -41,55 +56,101 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         };
 
         const generatedType = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpointName);
-        const headerProperties = [...this.example.serviceHeaders, ...this.example.endpointHeaders].map((header) => {
-            return ts.factory.createPropertyAssignment(
-                asObjectProperty(generatedType.getPropertyNameOfNonLiteralHeaderFromName(header.name).propertyName),
-                context.type.getGeneratedExample(header.value).build(context, opts)
-            );
-        });
-        const queryParamProperties = [...this.example.queryParameters].map((queryParam) => {
-            return ts.factory.createPropertyAssignment(
-                asObjectProperty(generatedType.getPropertyNameOfQueryParameterFromName(queryParam.name).propertyName),
-                context.type.getGeneratedExample(queryParam.value).build(context, opts)
-            );
-        });
+        const fileProperties = [];
+        if (context.inlineFileProperties && this.requestBody != null && this.requestBody.type === "fileUpload") {
+            for (const property of this.requestBody.properties) {
+                if (property.type === "file") {
+                    if (property.value.isOptional) {
+                        continue;
+                    }
+                    const createReadStream = context.externalDependencies.fs.createReadStream(
+                        ts.factory.createStringLiteral("/path/to/your/file")
+                    );
+                    if (property.value.type === "fileArray") {
+                        fileProperties.push(
+                            ts.factory.createPropertyAssignment(
+                                asObjectProperty(
+                                    generatedType.getPropertyNameOfFileParameter(property.value).propertyName
+                                ),
+                                ts.factory.createArrayLiteralExpression([createReadStream])
+                            )
+                        );
+                    } else {
+                        fileProperties.push(
+                            ts.factory.createPropertyAssignment(
+                                asObjectProperty(
+                                    generatedType.getPropertyNameOfFileParameter(property.value).propertyName
+                                ),
+                                createReadStream
+                            )
+                        );
+                    }
+                }
+            }
+        }
+        const headerProperties = [...this.example.serviceHeaders, ...this.example.endpointHeaders]
+            .filter((header) => this.isNotLiteral(header.value.shape))
+            .map((header) => {
+                return ts.factory.createPropertyAssignment(
+                    asObjectProperty(generatedType.getPropertyNameOfNonLiteralHeaderFromName(header.name).propertyName),
+                    context.type.getGeneratedExample(header.value).build(context, opts)
+                );
+            });
+        const queryParamProperties = [...this.example.queryParameters]
+            .filter((queryParam) => this.isNotLiteral(queryParam.value.shape))
+            .map((queryParam) => {
+                return ts.factory.createPropertyAssignment(
+                    asObjectProperty(
+                        generatedType.getPropertyNameOfQueryParameterFromName(queryParam.name).propertyName
+                    ),
+                    context.type.getGeneratedExample(queryParam.value).build(context, opts)
+                );
+            });
         const bodyProperties =
             this.example.request?._visit<ts.PropertyAssignment[]>({
                 inlinedRequestBody: (body) => {
-                    return body.properties.map((property) => {
-                        if (property.originalTypeDeclaration != null) {
-                            const originalTypeForProperty = context.type.getGeneratedType(
-                                property.originalTypeDeclaration
-                            );
-                            if (originalTypeForProperty.type === "union") {
-                                const propertyKey = originalTypeForProperty.getSinglePropertyKey({
-                                    name: property.name,
-                                    type: TypeReference.named(property.originalTypeDeclaration)
+                    return body.properties
+                        .filter((property) => this.isNotLiteral(property.value.shape))
+                        .map((property) => {
+                            if (property.originalTypeDeclaration != null) {
+                                const originalTypeForProperty = context.type.getGeneratedType(
+                                    property.originalTypeDeclaration
+                                );
+                                if (originalTypeForProperty.type === "union") {
+                                    const propertyKey = originalTypeForProperty.getSinglePropertyKey({
+                                        name: property.name,
+                                        type: TypeReference.named({
+                                            ...property.originalTypeDeclaration,
+                                            default: undefined,
+                                            inline: undefined
+                                        })
+                                    });
+                                    return ts.factory.createPropertyAssignment(
+                                        propertyKey,
+                                        context.type.getGeneratedExample(property.value).build(context, opts)
+                                    );
+                                }
+                                if (originalTypeForProperty.type !== "object") {
+                                    throw new Error(
+                                        `Property does not come from an object, instead got ${originalTypeForProperty.type}`
+                                    );
+                                }
+                                const key = originalTypeForProperty.getPropertyKey({
+                                    propertyWireKey: property.name.wireValue
                                 });
                                 return ts.factory.createPropertyAssignment(
-                                    propertyKey,
+                                    key,
+                                    context.type.getGeneratedExample(property.value).build(context, opts)
+                                );
+                            } else {
+                                return ts.factory.createPropertyAssignment(
+                                    asObjectProperty(
+                                        generatedType.getInlinedRequestBodyPropertyKeyFromName(property.name)
+                                    ),
                                     context.type.getGeneratedExample(property.value).build(context, opts)
                                 );
                             }
-                            if (originalTypeForProperty.type !== "object") {
-                                throw new Error(
-                                    `Property does not come from an object, instead got ${originalTypeForProperty.type}`
-                                );
-                            }
-                            const key = originalTypeForProperty.getPropertyKey({
-                                propertyWireKey: property.name.wireValue
-                            });
-                            return ts.factory.createPropertyAssignment(
-                                key,
-                                context.type.getGeneratedExample(property.value).build(context, opts)
-                            );
-                        } else {
-                            return ts.factory.createPropertyAssignment(
-                                asObjectProperty(generatedType.getInlinedRequestBodyPropertyKeyFromName(property.name)),
-                                context.type.getGeneratedExample(property.value).build(context, opts)
-                            );
-                        }
-                    });
+                        });
                 },
                 reference: (type) => {
                     return [
@@ -105,8 +166,12 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             }) ?? [];
 
         return ts.factory.createObjectLiteralExpression(
-            [...headerProperties, ...queryParamProperties, ...bodyProperties],
+            [...fileProperties, ...headerProperties, ...queryParamProperties, ...bodyProperties],
             true
         );
+    }
+
+    private isNotLiteral(shape: ExampleTypeReferenceShape): boolean {
+        return !(shape.type === "container" && shape.container.type === "literal");
     }
 }

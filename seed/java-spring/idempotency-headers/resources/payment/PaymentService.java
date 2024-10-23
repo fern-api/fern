@@ -28,7 +28,10 @@ public interface PaymentService {
   UUID create(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @RequestBody CreatePaymentRequest body);
 
-  @DeleteMapping("/{paymentId}")
+  @DeleteMapping(
+      value = "/{paymentId}",
+      produces = "application/json"
+  )
   void delete(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @PathVariable("paymentId") String paymentId);
 }

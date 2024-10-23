@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StackInformation.Builder.class)
 public final class StackInformation {
     private final int numStackFrames;
@@ -113,7 +113,7 @@ public final class StackInformation {
 
         @java.lang.Override
         public _FinalStage topStackFrame(StackFrame topStackFrame) {
-            this.topStackFrame = Optional.of(topStackFrame);
+            this.topStackFrame = Optional.ofNullable(topStackFrame);
             return this;
         }
 

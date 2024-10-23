@@ -8,25 +8,68 @@ export function appendPropertyToFormData({
     property,
     context,
     referenceToFormData,
+    wrapperName,
     requestParameter
 }: {
     property: FileUploadRequestProperty;
     context: SdkContext;
     referenceToFormData: ts.Expression;
+    wrapperName: string;
     requestParameter: FileUploadRequestParameter | undefined;
 }): ts.Statement {
     return FileUploadRequestProperty._visit(property, {
         file: (property) => {
-            let statement = context.externalDependencies.formData.append({
+            const FOR_LOOP_ITEM_VARIABLE_NAME = "_file";
+
+            let statement = context.coreUtilities.formDataUtils.appendFile({
                 referencetoFormData: referenceToFormData,
                 key: property.key.wireValue,
                 value: ts.factory.createIdentifier(
                     getParameterNameForFile({
                         property,
-                        retainOriginalCasing: context.retainOriginalCasing
+                        wrapperName,
+                        includeSerdeLayer: context.includeSerdeLayer,
+                        retainOriginalCasing: context.retainOriginalCasing,
+                        inlineFileProperties: context.inlineFileProperties
                     })
                 )
             });
+
+            if (property.type === "fileArray") {
+                statement = ts.factory.createForOfStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME),
+                                undefined,
+                                undefined,
+                                undefined
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    ),
+                    ts.factory.createIdentifier(
+                        getParameterNameForFile({
+                            property,
+                            wrapperName,
+                            includeSerdeLayer: context.includeSerdeLayer,
+                            retainOriginalCasing: context.retainOriginalCasing,
+                            inlineFileProperties: context.inlineFileProperties
+                        })
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            context.coreUtilities.formDataUtils.appendFile({
+                                referencetoFormData: referenceToFormData,
+                                key: property.key.wireValue,
+                                value: ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME)
+                            })
+                        ],
+                        true
+                    )
+                );
+            }
 
             if (property.isOptional) {
                 statement = ts.factory.createIfStatement(
@@ -34,7 +77,10 @@ export function appendPropertyToFormData({
                         ts.factory.createIdentifier(
                             getParameterNameForFile({
                                 property,
-                                retainOriginalCasing: context.retainOriginalCasing
+                                wrapperName,
+                                includeSerdeLayer: context.includeSerdeLayer,
+                                retainOriginalCasing: context.retainOriginalCasing,
+                                inlineFileProperties: context.inlineFileProperties
                             })
                         ),
                         ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
@@ -73,7 +119,7 @@ export function appendPropertyToFormData({
                     referenceToBodyProperty,
                     ts.factory.createBlock(
                         [
-                            context.externalDependencies.formData.append({
+                            context.coreUtilities.formDataUtils.append({
                                 referencetoFormData: referenceToFormData,
                                 key: property.name.wireValue,
                                 value: stringifyIterableItemType(
@@ -116,7 +162,7 @@ export function appendPropertyToFormData({
                     statement = ts.factory.createIfStatement(condition, statement);
                 }
             } else {
-                statement = context.externalDependencies.formData.append({
+                statement = context.coreUtilities.formDataUtils.append({
                     referencetoFormData: referenceToFormData,
                     key: property.name.wireValue,
                     value: context.type.stringify(referenceToBodyProperty, property.valueType, {

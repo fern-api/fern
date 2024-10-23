@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from typing import Callable, List, TypeVar
+from typing import Callable, List, Optional, TypeVar
 
 from ordered_set import OrderedSet
 
@@ -36,11 +36,19 @@ class SourceFile(ClassParent):
         ...
 
     @abstractmethod
-    def to_str(self) -> str:
+    def to_str(self, include_imports: Optional[bool] = True, should_format_override: Optional[bool] = None) -> str:
         ...
 
     @abstractmethod
     def write_to_file(self, *, filepath: str) -> None:
+        ...
+
+    @abstractmethod
+    def get_imports_manager(self) -> ImportsManager:
+        ...
+
+    @abstractmethod
+    def get_dummy_class_declaration(self, declaration: AST.ClassDeclaration) -> LocalClassReference:
         ...
 
 
@@ -51,7 +59,7 @@ class SourceFileImpl(SourceFile):
         module_path: AST.ModulePath,
         reference_resolver: ReferenceResolverImpl,
         dependency_manager: DependencyManager,
-        completion_listener: Callable[[SourceFileImpl], None] = None,
+        completion_listener: Optional[Callable[[SourceFileImpl], None]] = None,
         should_format: bool,
         should_format_as_snippet: bool = False,
         should_include_header: bool = True,
@@ -70,6 +78,9 @@ class SourceFileImpl(SourceFile):
         self._should_include_header = should_include_header
         self._whitelabel = whitelabel
 
+    def get_imports_manager(self) -> ImportsManager:
+        return self._imports_manager
+
     def add_declaration(
         self,
         declaration: AST.Declaration,
@@ -82,7 +93,7 @@ class SourceFileImpl(SourceFile):
     def add_class_declaration(
         self,
         declaration: AST.ClassDeclaration,
-        should_export: bool = None,
+        should_export: bool = True,
     ) -> LocalClassReference:
         new_declaration = declaration
 
@@ -90,7 +101,7 @@ class SourceFileImpl(SourceFile):
             def add_class_declaration(
                 class_reference_self,
                 declaration: AST.ClassDeclaration,
-                should_export: bool = None,
+                should_export: bool = True,
             ) -> LocalClassReference:
                 new_declaration.add_class(declaration)
                 return LocalClassReferenceImpl(
@@ -105,8 +116,38 @@ class SourceFileImpl(SourceFile):
 
         self.add_declaration(
             declaration=declaration,
-            should_export=should_export if should_export is not None else not declaration.name.startswith("_"),
+            should_export=should_export if not declaration.name.startswith("_") else False,
         )
+        return LocalClassReferenceImpl(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path),
+                named_import=declaration.name,
+            ),
+        )
+
+    def get_dummy_class_declaration(
+        self,
+        declaration: AST.ClassDeclaration,
+    ) -> LocalClassReference:
+        new_declaration = declaration
+
+        class LocalClassReferenceImpl(LocalClassReference):
+            def add_class_declaration(
+                class_reference_self,
+                declaration: AST.ClassDeclaration,
+                should_export: Optional[bool] = None,
+            ) -> LocalClassReference:
+                return LocalClassReferenceImpl(
+                    qualified_name_excluding_import=(
+                        class_reference_self.qualified_name_excluding_import + (declaration.name,)
+                    ),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path),
+                        named_import=new_declaration.name,
+                    ),
+                )
+
         return LocalClassReferenceImpl(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
@@ -124,9 +165,9 @@ class SourceFileImpl(SourceFile):
     def add_footer_expression(self, expression: AST.Expression) -> None:
         self._footer_statements.append(TopLevelStatement(node=expression))
 
-    def to_str(self) -> str:
-        writer = self._prepare_for_writing()
-        return writer.to_str()
+    def to_str(self, include_imports: Optional[bool] = True, should_format_override: Optional[bool] = None) -> str:
+        writer = self._prepare_for_writing(include_imports)
+        return writer.to_str(should_format_override)
 
     def write_to_file(self, *, filepath: str) -> None:
         writer = self._prepare_for_writing()
@@ -135,7 +176,7 @@ class SourceFileImpl(SourceFile):
         if self._completion_listener is not None:
             self._completion_listener(self)
 
-    def _prepare_for_writing(self) -> NodeWriterImpl:
+    def _prepare_for_writing(self, include_imports: Optional[bool] = True) -> NodeWriterImpl:
         # metadata about the whole file's AST
         ast_metadata = AST.AstNodeMetadata()
 
@@ -163,13 +204,20 @@ class SourceFileImpl(SourceFile):
             )
 
         for reference in ast_metadata.references:
+            # At times we may be trying to write `if TYPE_CHECKING` imports when no other import brings in typing
+            # and so the resolution of the import is off. This is a fine short circuit since it's a built-in module.
+            if reference.import_if_type_checking:
+                tc_ref = AST.TypeHint.type_checking_reference()
+                self._reference_resolver.register_reference(tc_ref)
+
             # register refrence for resolving later
             self._reference_resolver.register_reference(reference)
 
             # track dependency if this references relies on an external dep
-            if reference.import_ is not None:
-                for dependency in reference.import_.module.get_dependencies():
-                    self._dependency_manager.add_dependency(dependency)
+            if include_imports:
+                if reference.import_ is not None:
+                    for dependency in reference.import_.module.get_dependencies():
+                        self._dependency_manager.add_dependency(dependency)
 
         for declaration in ast_metadata.declarations:
             self._reference_resolver.register_declaration(declaration)
@@ -189,16 +237,18 @@ class SourceFileImpl(SourceFile):
         )
         self._imports_manager.write_top_imports_for_file(writer=writer, reference_resolver=self._reference_resolver)
         for statement in self._statements:
-            self._imports_manager.write_top_imports_for_statement(
-                statement_id=statement.id,
+            if include_imports:
+                self._imports_manager.write_top_imports_for_statement(
+                    statement_id=statement.id,
+                    writer=writer,
+                    reference_resolver=self._reference_resolver,
+                )
+            writer.write_node(statement.node)
+        if include_imports:
+            self._imports_manager.write_remaining_imports(
                 writer=writer,
                 reference_resolver=self._reference_resolver,
             )
-            writer.write_node(statement.node)
-        self._imports_manager.write_remaining_imports(
-            writer=writer,
-            reference_resolver=self._reference_resolver,
-        )
         for statement in self._footer_statements:
             writer.write_node(node=statement.node)
             writer.write_newline_if_last_line_not()

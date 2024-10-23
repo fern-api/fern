@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`change-services-key-to-service > simple 1`] = `
+"imports: {}
+
+# services!
+service:
+  base-path: /
+  auth: false
+  endpoints: {}
+
+types:
+  MyAlias: string
+"
+`;

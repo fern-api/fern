@@ -1,19 +1,26 @@
 using System.Text.Json.Serialization;
-using SeedTrace.V2;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace.V2;
 
-public class BasicTestCaseTemplate
+public record BasicTestCaseTemplate
 {
     [JsonPropertyName("templateId")]
-    public string TemplateId { get; init; }
+    public required string TemplateId { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("description")]
-    public TestCaseImplementationDescription Description { get; init; }
+    public required TestCaseImplementationDescription Description { get; set; }
 
     [JsonPropertyName("expectedValueParameterId")]
-    public string ExpectedValueParameterId { get; init; }
+    public required string ExpectedValueParameterId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

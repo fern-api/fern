@@ -48,7 +48,7 @@ func (c *Client) SetName(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name", userId)
+	endpointURL := core.EncodeURL(baseURL+"/users/%v/set-name", userId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
@@ -77,12 +77,14 @@ func (c *Client) SetName(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return "", err
@@ -105,7 +107,7 @@ func (c *Client) UpdateName(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/update-name", userId)
+	endpointURL := core.EncodeURL(baseURL+"/users/%v/update-name", userId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
@@ -114,12 +116,14 @@ func (c *Client) UpdateName(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPut,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPut,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return "", err

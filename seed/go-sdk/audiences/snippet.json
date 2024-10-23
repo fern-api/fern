@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_folder-a/service.getDirectThread"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/audiences/fern\"\n\tfernclient \"github.com/audiences/fern/client\"\n\toption \"github.com/audiences/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithBaseURL(\n\t\tfern.Environments.EnvironmentA,\n\t),\n)\nresponse, err := client.FolderA.Service.GetDirectThread(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/partner-path",
+                "method": "GET",
+                "identifier_override": "endpoint_folder-d/service.getDirectThread"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/audiences/fern\"\n\tfernclient \"github.com/audiences/fern/client\"\n\toption \"github.com/audiences/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithBaseURL(\n\t\tfern.Environments.EnvironmentA,\n\t),\n)\nresponse, err := client.FolderD.Service.GetDirectThread(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

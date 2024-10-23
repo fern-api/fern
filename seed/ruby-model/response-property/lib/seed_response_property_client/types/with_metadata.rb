@@ -30,7 +30,8 @@ module SeedResponsePropertyClient
     # @return [SeedResponsePropertyClient::WithMetadata]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      metadata = struct["metadata"]
+      parsed_json = JSON.parse(json_object)
+      metadata = parsed_json["metadata"]
       new(metadata: metadata, additional_properties: struct)
     end
 

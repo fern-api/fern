@@ -1,16 +1,23 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace.V2;
 
-public class Parameter
+public record Parameter
 {
     [JsonPropertyName("parameterId")]
-    public string ParameterId { get; init; }
+    public required string ParameterId { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("variableType")]
-    public VariableType VariableType { get; init; }
+    public required object VariableType { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,14 +1,18 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernGeneratorExec, GeneratorNotificationService, parseGeneratorConfig } from "@fern-api/generator-commons";
+import {
+    FernGeneratorExec,
+    GeneratorNotificationService,
+    parseGeneratorConfig,
+    parseIR
+} from "@fern-api/generator-commons";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
-import { cp, rm } from "fs";
 import { constructNpmPackage } from "./constructNpmPackage";
-import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
+import * as serializers from "@fern-fern/ir-sdk/serialization";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
 
@@ -59,13 +63,23 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 })
             );
 
-            const generatorContext = new GeneratorContextImpl(logger);
+            const version = config.output?.mode._visit({
+                downloadFiles: () => undefined,
+                github: (github) => github.version,
+                publish: (publish) => publish.version,
+                _other: () => undefined
+            });
+
+            const generatorContext = new GeneratorContextImpl(logger, version);
             const typescriptProject = await this.generateTypescriptProject({
                 config,
                 customConfig,
                 npmPackage,
                 generatorContext,
-                intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath)
+                intermediateRepresentation: await parseIR({
+                    absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
+                    parse: serializers.IntermediateRepresentation.parse
+                })
             });
             if (!generatorContext.didSucceed()) {
                 throw new Error("Failed to generate TypeScript project.");
@@ -98,49 +112,15 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             githubOutputMode,
                             isPackagePrivate: npmPackage != null && npmPackage.private,
                             pathToProject,
-                            config
+                            config,
+                            publishToJsr: this.publishToJsr(customConfig)
                         });
                     });
 
-                    if (config.writeUnitTests) {
-                        try {
-                            // Write .mock folder if present
-                            await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
-                                cp(
-                                    `${config.output.path}/.mock`,
-                                    `${pathToProject}/.mock`,
-                                    { recursive: true },
-                                    (err) => {
-                                        if (err) {
-                                            // eslint-disable-next-line no-console
-                                            generatorContext.logger.debug(
-                                                `Failed to copy config to project: ${err.message}`
-                                            );
-                                        }
-                                    }
-                                );
-                                rm(`${config.output.path}/.mock`, { recursive: true }, (err) => {
-                                    if (err) {
-                                        // eslint-disable-next-line no-console
-                                        generatorContext.logger.debug(
-                                            `Failed to delete config to project: ${err.message}`
-                                        );
-                                    }
-                                });
-                            });
-                            await typescriptProject.copyProjectAsZipTo({
-                                logger,
-                                destinationZip
-                            });
-                        } catch {
-                            generatorContext.logger.debug("Could not write .mock folder to project");
-                        }
-                    } else {
-                        await typescriptProject.copyProjectAsZipTo({
-                            logger,
-                            destinationZip
-                        });
-                    }
+                    await typescriptProject.copyProjectAsZipTo({
+                        logger,
+                        destinationZip
+                    });
                 },
                 downloadFiles: async () => {
                     if (this.outputSourceFiles(customConfig)) {
@@ -192,6 +172,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         intermediateRepresentation: IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject>;
     protected abstract isPackagePrivate(customConfig: CustomConfig): boolean;
+    protected abstract publishToJsr(customConfig: CustomConfig): boolean;
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
 }
@@ -199,7 +180,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 class GeneratorContextImpl implements GeneratorContext {
     private isSuccess = true;
 
-    constructor(public readonly logger: Logger) {}
+    constructor(public readonly logger: Logger, public readonly version: string | undefined) {}
 
     public fail(): void {
         this.isSuccess = false;

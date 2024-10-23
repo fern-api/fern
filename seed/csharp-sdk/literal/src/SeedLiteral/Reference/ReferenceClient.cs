@@ -1,15 +1,80 @@
-using SeedLiteral;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading;
+using SeedLiteral.Core;
+
+#nullable enable
 
 namespace SeedLiteral;
 
-public class ReferenceClient
+public partial class ReferenceClient
 {
     private RawClient _client;
 
-    public ReferenceClient(RawClient client)
+    internal ReferenceClient(RawClient client)
     {
         _client = client;
     }
 
-    public async void SendAsync() { }
+    /// <example>
+    /// <code>
+    /// await client.Reference.SendAsync(
+    ///     new SendRequest
+    ///     {
+    ///         Prompt = "You are a helpful assistant",
+    ///         Stream = false,
+    ///         Context = "You're super wise",
+    ///         Query = "What is the weather today",
+    ///         ContainerObject = new ContainerObject
+    ///         {
+    ///             NestedObjects = new List<NestedObjectWithLiterals>()
+    ///             {
+    ///                 new NestedObjectWithLiterals
+    ///                 {
+    ///                     Literal1 = "literal1",
+    ///                     Literal2 = "literal2",
+    ///                     StrProp = "strProp",
+    ///                 },
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<SendResponse> SendAsync(
+        SendRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "reference",
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<SendResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedLiteralException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedLiteralApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
 }

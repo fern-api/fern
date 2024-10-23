@@ -3,11 +3,12 @@
  */
 package com.seed.exhaustive.resources.reqwithheaders;
 
-import com.seed.exhaustive.core.ApiError;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveApiException;
+import com.seed.exhaustive.core.SeedExhaustiveException;
 import com.seed.exhaustive.resources.reqwithheaders.requests.ReqWithHeaders;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -16,6 +17,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class ReqWithHeadersClient {
     protected final ClientOptions clientOptions;
@@ -49,20 +51,22 @@ public class ReqWithHeadersClient {
         _requestBuilder.addHeader("X-TEST-SERVICE-HEADER", request.getXTestServiceHeader());
         _requestBuilder.addHeader("X-TEST-ENDPOINT-HEADER", request.getXTestEndpointHeader());
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return;
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedExhaustiveApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }
     }
 }

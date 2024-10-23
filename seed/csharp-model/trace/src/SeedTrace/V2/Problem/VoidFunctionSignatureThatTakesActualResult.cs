@@ -1,14 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
-using SeedTrace.V2;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace.V2;
 
-public class VoidFunctionSignatureThatTakesActualResult
+public record VoidFunctionSignatureThatTakesActualResult
 {
     [JsonPropertyName("parameters")]
-    public List<List<Parameter>> Parameters { get; init; }
+    public IEnumerable<Parameter> Parameters { get; set; } = new List<Parameter>();
 
     [JsonPropertyName("actualResultType")]
-    public VariableType ActualResultType { get; init; }
+    public required object ActualResultType { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,0 +1,656 @@
+---
+title: Tool use
+excerpt: Guide to using function calling with the Empathic Voice Interface (EVI).
+---
+
+EVI simplifies the integration of external APIs through function calling. Developers can integrate custom functions that are invoked dynamically based on the user’s
+input, enabling more useful conversations. There are two key concepts for using function calling with EVI: **Tools** and **Configurations** (Configs):
+
+- **Tools** are resources that EVI uses to do things, like search the web or call external APIs. For example, tools can check the weather, update databases, schedule appointments, or take
+  actions based on what occurs in the conversation. While the tools can be user-defined, Hume also offers natively implemented tools, like web search, which are labeled as “built-in” tools.
+
+- **Configurations** enable developers to customize an EVI’s behavior and incorporate these custom tools. Setting up an EVI configuration allows developers to seamlessly integrate
+  their tools into the voice interface. A configuration includes prompts, user-defined tools, and other settings.
+
+<Callout intent='info'>
+  Currently, our function calling feature only supports
+  [OpenAI](https://platform.openai.com/docs/guides/function-calling) models.
+  Function calling is not available if you are using your own [custom language
+  model](/docs/empathic-voice-interface-evi/custom-language-model). We plan to
+  support more function calling LLMs in the future.
+</Callout>
+
+The focus of this guide is on creating a Tool and a Configuration that allows EVI to use the Tool. Additionally, this guide details the message flow of function calls within a
+session, and outlines the expected responses when function calls fail. Refer to our [Configuration Guide](/docs/empathic-voice-interface-evi/configuration) for detailed,
+step-by-step instructions on how to create and use an EVI Configuration.
+
+<Callout intent='info'>
+  Explore this [sample
+  project](https://github.com/HumeAI/hume-api-examples/tree/main/evi-next-js-function-calling)
+  for an example of how Tool use could be implemented in practice.
+</Callout>
+
+## Setup
+
+For EVI to leverage tools or call functions, a configuration must be created with the tool’s definition. Our step-by-step guide below walks you through creating a tool and adding it to a configuration, either via our [Portal](https://beta.hume.ai) or a POST request.
+
+<Tabs>
+    <Tab>
+        <Frame>
+            ![image](./img/add-tool-view.png)
+        </Frame>
+    </Tab>
+</Tabs>
+
+<Tabs>
+  <Tab title="tab 1">
+    <Frame>
+      ![test](./img/add-tool-view.png)
+    </Frame>  
+  </Tab>
+  <Tab title="tab 2">
+    text and image
+  </Tab>
+</Tabs>
+
+<Tabs>
+  <Tab title='Portal'>
+    <Steps>
+    ### Create a Tool
+
+    We will first create a Tool with a specified function. In this case, we will create a tool for getting the weather. In the Portal, navigate to the [EVI Tools page](https://beta.hume.ai/evi/tools). Click the **Create function** button to begin.
+    
+    <Frame>
+      <img src="./img/evi-tools-view.png" alt="EVI Tools page" />
+    </Frame>
+
+    ### Fill in the Tool details.
+
+    Complete the following fields to specify the Tool behavior:
+    - **Name**: This is the name that the language model will invoke. Ensure it begins with a lowercase letter and only contains letters, numbers, or underscores.
+    - **Description**: Provide a brief description of what the function does.
+    - **Parameters**: Define the parameters your function accepts using a JSON schema. This schema specifies the expected structure and data types of the input parameters.
+
+    <Frame>
+      <img src="./img/create-function-interface.png" alt="EVI Create function interface" />
+    </Frame>
+
+    The JSON schema defines the structure of the parameters your function will accept. The key components of the schema are:
+    - **type**: Specify the data type of the item being defined (e.g. `object`).
+    - **required**: List the properties that must be present for the function call to succeed.
+    - **properties**: Define each parameter of the object, along with their respective data type and description.
+    
+    Here's an example schema for a weather function:
+    <CodeBlock title='JSON schema'>
+      ```json
+      {
+        "type": "object",
+        "required": ["location", "format"],
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "The city and state, e.g. San Francisco, CA"
+          },
+          "format": {
+            "type": "string",
+            "enum": ["celsius", "fahrenheit"],
+            "description": "The temperature unit to use. Infer this from the user's location."
+          }
+        }
+      }
+      ```
+    </CodeBlock>
+
+    ### Add Tool to Configuration
+    After creating an EVI Configuration using our [Configuration guide](https://dev.hume.ai/docs/empathic-voice-interface-evi/configuration), navgiate to the specific configuration where you want to add your tool. In the **Tools** section, click the **Add** button to add a tool to your configuration.  
+
+    <Frame>
+      <img src="./img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
+    </Frame>
+
+    </Steps>
+  </Tab>
+  <Tab title='POST request'>
+
+    <Steps>
+    ### Create a Tool
+
+    We will first create a Tool with a specified function. In this case, we will create a tool for getting the weather. Create this tool by making a POST request to
+    [/tools](/reference/empathic-voice-interface-evi/tools/create-tool) with the following request body:
+
+    <CodeBlock title='Request body'>
+      ```json
+      {
+        "name": "get_current_weather",
+        "version_description": "Fetches current weather and uses celsius or fahrenheit based on user's location.",
+        "description": "This tool is for getting the current weather.",
+        "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }"
+      }
+      ```
+    </CodeBlock>
+
+    <Callout intent='warning'>
+      The `parameters` field must contain a valid JSON schema.
+    </Callout>
+
+    <CodeBlock title='Sample response body'>
+      ```json
+      {
+        "tool_type": "FUNCTION",
+        "id": "15c38b04-ec9c-4ae2-b6bc-5603512b5d00",
+        "version": 0,
+        "version_description": "Fetches current weather and uses celsius or fahrenheit based on user's location.",
+        "name": "get_current_weather",
+        "created_on": 1714421925626,
+        "modified_on": 1714421925626,
+        "fallback_content": null,
+        "description": "This tool is for getting the current weather.",
+        "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }"
+      }
+      ```
+    </CodeBlock>
+
+    Record the value in the `id` field, as we will use it to specify the newly created Tool in the next step.
+
+    ### Create a Configuration
+
+    Next we will create an EVI Configuration called Weather Assistant Config, and include the created Tool by making a POST request to [/configs](/reference/empathic-voice-interface-evi/configs/create-config) with the
+    following request body:
+
+    <CodeBlock title='Request body'>
+      ```json
+      {
+        "name": "Weather Assistant Config",
+        "language_model": {
+          "model_provider": "OPEN_AI",
+          "model_resource": "gpt-3.5-turbo",
+          "temperature": null
+        },
+        "tools": [
+          {
+            "id": "15c38b04-ec9c-4ae2-b6bc-5603512b5d00",
+            "version": 0
+          }
+        ]
+      }
+      ```
+    </CodeBlock>
+
+    <CodeBlock title='Sample response body'>
+      ```json
+      {
+        "id": "87e88a1a-3768-4a01-ba54-2e6d247a00a7",
+        "version": 0,
+        "version_description": null,
+        "name": "Weather Assistant Config",
+        "created_on": 1714421581844,
+        "modified_on": 1714421581844,
+        "prompt": null,
+        "voice": null,
+        "language_model": {
+          "model_provider": "OPEN_AI",
+          "model_resource": "gpt-3.5-turbo",
+          "temperature": null
+        },
+        "tools": [
+          {
+            "tool_type": "FUNCTION",
+            "id": "15c38b04-ec9c-4ae2-b6bc-5603512b5d00",
+            "version": 0,
+            "version_description": "Fetches current weather and uses celsius or fahrenheit based on user's location.",
+            "name": "get_current_weather",
+            "created_on": 1714421925626,
+            "modified_on": 1714421925626,
+            "fallback_content": null,
+            "description": "This tool is for getting the current weather.",
+            "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }"
+          }
+        ],
+        "builtin_tools": []
+      }
+      ```
+    </CodeBlock>
+
+    <Callout intent='info'>
+      Ensure your tool definitions conform to the language model's schema. The
+      specified language model will be the one to execute the function calls.
+    </Callout>
+
+    </Steps>
+  </Tab>
+</Tabs>
+
+## Function calling
+
+In this section we will go over the end-to-end flow of a function call within a chat session. This flow will be predicated on having specified the
+`Weather Assistant Config` when establishing a connection with EVI. See our [Configuration Guide](/docs/empathic-voice-interface-evi/configuration#apply-the-configuration)
+for details on how to apply your configuration when connecting.
+
+<Callout intent='info'>
+  Currently, EVI does not support parallel function calling. Only one function
+  call can be processed at a time.
+</Callout>
+
+<Steps>
+### Invoke function call
+
+With EVI configured to use the `get_current_weather` Tool, we can now ask it: "what is the weather in New York?" We can expect EVI to respond with a `user_message` and a `tool_call` message:
+
+  <CodeBlock title="Sample user_message">
+    ```json
+    {
+      "type": "user_message",
+      "message": {
+        "role": "user",
+        "content": "What's the weather in New York?"
+      },
+      // ...etc
+    }
+    ```
+  </CodeBlock>
+
+  <CodeBlock title="Sample tool_call">
+    ```json
+    {
+      "type": "tool_call",
+      "tool_type": "function",
+      "response_required": true,
+      "tool_call_id": "call_m7PTzGxrD0i9oCHiquKIaibo",
+      "name": "get_current_weather",
+      "parameters": "{\"location\":\"New York\",\"format\":\"fahrenheit\"}"
+    }
+    ```
+  </CodeBlock>
+
+Next, extract the `tool_call_id` from the `tool_call` message to be used in the next step. Then, you will need to pass the parameters from the `tool_call`
+message to your function to retrieve the weather for the designated city in the specified format.
+
+<Callout intent='info'>
+  While EVI will send a message to indicate when to invoke your function and
+  which parameters to pass into it, you will need to define the function itself
+  in your code. For the sake of this example, you can define a function which
+  actually calls a weather API, or simply hard code a return value like: `60F`.
+</Callout>
+
+### Send function call result
+
+Upon receiving the response from your function, we will then send a `tool_response` message containing the result. The specified `tool_call_id` should match the one received in
+the `tool_call` message in the previous step.
+
+  <CodeBlock title="tool_response">
+    ```json
+    {
+      "type": "tool_response",
+      "tool_call_id":"call_m7PTzGxrD0i9oCHiquKIaibo",
+      "content":"60F"
+    }
+    ```
+  </CodeBlock>
+
+### EVI responds
+
+After the interface receives the `tool_response` message, it will then send an `assistant_message` containing the response generated from the reported result of the function call:
+
+  <CodeBlock title="Sample assistant_message">
+    ```json
+    {
+      "type": "assistant_message",
+      "message": {
+        "role": "assistant",
+        "content": "The current weather in New York is 60F."
+      }
+    }
+    ```
+  </CodeBlock>
+</Steps>
+
+## Using built-in tools
+
+User-defined tools allow EVI to identify when a function should be invoked, but you implement the function itself. On the other hand, Hume also provides built-in tools that are natively integrated. This
+means that you don't need to define the function; EVI handles both determining when the function needs to be called and invoking it.
+
+One such example of a built-in tool we provide is **Web search**. Web search equips EVI with the ability to search the web for up-to-date information.
+
+This section explains how to specify built-in tools in your configurations and details the message flow you can expect when EVI uses a built-in tool during a chat session.
+
+<Steps>
+
+### Specify built-in tool in EVI configuration
+
+Let's begin by creating a configuration which includes the built-in web search tool by making a POST request to [/configs](/reference/empathic-voice-interface-evi/configs/create-config) with the following request body:
+
+<CodeBlock title='Request body'>
+  ```json
+  {
+    "name": "Web Search Config",
+    "language_model": {
+      "model_provider": "OPEN_AI",
+      "model_resource": "gpt-3.5-turbo"
+    },
+    "builtin_tools": [
+      { 
+        "name": "web_search",
+        "fallback_content": "Optional fallback content to inform EVI’s spoken response if web search is not successful."
+      }
+    ]
+  }
+  ```
+</CodeBlock>
+
+<CodeBlock title='Sample response body'>
+  ```json
+  {
+    "id": "3a60e85c-d04f-4eb5-8076-fb4bd344d5d0",
+    "version": 0,
+    "version_description": null,
+    "name": "Web Search Config",
+    "created_on": 1714421925626,
+    "modified_on": 1714421925626,
+    "prompt": null,
+    "voice": null,
+    "language_model": {
+      "model_provider": "OPEN_AI",
+      "model_resource": "gpt-3.5-turbo",
+      "temperature": null
+    },
+    "tools": [],
+    "builtin_tools": [
+      {
+        "tool_type": "BUILTIN",
+        "name": "web_search",
+        "fallback_content": "Optional fallback content to inform EVI’s spoken response if web search is not successful."
+      }
+    ]
+  }
+  ```
+</CodeBlock>
+
+### EVI uses built-in tool
+
+Now that we've created an EVI configuration which includes the built-in web search tool, let's review the message flow for when web search is invoked.
+
+<CodeBlock title="Web search message flow">
+  ```json
+  // 1. User asks EVI for the latest news in AI research
+  {
+    "type": "user_message",
+    "message": {
+      "role": "user",
+      "content": "What is the latest news with AI research?"
+    },
+    // ...etc
+  }
+  // 2. EVI infers it needs to use web search, generates a search query, and invokes Hume's native web search function
+  {
+    "name": "web_search", 
+    "parameters": "{\"query\":\"latest news AI research\"}", 
+    "tool_call_id": "call_zt1NYGpPkhR7v4kb4RPxTkLn", 
+    "type": "tool_call", 
+    "tool_type": "builtin", 
+    "response_required": false
+  }
+  // 3. EVI sends back the web search results 
+  {
+    "type": "tool_response", 
+    "tool_call_id": "call_zt1NYGpPkhR7v4kb4RPxTkLn", 
+    "content": "{ \”summary\”:null, “references”: [{\”content\”:\”The latest NVIDIA news is...etc.\”, \”url\”:\”https://www.artificialintelligence-news.com/\”, \”name\”:\”AI News - Artificial Intelligence News\”}] }", 
+    "tool_name": "web_search", 
+    "tool_type": "builtin"
+  }
+  // 4. EVI sends a response generated from the web search results
+  {
+    "type": "assistant_message", 
+    "message": {
+      "role": "assistant", 
+      "content": "IBM Research unveiled a breakthrough analog AI chip for efficient deep learning, and Quantum AI is making transformative advancements by harnessing quantum mechanics."
+    },
+    // ...etc
+  }
+  ```
+</CodeBlock>
+
+</Steps>
+
+## Interruptibility
+
+Function calls can be interrupted to cancel them or to resend them with updated parameters.
+
+### Canceling a function call
+
+Just as EVI is able to infer when to make a function call, it can also infer from the user's input when to cancel one. Here is an overview of what the message flow would look like:
+
+<CodeBlock title="Cancel function call message flow">
+  ```json
+  // 1. User asks what the weather is in New York
+  {
+    "type": "user_message",
+    "message": {
+      "role": "user",
+      "content": "What's the weather in New York?"
+    },
+    // ...etc
+  }
+  // 2. EVI infers it is time to make a function call
+  {
+    "type": "tool_call",
+    "tool_type": "function",
+    "response_required": true,
+    "tool_call_id": "call_m7PTzGxrD0i9oCHiquKIaibo",
+    "name": "get_current_weather",
+    "parameters": "{\"location\":\"New York\",\"format\":\"fahrenheit\"}"
+  }
+  // 3. User communicates sudden disinterested in the weather
+  {
+    "type": "user_message",
+    "message": {
+      "role": "user",
+      "content": "Actually, never mind."
+    }
+  }
+  // 4. EVI infers the function call should be canceled
+  {
+      "type": "assistant_message",
+      "message": {
+        "role": "assistant",
+        "content": "Okay, never mind then. Can I help you with anything else?"
+      },
+      // ...etc
+    }
+  ```
+</CodeBlock>
+
+### Updating a function call
+
+Sometimes we don't necessarily want to cancel the function call, and instead want to update the parameters. EVI can infer the difference. Below is a sample flow of
+interrupting the interface to update the parameters of the function call:
+
+<CodeBlock title="Update function call message flow">
+  ```json
+  // 1. User asks EVI what the weather is in New York
+  {
+    "type": "user_message",
+    "message": {
+      "role": "user",
+      "content": "What's the weather in New York?"
+    },
+    // ...etc
+  }
+  // 2. EVI infers it is time to make a function call
+  {
+    "type": "tool_call",
+    "tool_type": "function",
+    "response_required": true,
+    "tool_call_id": "call_m7PTzGxrD0i9oCHiquKIaibo",
+    "name": "get_current_weather",
+    "parameters": "{\"location\":\"New York\",\"format\":\"fahrenheit\"}"
+  }
+  // 3. User communicates to EVI they want the weather in Los Angeles instead
+  {
+    "type": "user_message",
+    "message": {
+      "role": "user",
+      "content": "Actually, Los Angeles."
+    }
+  }
+  // 4. EVI infers the parameters to function call should be updated
+  {
+    "type": "tool_call",
+    "response_required": true,
+    "tool_call_id": "call_5RWLt3IMQyayzGdvMQVn5AOQ",
+    "name": "get_current_weather",
+    "parameters": "{\"location\":\"Los Angeles\",\"format\":\"celsius\"}"
+  }
+  // 5. User sends results of function call to EVI
+  {
+    "type": "tool_response",
+    "tool_call_id":"call_5RWLt3IMQyayzGdvMQVn5AOQ",
+    "content":"72F"
+  }
+  // 6. EVI sends response container function call result
+  {
+    "type": "assistant_message",
+    "message": {
+      "role": "assistant",
+      "content": "The current weather in Los Angeles is 72F."
+    },
+    // ...etc
+  }
+  ```
+</CodeBlock>
+
+## Handling errors
+
+It's possible for tool use to fail. For example, it can fail if the `tool_response` message content was not in UTF-8 format or if the function call response timed out. This
+section outlines how to specify fallback content to be used by EVI to communicate a failure, as well as the message flow for when a function call failure occurs.
+
+### Specifying fallback content
+
+When defining your **Tool**, you can specify fallback content within the Tool's `fallback_content` field. When the **Tool** fails to generate content, the text in this
+field will be sent to the LLM in place of a result. To accomplish this, let's update the **Tool** we created during setup to include fallback content. We can accomplish
+this by publishing a new version of the **Tool** via a POST request to [/tools/{id}](/reference/empathic-voice-interface-evi/tools/create-tool-version):
+
+<CodeBlock title="Request body">
+  ```json
+  {
+    "version_description": "Adds fallback content",
+    "description": "This tool is for getting the current weather.",
+    "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }",
+    "fallback_content": "Something went wrong. Failed to get the weather."
+  }
+  ```
+</CodeBlock>
+
+<CodeBlock title="Sample response body">
+  ```json
+  {
+    "tool_type": "FUNCTION",
+    "id": "36f09fdc-4630-40c0-8afa-6a3bdc4eb4b1",
+    "version": 1,
+    "version_type": "FIXED",
+    "version_description": "Adds fallback content",
+    "name": "get_current_weather",
+    "created_on": 1714421925626,
+    "modified_on": 1714425632084,
+    "fallback_content": "Something went wrong. Failed to get the weather.",
+    "description": null,
+    "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\"], \"description\": \"The temperature unit to use. Infer this from the user's location.\" } }, \"required\": [\"location\", \"format\"] }"
+  }
+  ```
+</CodeBlock>
+
+### Failure message flow
+
+This section outlines the sort of messages that can be expected when Tool use fails. After sending a `tool-response` message, we will know an error, or failure,
+occurred when we receive the `tool_error` message:
+
+<CodeBlock title="Bad function call response error flow">
+  ```json
+  // 1. User asks EVI what the weather is in New York
+  {
+    "type": "user_message",
+    "message": {
+      "role": "user",
+      "content": "What's the weather in New York?"
+    },
+    // ...etc
+  }
+  // 2. EVI infers it is time to make a function call
+  {
+    "type": "tool_call",
+    "tool_type": "function",
+    "response_required": true,
+    "tool_call_id": "call_m7PTzGxrD0i9oCHiquKIaibo",
+    "name": "get_current_weather",
+    "parameters": "{\"location\":\"New York\",\"format\":\"fahrenheit\"}"
+  }
+  // 3. User sends results of function call to EVI (result not formatted correctly)
+  {
+    "type": "tool_response",
+    "tool_call_id":"call_5RWLt3IMQyayzGdvMQVn5AOQ",
+    "content":"60F"
+  }
+  // 4. EVI sends response communicating it failed to process the tool_response
+  {
+    "type": "tool_error",
+    "tool_call_id": "call_m7PTzGxrD0i9oCHiquKIaibo",
+    "error": "Malformed tool response: <error message here>",
+    "fallback_content": "Something went wrong. Failed to get the weather.",
+    "level": "warn"
+  }
+  // 5. EVI generates a response based on the failure
+  {
+    "type": "assistant_message",
+    "message": {
+      "role": "assistant",
+      "content": "Sorry, I wasn't able to get the weather. Can I help with anything else?"
+    },
+    // ...etc
+  }
+  ```
+</CodeBlock>
+
+Let's cover another type of failure scenario: what if the weather API the function was using was down? In this case we would send EVI a `tool_error` message.
+When sending the `tool_error` message we can specify `fallback_content` more specific to the error our function throws. This is what the message flow would be
+for this type of failure:
+
+<CodeBlock title="Failed function call flow">
+  ```json
+  // 1. User asks EVI what the weather is in New York
+  {
+    "type": "user_message",
+    "message": {
+      "role": "user",
+      "content": "What's the weather in New York?"
+    },
+    // ...etc
+  }
+  // 2. EVI infers it is time to make a function call
+  {
+    "type": "tool_call",
+    "tool_type": "function",
+    "response_required": true,
+    "tool_call_id": "call_m7PTzGxrD0i9oCHiquKIaibo",
+    "name": "get_current_weather",
+    "parameters": "{\"location\":\"New York\",\"format\":\"fahrenheit\"}"
+  }
+  // 3. Function failed, so we send EVI a message communicating the failure on our end
+  {
+    "type": "tool_error",
+    "tool_call_id": "call_m7PTzGxrD0i9oCHiquKIaibo",
+    "error": "Malformed tool response: <error message here>",
+    "fallback_content": "Function execution failure - weather API down.",
+    "level": "warn"
+  }
+  // 4. EVI generates a response based on the failure
+  {
+    "type": "assistant_message",
+    "message": {
+      "role": "assistant",
+      "content": "Sorry, our weather resource is unavailable. Can I help with anything else?"
+    },
+    // ...etc
+  }
+  ```
+</CodeBlock>
+
+---

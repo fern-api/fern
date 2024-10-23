@@ -1,13 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class RunningResponse
+public record RunningResponse
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("state")]
-    public RunningSubmissionState State { get; init; }
+    public required RunningSubmissionState State { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

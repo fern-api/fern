@@ -4,7 +4,6 @@ package service
 
 import (
 	context "context"
-	fmt "fmt"
 	fern "github.com/mixed-case/fern"
 	core "github.com/mixed-case/fern/core"
 	option "github.com/mixed-case/fern/option"
@@ -45,7 +44,7 @@ func (c *Client) GetResource(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"resource/%v", resourceId)
+	endpointURL := core.EncodeURL(baseURL+"/resource/%v", resourceId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -53,12 +52,14 @@ func (c *Client) GetResource(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return nil, err
@@ -80,7 +81,7 @@ func (c *Client) ListResources(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "resource"
+	endpointURL := baseURL + "/resource"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {
@@ -96,12 +97,14 @@ func (c *Client) ListResources(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return nil, err

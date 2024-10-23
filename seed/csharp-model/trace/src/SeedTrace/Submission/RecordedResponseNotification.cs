@@ -1,15 +1,23 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class RecordedResponseNotification
+public record RecordedResponseNotification
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("traceResponsesSize")]
-    public int TraceResponsesSize { get; init; }
+    public required int TraceResponsesSize { get; set; }
 
     [JsonPropertyName("testCaseId")]
-    public List<string?> TestCaseId { get; init; }
+    public string? TestCaseId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,16 +1,23 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class StackFrame
+public record StackFrame
 {
     [JsonPropertyName("methodName")]
-    public string MethodName { get; init; }
+    public required string MethodName { get; set; }
 
     [JsonPropertyName("lineNumber")]
-    public int LineNumber { get; init; }
+    public required int LineNumber { get; set; }
 
     [JsonPropertyName("scopes")]
-    public List<List<Scope>> Scopes { get; init; }
+    public IEnumerable<Scope> Scopes { get; set; } = new List<Scope>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

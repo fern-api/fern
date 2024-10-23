@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/headers",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_headers.send"
             },
             "snippet": {
                 "type": "go",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/inlined",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_inlined.send"
             },
             "snippet": {
                 "type": "go",
@@ -23,7 +25,8 @@
         {
             "id": {
                 "path": "/path/{id}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_path.send"
             },
             "snippet": {
                 "type": "go",
@@ -33,7 +36,8 @@
         {
             "id": {
                 "path": "/query",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_query.send"
             },
             "snippet": {
                 "type": "go",
@@ -43,11 +47,12 @@
         {
             "id": {
                 "path": "/reference",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_reference.send"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Reference.Send(\n\tcontext.TODO(),\n\t\u0026fern.SendRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Reference.Send(\n\tcontext.TODO(),\n\t\u0026fern.SendRequest{\n\t\tContext: \"You're super wise\",\n\t\tQuery:   \"What is the weather today\",\n\t\tContainerObject: \u0026fern.ContainerObject{\n\t\t\tNestedObjects: []*fern.NestedObjectWithLiterals{\n\t\t\t\t\u0026fern.NestedObjectWithLiterals{\n\t\t\t\t\tStrProp: \"strProp\",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t},\n)\n"
             }
         }
     ]

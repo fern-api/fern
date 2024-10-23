@@ -5,5 +5,6 @@
   "python.sortImports.args": [
     "--profile",
     "black"
-  ]
+  ],
+  "python.analysis.typeCheckingMode": "basic"
 }

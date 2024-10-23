@@ -5,6 +5,7 @@ package unions
 import (
 	json "encoding/json"
 	fmt "fmt"
+	core "github.com/unions/fern/core"
 )
 
 type Shape struct {
@@ -32,6 +33,9 @@ func (s *Shape) UnmarshalJSON(data []byte) error {
 	}
 	s.Type = unmarshaler.Type
 	s.Id = unmarshaler.Id
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", s)
+	}
 	switch unmarshaler.Type {
 	case "circle":
 		value := new(Circle)
@@ -54,27 +58,9 @@ func (s Shape) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "circle":
-		var marshaler = struct {
-			Type string `json:"type"`
-			Id   string `json:"id"`
-			*Circle
-		}{
-			Type:   "circle",
-			Id:     s.Id,
-			Circle: s.Circle,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
 	case "square":
-		var marshaler = struct {
-			Type string `json:"type"`
-			Id   string `json:"id"`
-			*Square
-		}{
-			Type:   "square",
-			Id:     s.Id,
-			Square: s.Square,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(s.Square, "type", "square")
 	}
 }
 

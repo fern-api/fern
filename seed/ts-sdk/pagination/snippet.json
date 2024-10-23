@@ -3,51 +3,111 @@
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithCursorPagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listWithCursorPagination({\n    page: 1,\n    perPage: 1,\n    order: SeedPagination.Order.Asc,\n    startingAfter: \"string\"\n});\n"
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\nimport * as core from \"../src/core\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listWithCursorPagination();\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listWithCursorPagination();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
             }
         },
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithBodyCursorPagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listWithOffsetPagination({\n    page: 1,\n    perPage: 1,\n    order: SeedPagination.Order.Asc,\n    startingAfter: \"string\"\n});\n"
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\nimport * as core from \"../src/core\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listWithBodyCursorPagination({\n    pagination: undefined\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listWithBodyCursorPagination({\n    pagination: undefined\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
             }
         },
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOffsetPagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listWithExtendedResults({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\n"
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\nimport * as core from \"../src/core\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listWithOffsetPagination();\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listWithOffsetPagination();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
             }
         },
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithBodyOffsetPagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listUsernames({\n    startingAfter: \"string\"\n});\n"
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\nimport * as core from \"../src/core\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listWithBodyOffsetPagination({\n    pagination: undefined\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listWithBodyOffsetPagination({\n    pagination: undefined\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
             }
         },
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOffsetStepPagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listWithGlobalConfig({\n    offset: 1\n});\n"
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\nimport * as core from \"../src/core\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listWithOffsetStepPagination();\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listWithOffsetStepPagination();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\nimport * as core from \"../src/core\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listWithOffsetPaginationHasNextPage();\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listWithOffsetPaginationHasNextPage();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithExtendedResults"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\nimport * as core from \"../src/core\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listWithExtendedResults();\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listWithExtendedResults();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithExtendedResultsAndOptionalData"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\nimport * as core from \"../src/core\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listWithExtendedResultsAndOptionalData();\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listWithExtendedResultsAndOptionalData();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listUsernames"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\nimport * as core from \"../src/core\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listUsernames();\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listUsernames();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithGlobalConfig"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\nimport * as core from \"../src/core\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listWithGlobalConfig();\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listWithGlobalConfig();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
             }
         }
     ],

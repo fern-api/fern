@@ -1,15 +1,23 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class UpdatePlaylistRequest
+public record UpdatePlaylistRequest
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     /// <summary>
     /// The problems that make up the playlist.
     /// </summary>
     [JsonPropertyName("problems")]
-    public List<List<string>> Problems { get; init; }
+    public IEnumerable<string> Problems { get; set; } = new List<string>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

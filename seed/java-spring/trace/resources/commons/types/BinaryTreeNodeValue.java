@@ -15,8 +15,9 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = BinaryTreeNodeValue.Builder.class
 )
@@ -82,7 +83,7 @@ public final class BinaryTreeNodeValue {
   }
 
   public interface NodeIdStage {
-    ValStage nodeId(NodeId nodeId);
+    ValStage nodeId(@NotNull NodeId nodeId);
 
     Builder from(BinaryTreeNodeValue other);
   }
@@ -129,8 +130,8 @@ public final class BinaryTreeNodeValue {
 
     @java.lang.Override
     @JsonSetter("nodeId")
-    public ValStage nodeId(NodeId nodeId) {
-      this.nodeId = nodeId;
+    public ValStage nodeId(@NotNull NodeId nodeId) {
+      this.nodeId = Objects.requireNonNull(nodeId, "nodeId must not be null");
       return this;
     }
 
@@ -143,7 +144,7 @@ public final class BinaryTreeNodeValue {
 
     @java.lang.Override
     public _FinalStage left(NodeId left) {
-      this.left = Optional.of(left);
+      this.left = Optional.ofNullable(left);
       return this;
     }
 
@@ -159,7 +160,7 @@ public final class BinaryTreeNodeValue {
 
     @java.lang.Override
     public _FinalStage right(NodeId right) {
-      this.right = Optional.of(right);
+      this.right = Optional.ofNullable(right);
       return this;
     }
 

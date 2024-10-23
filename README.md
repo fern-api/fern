@@ -1,7 +1,7 @@
 <br/>
 <div align="center">
   <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern&utm_content=logo">
-    <img src="/fern/images/logo-green.png" height="80" align="center" alt="header" />
+    <img src="/fern/images/logo-primary.png" height="80" align="center" alt="header" />
   </a>
 <br/>
 
@@ -10,7 +10,7 @@
 [![2023 Y Combinator Startup](https://img.shields.io/badge/Y%20Combinator-2023-orange)](https://www.ycombinator.com/companies/fern)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
-[![Discord](https://img.shields.io/badge/Join%20Our%20Community-black?logo=discord)](https://discord.com/invite/JkkXumPzcG)
+[![Slack](https://img.shields.io/badge/slack-pink.svg)](https://join.slack.com/t/fern-community/shared_invite/zt-2dpftfmif-MuAegl8AfP_PK8s2tx350Q)
 [![Documentation](https://img.shields.io/badge/Read%20our%20Documentation-black?logo=book)](https://buildwithfern.com/learn/home?utm_source=fern-api/fern/readme-read-our-documentation)
 
 </div>
@@ -18,8 +18,15 @@
 Fern is a toolkit that allows you to input your API Definition and output SDKs and API documentation. Fern is compatible with the OpenAPI specification (formerly Swagger).
 
 <div align="center">
-    <img src="/fern/images/overview.png" width="700" alt="Overview Diagram">
+    <a href="/fern/images/overview-dark.png" target="_blank">
+        <picture>
+            <source srcset="/fern/images/overview-dark.png" media="(prefers-color-scheme: dark)">
+            <source srcset="/fern/images/overview-light.png" media="(prefers-color-scheme: light)">
+            <img src="/fern/images/overview-light.png" width="700" alt="Overview Diagram">
+        </picture>
+    </a>
 </div>
+
 
 ## 🌿 SDKs
 
@@ -74,49 +81,51 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 
 ### SDK Generators
 
-| Generator ID                           | Latest Version | Changelog                                                    | Entrypoint                                                                      |
-| -------------------------------------- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------- |
-| `fernapi/fern-typescript-node-sdk`     | [![Typescript Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-node-sdk)](./generators/typescript/sdk/VERSION) | [CHANGELOG.md](./generators/typescript/sdk/CHANGELOG.md)     | [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                        |
-| `fernapi/fern-python-sdk`              | [![Python Generator Version](https://img.shields.io/docker/v/fernapi/fern-python-sdk)](./generators/python/sdk/VERSION)                  | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)    | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
-| `fernapi/fern-java-sdk`                | [![Java Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-sdk)](./generators/java/sdk/VERSION)                        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)           | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
-| `fernapi/fern-ruby-sdk`                | [![Ruby Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-sdk)](./generators/ruby/sdk/VERSION)                        | [CHANGELOG.md](./generators/ruby/sdk/CHANGELOG.md)           | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                      |
-| `fernapi/fern-go-sdk`                  | [![Go Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-sdk)](./generators/go/sdk/VERSION)                              | [CHANGELOG.md](./generators/go/sdk/CHANGELOG.md)             | [main.go](./generators/go/cmd/fern-go-sdk/main.go)                              |
+| Generator ID                           | Latest Version | Entrypoint                                                                      |
+| -------------------------------------- | -------------- | ------------------------------------------------------------------------------- |
+| `fernapi/fern-typescript-node-sdk`     | ![Typescript Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-node-sdk) |  [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                        |
+| `fernapi/fern-python-sdk`              | ![Python Generator Version](https://img.shields.io/docker/v/fernapi/fern-python-sdk)                  | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
+| `fernapi/fern-java-sdk`                | ![Java Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-sdk)                        |    [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
+| `fernapi/fern-ruby-sdk`                | ![Ruby Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-sdk)                        |        [cli.ts](./generators/ruby/sdk/src/cli.ts)                                      |
+| `fernapi/fern-go-sdk`                  | ![Go Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-sdk)                              |      [main.go](./generators/go/cmd/fern-go-sdk/main.go)                              |
+| `fernapi/fern-csharp-sdk`              | ![C# Generator Version](https://img.shields.io/docker/v/fernapi/fern-csharp-sdk)                      |     [cli.ts](./generators/csharp/sdk/src/cli.ts)                                    |
 
 ### Server-side Generators
 
-Fern's server-side generators output boilerplate application code (models and networking logic). This is intended for spec-first or API-first developers,
-who write their API definition (as an OpenAPI spec or Fern definition) and want to generate backend code. Watch a demo [here](https://docs.buildwithfern.com/fern-sd-ks/other-generators/server-side/express-js#demo-video).
+Fern's server-side generators output boilerplate application code (models and networking logic). This is intended for spec-first or API-first developers, who write their API definition (as an OpenAPI spec or Fern definition) and want to generate backend code.
 
-| Generator ID                  | Latest Version | Changelog                                                    | Entrypoint                                                                       |
-| ----------------------------- | -------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------- |
-| `fernapi/fern-typescript-express` | [![Typescript Express Server Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-express)](./generators/typescript/express/VERSION) | [CHANGELOG.md](./generators/typescript/express/CHANGELOG.md) | [cli.ts](./generators/typescript/express/cli/src/cli.ts)                         |
-| `fernapi/fern-fastapi-server` | [![Python FastAPI Server Generator Version](https://img.shields.io/docker/v/fernapi/fern-fastapi-server)](./generators/python/fastapi/VERSION) | [CHANGELOG.md](./generators/python/fastapi/CHANGELOG.md)     | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)              |
-| `fernapi/fern-java-spring`    | [![Java Spring Server Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-spring)](./generators/java/spring/VERSION) | [CHANGELOG.md](./generators/java/spring/CHANGELOG.md)        | [Cli.java](./generators/java/spring/src/main/java/com/fern/java/spring/Cli.java) |
+| Generator ID                  | Latest Version | Entrypoint                                                                       |
+| ----------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| `fernapi/fern-typescript-express` | ![Typescript Express Server Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-express) |[cli.ts](./generators/typescript/express/cli/src/cli.ts)                         |
+| `fernapi/fern-fastapi-server` | ![Python FastAPI Server Generator Version](https://img.shields.io/docker/v/fernapi/fern-fastapi-server) |   [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)              |
+| `fernapi/fern-java-spring`    | ![Java Spring Server Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-spring) |    [Cli.java](./generators/java/spring/src/main/java/com/fern/java/spring/Cli.java) |
 
 ### Model Generators
 
 Fern's model generators will output schemas or types defined in your OpenAPI spec or Fern Definition.
 
-| Generator ID                  | Latest Version | Changelog                                                 | Entrypoint                                                                    |
-| ----------------------------- | -------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `fernapi/fern-pydantic-model` | [![Pydantic Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-pydantic-model)](./generators/python/pydantic/VERSION) | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)           |
-| `fernapi/java-model`     | [![Java Model Generator Version](https://img.shields.io/docker/v/fernapi/java-model)](./generators/java/model/VERSION) | [CHANGELOG.md](./generators/java/model/CHANGELOG.md)        | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java) |
-| `fernapi/fern-ruby-model`     | [![Ruby Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-model)](./generators/ruby/model/VERSION)| [CHANGELOG.md](./generators/ruby/model/CHANGELOG.md)      | [cli.ts](./generators/ruby/model/src/cli.ts)                                  |
+| Generator ID                  | Latest Version                                                | Entrypoint                                                                    |
+| ----------------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `fernapi/fern-pydantic-model` | ![Pydantic Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-pydantic-model) |  [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)           |
+| `fernapi/java-model`     | ![Java Model Generator Version](https://img.shields.io/docker/v/fernapi/java-model) |        [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java) |
+| `fernapi/fern-ruby-model`     | ![Ruby Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-model) |     [cli.ts](./generators/ruby/model/src/cli.ts)                                  |
+| `fernapi/fern-go-model`     | ![Go Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-model) |     [main.go](./generators/go/cmd/fern-go-model/main.go)                          |
 
 ### Spec Generators
 
 Fern's spec generators can output an OpenAPI spec or a Postman collection.
 
-> **Note**: The OpenAPI spec generator is primarly intended for Fern Definition users. This prevents lock-in so that one can always export to OpenAPI.
+> **Note**: The OpenAPI spec generator is primarily intended for Fern Definition users. This prevents lock-in so that one can always export to OpenAPI.
 
-| Generator ID           | Latest Version | Changelog                                         | Entrypoint                                 |
-| ---------------------- | -------------- | ------------------------------------------------- | ------------------------------------------ |
-| `fernapi/fern-openapi` | [![OpenAPI Generator Version](https://img.shields.io/docker/v/fernapi/fern-openapi)](./generators/openapi/VERSION) | [CHANGELOG.md](./generators/openapi/CHANGELOG.md) | [cli.ts](./generators/openapi/src/cli.ts)  |
-| `fernapi/fern-postman` | [![Postman Generator Version](https://img.shields.io/docker/v/fernapi/fern-postman)](./generators/postman/VERSION) | [CHANGELOG.md](./generators/postman/CHANGELOG.md) | [cli.ts](./generators/postman/src/cli.ts) |
+| Generator ID           | Latest Version                                         | Entrypoint                                 |
+| ---------------------- | ------------------------------------------------- | ------------------------------------------ |
+| `fernapi/fern-openapi` | ![OpenAPI Generator Version](https://img.shields.io/docker/v/fernapi/fern-openapi) |  [cli.ts](./generators/openapi/src/cli.ts)  |
+| `fernapi/fern-postman` | ![Postman Generator Version](https://img.shields.io/docker/v/fernapi/fern-postman) |  [cli.ts](./generators/postman/src/cli.ts) |
+
 
 ## 🌿 CLI Commands
 
-Here's a quick look at the most popular CLI commands. View the documentation for [all CLI commands](https://docs.buildwithfern.com/overview/cli/overview).
+Here's a quick look at the most popular CLI commands. View the documentation for [all CLI commands](https://buildwithfern.com/learn/cli-api/cli-reference/commands).
 
 `fern init`: adds a new starter API to your repository.
 
@@ -142,8 +151,6 @@ Frameworks currently supported:
 - [Express](./generators/typescript)
 - [Spring Boot](./generators/java)
 - [FastAPI](./generators/python)
-
-For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfern.com/fern-sd-ks/other-generators/server-side/express-js#demo-video).
 
 ### Fern Definition
 
@@ -217,7 +224,10 @@ Checkout open source projects that are using Fern Definitions:
 
 - [Metriport](https://github.com/metriport/metriport/tree/develop/fern/definition)
 - [Rivet](https://github.com/rivet-gg/rivet/tree/main/fern/definition)
-- [Revert](https://github.com/revertinc/revert/tree/main/fern/definition)
+
+## Inspiration
+
+Fern is inspired by internal tooling built to enhance the developer experience. We stand on the shoulders of giants. While teams were responsible for building the following tools, we want to give a shout out to Mark Elliot (creator of Conjure at Palantir), Michael Dowling (creator of Smithy at AWS), and Ian McCrystal (creator of Stripe Docs).
 
 ## Community
 

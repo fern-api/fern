@@ -8,11 +8,13 @@ types:
   Webhook:
     extends: commons.Declaration
     properties:
+      id: commons.WebhookId
       name: WebhookName
       displayName: optional<string>
       method: WebhookHttpMethod
       headers: list<http.HttpHeader>
       payload: WebhookPayload
+      examples: optional<list<ExampleWebhookCall>>
 
   WebhookName: commons.Name
 
@@ -33,7 +35,7 @@ types:
       properties: list<InlinedWebhookPayloadProperty>
 
   InlinedWebhookPayloadProperty:
-    extends: commons.WithDocs
+    extends: commons.WithDocsAndAvailability
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
@@ -42,3 +44,13 @@ types:
     enum:
       - GET
       - POST
+
+  ExampleWebhookCall:
+    docs: |
+      An example webhook call. For now, this only includes the payload,
+      but it can be easily extended to support other endpoint properties
+      (e.g. headers).
+    extends: commons.WithDocs
+    properties:
+      name: optional<commons.Name>
+      payload: types.ExampleTypeReference

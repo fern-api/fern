@@ -2,6 +2,9 @@ import os
 from typing import List, Optional, Set, Tuple
 
 from fern_python.codegen import AST, ExportStrategy, Filepath, Project
+from fern_python.external_dependencies.pydantic import PYDANTIC_CORE_DEPENDENCY
+from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
+from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from fern_python.source_file_factory import SourceFileFactory
 
 
@@ -91,10 +94,11 @@ class Exceptions:
 
 
 class CoreUtilities:
-    def __init__(self) -> None:
+    def __init__(self, custom_config: FastAPICustomConfig) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         self.exceptions = Exceptions(filepath=self.filepath)
+        self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -124,6 +128,37 @@ class CoreUtilities:
             ),
             exports={"serialize_datetime"},
         )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="with_pydantic_aliases/pydantic_utilities.py"
+            if self._use_pydantic_field_aliases
+            else "pydantic_utilities.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="pydantic_utilities"),
+            ),
+            exports={
+                "parse_obj_as",
+                "UniversalBaseModel",
+                "IS_PYDANTIC_V2",
+                "universal_root_validator",
+                "universal_field_validator",
+                "update_forward_refs",
+                "UniversalRootModel",
+            },
+        )
+
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="serialization.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="serialization"),
+            ),
+            exports={"FieldMetadata", "convert_and_respect_annotation_metadata"},
+        )
+
+        project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
         self._copy_security_to_project(project=project)
         self._copy_exceptions_to_project(project=project)
 
@@ -236,3 +271,66 @@ class CoreUtilities:
 
     def _get_security_submodule_path(self, *submodule: str) -> AST.ModulePath:
         return self._get_security_module_path() + submodule
+
+    def get_universal_base_model(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                named_import="UniversalBaseModel",
+            ),
+        )
+
+    def get_is_pydantic_v2(self) -> AST.Expression:
+        return AST.Expression(
+            AST.Reference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="IS_PYDANTIC_V2"
+                ),
+            )
+        )
+
+    def get_update_forward_refs(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                named_import="update_forward_refs",
+            ),
+        )
+
+    def universal_root_validator(self, pre: bool = False) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=AST.Reference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                    named_import="universal_root_validator",
+                ),
+            ),
+            kwargs=[("pre", AST.Expression(expression="True" if pre else "False"))],
+        )
+
+    def universal_field_validator(self, field_name: str, pre: bool = False) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=AST.Reference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                    named_import="universal_field_validator",
+                ),
+            ),
+            args=[AST.Expression(expression=f'"{field_name}"')],
+            kwargs=[("pre", AST.Expression(expression="True" if pre else "False"))],
+        )
+
+    def get_field_metadata(self) -> FieldMetadata:
+        field_metadata_reference = AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "serialization"), named_import="FieldMetadata"
+            ),
+        )
+
+        return FieldMetadata(reference=field_metadata_reference)

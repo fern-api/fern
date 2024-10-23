@@ -1,0 +1,127 @@
+openapi: 3.0.1
+info:
+  title: api
+  version: ''
+paths:
+  /account/{account_id}:
+    get:
+      operationId: getAccount
+      tags:
+        - ''
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+components:
+  schemas:
+    Memo:
+      title: Memo
+      type: object
+      properties:
+        description:
+          type: string
+        account:
+          $ref: '#/components/schemas/Account'
+          nullable: true
+      required:
+        - description
+    BaseResource:
+      title: BaseResource
+      type: object
+      properties:
+        id:
+          type: string
+        related_resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceList'
+        memo:
+          $ref: '#/components/schemas/Memo'
+      required:
+        - id
+        - related_resources
+        - memo
+    ResourceList:
+      title: ResourceList
+      oneOf:
+        - $ref: '#/components/schemas/Account'
+        - $ref: '#/components/schemas/Patient'
+        - $ref: '#/components/schemas/Practitioner'
+        - $ref: '#/components/schemas/Script'
+    Account:
+      title: Account
+      type: object
+      properties:
+        resource_type:
+          type: string
+          const: Account
+        name:
+          type: string
+        patient:
+          $ref: '#/components/schemas/Patient'
+          nullable: true
+        practitioner:
+          $ref: '#/components/schemas/Practitioner'
+          nullable: true
+      required:
+        - resource_type
+        - name
+      allOf:
+        - $ref: '#/components/schemas/BaseResource'
+    Patient:
+      title: Patient
+      type: object
+      properties:
+        resource_type:
+          type: string
+          const: Patient
+        name:
+          type: string
+        scripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Script'
+      required:
+        - resource_type
+        - name
+        - scripts
+      allOf:
+        - $ref: '#/components/schemas/BaseResource'
+    Practitioner:
+      title: Practitioner
+      type: object
+      properties:
+        resource_type:
+          type: string
+          const: Practitioner
+        name:
+          type: string
+      required:
+        - resource_type
+        - name
+      allOf:
+        - $ref: '#/components/schemas/BaseResource'
+    Script:
+      title: Script
+      type: object
+      properties:
+        resource_type:
+          type: string
+          const: Script
+        name:
+          type: string
+      required:
+        - resource_type
+        - name
+      allOf:
+        - $ref: '#/components/schemas/BaseResource'
+  securitySchemes: {}

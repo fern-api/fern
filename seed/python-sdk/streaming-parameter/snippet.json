@@ -1,0 +1,44 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "Default",
+            "id": {
+                "path": "/generate",
+                "method": "POST",
+                "identifier_override": "endpoint_dummy.generate"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedStreaming\n\nclient = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.dummy.generate(\n    stream=False,\n    num_events=5,\n)\nfor chunk in response:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedStreaming\n\nclient = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.dummy.generate(\n        stream=False,\n        num_events=5,\n    )\n    async for chunk in response:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "Default",
+            "id": {
+                "path": "/generate",
+                "method": "POST",
+                "identifier_override": "endpoint_dummy.generate"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedStreaming\n\nclient = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.dummy.generate(\n    stream=False,\n    num_events=5,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedStreaming\n\nclient = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.dummy.generate(\n        stream=False,\n        num_events=5,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "Default",
+            "id": {
+                "path": "/generate",
+                "method": "POST",
+                "identifier_override": "endpoint_dummy.generate"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedStreaming\n\nclient = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.dummy.generate(\n    stream=False,\n    num_events=5,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedStreaming\n\nclient = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.dummy.generate(\n        stream=False,\n        num_events=5,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

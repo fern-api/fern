@@ -20,7 +20,21 @@ export class EnvironmentsGenerator {
         environmentUrlsTypeName,
         environmentsConfig
     }: EnvironmentsGenerator.generateEnvironments.Args): GeneratedEnvironments {
-        if (environmentsConfig == null) {
+        if (
+            environmentsConfig == null ||
+            environmentsConfig.environments == null ||
+            environmentsConfig.environments._visit({
+                singleBaseUrl: (value) => {
+                    return value.environments.length === 0;
+                },
+                multipleBaseUrls: (value) => {
+                    return value.environments.length === 0;
+                },
+                _other: () => {
+                    return true;
+                }
+            })
+        ) {
             return new EmptyGeneratedEnvironmentsImpl();
         }
         return Environments._visit<GeneratedEnvironments>(environmentsConfig.environments, {

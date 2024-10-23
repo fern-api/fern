@@ -17,24 +17,46 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
+import resources.inlined.types.ATopLevelLiteral;
+import resources.inlined.types.SomeAliasedLiteral;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = SendLiteralsInlinedRequest.Builder.class
 )
 public final class SendLiteralsInlinedRequest {
+  private final Optional<String> context;
+
   private final String query;
 
   private final Optional<Double> temperature;
 
-  private SendLiteralsInlinedRequest(String query, Optional<Double> temperature) {
+  private final SomeAliasedLiteral aliasedContext;
+
+  private final Optional<SomeAliasedLiteral> maybeContext;
+
+  private final ATopLevelLiteral objectWithLiteral;
+
+  private SendLiteralsInlinedRequest(Optional<String> context, String query,
+      Optional<Double> temperature, SomeAliasedLiteral aliasedContext,
+      Optional<SomeAliasedLiteral> maybeContext, ATopLevelLiteral objectWithLiteral) {
+    this.context = context;
     this.query = query;
     this.temperature = temperature;
+    this.aliasedContext = aliasedContext;
+    this.maybeContext = maybeContext;
+    this.objectWithLiteral = objectWithLiteral;
   }
 
   @JsonProperty("prompt")
   public String getPrompt() {
     return "You are a helpful assistant";
+  }
+
+  @JsonProperty("context")
+  public Optional<String> getContext() {
+    return context;
   }
 
   @JsonProperty("query")
@@ -52,6 +74,21 @@ public final class SendLiteralsInlinedRequest {
     return false;
   }
 
+  @JsonProperty("aliasedContext")
+  public SomeAliasedLiteral getAliasedContext() {
+    return aliasedContext;
+  }
+
+  @JsonProperty("maybeContext")
+  public Optional<SomeAliasedLiteral> getMaybeContext() {
+    return maybeContext;
+  }
+
+  @JsonProperty("objectWithLiteral")
+  public ATopLevelLiteral getObjectWithLiteral() {
+    return objectWithLiteral;
+  }
+
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
@@ -59,12 +96,12 @@ public final class SendLiteralsInlinedRequest {
   }
 
   private boolean equalTo(SendLiteralsInlinedRequest other) {
-    return query.equals(other.query) && temperature.equals(other.temperature);
+    return context.equals(other.context) && query.equals(other.query) && temperature.equals(other.temperature) && aliasedContext.equals(other.aliasedContext) && maybeContext.equals(other.maybeContext) && objectWithLiteral.equals(other.objectWithLiteral);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.query, this.temperature);
+    return Objects.hash(this.context, this.query, this.temperature, this.aliasedContext, this.maybeContext, this.objectWithLiteral);
   }
 
   @java.lang.Override
@@ -77,47 +114,105 @@ public final class SendLiteralsInlinedRequest {
   }
 
   public interface QueryStage {
-    _FinalStage query(String query);
+    AliasedContextStage query(@NotNull String query);
 
     Builder from(SendLiteralsInlinedRequest other);
+  }
+
+  public interface AliasedContextStage {
+    ObjectWithLiteralStage aliasedContext(@NotNull SomeAliasedLiteral aliasedContext);
+  }
+
+  public interface ObjectWithLiteralStage {
+    _FinalStage objectWithLiteral(@NotNull ATopLevelLiteral objectWithLiteral);
   }
 
   public interface _FinalStage {
     SendLiteralsInlinedRequest build();
 
+    _FinalStage context(Optional<String> context);
+
+    _FinalStage context(String context);
+
     _FinalStage temperature(Optional<Double> temperature);
 
     _FinalStage temperature(Double temperature);
+
+    _FinalStage maybeContext(Optional<SomeAliasedLiteral> maybeContext);
+
+    _FinalStage maybeContext(SomeAliasedLiteral maybeContext);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements QueryStage, _FinalStage {
+  public static final class Builder implements QueryStage, AliasedContextStage, ObjectWithLiteralStage, _FinalStage {
     private String query;
 
+    private SomeAliasedLiteral aliasedContext;
+
+    private ATopLevelLiteral objectWithLiteral;
+
+    private Optional<SomeAliasedLiteral> maybeContext = Optional.empty();
+
     private Optional<Double> temperature = Optional.empty();
+
+    private Optional<String> context = Optional.empty();
 
     private Builder() {
     }
 
     @java.lang.Override
     public Builder from(SendLiteralsInlinedRequest other) {
+      context(other.getContext());
       query(other.getQuery());
       temperature(other.getTemperature());
+      aliasedContext(other.getAliasedContext());
+      maybeContext(other.getMaybeContext());
+      objectWithLiteral(other.getObjectWithLiteral());
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("query")
-    public _FinalStage query(String query) {
-      this.query = query;
+    public AliasedContextStage query(@NotNull String query) {
+      this.query = Objects.requireNonNull(query, "query must not be null");
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("aliasedContext")
+    public ObjectWithLiteralStage aliasedContext(@NotNull SomeAliasedLiteral aliasedContext) {
+      this.aliasedContext = Objects.requireNonNull(aliasedContext, "aliasedContext must not be null");
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("objectWithLiteral")
+    public _FinalStage objectWithLiteral(@NotNull ATopLevelLiteral objectWithLiteral) {
+      this.objectWithLiteral = Objects.requireNonNull(objectWithLiteral, "objectWithLiteral must not be null");
+      return this;
+    }
+
+    @java.lang.Override
+    public _FinalStage maybeContext(SomeAliasedLiteral maybeContext) {
+      this.maybeContext = Optional.ofNullable(maybeContext);
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter(
+        value = "maybeContext",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage maybeContext(Optional<SomeAliasedLiteral> maybeContext) {
+      this.maybeContext = maybeContext;
       return this;
     }
 
     @java.lang.Override
     public _FinalStage temperature(Double temperature) {
-      this.temperature = Optional.of(temperature);
+      this.temperature = Optional.ofNullable(temperature);
       return this;
     }
 
@@ -132,8 +227,24 @@ public final class SendLiteralsInlinedRequest {
     }
 
     @java.lang.Override
+    public _FinalStage context(String context) {
+      this.context = Optional.ofNullable(context);
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter(
+        value = "context",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage context(Optional<String> context) {
+      this.context = context;
+      return this;
+    }
+
+    @java.lang.Override
     public SendLiteralsInlinedRequest build() {
-      return new SendLiteralsInlinedRequest(query, temperature);
+      return new SendLiteralsInlinedRequest(context, query, temperature, aliasedContext, maybeContext, objectWithLiteral);
     }
   }
 }

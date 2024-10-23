@@ -11,6 +11,12 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
         displayName: core.serialization.property("display-name", core.serialization.string()),
         icon: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
+        skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+        hidden: core.serialization.boolean().optional(),
+        href: core.serialization.string().optional(),
+        changelog: core.serialization
+            .lazy(async () => (await import("../../..")).ChangelogFolderRelativePath)
+            .optional(),
     });
 
 export declare namespace TabConfig {
@@ -18,5 +24,9 @@ export declare namespace TabConfig {
         "display-name": string;
         icon?: string | null;
         slug?: string | null;
+        "skip-slug"?: boolean | null;
+        hidden?: boolean | null;
+        href?: string | null;
+        changelog?: serializers.ChangelogFolderRelativePath.Raw | null;
     }
 }

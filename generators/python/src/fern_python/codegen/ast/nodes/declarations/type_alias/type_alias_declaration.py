@@ -22,7 +22,7 @@ class TypeAliasDeclaration(AstNode):
     def add_ghost_reference(self, reference: Reference) -> None:
         self.ghost_references.add(reference)
 
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         if self.snippet is not None:
             writer.write_line('"""')
             writer.write(self.snippet)

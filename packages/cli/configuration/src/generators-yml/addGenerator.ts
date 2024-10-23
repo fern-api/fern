@@ -1,55 +1,46 @@
 import { TaskContext } from "@fern-api/task-context";
-import {
-    DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
-    GeneratorName,
-    GeneratorsConfigurationSchema,
-    updateGeneratorGroup
-} from ".";
+import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, GeneratorsConfigurationSchema, updateGeneratorGroup } from ".";
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
+import { getGeneratorNameOrThrow } from "./getGeneratorName";
+import { getLatestGeneratorVersion } from "./getGeneratorVersions";
 
-export function addGenerator({
+export async function addGenerator({
     generatorName,
     generatorsConfiguration,
     groupName = generatorsConfiguration[DEFAULT_GROUP_GENERATORS_CONFIG_KEY],
-    context
+    context,
+    cliVersion
 }: {
     generatorName: string;
     generatorsConfiguration: GeneratorsConfigurationSchema;
     groupName: string | undefined;
     context: TaskContext;
-}): GeneratorsConfigurationSchema {
-    const normalizedGeneratorName = normalizeGeneratorName(generatorName);
-    if (normalizedGeneratorName == null) {
-        return context.failAndThrow("Unrecognized generator: " + generatorName);
-    }
+    cliVersion: string;
+}): Promise<GeneratorsConfigurationSchema> {
+    const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
+
     const invocation = GENERATOR_INVOCATIONS[normalizedGeneratorName];
 
-    return updateGeneratorGroup({
+    return await updateGeneratorGroup({
         generatorsConfiguration,
         groupName,
         context,
-        update: (group) => {
+        update: async (group) => {
             if (group.generators.some((generator) => generator.name === normalizedGeneratorName)) {
                 context.failAndThrow(`${generatorName} is already installed in group ${groupName}.`);
             }
             group.generators.push({
                 name: normalizedGeneratorName,
-                ...invocation
+                ...invocation,
+                // Fall back to the hardcoded version if a "latest" does not yet exist
+                version:
+                    (await getLatestGeneratorVersion({
+                        cliVersion,
+                        generatorName: normalizedGeneratorName,
+                        context,
+                        channel: undefined
+                    })) ?? invocation.version
             });
         }
     });
-}
-
-function normalizeGeneratorName(generatorName: string): GeneratorName | undefined {
-    if (!generatorName.startsWith("fernapi/")) {
-        generatorName = `fernapi/${generatorName}`;
-    }
-    if (isGeneratorName(generatorName)) {
-        return generatorName;
-    }
-    return undefined;
-}
-
-function isGeneratorName(generatorName: string): generatorName is GeneratorName {
-    return Object.values(GeneratorName).includes(generatorName as GeneratorName);
 }

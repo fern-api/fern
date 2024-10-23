@@ -1,18 +1,26 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class BinaryTreeNodeValue
+public record BinaryTreeNodeValue
 {
     [JsonPropertyName("nodeId")]
-    public string NodeId { get; init; }
+    public required string NodeId { get; set; }
 
     [JsonPropertyName("val")]
-    public double Val { get; init; }
+    public required double Val { get; set; }
 
     [JsonPropertyName("right")]
-    public List<string?> Right { get; init; }
+    public string? Right { get; set; }
 
     [JsonPropertyName("left")]
-    public List<string?> Left { get; init; }
+    public string? Left { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -14,8 +14,9 @@ import com.seed.fileUpload.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MyObject.Builder.class)
 public final class MyObject {
     private final String foo;
@@ -62,7 +63,7 @@ public final class MyObject {
     }
 
     public interface FooStage {
-        _FinalStage foo(String foo);
+        _FinalStage foo(@NotNull String foo);
 
         Builder from(MyObject other);
     }
@@ -88,8 +89,8 @@ public final class MyObject {
 
         @java.lang.Override
         @JsonSetter("foo")
-        public _FinalStage foo(String foo) {
-            this.foo = foo;
+        public _FinalStage foo(@NotNull String foo) {
+            this.foo = Objects.requireNonNull(foo, "foo must not be null");
             return this;
         }
 

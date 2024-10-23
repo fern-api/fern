@@ -12,7 +12,12 @@ type Metadata struct {
 	Id   string            `json:"id" url:"id"`
 	Data map[string]string `json:"data,omitempty" url:"data,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (m *Metadata) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
 }
 
 func (m *Metadata) UnmarshalJSON(data []byte) error {
@@ -22,6 +27,13 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Metadata(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
 	m._rawJSON = json.RawMessage(data)
 	return nil
 }

@@ -1,13 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class WorkspaceFiles
+public record WorkspaceFiles
 {
     [JsonPropertyName("mainFile")]
-    public FileInfo MainFile { get; init; }
+    public required FileInfo MainFile { get; set; }
 
     [JsonPropertyName("readOnlyFiles")]
-    public List<List<FileInfo>> ReadOnlyFiles { get; init; }
+    public IEnumerable<FileInfo> ReadOnlyFiles { get; set; } = new List<FileInfo>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

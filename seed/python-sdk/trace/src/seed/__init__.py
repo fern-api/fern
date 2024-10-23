@@ -2,6 +2,7 @@
 
 from . import admin, commons, homepage, lang_server, migration, playlist, problem, submission, sysprop, v_2
 from .admin import Test, Test_And, Test_Or
+from .client import AsyncSeedTrace, SeedTrace
 from .commons import (
     BinaryTreeNodeAndTreeValue,
     BinaryTreeNodeValue,
@@ -250,6 +251,7 @@ __all__ = [
     "ActualResult_Exception",
     "ActualResult_ExceptionV2",
     "ActualResult_Value",
+    "AsyncSeedTrace",
     "BinaryTreeNodeAndTreeValue",
     "BinaryTreeNodeValue",
     "BinaryTreeValue",
@@ -358,6 +360,7 @@ __all__ = [
     "RunningSubmissionState",
     "RuntimeError",
     "Scope",
+    "SeedTrace",
     "SeedTraceEnvironment",
     "ShareId",
     "SinglyLinkedListNodeAndListValue",

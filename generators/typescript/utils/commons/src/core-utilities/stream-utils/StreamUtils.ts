@@ -2,7 +2,12 @@ import { ts } from "ts-morph";
 
 export interface StreamUtils {
     readonly Stream: {
-        _construct: (args: { stream: ts.Expression; parse: ts.Expression; terminator: string }) => ts.Expression;
+        _construct: (args: {
+            stream: ts.Expression;
+            parse: ts.Expression;
+            eventShape: StreamingFetcher.SSEEventShape | StreamingFetcher.MessageEventShape;
+            signal: ts.Expression;
+        }) => ts.Expression;
         _getReferenceToType: (response: ts.TypeNode) => ts.TypeNode;
     };
 }
@@ -18,5 +23,15 @@ export declare namespace StreamingFetcher {
         withCredentials: boolean;
 
         abortController: ts.Expression | undefined;
+    }
+
+    export interface SSEEventShape {
+        type: "sse";
+        streamTerminator?: ts.Expression;
+    }
+
+    export interface MessageEventShape {
+        type: "json";
+        messageTerminator?: ts.Expression;
     }
 }

@@ -38,6 +38,15 @@ export class Ec2 {
     constructor(protected readonly _options: Ec2.Options) {
     }
 
+    /**
+     * @param {TestSdk.BootInstanceRequest} request
+     * @param {Ec2.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.ec2.bootInstance({
+     *         size: "string"
+     *     })
+     */
     public async bootInstance(request: TestSdk.BootInstanceRequest, requestOptions?: Ec2.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin((await core.Supplier.get(this._options.environment) ?? environments.TestSdkEnvironment.Production).ec2, "/ec2/boot"),
@@ -105,7 +114,7 @@ export interface BootInstanceRequest {
 
 
 /// File: /src/api/resources/ec2/client/requests/index.ts
-export { BootInstanceRequest } from "./BootInstanceRequest";
+export { type BootInstanceRequest } from "./BootInstanceRequest";
 
 
 /// File: /src/api/resources/ec2/index.ts
@@ -147,6 +156,15 @@ export class S3 {
     constructor(protected readonly _options: S3.Options) {
     }
 
+    /**
+     * @param {TestSdk.GetPresignedUrlRequest} request
+     * @param {S3.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.s3.getPresignedUrl({
+     *         s3Key: "string"
+     *     })
+     */
     public async getPresignedUrl(request: TestSdk.GetPresignedUrlRequest, requestOptions?: S3.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin((await core.Supplier.get(this._options.environment) ?? environments.TestSdkEnvironment.Production).s3, "/s3/presigned-url"),
@@ -214,7 +232,7 @@ export interface GetPresignedUrlRequest {
 
 
 /// File: /src/api/resources/s3/client/requests/index.ts
-export { GetPresignedUrlRequest } from "./GetPresignedUrlRequest";
+export { type GetPresignedUrlRequest } from "./GetPresignedUrlRequest";
 
 
 /// File: /src/api/resources/s3/index.ts

@@ -11,13 +11,16 @@ from .ast import (
     FieldValue_ContainerValue,
     FieldValue_ObjectValue,
     FieldValue_PrimitiveValue,
+    JsonLike,
     ObjectValue,
     PrimitiveValue,
 )
+from .client import AsyncSeedApi, SeedApi
 from .version import __version__
 
 __all__ = [
     "A",
+    "AsyncSeedApi",
     "ContainerValue",
     "ContainerValue_List",
     "ContainerValue_Optional",
@@ -26,9 +29,11 @@ __all__ = [
     "FieldValue_ObjectValue",
     "FieldValue_PrimitiveValue",
     "ImportingA",
+    "JsonLike",
     "ObjectValue",
     "PrimitiveValue",
     "RootType",
+    "SeedApi",
     "__version__",
     "a",
     "ast",

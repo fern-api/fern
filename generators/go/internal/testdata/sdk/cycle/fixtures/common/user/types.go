@@ -11,7 +11,12 @@ import (
 type Username struct {
 	Value string `json:"value" url:"value"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (u *Username) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
 }
 
 func (u *Username) UnmarshalJSON(data []byte) error {
@@ -21,6 +26,13 @@ func (u *Username) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = Username(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
 	u._rawJSON = json.RawMessage(data)
 	return nil
 }

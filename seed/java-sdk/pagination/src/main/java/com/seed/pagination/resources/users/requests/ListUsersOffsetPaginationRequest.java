@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListUsersOffsetPaginationRequest.Builder.class)
 public final class ListUsersOffsetPaginationRequest {
     private final Optional<Integer> page;
@@ -136,7 +136,7 @@ public final class ListUsersOffsetPaginationRequest {
         }
 
         public Builder page(Integer page) {
-            this.page = Optional.of(page);
+            this.page = Optional.ofNullable(page);
             return this;
         }
 
@@ -147,7 +147,7 @@ public final class ListUsersOffsetPaginationRequest {
         }
 
         public Builder perPage(Integer perPage) {
-            this.perPage = Optional.of(perPage);
+            this.perPage = Optional.ofNullable(perPage);
             return this;
         }
 
@@ -158,7 +158,7 @@ public final class ListUsersOffsetPaginationRequest {
         }
 
         public Builder order(Order order) {
-            this.order = Optional.of(order);
+            this.order = Optional.ofNullable(order);
             return this;
         }
 
@@ -169,7 +169,7 @@ public final class ListUsersOffsetPaginationRequest {
         }
 
         public Builder startingAfter(String startingAfter) {
-            this.startingAfter = Optional.of(startingAfter);
+            this.startingAfter = Optional.ofNullable(startingAfter);
             return this;
         }
 

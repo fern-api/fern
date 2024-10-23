@@ -12,12 +12,23 @@ export declare namespace Service {
     interface Options {
         environment: core.Supplier<string>;
         apiKey?: core.Supplier<string | undefined>;
+        /** Override the X-Another-Header header */
         xAnotherHeader: core.Supplier<string>;
+        /** Override the X-API-Version header */
+        xApiVersion?: "01-01-2000";
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Another-Header header */
+        xAnotherHeader?: string;
+        /** Override the X-API-Version header */
+        xApiVersion?: "01-01-2000";
     }
 }
 
@@ -27,8 +38,10 @@ export class Service {
     /**
      * GET request with custom api key
      *
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await seedAuthEnvironmentVariables.service.getWithApiKey()
+     *     await client.service.getWithApiKey()
      */
     public async getWithApiKey(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
@@ -36,19 +49,23 @@ export class Service {
             method: "GET",
             headers: {
                 "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
+                "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "01-01-2000",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/auth-environment-variables",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/auth-environment-variables/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...(await this._getCustomAuthorizationHeaders()),
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.service.getWithApiKey.Response.parseOrThrow(_response.body, {
+            return serializers.service.getWithApiKey.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -81,9 +98,12 @@ export class Service {
     /**
      * GET request with custom api key
      *
+     * @param {SeedAuthEnvironmentVariables.HeaderAuthRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await seedAuthEnvironmentVariables.service.getWithHeader({
-     *         xEndpointHeader: "string"
+     *     await client.service.getWithHeader({
+     *         xEndpointHeader: "X-Endpoint-Header"
      *     })
      */
     public async getWithHeader(
@@ -96,20 +116,24 @@ export class Service {
             method: "GET",
             headers: {
                 "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
+                "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "01-01-2000",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/auth-environment-variables",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/auth-environment-variables/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "X-Endpoint-Header": xEndpointHeader,
                 ...(await this._getCustomAuthorizationHeaders()),
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.service.getWithHeader.Response.parseOrThrow(_response.body, {
+            return serializers.service.getWithHeader.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

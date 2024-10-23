@@ -2,27 +2,9 @@ name: ci
 
 on:
   push:
-    paths:
-      - "packages/**"
-      # IR snapshot tests run on test definitions
-      - "test-definitions/**"
-      # Add any generators that are written in TypeScript
-      - "generators/openapi/**"
-      - "generators/postman/**"
-      - "generators/ruby/**"
-      - "generators/typescript/**"
     branches:
       - main
   pull_request:
-    paths:
-      - "packages/**"
-      # IR snapshot tests run on test definitions
-      - "test-definitions/**"
-      # Add any generators that are written in TypeScript
-      - "generators/openapi/**"
-      - "generators/postman/**"
-      - "generators/ruby/**"
-      - "generators/typescript/**"
     branches:
       - main
 
@@ -38,28 +20,20 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
       - name: Install
-        run: yarn install
-
-      - name: Lint Monorepo
-        run: yarn lint:monorepo
+        uses: ./.github/actions/install
 
       - name: Check dependencies
-        run: yarn depcheck
+        run: pnpm depcheck
 
       - name: Lint
-        run: yarn lint:style
+        run: pnpm lint:style
 
-      - name: generate (dev) JSON Schema
-        run: yarn generate-json-schema:dev
+      - name: Generate JSON Schema
+        run: pnpm jsonschema
 
       - name: Format
-        run: yarn format:check
+        run: pnpm format:check
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -70,16 +44,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
       - name: Install
-        run: yarn install
+        uses: ./.github/actions/install
 
-      - name: compile
-        run: yarn compile
+      - name: Compile
+        run: pnpm compile
 
   eslint:
     runs-on: ubuntu-latest
@@ -87,36 +56,37 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
       - name: Install
-        run: yarn install
+        uses: ./.github/actions/install
 
       - name: lint:eslint
-        run: yarn lint:eslint
+        run: pnpm lint:eslint
 
   test:
-    runs-on: CLI
-    strategy:
-      matrix:
-        shard: [1, 2, 3, 4]
+    runs-on: Test
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
       - name: Install
-        run: yarn install
+        uses: ./.github/actions/install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
+
+      - name: Compile
+        run: pnpm compile
 
       - name: Run tests
-        run: yarn test --maxWorkers 15 --shard=${{ matrix.shard }}/${{ strategy.job-total }} --ci
+        run: pnpm test
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -127,19 +97,17 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
       - name: Install
-        run: yarn install
+        uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm compile
 
       - name: Run ETE tests
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |
-          FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} yarn test:ete
+          FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm test:ete
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -152,13 +120,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
       - name: Install
-        run: yarn install
+        uses: ./.github/actions/install
 
       - name: Check API definition is valid
         env:
@@ -167,6 +130,101 @@ jobs:
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
         run: |
-          yarn workspace @fern-api/cli dist:cli:dev
-          cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
+          pnpm --filter @fern-api/cli dist:cli:dev
+          cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs" 
           ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
+
+  live-test-dev-windows:
+    environment: Fern Dev
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Check API definition is valid
+        env:
+          FORCE_COLOR: "2"
+          FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+        run: |
+          pnpm --filter @fern-api/cli dist:cli:dev
+          $cliPath = Join-Path $env:GITHUB_WORKSPACE "packages\cli\cli\dist\dev\cli.cjs"
+          if (-not (Test-Path $cliPath)) {
+            Write-Error "CLI path does not exist: $cliPath"
+            exit 1
+          }
+          $scriptPath = Join-Path $env:GITHUB_WORKSPACE "scripts\live-test.ps1"
+          & $scriptPath -cli_path $cliPath -token $env:FERN_ORG_TOKEN_DEV
+
+  ts-generator-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      typescript: ${{ steps.filter.outputs.typescript }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            typescript:
+              - 'generators/typescript/sdk/**'
+
+  node-version-tests:
+    runs-on: ubuntu-latest
+    needs: ts-generator-changes
+    if: ${{ needs.changes.outputs.typescript == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Load NVM
+        run: |
+          source /home/runner/.nvm/nvm.sh
+        shell: bash
+
+      - name: Run file tests
+        run: ./scripts/node-all-versions-test.sh
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  cloudflare-startup-tests:
+    runs-on: ubuntu-latest
+    needs: ts-generator-changes
+    if: ${{ needs.changes.outputs.typescript == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run cloudflare startup test
+        run: ./scripts/cloudflare-startup-test.sh
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  browser-startup-tests:
+    runs-on: ubuntu-latest
+    needs: ts-generator-changes
+    if: ${{ needs.changes.outputs.typescript == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run browser startup test
+        run: ./scripts/browser-startup-test.sh
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code

@@ -1,33 +1,36 @@
 ---
 title: Welcome
-excerpt: Input OpenAPI. Output SDKs and Docs.
+description: Input OpenAPI. Output SDKs and Docs.
 slug: home
 layout: overview
+hide-toc: true
 ---
+
+<Note>Our entire docs website (the one you're looking at right now!) is built using Fern. [See the source Markdown.](https://github.com/fern-api/fern/blob/main/fern/pages/welcome.mdx)</Note>
 
 ## Products
 
 <Cards cols={3}>
   <Card
+    title="API First Development"
+    icon="fa-regular fa-pen"
+    href="/learn/api-definition/introduction/what-is-an-api-definition"
+  >
+    Start with an API Definition
+  </Card>
+  <Card
     title="Docs"
-    icon="fa-solid fa-browser"
-    href="/learn/docs"
+    icon="fa-regular fa-browser"
+    href="/learn/docs/getting-started/quickstart"
   >
     A beautiful documentation website
   </Card>
   <Card
     title="SDKs"
     icon="fa-brands fa-codepen"
-    href="/learn/sdks"
+    href="/learn/sdks/introduction/overview"
   >
     Idiomatic client libraries
-  </Card>
-  <Card
-    title="API First Development"
-    icon="fa-solid fa-pen"
-    href="/learn/sdks/other-generators/server-side/"
-  >
-    Start with an API Definition
   </Card>
 </Cards>
 
@@ -35,7 +38,7 @@ layout: overview
 
 <div className="motivation">
   Stripe, Twilio, and AWS have the resources to invest in internal tooling for developer 
-  experience. They provide client libraries in multiple language and developer documentation
+  experience. They provide client libraries in multiple languages and developer documentation
   that stays up-to-date. 
 
   We are building Fern to productize this process and make it accessible to all

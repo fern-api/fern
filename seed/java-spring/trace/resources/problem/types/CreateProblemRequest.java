@@ -18,11 +18,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.Language;
 import resources.commons.types.TestCaseWithExpectedResult;
 import resources.commons.types.VariableType;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = CreateProblemRequest.Builder.class
 )
@@ -113,21 +114,21 @@ public final class CreateProblemRequest {
   }
 
   public interface ProblemNameStage {
-    ProblemDescriptionStage problemName(String problemName);
+    ProblemDescriptionStage problemName(@NotNull String problemName);
 
     Builder from(CreateProblemRequest other);
   }
 
   public interface ProblemDescriptionStage {
-    OutputTypeStage problemDescription(ProblemDescription problemDescription);
+    OutputTypeStage problemDescription(@NotNull ProblemDescription problemDescription);
   }
 
   public interface OutputTypeStage {
-    MethodNameStage outputType(VariableType outputType);
+    MethodNameStage outputType(@NotNull VariableType outputType);
   }
 
   public interface MethodNameStage {
-    _FinalStage methodName(String methodName);
+    _FinalStage methodName(@NotNull String methodName);
   }
 
   public interface _FinalStage {
@@ -187,29 +188,29 @@ public final class CreateProblemRequest {
 
     @java.lang.Override
     @JsonSetter("problemName")
-    public ProblemDescriptionStage problemName(String problemName) {
-      this.problemName = problemName;
+    public ProblemDescriptionStage problemName(@NotNull String problemName) {
+      this.problemName = Objects.requireNonNull(problemName, "problemName must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("problemDescription")
-    public OutputTypeStage problemDescription(ProblemDescription problemDescription) {
-      this.problemDescription = problemDescription;
+    public OutputTypeStage problemDescription(@NotNull ProblemDescription problemDescription) {
+      this.problemDescription = Objects.requireNonNull(problemDescription, "problemDescription must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("outputType")
-    public MethodNameStage outputType(VariableType outputType) {
-      this.outputType = outputType;
+    public MethodNameStage outputType(@NotNull VariableType outputType) {
+      this.outputType = Objects.requireNonNull(outputType, "outputType must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("methodName")
-    public _FinalStage methodName(String methodName) {
-      this.methodName = methodName;
+    public _FinalStage methodName(@NotNull String methodName) {
+      this.methodName = Objects.requireNonNull(methodName, "methodName must not be null");
       return this;
     }
 

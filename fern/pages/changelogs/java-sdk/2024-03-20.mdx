@@ -1,0 +1,6 @@
+## 0.8.6
+**`(fix):`** The SDK now generates RequestOptions functions for timeouts with IdempotentRequestOptions correctly, previously
+timeout functions were only taking in regular RequestOptions. This also addresses a JavaPoet issue where fields were
+being initialized twice across RequestOptions and IdempotentRequestOptions classes, preventing the SDK from generating at all.
+
+

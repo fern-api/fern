@@ -1,0 +1,38 @@
+types:
+  User:
+    properties:
+      name: string
+
+  ListUsersResponse:
+    properties:
+      users: list<User>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    listUsers:
+      method: GET
+      path: /users
+      pagination:
+        offset: $request.page
+        results: $response.users
+      request:
+        name: ListUsersRequest
+        query-parameters:
+          page: integer
+      response: ListUsersResponse
+
+    listUsersWithStep:
+      method: GET
+      path: /users
+      pagination:
+        offset: $request.page
+        results: $response.users
+        step: $request.limit
+      request:
+        name: ListUsersWithStepRequest
+        query-parameters:
+          page: integer
+          limit: integer
+      response: ListUsersResponse

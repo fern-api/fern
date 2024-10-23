@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifierOverride": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.auth.get_token(client_id: \"client_id\", client_secret: \"client_secret\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifierOverride": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.auth.get_token(client_id: \"client_id\", client_secret: \"client_secret\")",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

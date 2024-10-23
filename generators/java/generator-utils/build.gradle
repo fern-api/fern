@@ -1,6 +1,6 @@
 dependencies {
     api 'com.squareup:javapoet'
-    api 'com.fern.fern:irV31'
+    api 'com.fern.fern:irV46'
     api 'com.fern.fern:generator-exec-client'
     api 'com.fasterxml.jackson.core:jackson-annotations'
     api 'com.fasterxml.jackson.core:jackson-databind'

@@ -1,0 +1,52 @@
+---
+title: 'Accordion Groups'
+description: Display expandable/collapsible options that can reveal more information
+icon: 'table-rows'
+---
+<AccordionGroup>
+  <Accordion title="Option 1">
+    You can put other components inside Accordions.
+
+    ```ts index.ts
+    export function generateRandomNumber() {
+      return Math.random();
+    }   
+    ```
+
+  </Accordion>
+
+  <Accordion title="Option 2">
+    This is a second option.
+  </Accordion>
+  
+  <Accordion title="Option 3">
+    This is a third option.
+  </Accordion>
+</AccordionGroup>
+
+<Aside>
+<CodeBlock title="Markdown">
+````jsx
+<AccordionGroup>
+  <Accordion title="Option 1">
+    You can put other components inside Accordions.
+
+    ```ts
+    export function generateRandomNumber() {
+      return Math.random();
+    }   
+    ```
+
+  </Accordion>
+
+  <Accordion title="Option 2">
+    This is a second option.
+  </Accordion>
+  
+  <Accordion title="Option 3">
+    This is a third option.
+  </Accordion>
+</AccordionGroup>
+````
+</CodeBlock>
+</Aside>

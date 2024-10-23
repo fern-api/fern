@@ -1,0 +1,97 @@
+---
+title: Environments
+description: List environments like production, staging, and development. 
+---
+
+You can specify the environments where your server is deployed. 
+
+## Single URL environments
+
+<CodeBlock title="api.yml">
+```yaml
+name: api
+environments:
+  Production: https://www.yoursite.com
+  Staging:
+    docs: This staging environment is helpful for testing!
+    url: https://www.staging.yoursite.com
+```
+</CodeBlock>
+
+## Multiple URLs per environment
+
+You can specify multiple URLs per environment. This is helpful if you have a
+microservice architecture, and you want a single SDK to interact with multiple
+servers.
+
+<CodeBlock title="api.yml">
+```yaml
+environments:
+  Production:
+    urls:
+      Auth: https://auth.yoursite.com
+      Plants: https://plants.yoursite.com
+  Staging:
+    urls:
+      Auth: https://auth.staging.yoursite.com
+      Plants: https://plants.staging.yoursite.com
+```
+</CodeBlock>
+
+If you choose to use this feature, you must specify a `url` for each service you define:
+
+<CodeBlock title="auth.yml">
+```yaml
+service:
+  url: Auth
+  base-path: /auth
+  ...
+```
+</CodeBlock>
+
+## Default environment
+
+You can also provide a default environment:
+
+<CodeBlock title="api.yml">
+```yaml
+name: api
+environments:
+  Production: https://www.yoursite.com
+  Staging:
+    docs: This staging environment is helpful for testing!
+    url: https://www.staging.yoursite.com
+default-environment: Production
+```
+</CodeBlock>
+
+<Note> By providing a default environment, the generated SDK will be setup to hit that URL out-of-the-box. </Note>
+
+## Base path
+If you would like all of your endpoints to be prefixed with a path, use `base-path`. 
+
+In the example below, every endpoint is prefixed with a `/v1`: 
+```yaml api.yml
+name: api
+base-path: /v1
+```
+
+## Audiences
+
+If you have listed environments that you want to filter, you can leverage audiences. 
+
+<CodeBlock title="api.yml">
+```yaml 
+audiences:
+  - public
+
+environments:
+  Dev: 
+    url: https://dev.com
+  Prod: 
+    url: https://rewards-api.getkard.com
+    audiences:
+      - external
+```
+</CodeBlock>
+

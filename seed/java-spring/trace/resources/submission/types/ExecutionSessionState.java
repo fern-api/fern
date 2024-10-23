@@ -15,9 +15,10 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.Language;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = ExecutionSessionState.Builder.class
 )
@@ -103,7 +104,7 @@ public final class ExecutionSessionState {
   }
 
   public interface SessionIdStage {
-    IsWarmInstanceStage sessionId(String sessionId);
+    IsWarmInstanceStage sessionId(@NotNull String sessionId);
 
     Builder from(ExecutionSessionState other);
   }
@@ -113,11 +114,11 @@ public final class ExecutionSessionState {
   }
 
   public interface LanguageStage {
-    StatusStage language(Language language);
+    StatusStage language(@NotNull Language language);
   }
 
   public interface StatusStage {
-    _FinalStage status(ExecutionSessionStatus status);
+    _FinalStage status(@NotNull ExecutionSessionStatus status);
   }
 
   public interface _FinalStage {
@@ -168,8 +169,8 @@ public final class ExecutionSessionState {
      */
     @java.lang.Override
     @JsonSetter("sessionId")
-    public IsWarmInstanceStage sessionId(String sessionId) {
-      this.sessionId = sessionId;
+    public IsWarmInstanceStage sessionId(@NotNull String sessionId) {
+      this.sessionId = Objects.requireNonNull(sessionId, "sessionId must not be null");
       return this;
     }
 
@@ -182,21 +183,21 @@ public final class ExecutionSessionState {
 
     @java.lang.Override
     @JsonSetter("language")
-    public StatusStage language(Language language) {
-      this.language = language;
+    public StatusStage language(@NotNull Language language) {
+      this.language = Objects.requireNonNull(language, "language must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("status")
-    public _FinalStage status(ExecutionSessionStatus status) {
-      this.status = status;
+    public _FinalStage status(@NotNull ExecutionSessionStatus status) {
+      this.status = Objects.requireNonNull(status, "status must not be null");
       return this;
     }
 
     @java.lang.Override
     public _FinalStage awsTaskId(String awsTaskId) {
-      this.awsTaskId = Optional.of(awsTaskId);
+      this.awsTaskId = Optional.ofNullable(awsTaskId);
       return this;
     }
 
@@ -212,7 +213,7 @@ public final class ExecutionSessionState {
 
     @java.lang.Override
     public _FinalStage lastTimeContacted(String lastTimeContacted) {
-      this.lastTimeContacted = Optional.of(lastTimeContacted);
+      this.lastTimeContacted = Optional.ofNullable(lastTimeContacted);
       return this;
     }
 

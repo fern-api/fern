@@ -1,20 +1,27 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
-using SeedTrace.V2;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class TestSubmissionStatusV2
+public record TestSubmissionStatusV2
 {
     [JsonPropertyName("updates")]
-    public List<List<TestSubmissionUpdate>> Updates { get; init; }
+    public IEnumerable<TestSubmissionUpdate> Updates { get; set; } =
+        new List<TestSubmissionUpdate>();
 
     [JsonPropertyName("problemId")]
-    public string ProblemId { get; init; }
+    public required string ProblemId { get; set; }
 
     [JsonPropertyName("problemVersion")]
-    public int ProblemVersion { get; init; }
+    public required int ProblemVersion { get; set; }
 
     [JsonPropertyName("problemInfo")]
-    public ProblemInfoV2 ProblemInfo { get; init; }
+    public required V2.ProblemInfoV2 ProblemInfo { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -2,6 +2,15 @@
 
 from .errors import PropertyBasedErrorTest, PropertyBasedErrorTestBody
 from . import errors, property_based_error
+from .client import AsyncSeedErrorProperty, SeedErrorProperty
 from .version import __version__
 
-__all__ = ["PropertyBasedErrorTest", "PropertyBasedErrorTestBody", "__version__", "errors", "property_based_error"]
+__all__ = [
+    "AsyncSeedErrorProperty",
+    "PropertyBasedErrorTest",
+    "PropertyBasedErrorTestBody",
+    "SeedErrorProperty",
+    "__version__",
+    "errors",
+    "property_based_error",
+]

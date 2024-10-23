@@ -1,0 +1,242 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/unions",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/{id}",
+            "method": "GET",
+            "identifierOverride": "endpoint_union.get"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedUnionsClient } from \"@fern/unions\";"
+                ],
+                "templateString": "const client = new SeedUnionsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.union.get(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "id",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/unions",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "PATCH",
+            "identifierOverride": "endpoint_union.update"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedUnionsClient } from \"@fern/unions\";"
+                ],
+                "templateString": "const client = new SeedUnionsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.union.update(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "discriminantField": "type",
+                                        "members": {
+                                            "circle": {
+                                                "imports": [],
+                                                "templateString": "{ \n\t\t\ttype : \"circle\", \n\t\t\t$FERN_INPUT\n\t\t}",
+                                                "isOptional": true,
+                                                "templateInputs": [
+                                                    {
+                                                        "value": {
+                                                            "imports": [],
+                                                            "templateString": "$FERN_INPUT",
+                                                            "isOptional": true,
+                                                            "inputDelimiter": ",\n\t\t\t",
+                                                            "templateInputs": [
+                                                                {
+                                                                    "value": {
+                                                                        "imports": [],
+                                                                        "templateString": "radius: $FERN_INPUT",
+                                                                        "isOptional": true,
+                                                                        "templateInputs": [
+                                                                            {
+                                                                                "location": "BODY",
+                                                                                "path": "radius",
+                                                                                "type": "payload"
+                                                                            }
+                                                                        ],
+                                                                        "type": "generic"
+                                                                    },
+                                                                    "type": "template"
+                                                                }
+                                                            ],
+                                                            "type": "generic"
+                                                        },
+                                                        "type": "template"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            },
+                                            "square": {
+                                                "imports": [],
+                                                "templateString": "{ \n\t\t\ttype : \"square\", \n\t\t\t$FERN_INPUT\n\t\t}",
+                                                "isOptional": true,
+                                                "templateInputs": [
+                                                    {
+                                                        "value": {
+                                                            "imports": [],
+                                                            "templateString": "$FERN_INPUT",
+                                                            "isOptional": true,
+                                                            "inputDelimiter": ",\n\t\t\t",
+                                                            "templateInputs": [
+                                                                {
+                                                                    "value": {
+                                                                        "imports": [],
+                                                                        "templateString": "length: $FERN_INPUT",
+                                                                        "isOptional": true,
+                                                                        "templateInputs": [
+                                                                            {
+                                                                                "location": "BODY",
+                                                                                "path": "length",
+                                                                                "type": "payload"
+                                                                            }
+                                                                        ],
+                                                                        "type": "generic"
+                                                                    },
+                                                                    "type": "template"
+                                                                }
+                                                            ],
+                                                            "type": "generic"
+                                                        },
+                                                        "type": "template"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            }
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "type": "payload"
+                                        },
+                                        "type": "discriminatedUnion"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

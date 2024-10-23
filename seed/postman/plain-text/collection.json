@@ -17,31 +17,7 @@
       "_type": "container",
       "description": null,
       "name": "Service",
-      "item": [
-        {
-          "_type": "endpoint",
-          "name": "Get Text",
-          "request": {
-            "description": null,
-            "url": {
-              "raw": "{{baseUrl}}/text",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "text"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [],
-            "method": "POST",
-            "auth": null,
-            "body": null
-          },
-          "response": []
-        }
-      ]
+      "item": []
     }
   ]
 }

@@ -18,8 +18,9 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LightweightProblemInfoV2.Builder.class)
 public final class LightweightProblemInfoV2 {
     private final String problemId;
@@ -98,13 +99,13 @@ public final class LightweightProblemInfoV2 {
     }
 
     public interface ProblemIdStage {
-        ProblemNameStage problemId(String problemId);
+        ProblemNameStage problemId(@NotNull String problemId);
 
         Builder from(LightweightProblemInfoV2 other);
     }
 
     public interface ProblemNameStage {
-        ProblemVersionStage problemName(String problemName);
+        ProblemVersionStage problemName(@NotNull String problemName);
     }
 
     public interface ProblemVersionStage {
@@ -147,15 +148,15 @@ public final class LightweightProblemInfoV2 {
 
         @java.lang.Override
         @JsonSetter("problemId")
-        public ProblemNameStage problemId(String problemId) {
-            this.problemId = problemId;
+        public ProblemNameStage problemId(@NotNull String problemId) {
+            this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemName")
-        public ProblemVersionStage problemName(String problemName) {
-            this.problemName = problemName;
+        public ProblemVersionStage problemName(@NotNull String problemName) {
+            this.problemName = Objects.requireNonNull(problemName, "problemName must not be null");
             return this;
         }
 

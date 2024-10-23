@@ -14,8 +14,9 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetGeneratedTestCaseTemplateFileRequest.Builder.class)
 public final class GetGeneratedTestCaseTemplateFileRequest {
     private final TestCaseTemplate template;
@@ -64,7 +65,7 @@ public final class GetGeneratedTestCaseTemplateFileRequest {
     }
 
     public interface TemplateStage {
-        _FinalStage template(TestCaseTemplate template);
+        _FinalStage template(@NotNull TestCaseTemplate template);
 
         Builder from(GetGeneratedTestCaseTemplateFileRequest other);
     }
@@ -90,8 +91,8 @@ public final class GetGeneratedTestCaseTemplateFileRequest {
 
         @java.lang.Override
         @JsonSetter("template")
-        public _FinalStage template(TestCaseTemplate template) {
-            this.template = template;
+        public _FinalStage template(@NotNull TestCaseTemplate template) {
+            this.template = Objects.requireNonNull(template, "template must not be null");
             return this;
         }
 

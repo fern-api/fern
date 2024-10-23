@@ -4,7 +4,6 @@ package pathparam
 
 import (
 	context "context"
-	fmt "fmt"
 	fern "github.com/enum/fern"
 	core "github.com/enum/fern/core"
 	option "github.com/enum/fern/option"
@@ -48,18 +47,26 @@ func (c *Client) Send(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"path/%v/%v/%v/%v", operand, maybeOperand, operandOrColor, maybeOperandOrColor)
+	endpointURL := core.EncodeURL(
+		baseURL+"/path/%v/%v/%v/%v",
+		operand,
+		maybeOperand,
+		operandOrColor,
+		maybeOperandOrColor,
+	)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
 		},
 	); err != nil {
 		return err

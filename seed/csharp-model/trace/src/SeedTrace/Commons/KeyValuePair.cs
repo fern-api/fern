@@ -1,13 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class KeyValuePair
+public record KeyValuePair
 {
     [JsonPropertyName("key")]
-    public VariableValue Key { get; init; }
+    public required object Key { get; set; }
 
     [JsonPropertyName("value")]
-    public VariableValue Value { get; init; }
+    public required object Value { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

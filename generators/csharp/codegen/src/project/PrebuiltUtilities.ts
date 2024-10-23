@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import { Annotation, ClassReference } from "../ast";
-import { File } from "./File";
+import { File } from "@fern-api/generator-commons";
 
 export class PrebuiltUtilities {
     private utilitiesDirectory = RelativeFilePath.of("Utilities");
@@ -19,13 +19,15 @@ export class PrebuiltUtilities {
     public async writeFiles(outputDirectory: AbsoluteFilePath): Promise<void> {
         // Register files from ./
         const asIsFilenames = ["EnumConverter.cs", "OneOfJsonConverter.cs", "StringEnum.cs"];
-        asIsFilenames.forEach(async (filename) => {
+
+        for (const filename of asIsFilenames) {
             const contents = await readFile(filename);
             this.files.push(new File(filename, this.utilitiesDirectory, contents));
-        });
+        }
 
-        // Write these and any custom registered files to the output directory
-        this.files.forEach((file) => file.write(outputDirectory));
+        for (const file of this.files) {
+            await file.write(outputDirectory);
+        }
     }
 
     // TODO: write json serializers code to the main file

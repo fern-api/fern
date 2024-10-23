@@ -9,8 +9,13 @@ import java.lang.String;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import resources.users.requests.ListUsersBodyCursorPaginationRequest;
+import resources.users.requests.ListUsersBodyOffsetPaginationRequest;
+import resources.users.types.ListUsersExtendedOptionalListResponse;
 import resources.users.types.ListUsersExtendedResponse;
 import resources.users.types.ListUsersPaginationResponse;
 import resources.users.types.Order;
@@ -30,6 +35,14 @@ public interface UsersService {
       @RequestParam("order") Optional<Order> order,
       @RequestParam("starting_after") Optional<String> startingAfter);
 
+  @PostMapping(
+      value = "",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  ListUsersPaginationResponse listWithBodyCursorPagination(
+      @RequestBody ListUsersBodyCursorPaginationRequest body);
+
   @GetMapping(
       value = "",
       produces = "application/json"
@@ -39,11 +52,42 @@ public interface UsersService {
       @RequestParam("order") Optional<Order> order,
       @RequestParam("starting_after") Optional<String> startingAfter);
 
+  @PostMapping(
+      value = "",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  ListUsersPaginationResponse listWithBodyOffsetPagination(
+      @RequestBody ListUsersBodyOffsetPaginationRequest body);
+
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
+  ListUsersPaginationResponse listWithOffsetStepPagination(
+      @RequestParam("page") Optional<Integer> page, @RequestParam("limit") Optional<Integer> limit,
+      @RequestParam("order") Optional<Order> order);
+
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
+  ListUsersPaginationResponse listWithOffsetPaginationHasNextPage(
+      @RequestParam("page") Optional<Integer> page, @RequestParam("limit") Optional<Integer> limit,
+      @RequestParam("order") Optional<Order> order);
+
   @GetMapping(
       value = "",
       produces = "application/json"
   )
   ListUsersExtendedResponse listWithExtendedResults(@RequestParam("cursor") Optional<UUID> cursor);
+
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
+  ListUsersExtendedOptionalListResponse listWithExtendedResultsAndOptionalData(
+      @RequestParam("cursor") Optional<UUID> cursor);
 
   @GetMapping(
       value = "",

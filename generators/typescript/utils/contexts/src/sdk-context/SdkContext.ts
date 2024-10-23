@@ -1,4 +1,6 @@
-import { JavaScriptRuntime } from "@fern-typescript/commons";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { JavaScriptRuntime, NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { ModelContext } from "../model-context/ModelContext";
 import { EndpointErrorUnionContext } from "./endpoint-error-union";
@@ -11,10 +13,19 @@ import { SdkErrorContext } from "./sdk-error";
 import { SdkErrorSchemaContext } from "./sdk-error-schema";
 import { SdkInlinedRequestBodySchemaContext } from "./sdk-inlined-request-body-schema";
 import { TimeoutSdkErrorContext } from "./timeout-sdk-error";
+import { VersionContext } from "./version";
+import { GeneratorNotificationService } from "@fern-api/generator-commons";
+import { Logger } from "@fern-api/logger";
 
 export interface SdkContext extends ModelContext {
+    logger: Logger;
+    version: string | undefined;
+    ir: IntermediateRepresentation;
+    config: FernGeneratorExec.GeneratorConfig;
+    generatorNotificationService: GeneratorNotificationService;
+    npmPackage: NpmPackage | undefined;
     sdkInstanceReferenceForSnippet: ts.Identifier;
-    namespaceExport: string | undefined;
+    namespaceExport: string;
     endpointErrorUnion: EndpointErrorUnionContext;
     environments: EnvironmentsContext;
     genericAPISdkError: GenericAPISdkErrorContext;
@@ -25,7 +36,11 @@ export interface SdkContext extends ModelContext {
     timeoutSdkError: TimeoutSdkErrorContext;
     requestWrapper: RequestWrapperContext;
     sdkClientClass: SdkClientClassContext;
+    versionContext: VersionContext;
     targetRuntime: JavaScriptRuntime;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
+    generateOAuthClients: boolean;
+    inlineFileProperties: boolean;
+    omitUndefined: boolean;
 }

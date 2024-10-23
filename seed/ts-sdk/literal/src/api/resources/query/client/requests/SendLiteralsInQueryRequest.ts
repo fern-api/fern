@@ -5,16 +5,7 @@
 /**
  * @example
  *     {
- *         prompt: "You are a helpful assistant",
- *         stream: false,
  *         query: "What is the weather today"
- *     }
- *
- * @example
- *     {
- *         prompt: "You are a helpful assistant",
- *         query: "string",
- *         stream: false
  *     }
  */
 export interface SendLiteralsInQueryRequest {

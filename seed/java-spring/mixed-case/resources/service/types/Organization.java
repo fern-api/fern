@@ -13,8 +13,9 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Organization.Builder.class
 )
@@ -55,7 +56,7 @@ public final class Organization {
   }
 
   public interface NameStage {
-    _FinalStage name(String name);
+    _FinalStage name(@NotNull String name);
 
     Builder from(Organization other);
   }
@@ -81,8 +82,8 @@ public final class Organization {
 
     @java.lang.Override
     @JsonSetter("name")
-    public _FinalStage name(String name) {
-      this.name = name;
+    public _FinalStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 

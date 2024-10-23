@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "json"
+require "set"
 
 module SeedUndiscriminatedUnionsClient
   class Union
@@ -14,7 +15,7 @@ module SeedUndiscriminatedUnionsClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         begin
           struct.is_a?(String) != false || raise("Passed value for field struct is not the expected type, validation failed.")
-          return json_object unless json_object.nil?
+          return struct unless struct.nil?
 
           return nil
         rescue StandardError
@@ -22,7 +23,7 @@ module SeedUndiscriminatedUnionsClient
         end
         begin
           struct.is_a?(Array) != false || raise("Passed value for field struct is not the expected type, validation failed.")
-          return json_object unless json_object.nil?
+          return struct unless struct.nil?
 
           return nil
         rescue StandardError
@@ -30,7 +31,7 @@ module SeedUndiscriminatedUnionsClient
         end
         begin
           struct.is_a?(Integer) != false || raise("Passed value for field struct is not the expected type, validation failed.")
-          return json_object unless json_object.nil?
+          return struct unless struct.nil?
 
           return nil
         rescue StandardError
@@ -38,7 +39,7 @@ module SeedUndiscriminatedUnionsClient
         end
         begin
           struct.is_a?(Array) != false || raise("Passed value for field struct is not the expected type, validation failed.")
-          return json_object unless json_object.nil?
+          return struct unless struct.nil?
 
           return nil
         rescue StandardError
@@ -46,7 +47,15 @@ module SeedUndiscriminatedUnionsClient
         end
         begin
           struct.is_a?(Array) != false || raise("Passed value for field struct is not the expected type, validation failed.")
-          return json_object unless json_object.nil?
+          return struct unless struct.nil?
+
+          return nil
+        rescue StandardError
+          # noop
+        end
+        begin
+          struct.is_a?(Set) != false || raise("Passed value for field struct is not the expected type, validation failed.")
+          return Set.new(struct) unless struct.nil?
 
           return nil
         rescue StandardError
@@ -84,6 +93,11 @@ module SeedUndiscriminatedUnionsClient
         end
         begin
           return obj.is_a?(Array) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+        rescue StandardError
+          # noop
+        end
+        begin
+          return obj.is_a?(Set) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         rescue StandardError
           # noop
         end

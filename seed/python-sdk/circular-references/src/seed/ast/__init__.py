@@ -8,6 +8,7 @@ from .types import (
     FieldValue_ContainerValue,
     FieldValue_ObjectValue,
     FieldValue_PrimitiveValue,
+    JsonLike,
     ObjectValue,
     PrimitiveValue,
 )
@@ -20,6 +21,7 @@ __all__ = [
     "FieldValue_ContainerValue",
     "FieldValue_ObjectValue",
     "FieldValue_PrimitiveValue",
+    "JsonLike",
     "ObjectValue",
     "PrimitiveValue",
 ]

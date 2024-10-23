@@ -1,0 +1,350 @@
+- version: 0.27.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for SSE (Server-Sent Events) streaming responses. The user-facing
+        interface for streaming responses remains the same between standard HTTP
+        streaming and SSE.
+  irVersion: 40
+- version: 0.26.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for sending custom Content-Type header values defined in the API.
+  irVersion: 40
+- version: 0.25.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for sending extra body properties and query parameters via `RequestOption`.
+  irVersion: 40
+- version: 0.24.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for reading headers from environment variables (e.g. `X-API-Version`).
+  irVersion: 40
+- version: 0.23.7
+  createdAt: '2024-09-06'
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fixes an issue where optional `unknown` values (typed as `interface{}`) were
+        mistakenly dereferenced.
+  irVersion: 40
+- version: 0.23.6
+  createdAt: '2024-09-05'
+  changelogEntry:
+    - type: internal
+      summary: No changes.
+  irVersion: 40
+- version: 0.23.5
+  createdAt: '2024-09-05'
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where `long` type examples (generated as `int64` in Go) were not
+        successfully converted to their equivalent `string` representation for snippets.
+  irVersion: 40
+- version: 0.23.4
+  createdAt: '2024-08-30'
+  changelogEntry:
+    - type: internal
+      summary: No changes.
+  irVersion: 40
+- version: 0.23.3
+  createdAt: '2024-08-30'
+  changelogEntry:
+    - type: internal
+      summary: No changes.
+  irVersion: 40
+- version: 0.23.2
+  createdAt: '2024-08-26'
+  changelogEntry:
+    - type: internal
+      summary: No changes.
+  irVersion: 40
+- version: 0.23.1
+  createdAt: '2024-08-19'
+  changelogEntry:
+    - type: fix
+      summary: Fix literal value deserialization.
+      changed:
+        - >-
+          Updates object and undisriminated union deserialization to return an
+          error whenever any literal values do not exist or are mismatched.
+  irVersion: 40
+- version: 0.23.0
+  createdAt: '2024-08-07'
+  changelogEntry:
+    - type: feat
+      summary: Add support for always sending required properties.
+      added:
+        - >-
+          Added the `alwaysSendRequiredProperties` configuration option. When
+          `alwaysSendRequiredProperties` is enabled, required properties are
+          never omitted in the type's wire representation. Any required property
+          that is not explicitly set will send the default value for that type.
+  irVersion: 40
+- version: 0.22.3
+  createdAt: '2024-07-22'
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where APIs that specify the `property-name` error
+        discrimination strategy would receive JSON decode errors instead of the
+        server's error.
+  irVersion: 40
+- version: 0.22.2
+  createdAt: '2024-07-04'
+  changelogEntry:
+    - type: fix
+      summary: Request types set to `nil` no longer send an explicit `null` value.
+  irVersion: 40
+- version: 0.22.1
+  createdAt: '2024-06-11'
+  changelogEntry:
+    - type: fix
+      summary: Array of `deepObject` query parameters are correctly serialized.
+  irVersion: 40
+- version: 0.22.0
+  createdAt: '2024-05-21'
+  changelogEntry:
+    - type: feat
+      summary: Add support for retrieving extra properties from response objects.
+      added:
+        - >-
+          Extra properties decoded from response objects are retained and
+          accessible via the `GetExtraProperties` method.
+  irVersion: 40
+- version: 0.21.3
+  createdAt: '2024-05-17'
+  changelogEntry:
+    - type: internal
+      summary: The generator now uses the latest FDR SDK.
+  irVersion: 40
+- version: 0.21.2
+  createdAt: '2024-05-07'
+  changelogEntry:
+    - type: fix
+      summary: >-
+        In-lined request body properties no longer include a non-empty `url`
+        struct tag.
+  irVersion: 40
+- version: 0.21.1
+  createdAt: '2024-04-29'
+  changelogEntry:
+    - type: fix
+      summary: >-
+        The Go generator now escapes path parameters that would previously
+        create invalid URLs (e.g. "\\example").
+    - type: internal
+      summary: Refactor endpoint URL mapping with `core.EncodeURL`.
+  irVersion: 40
+- version: 0.21.0
+  createdAt: '2024-04-29'
+  changelogEntry:
+    - type: feat
+      summary: Add support for cursor and offset pagination.
+  irVersion: 40
+- version: 0.20.2
+  createdAt: '2024-04-26'
+  changelogEntry:
+    - type: internal
+      summary: Enhance extra property serialization performance.
+    - type: internal
+      summary: Generate additional extra property tests into the SDK.
+    - type: fix
+      summary: >-
+        Resolve a non-deterministic key ordering issue for snippets of type
+        `unknown`.
+    - type: fix
+      summary: Resolve an issue with discriminated union serialization.
+  irVersion: 40
+- version: 0.20.1
+  createdAt: '2024-04-25'
+  changelogEntry:
+    - type: fix
+      summary: The `omitempty` struct tag is now only used for nil-able types.
+    - type: fix
+      summary: >-
+        Update the query encoder to prevent unintentional errors whenever the
+        `omitempty` is used for a non-optional field.
+  irVersion: 40
+- version: 0.20.0
+  createdAt: '2024-04-24'
+  changelogEntry:
+    - type: feat
+      summary: The Go generator now supports extra properties.
+  irVersion: 40
+- version: 0.19.0
+  createdAt: '2024-04-16'
+  changelogEntry:
+    - type: feat
+      summary: The Go generator now supports environment variable scanning.
+  irVersion: 35
+- version: 0.18.3
+  createdAt: '2024-04-15'
+  changelogEntry:
+    - type: fix
+      summary: Path parameters are now applied in the correct order.
+  irVersion: 35
+- version: 0.18.2
+  createdAt: '2024-04-02'
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Custom authorization header schemes had their values overridden by
+        request options, which required using the generated request option at
+        every call-site.
+  irVersion: 35
+- version: 0.18.1
+  createdAt: '2024-03-12'
+  changelogEntry:
+    - type: fix
+      summary: Go snippets correctly handle unknown examples.
+  irVersion: 35
+- version: 0.18.0
+  createdAt: '2024-03-04'
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for simpler unions, which is configurable with `union: v1`
+        (if omitted, the default `v0` version will be used).
+    - type: feat
+      summary: Add support for multiple files in upload endpoints.
+  irVersion: 35
+- version: 0.17.0
+  createdAt: '2024-02-26'
+  changelogEntry:
+    - type: internal
+      summary: No changes since previous release candidate.
+  irVersion: 33
+- version: 0.17.0-rc1
+  createdAt: '2024-02-23'
+  changelogEntry:
+    - type: fix
+      summary: Snippets for aliases to optional primitive values.
+  irVersion: 33
+- version: 0.17.0-rc0
+  createdAt: '2024-02-21'
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Package documentation is now generated into the correct package's
+        `doc.go`.
+    - type: feat
+      summary: Add support for generated endpoint snippets.
+  irVersion: 33
+- version: 0.16.0
+  createdAt: '2024-02-12'
+  changelogEntry:
+    - type: feat
+      summary: The generator now supports whitelabelling.
+  irVersion: 33
+- version: 0.15.0
+  createdAt: '2024-02-09'
+  changelogEntry:
+    - type: feat
+      summary: Enforce RFC3339 for date[time] serialization in request bodies.
+  irVersion: 33
+- version: 0.14.1
+  createdAt: '2024-02-07'
+  changelogEntry:
+    - type: fix
+      summary: Query parameter support for optional `time.Time` types.
+  irVersion: 33
+- version: 0.14.0
+  createdAt: '2024-02-06'
+  changelogEntry:
+    - type: feat
+      summary: Add support for `deepObject` query parameters.
+    - type: chore
+      summary: Refactor query parameter serialization with `url` struct tags.
+  irVersion: 33
+- version: 0.13.0
+  createdAt: '2024-01-31'
+  changelogEntry:
+    - type: feat
+      summary: Add `packageName` generator configuration.
+    - type: feat
+      summary: Add support for `bytes` request bodies wrapped in an in-lined request.
+  irVersion: 32
+- version: 0.12.1
+  createdAt: '2024-01-31'
+  changelogEntry:
+    - type: fix
+      summary: '`text/plain` response handling.'
+  irVersion: 32
+- version: 0.12.0
+  createdAt: '2024-01-30'
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for `bytes` request bodies with `Content-Type` set to
+        `application/octet-stream`.
+  irVersion: 32
+- version: 0.11.0
+  createdAt: '2024-01-29'
+  changelogEntry:
+    - type: feat
+      summary: Add automatic retry with exponential backoff.
+  irVersion: 32
+- version: 0.10.0
+  createdAt: '2024-01-25'
+  changelogEntry:
+    - type: feat
+      summary: Refactor `ClientOption` as `RequestOption`.
+    - type: feat
+      summary: Add `includeLegacyClientOptions` generator configuration.
+    - type: feat
+      summary: >-
+        Support idempotency headers as a special `RequestOption` only available
+        on idempotent endpoints.
+    - type: fix
+      summary: Placement of path parameter documentation.
+    - type: fix
+      summary: >-
+        Naming collision issue for undiscriminated unions that define more than
+        one literal.
+  irVersion: 32
+- version: 0.9.4
+  createdAt: '2024-01-10'
+  changelogEntry:
+    - type: fix
+      summary: File upload requests that specify query parameters.
+  irVersion: 28
+- version: 0.9.3
+  createdAt: '2023-12-04'
+  changelogEntry:
+    - type: fix
+      summary: Optional query parameter dereferencing issue.
+  irVersion: 28
+- version: 0.9.2
+  createdAt: '2023-11-30'
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Append version suffix for modules tagged with major versions greater
+        than `1.X.X`.
+  irVersion: 28
+- version: 0.9.1
+  createdAt: '2023-11-08'
+  changelogEntry:
+    - type: fix
+      summary: Support boolean literals.
+    - type: fix
+      summary: Union subt-ypes with no properties are now go 1.13 compatible.
+  irVersion: 28
+- version: 0.9.0
+  createdAt: '2023-10-31'
+  changelogEntry:
+    - type: feat
+      summary: Add support for streaming endpoints.
+    - type: feat
+      summary: Add support for non-primitive file upload properties.
+    - type: chore
+      summary: Refactor `core.DoRequest` with `core.Caller` abstraction.
+    - type: chore
+      summary: Update pinned dependencies in generated `go.mod`.
+  irVersion: 27

@@ -5,7 +5,6 @@ from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
-from fern_python.source_file_factory import SourceFileFactory
 
 from ..context import FastApiGeneratorContext
 
@@ -19,7 +18,7 @@ class FernHTTPExceptionGenerator:
         self.FernHTTPException = context.core_utilities.exceptions.FernHTTPException
 
     def generate(self, project: Project, generator_exec_wrapper: GeneratorExecWrapper) -> None:
-        source_file = SourceFileFactory.create(
+        source_file = self._context.source_file_factory.create(
             project=project,
             generator_exec_wrapper=generator_exec_wrapper,
             filepath=self.FernHTTPException.filepath,
@@ -98,13 +97,21 @@ class FernHTTPExceptionGenerator:
             orm_mode=False,
             version=self._custom_config.pydantic_config.version,
             smart_union=False,
+            require_optional_fields=self._custom_config.pydantic_config.require_optional_fields,
+            pydantic_base_model=self._context.core_utilities.get_universal_base_model(),
+            is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
+            universal_field_validator=self._context.core_utilities.universal_field_validator,
+            universal_root_validator=self._context.core_utilities.universal_root_validator,
+            update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
+            field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
+            use_pydantic_field_aliases=self._custom_config.pydantic_config.use_pydantic_field_aliases,
         ) as body_pydantic_model:
             body_pydantic_model.add_field(
                 PydanticField(
-                    name=error_discriminant.name.snake_case.unsafe_name,
+                    name=error_discriminant.name.snake_case.safe_name,
                     type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
                     json_field_name=error_discriminant.wire_value,
-                    pascal_case_field_name=error_discriminant.name.pascal_case.unsafe_name,
+                    pascal_case_field_name=error_discriminant.name.pascal_case.safe_name,
                 )
             )
             body_pydantic_model.add_field(
@@ -118,7 +125,7 @@ class FernHTTPExceptionGenerator:
                     ),
                     json_field_name=self._context.ir.constants.error_instance_id_key.wire_value,
                     pascal_case_field_name=(
-                        self._context.ir.constants.error_instance_id_key.name.pascal_case.unsafe_name
+                        self._context.ir.constants.error_instance_id_key.name.pascal_case.safe_name
                     ),
                     default_factory=AST.Expression(
                         AST.Reference(
@@ -133,16 +140,16 @@ class FernHTTPExceptionGenerator:
                     name=self._get_error_content_field_name(),
                     type_hint=AST.TypeHint.optional(AST.TypeHint.any()),
                     json_field_name=self._get_content_property().wire_value,
-                    pascal_case_field_name=self._get_content_property().name.pascal_case.unsafe_name,
+                    pascal_case_field_name=self._get_content_property().name.pascal_case.safe_name,
                 )
             )
             return body_pydantic_model.to_reference()
 
     def _get_error_instance_id_field_name(self) -> str:
-        return self._context.ir.constants.error_instance_id_key.name.snake_case.unsafe_name
+        return self._context.ir.constants.error_instance_id_key.name.snake_case.safe_name
 
     def _get_error_content_field_name(self) -> str:
-        return self._get_content_property().name.snake_case.unsafe_name
+        return self._get_content_property().name.snake_case.safe_name
 
     def _get_content_property(self) -> NameAndWireValue:
         error_discrimination_strategy = self._context.ir.error_discrimination_strategy.get_as_union()
@@ -165,7 +172,7 @@ class FernHTTPExceptionGenerator:
                     class_=reference_to_body,
                     kwargs=[
                         (
-                            error_discriminant.name.snake_case.unsafe_name,
+                            error_discriminant.name.snake_case.safe_name,
                             AST.Expression("self." + self.FernHTTPException.NAME_MEMBER),
                         ),
                         (

@@ -14,8 +14,9 @@ import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateMovieRequest.Builder.class)
 public final class CreateMovieRequest {
     private final String title;
@@ -70,7 +71,7 @@ public final class CreateMovieRequest {
     }
 
     public interface TitleStage {
-        RatingStage title(String title);
+        RatingStage title(@NotNull String title);
 
         Builder from(CreateMovieRequest other);
     }
@@ -103,8 +104,8 @@ public final class CreateMovieRequest {
 
         @java.lang.Override
         @JsonSetter("title")
-        public RatingStage title(String title) {
-            this.title = title;
+        public RatingStage title(@NotNull String title) {
+            this.title = Objects.requireNonNull(title, "title must not be null");
             return this;
         }
 

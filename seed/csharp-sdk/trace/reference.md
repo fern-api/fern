@@ -1,0 +1,2007 @@
+# Reference
+## V2
+<details><summary><code>client.V2.<a href="/src/SeedTrace/V2/V2Client.cs">TestAsync</a>()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.V2.TestAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Admin
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateTestSubmissionStatusAsync</a>(submissionId, object { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Admin.UpdateTestSubmissionStatusAsync(
+    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    "no-properties-union"
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `object` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">SendTestSubmissionUpdateAsync</a>(submissionId, TestSubmissionUpdate { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Admin.SendTestSubmissionUpdateAsync(
+    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    new TestSubmissionUpdate
+    {
+        UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+        UpdateInfo = RunningSubmissionState.QueueingSubmission,
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TestSubmissionUpdate` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateWorkspaceSubmissionStatusAsync</a>(submissionId, object { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
+    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    "no-properties-union"
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `object` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">SendWorkspaceSubmissionUpdateAsync</a>(submissionId, WorkspaceSubmissionUpdate { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Admin.SendWorkspaceSubmissionUpdateAsync(
+    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    new WorkspaceSubmissionUpdate
+    {
+        UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+        UpdateInfo = RunningSubmissionState.QueueingSubmission,
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `WorkspaceSubmissionUpdate` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseAsync</a>(submissionId, testCaseId, StoreTracedTestCaseRequest { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Admin.StoreTracedTestCaseAsync(
+    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    "testCaseId",
+    new StoreTracedTestCaseRequest
+    {
+        Result = new TestCaseResultWithStdout
+        {
+            Result = new TestCaseResult
+            {
+                ExpectedResult = 1,
+                ActualResult = 1,
+                Passed = true,
+            },
+            Stdout = "stdout",
+        },
+        TraceResponses = new List<TraceResponse>()
+        {
+            new TraceResponse
+            {
+                SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                LineNumber = 1,
+                ReturnValue = null,
+                ExpressionLocation = null,
+                Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+                Stdout = null,
+            },
+            new TraceResponse
+            {
+                SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                LineNumber = 1,
+                ReturnValue = null,
+                ExpressionLocation = null,
+                Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+                Stdout = null,
+            },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**testCaseId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `StoreTracedTestCaseRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseV2Async</a>(submissionId, testCaseId, IEnumerable<TraceResponseV2> { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Admin.StoreTracedTestCaseV2Async(
+    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    "testCaseId",
+    new List<TraceResponseV2>()
+    {
+        new TraceResponseV2
+        {
+            SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            LineNumber = 1,
+            File = new TracedFile { Filename = "filename", Directory = "directory" },
+            ReturnValue = null,
+            ExpressionLocation = null,
+            Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+            Stdout = null,
+        },
+        new TraceResponseV2
+        {
+            SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            LineNumber = 1,
+            File = new TracedFile { Filename = "filename", Directory = "directory" },
+            ReturnValue = null,
+            ExpressionLocation = null,
+            Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+            Stdout = null,
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**testCaseId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `IEnumerable<TraceResponseV2>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceAsync</a>(submissionId, StoreTracedWorkspaceRequest { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Admin.StoreTracedWorkspaceAsync(
+    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    new StoreTracedWorkspaceRequest
+    {
+        WorkspaceRunDetails = new WorkspaceRunDetails
+        {
+            ExceptionV2 = null,
+            Exception = null,
+            Stdout = "stdout",
+        },
+        TraceResponses = new List<TraceResponse>()
+        {
+            new TraceResponse
+            {
+                SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                LineNumber = 1,
+                ReturnValue = null,
+                ExpressionLocation = null,
+                Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+                Stdout = null,
+            },
+            new TraceResponse
+            {
+                SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                LineNumber = 1,
+                ReturnValue = null,
+                ExpressionLocation = null,
+                Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+                Stdout = null,
+            },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `StoreTracedWorkspaceRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceV2Async</a>(submissionId, IEnumerable<TraceResponseV2> { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Admin.StoreTracedWorkspaceV2Async(
+    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    new List<TraceResponseV2>()
+    {
+        new TraceResponseV2
+        {
+            SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            LineNumber = 1,
+            File = new TracedFile { Filename = "filename", Directory = "directory" },
+            ReturnValue = null,
+            ExpressionLocation = null,
+            Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+            Stdout = null,
+        },
+        new TraceResponseV2
+        {
+            SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            LineNumber = 1,
+            File = new TracedFile { Filename = "filename", Directory = "directory" },
+            ReturnValue = null,
+            ExpressionLocation = null,
+            Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+            Stdout = null,
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `IEnumerable<TraceResponseV2>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Homepage
+<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">GetHomepageProblemsAsync</a>() -> IEnumerable<string></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Homepage.GetHomepageProblemsAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">SetHomepageProblemsAsync</a>(IEnumerable<string> { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string", "string" });
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IEnumerable<string>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Migration
+<details><summary><code>client.Migration.<a href="/src/SeedTrace/Migration/MigrationClient.cs">GetAttemptedMigrationsAsync</a>(GetAttemptedMigrationsRequest { ... }) -> IEnumerable<Migration></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Migration.GetAttemptedMigrationsAsync(
+    new GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GetAttemptedMigrationsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Playlist
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">CreatePlaylistAsync</a>(serviceParam, CreatePlaylistRequest { ... }) -> Playlist</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new playlist
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Playlist.CreatePlaylistAsync(
+    1,
+    new CreatePlaylistRequest
+    {
+        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+        Body = new PlaylistCreateRequest
+        {
+            Name = "name",
+            Problems = new List<string>() { "problems", "problems" },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serviceParam:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreatePlaylistRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistsAsync</a>(serviceParam, GetPlaylistsRequest { ... }) -> IEnumerable<Playlist></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the user's playlists
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Playlist.GetPlaylistsAsync(
+    1,
+    new GetPlaylistsRequest
+    {
+        OtherField = "otherField",
+        MultiLineDocs = "multiLineDocs",
+        MultipleField = ["multipleField"],
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serviceParam:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `GetPlaylistsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistAsync</a>(serviceParam, playlistId) -> Playlist</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a playlist
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Playlist.GetPlaylistAsync(1, "playlistId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serviceParam:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**playlistId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">UpdatePlaylistAsync</a>(serviceParam, playlistId, UpdatePlaylistRequest? { ... }) -> Playlist?</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates a playlist
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Playlist.UpdatePlaylistAsync(1, "playlistId", null);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serviceParam:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**playlistId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdatePlaylistRequest?` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">DeletePlaylistAsync</a>(serviceParam, playlistId)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a playlist
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Playlist.DeletePlaylistAsync(1, "playlist_id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serviceParam:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**playlistId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Problem
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">CreateProblemAsync</a>(CreateProblemRequest { ... }) -> object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Problem.CreateProblemAsync(
+    new CreateProblemRequest
+    {
+        ProblemName = "problemName",
+        ProblemDescription = new ProblemDescription
+        {
+            Boards = new List<object>() { "boards", "boards" },
+        },
+        Files = new Dictionary<Language, ProblemFiles>()
+        {
+            {
+                Language.Java,
+                new ProblemFiles
+                {
+                    SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
+                    ReadOnlyFiles = new List<FileInfo>()
+                    {
+                        new FileInfo { Filename = "filename", Contents = "contents" },
+                        new FileInfo { Filename = "filename", Contents = "contents" },
+                    },
+                }
+            },
+        },
+        InputParams = new List<VariableTypeAndName>()
+        {
+            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+        },
+        OutputType = "no-properties-union",
+        Testcases = new List<TestCaseWithExpectedResult>()
+        {
+            new TestCaseWithExpectedResult
+            {
+                TestCase = new TestCase
+                {
+                    Id = "id",
+                    Params = new List<object>() { 1, 1 },
+                },
+                ExpectedResult = 1,
+            },
+            new TestCaseWithExpectedResult
+            {
+                TestCase = new TestCase
+                {
+                    Id = "id",
+                    Params = new List<object>() { 1, 1 },
+                },
+                ExpectedResult = 1,
+            },
+        },
+        MethodName = "methodName",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateProblemRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">UpdateProblemAsync</a>(problemId, CreateProblemRequest { ... }) -> UpdateProblemResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Problem.UpdateProblemAsync(
+    "problemId",
+    new CreateProblemRequest
+    {
+        ProblemName = "problemName",
+        ProblemDescription = new ProblemDescription
+        {
+            Boards = new List<object>() { "boards", "boards" },
+        },
+        Files = new Dictionary<Language, ProblemFiles>()
+        {
+            {
+                Language.Java,
+                new ProblemFiles
+                {
+                    SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
+                    ReadOnlyFiles = new List<FileInfo>()
+                    {
+                        new FileInfo { Filename = "filename", Contents = "contents" },
+                        new FileInfo { Filename = "filename", Contents = "contents" },
+                    },
+                }
+            },
+        },
+        InputParams = new List<VariableTypeAndName>()
+        {
+            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+        },
+        OutputType = "no-properties-union",
+        Testcases = new List<TestCaseWithExpectedResult>()
+        {
+            new TestCaseWithExpectedResult
+            {
+                TestCase = new TestCase
+                {
+                    Id = "id",
+                    Params = new List<object>() { 1, 1 },
+                },
+                ExpectedResult = 1,
+            },
+            new TestCaseWithExpectedResult
+            {
+                TestCase = new TestCase
+                {
+                    Id = "id",
+                    Params = new List<object>() { 1, 1 },
+                },
+                ExpectedResult = 1,
+            },
+        },
+        MethodName = "methodName",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**problemId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreateProblemRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">DeleteProblemAsync</a>(problemId)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Soft deletes a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Problem.DeleteProblemAsync("problemId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**problemId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">GetDefaultStarterFilesAsync</a>(GetDefaultStarterFilesRequest { ... }) -> GetDefaultStarterFilesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns default starter files for problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Problem.GetDefaultStarterFilesAsync(
+    new GetDefaultStarterFilesRequest
+    {
+        InputParams = new List<VariableTypeAndName>()
+        {
+            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+        },
+        OutputType = "no-properties-union",
+        MethodName = "methodName",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GetDefaultStarterFilesRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Submission
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">CreateExecutionSessionAsync</a>(language) -> ExecutionSessionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns sessionId and execution server URL for session. Spins up server.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Submission.CreateExecutionSessionAsync(Language.Java);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**language:** `Language` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">GetExecutionSessionAsync</a>(sessionId) -> ExecutionSessionResponse?</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns execution server URL for session. Returns empty if session isn't registered.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Submission.GetExecutionSessionAsync("sessionId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">StopExecutionSessionAsync</a>(sessionId)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stops execution session.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Submission.StopExecutionSessionAsync("sessionId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">GetExecutionSessionsStateAsync</a>() -> GetExecutionSessionStateResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Submission.GetExecutionSessionsStateAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Sysprop
+<details><summary><code>client.Sysprop.<a href="/src/SeedTrace/Sysprop/SyspropClient.cs">SetNumWarmInstancesAsync</a>(language, numWarmInstances)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**language:** `Language` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**numWarmInstances:** `int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Sysprop.<a href="/src/SeedTrace/Sysprop/SyspropClient.cs">GetNumWarmInstancesAsync</a>() -> Dictionary<Language, int></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Sysprop.GetNumWarmInstancesAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## V2 Problem
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<V2.LightweightProblemInfoV2></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns lightweight versions of all problems
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.V2.Problem.GetLightweightProblemsAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<V2.ProblemInfoV2></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns latest versions of all problems
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.V2.Problem.GetProblemsAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> V2.ProblemInfoV2</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns latest version of a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.V2.Problem.GetLatestProblemAsync("problemId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**problemId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> V2.ProblemInfoV2</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns requested version of a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.V2.Problem.GetProblemVersionAsync("problemId", 1);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**problemId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**problemVersion:** `int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## V2 V3 Problem
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<V2.V3.LightweightProblemInfoV2></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns lightweight versions of all problems
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.V2.V3.Problem.GetLightweightProblemsAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<V2.V3.ProblemInfoV2></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns latest versions of all problems
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.V2.V3.Problem.GetProblemsAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> V2.V3.ProblemInfoV2</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns latest version of a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.V2.V3.Problem.GetLatestProblemAsync("problemId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**problemId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> V2.V3.ProblemInfoV2</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns requested version of a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.V2.V3.Problem.GetProblemVersionAsync("problemId", 1);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**problemId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**problemVersion:** `int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

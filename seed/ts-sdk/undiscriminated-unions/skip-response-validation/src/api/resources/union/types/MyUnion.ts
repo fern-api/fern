@@ -5,4 +5,4 @@
 /**
  * Several different types are accepted.
  */
-export type MyUnion = string | string[] | number | number[] | number[][];
+export type MyUnion = string | string[] | number | number[] | number[][] | Set<string>;

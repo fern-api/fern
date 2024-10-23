@@ -11,6 +11,29 @@ import (
 
 type Base struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (b *Base) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *Base) UnmarshalJSON(data []byte) error {
+	type unmarshaler Base
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Base(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
+	return nil
 }
 
 func (b *Base) String() string {
@@ -22,6 +45,29 @@ func (b *Base) String() string {
 
 type Value struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (v *Value) GetExtraProperties() map[string]interface{} {
+	return v.extraProperties
+}
+
+func (v *Value) UnmarshalJSON(data []byte) error {
+	type unmarshaler Value
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*v = Value(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *v)
+	if err != nil {
+		return err
+	}
+	v.extraProperties = extraProperties
+
+	return nil
 }
 
 func (v *Value) String() string {
@@ -35,6 +81,29 @@ type Foo struct {
 	Name  string   `json:"name" url:"name"`
 	Value *Value   `json:"value,omitempty" url:"value,omitempty"`
 	Bar   *bar.Bar `json:"bar,omitempty" url:"bar,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (f *Foo) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *Foo) UnmarshalJSON(data []byte) error {
+	type unmarshaler Foo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Foo(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
+	return nil
 }
 
 func (f *Foo) String() string {
@@ -76,6 +145,9 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "value":
 		value := new(Value)
@@ -114,14 +186,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "value":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Value
-		}{
-			Type:  "value",
-			Value: u.Value,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Value, "type", "value")
 	case "anotherValue":
 		var marshaler = struct {
 			Type         string `json:"type"`
@@ -132,14 +197,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "bar":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*bar.Bar
-		}{
-			Type: "bar",
-			Bar:  u.Bar,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
 	case "anotherBar":
 		var marshaler = struct {
 			Type       string   `json:"type"`

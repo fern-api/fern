@@ -34,6 +34,9 @@ func (t *Tag) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	t.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", t)
+	}
 	switch unmarshaler.Type {
 	case "number":
 		var valueUnmarshaler struct {

@@ -2,7 +2,7 @@ import typing
 from typing import Optional
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources import GeneratorConfig
+from fern.generator_exec import GeneratorConfig
 
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
@@ -12,6 +12,7 @@ from ..custom_config import SDKCustomConfig
 from ..declaration_referencers import (
     EnvironmentsEnumDeclarationReferencer,
     ErrorDeclarationReferencer,
+    OAuthTokenProviderDeclarationReferencer,
     RootClientDeclarationReferencer,
     SubpackageAsyncClientDeclarationReferencer,
     SubpackageClientDeclarationReferencer,
@@ -28,12 +29,6 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         custom_config: SDKCustomConfig,
         project_module_path: AST.ModulePath,
     ):
-        super().__init__(
-            ir=ir,
-            generator_config=generator_config,
-            custom_config=custom_config,
-            project_module_path=project_module_path,
-        )
         client_class_name = (
             custom_config.client_class_name
             or custom_config.client.class_name
@@ -41,6 +36,26 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         )
         exported_client_class_name = custom_config.client.exported_class_name or client_class_name
         client_filename = custom_config.client_filename or custom_config.client.filename
+
+        self._root_generated_client_declaration_referencer = RootClientDeclarationReferencer(
+            client_class_name=client_class_name,
+            client_filename=client_filename,
+            skip_resources_module=custom_config.improved_imports,
+        )
+        self._root_exported_client_declaration_referencer = RootClientDeclarationReferencer(
+            client_class_name=exported_client_class_name,
+            client_filename=custom_config.client.exported_filename or client_filename,
+            skip_resources_module=custom_config.improved_imports,
+        )
+
+        super().__init__(
+            ir=ir,
+            generator_config=generator_config,
+            custom_config=custom_config,
+            project_module_path=project_module_path,
+            exported_root_client=self._root_exported_client_declaration_referencer,
+        )
+
         self._error_declaration_referencer = ErrorDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
         )
@@ -53,14 +68,9 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         self._subpackage_async_client_declaration_referencer = SubpackageAsyncClientDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
         )
-        self._root_generated_client_declaration_referencer = RootClientDeclarationReferencer(
+        self._oauth_generated_client_declaration_referencer = OAuthTokenProviderDeclarationReferencer(
             client_class_name=client_class_name,
             client_filename=client_filename,
-            skip_resources_module=custom_config.improved_imports,
-        )
-        self._root_exported_client_declaration_referencer = RootClientDeclarationReferencer(
-            client_class_name=exported_client_class_name,
-            client_filename=custom_config.client.exported_filename or client_filename,
             skip_resources_module=custom_config.improved_imports,
         )
         self._custom_config = custom_config
@@ -82,7 +92,7 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         return self._environments_enum_declaration_referencer.get_filepath(name=None)
 
     def get_reference_to_environments_class(self) -> AST.ClassReference:
-        return self._environments_enum_declaration_referencer.get_class_reference(name=None)
+        return self._environments_enum_declaration_referencer.get_class_reference(name=None, as_request=False)
 
     def get_filepath_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath:
         subpackage = self.ir.subpackages[subpackage_id]
@@ -93,11 +103,14 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         return self._subpackage_client_declaration_referencer.get_class_name(name=subpackage)
 
     def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference:
-        return self._error_declaration_referencer.get_class_reference(name=error_name)
+        return self._error_declaration_referencer.get_class_reference(name=error_name, as_request=False)
 
     def get_reference_to_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> AST.ClassReference:
         subpackage = self.ir.subpackages[subpackage_id]
-        return self._subpackage_client_declaration_referencer.get_class_reference(name=subpackage)
+        return self._subpackage_client_declaration_referencer.get_class_reference(name=subpackage, as_request=False)
+
+    def get_filepath_for_generated_oauth_token_provider(self) -> Filepath:
+        return self._oauth_generated_client_declaration_referencer.get_filepath(name=None)
 
     def get_filepath_for_generated_root_client(self) -> Filepath:
         return self._root_generated_client_declaration_referencer.get_filepath(name=None)
@@ -121,7 +134,9 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
 
     def get_reference_to_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> AST.ClassReference:
         subpackage = self.ir.subpackages[subpackage_id]
-        return self._subpackage_async_client_declaration_referencer.get_class_reference(name=subpackage)
+        return self._subpackage_async_client_declaration_referencer.get_class_reference(
+            name=subpackage, as_request=False
+        )
 
     def get_literal_value(self, reference: ir_types.TypeReference) -> Optional[typing.Union[str, bool]]:
         type = reference.get_as_union()
@@ -182,3 +197,14 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
                 else:
                     break
         return False
+
+    def get_types(self) -> typing.Dict[ir_types.TypeId, ir_types.TypeDeclaration]:
+        return self.ir.types
+
+    def unwrap_optional_type_reference(self, type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
+        type_union = type_reference.get_as_union()
+        if type_union.type == "container":
+            container_union = type_union.container.get_as_union()
+            if container_union.type == "optional":
+                return self.unwrap_optional_type_reference(container_union.optional)
+        return type_reference

@@ -1,13 +1,21 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class DoublyLinkedListValue
+public record DoublyLinkedListValue
 {
     [JsonPropertyName("head")]
-    public List<string?> Head { get; init; }
+    public string? Head { get; set; }
 
     [JsonPropertyName("nodes")]
-    public List<Dictionary<string, DoublyLinkedListNodeValue>> Nodes { get; init; }
+    public Dictionary<string, DoublyLinkedListNodeValue> Nodes { get; set; } =
+        new Dictionary<string, DoublyLinkedListNodeValue>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

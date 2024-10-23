@@ -1,5 +1,6 @@
 imports:
   commons: commons/types.yml
+  root: __package__.yml
 
 errors:
   NotFoundError:
@@ -26,6 +27,7 @@ types:
       tag: commons.Tag
       book: optional<string>
       metadata: map<string, unknown>
+      revenue: long
     examples:
       - name: One
         value:
@@ -45,6 +47,7 @@ types:
             ratings:
               rottenTomatoes: 97
               imdb: 7.6
+          revenue: 1000000
   
   CastMember: 
     discriminated: false
@@ -103,6 +106,7 @@ types:
             ratings:
               rottenTomatoes: 97
               imdb: 7.6
+          revenue: 1000000
 
   Moment:
     properties:
@@ -252,10 +256,22 @@ types:
   Response:
     properties:
       response: unknown
+      identifiers: list<root.Identifier>
     examples:
       - name: String
         value:
           response: "Initializing..."
+          identifiers:
+            - type: primitive
+              value: 'example'
+              label: Primitive
+            - type: unknown
+              value: '{}'
+              label: Unknown
+
+  ResponseType:
+    properties:
+      type: root.Type
 
   Test:
     union:
@@ -270,3 +286,13 @@ types:
         value:
           type: or
           value: true
+
+  Entity:
+    properties:
+      type: root.Type
+      name: string
+    examples:
+      - name: One
+        value:
+          type: unknown
+          name: unknown

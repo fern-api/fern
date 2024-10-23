@@ -1,4 +1,5 @@
 name: ir
 docs: |
- Adds the concept of a text-response example, this is meant to reflect responses of form text or `text/plain`
- as opposed to JSON strings.
+ - Add `float` primitive type.
+ - Add a `PrimitiveTypeV2` variant for every `PrimitiveTypeV1`.
+ - Add gRPC/Protobuf types.

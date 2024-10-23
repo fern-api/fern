@@ -1,24 +1,5 @@
 package com.fern.java;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import com.fern.java.output.GeneratedGradleProperties;
-import com.fern.java.output.GeneratedPublishScript;
-import org.immutables.value.Value;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
@@ -32,21 +13,38 @@ import com.fern.generator.exec.model.logging.GeneratorUpdate;
 import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.generator.exec.model.logging.PackageCoordinate;
 import com.fern.generator.exec.model.logging.SuccessfulStatusUpdate;
+import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.MavenCoordinateParser.MavenArtifactAndGroup;
 import com.fern.java.generators.GithubWorkflowGenerator;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.output.GeneratedBuildGradle;
 import com.fern.java.output.GeneratedFile;
+import com.fern.java.output.GeneratedGradleProperties;
+import com.fern.java.output.GeneratedPublishScript;
 import com.fern.java.output.ImmutableGeneratedBuildGradle;
 import com.fern.java.output.RawGeneratedFile;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
 import com.fern.java.output.gradle.GradleRepository;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import org.immutables.value.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends DownloadFilesCustomConfig> {
+public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends IDownloadFilesCustomConfig> {
 
     @Value.Immutable
     @StagedBuilderImmutablesStyle
@@ -64,7 +62,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
 
     private static GeneratorConfig getGeneratorConfig(String pluginPath) {
         try {
-            return ClientObjectMappers.JSON_MAPPER.readValue(new File(pluginPath), GeneratorConfig.class);
+            return ObjectMappers.JSON_MAPPER.readValue(new File(pluginPath), GeneratorConfig.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read plugin configuration", e);
         }
@@ -72,7 +70,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
 
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
-            return ClientObjectMappers.JSON_MAPPER.readValue(
+            return ObjectMappers.JSON_MAPPER.readValue(
                     new File(generatorConfig.getIrFilepath()), IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
@@ -111,8 +109,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
 
     private Path outputDirectory = null;
 
-    protected AbstractGeneratorCli() {
-    }
+    protected AbstractGeneratorCli() {}
 
     public final void run(String... args) {
         String pluginPath = args[0];
@@ -149,8 +146,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                     throw new RuntimeException("Encountered unknown output mode: " + unknownType);
                 }
             });
-            generatorExecClient.sendUpdate(GeneratorUpdate
-                    .exitStatusUpdate(ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
+            generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(
+                    ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
         } catch (Exception e) {
             log.error("Encountered fatal error", e);
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.error(
@@ -184,8 +181,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         Optional<MavenCoordinate> maybeMavenCoordinate = githubOutputMode
                 .getPublishInfo()
                 .flatMap(githubPublishInfo -> githubPublishInfo.getMaven().map(mavenGithubPublishInfo -> {
-                    MavenArtifactAndGroup mavenArtifactAndGroup = MavenCoordinateParser
-                            .parse(mavenGithubPublishInfo.getCoordinate());
+                    MavenArtifactAndGroup mavenArtifactAndGroup =
+                            MavenCoordinateParser.parse(mavenGithubPublishInfo.getCoordinate());
                     return MavenCoordinate.builder()
                             .group(mavenArtifactAndGroup.group())
                             .artifact(mavenArtifactAndGroup.artifact())
@@ -194,9 +191,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                 }));
         runInGithubModeHook(generatorExecClient, generatorConfig, ir, customConfig, githubOutputMode);
 
-        Optional<MavenGithubPublishInfo> mavenGithubPublishInfo = githubOutputMode.getPublishInfo()
-                .flatMap(githubPublishInfo -> githubPublishInfo
-                        .getMaven());
+        Optional<MavenGithubPublishInfo> mavenGithubPublishInfo =
+                githubOutputMode.getPublishInfo().flatMap(githubPublishInfo -> githubPublishInfo.getMaven());
         Boolean addSignatureBlock = mavenGithubPublishInfo.isPresent()
                 && mavenGithubPublishInfo.get().getSignature().isPresent();
         // add project level files
@@ -204,15 +200,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
-
         // write files to disk
-        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory,
-                false, Optional.empty()));
-
-        runCommandBlocking(new String[] { "gradle", "wrapper" }, outputDirectory,
-                Collections.emptyMap());
-        runCommandBlocking(new String[] { "gradle", "spotlessApply" },
-                outputDirectory, Collections.emptyMap());
+        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
+        runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
     }
 
     public abstract void runInGithubModeHook(
@@ -229,9 +220,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
             T customConfig,
             GeneratorPublishConfig publishOutputMode) {
         // send publishing update
-        MavenRegistryConfigV2 mavenRegistryConfigV2 = publishOutputMode.getRegistriesV2().getMaven();
-        MavenArtifactAndGroup mavenArtifactAndGroup = MavenCoordinateParser
-                .parse(mavenRegistryConfigV2.getCoordinate());
+        MavenRegistryConfigV2 mavenRegistryConfigV2 =
+                publishOutputMode.getRegistriesV2().getMaven();
+        MavenArtifactAndGroup mavenArtifactAndGroup =
+                MavenCoordinateParser.parse(mavenRegistryConfigV2.getCoordinate());
         MavenCoordinate mavenCoordinate = MavenCoordinate.builder()
                 .group(mavenArtifactAndGroup.group())
                 .artifact(mavenArtifactAndGroup.artifact())
@@ -242,11 +234,15 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         runInPublishModeHook(generatorExecClient, generatorConfig, ir, customConfig, publishOutputMode);
 
         Boolean addSignatureBlock = mavenRegistryConfigV2.getSignature().isPresent();
-        addRootProjectFiles(Optional.of(mavenCoordinate), false, mavenRegistryConfigV2.getSignature().isPresent(), generatorConfig);
+        addRootProjectFiles(
+                Optional.of(mavenCoordinate),
+                false,
+                mavenRegistryConfigV2.getSignature().isPresent(),
+                generatorConfig);
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
-        runCommandBlocking(new String[] { "gradle", "wrapper" }, outputDirectory, Collections.emptyMap());
-        runCommandBlocking(new String[] { "gradle", "spotlessApply" }, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
 
         // run publish
         if (!generatorConfig.getDryRun()) {
@@ -258,18 +254,18 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                     GeneratedBuildGradle.MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR,
                     mavenRegistryConfigV2.getRegistryUrl()));
             if (addSignatureBlock) {
-                MavenCentralSignature signature = mavenRegistryConfigV2.getSignature().get();
+                MavenCentralSignature signature =
+                        mavenRegistryConfigV2.getSignature().get();
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_KEY_ID, signature.getKeyId());
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_PASSWORD, signature.getPassword());
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_KEY, signature.getSecretKey());
                 runCommandBlocking(
-                        new String[] { "./.publish/prepare.sh" },
+                        new String[] {"./.publish/prepare.sh"},
                         Paths.get(generatorConfig.getOutput().getPath()),
                         publishEnvVars);
-
             }
             runCommandBlocking(
-                    new String[] { "gradle", "publish" },
+                    new String[] {"gradle", "publish"},
                     Paths.get(generatorConfig.getOutput().getPath()),
                     publishEnvVars);
         }
@@ -289,16 +285,21 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
 
     public abstract <T extends ICustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
 
-    public abstract <K extends DownloadFilesCustomConfig> K getDownloadFilesCustomConfig(
+    public abstract <K extends IDownloadFilesCustomConfig> K getDownloadFilesCustomConfig(
             GeneratorConfig generatorConfig);
 
     protected final void addGeneratedFile(GeneratedFile generatedFile) {
         generatedFiles.add(generatedFile);
     }
 
-    private void addRootProjectFiles(Optional<MavenCoordinate> maybeMavenCoordinate, boolean addTestBlock,
-                                     boolean addSignaturePlugin, GeneratorConfig generatorConfig) {
-        String repositoryUrl = addSignaturePlugin ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/" : "https://s01.oss.sonatype.org/content/repositories/releases/";
+    private void addRootProjectFiles(
+            Optional<MavenCoordinate> maybeMavenCoordinate,
+            boolean addTestBlock,
+            boolean addSignaturePlugin,
+            GeneratorConfig generatorConfig) {
+        String repositoryUrl = addSignaturePlugin
+                ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                : "https://s01.oss.sonatype.org/content/repositories/releases/";
 
         ImmutableGeneratedBuildGradle.Builder buildGradle = GeneratedBuildGradle.builder()
                 .addAllPlugins(List.of(
@@ -312,9 +313,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                                 .pluginId("com.diffplug.spotless")
                                 .version("6.11.0")
                                 .build()))
-                .addCustomRepositories(GradleRepository.builder()
-                        .url(repositoryUrl)
-                        .build())
+                .addCustomRepositories(
+                        GradleRepository.builder().url(repositoryUrl).build())
                 .gradlePublishingConfig(maybeMavenCoordinate.map(mavenCoordinate -> GradlePublishingConfig.builder()
                         .version(mavenCoordinate.getVersion())
                         .group(mavenCoordinate.getGroup())
@@ -326,12 +326,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                 .addCustomBlocks("spotless {\n" + "    java {\n" + "        palantirJavaFormat()\n" + "    }\n" + "}\n")
                 .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n");
         if (addSignaturePlugin) {
-            buildGradle.addPlugins(GradlePlugin.builder()
-                    .pluginId("signing")
-                    .build());
-            buildGradle.addCustomBlocks("signing {\n"
-                    + "    sign(publishing.publications)\n"
-                    + "}");
+            buildGradle.addPlugins(GradlePlugin.builder().pluginId("signing").build());
+            buildGradle.addCustomBlocks("signing {\n" + "    sign(publishing.publications)\n" + "}");
             // Generate an empty gradle.properties file
             addGeneratedFile(GeneratedGradleProperties.getGeneratedFile());
             // Generate script to populate that file

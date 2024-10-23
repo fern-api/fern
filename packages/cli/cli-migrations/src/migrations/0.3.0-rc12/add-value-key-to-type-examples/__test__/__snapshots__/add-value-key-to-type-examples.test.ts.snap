@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`add-value-key-to-type-examples > simple 1`] = `
+"types:
+  # alias without examples
+  AliasWithoutExamples: string
+  # object without examples
+  ObjectWithoutExamples:
+    properties:
+      foo: string
+  # alias with examples
+  AliasWithExamples:
+    type: string
+    examples:
+      # example 1
+      - value: foo
+      - value:
+          # example 2
+          bar
+  ObjectWithExamples:
+    properties:
+      foo: string
+    examples:
+      # example 1
+      - value:
+          foo: hello
+      - value:
+          # example 2
+          foo: world
+"
+`;

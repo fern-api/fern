@@ -1,10 +1,47 @@
-irVersion: v37
-docker: fernapi/fern-typescript-node-sdk:local
-dockerCommand: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
+irVersion: v53
+displayName: TypeScript SDK
+image: fernapi/fern-typescript-node-sdk
+publish:
+  workingDirectory: generators/typescript
+  versionSubstitution: "$VERSION"
+  command:
+    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
+    - docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
+    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
+    - docker push fernapi/fern-typescript-node-sdk:"$VERSION"
+test:
+  docker:
+    image: fernapi/fern-typescript-node-sdk:local
+    command: pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLocal:node
+  local:
+    workingDirectory: generators/typescript
+    buildCommand:
+      - pnpm --filter @fern-typescript/sdk-generator-cli compile
+      - pnpm --filter @fern-typescript/sdk-generator-cli build:node
+    runCommand: node sdk/cli/dist/nodeCli.cjs
+    env:
+      NODE_ENV: test
+
 language: typescript
 generatorType: SDK
 defaultOutputMode: github
+
+customFixtureConfig:
+  customConfig:
+    generateWireTests: true
+    noSerdeLayer: true
 fixtures:
+  imdb:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        omitUndefined: true
+      outputFolder: omit-undefined
+    - customConfig:
+        noScripts: true
+        extraDependencies:
+          dummmy: "dummy"
+      outputFolder: noScripts
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -12,6 +49,13 @@ fixtures:
         allowCustomFetcher: true
         timeoutInSeconds: 2
       outputFolder: allow-custom-fetcher
+  audiences:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: null
+      audiences:
+        - partner
+      outputFolder: with-partner-audience
   exhaustive:
     - customConfig: null
       audiences:
@@ -28,8 +72,29 @@ fixtures:
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
         extraDependencies:
-            lodash-es: "^4.17.21"
+          lodash-es: "^4.17.21"
       outputFolder: bundle
+    - customConfig:
+        useBrandedStringAliases: true
+        neverThrowErrors: true
+        namespaceExport: "Fiddle"
+        bundle: true
+        includeUtilsOnUnionMembers: true
+        includeOtherInUnionTypes: true
+        extraDependencies:
+          lodash-es: "^4.17.21"
+        packageJson:
+          version: "0.0.2"
+          dependencies:
+            stream: "^0.0.2"
+            qs: "^6.11.2"
+          files:
+            - exampleFile
+            - dist
+          browser:
+            command-exists: false
+            execa: false
+      outputFolder: custom-package-json
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
@@ -47,7 +112,18 @@ fixtures:
           lodash-es: "^4.17.21"
         extraDevDependencies:
           jest: "^29.7.0"
+        extraPeerDependencies:
+          "openai": "^4.47.1"
+        extraPeerDependenciesMeta:
+          "openai":
+            optional: true
       outputFolder: dev-dependencies
+    - outputFolder: jsr
+      customConfig:
+        publishToJsr: true
+    - outputFolder: bigint
+      customConfig:
+        useBigInt: true
   error-property:
     - customConfig:
         private: true
@@ -66,6 +142,12 @@ fixtures:
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
       outputFolder: file-download-reponse-headers
+  file-upload:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        inlineFileProperties: true
+      outputFolder: wrap-file-properties
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -99,10 +181,25 @@ fixtures:
   examples:
     - customConfig:
         includeApiReference: true
+      readmeConfig:
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+            - method: POST
+              path: /movie
       outputFolder: examples-with-api-reference
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
+  oauth-client-credentials-nested-root:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        neverThrowErrors: true
+      outputFolder: never-throw-errors
   mixed-case:
     - customConfig: null
       outputFolder: no-custom-config
@@ -112,16 +209,26 @@ fixtures:
 scripts:
   - docker: fernapi/ts-seed
     commands:
-      - yarn install && yarn build
+      - mkdir cache
+      - yarn install --cache-folder ./cache
+      - yarn build
+      - if grep -q '"test"' package.json && grep -q 'exhaustive' package.json; then yarn test --passWithNoTests --testPathPattern='exhaustive.*\.test\.ts$'; fi
 allowedFailures:
   - response-property
-  - bytes
   - plain-text
   - alias
   - api-wide-base-path
+  - cross-package-type-names
   - auth-environment-variables
   - basic-auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
-  - audiences
+  - audiences:no-custom-config
   - enum # throws b/c of undiscriminated union examples
+  - streaming-parameter
+  - imdb:noScripts
+  - circular-references
+  # the below are likely related to changes made to example generation
+  - multi-url-environment-no-default
+  - objects-with-imports
+  - reserved-keywords

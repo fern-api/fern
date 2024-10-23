@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Migration.Builder.class)
 public final class Migration {
     private final String name;
@@ -89,14 +89,14 @@ public final class Migration {
         @java.lang.Override
         @JsonSetter("name")
         public StatusStage name(String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(MigrationStatus status) {
-            this.status = status;
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 

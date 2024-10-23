@@ -1,12 +1,7 @@
 import datetime as dt
 import typing
-
-from core_utilities.sdk.unchecked_base_model import UncheckedBaseModel
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+import pydantic
+from core_utilities.shared.unchecked_base_model import UncheckedBaseModel
 
 
 class ObjectWithDefaultedOptionalFields(UncheckedBaseModel):
@@ -26,10 +21,3 @@ class ObjectWithDefaultedOptionalFields(UncheckedBaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic.Extra.allow

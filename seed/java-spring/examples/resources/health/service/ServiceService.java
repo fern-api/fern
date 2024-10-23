@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
     path = "/"
 )
 public interface ServiceService {
-  @GetMapping("/check/{id}")
+  @GetMapping(
+      value = "/check/{id}",
+      produces = "application/json"
+  )
   void check(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @PathVariable("id") String id);
 

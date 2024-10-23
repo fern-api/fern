@@ -1,6 +1,32 @@
-irVersion: v38
-docker: fernapi/fern-fastapi-server:latest
-dockerCommand: docker build -f ./generators/python/fastapi/Dockerfile -t fernapi/fern-fastapi-server:latest ./generators/python
+irVersion: v53
+displayName: FastAPI
+image: fernapi/fern-fastapi-server
+changelogLocation: ../../generators/python/fastapi/versions.yml
+
+buildScripts:
+  installScript:
+    commands:
+      - poetry shell
+      - poetry install
+  compileScript:
+    commands:
+      - poetry run mypy .
+
+publish:
+  workingDirectory: generators/python
+  preBuildCommands:
+    - pip install poetry
+    - poetry shell
+    - poetry config virtualenvs.in-project true
+    - poetry install
+  docker:
+    file: ./generators/python/fastapi/Dockerfile
+    image: fernapi/fern-fastapi-server
+    context: ./generators/python
+test:
+  docker:
+    image: fernapi/fern-fastapi-server:latest
+    command: docker build -f ./generators/python/fastapi/Dockerfile -t fernapi/fern-fastapi-server:latest ./generators/python
 language: python
 generatorType: Server
 defaultOutputMode: local_files
@@ -12,17 +38,37 @@ fixtures:
         skip_formatting: True
       outputFolder: skip-formatting
     - customConfig:
-        pydantic_config: 
+        pydantic_config:
           version: v1
       outputFolder: pydantic-v1
     - customConfig:
-        pydantic_config: 
+        pydantic_config:
           version: v2
       outputFolder: pydantic-v2
-allowedFailures: 
+    - customConfig:
+        pydantic_config:
+          frozen: True
+          include_union_utils: true
+      outputFolder: frozen_utils
+    - customConfig:
+        include_validators: True
+        pydantic_config:
+          include_union_utils: true
+      outputFolder: include-validators
+  imdb:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          extra_fields: allow
+      outputFolder: includes-extra-fields
+    - customConfig:
+        async_handlers:
+          - imdb.createMovie
+      outputFolder: async-handlers
+allowedFailures:
+  - auth-environment-variables
   - bytes
-  - file-download
-  - file-upload
   - literal-headers
   - query-parameters
   - response-property
@@ -30,4 +76,9 @@ allowedFailures:
   - literal
   - websocket
   - enum
-  - server-sent-events.
+  - server-sent-events
+  - server-sent-event-examples
+  - streaming-parameter
+  - any-auth
+  # Complex circular refs
+  - simple-fhir

@@ -9,12 +9,23 @@ export declare namespace SeedAuthEnvironmentVariablesClient {
     interface Options {
         environment: core.Supplier<string>;
         apiKey?: core.Supplier<string | undefined>;
+        /** Override the X-Another-Header header */
         xAnotherHeader: core.Supplier<string>;
+        /** Override the X-API-Version header */
+        xApiVersion?: "01-01-2000";
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Another-Header header */
+        xAnotherHeader?: string;
+        /** Override the X-API-Version header */
+        xApiVersion?: "01-01-2000";
     }
 }
 

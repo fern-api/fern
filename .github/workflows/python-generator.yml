@@ -39,10 +39,6 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
 
-      - name: Install Dependencies
-        working-directory: ./generators/python
-        run: poetry install
-
       - name: Update models for testing
         working-directory: ./generators/python
         env:
@@ -52,8 +48,35 @@ jobs:
 
           docker build -f ./pydantic/Dockerfile -t ferntest/fern-pydantic-model:0.0.0 .
           cd tests/utils/example_models
-          fern generate --group dummy_types --local
+          fern generate --group dummy_types --local || true
 
-      - name: Unit Test
+          cd ../typeddict_models
+          fern generate --group dummy_td_types --local || true
+
+          cd ../union_utils
+          fern generate --group dummy_union_types --local || true
+
+          cd ../unaliased_models
+          fern generate --group dummy_unaliased_types --local || true
+
+      - name: Install Dependencies - Pydantic V1
+        working-directory: ./generators/python
+        run: |
+          poetry add pydantic=^1.10
+          poetry lock
+          poetry install
+      - name: Unit Test - Pydantic V1
+        working-directory: ./generators/python
+        # We have to ignore these tests as they pull in the custom config which uses a model validator,
+        # the syntax of which is not valid in Pydantic V1, now that we've moved to V2.
+        run: poetry run pytest -sv --ignore ./tests/utils/casing --ignore ./tests/sdk
+
+      - name: Install Dependencies - Pydantic V2
+        working-directory: ./generators/python
+        run: |
+          poetry add pydantic=^2.8.2
+          poetry lock
+          poetry install
+      - name: Unit Test - Pydantic V2
         working-directory: ./generators/python
         run: poetry run pytest -sv

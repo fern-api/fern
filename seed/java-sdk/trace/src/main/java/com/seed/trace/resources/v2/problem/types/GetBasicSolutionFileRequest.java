@@ -14,8 +14,9 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetBasicSolutionFileRequest.Builder.class)
 public final class GetBasicSolutionFileRequest {
     private final String methodName;
@@ -71,13 +72,13 @@ public final class GetBasicSolutionFileRequest {
     }
 
     public interface MethodNameStage {
-        SignatureStage methodName(String methodName);
+        SignatureStage methodName(@NotNull String methodName);
 
         Builder from(GetBasicSolutionFileRequest other);
     }
 
     public interface SignatureStage {
-        _FinalStage signature(NonVoidFunctionSignature signature);
+        _FinalStage signature(@NotNull NonVoidFunctionSignature signature);
     }
 
     public interface _FinalStage {
@@ -104,15 +105,15 @@ public final class GetBasicSolutionFileRequest {
 
         @java.lang.Override
         @JsonSetter("methodName")
-        public SignatureStage methodName(String methodName) {
-            this.methodName = methodName;
+        public SignatureStage methodName(@NotNull String methodName) {
+            this.methodName = Objects.requireNonNull(methodName, "methodName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("signature")
-        public _FinalStage signature(NonVoidFunctionSignature signature) {
-            this.signature = signature;
+        public _FinalStage signature(@NotNull NonVoidFunctionSignature signature) {
+            this.signature = Objects.requireNonNull(signature, "signature must not be null");
             return this;
         }
 

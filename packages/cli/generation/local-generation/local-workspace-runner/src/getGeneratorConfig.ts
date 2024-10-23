@@ -4,6 +4,7 @@ import {
     GithubPublishInfo as FiddleGithubPublishInfo,
     MavenOutput,
     NpmOutput,
+    NugetOutput,
     PostmanOutput,
     PublishOutputMode,
     PublishOutputModeV2,
@@ -12,7 +13,12 @@ import {
 } from "@fern-fern/fiddle-sdk/api";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
-import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR, DOCKER_PATH_TO_SNIPPET } from "./constants";
+import {
+    DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+    DOCKER_PATH_TO_IR,
+    DOCKER_PATH_TO_SNIPPET,
+    DOCKER_PATH_TO_SNIPPET_TEMPLATES
+} from "./constants";
 
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
 
@@ -24,7 +30,10 @@ export declare namespace getGeneratorConfig {
         customConfig: unknown;
         generatorInvocation: generatorsYml.GeneratorInvocation;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
+        absolutePathToSnippetTemplates: AbsoluteFilePath | undefined;
         writeUnitTests: boolean;
+        generateOauthClients: boolean;
+        generatePaginatedClients: boolean;
     }
 
     export interface Return {
@@ -77,6 +86,12 @@ function getGithubPublishConfig(
                       apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? ""),
                       workspaceIdEnvironmentVariable: EnvironmentVariable(value.workspaceId ?? "")
                   }),
+              nuget: (value) =>
+                  FernGeneratorExec.GithubPublishInfo.nuget({
+                      registryUrl: value.registryUrl,
+                      packageName: value.packageName,
+                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? "")
+                  }),
               _other: () => undefined
           })
         : undefined;
@@ -89,7 +104,10 @@ export function getGeneratorConfig({
     organization,
     outputVersion = DEFAULT_OUTPUT_VERSION,
     absolutePathToSnippet,
-    writeUnitTests
+    absolutePathToSnippetTemplates,
+    writeUnitTests,
+    generateOauthClients,
+    generatePaginatedClients
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
@@ -117,7 +135,8 @@ export function getGeneratorConfig({
                 mode: FernGeneratorExec.OutputMode.github({
                     repoUrl: `https://github.com/${value.owner}/${value.repo}`,
                     version: outputVersion,
-                    publishInfo: getGithubPublishConfig(value.publishInfo)
+                    publishInfo: getGithubPublishConfig(value.publishInfo),
+                    installationToken: undefined // Don't attempt to clone the repository when generating locally.
                 }),
                 path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
                 publishingMetadata: generatorInvocation.publishMetadata
@@ -125,6 +144,10 @@ export function getGeneratorConfig({
             if (absolutePathToSnippet !== undefined) {
                 binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
                 outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
+            }
+            if (absolutePathToSnippetTemplates !== undefined) {
+                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
+                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
             }
             return outputConfig;
         },
@@ -150,6 +173,10 @@ export function getGeneratorConfig({
                 binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
                 outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
             }
+            if (absolutePathToSnippetTemplates !== undefined) {
+                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
+                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
+            }
             return outputConfig;
         },
         _other: () => {
@@ -168,7 +195,9 @@ export function getGeneratorConfig({
             environment: FernGeneratorExec.GeneratorEnvironment.local(),
             dryRun: false,
             whitelabel: false,
-            writeUnitTests
+            writeUnitTests,
+            generateOauthClients,
+            generatePaginatedClients
         }
     };
 }
@@ -177,18 +206,19 @@ function newDummyPublishOutputConfig(
     version: string,
     multipleOutputMode: PublishOutputMode | PublishOutputModeV2
 ): FernGeneratorExec.GeneratorOutputConfig {
-    let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | undefined;
+    let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined;
     if ("registryOverrides" in multipleOutputMode) {
         outputMode = multipleOutputMode.registryOverrides.maven ?? multipleOutputMode.registryOverrides.npm;
     } else if (outputMode != null) {
         outputMode = multipleOutputMode._visit<
-            NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | undefined
+            NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined
         >({
             mavenOverride: (value) => value,
             npmOverride: (value) => value,
             pypiOverride: (value) => value,
             rubyGemsOverride: (value) => value,
             postman: (value) => value,
+            nugetOverride: (value) => value,
             _other: () => undefined
         });
     }
@@ -226,12 +256,18 @@ function newDummyPublishOutputConfig(
                     packageName: (outputMode as PypiOutput)?.coordinate ?? "",
                     password: (outputMode as PypiOutput)?.password ?? "",
                     registryUrl: (outputMode as PypiOutput)?.registryUrl ?? "",
-                    username: (outputMode as PypiOutput)?.username ?? ""
+                    username: (outputMode as PypiOutput)?.username ?? "",
+                    pypiMetadata: (outputMode as PypiOutput)?.pypiMetadata
                 },
                 rubygems: {
                     registryUrl: (outputMode as RubyGemsOutput)?.registryUrl ?? "",
                     apiKey: (outputMode as RubyGemsOutput)?.apiKey ?? "",
                     packageName: (outputMode as RubyGemsOutput)?.packageName ?? ""
+                },
+                nuget: {
+                    registryUrl: (outputMode as NugetOutput)?.registryUrl ?? "",
+                    apiKey: (outputMode as NugetOutput)?.apiKey ?? "",
+                    packageName: (outputMode as NugetOutput)?.packageName ?? ""
                 }
             },
             version

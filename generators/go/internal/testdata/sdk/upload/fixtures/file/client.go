@@ -49,7 +49,7 @@ func (c *Client) Upload(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "file/upload"
+	endpointURL := baseURL + "/file/upload"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -81,13 +81,15 @@ func (c *Client) Upload(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     requestBuffer,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         requestBuffer,
+			Response:        &response,
 		},
 	); err != nil {
 		return "", err
@@ -109,7 +111,7 @@ func (c *Client) UploadSimple(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "file/upload-simple"
+	endpointURL := baseURL + "/file/upload-simple"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -135,13 +137,15 @@ func (c *Client) UploadSimple(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     requestBuffer,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         requestBuffer,
+			Response:        &response,
 		},
 	); err != nil {
 		return "", err
@@ -165,7 +169,7 @@ func (c *Client) UploadMultiple(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "file/upload-multi"
+	endpointURL := baseURL + "/file/upload-multi"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -207,13 +211,15 @@ func (c *Client) UploadMultiple(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     requestBuffer,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         requestBuffer,
+			Response:        &response,
 		},
 	); err != nil {
 		return "", err

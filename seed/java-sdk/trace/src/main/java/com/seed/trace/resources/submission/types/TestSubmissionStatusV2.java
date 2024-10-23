@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TestSubmissionStatusV2.Builder.class)
 public final class TestSubmissionStatusV2 {
     private final List<TestSubmissionUpdate> updates;
@@ -98,7 +99,7 @@ public final class TestSubmissionStatusV2 {
     }
 
     public interface ProblemIdStage {
-        ProblemVersionStage problemId(String problemId);
+        ProblemVersionStage problemId(@NotNull String problemId);
 
         Builder from(TestSubmissionStatusV2 other);
     }
@@ -108,7 +109,7 @@ public final class TestSubmissionStatusV2 {
     }
 
     public interface ProblemInfoStage {
-        _FinalStage problemInfo(ProblemInfoV2 problemInfo);
+        _FinalStage problemInfo(@NotNull ProblemInfoV2 problemInfo);
     }
 
     public interface _FinalStage {
@@ -147,8 +148,8 @@ public final class TestSubmissionStatusV2 {
 
         @java.lang.Override
         @JsonSetter("problemId")
-        public ProblemVersionStage problemId(String problemId) {
-            this.problemId = problemId;
+        public ProblemVersionStage problemId(@NotNull String problemId) {
+            this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
             return this;
         }
 
@@ -161,8 +162,8 @@ public final class TestSubmissionStatusV2 {
 
         @java.lang.Override
         @JsonSetter("problemInfo")
-        public _FinalStage problemInfo(ProblemInfoV2 problemInfo) {
-            this.problemInfo = problemInfo;
+        public _FinalStage problemInfo(@NotNull ProblemInfoV2 problemInfo) {
+            this.problemInfo = Objects.requireNonNull(problemInfo, "problemInfo must not be null");
             return this;
         }
 

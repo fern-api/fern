@@ -15,8 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WorkspaceRanResponse.Builder.class)
 public final class WorkspaceRanResponse {
     private final UUID submissionId;
@@ -72,13 +73,13 @@ public final class WorkspaceRanResponse {
     }
 
     public interface SubmissionIdStage {
-        RunDetailsStage submissionId(UUID submissionId);
+        RunDetailsStage submissionId(@NotNull UUID submissionId);
 
         Builder from(WorkspaceRanResponse other);
     }
 
     public interface RunDetailsStage {
-        _FinalStage runDetails(WorkspaceRunDetails runDetails);
+        _FinalStage runDetails(@NotNull WorkspaceRunDetails runDetails);
     }
 
     public interface _FinalStage {
@@ -105,15 +106,15 @@ public final class WorkspaceRanResponse {
 
         @java.lang.Override
         @JsonSetter("submissionId")
-        public RunDetailsStage submissionId(UUID submissionId) {
-            this.submissionId = submissionId;
+        public RunDetailsStage submissionId(@NotNull UUID submissionId) {
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("runDetails")
-        public _FinalStage runDetails(WorkspaceRunDetails runDetails) {
-            this.runDetails = runDetails;
+        public _FinalStage runDetails(@NotNull WorkspaceRunDetails runDetails) {
+            this.runDetails = Objects.requireNonNull(runDetails, "runDetails must not be null");
             return this;
         }
 

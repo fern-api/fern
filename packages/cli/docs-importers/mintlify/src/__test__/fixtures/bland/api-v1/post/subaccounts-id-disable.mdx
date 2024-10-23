@@ -1,0 +1,46 @@
+---
+title: "Disable Subaccount"
+api: "POST https://api.bland.ai/v1/subaccounts/{subaccount_id}/disable"
+description: "Immediately disables a subaccount and transfers any remaining credits back to the parent account."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="subaccount_id" type="string" required>
+  The unique identifier of the subaccount to which you want to transfer credits.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Whether the subaccount was successfully disabled.
+</ResponseField>
+
+<ResponseField name="subaccount_id" type="string">
+  The affected subaccount's unique identifier.
+</ResponseField>
+
+<ResponseField name="transferred_amount" type="number">
+  The amount of credits transferred back to the parent account.
+</ResponseField>
+
+<ResponseField name="new_parent_balance" type="number">
+  The new balance of the parent account after the transfer.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "status": "success",
+    "subaccount_id": "1234567890",
+    "transferred_amount": 1000,
+    "new_parent_balance": 5000
+}
+```
+</ResponseExample>

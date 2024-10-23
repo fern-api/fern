@@ -1,12 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedResponseProperty.Core;
+
+#nullable enable
 
 namespace SeedResponseProperty;
 
-public class Movie
+public record Movie
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

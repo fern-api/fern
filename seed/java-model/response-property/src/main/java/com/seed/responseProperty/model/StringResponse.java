@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.responseProperty.core.ObjectMappers;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StringResponse.Builder.class)
 public final class StringResponse {
     private final String data;
@@ -74,7 +74,7 @@ public final class StringResponse {
         @java.lang.Override
         @JsonSetter("data")
         public _FinalStage data(String data) {
-            this.data = data;
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 

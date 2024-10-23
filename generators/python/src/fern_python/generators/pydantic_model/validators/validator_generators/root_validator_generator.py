@@ -166,7 +166,6 @@ class RootValidatorGenerator(ValidatorGenerator):
         return f"_{prefix}RootValidator"
 
     def write_example_for_docstring(self, writer: AST.NodeWriter) -> None:
-
         reference_to_decorator = ".".join(
             (*self._reference_to_validators_class, RootValidatorGenerator._DECORATOR_FUNCTION_NAME)
         )

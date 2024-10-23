@@ -26,12 +26,26 @@ module SeedTraceClient
     # @param request [SeedTraceClient::Submission::TestSubmissionStatus]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.update_test_submission_status(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
     def update_test_submission_status(submission_id:, request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-test-submission-status/#{submission_id}"
       end
@@ -43,12 +57,26 @@ module SeedTraceClient
     #   * :update_info (Hash)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.send_test_submission_update(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: { update_time: DateTime.parse("2024-01-15T09:30:00.000Z") })
     def send_test_submission_update(submission_id:, request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-test-submission-status-v2/#{submission_id}"
       end
@@ -58,12 +86,26 @@ module SeedTraceClient
     # @param request [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.update_workspace_submission_status(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
     def update_workspace_submission_status(submission_id:, request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-workspace-submission-status/#{submission_id}"
       end
@@ -75,12 +117,26 @@ module SeedTraceClient
     #   * :update_info (Hash)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.send_workspace_submission_update(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: { update_time: DateTime.parse("2024-01-15T09:30:00.000Z") })
     def send_workspace_submission_update(submission_id:, request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-workspace-submission-status-v2/#{submission_id}"
       end
@@ -110,12 +166,31 @@ module SeedTraceClient
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.store_traced_test_case(
+    #    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    #    test_case_id: "testCaseId",
+    #    result: { result: { passed: true }, stdout: "stdout" },
+    #    trace_responses: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, stack: { num_stack_frames: 1 } }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, stack: { num_stack_frames: 1 } }]
+    #  )
     def store_traced_test_case(submission_id:, test_case_id:, result:, trace_responses:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           result: result,
@@ -146,12 +221,30 @@ module SeedTraceClient
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.store_traced_test_case_v_2(
+    #    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    #    test_case_id: "testCaseId",
+    #    request: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, stack: { num_stack_frames: 1 } }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, stack: { num_stack_frames: 1 } }]
+    #  )
     def store_traced_test_case_v_2(submission_id:, test_case_id:, request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-test-trace-v2/submission/#{submission_id}/testCase/#{test_case_id}"
       end
@@ -181,12 +274,30 @@ module SeedTraceClient
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.store_traced_workspace(
+    #    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    #    workspace_run_details: { stdout: "stdout" },
+    #    trace_responses: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, stack: { num_stack_frames: 1 } }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, stack: { num_stack_frames: 1 } }]
+    #  )
     def store_traced_workspace(submission_id:, workspace_run_details:, trace_responses:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           workspaceRunDetails: workspace_run_details,
@@ -216,12 +327,26 @@ module SeedTraceClient
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.store_traced_workspace_v_2(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, stack: { num_stack_frames: 1 } }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, stack: { num_stack_frames: 1 } }])
     def store_traced_workspace_v_2(submission_id:, request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-workspace-trace-v2/submission/#{submission_id}"
       end
@@ -242,13 +367,27 @@ module SeedTraceClient
     # @param request [SeedTraceClient::Submission::TestSubmissionStatus]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.update_test_submission_status(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
     def update_test_submission_status(submission_id:, request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-test-submission-status/#{submission_id}"
         end
@@ -261,13 +400,27 @@ module SeedTraceClient
     #   * :update_info (Hash)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.send_test_submission_update(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: { update_time: DateTime.parse("2024-01-15T09:30:00.000Z") })
     def send_test_submission_update(submission_id:, request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-test-submission-status-v2/#{submission_id}"
         end
@@ -278,13 +431,27 @@ module SeedTraceClient
     # @param request [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.update_workspace_submission_status(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
     def update_workspace_submission_status(submission_id:, request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-workspace-submission-status/#{submission_id}"
         end
@@ -297,13 +464,27 @@ module SeedTraceClient
     #   * :update_info (Hash)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.send_workspace_submission_update(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: { update_time: DateTime.parse("2024-01-15T09:30:00.000Z") })
     def send_workspace_submission_update(submission_id:, request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-workspace-submission-status-v2/#{submission_id}"
         end
@@ -334,13 +515,32 @@ module SeedTraceClient
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.store_traced_test_case(
+    #    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    #    test_case_id: "testCaseId",
+    #    result: { result: { passed: true }, stdout: "stdout" },
+    #    trace_responses: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, stack: { num_stack_frames: 1 } }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, stack: { num_stack_frames: 1 } }]
+    #  )
     def store_traced_test_case(submission_id:, test_case_id:, result:, trace_responses:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             result: result,
@@ -372,13 +572,31 @@ module SeedTraceClient
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.store_traced_test_case_v_2(
+    #    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    #    test_case_id: "testCaseId",
+    #    request: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, stack: { num_stack_frames: 1 } }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, stack: { num_stack_frames: 1 } }]
+    #  )
     def store_traced_test_case_v_2(submission_id:, test_case_id:, request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-test-trace-v2/submission/#{submission_id}/testCase/#{test_case_id}"
         end
@@ -409,13 +627,31 @@ module SeedTraceClient
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.store_traced_workspace(
+    #    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    #    workspace_run_details: { stdout: "stdout" },
+    #    trace_responses: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, stack: { num_stack_frames: 1 } }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, stack: { num_stack_frames: 1 } }]
+    #  )
     def store_traced_workspace(submission_id:, workspace_run_details:, trace_responses:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             workspaceRunDetails: workspace_run_details,
@@ -446,13 +682,27 @@ module SeedTraceClient
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.admin.store_traced_workspace_v_2(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, stack: { num_stack_frames: 1 } }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, stack: { num_stack_frames: 1 } }])
     def store_traced_workspace_v_2(submission_id:, request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/admin/store-workspace-trace-v2/submission/#{submission_id}"
         end

@@ -1,22 +1,24 @@
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
-import { DocsV1Write } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";
-import { getAllPages } from "./getAllPages";
+import { getAllPages, loadAllPages } from "./getAllPages";
 import {
     AbsoluteJsFileConfig,
     DocsNavigationConfiguration,
     DocsNavigationItem,
+    FilepathOrUrl,
     FontConfig,
-    ImageReference,
     JavascriptConfig,
-    ParsedApiNavigationItem,
+    ParsedApiReferenceLayoutItem,
     ParsedDocsConfiguration,
+    ParsedMetadataConfig,
     TabbedDocsNavigation,
+    TabbedNavigation,
     TypographyConfig,
     UntabbedDocsNavigation,
     VersionInfo
@@ -36,39 +38,59 @@ export async function parseDocsConfiguration({
 }): Promise<WithoutQuestionMarks<ParsedDocsConfiguration>> {
     const {
         instances,
-        navigation,
-        colors,
-        favicon: faviconRef,
-        backgroundImage: rawBackgroundImage,
-        logo: rawLogo,
-        navbarLinks,
         title,
-        typography: rawTypography,
+
+        /* navigation */
         tabs,
         versions,
+        navigation: rawNavigation,
+        navbarLinks,
+        footerLinks,
+        defaultLanguage,
+
+        /* seo */
+        metadata: rawMetadata,
+        redirects,
+
+        /* branding */
+        logo: rawLogo,
+        favicon: faviconRef,
+        backgroundImage: rawBackgroundImage,
+        colors,
+        typography: rawTypography,
         layout,
+        analytics: analyticsConfig,
+        /* integrations */
+        integrations,
+
+        /* scripts */
         css: rawCssConfig,
-        js: rawJsConfig
+        js: rawJsConfig,
+
+        experimental
     } = rawDocsConfiguration;
 
+    const landingPage = parsePageConfig(rawDocsConfiguration.landingPage, absoluteFilepathToDocsConfig);
+
     const convertedNavigationPromise = getNavigationConfiguration({
+        tabs,
         versions,
-        navigation,
+        navigation: rawNavigation,
         absolutePathToFernFolder,
         absolutePathToConfig: absoluteFilepathToDocsConfig,
         context
     });
 
     const pagesPromise = convertedNavigationPromise.then((convertedNavigation) =>
-        getAllPages({ navigation: convertedNavigation, absolutePathToFernFolder })
+        loadAllPages({
+            files: getAllPages({ navigation: convertedNavigation, landingPage }),
+            absolutePathToFernFolder
+        })
     );
 
     const logo = convertLogoReference(rawLogo, absoluteFilepathToDocsConfig);
 
-    const favicon =
-        faviconRef != null
-            ? convertImageReference({ rawImageReference: faviconRef, absoluteFilepathToDocsConfig })
-            : undefined;
+    const favicon = resolveFilepath(faviconRef, absoluteFilepathToDocsConfig);
 
     const backgroundImage = convertBackgroundImage(rawBackgroundImage, absoluteFilepathToDocsConfig);
 
@@ -83,40 +105,90 @@ export async function parseDocsConfiguration({
     const cssPromise = convertCssConfig(rawCssConfig, absoluteFilepathToDocsConfig);
     const jsPromise = convertJsConfig(rawJsConfig, absoluteFilepathToDocsConfig);
 
-    const [convertedNavigation, pages, typography, css, js] = await Promise.all([
+    const metadataPromise = convertMetadata(rawMetadata, absoluteFilepathToDocsConfig);
+
+    const [navigation, pages, typography, css, js, metadata] = await Promise.all([
         convertedNavigationPromise,
         pagesPromise,
         typographyPromise,
         cssPromise,
-        jsPromise
+        jsPromise,
+        metadataPromise
     ]);
 
     return {
-        instances,
-        absoluteFilepath: absoluteFilepathToDocsConfig,
-        pages,
-        navigation: convertedNavigation,
         title,
-        tabs,
+        // absoluteFilepath: absoluteFilepathToDocsConfig,
+        instances,
+
+        /* filepath of page to contents */
+        pages,
+
+        /* navigation */
+        landingPage,
+        navigation,
+        navbarLinks: convertNavbarLinks(navbarLinks),
+        footerLinks: convertFooterLinks(footerLinks),
+        defaultLanguage,
+        announcement: rawDocsConfiguration.announcement,
+
+        /* seo */
+        metadata,
+        redirects: redirects?.map((redirect) => ({
+            ...redirect,
+            permanent: redirect?.permanent
+        })),
+
+        /* branding */
         logo,
         favicon,
         backgroundImage,
-        colors: convertColorsConfiguration(
-            colors ?? {
-                accentPrimary: undefined,
-                background: undefined
-            },
-            context
-        ),
-        navbarLinks: navbarLinks?.map((navbarLink) => ({
-            type: navbarLink.type,
-            text: navbarLink.text,
-            url: navbarLink.href ?? navbarLink.url ?? "/"
-        })),
+        colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout),
+        analyticsConfig: {
+            ...rawDocsConfiguration.analytics,
+            intercom: rawDocsConfiguration.analytics?.intercom
+                ? {
+                      ...rawDocsConfiguration.analytics.intercom,
+                      appId: rawDocsConfiguration.analytics.intercom.appId,
+                      apiBase: rawDocsConfiguration.analytics.intercom.apiBase
+                  }
+                : undefined,
+            fullstory: rawDocsConfiguration.analytics?.fullstory,
+            posthog: rawDocsConfiguration.analytics?.posthog
+                ? {
+                      ...rawDocsConfiguration.analytics.posthog,
+                      apiKey: rawDocsConfiguration.analytics.posthog.apiKey,
+                      endpoint: rawDocsConfiguration.analytics.posthog.endpoint
+                  }
+                : undefined,
+            segment: rawDocsConfiguration.analytics?.segment,
+            gtm: undefined,
+            ga4: undefined,
+            amplitude: undefined,
+            mixpanel: undefined,
+            hotjar: undefined,
+            koala: undefined,
+            logrocket: undefined,
+            pirsch: undefined,
+            plausible: undefined,
+            fathom: undefined,
+            clearbit: undefined,
+            heap: undefined
+        },
+
+        /* integrations */
+        integrations: {
+            ...integrations,
+            intercom: integrations?.intercom ? integrations.intercom : undefined
+        },
+
+        /* scripts */
         css,
-        js
+        js,
+
+        experimental
     };
 }
 
@@ -126,22 +198,10 @@ function convertLogoReference(
 ): ParsedDocsConfiguration["logo"] {
     return rawLogo != null
         ? {
-              dark:
-                  rawLogo.dark != null
-                      ? convertImageReference({
-                            rawImageReference: rawLogo.dark,
-                            absoluteFilepathToDocsConfig
-                        })
-                      : undefined,
-              light:
-                  rawLogo.light != null
-                      ? convertImageReference({
-                            rawImageReference: rawLogo.light,
-                            absoluteFilepathToDocsConfig
-                        })
-                      : undefined,
+              dark: resolveFilepath(rawLogo.dark, absoluteFilepathToDocsConfig),
+              light: resolveFilepath(rawLogo.light, absoluteFilepathToDocsConfig),
               height: rawLogo.height,
-              href: rawLogo.href != null ? rawLogo.href : undefined
+              href: rawLogo.href != null ? CjsFdrSdk.Url(rawLogo.href) : undefined
           }
         : undefined;
 }
@@ -153,27 +213,12 @@ function convertBackgroundImage(
     if (rawBackgroundImage == null) {
         return undefined;
     } else if (typeof rawBackgroundImage === "string") {
-        const image = convertImageReference({
-            rawImageReference: rawBackgroundImage,
-            absoluteFilepathToDocsConfig
-        });
+        const image = resolveFilepath(rawBackgroundImage, absoluteFilepathToDocsConfig);
 
         return { dark: image, light: image };
     } else {
-        const dark =
-            rawBackgroundImage.dark != null
-                ? convertImageReference({
-                      rawImageReference: rawBackgroundImage.dark,
-                      absoluteFilepathToDocsConfig
-                  })
-                : undefined;
-        const light =
-            rawBackgroundImage.light != null
-                ? convertImageReference({
-                      rawImageReference: rawBackgroundImage.light,
-                      absoluteFilepathToDocsConfig
-                  })
-                : undefined;
+        const dark = resolveFilepath(rawBackgroundImage.dark, absoluteFilepathToDocsConfig);
+        const light = resolveFilepath(rawBackgroundImage.light, absoluteFilepathToDocsConfig);
 
         return { dark, light };
     }
@@ -190,12 +235,7 @@ async function convertCssConfig(
     return {
         inline: await Promise.all(
             cssFilePaths.map(async (cssFilePath) => {
-                const content = await readFile(
-                    resolveFilepath({
-                        rawUnresolvedFilepath: cssFilePath,
-                        absolutePath: absoluteFilepathToDocsConfig
-                    })
-                );
+                const content = await readFile(resolveFilepath(cssFilePath, absoluteFilepathToDocsConfig));
                 return content.toString();
             })
         )
@@ -218,7 +258,7 @@ async function convertJsConfig(
     js: RawDocs.JsConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): Promise<JavascriptConfig> {
-    const remote: DocsV1Write.JsRemoteConfig[] = [];
+    const remote: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[] = [];
     const files: AbsoluteJsFileConfig[] = [];
     if (js == null) {
         return { files: [] };
@@ -229,19 +269,16 @@ async function convertJsConfig(
     for (const config of configs) {
         if (typeof config === "string") {
             files.push({
-                absolutePath: resolveFilepath({
-                    rawUnresolvedFilepath: config,
-                    absolutePath: absoluteFilepathToDocsConfig
-                })
+                absolutePath: resolveFilepath(config, absoluteFilepathToDocsConfig)
             });
         } else if (isRemoteJsConfig(config)) {
-            remote.push(config);
+            remote.push({
+                strategy: config.strategy,
+                url: CjsFdrSdk.Url(config.url)
+            });
         } else if (isFileJsConfig(config)) {
             files.push({
-                absolutePath: resolveFilepath({
-                    rawUnresolvedFilepath: config.path,
-                    absolutePath: absoluteFilepathToDocsConfig
-                }),
+                absolutePath: resolveFilepath(config.path, absoluteFilepathToDocsConfig),
                 strategy: config.strategy
             });
         }
@@ -264,23 +301,27 @@ function convertLayoutConfig(layout: RawDocs.LayoutConfig | undefined): ParsedDo
 
         searchbarPlacement:
             layout.searchbarPlacement === "header"
-                ? DocsV1Write.SidebarOrHeaderPlacement.Header
-                : DocsV1Write.SidebarOrHeaderPlacement.Sidebar,
+                ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Header
+                : layout.searchbarPlacement === "header-tabs"
+                ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
+                : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
         tabsPlacement:
             layout.tabsPlacement === "header"
-                ? DocsV1Write.SidebarOrHeaderPlacement.Header
-                : DocsV1Write.SidebarOrHeaderPlacement.Sidebar,
+                ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
+                : CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar,
         contentAlignment:
             layout.contentAlignment === "left"
-                ? DocsV1Write.ContentAlignment.Left
-                : DocsV1Write.ContentAlignment.Center,
+                ? CjsFdrSdk.docs.v1.commons.ContentAlignment.Left
+                : CjsFdrSdk.docs.v1.commons.ContentAlignment.Center,
         headerPosition:
-            layout.headerPosition === "static" ? DocsV1Write.HeaderPosition.Absolute : DocsV1Write.HeaderPosition.Fixed,
+            layout.headerPosition === "static"
+                ? CjsFdrSdk.docs.v1.commons.HeaderPosition.Absolute
+                : CjsFdrSdk.docs.v1.commons.HeaderPosition.Fixed,
         disableHeader: layout.disableHeader ?? false
     };
 }
 
-function parseSizeConfig(sizeAsString: string | undefined): DocsV1Write.SizeConfig | undefined {
+function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.commons.SizeConfig | undefined {
     if (sizeAsString == null) {
         return undefined;
     }
@@ -307,12 +348,14 @@ function parseSizeConfig(sizeAsString: string | undefined): DocsV1Write.SizeConf
 }
 
 async function getNavigationConfiguration({
+    tabs,
     versions,
     navigation,
     absolutePathToFernFolder,
     absolutePathToConfig,
     context
 }: {
+    tabs?: Record<string, RawDocs.TabConfig>;
     versions?: VersionConfig[];
     navigation?: NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -321,6 +364,7 @@ async function getNavigationConfiguration({
 }): Promise<DocsNavigationConfiguration> {
     if (navigation != null) {
         return await convertNavigationConfiguration({
+            tabs,
             rawNavigationConfig: navigation,
             absolutePathToFernFolder,
             absolutePathToConfig,
@@ -333,13 +377,14 @@ async function getNavigationConfiguration({
             const content = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
             const result = await Serializer.VersionFileConfig.parseOrThrow(content);
             const navigation = await convertNavigationConfiguration({
+                tabs: result.tabs,
                 rawNavigationConfig: result.navigation,
                 absolutePathToFernFolder,
                 absolutePathToConfig: absoluteFilepathToVersionFile,
                 context
             });
             versionedNavbars.push({
-                tabs: result.tabs,
+                landingPage: parsePageConfig(result.landingPage, absoluteFilepathToVersionFile),
                 version: version.displayName,
                 navigation,
                 availability: version.availability,
@@ -434,19 +479,20 @@ function constructVariants(
 
     return Promise.all(
         variants.map(async (rawVariant) => ({
-            absolutePath: resolveFilepath({
-                absolutePath: absoluteFilepathToDocsConfig,
-                rawUnresolvedFilepath: rawVariant.path
-            }),
+            absolutePath: resolveFilepath(rawVariant.path, absoluteFilepathToDocsConfig),
             weight: parseWeight(rawVariant.weight),
             style: rawVariant.style
         }))
     );
 }
 
-function parseWeight(weight: string | undefined): string[] | undefined {
+function parseWeight(weight: string | number | undefined): string[] | undefined {
     if (weight == null) {
         return undefined;
+    }
+
+    if (typeof weight === "number") {
+        return [weight.toString()];
     }
 
     const weights = weight
@@ -458,12 +504,82 @@ function parseWeight(weight: string | undefined): string[] | undefined {
     return weights;
 }
 
+async function convertNavigationTabConfiguration({
+    tabs,
+    item,
+    absolutePathToFernFolder,
+    absolutePathToConfig,
+    context
+}: {
+    tabs: Record<string, RawDocs.TabConfig>;
+    item: RawDocs.TabbedNavigationItem;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    absolutePathToConfig: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<TabbedNavigation> {
+    const tab = tabs[item.tab];
+    if (tab == null) {
+        throw new Error(`Tab ${item.tab} is not defined in the tabs config.`);
+    }
+
+    if (item.layout != null) {
+        const layout = await Promise.all(
+            item.layout.map((item) =>
+                convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
+            )
+        );
+        return {
+            title: tab.displayName,
+            icon: tab.icon,
+            slug: tab.slug,
+            skipUrlSlug: tab.skipSlug,
+            hidden: tab.hidden,
+            child: {
+                type: "layout",
+                layout
+            }
+        };
+    }
+
+    if (tab.href != null) {
+        return {
+            title: tab.displayName,
+            icon: tab.icon,
+            slug: tab.slug,
+            skipUrlSlug: tab.skipSlug,
+            hidden: tab.hidden,
+            child: {
+                type: "link",
+                href: tab.href
+            }
+        };
+    }
+
+    if (tab.changelog != null) {
+        return {
+            title: tab.displayName,
+            icon: tab.icon,
+            slug: tab.slug,
+            skipUrlSlug: tab.skipSlug,
+            hidden: tab.hidden,
+            child: {
+                type: "changelog",
+                changelog: await listFiles(resolveFilepath(tab.changelog, absolutePathToConfig), "{md,mdx}")
+            }
+        };
+    }
+
+    assertNever(tab as never);
+}
+
 async function convertNavigationConfiguration({
+    tabs = {},
     rawNavigationConfig,
     absolutePathToFernFolder,
     absolutePathToConfig,
     context
 }: {
+    tabs?: Record<string, RawDocs.TabConfig>;
     rawNavigationConfig: RawDocs.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
@@ -471,22 +587,15 @@ async function convertNavigationConfiguration({
 }): Promise<UntabbedDocsNavigation | TabbedDocsNavigation> {
     if (isTabbedNavigationConfig(rawNavigationConfig)) {
         const tabbedNavigationItems = await Promise.all(
-            rawNavigationConfig.map(async (item) => {
-                const layout = await Promise.all(
-                    item.layout.map((item) =>
-                        convertNavigationItem({
-                            rawConfig: item,
-                            absolutePathToFernFolder,
-                            absolutePathToConfig,
-                            context
-                        })
-                    )
-                );
-                return {
-                    tab: item.tab,
-                    layout
-                };
-            })
+            rawNavigationConfig.map((item) =>
+                convertNavigationTabConfiguration({
+                    tabs,
+                    item,
+                    absolutePathToFernFolder,
+                    absolutePathToConfig,
+                    context
+                })
+            )
         );
         return {
             type: "tabbed",
@@ -504,6 +613,8 @@ async function convertNavigationConfiguration({
     }
 }
 
+const DEFAULT_CHANGELOG_TITLE = "Changelog";
+
 async function convertNavigationItem({
     rawConfig,
     absolutePathToFernFolder,
@@ -516,17 +627,7 @@ async function convertNavigationItem({
     context: TaskContext;
 }): Promise<DocsNavigationItem> {
     if (isRawPageConfig(rawConfig)) {
-        return {
-            type: "page",
-            title: rawConfig.page,
-            absolutePath: resolveFilepath({
-                absolutePath: absolutePathToConfig,
-                rawUnresolvedFilepath: rawConfig.path
-            }),
-            slug: rawConfig.slug,
-            icon: rawConfig.icon,
-            hidden: rawConfig.hidden
-        };
+        return parsePageConfig(rawConfig, absolutePathToConfig);
     }
     if (isRawSectionConfig(rawConfig)) {
         return {
@@ -541,7 +642,8 @@ async function convertNavigationItem({
             slug: rawConfig.slug ?? undefined,
             collapsed: rawConfig.collapsed ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
-            skipUrlSlug: rawConfig.skipSlug ?? false
+            skipUrlSlug: rawConfig.skipSlug ?? false,
+            overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig)
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
@@ -557,59 +659,142 @@ async function convertNavigationItem({
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
                     : undefined,
-            navigation: rawConfig.layout?.flatMap((item) => parseApiNavigationItem(item, absolutePathToConfig)) ?? [],
-            summaryAbsolutePath:
-                rawConfig.summary != null
-                    ? resolveFilepath({
-                          absolutePath: absolutePathToConfig,
-                          rawUnresolvedFilepath: rawConfig.summary
-                      })
-                    : undefined,
+            navigation:
+                rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig)) ?? [],
+            overviewAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),
             hidden: rawConfig.hidden ?? undefined,
-            skipUrlSlug: rawConfig.skipSlug ?? false
+            slug: rawConfig.slug,
+            skipUrlSlug: rawConfig.skipSlug ?? false,
+            flattened: rawConfig.flattened ?? false,
+            alphabetized: rawConfig.alphabetized ?? false,
+            paginated: rawConfig.paginated ?? false,
+            playground: rawConfig.playground
         };
     }
     if (isRawLinkConfig(rawConfig)) {
         return {
             type: "link",
             text: rawConfig.link,
-            url: rawConfig.href
+            url: rawConfig.href,
+            icon: rawConfig.icon
+        };
+    }
+    if (isRawChangelogConfig(rawConfig)) {
+        return {
+            type: "changelog",
+            changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
+            hidden: rawConfig.hidden ?? false,
+            icon: rawConfig.icon,
+            title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
+            slug: rawConfig.slug
         };
     }
     assertNever(rawConfig);
 }
 
-function parseApiNavigationItem(
-    item: RawDocs.ApiNavigationItem,
+function parsePageConfig(
+    item: RawDocs.PageConfiguration,
     absolutePathToConfig: AbsoluteFilePath
-): ParsedApiNavigationItem[] {
+): DocsNavigationItem.Page;
+function parsePageConfig(
+    item: RawDocs.PageConfiguration | undefined,
+    absolutePathToConfig: AbsoluteFilePath
+): DocsNavigationItem.Page | undefined;
+function parsePageConfig(
+    item: RawDocs.PageConfiguration | undefined,
+    absolutePathToConfig: AbsoluteFilePath
+): DocsNavigationItem.Page | undefined {
+    if (item == null) {
+        return undefined;
+    }
+    return {
+        type: "page",
+        title: item.page,
+        absolutePath: resolveFilepath(item.path, absolutePathToConfig),
+        slug: item.slug,
+        icon: item.icon,
+        hidden: item.hidden,
+        // TODO: implement noindex
+        noindex: undefined
+    };
+}
+
+function parseApiReferenceLayoutItem(
+    item: RawDocs.ApiReferenceLayoutItem,
+    absolutePathToConfig: AbsoluteFilePath
+): ParsedApiReferenceLayoutItem[] {
     if (typeof item === "string") {
         return [{ type: "item", value: item }];
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (isRawPageConfig(item)) {
+        return [parsePageConfig(item, absolutePathToConfig)];
+    } else if (isRawLinkConfig(item)) {
         return [
             {
-                type: "page",
-                title: item.page,
-                absolutePath: resolveFilepath({
-                    absolutePath: absolutePathToConfig,
-                    rawUnresolvedFilepath: item.path
-                }),
+                type: "link",
+                text: item.link,
+                url: item.href,
+                icon: item.icon
+            }
+        ];
+    } else if (isRawApiRefSectionConfiguration(item)) {
+        return [
+            {
+                type: "section",
+                title: item.section,
+                referencedSubpackages: item.referencedPackages ?? [],
+                overviewAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
+                contents:
+                    item.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
                 slug: item.slug,
+                hidden: item.hidden,
+                skipUrlSlug: item.skipSlug,
                 icon: item.icon,
-                hidden: item.hidden
+                playground: item.playground
+            }
+        ];
+    } else if (isRawApiRefEndpointConfiguration(item)) {
+        return [
+            {
+                type: "endpoint",
+                endpoint: item.endpoint,
+                title: item.title,
+                icon: item.icon,
+                slug: item.slug,
+                hidden: item.hidden,
+                playground: item.playground
             }
         ];
     }
-
-    return Object.entries(item).map(([key, values]): ParsedApiNavigationItem.Subpackage => {
+    return Object.entries(item).map(([key, value]): ParsedApiReferenceLayoutItem.Package => {
+        if (isRawApiRefPackageConfiguration(value)) {
+            return {
+                type: "package",
+                title: value.title,
+                package: key,
+                overviewAbsolutePath: resolveFilepath(value.summary, absolutePathToConfig),
+                contents:
+                    value.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
+                slug: value.slug,
+                hidden: value.hidden,
+                skipUrlSlug: value.skipSlug,
+                icon: value.icon,
+                playground: value.playground
+            };
+        }
         return {
-            type: "subpackage",
-            subpackageId: key,
-            summaryAbsolutePath: undefined, // TODO: implement subpackage summary page
-            items: values.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig))
+            type: "package",
+            title: undefined,
+            package: key,
+            overviewAbsolutePath: undefined,
+            contents: value.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)),
+            hidden: false,
+            slug: undefined,
+            skipUrlSlug: false,
+            icon: undefined,
+            playground: undefined
         };
     });
 }
@@ -623,7 +808,8 @@ function convertSnippetsConfiguration({
         python: rawConfig.python,
         typescript: rawConfig.typescript,
         go: rawConfig.go,
-        java: rawConfig.java
+        java: rawConfig.java,
+        ruby: rawConfig.ruby
     };
 }
 
@@ -636,40 +822,48 @@ function isRawSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.Secti
     return (item as RawDocs.SectionConfiguration).section != null;
 }
 
-function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.ApiSectionConfiguration {
+function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.ApiReferenceConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as RawDocs.ApiSectionConfiguration).api != null;
+    return (item as RawDocs.ApiReferenceConfiguration).api != null;
 }
 
-function isRawLinkConfig(item: RawDocs.NavigationItem): item is RawDocs.LinkConfiguration {
+function isRawLinkConfig(item: unknown): item is RawDocs.LinkConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as RawDocs.LinkConfiguration).link != null;
+    RawDocs;
+    return isPlainObject(item) && typeof item.link === "string" && typeof item.href === "string";
 }
 
-function convertImageReference({
-    rawImageReference,
-    absoluteFilepathToDocsConfig
-}: {
-    rawImageReference: string;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
-}): ImageReference {
-    return {
-        filepath: resolveFilepath({
-            absolutePath: absoluteFilepathToDocsConfig,
-            rawUnresolvedFilepath: rawImageReference
-        })
-    };
+function isRawChangelogConfig(item: unknown): item is RawDocs.ChangelogConfiguration {
+    return isPlainObject(item) && typeof item.changelog === "string";
 }
 
-function resolveFilepath({
-    rawUnresolvedFilepath,
-    absolutePath
-}: {
-    rawUnresolvedFilepath: string;
-    absolutePath: AbsoluteFilePath;
-}): AbsoluteFilePath {
-    const resolved = resolve(dirname(absolutePath), rawUnresolvedFilepath);
-    return resolved;
+function isRawApiRefSectionConfiguration(item: unknown): item is RawDocs.ApiReferenceSectionConfiguration {
+    return isPlainObject(item) && typeof item.section === "string" && Array.isArray(item.contents);
+}
+
+function isRawApiRefEndpointConfiguration(item: unknown): item is RawDocs.ApiReferenceEndpointConfiguration {
+    return isPlainObject(item) && typeof item.endpoint === "string";
+}
+
+function isRawApiRefPackageConfiguration(
+    item: RawDocs.ApiReferencePackageConfiguration
+): item is RawDocs.ApiReferencePackageConfigurationWithOptions {
+    return !Array.isArray(item);
+}
+
+export function resolveFilepath(unresolvedFilepath: string, absolutePath: AbsoluteFilePath): AbsoluteFilePath;
+export function resolveFilepath(
+    unresolvedFilepath: string | undefined,
+    absolutePath: AbsoluteFilePath
+): AbsoluteFilePath | undefined;
+export function resolveFilepath(
+    unresolvedFilepath: string | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): AbsoluteFilePath | undefined {
+    if (unresolvedFilepath == null) {
+        return undefined;
+    }
+    return resolve(dirname(absoluteFilepathToDocsConfig), unresolvedFilepath);
 }
 
 function isTabbedNavigationConfig(
@@ -681,4 +875,99 @@ function isTabbedNavigationConfig(
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (navigationConfig[0] as RawDocs.TabbedNavigationItem).tab != null
     );
+}
+
+function convertNavbarLinks(
+    navbarLinks: RawDocs.NavbarLink[] | undefined
+): CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined {
+    return navbarLinks?.map((navbarLink): WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.NavbarLink> => {
+        if (navbarLink.type === "github") {
+            return { type: "github", url: CjsFdrSdk.Url(navbarLink.value) };
+        }
+
+        return {
+            type: navbarLink.type,
+            text: navbarLink.text,
+            url: CjsFdrSdk.Url(navbarLink.href ?? navbarLink.url ?? "/"),
+            icon: navbarLink.icon,
+            rightIcon: navbarLink.rightIcon,
+            rounded: navbarLink.rounded
+        };
+    });
+}
+
+function convertFooterLinks(
+    footerLinks: RawDocs.FooterLinksConfig | undefined
+): CjsFdrSdk.docs.v1.commons.FooterLink[] | undefined {
+    if (footerLinks == null) {
+        return undefined;
+    }
+
+    const links: CjsFdrSdk.docs.v1.commons.FooterLink[] = [];
+
+    (Object.keys(footerLinks) as (keyof RawDocs.FooterLinksConfig)[]).forEach((key) => {
+        const link = footerLinks[key];
+        if (link == null) {
+            return;
+        }
+        links.push({ type: key, value: CjsFdrSdk.Url(link) });
+    });
+
+    if (links.length === 0) {
+        return undefined;
+    }
+
+    return links;
+}
+
+async function convertMetadata(
+    metadata: RawDocs.MetadataConfig | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): Promise<ParsedMetadataConfig | undefined> {
+    if (metadata == null) {
+        return undefined;
+    }
+
+    return {
+        "og:site_name": metadata.ogSiteName,
+        "og:title": metadata.ogTitle,
+        "og:description": metadata.ogDescription,
+        "og:url": metadata.ogUrl,
+        "og:image": await convertFilepathOrUrl(metadata.ogImage, absoluteFilepathToDocsConfig),
+        "og:image:width": metadata.ogImageWidth,
+        "og:image:height": metadata.ogImageHeight,
+        "og:locale": metadata.ogLocale,
+        "og:logo": await convertFilepathOrUrl(metadata.ogLogo, absoluteFilepathToDocsConfig),
+        "twitter:title": metadata.twitterTitle,
+        "twitter:description": metadata.twitterDescription,
+        "twitter:image": await convertFilepathOrUrl(metadata.twitterImage, absoluteFilepathToDocsConfig),
+        "twitter:handle": metadata.twitterHandle,
+        "twitter:site": metadata.twitterSite,
+        "twitter:url": metadata.twitterUrl,
+        "twitter:card": metadata.twitterCard,
+        nofollow: undefined,
+        noindex: undefined
+    };
+}
+
+async function convertFilepathOrUrl(
+    value: string | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): Promise<FilepathOrUrl | undefined> {
+    if (value == null) {
+        return undefined;
+    }
+
+    if (value.startsWith("http")) {
+        return { type: "url", value };
+    }
+
+    const filepath = resolveFilepath(value, absoluteFilepathToDocsConfig);
+
+    if (await doesPathExist(filepath)) {
+        return { type: "filepath", value: filepath };
+    }
+
+    // If the file does not exist, fallback to a URL
+    return { type: "url", value };
 }

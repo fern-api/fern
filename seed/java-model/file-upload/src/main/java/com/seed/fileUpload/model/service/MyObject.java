@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.fileUpload.core.ObjectMappers;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MyObject.Builder.class)
 public final class MyObject {
     private final String foo;
@@ -74,7 +74,7 @@ public final class MyObject {
         @java.lang.Override
         @JsonSetter("foo")
         public _FinalStage foo(String foo) {
-            this.foo = foo;
+            this.foo = Objects.requireNonNull(foo, "foo must not be null");
             return this;
         }
 

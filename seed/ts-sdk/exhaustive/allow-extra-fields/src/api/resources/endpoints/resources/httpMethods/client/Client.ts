@@ -15,32 +15,46 @@ export declare namespace HttpMethods {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
 export class HttpMethods {
     constructor(protected readonly _options: HttpMethods.Options) {}
 
+    /**
+     * @param {string} id
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testGet("id")
+     */
     public async testGet(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.httpMethods.testGet.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.httpMethods.testGet.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -70,6 +84,15 @@ export class HttpMethods {
         }
     }
 
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPost({
+     *         string: "string"
+     *     })
+     */
     public async testPost(
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions
@@ -82,20 +105,23 @@ export class HttpMethods {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -125,33 +151,46 @@ export class HttpMethods {
         }
     }
 
+    /**
+     * @param {string} id
+     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPut("id", {
+     *         string: "string"
+     *     })
+     */
     public async testPut(
         id: string,
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -181,33 +220,58 @@ export class HttpMethods {
         }
     }
 
+    /**
+     * @param {string} id
+     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPatch("id", {
+     *         string: undefined,
+     *         integer: undefined,
+     *         long: undefined,
+     *         double: undefined,
+     *         bool: undefined,
+     *         datetime: undefined,
+     *         date: undefined,
+     *         uuid: undefined,
+     *         base64: undefined,
+     *         list: undefined,
+     *         set: undefined,
+     *         map: undefined,
+     *         bigint: undefined
+     *     })
+     */
     public async testPatch(
         id: string,
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: HttpMethods.RequestOptions
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -237,24 +301,34 @@ export class HttpMethods {
         }
     }
 
+    /**
+     * @param {string} id
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testDelete("id")
+     */
     public async testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.httpMethods.testDelete.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.httpMethods.testDelete.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

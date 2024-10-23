@@ -18,8 +18,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = User.Builder.class
 )
@@ -76,7 +77,7 @@ public final class User {
   }
 
   public interface UserNameStage {
-    _FinalStage userName(String userName);
+    _FinalStage userName(@NotNull String userName);
 
     Builder from(User other);
   }
@@ -120,8 +121,8 @@ public final class User {
 
     @java.lang.Override
     @JsonSetter("userName")
-    public _FinalStage userName(String userName) {
-      this.userName = userName;
+    public _FinalStage userName(@NotNull String userName) {
+      this.userName = Objects.requireNonNull(userName, "userName must not be null");
       return this;
     }
 

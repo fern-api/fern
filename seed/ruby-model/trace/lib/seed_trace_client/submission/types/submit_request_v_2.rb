@@ -64,15 +64,15 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        submission_id = struct["submissionId"]
-        language = struct["language"]
-        submission_files = parsed_json["submissionFiles"]&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Submission::SubmissionFileInfo.from_json(json_object: v)
+        submission_id = parsed_json["submissionId"]
+        language = parsed_json["language"]
+        submission_files = parsed_json["submissionFiles"]&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Submission::SubmissionFileInfo.from_json(json_object: item)
         end
-        problem_id = struct["problemId"]
-        problem_version = struct["problemVersion"]
-        user_id = struct["userId"]
+        problem_id = parsed_json["problemId"]
+        problem_version = parsed_json["problemVersion"]
+        user_id = parsed_json["userId"]
         new(
           submission_id: submission_id,
           language: language,

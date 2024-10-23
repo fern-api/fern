@@ -3,6 +3,7 @@ package com.fern.java.generators;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.ir.model.types.AliasTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
@@ -22,16 +23,13 @@ public final class AliasGenerator extends AbstractFileGenerator {
     private static final String VALUE_FIELD_NAME = "value";
     private static final String OF_METHOD_NAME = "of";
     private final AliasTypeDeclaration aliasTypeDeclaration;
-    private final boolean publicConstructorsEnabled;
 
     public AliasGenerator(
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
-            AliasTypeDeclaration aliasTypeDeclaration,
-            boolean publicConstructorsEnabled) {
+            AliasTypeDeclaration aliasTypeDeclaration) {
         super(className, generatorContext);
         this.aliasTypeDeclaration = aliasTypeDeclaration;
-        this.publicConstructorsEnabled = publicConstructorsEnabled;
     }
 
     @Override
@@ -68,7 +66,10 @@ public final class AliasGenerator extends AbstractFileGenerator {
 
     private MethodSpec getConstructor(TypeName aliasTypeName) {
         return MethodSpec.constructorBuilder()
-                .addModifiers(publicConstructorsEnabled ? Modifier.PUBLIC : Modifier.PRIVATE)
+                .addModifiers(
+                        this.generatorContext.getCustomConfig().enablePublicConstructors()
+                                ? Modifier.PUBLIC
+                                : Modifier.PRIVATE)
                 .addParameter(aliasTypeName, VALUE_FIELD_NAME)
                 .addStatement("this.value = value")
                 .build();
@@ -110,8 +111,12 @@ public final class AliasGenerator extends AbstractFileGenerator {
     private MethodSpec getHashCodeMethod() {
         CodeBlock hashCodeMethodBlock;
         if (aliasTypeDeclaration.getAliasOf().isPrimitive()) {
-            hashCodeMethodBlock =
-                    aliasTypeDeclaration.getAliasOf().getPrimitive().get().visit(HashcodeMethodSpecVisitor.INSTANCE);
+            hashCodeMethodBlock = aliasTypeDeclaration
+                    .getAliasOf()
+                    .getPrimitive()
+                    .get()
+                    .getV1()
+                    .visit(HashcodeMethodSpecVisitor.INSTANCE);
         } else {
             hashCodeMethodBlock = CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "hashCode");
         }
@@ -126,8 +131,12 @@ public final class AliasGenerator extends AbstractFileGenerator {
     private MethodSpec getToStringMethod() {
         CodeBlock toStringMethodCodeBlock;
         if (aliasTypeDeclaration.getAliasOf().isPrimitive()) {
-            toStringMethodCodeBlock =
-                    aliasTypeDeclaration.getAliasOf().getPrimitive().get().visit(ToStringMethodSpecVisitor.INSTANCE);
+            toStringMethodCodeBlock = aliasTypeDeclaration
+                    .getAliasOf()
+                    .getPrimitive()
+                    .get()
+                    .getV1()
+                    .visit(ToStringMethodSpecVisitor.INSTANCE);
         } else {
             toStringMethodCodeBlock = CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "toString");
         }
@@ -150,7 +159,7 @@ public final class AliasGenerator extends AbstractFileGenerator {
 
     @SuppressWarnings("checkstyle:cyclomaticcomplexity")
     private static CodeBlock valueOfFactoryMethodForPrimitive(PrimitiveType primitiveType) {
-        switch (primitiveType.getEnumValue()) {
+        switch (primitiveType.getV1().getEnumValue()) {
             case STRING:
             case UUID:
             case DATE_TIME:
@@ -175,7 +184,7 @@ public final class AliasGenerator extends AbstractFileGenerator {
         throw new IllegalStateException("Unsupported primitive type: " + primitiveType + "for `valueOf` method.");
     }
 
-    private static final class ToStringMethodSpecVisitor implements PrimitiveType.Visitor<CodeBlock> {
+    private static final class ToStringMethodSpecVisitor implements PrimitiveTypeV1.Visitor<CodeBlock> {
 
         private static final ToStringMethodSpecVisitor INSTANCE = new ToStringMethodSpecVisitor();
 
@@ -225,12 +234,17 @@ public final class AliasGenerator extends AbstractFileGenerator {
         }
 
         @Override
+        public CodeBlock visitBigInteger() {
+            return CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "toString");
+        }
+
+        @Override
         public CodeBlock visitUnknown(String unknown) {
             throw new RuntimeException("Encountered unknown primitive type: " + unknown);
         }
     }
 
-    private static final class HashcodeMethodSpecVisitor implements PrimitiveType.Visitor<CodeBlock> {
+    private static final class HashcodeMethodSpecVisitor implements PrimitiveTypeV1.Visitor<CodeBlock> {
 
         private static final HashcodeMethodSpecVisitor INSTANCE = new HashcodeMethodSpecVisitor();
 
@@ -277,6 +291,11 @@ public final class AliasGenerator extends AbstractFileGenerator {
         @Override
         public CodeBlock visitBase64() {
             return visitString();
+        }
+
+        @Override
+        public CodeBlock visitBigInteger() {
+            return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
         }
 
         @Override

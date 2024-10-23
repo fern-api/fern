@@ -1,6 +1,11 @@
 import { ContainerType, TypeReference } from "@fern-api/ir-sdk";
-import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
-import { isRawAliasDefinition, RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
+import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
+import {
+    isRawAliasDefinition,
+    RawSchemas,
+    recursivelyVisitRawTypeReference,
+    parseGeneric
+} from "@fern-api/fern-definition-schema";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
@@ -75,7 +80,28 @@ export class TypeResolverImpl implements TypeResolver {
         }
 
         const declaration = definitionFile.types?.[parsedReference.typeName];
+
         if (declaration == null) {
+            const parsedGeneric = parseGeneric(parsedReference.typeName);
+            if (parsedGeneric != null) {
+                for (const type of Object.keys(definitionFile.types ?? {}) ?? []) {
+                    if (parsedGeneric.name && type.startsWith(parsedGeneric.name) && type.endsWith(">")) {
+                        const genericDeclaration = definitionFile.types?.[type];
+                        return genericDeclaration != null
+                            ? {
+                                  typeName: type,
+                                  declaration: genericDeclaration,
+                                  file: constructFernFileContext({
+                                      relativeFilepath: parsedReference.relativeFilepath,
+                                      definitionFile,
+                                      casingsGenerator: file.casingsGenerator,
+                                      rootApiFile: this.workspace.definition.rootApiFile.contents
+                                  })
+                              }
+                            : undefined;
+                    }
+                }
+            }
             return undefined;
         }
 
@@ -100,108 +126,114 @@ export class TypeResolverImpl implements TypeResolver {
         file: FernFileContext;
         objectPath?: ObjectPathItem[];
     }): ResolvedType | undefined {
-        return recursivelyVisitRawTypeReference<ResolvedType | undefined>(type, {
-            primitive: (primitive) => ({
-                _type: "primitive",
-                primitive,
-                originalTypeReference: TypeReference.primitive(primitive)
-            }),
-            unknown: () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
-            map: ({ keyType, valueType }) =>
-                keyType != null && valueType != null
-                    ? {
-                          _type: "container",
-                          container: {
-                              _type: "map",
-                              keyType,
-                              valueType
-                          },
-                          originalTypeReference: TypeReference.container(
-                              ContainerType.map({
-                                  keyType: keyType.originalTypeReference,
-                                  valueType: valueType.originalTypeReference
-                              })
-                          )
-                      }
-                    : undefined,
-            list: (itemType) =>
-                itemType != null
-                    ? {
-                          _type: "container",
-                          container: {
-                              _type: "list",
-                              itemType
-                          },
-                          originalTypeReference: TypeReference.container(
-                              ContainerType.list(itemType.originalTypeReference)
-                          )
-                      }
-                    : undefined,
-            optional: (itemType) =>
-                itemType != null
-                    ? {
-                          _type: "container",
-                          container: {
-                              _type: "optional",
-                              itemType
-                          },
-                          originalTypeReference: TypeReference.container(
-                              ContainerType.optional(itemType.originalTypeReference)
-                          )
-                      }
-                    : undefined,
-            set: (itemType) =>
-                itemType != null
-                    ? {
-                          _type: "container",
-                          container: {
-                              _type: "set",
-                              itemType
-                          },
-                          originalTypeReference: TypeReference.container(
-                              ContainerType.set(itemType.originalTypeReference)
-                          )
-                      }
-                    : undefined,
-            literal: (literal) => ({
-                _type: "container",
-                container: {
-                    _type: "literal",
-                    literal
-                },
-                originalTypeReference: TypeReference.container(ContainerType.literal(literal))
-            }),
-            named: (referenceToNamedType) => {
-                const maybeDeclaration = this.getDeclarationOfNamedType({
-                    referenceToNamedType,
-                    file
-                });
-                if (maybeDeclaration == null) {
-                    return undefined;
+        return recursivelyVisitRawTypeReference<ResolvedType | undefined>({
+            type,
+            _default: undefined,
+            validation: undefined,
+            visitor: {
+                primitive: (primitive) => ({
+                    _type: "primitive",
+                    primitive,
+                    originalTypeReference: TypeReference.primitive(primitive)
+                }),
+                unknown: () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
+                map: ({ keyType, valueType }) =>
+                    keyType != null && valueType != null
+                        ? {
+                              _type: "container",
+                              container: {
+                                  _type: "map",
+                                  keyType,
+                                  valueType
+                              },
+                              originalTypeReference: TypeReference.container(
+                                  ContainerType.map({
+                                      keyType: keyType.originalTypeReference,
+                                      valueType: valueType.originalTypeReference
+                                  })
+                              )
+                          }
+                        : undefined,
+                list: (itemType) =>
+                    itemType != null
+                        ? {
+                              _type: "container",
+                              container: {
+                                  _type: "list",
+                                  itemType
+                              },
+                              originalTypeReference: TypeReference.container(
+                                  ContainerType.list(itemType.originalTypeReference)
+                              )
+                          }
+                        : undefined,
+                optional: (itemType) =>
+                    itemType != null
+                        ? {
+                              _type: "container",
+                              container: {
+                                  _type: "optional",
+                                  itemType
+                              },
+                              originalTypeReference: TypeReference.container(
+                                  ContainerType.optional(itemType.originalTypeReference)
+                              )
+                          }
+                        : undefined,
+                set: (itemType) =>
+                    itemType != null
+                        ? {
+                              _type: "container",
+                              container: {
+                                  _type: "set",
+                                  itemType
+                              },
+                              originalTypeReference: TypeReference.container(
+                                  ContainerType.set(itemType.originalTypeReference)
+                              )
+                          }
+                        : undefined,
+                literal: (literal) => ({
+                    _type: "container",
+                    container: {
+                        _type: "literal",
+                        literal
+                    },
+                    originalTypeReference: TypeReference.container(ContainerType.literal(literal))
+                }),
+                named: (referenceToNamedType) => {
+                    const maybeDeclaration = this.getDeclarationOfNamedType({
+                        referenceToNamedType,
+                        file
+                    });
+                    if (maybeDeclaration == null) {
+                        return undefined;
+                    }
+
+                    const newObjectPathItem: ObjectPathItem = {
+                        typeName: maybeDeclaration.typeName,
+                        file: maybeDeclaration.file.relativeFilepath,
+                        reference: referenceToNamedType
+                    };
+
+                    // detect infinite loop
+                    if (
+                        objectPath.some(
+                            (pathItem) =>
+                                pathItem.file === newObjectPathItem.file &&
+                                pathItem.typeName === newObjectPathItem.typeName
+                        )
+                    ) {
+                        return undefined;
+                    }
+
+                    return this.resolveNamedTypeFromDeclaration({
+                        referenceToNamedType,
+                        referencedIn: file,
+                        rawDeclaration: maybeDeclaration,
+                        objectPath: [...objectPath, newObjectPathItem]
+                    });
                 }
-
-                const newObjectPathItem: ObjectPathItem = {
-                    typeName: maybeDeclaration.typeName,
-                    file: maybeDeclaration.file.relativeFilepath,
-                    reference: referenceToNamedType
-                };
-
-                // detect infinite loop
-                if (
-                    objectPath.some(
-                        (pathItem) =>
-                            pathItem.file === newObjectPathItem.file && pathItem.typeName === newObjectPathItem.typeName
-                    )
-                ) {
-                    return undefined;
-                }
-
-                return this.resolveNamedTypeFromDeclaration({
-                    referenceToNamedType,
-                    referencedIn: file,
-                    rawDeclaration: maybeDeclaration,
-                    objectPath: [...objectPath, newObjectPathItem]
-                });
             }
         });
     }
@@ -262,7 +294,12 @@ export class TypeResolverImpl implements TypeResolver {
             });
         }
 
-        const parsedTypeReference = parseInlineType({ type: referenceToNamedType, file: referencedIn });
+        const parsedTypeReference = parseInlineType({
+            type: referenceToNamedType,
+            _default: undefined,
+            validation: undefined,
+            file: referencedIn
+        });
         if (parsedTypeReference.type !== "named") {
             return undefined;
         }

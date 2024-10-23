@@ -1,10 +1,17 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class MapValue
+public record MapValue
 {
     [JsonPropertyName("keyValuePairs")]
-    public List<List<KeyValuePair>> KeyValuePairs { get; init; }
+    public IEnumerable<KeyValuePair> KeyValuePairs { get; set; } = new List<KeyValuePair>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

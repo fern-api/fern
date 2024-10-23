@@ -24,11 +24,18 @@ module SeedEnumClient
     # @return [Void]
     # @example
     #  enum = SeedEnumClient::Client.new(base_url: "https://api.example.com")
-    #  enum.send(operand: GREATER_THAN, operand_or_color: RED)
+    #  enum.inlined_request.send(operand: GREATER_THAN, operand_or_color: RED)
     def send(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           operand: operand,
@@ -59,12 +66,19 @@ module SeedEnumClient
     # @return [Void]
     # @example
     #  enum = SeedEnumClient::Client.new(base_url: "https://api.example.com")
-    #  enum.send(operand: GREATER_THAN, operand_or_color: RED)
+    #  enum.inlined_request.send(operand: GREATER_THAN, operand_or_color: RED)
     def send(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             operand: operand,

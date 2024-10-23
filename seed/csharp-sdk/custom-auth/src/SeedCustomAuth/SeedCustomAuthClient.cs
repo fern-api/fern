@@ -1,4 +1,6 @@
-using SeedCustomAuth;
+using SeedCustomAuth.Core;
+
+#nullable enable
 
 namespace SeedCustomAuth;
 
@@ -6,28 +8,35 @@ public partial class SeedCustomAuthClient
 {
     private RawClient _client;
 
-    public SeedCustomAuthClient(string customAuthScheme, ClientOptions clientOptions)
+    public SeedCustomAuthClient(
+        string? customAuthScheme = null,
+        ClientOptions? clientOptions = null
+    )
     {
-        _client = new RawClient(
-            new Dictionary<string, string>
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
             {
                 { "X-API-KEY", customAuthScheme },
                 { "X-Fern-Language", "C#" },
-            },
-            clientOptions ?? new ClientOptions()
+                { "X-Fern-SDK-Name", "SeedCustomAuth" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Ferncustom-auth/0.0.1" },
+            }
         );
-        CustomAuth = new CustomAuthClient(_client);
-    }
-
-    public CustomAuthClient CustomAuth { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
         {
-            throw new Exception(message);
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
         }
-        return value;
+        _client = new RawClient(clientOptions);
+        CustomAuth = new CustomAuthClient(_client);
+        Errors = new ErrorsClient(_client);
     }
+
+    public CustomAuthClient CustomAuth { get; init; }
+
+    public ErrorsClient Errors { get; init; }
 }

@@ -1,10 +1,17 @@
 using System.Text.Json.Serialization;
-using SeedTrace.V2;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace.V2;
 
-public class GetGeneratedTestCaseTemplateFileRequest
+public record GetGeneratedTestCaseTemplateFileRequest
 {
     [JsonPropertyName("template")]
-    public TestCaseTemplate Template { get; init; }
+    public required TestCaseTemplate Template { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

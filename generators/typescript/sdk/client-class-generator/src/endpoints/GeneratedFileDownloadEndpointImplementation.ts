@@ -7,6 +7,7 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
 import {
+    getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
@@ -22,6 +23,7 @@ export declare namespace GeneratedFileDownloadEndpointImplementation {
         response: GeneratedEndpointResponse;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -34,6 +36,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
     private response: GeneratedEndpointResponse;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
+    private omitUndefined: boolean;
 
     constructor({
         endpoint,
@@ -43,7 +46,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         request,
         response,
         includeSerdeLayer,
-        retainOriginalCasing
+        retainOriginalCasing,
+        omitUndefined
     }: GeneratedFileDownloadEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -53,6 +57,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         this.response = response;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
     }
 
     public getExample(args: {
@@ -81,6 +86,16 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                 exampleParameters
             )
         );
+    }
+
+    public maybeLeverageInvocation({
+        invocation,
+        context
+    }: {
+        invocation: ts.Expression;
+        context: SdkContext;
+    }): undefined {
+        return undefined;
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -135,7 +150,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             generatedClientClass: this.generatedSdkClientClass,
             context,
             includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            omitUndefined: this.omitUndefined
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
@@ -157,6 +173,11 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             }),
             maxRetries: getMaxRetriesExpression({
                 maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
+                    this.generatedSdkClientClass
+                )
+            }),
+            abortSignal: getAbortSignalExpression({
+                abortSignalReference: this.generatedSdkClientClass.getReferenceToAbortSignal.bind(
                     this.generatedSdkClientClass
                 )
             }),

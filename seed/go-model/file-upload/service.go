@@ -3,12 +3,38 @@
 package fileupload
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/file-upload/fern/core"
 )
 
+type Id = string
+
 type MyObject struct {
 	Foo string `json:"foo" url:"foo"`
+
+	extraProperties map[string]interface{}
+}
+
+func (m *MyObject) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
+}
+
+func (m *MyObject) UnmarshalJSON(data []byte) error {
+	type unmarshaler MyObject
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MyObject(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
+	return nil
 }
 
 func (m *MyObject) String() string {
@@ -16,4 +42,26 @@ func (m *MyObject) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
+}
+
+type ObjectType string
+
+const (
+	ObjectTypeFoo ObjectType = "FOO"
+	ObjectTypeBar ObjectType = "BAR"
+)
+
+func NewObjectTypeFromString(s string) (ObjectType, error) {
+	switch s {
+	case "FOO":
+		return ObjectTypeFoo, nil
+	case "BAR":
+		return ObjectTypeBar, nil
+	}
+	var t ObjectType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o ObjectType) Ptr() *ObjectType {
+	return &o
 }

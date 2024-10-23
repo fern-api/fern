@@ -19,13 +19,14 @@ export class Parameter extends AstNode {
     public readonly name: string;
     public readonly docs: string | undefined;
     public readonly initializer: string | undefined;
-    private type: Type;
+    public readonly type: Type;
 
     constructor({ name, type, docs, initializer }: Parameter.Args) {
         super();
         this.name = name;
         this.type = type;
         this.docs = docs;
+        this.initializer = initializer;
     }
 
     public write(writer: Writer): void {

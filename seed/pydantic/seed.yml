@@ -1,6 +1,33 @@
-irVersion: v38
-docker: fernapi/fern-pydantic-model:latest
-dockerCommand: docker build -f ./generators/python/pydantic/Dockerfile -t fernapi/fern-pydantic-model:latest ./generators/python
+irVersion: v53
+displayName: Pydantic Model
+image: fernapi/fern-pydantic-model
+changelogLocation: ../../generators/python/pydantic/versions.yml
+
+buildScripts:
+  installScript:
+    commands:
+      - poetry shell
+      - poetry install
+  compileScript:
+    commands:
+      - poetry run mypy .
+
+publish:
+  workingDirectory: generators/python
+  preBuildCommands:
+    - pip install poetry
+    - poetry shell
+    - poetry config virtualenvs.in-project true
+    - poetry install
+  docker:
+    file: ./generators/python/pydantic/Dockerfile
+    image: fernapi/fern-pydantic-model
+    context: ./generators/python
+test:
+  docker:
+    image: fernapi/fern-pydantic-model:latest
+    command: docker build -f ./generators/python/pydantic/Dockerfile -t fernapi/fern-pydantic-model:latest ./generators/python
+
 language: python
 generatorType: model
 defaultOutputMode: github
@@ -12,5 +39,7 @@ fixtures:
     - customConfig:
         version: v2
       outputFolder: pydantic-v2
-allowedFailures: 
+allowedFailures:
   - websocket
+  # Complex circular refs
+  - simple-fhir

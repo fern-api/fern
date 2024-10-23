@@ -6,6 +6,9 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
+from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
+    EndpointMetadataCollector,
+)
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
 )
@@ -27,10 +30,10 @@ class ConstructorParameter:
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
-        ir_types.PrimitiveType.STRING,
-        ir_types.PrimitiveType.INTEGER,
-        ir_types.PrimitiveType.DOUBLE,
-        ir_types.PrimitiveType.BOOLEAN,
+        ir_types.PrimitiveTypeV1.STRING,
+        ir_types.PrimitiveTypeV1.INTEGER,
+        ir_types.PrimitiveTypeV1.DOUBLE,
+        ir_types.PrimitiveTypeV1.BOOLEAN,
     ]
 )
 
@@ -52,6 +55,7 @@ class ClientGenerator:
         generated_root_client: GeneratedRootClient,
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
+        endpoint_metadata_collector: EndpointMetadataCollector,
     ):
         self._context = context
         self._package = package
@@ -61,6 +65,7 @@ class ClientGenerator:
         self._snippet_registry = snippet_registry
         self._snippet_writer = snippet_writer
         self._is_default_body_parameter_used = False
+        self._endpoint_metadata_collector = endpoint_metadata_collector
 
     def generate(self, source_file: SourceFile) -> None:
         class_declaration = self._create_class_declaration(is_async=False)
@@ -110,24 +115,26 @@ class ClientGenerator:
                     client_wrapper_member_name=self._get_client_wrapper_member_name(),
                     generated_root_client=self._generated_root_client,
                     snippet_writer=self._snippet_writer,
+                    endpoint_metadata_collector=self._endpoint_metadata_collector,
                 )
-                generated_endpoint_function = endpoint_function_generator.generate()
-                class_declaration.add_method(generated_endpoint_function.function)
-                if (
-                    not self._is_default_body_parameter_used
-                    and generated_endpoint_function.is_default_body_parameter_used
-                ):
-                    self._is_default_body_parameter_used = True
+                generated_endpoint_functions = endpoint_function_generator.generate()
+                for generated_endpoint_function in generated_endpoint_functions:
+                    class_declaration.add_method(generated_endpoint_function.function)
+                    if (
+                        not self._is_default_body_parameter_used
+                        and generated_endpoint_function.is_default_body_parameter_used
+                    ):
+                        self._is_default_body_parameter_used = True
 
-                if generated_endpoint_function.snippet is not None:
-                    if is_async:
-                        self._snippet_registry.register_async_client_endpoint_snippet(
-                            endpoint=endpoint, expr=generated_endpoint_function.snippet
-                        )
-                    else:
-                        self._snippet_registry.register_sync_client_endpoint_snippet(
-                            endpoint=endpoint, expr=generated_endpoint_function.snippet
-                        )
+                    for snippet in generated_endpoint_function.snippets or []:
+                        if is_async:
+                            self._snippet_registry.register_async_client_endpoint_snippet(
+                                endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
+                            )
+                        else:
+                            self._snippet_registry.register_sync_client_endpoint_snippet(
+                                endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
+                            )
 
         return class_declaration
 

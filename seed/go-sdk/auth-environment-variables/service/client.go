@@ -23,6 +23,12 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.ApiKey == "" {
 		options.ApiKey = os.Getenv("FERN_API_KEY")
 	}
+	if options.XAnotherHeader == "" {
+		options.XAnotherHeader = os.Getenv("ANOTHER_ENV_VAR")
+	}
+	if options.XApiVersion == "" {
+		options.XApiVersion = os.Getenv("VERSION")
+	}
 	return &Client{
 		baseURL: options.BaseURL,
 		caller: core.NewCaller(
@@ -49,7 +55,7 @@ func (c *Client) GetWithApiKey(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "apiKey"
+	endpointURL := baseURL + "/apiKey"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -57,12 +63,14 @@ func (c *Client) GetWithApiKey(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return "", err
@@ -85,7 +93,7 @@ func (c *Client) GetWithHeader(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "apiKeyInHeader"
+	endpointURL := baseURL + "/apiKeyInHeader"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
@@ -94,12 +102,14 @@ func (c *Client) GetWithHeader(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return "", err

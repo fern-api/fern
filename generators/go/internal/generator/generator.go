@@ -133,6 +133,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			fileInfo.packageName,
 			g.config.ImportPath,
 			g.config.Whitelabel,
+			g.config.AlwaysSendRequiredProperties,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -237,6 +238,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			fileInfo.packageName,
 			"",
 			g.config.Whitelabel,
+			g.config.AlwaysSendRequiredProperties,
 			g.config.UnionVersion,
 			nil,
 			nil,
@@ -255,6 +257,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			fileInfo.packageName,
 			"",
 			g.config.Whitelabel,
+			g.config.AlwaysSendRequiredProperties,
 			g.config.UnionVersion,
 			nil,
 			nil,
@@ -272,11 +275,14 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, modelFiles...)
 	files = append(files, newStringerFile(g.coordinator))
 	files = append(files, newTimeFile(g.coordinator))
+	files = append(files, newExtraPropertiesFile(g.coordinator))
+	files = append(files, newExtraPropertiesTestFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
 	var rootClientInstantiation *ast.AssignStmt
 	generatedRootClient := &GeneratedClient{
 		Instantiation: rootClientInstantiation,
 	}
+	var generatedPagination bool
 	switch mode {
 	case ModeFiber:
 		break
@@ -285,6 +291,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			generatedAuth        *GeneratedAuth
 			generatedEnvironment *GeneratedEnvironment
 		)
+		generatedPagination = needsPaginationHelpers(ir)
 		// Generate the core API files.
 		fileInfo := fileInfoForRequestOptionsDefinition()
 		writer := newFileWriter(
@@ -292,6 +299,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			fileInfo.packageName,
 			g.config.ImportPath,
 			g.config.Whitelabel,
+			g.config.AlwaysSendRequiredProperties,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -320,6 +328,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				fileInfo.packageName,
 				g.config.ImportPath,
 				g.config.Whitelabel,
+				g.config.AlwaysSendRequiredProperties,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -342,6 +351,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			fileInfo.packageName,
 			g.config.ImportPath,
 			g.config.Whitelabel,
+			g.config.AlwaysSendRequiredProperties,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -368,6 +378,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				fileInfo.packageName,
 				g.config.ImportPath,
 				g.config.Whitelabel,
+				g.config.AlwaysSendRequiredProperties,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -387,6 +398,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				fileInfo.packageName,
 				g.config.ImportPath,
 				g.config.Whitelabel,
+				g.config.AlwaysSendRequiredProperties,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -409,6 +421,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				fileInfo.packageName,
 				g.config.ImportPath,
 				g.config.Whitelabel,
+				g.config.AlwaysSendRequiredProperties,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -430,6 +443,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			fileInfo.packageName,
 			g.config.ImportPath,
 			g.config.Whitelabel,
+			g.config.AlwaysSendRequiredProperties,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -456,6 +470,10 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		if ir.SdkConfig.HasStreamingEndpoints {
 			files = append(files, newStreamFile(g.coordinator))
 		}
+		if generatedPagination {
+			files = append(files, newPagerFile(g.coordinator))
+			files = append(files, newPageFile(g.coordinator))
+		}
 		clientTestFile, err := newClientTestFile(g.config.ImportPath, g.coordinator)
 		if err != nil {
 			return nil, err
@@ -468,6 +486,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				fileInfo.packageName,
 				g.config.ImportPath,
 				g.config.Whitelabel,
+				g.config.AlwaysSendRequiredProperties,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -590,7 +609,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	// The go.sum file will be generated after the
 	// go.mod file is written to disk.
 	if g.config.ModuleConfig != nil {
-		requiresGenerics := g.config.EnableExplicitNull || ir.SdkConfig.HasStreamingEndpoints
+		requiresGenerics := g.config.EnableExplicitNull || ir.SdkConfig.HasStreamingEndpoints || generatedPagination
 		file, generatedGoVersion, err := NewModFile(g.coordinator, g.config.ModuleConfig, requiresGenerics)
 		if err != nil {
 			return nil, err
@@ -620,6 +639,7 @@ func (g *Generator) generateService(
 		fileInfo.packageName,
 		g.config.ImportPath,
 		g.config.Whitelabel,
+		g.config.AlwaysSendRequiredProperties,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -662,6 +682,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		fileInfo.packageName,
 		g.config.ImportPath,
 		g.config.Whitelabel,
+		g.config.AlwaysSendRequiredProperties,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -698,6 +719,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		fileInfo.packageName,
 		g.config.ImportPath,
 		g.config.Whitelabel,
+		g.config.AlwaysSendRequiredProperties,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -902,6 +924,7 @@ func newClientTestFile(
 		"client",
 		baseImportPath,
 		false,
+		false,
 		UnionVersionUnspecified,
 		nil,
 		nil,
@@ -940,6 +963,22 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/optional_test.go",
 		[]byte(optionalTestFile),
+	)
+}
+
+func newPagerFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/pager.go",
+		[]byte(pagerFile),
+	)
+}
+
+func newPageFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/page.go",
+		[]byte(pageFile),
 	)
 }
 
@@ -988,6 +1027,22 @@ func newTimeFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/time.go",
 		[]byte(timeFile),
+	)
+}
+
+func newExtraPropertiesFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/extra_properties.go",
+		[]byte(extraPropertiesFile),
+	)
+}
+
+func newExtraPropertiesTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/extra_properties_test.go",
+		[]byte(extraPropertiesTestFile),
 	)
 }
 
@@ -1457,6 +1512,18 @@ func generatorexecEndpointSnippetToString(endpointSnippet *generatorexec.Endpoin
 	)
 }
 
+// needsPaginationHelpers returns true if at least endpoint specifies pagination.
+func needsPaginationHelpers(ir *fernir.IntermediateRepresentation) bool {
+	for _, irService := range ir.Services {
+		for _, irEndpoint := range irService.Endpoints {
+			if irEndpoint.Pagination != nil {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 // pointerFunctionNames enumerates all of the pointer function names.
 var pointerFunctionNames = map[string]struct{}{
 	"Bool":       struct{}{},
@@ -1479,4 +1546,13 @@ var pointerFunctionNames = map[string]struct{}{
 	"Uint64":     struct{}{},
 	"Uintptr":    struct{}{},
 	"Time":       struct{}{},
+}
+
+// valueOf dereferences the given value, or returns the zero value if nil.
+func valueOf[T any](value *T) T {
+	var result T
+	if value == nil {
+		return result
+	}
+	return *value
 }

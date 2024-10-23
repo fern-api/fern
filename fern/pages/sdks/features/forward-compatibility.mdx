@@ -1,6 +1,6 @@
 ---
 title: Forward compatibility 
-excerpt: SDKs that are fault-tolerant as your API evolves
+description: SDKs that are fault-tolerant as your API evolves
 ---
 
 Fern SDKs are designed so that you can evolve your API without breaking users on 
@@ -30,7 +30,7 @@ The legacy SDKs will safely handle deserializing extra information.
 
   ### Additional Enum values
   As you add additional enum properties on your server, the 
-  legacy SDks will continue to work. For example, let's say your generated SDK 
+  legacy SDKs will continue to work. For example, let's say your generated SDK 
   had the following `Genre` type: 
 
   ```ts
@@ -56,7 +56,7 @@ The legacy SDKs will safely handle deserializing extra information.
   }
   ```
 
-  ### Additional Union variants
+  ### Additional union variants
   Similar to additional enum properties, if you add additional union types 
   on your server, the legacy SDKs will continue to work. For example, let's say your 
   generated SDK had the following `Shape` type: 

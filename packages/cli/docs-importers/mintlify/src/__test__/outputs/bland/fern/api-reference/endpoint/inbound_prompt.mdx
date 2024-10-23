@@ -1,0 +1,65 @@
+---
+title: Update Inbound Prompt
+subtitle: Update the prompt for a given inbound phone number.
+slug: api-reference/endpoint/inbound_prompt
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Body
+
+<ParamField body="phone_number" type="string">
+  The phone number associated with the prompt. - Format: "+XXXXXXXXXX" or "+XXX-XXX-XXXX". Make sure to include the
+  exact phone number (area code and "+" included). Otherwise the update will fail.
+</ParamField>
+
+<ParamField body="prompt" type="string">
+  The new prompt for the given phone number. The prompt shouldn't exceed 5000 characters. Note: Ensure the prompt is
+  clear and relevant to your use case.
+</ParamField>
+
+<ParamField body="voice_id" type="integer">
+  Set a custom voice for your agent. Matches the voices in the /call endpoint. - 0: British Female (default) - 1:
+  Australian Female - 2: American Male
+</ParamField>
+
+### Response
+
+<ResponseField name="id" type="integer">
+  The unique ID associated with the inbound record.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  The creation timestamp of the inbound record. - Example: "2023-10-10T12:00:00Z"
+</ResponseField>
+
+<ResponseField name="phone_number" type="string">
+  The updated phone number. - Example: "+1234567890"
+</ResponseField>
+
+<ResponseField name="prompt" type="string">
+  The updated prompt text.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  The status of the inbound record. Typically "active".
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "id": 1,
+  "created_at": "2023-10-10T12:00:00Z",
+  "phone_number": "+1234567890",
+  "prompt": "New Prompt Text",
+  "status": "active"
+}
+```
+
+</ResponseExample>

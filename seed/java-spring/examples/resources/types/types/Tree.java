@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Tree.Builder.class
 )
@@ -81,7 +81,7 @@ public final class Tree {
     }
 
     public Builder nodes(List<Node> nodes) {
-      this.nodes = Optional.of(nodes);
+      this.nodes = Optional.ofNullable(nodes);
       return this;
     }
 

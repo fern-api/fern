@@ -44,7 +44,7 @@ func (c *Client) Hello(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "hello"
+	endpointURL := baseURL + "/hello"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

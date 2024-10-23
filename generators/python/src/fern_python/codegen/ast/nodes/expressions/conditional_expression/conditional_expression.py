@@ -1,3 +1,5 @@
+from typing import Optional
+
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ..expression import Expression
 
@@ -15,7 +17,7 @@ class ConditionalExpression(AstNode):
         metadata.update(self.right.get_metadata())
         return metadata
 
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         writer.write_node(self.left)
         writer.write(" if ")
         writer.write_node(self.test)

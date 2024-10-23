@@ -15,8 +15,9 @@ import com.seed.trace.resources.commons.types.Language;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UnexpectedLanguageError.Builder.class)
 public final class UnexpectedLanguageError {
     private final Language expectedLanguage;
@@ -72,13 +73,13 @@ public final class UnexpectedLanguageError {
     }
 
     public interface ExpectedLanguageStage {
-        ActualLanguageStage expectedLanguage(Language expectedLanguage);
+        ActualLanguageStage expectedLanguage(@NotNull Language expectedLanguage);
 
         Builder from(UnexpectedLanguageError other);
     }
 
     public interface ActualLanguageStage {
-        _FinalStage actualLanguage(Language actualLanguage);
+        _FinalStage actualLanguage(@NotNull Language actualLanguage);
     }
 
     public interface _FinalStage {
@@ -105,15 +106,15 @@ public final class UnexpectedLanguageError {
 
         @java.lang.Override
         @JsonSetter("expectedLanguage")
-        public ActualLanguageStage expectedLanguage(Language expectedLanguage) {
-            this.expectedLanguage = expectedLanguage;
+        public ActualLanguageStage expectedLanguage(@NotNull Language expectedLanguage) {
+            this.expectedLanguage = Objects.requireNonNull(expectedLanguage, "expectedLanguage must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("actualLanguage")
-        public _FinalStage actualLanguage(Language actualLanguage) {
-            this.actualLanguage = actualLanguage;
+        public _FinalStage actualLanguage(@NotNull Language actualLanguage) {
+            this.actualLanguage = Objects.requireNonNull(actualLanguage, "actualLanguage must not be null");
             return this;
         }
 

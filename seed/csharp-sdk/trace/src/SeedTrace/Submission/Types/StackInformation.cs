@@ -1,13 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class StackInformation
+public record StackInformation
 {
     [JsonPropertyName("numStackFrames")]
-    public int NumStackFrames { get; init; }
+    public required int NumStackFrames { get; set; }
 
     [JsonPropertyName("topStackFrame")]
-    public List<StackFrame?> TopStackFrame { get; init; }
+    public StackFrame? TopStackFrame { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

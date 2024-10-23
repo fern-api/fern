@@ -1,13 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class SinglyLinkedListNodeAndListValue
+public record SinglyLinkedListNodeAndListValue
 {
     [JsonPropertyName("nodeId")]
-    public string NodeId { get; init; }
+    public required string NodeId { get; set; }
 
     [JsonPropertyName("fullList")]
-    public SinglyLinkedListValue FullList { get; init; }
+    public required SinglyLinkedListValue FullList { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -14,8 +14,9 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TestCaseResultWithStdout.Builder.class)
 public final class TestCaseResultWithStdout {
     private final TestCaseResult result;
@@ -70,13 +71,13 @@ public final class TestCaseResultWithStdout {
     }
 
     public interface ResultStage {
-        StdoutStage result(TestCaseResult result);
+        StdoutStage result(@NotNull TestCaseResult result);
 
         Builder from(TestCaseResultWithStdout other);
     }
 
     public interface StdoutStage {
-        _FinalStage stdout(String stdout);
+        _FinalStage stdout(@NotNull String stdout);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class TestCaseResultWithStdout {
 
         @java.lang.Override
         @JsonSetter("result")
-        public StdoutStage result(TestCaseResult result) {
-            this.result = result;
+        public StdoutStage result(@NotNull TestCaseResult result) {
+            this.result = Objects.requireNonNull(result, "result must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("stdout")
-        public _FinalStage stdout(String stdout) {
-            this.stdout = stdout;
+        public _FinalStage stdout(@NotNull String stdout) {
+            this.stdout = Objects.requireNonNull(stdout, "stdout must not be null");
             return this;
         }
 

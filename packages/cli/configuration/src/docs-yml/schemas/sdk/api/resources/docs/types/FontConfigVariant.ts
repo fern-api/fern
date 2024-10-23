@@ -7,7 +7,7 @@ import * as FernDocsConfig from "../../..";
 export interface FontConfigVariant {
     path: string;
     /** @default: `100 900`. */
-    weight?: string;
+    weight?: FernDocsConfig.FontWeight;
     /** @default: `normal`. */
     style?: FernDocsConfig.FontStyle;
 }

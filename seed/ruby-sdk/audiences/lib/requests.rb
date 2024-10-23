@@ -1,26 +1,28 @@
 # frozen_string_literal: true
 
+require_relative "environment"
 require "faraday"
 require "faraday/retry"
 require "async/http/faraday"
 
 module SeedAudiencesClient
   class RequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :default_environment
 
     # @param base_url [String]
+    # @param environment [SeedAudiencesClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @return [SeedAudiencesClient::RequestClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @base_url = base_url
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_audiences", "X-Fern-SDK-Version": "0.0.1" }
-      @conn = Faraday.new(headers: @headers) do |faraday|
+    def initialize(base_url: nil, environment: nil, max_retries: nil, timeout_in_seconds: nil)
+      @default_environment = environment
+      @base_url = environment || base_url
+      @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.request :retry, { max: max_retries } unless max_retries.nil?
@@ -31,26 +33,32 @@ module SeedAudiencesClient
     # @param request_options [SeedAudiencesClient::RequestOptions]
     # @return [String]
     def get_url(request_options: nil)
-      request_options&.base_url || @base_url
+      request_options&.base_url || @default_environment || @base_url
+    end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_audiences", "X-Fern-SDK-Version": "0.0.1" }
     end
   end
 
   class AsyncRequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :default_environment
 
     # @param base_url [String]
+    # @param environment [SeedAudiencesClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @return [SeedAudiencesClient::AsyncRequestClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @base_url = base_url
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_audiences", "X-Fern-SDK-Version": "0.0.1" }
-      @conn = Faraday.new(headers: @headers) do |faraday|
+    def initialize(base_url: nil, environment: nil, max_retries: nil, timeout_in_seconds: nil)
+      @default_environment = environment
+      @base_url = environment || base_url
+      @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.adapter :async_http
@@ -62,7 +70,12 @@ module SeedAudiencesClient
     # @param request_options [SeedAudiencesClient::RequestOptions]
     # @return [String]
     def get_url(request_options: nil)
-      request_options&.base_url || @base_url
+      request_options&.base_url || @default_environment || @base_url
+    end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_audiences", "X-Fern-SDK-Version": "0.0.1" }
     end
   end
 

@@ -1,0 +1,27 @@
+name: ci
+
+on: [push]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up go
+        uses: actions/setup-go@v4
+
+      - name: Compile
+        run: go build ./...
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up go
+        uses: actions/setup-go@v4
+
+      - name: Test
+        run: go test ./...

@@ -16,6 +16,7 @@
 
 package com.fern.java.client.generators;
 
+import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.java.AbstractGeneratorContext;
@@ -40,6 +41,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final Subpackage subpackage;
     private final GeneratedJavaFile requestOptionsFile;
+    private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
 
     public SubpackageClientGenerator(
             Subpackage subpackage,
@@ -50,7 +52,8 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
             GeneratedJavaFile generatedSuppliersFile,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedJavaFile requestOptionsFile,
-            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces) {
+            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(clientGeneratorContext.getPoetClassNameFactory().getClientClassName(subpackage), generatorContext);
         this.generatedObjectMapper = generatedObjectMapper;
         this.clientGeneratorContext = clientGeneratorContext;
@@ -60,6 +63,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.requestOptionsFile = requestOptionsFile;
         this.subpackage = subpackage;
+        this.generatedErrors = generatedErrors;
     }
 
     @Override
@@ -73,7 +77,8 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
                 allGeneratedInterfaces,
                 generatedSuppliersFile,
                 requestOptionsFile,
-                subpackage);
+                subpackage,
+                generatedErrors);
         Result result = clientGeneratorUtils.buildClients();
         return GeneratedClient.builder()
                 .className(className)

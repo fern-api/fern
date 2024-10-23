@@ -1,0 +1,94 @@
+---
+title: Batch Calling
+subtitle: Send a series of calls with a single api call
+slug: api-reference/batch-endpoint/batch
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Body
+
+<ParamField body="base_prompt" type="string" required>
+  This is the prompt or task used for all the phone calls in the request. Information can be inserted into it surrounding variable names with \{\{curly braces\}\}.
+
+Example:
+
+```json
+"You are calling {{business}} to renew their subscription to {{service}} before it expires on {{date}}."
+```
+
+</ParamField>
+
+<ParamField body="call_data" type="array" required>
+  Define a list of calls to make and their properties. 
+  
+  Each call in call_data *must* have a `phone_number` property. Properties are case-sensitive.
+
+Example:
+
+```json
+[
+  {
+    "phone_number": "1234567890",
+    "business": "ABC co.",
+    "service": "Netflix",
+    "date": "September 4th"
+  },
+  {
+    "phone_number": "32176540987",
+    "business": "XYZ inc.",
+    "service": "Window Cleaning",
+    "date": "December 20th"
+  }
+]
+```
+
+</ParamField>
+
+<ParamField body="label" type="string">
+  Adds a user-friendly label to your batch to keep track of it's original intention. This can help differentiate
+  multiple call batches that are part of the same Campaign. Shown when a batch is retreived.
+</ParamField>
+
+<ParamField body="campaign_id" type="string">
+  Use ```campaign_id``` to organize related batches together. This can be set manually or auto-generated through
+  Campaigns.
+</ParamField>
+
+<ParamField body="test_mode" type="boolean" default="false">
+  When this is set to ```true```, only the first call of ```call_data``` will be dispatched. A common use case is to set the first ```phone_number``` value to your own to confirm everything's set up properly.
+
+Includes additional information in the response when true so that it's easier to find any issues.
+
+</ParamField>
+
+<ParamField body="*">
+  All other parameters supported by the [Send Call](/api-v1/post/calls) endpoint are supported here as well. They will
+  be applied to each call in the batch.
+</ParamField>
+
+### Response
+
+<ResponseField name="message" type="string">
+  If anything other than "success" is returned, there was an error.
+</ResponseField>
+
+<ResponseField name="batch_id" type="string">
+  The unique identifier for the batch.
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "message": "success",
+  "batch_id": "3p$7rQ3p9sT5bzmF-gen-batch"
+}
+```
+
+</ResponseExample>

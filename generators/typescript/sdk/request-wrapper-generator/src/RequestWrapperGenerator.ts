@@ -12,6 +12,7 @@ export declare namespace RequestWrapperGenerator {
             packageId: PackageId;
             includeSerdeLayer: boolean;
             retainOriginalCasing: boolean;
+            inlineFileProperties: boolean;
         }
     }
 }
@@ -23,7 +24,8 @@ export class RequestWrapperGenerator {
         endpoint,
         wrapperName,
         includeSerdeLayer,
-        retainOriginalCasing
+        retainOriginalCasing,
+        inlineFileProperties
     }: RequestWrapperGenerator.generateRequestWrapper.Args): GeneratedRequestWrapper {
         return new GeneratedRequestWrapperImpl({
             packageId,
@@ -31,7 +33,8 @@ export class RequestWrapperGenerator {
             endpoint,
             wrapperName,
             includeSerdeLayer,
-            retainOriginalCasing
+            retainOriginalCasing,
+            inlineFileProperties
         });
     }
 }

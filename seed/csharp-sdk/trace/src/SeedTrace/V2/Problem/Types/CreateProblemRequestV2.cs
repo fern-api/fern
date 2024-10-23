@@ -1,29 +1,37 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
-using SeedTrace.V2;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace.V2;
 
-public class CreateProblemRequestV2
+public record CreateProblemRequestV2
 {
     [JsonPropertyName("problemName")]
-    public string ProblemName { get; init; }
+    public required string ProblemName { get; set; }
 
     [JsonPropertyName("problemDescription")]
-    public ProblemDescription ProblemDescription { get; init; }
+    public required ProblemDescription ProblemDescription { get; set; }
 
     [JsonPropertyName("customFiles")]
-    public CustomFiles CustomFiles { get; init; }
+    public required object CustomFiles { get; set; }
 
     [JsonPropertyName("customTestCaseTemplates")]
-    public List<List<TestCaseTemplate>> CustomTestCaseTemplates { get; init; }
+    public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; set; } =
+        new List<TestCaseTemplate>();
 
     [JsonPropertyName("testcases")]
-    public List<List<TestCaseV2>> Testcases { get; init; }
+    public IEnumerable<TestCaseV2> Testcases { get; set; } = new List<TestCaseV2>();
 
     [JsonPropertyName("supportedLanguages")]
-    public List<HashSet<Language>> SupportedLanguages { get; init; }
+    public HashSet<Language> SupportedLanguages { get; set; } = new HashSet<Language>();
 
     [JsonPropertyName("isPublic")]
-    public bool IsPublic { get; init; }
+    public required bool IsPublic { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

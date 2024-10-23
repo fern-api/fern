@@ -3,11 +3,12 @@
         {
             "id": {
                 "path": "/send-optional-body",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_optional.sendOptionalBody"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedObjectsWithImportsClient } from \"@fern/optional\";\n\nconst seedObjectsWithImports = new SeedObjectsWithImportsClient;\nawait seedObjectsWithImports.optional.sendOptionalBody({\n    \"string\": {\n        \"key\": \"value\"\n    }\n});\n"
+                "client": "import { SeedObjectsWithImportsClient } from \"@fern/optional\";\n\nconst client = new SeedObjectsWithImportsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.optional.sendOptionalBody(undefined);\n"
             }
         }
     ],

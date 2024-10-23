@@ -4,7 +4,6 @@ package service
 
 import (
 	context "context"
-	fmt "fmt"
 	core "github.com/api-wide-base-path/fern/core"
 	option "github.com/api-wide-base-path/fern/option"
 	http "net/http"
@@ -47,18 +46,26 @@ func (c *Client) Post(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"test/%v/%v/%v/%v", pathParam, serviceParam, endpointParam, resourceParam)
+	endpointURL := core.EncodeURL(
+		baseURL+"/test/%v/%v/%v/%v",
+		pathParam,
+		serviceParam,
+		endpointParam,
+		resourceParam,
+	)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
 		},
 	); err != nil {
 		return err

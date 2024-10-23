@@ -1,141 +1,167 @@
 # Contributing
 
-Thanks for being here! Fern gives a lot of importance to being a community project, and we rely on your help as much as you rely on ours. If you have any feedback on what we could improve, please [open an issue](https://github.com/fern-api/fern/issues/new) to discuss it!
+Thanks for being here! This monorepo contains Fern's documentation, the Fern CLI, the Fern Definition, the OpenAPI importer, as well as all of our generators.
 
-## Opening an issue
+<br>
 
-All contributions start with [an issue](https://github.com/fern-api/fern/issues/new). Even if you have a good idea of what the problem is and what the solution looks like, please open an issue. This will give us an opportunity to align on the problem and solution, and to deconflict in the case that somebody else is already working on it.
+## Setup
 
-## How can you help?
+The Fern repo is primarily written in TypeScript and relies on [PnPm](https://pnpm.io/) for package management.
 
-Review [our documentation](https://buildwithfern.com/docs)! We appreciate any help we can get that makes our documentation more digestible.
+Once you have cloned or forked the repository, run through the steps below.
 
-Talk about Fern in your local meetups! Even our users aren't always aware of some of our features. Learn, then share your knowledge with your own circles.
+### Step 1: Install dependencies
 
-Write code! We've got lots of open issues - feel free to volunteer for one by commenting on the issue.
+```sh
+pnpm install
+```
 
-## Writing Documentation
+### Step 2: Compile
 
-Our documentation is powered by Fern's Docs product. All of the configuration for the docs lives in
-[docs.yml](./fern/docs.yml).
+To compile all the packages in this monorepo, run `pnpm compile`.
+
+To compile a single package, filter to the relevant package: `pnpm --filter @fern-api/openapi-parser compile`.
+
+### Step 3: Testing
+
+This repo contains both unit tests and integration (end-to-end) tests.
+
+To run all the unit tests: `pnpm test`.
+
+To run unit tests for a single package: `pnpm --filter @fern-api/openapi-parser test`
+
+To run the integration tests: `pnpm test:ete`.
+
+Many of our tests rely on [snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `pnpm test:update` or `pnpm test:ete:update`.
+
+<br>
+
+## Repository Architecture
+
+Below we talk through the large components of this monorepo and how to contribute to each one.
+
+<br>
+
+## Documentation
+
+Fern's documentation is hosted live at the URL https://buildwithfern.com/learn. We appreciate any help we can get that makes our documentation more digestible.
+
+If you find gaps within our documentation, please open an [issue](https://github.com/fern-api/fern/issues/new?assignees=&labels=documentation&projects=&template=documentation-suggestion.md&title=%5BFern%27s+Documentation%5D+)
+
+### Editing Documentation
+
+Our documentation is powered by Fern's Docs product. All of the configuration for the docs lives in [docs.yml](./fern/docs.yml).
 
 To edit the docs, you can modify `docs.yml` or any of the markdown that it references.
 
 To validate that the docs, run:
 
-```
-npm install -g fern-api
+```sh
 fern check
 ```
 
-When you make a PR to update the docs, a PR preview link will be generated which will allow you
-to test if your changes came out as intended.
+To preview the documentation, run:
 
-## Local Development
-
-Our repo is a monorepo that relies on [Yarn workspaces](https://yarnpkg.com/features/workspaces) and [Yarn Plug'n'Play](https://yarnpkg.com/features/pnp) to run smoothly.
-
-To get started:
-
-**Step 1: Fork this repo**
-
-Fork by clicking [here](https://github.com/fern-api/fern/fork).
-
-**Step 2: Clone your fork and open in VSCode**
-
-```
-git clone <your fork>
-cd fern
-code .
+```sh
+fern docs dev
 ```
 
-**Step 3: Install dependencies**
+Finally, when you make a PR to update the docs, a PR preview link will be generated which will allow you
+to test if your changes came out as intended. [Here](https://github.com/fern-api/fern/pull/4330) is a sample PR with a preview link.
 
-```
-yarn
-```
+<br>
 
-**Step 4: Use the "workspace" version of Typescript**
+## Fern CLI
 
-1. Open any TypeScript file in VSCode
-2. Open the Command Palette (Cmd+Shift+P on Mac) and select `Typescript: Select TypeScript Version...`
-3. Choose `Use Workspace Version`
+The Fern CLI lives in a directory called [cli](./packages/cli/cli/) and the entrypoint is [cli.ts](./packages/cli/cli/src/cli.ts).
 
-This tells VSCode to rely on the version of TypeScript that lives in `.yarn/sdks/typescript`, which is modified to work with Yarn PNP.
+### Building the CLI from source
 
-**Step 5: Install Husky**
+For testing purposes, you can build a local version of the CLI by running `pnpm fern:build`. This compiles and builds a CLI
+that communicates with our production cloud environment.
 
-Run `yarn husky install` from the root of the repo and this will configure pre-commit hooks that will lint your changes.
+The CLI is outputted to `packages/cli/cli/dist/prod/cli.cjs`.
 
-### Compiling
+Once the CLI has been built, you can navigate to any `fern` folder and invoke it by running
 
-To compile the packages in this monorepo, run `yarn compile`.
-
-### Tests
-
-This repo contains both unit tests and integration (end-to-end) tests.
-
-To run the unit tests: `yarn test`.
-
-To run the integration tests: `yarn test:ete`.
-
-Many of our tests rely on [Jest snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `-u`: `yarn test -u` and `yarn test:ete -u`.
-
-### CLI
-
-To build the CLI, run either:
-
-- `yarn dist:cli:dev`. This compiles and bundles a CLI that communicates with our dev cloud environment. The CLI is outputted to `packages/cli/cli/dist/dev/cli.cjs`.
-
-- `yarn dist:cli:prod`. This compiles and bundles a CLI that communicates with our production cloud environment. The CLI is outputted to `packages/cli/cli/dist/prod/cli.cjs`.
-
-To run the locally-generated CLI, run:
-
-```
-FERN_NO_VERSION_REDIRECTION=true node <path to CLI> <args>
+```sh
+FERN_NO_VERSION_REDIRECTION=true node /<path to fern git repo>/packages/cli/cli/dist/prod/cli.cjs <args>
 ```
 
-## Intermediate Representation
+### Development CLI
 
-Fern generators read in IR (Intermediate Representation) and spit out
-generated files. The IR is a JSON data structure that includes information
-about your API and any additional information that may be convenient for a
-code generator. For example, the IR includes all possible casings of every
-string (e.g. `snake_case`, `camelCase`, `PascalCase`) so that the
-generators don't need to implement this individually.
+To build a CLI that communicates with Fern's development cloud environment, run the command `pnpm fern-dev:build`.
 
-### IR Versioning
+Once the CLI has been built, you can navigate to any `fern` folder and invoke it by running
 
-As we add more features to the API definition, we introduce new versions
-of the IR. For example, if we wanted to add a new auth mechanism, we would
-eventually need to add it to the IR so that the generators could generate
-relevant code.
+```sh
+FERN_NO_VERSION_REDIRECTION=true node /<path to fern git repo>/packages/cli/cli/dist/dev/cli.cjsn <args>
+```
 
-Each generator is pinned to an IR Version. Different versions of the generator,
-can dependend on differnt versions of the IR. For example, the Python SDK generator released
-2 months ago depends on an older IR than the one released this week.
+<br>
 
-> Note: The IR schema is modeled as a Fern Definition and you can see several
-> versions of them in the `./fern` folder.
+## Generators
 
-The Fern CLI should be able to run old generators so whenver we
-introduce a new IR version, we write a migration. In other words if you introduce IR V20, then
-you will have to write a migration from IR V20 -> IR V19 so that any generator
-that depends on a lower IR version can continue to be run from our CLI.
+All of Fern's generators live in a directory called [generators](./generators/). This directory contains generators for several languages such as
+[typescript](./generators/typescript/), [python](./generators/python/), [go](./generators/go).
 
-### How to add a new IR Version?
+Some of the generators are written in the language they generate (i.e. Python is written in python, Go is written in Go, and Java is written in Java).
+We are moving to a world where each generator will be written in TypeScript so that we can share more utilities and enforce a consistent structure
+in the generator.
 
-**Step 1: Define the new IR**
+### Generator Testing
 
-1. Create a new Fern Definition for the IR version `fern/ir-types-vXXX`.
-   Copy the latest IR Fern Definition as a starting point.
-2. Introduce any changes you want in the new IR Fern Definition.
-3. Generate a TypeScript SDK for the IR by running `fern generate --api ir-types-vXXX`
-4. Update all `package.json` files to use new `ir-sdk` npm version.
-   Run `yarn install`
-5. Run `yarn compile`. You will see compile errors related to your schema changes.
+**Note**: Please make sure that the docker daemon is running before running commands below. 
 
-**Step 2: Write a reverse migration**
+To test our generators we have built a CLI called seed.
 
-In the `ir-migrations` package, introduce a new migration.
-You can copy the latest migration as a starting point.
+Seed handles building the generators from source and running them against all of the
+[test definitions](./test-definitions/fern/) that are present in the repository. Generated code is then stored in a directory named
+[seed](./seed/).
+
+Each generator configures a `seed.yml`. For example, the TypeScript generator's configuration lives [here](./seed/ts-sdk/seed.yml).
+
+Seed also handles running scripts against the generated code to make sure that the generated code compiles and works
+as intended. For example, in the TypeScript generator seed runs `yarn install` and `yarn build` to compile the source code.
+
+To build seed, simply run
+
+```sh
+pnpm seed:build
+```
+
+**Note**: If you make any changes to the seed [source code](./packages/seed/src/) then you will need to rerun `pnpm seed:build`.
+
+To run seed, you can use the command:
+
+```
+pnpm seed test [--generator <generator-id>] [--fixture <fixture-name>] [--skip-scripts] [--local]
+```
+
+Below are some examples of using the command.
+
+- For a single generator: `pnpm seed test --generator python-sdk`
+- For a single generator and test definition: `pnpm seed test --generator python-sdk --fixture file-download`
+- For a single generator, test definition, and skipping scripts: `pnpm seed test --generator python-sdk --fixture file-download --skip-scripts`
+- For running the generator locally (not on docker): `pnpm seed test --generator python-sdk`
+
+### Running seed against a custom fern definition
+
+It may be valuable to run seed on a particular Fern definition or OpenAPI spec. To do this,
+you can use the `seed run` command and point it at the fern folder:
+
+```
+pnpm seed run [--generator <generator-id>] [--path /path/to/fern/folder] [--audience <audience>]
+```
+
+Below are some examples of using the command.
+
+- Pointed at a fern folder: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern --audience external`
+- Pointed at a fern folder with an audience: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern`
+- Pointed at a fern folder with multiple apis: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern/apis/<name-of-api>`
+
+<br>
+
+## Feedback
+
+If you have any feedback on what we could improve, please [open an issue](https://github.com/fern-api/fern/issues/new) to discuss it!

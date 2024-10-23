@@ -15,8 +15,9 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = RecordedResponseNotification.Builder.class
 )
@@ -74,7 +75,7 @@ public final class RecordedResponseNotification {
   }
 
   public interface SubmissionIdStage {
-    TraceResponsesSizeStage submissionId(SubmissionId submissionId);
+    TraceResponsesSizeStage submissionId(@NotNull SubmissionId submissionId);
 
     Builder from(RecordedResponseNotification other);
   }
@@ -114,8 +115,8 @@ public final class RecordedResponseNotification {
 
     @java.lang.Override
     @JsonSetter("submissionId")
-    public TraceResponsesSizeStage submissionId(SubmissionId submissionId) {
-      this.submissionId = submissionId;
+    public TraceResponsesSizeStage submissionId(@NotNull SubmissionId submissionId) {
+      this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
       return this;
     }
 
@@ -128,7 +129,7 @@ public final class RecordedResponseNotification {
 
     @java.lang.Override
     public _FinalStage testCaseId(String testCaseId) {
-      this.testCaseId = Optional.of(testCaseId);
+      this.testCaseId = Optional.ofNullable(testCaseId);
       return this;
     }
 

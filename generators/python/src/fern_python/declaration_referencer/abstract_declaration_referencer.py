@@ -13,26 +13,29 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         self,
         *,
         name: T,
+        as_request: bool,
         must_import_after_current_declaration: Optional[Callable[[T], bool]] = None,
+        as_if_type_checking_import: bool = False,
     ) -> AST.ClassReference:
-        filepath = self.get_filepath(name=name)
+        filepath = self.get_filepath(name=name, as_request=as_request)
         return AST.ClassReference(
             import_=AST.ReferenceImport(
                 module=filepath.to_module(),
-                named_import=self.get_class_name(name=name),
+                named_import=self.get_class_name(name=name, as_request=as_request),
             ),
             qualified_name_excluding_import=(),
             must_import_after_current_declaration=must_import_after_current_declaration(name)
             if must_import_after_current_declaration is not None
             else False,
+            import_if_type_checking=as_if_type_checking_import,
         )
 
     @abstractmethod
-    def get_filepath(self, *, name: T) -> Filepath:
+    def get_filepath(self, *, name: T, as_request: bool) -> Filepath:
         ...
 
     @abstractmethod
-    def get_class_name(self, *, name: T) -> str:
+    def get_class_name(self, *, name: T, as_request: bool) -> str:
         ...
 
     def _get_directories_for_fern_filepath(
@@ -61,7 +64,7 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         return (
             Filepath.DirectoryFilepathPart(
-                module_name=fern_filepath_part.snake_case.unsafe_name,
+                module_name=fern_filepath_part.snake_case.safe_name,
                 export_strategy=export_strategy,
             ),
         )

@@ -3,12 +3,17 @@
  */
 package com.seed.serverSentEvents.resources.completions;
 
-import com.seed.serverSentEvents.core.ApiError;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.serverSentEvents.core.ClientOptions;
 import com.seed.serverSentEvents.core.MediaTypes;
 import com.seed.serverSentEvents.core.ObjectMappers;
 import com.seed.serverSentEvents.core.RequestOptions;
+import com.seed.serverSentEvents.core.ResponseBodyReader;
+import com.seed.serverSentEvents.core.SeedServerSentEventsApiException;
+import com.seed.serverSentEvents.core.SeedServerSentEventsException;
+import com.seed.serverSentEvents.core.Stream;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
+import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -16,6 +21,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class CompletionsClient {
     protected final ClientOptions clientOptions;
@@ -24,11 +30,11 @@ public class CompletionsClient {
         this.clientOptions = clientOptions;
     }
 
-    public void stream(StreamCompletionRequest request) {
-        stream(request, null);
+    public Iterable<StreamedCompletion> stream(StreamCompletionRequest request) {
+        return stream(request, null);
     }
 
-    public void stream(StreamCompletionRequest request, RequestOptions requestOptions) {
+    public Iterable<StreamedCompletion> stream(StreamCompletionRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("stream")
@@ -37,8 +43,8 @@ public class CompletionsClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new SeedServerSentEventsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -46,20 +52,24 @@ public class CompletionsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
         try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return;
+                return new Stream<StreamedCompletion>(
+                        StreamedCompletion.class, new ResponseBodyReader(response), "[[DONE]]");
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedServerSentEventsApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedServerSentEventsException("Network error executing HTTP request", e);
         }
     }
 }

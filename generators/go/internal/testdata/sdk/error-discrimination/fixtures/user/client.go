@@ -7,7 +7,6 @@ import (
 	context "context"
 	json "encoding/json"
 	errors "errors"
-	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures/option"
@@ -49,7 +48,7 @@ func (c *Client) Get(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"%v", id)
+	endpointURL := core.EncodeURL(baseURL+"/%v", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -65,7 +64,7 @@ func (c *Client) Get(
 			Content   json.RawMessage `json:"content"`
 		}
 		if err := decoder.Decode(&discriminant); err != nil {
-			return err
+			return apiError
 		}
 		switch discriminant.ErrorName {
 		case "OrganizationNotFoundError":
@@ -104,13 +103,15 @@ func (c *Client) Get(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:          endpointURL,
-			Method:       http.MethodGet,
-			MaxAttempts:  options.MaxAttempts,
-			Headers:      headers,
-			Client:       options.HTTPClient,
-			Response:     &response,
-			ErrorDecoder: errorDecoder,
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    errorDecoder,
 		},
 	); err != nil {
 		return "", err

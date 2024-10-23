@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_folder-a/service.getDirectThread"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedCrossPackageTypeNamesClient, SeedCrossPackageTypeNames } from \"@fern/cross-package-type-names\";\n\nconst client = new SeedCrossPackageTypeNamesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folderA.service.getDirectThread();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_folder-d/service.getDirectThread"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedCrossPackageTypeNamesClient, SeedCrossPackageTypeNames } from \"@fern/cross-package-type-names\";\n\nconst client = new SeedCrossPackageTypeNamesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folderD.service.getDirectThread();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_foo.find"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedCrossPackageTypeNamesClient, SeedCrossPackageTypeNames } from \"@fern/cross-package-type-names\";\n\nconst client = new SeedCrossPackageTypeNamesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.foo.find({\n    publicProperty: undefined,\n    privateProperty: undefined\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

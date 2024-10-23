@@ -1,0 +1,239 @@
+---
+title: General Ledger objects
+slug: api-reference/ledger
+---
+
+The general ledger of a business on Layer’s platform. A general ledger is automatically created when a [Business](/api-reference/business/business) is created via the [Create a Business](/api-reference/business/create) endpoint.
+
+### Attributes
+
+<ParamField body="type" type="string">
+  Resource type. Value will be "Chart_Of_Accounts".
+</ParamField>
+<ParamField body="accounts" type="array of Ledger Accounts">
+  Array of [Ledger Accounts](/api-reference/ledger#ledger-account-object) within the Ledger.
+</ParamField>
+
+#### Ledger Account object
+An account within the general ledger
+<ParamField body="id" type="string">
+  Unique identifier of the ledger account.
+</ParamField>
+<ParamField body="name" type="string">
+  Account name
+</ParamField>
+<ParamField body="accountStableName" type="string">
+  Stable identifier for templated account.
+</ParamField>
+<ParamField body="description" type="string">
+  Human readable description for this ledger account.
+</ParamField>
+<ParamField body="subAccounts" type="array of Ledger Account objects">
+  An array of [Ledger Account](/api-reference/ledger#ledger-account-object) objects representing child accounts of this ledger account.
+</ParamField>
+<ParamField body="balance" type="integer">
+  Balance of the account, in cents.
+</ParamField>
+<ParamField body="normality" type="enum">
+  Account balance normality.
+  Values can be: `DEBIT`, `CREDIT`
+</ParamField>
+<ParamField body="entries" type="array of Ledger Account Line Item objects">
+  Array of [Ledger Account Line Item](/api-reference/ledger#ledger-account-line-item-object) objects representing ledger entries recorded in this account.
+</ParamField>
+
+#### Ledger Account Line Item object
+A ledger entry within a ledger account.
+<ParamField body="id" type="string">
+  Unique identifier of the ledger account line item.
+</ParamField>
+<ParamField body="entry_id" type="string">
+  Id of the Journal entry the ledger account line item was part of.
+</ParamField>
+<ParamField body="account" type="Ledger Account object">
+  Simplified [Ledger Account](/api-reference/ledger#ledger-account-object) object containing this line item.
+</ParamField>
+<ParamField body="direction" type="enum">
+  Direction of line item.
+  Values can be: `DEBIT`, `CREDIT`
+</ParamField>
+<ParamField body="entry_at" type="ISO8601 timestamp">
+  Timestamp of the financial transaction associted with the line item.
+</ParamField>
+<ParamField body="createdAt" type="ISO8601 timestamp">
+  Timestamp when ledger entry was added to the ledger account.
+</ParamField>
+
+#### Journal Entry object
+A journal entry within the general ledger.
+<ParamField body="id" type="string">
+  Unique identifier of the journal entry.
+</ParamField>
+<ParamField body="business_id" type="string">
+  Id of the business associated with this journal entry.
+</ParamField>
+<ParamField body="ledger_id" type="string">
+  Id of the general ledger containing this journal entry.
+</ParamField>
+<ParamField body="agent" type="string">
+  Entity that created the journal entry.
+</ParamField>
+<ParamField body="entry_type" type="enum">
+  Type of entry.
+  Example values: `INVOICE_PAYMENT`, `EXPENSE`
+</ParamField>
+<ParamField body="line_items" type="array of Ledger Account Line Item objects">
+  Array of [Ledger Account Line Items](/api-reference/ledger#ledger-account-line-item-object) comprising the Journal Entry.
+</ParamField>
+
+<ResponseExample>
+
+```json Example
+{
+  "data":{
+    "type":"Chart_Of_Accounts",
+    "name":"Default",
+    "accounts":[
+      {
+        "id":"86b497b9-71e3-4353-9726-8b4a5ac46626",
+        "number":0,
+        "pnlCategory":null,
+        "name":"Assets",
+        "accountStableName":"ASSETS",
+        "description":"All asset accounts for your business",
+        "subAccounts":[
+          {
+            "id":"b0b4f2ef-9c46-4ee4-87f6-3db37cad4d5d",
+            "number":0,
+            "pnlCategory":null,
+            "name":"JP Morgan Chase Business Checking (4402)",
+            "accountStableName":"UNIT_CHECKING",
+            "description":"Unit checking",
+            "normality":"DEBIT",
+            "balance":478018,
+            "selfOnlyBalance":478018,
+            "entries":[
+              {
+                "id":"63c52976-16a4-486a-86ab-00d2cc669e99",
+                "entry_id":"0e81ec02-483a-4ade-8878-b8e731e14c0f",
+                "account":{
+                  "id":"b0b4f2ef-9c46-4ee4-87f6-3db37cad4d5d",
+                  "name":"JP Morgan Chase Business Checking (4402)",
+                  "stable_name":"UNIT_CHECKING",
+                  "normality":"DEBIT",
+                  "pnl_category":null,
+                  "always_show_in_pnl":false,
+                  "description":"Unit checking"
+                },
+                "amount":8531,
+                "direction":"CREDIT",
+                "entry_at":"2023-12-11T16:11:41.316Z",
+                "createdAt":"2023-12-11T16:11:43.875713Z"
+              },
+              {
+                "id":"91c7b1b6-5ab5-4b11-b39d-1adf33841f11",
+                "entry_id":"e9394916-91d2-4ddb-8bfe-bbc25bb7d9da",
+                "account":{
+                  "id":"b0b4f2ef-9c46-4ee4-87f6-3db37cad4d5d",
+                  "name":"JP Morgan Chase Business Checking (4402)",
+                  "stable_name":"UNIT_CHECKING",
+                  "normality":"DEBIT",
+                  "pnl_category":null,
+                  "always_show_in_pnl":false,
+                  "description":"Unit checking"
+                },
+                "amount":540981,
+                "direction":"DEBIT",
+                "entry_at":"2023-12-11T16:11:41.316Z",
+                "createdAt":"2023-12-11T16:11:43.949003Z"
+              }
+            ]
+          },
+          {
+            "id":"bd68a8e3-fce4-4e7f-bee3-e7bd0f94627d",
+            "number":0,
+            "pnlCategory":null,
+            "name":"Accounts Receivable",
+            "accountStableName":"ACCOUNTS_RECEIVABLE",
+            "description":"Amounts owed by clients",
+            "normality":"DEBIT",
+            "balance":140485,
+            "selfOnlyBalance":140485,
+            "entries":[
+            // Omitteed for length
+            ]
+          }
+          // Omitted for length
+        ],
+        "normality":"DEBIT",
+        "balance":618503,
+        "entries":[
+
+        ]
+      },
+      {
+        "id":"d138a41a-0ea4-4949-a3c2-28279936fda1",
+        "number":0,
+        "pnlCategory":null,
+        "name":"Liabilities",
+        "accountStableName":"LIABILITIES",
+        "description":"All liabilities for your business",
+        "subAccounts":[
+        // Omitted for brefity
+        ],
+        "normality":"CREDIT",
+        "entries":[
+
+        ]
+      },
+      {
+        "id":"436a0187-1355-4e2d-978a-5ff4d52ad03f",
+        "number":0,
+        "pnlCategory":null,
+        "name":"Equity",
+        "accountStableName":"EQUITY",
+        "description":"All equity accounts for your business",
+        "subAccounts":[
+        // Omitted for brefity
+        ],
+        "normality":"CREDIT",
+        "entries":[
+        ]
+      },
+      {
+        "id":"337ae99d-68a9-4ec2-b19d-4b8a5750f6b9",
+        "number":0,
+        "pnlCategory":"INCOME",
+        "name":"Revenue",
+        "accountStableName":"REVENUE",
+        "subAccounts":[
+        // Omitted for brefity
+        ],
+        "normality":"CREDIT",
+        "balance":678466,
+        "entries":[
+
+        ]
+      },
+      {
+        "id":"4f394bcb-e514-4ec9-bcd7-6612ebd146fe",
+        "number":0,
+        "pnlCategory":null,
+        "name":"Expenses",
+        "accountStableName":"EXPENSES",
+        "description":"Expenses",
+        "subAccounts":[
+        // Omitted for brefity
+        ],
+        "normality":"DEBIT",
+        "balance":65963,
+        "entries":[
+
+        ]
+      }
+    ]
+  }
+}
+```
+
+</ResponseExample>

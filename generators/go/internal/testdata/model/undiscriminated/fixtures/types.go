@@ -39,10 +39,11 @@ func (a *AnotherUnion) UnmarshalJSON(data []byte) error {
 	}
 	var valueFernStringLiteral string
 	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
-		if valueFernStringLiteral == "fern" {
-			a.fernStringLiteral = valueFernStringLiteral
-			return nil
+		a.fernStringLiteral = valueFernStringLiteral
+		if a.fernStringLiteral != "fern" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "fern", valueFernStringLiteral)
 		}
+		return nil
 	}
 	valueFoo := new(Foo)
 	if err := json.Unmarshal(data, &valueFoo); err == nil {
@@ -86,6 +87,29 @@ func (a *AnotherUnion) Accept(visitor AnotherUnionVisitor) error {
 
 type Bar struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (b *Bar) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *Bar) UnmarshalJSON(data []byte) error {
+	type unmarshaler Bar
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Bar(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
+	return nil
 }
 
 func (b *Bar) String() string {
@@ -97,6 +121,29 @@ func (b *Bar) String() string {
 
 type Baz struct {
 	Id string `json:"id" url:"id"`
+
+	extraProperties map[string]interface{}
+}
+
+func (b *Baz) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *Baz) UnmarshalJSON(data []byte) error {
+	type unmarshaler Baz
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Baz(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
+	return nil
 }
 
 func (b *Baz) String() string {
@@ -108,6 +155,29 @@ func (b *Baz) String() string {
 
 type Foo struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (f *Foo) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *Foo) UnmarshalJSON(data []byte) error {
+	type unmarshaler Foo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Foo(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
+	return nil
 }
 
 func (f *Foo) String() string {
@@ -231,17 +301,19 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 	}
 	var valueFernStringLiteral string
 	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
-		if valueFernStringLiteral == "fern" {
-			u.fernStringLiteral = valueFernStringLiteral
-			return nil
+		u.fernStringLiteral = valueFernStringLiteral
+		if u.fernStringLiteral != "fern" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "fern", valueFernStringLiteral)
 		}
+		return nil
 	}
 	var valueAnotherStringLiteral string
 	if err := json.Unmarshal(data, &valueAnotherStringLiteral); err == nil {
-		if valueAnotherStringLiteral == "another" {
-			u.anotherStringLiteral = valueAnotherStringLiteral
-			return nil
+		u.anotherStringLiteral = valueAnotherStringLiteral
+		if u.anotherStringLiteral != "another" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "another", valueAnotherStringLiteral)
 		}
+		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
 }
@@ -354,10 +426,11 @@ func (u *UnionWithLiteral) FernStringLiteral() string {
 func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 	var valueFernStringLiteral string
 	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
-		if valueFernStringLiteral == "fern" {
-			u.fernStringLiteral = valueFernStringLiteral
-			return nil
+		u.fernStringLiteral = valueFernStringLiteral
+		if u.fernStringLiteral != "fern" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "fern", valueFernStringLiteral)
 		}
+		return nil
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {

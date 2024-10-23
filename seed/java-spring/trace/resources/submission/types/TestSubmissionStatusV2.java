@@ -16,10 +16,11 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.ProblemId;
 import resources.v2.problem.types.ProblemInfoV2;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = TestSubmissionStatusV2.Builder.class
 )
@@ -85,7 +86,7 @@ public final class TestSubmissionStatusV2 {
   }
 
   public interface ProblemIdStage {
-    ProblemVersionStage problemId(ProblemId problemId);
+    ProblemVersionStage problemId(@NotNull ProblemId problemId);
 
     Builder from(TestSubmissionStatusV2 other);
   }
@@ -95,7 +96,7 @@ public final class TestSubmissionStatusV2 {
   }
 
   public interface ProblemInfoStage {
-    _FinalStage problemInfo(ProblemInfoV2 problemInfo);
+    _FinalStage problemInfo(@NotNull ProblemInfoV2 problemInfo);
   }
 
   public interface _FinalStage {
@@ -134,8 +135,8 @@ public final class TestSubmissionStatusV2 {
 
     @java.lang.Override
     @JsonSetter("problemId")
-    public ProblemVersionStage problemId(ProblemId problemId) {
-      this.problemId = problemId;
+    public ProblemVersionStage problemId(@NotNull ProblemId problemId) {
+      this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
       return this;
     }
 
@@ -148,8 +149,8 @@ public final class TestSubmissionStatusV2 {
 
     @java.lang.Override
     @JsonSetter("problemInfo")
-    public _FinalStage problemInfo(ProblemInfoV2 problemInfo) {
-      this.problemInfo = problemInfo;
+    public _FinalStage problemInfo(@NotNull ProblemInfoV2 problemInfo) {
+      this.problemInfo = Objects.requireNonNull(problemInfo, "problemInfo must not be null");
       return this;
     }
 

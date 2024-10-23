@@ -155,7 +155,7 @@ public final class ExceptionGenerator extends AbstractFileGenerator {
 
     private final class ControllerAdviceImplementer implements ErrorDiscriminationStrategy.Visitor<Void> {
 
-        private MethodSpec.Builder handleMethod;
+        private final MethodSpec.Builder handleMethod;
 
         ControllerAdviceImplementer(MethodSpec.Builder handleMethod) {
             this.handleMethod = handleMethod;

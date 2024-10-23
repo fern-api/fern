@@ -1,9 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedUnions.Core;
+
+#nullable enable
 
 namespace SeedUnions;
 
-public class Circle
+public record Circle
 {
     [JsonPropertyName("radius")]
-    public double Radius { get; init; }
+    public required double Radius { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

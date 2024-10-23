@@ -116,7 +116,14 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 				continue
 			}
 			for i := 0; i < sv.Len(); i++ {
-				values.Add(name, valueString(sv.Index(i), opts, sf))
+				value := sv.Index(i)
+				if isStructPointer(value) && !value.IsNil() {
+					if err := reflectValue(values, value.Elem(), name); err != nil {
+						return err
+					}
+				} else {
+					values.Add(name, valueString(value, opts, sf))
+				}
 			}
 			continue
 		}
@@ -171,7 +178,7 @@ func isEmptyValue(v reflect.Value) bool {
 		IsZero() bool
 	}
 
-	if !v.IsNil() {
+	if !v.IsZero() {
 		if z, ok := v.Interface().(zeroable); ok {
 			return z.IsZero()
 		}
@@ -195,6 +202,11 @@ func isEmptyValue(v reflect.Value) bool {
 	}
 
 	return false
+}
+
+// isStructPointer returns true if the given reflect.Value is a pointer to a struct.
+func isStructPointer(v reflect.Value) bool {
+	return v.Kind() == reflect.Ptr && v.Elem().Kind() == reflect.Struct
 }
 
 // tagOptions is the string following a comma in a struct field's "url" tag, or

@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = DoublyLinkedListValue.Builder.class
 )
@@ -94,7 +94,7 @@ public final class DoublyLinkedListValue {
     }
 
     public Builder head(NodeId head) {
-      this.head = Optional.of(head);
+      this.head = Optional.ofNullable(head);
       return this;
     }
 

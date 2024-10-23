@@ -13,8 +13,9 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = BinaryTreeNodeAndTreeValue.Builder.class
 )
@@ -63,13 +64,13 @@ public final class BinaryTreeNodeAndTreeValue {
   }
 
   public interface NodeIdStage {
-    FullTreeStage nodeId(NodeId nodeId);
+    FullTreeStage nodeId(@NotNull NodeId nodeId);
 
     Builder from(BinaryTreeNodeAndTreeValue other);
   }
 
   public interface FullTreeStage {
-    _FinalStage fullTree(BinaryTreeValue fullTree);
+    _FinalStage fullTree(@NotNull BinaryTreeValue fullTree);
   }
 
   public interface _FinalStage {
@@ -96,15 +97,15 @@ public final class BinaryTreeNodeAndTreeValue {
 
     @java.lang.Override
     @JsonSetter("nodeId")
-    public FullTreeStage nodeId(NodeId nodeId) {
-      this.nodeId = nodeId;
+    public FullTreeStage nodeId(@NotNull NodeId nodeId) {
+      this.nodeId = Objects.requireNonNull(nodeId, "nodeId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("fullTree")
-    public _FinalStage fullTree(BinaryTreeValue fullTree) {
-      this.fullTree = fullTree;
+    public _FinalStage fullTree(@NotNull BinaryTreeValue fullTree) {
+      this.fullTree = Objects.requireNonNull(fullTree, "fullTree must not be null");
       return this;
     }
 

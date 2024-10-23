@@ -17,6 +17,8 @@ export interface SdkCustomConfig {
     skipResponseValidation: boolean;
     extraDependencies: Record<string, string>;
     extraDevDependencies: Record<string, string>;
+    extraPeerDependencies: Record<string, string>;
+    extraPeerDependenciesMeta: Record<string, unknown>;
     treatUnknownAsAny: boolean;
     includeContentHeadersOnFileDownloadResponse: boolean;
     noSerdeLayer: boolean;
@@ -25,4 +27,11 @@ export interface SdkCustomConfig {
     tolerateRepublish: boolean;
     retainOriginalCasing: boolean | undefined;
     allowExtraFields: boolean | undefined;
+    inlineFileProperties: boolean | undefined;
+    packageJson: Record<string, unknown> | undefined;
+    publishToJsr: boolean | undefined;
+    omitUndefined: boolean | undefined;
+    generateWireTests: boolean | undefined;
+    noScripts: boolean | undefined;
+    useBigInt: boolean | undefined;
 }

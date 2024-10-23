@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.mixedCase.core.ObjectMappers;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = NestedUser.Builder.class)
 public final class NestedUser {
     private final String name;
@@ -89,14 +89,14 @@ public final class NestedUser {
         @java.lang.Override
         @JsonSetter("Name")
         public NestedUserStage name(String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("NestedUser")
         public _FinalStage nestedUser(User nestedUser) {
-            this.nestedUser = nestedUser;
+            this.nestedUser = Objects.requireNonNull(nestedUser, "nestedUser must not be null");
             return this;
         }
 

@@ -43,7 +43,7 @@ module SeedTraceClient
           variable_type = parsed_json["variableType"].to_json
           variable_type = SeedTraceClient::Commons::VariableType.from_json(json_object: variable_type)
         end
-        name = struct["name"]
+        name = parsed_json["name"]
         new(
           variable_type: variable_type,
           name: name,

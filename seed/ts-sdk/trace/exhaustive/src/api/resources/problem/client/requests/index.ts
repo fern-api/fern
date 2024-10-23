@@ -1,1 +1,1 @@
-export { GetDefaultStarterFilesRequest } from "./GetDefaultStarterFilesRequest";
+export { type GetDefaultStarterFilesRequest } from "./GetDefaultStarterFilesRequest";

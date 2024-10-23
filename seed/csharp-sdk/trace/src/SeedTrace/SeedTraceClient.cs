@@ -1,5 +1,7 @@
-using SeedTrace;
+using SeedTrace.Core;
 using SeedTrace.V2;
+
+#nullable enable
 
 namespace SeedTrace;
 
@@ -7,15 +9,36 @@ public partial class SeedTraceClient
 {
     private RawClient _client;
 
-    public SeedTraceClient(string token, List<string?> xRandomHeader, ClientOptions clientOptions)
+    public SeedTraceClient(
+        string token,
+        string? xRandomHeader = null,
+        ClientOptions? clientOptions = null
+    )
     {
-        _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Random-Header", xRandomHeader },
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedTrace" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Ferntrace/0.0.1" },
+            }
         );
-        V2 = new undefinedClient(_client);
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
+        V2 = new V2Client(_client);
         Admin = new AdminClient(_client);
+        Commons = new CommonsClient(_client);
         Homepage = new HomepageClient(_client);
+        LangServer = new LangServerClient(_client);
         Migration = new MigrationClient(_client);
         Playlist = new PlaylistClient(_client);
         Problem = new ProblemClient(_client);
@@ -23,29 +46,23 @@ public partial class SeedTraceClient
         Sysprop = new SyspropClient(_client);
     }
 
-    public undefinedClient V2 { get; }
+    public V2Client V2 { get; init; }
 
-    public AdminClient Admin { get; }
+    public AdminClient Admin { get; init; }
 
-    public HomepageClient Homepage { get; }
+    public CommonsClient Commons { get; init; }
 
-    public MigrationClient Migration { get; }
+    public HomepageClient Homepage { get; init; }
 
-    public PlaylistClient Playlist { get; }
+    public LangServerClient LangServer { get; init; }
 
-    public ProblemClient Problem { get; }
+    public MigrationClient Migration { get; init; }
 
-    public SubmissionClient Submission { get; }
+    public PlaylistClient Playlist { get; init; }
 
-    public SyspropClient Sysprop { get; }
+    public ProblemClient Problem { get; init; }
 
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public SubmissionClient Submission { get; init; }
+
+    public SyspropClient Sysprop { get; init; }
 }

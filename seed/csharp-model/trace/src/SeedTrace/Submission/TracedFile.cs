@@ -1,12 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class TracedFile
+public record TracedFile
 {
     [JsonPropertyName("filename")]
-    public string Filename { get; init; }
+    public required string Filename { get; set; }
 
     [JsonPropertyName("directory")]
-    public string Directory { get; init; }
+    public required string Directory { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

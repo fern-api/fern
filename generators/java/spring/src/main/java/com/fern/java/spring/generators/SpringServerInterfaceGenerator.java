@@ -25,6 +25,7 @@ import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.HttpRequestBody;
 import com.fern.ir.model.http.HttpRequestBodyReference;
 import com.fern.ir.model.http.HttpResponse;
+import com.fern.ir.model.http.HttpResponseBody;
 import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.InlinedRequestBody;
 import com.fern.ir.model.http.JsonResponse;
@@ -119,8 +120,8 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                 .addParameters(endpointParameters);
 
         Optional<HttpResponse> httpResponse = httpEndpoint.getResponse();
-        if (httpResponse.isPresent()) {
-            httpResponse.get().visit(new HttpResponse.Visitor<Void>() {
+        if (httpResponse.isPresent() && httpResponse.get().getBody().isPresent()) {
+            httpResponse.get().getBody().get().visit(new HttpResponseBody.Visitor<Void>() {
                 @Override
                 public Void visitJson(JsonResponse json) {
                     JsonResponseBody body = json.visit(new JsonResponse.Visitor<JsonResponseBody>() {

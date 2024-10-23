@@ -1,16 +1,23 @@
 using System.Text.Json.Serialization;
-using SeedObjectsWithImports;
+using SeedObjectsWithImports.Core;
+
+#nullable enable
 
 namespace SeedObjectsWithImports;
 
-public class File
+public record File
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("contents")]
-    public string Contents { get; init; }
+    public required string Contents { get; set; }
 
     [JsonPropertyName("info")]
-    public FileInfo Info { get; init; }
+    public required FileInfo Info { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

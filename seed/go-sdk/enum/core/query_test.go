@@ -143,4 +143,45 @@ func TestQueryValues(t *testing.T) {
 		require.NoError(t, err)
 		assert.Empty(t, values.Encode())
 	})
+
+	t.Run("omitempty with non-pointer zero value", func(t *testing.T) {
+		type enum string
+
+		type example struct {
+			Enum enum `json:"enum,omitempty" url:"enum,omitempty"`
+		}
+
+		values, err := QueryValues(
+			&example{},
+		)
+		require.NoError(t, err)
+		assert.Empty(t, values.Encode())
+	})
+
+	t.Run("object array", func(t *testing.T) {
+		type object struct {
+			Key   string `json:"key" url:"key"`
+			Value string `json:"value" url:"value"`
+		}
+		type example struct {
+			Objects []*object `json:"objects,omitempty" url:"objects,omitempty"`
+		}
+
+		values, err := QueryValues(
+			&example{
+				Objects: []*object{
+					{
+						Key:   "hello",
+						Value: "world",
+					},
+					{
+						Key:   "foo",
+						Value: "bar",
+					},
+				},
+			},
+		)
+		require.NoError(t, err)
+		assert.Equal(t, "objects%5Bkey%5D=hello&objects%5Bkey%5D=foo&objects%5Bvalue%5D=world&objects%5Bvalue%5D=bar", values.Encode())
+	})
 }

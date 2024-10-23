@@ -1,35 +1,54 @@
-import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { Audiences } from "../commons";
-import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { DocsInstances, TabConfig, VersionAvailability } from "./schemas";
+import { DocsInstance, ExperimentalConfig, PlaygroundSettings, VersionAvailability } from "./schemas";
+import { AnnouncementConfig } from "./schemas/sdk/api/resources/docs/types/AnnouncementConfig";
 
 export interface ParsedDocsConfiguration {
-    absoluteFilepath: AbsoluteFilePath;
-    instances: DocsInstances[];
-    tabs?: Record<RelativeFilePath, TabConfig>;
-    navigation: DocsNavigationConfiguration;
+    instances: DocsInstance[];
     title: string | undefined;
-    logo: Logo | undefined;
-    favicon: ImageReference | undefined;
-    backgroundImage: BackgroundImage | undefined;
-    colors: DocsV1Write.ColorsConfigV3 | undefined;
-    navbarLinks: DocsV1Write.NavbarLink[] | undefined;
-    typography: TypographyConfig | undefined;
-    layout: WithoutQuestionMarks<DocsV1Write.DocsLayoutConfig> | undefined;
+
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
-    css: DocsV1Write.CssConfig | undefined;
+
+    /* navigation */
+    landingPage: DocsNavigationItem.Page | undefined;
+    navigation: DocsNavigationConfiguration;
+    navbarLinks: CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined;
+    footerLinks: CjsFdrSdk.docs.v1.commons.FooterLink[] | undefined;
+
+    /* seo */
+    metadata: ParsedMetadataConfig | undefined;
+    redirects: CjsFdrSdk.docs.v1.commons.RedirectConfig[] | undefined;
+
+    /* branding */
+    logo: Logo | undefined;
+    favicon: AbsoluteFilePath | undefined;
+    backgroundImage: BackgroundImage | undefined;
+    colors: CjsFdrSdk.docs.v1.write.ColorsConfigV3 | undefined;
+    typography: TypographyConfig | undefined;
+    layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
+    defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
+    analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
+    announcement: AnnouncementConfig | undefined;
+
+    /* integrations */
+    integrations: CjsFdrSdk.docs.v1.commons.IntegrationsConfig | undefined;
+
+    /* scripts */
+    css: CjsFdrSdk.docs.v1.commons.CssConfig | undefined;
     js: JavascriptConfig | undefined;
+
+    experimental: ExperimentalConfig | undefined;
 }
 
 export interface AbsoluteJsFileConfig {
     absolutePath: AbsoluteFilePath;
-    strategy?: DocsV1Write.JsScriptStrategy;
+    strategy?: CjsFdrSdk.docs.v1.commons.JsScriptStrategy;
 }
 
 export interface JavascriptConfig {
-    remote?: DocsV1Write.JsRemoteConfig[];
+    remote?: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[];
     files: AbsoluteJsFileConfig[];
 }
 
@@ -38,33 +57,40 @@ export interface DocsColorsConfiguration {
     background: ColorConfiguration | undefined;
 }
 
+export interface ParsedMetadataConfig
+    extends Omit<CjsFdrSdk.docs.v1.commons.MetadataConfig, "og:image" | "og:logo" | "twitter:image"> {
+    "og:image": FilepathOrUrl | undefined;
+    "og:logo": FilepathOrUrl | undefined;
+    "twitter:image": FilepathOrUrl | undefined;
+}
+
 export type ColorConfiguration =
     | {
           type: "themed";
-          dark: DocsV1Write.RgbaColor | undefined;
-          light: DocsV1Write.RgbaColor | undefined;
+          dark: CjsFdrSdk.docs.v1.commons.RgbaColor | undefined;
+          light: CjsFdrSdk.docs.v1.commons.RgbaColor | undefined;
       }
     | {
           type: "unthemed";
-          color: DocsV1Write.RgbaColor | undefined;
+          color: CjsFdrSdk.docs.v1.commons.RgbaColor | undefined;
       };
 
 export interface Logo {
-    dark: ImageReference | undefined;
-    light: ImageReference | undefined;
-    height: DocsV1Write.Height | undefined;
-    href: DocsV1Write.Url | undefined;
+    dark: AbsoluteFilePath | undefined;
+    light: AbsoluteFilePath | undefined;
+    height: CjsFdrSdk.docs.v1.write.Height | undefined;
+    href: CjsFdrSdk.Url | undefined;
 }
 
 export interface BackgroundImage {
-    dark: ImageReference | undefined;
-    light: ImageReference | undefined;
+    dark: AbsoluteFilePath | undefined;
+    light: AbsoluteFilePath | undefined;
 }
 
 export interface FontConfig {
     name: string | undefined;
     variants: FontVariant[];
-    display: DocsV1Write.FontDisplay | undefined;
+    display: CjsFdrSdk.docs.v1.commons.FontDisplay | undefined;
     fallback: string[] | undefined;
     fontVariationSettings: string | undefined;
 }
@@ -72,7 +98,7 @@ export interface FontConfig {
 export interface FontVariant {
     absolutePath: AbsoluteFilePath;
     weight: string[] | undefined;
-    style: DocsV1Write.FontStyle | undefined;
+    style: CjsFdrSdk.docs.v1.commons.FontStyle | undefined;
 }
 
 export interface TypographyConfig {
@@ -92,9 +118,7 @@ export interface TypographyConfig {
     codeFont: FontConfig | undefined;
 }
 
-export interface ImageReference {
-    filepath: AbsoluteFilePath;
-}
+export type FilepathOrUrl = { type: "filepath"; value: AbsoluteFilePath } | { type: "url"; value: string };
 
 export interface UntabbedDocsNavigation {
     type: "untabbed";
@@ -112,7 +136,7 @@ export interface VersionedDocsNavigation {
 }
 
 export interface VersionInfo {
-    tabs?: Record<RelativeFilePath, TabConfig>;
+    landingPage: DocsNavigationItem.Page | undefined;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
     availability: VersionAvailability | undefined;
@@ -124,15 +148,43 @@ export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNav
 export type UnversionedNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation;
 
 export interface TabbedNavigation {
-    tab: string;
-    layout: DocsNavigationItem[];
+    // tab: string;
+    title: string;
+    icon: string | undefined;
+    slug: string | undefined;
+    skipUrlSlug: boolean | undefined;
+    hidden: boolean | undefined;
+    child: TabbedNavigationChild;
+}
+
+type TabbedNavigationChild =
+    | TabbedNavigationChild.Layout
+    | TabbedNavigationChild.Link
+    | TabbedNavigationChild.Changelog;
+
+export declare namespace TabbedNavigationChild {
+    export interface Layout {
+        type: "layout";
+        layout: DocsNavigationItem[];
+    }
+
+    export interface Link {
+        type: "link";
+        href: string;
+    }
+
+    export interface Changelog {
+        type: "changelog";
+        changelog: AbsoluteFilePath[];
+    }
 }
 
 export type DocsNavigationItem =
     | DocsNavigationItem.Page
     | DocsNavigationItem.Section
     | DocsNavigationItem.ApiSection
-    | DocsNavigationItem.Link;
+    | DocsNavigationItem.Link
+    | DocsNavigationItem.Changelog;
 
 export declare namespace DocsNavigationItem {
     export interface Page {
@@ -142,6 +194,7 @@ export declare namespace DocsNavigationItem {
         absolutePath: AbsoluteFilePath;
         slug: string | undefined;
         hidden: boolean | undefined;
+        noindex: boolean | undefined;
     }
 
     export interface Section {
@@ -153,6 +206,7 @@ export declare namespace DocsNavigationItem {
         slug: string | undefined;
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
+        overviewAbsolutePath: AbsoluteFilePath | undefined;
     }
 
     export interface ApiSection {
@@ -163,16 +217,31 @@ export declare namespace DocsNavigationItem {
         audiences: Audiences;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
-        summaryAbsolutePath: AbsoluteFilePath | undefined;
-        navigation: ParsedApiNavigationItem[];
+        overviewAbsolutePath: AbsoluteFilePath | undefined;
+        navigation: ParsedApiReferenceLayoutItem[];
         hidden: boolean | undefined;
+        slug: string | undefined;
         skipUrlSlug: boolean | undefined;
+        alphabetized: boolean;
+        flattened: boolean;
+        paginated: boolean;
+        playground: PlaygroundSettings | undefined;
     }
 
     export interface Link {
         type: "link";
         text: string;
         url: string;
+        icon: string | undefined;
+    }
+
+    export interface Changelog {
+        type: "changelog";
+        changelog: AbsoluteFilePath[];
+        title: string;
+        icon: string | undefined;
+        hidden: boolean | undefined;
+        slug: string | undefined;
     }
 
     export interface VersionedSnippetLanguageConfiguration {
@@ -185,15 +254,44 @@ export declare namespace DocsNavigationItem {
         typescript: string | VersionedSnippetLanguageConfiguration | undefined;
         go: string | VersionedSnippetLanguageConfiguration | undefined;
         java: string | VersionedSnippetLanguageConfiguration | undefined;
+        ruby: string | VersionedSnippetLanguageConfiguration | undefined;
     }
 }
 
-export declare namespace ParsedApiNavigationItem {
-    export interface Subpackage {
-        type: "subpackage";
-        subpackageId: string;
-        summaryAbsolutePath: AbsoluteFilePath | undefined;
-        items: ParsedApiNavigationItem[];
+export declare namespace ParsedApiReferenceLayoutItem {
+    export interface Section {
+        type: "section";
+        title: string; // title
+        referencedSubpackages: string[]; // subpackage IDs
+        overviewAbsolutePath: AbsoluteFilePath | undefined;
+        contents: ParsedApiReferenceLayoutItem[];
+        slug: string | undefined;
+        hidden: boolean | undefined;
+        icon: string | undefined;
+        skipUrlSlug: boolean | undefined;
+        playground: PlaygroundSettings | undefined;
+    }
+    export interface Package {
+        type: "package";
+        title: string | undefined; // defaults to subpackage title
+        package: string; // subpackage ID
+        overviewAbsolutePath: AbsoluteFilePath | undefined;
+        contents: ParsedApiReferenceLayoutItem[];
+        slug: string | undefined;
+        hidden: boolean | undefined;
+        icon: string | undefined;
+        skipUrlSlug: boolean | undefined;
+        playground: PlaygroundSettings | undefined;
+    }
+
+    export interface Endpoint {
+        type: "endpoint";
+        endpoint: string; // endpoint locator
+        title: string | undefined;
+        icon: string | undefined;
+        slug: string | undefined;
+        hidden: boolean | undefined;
+        playground: PlaygroundSettings | undefined;
     }
 
     export interface Item {
@@ -202,7 +300,10 @@ export declare namespace ParsedApiNavigationItem {
     }
 }
 
-export type ParsedApiNavigationItem =
-    | ParsedApiNavigationItem.Item
-    | ParsedApiNavigationItem.Subpackage
-    | DocsNavigationItem.Page;
+export type ParsedApiReferenceLayoutItem =
+    | ParsedApiReferenceLayoutItem.Item
+    | ParsedApiReferenceLayoutItem.Section
+    | ParsedApiReferenceLayoutItem.Package
+    | ParsedApiReferenceLayoutItem.Endpoint
+    | DocsNavigationItem.Page
+    | DocsNavigationItem.Link;

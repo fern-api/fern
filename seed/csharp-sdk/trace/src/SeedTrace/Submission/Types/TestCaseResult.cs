@@ -1,16 +1,23 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class TestCaseResult
+public record TestCaseResult
 {
     [JsonPropertyName("expectedResult")]
-    public VariableValue ExpectedResult { get; init; }
+    public required object ExpectedResult { get; set; }
 
     [JsonPropertyName("actualResult")]
-    public ActualResult ActualResult { get; init; }
+    public required object ActualResult { get; set; }
 
     [JsonPropertyName("passed")]
-    public bool Passed { get; init; }
+    public required bool Passed { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

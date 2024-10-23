@@ -16,10 +16,11 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.ProblemId;
 import resources.commons.types.TestCase;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = TestSubmissionState.Builder.class
 )
@@ -85,13 +86,13 @@ public final class TestSubmissionState {
   }
 
   public interface ProblemIdStage {
-    StatusStage problemId(ProblemId problemId);
+    StatusStage problemId(@NotNull ProblemId problemId);
 
     Builder from(TestSubmissionState other);
   }
 
   public interface StatusStage {
-    _FinalStage status(TestSubmissionStatus status);
+    _FinalStage status(@NotNull TestSubmissionStatus status);
   }
 
   public interface _FinalStage {
@@ -136,15 +137,15 @@ public final class TestSubmissionState {
 
     @java.lang.Override
     @JsonSetter("problemId")
-    public StatusStage problemId(ProblemId problemId) {
-      this.problemId = problemId;
+    public StatusStage problemId(@NotNull ProblemId problemId) {
+      this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("status")
-    public _FinalStage status(TestSubmissionStatus status) {
-      this.status = status;
+    public _FinalStage status(@NotNull TestSubmissionStatus status) {
+      this.status = Objects.requireNonNull(status, "status must not be null");
       return this;
     }
 

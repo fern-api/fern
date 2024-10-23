@@ -16,10 +16,11 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.ProblemId;
 import resources.commons.types.UserId;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Playlist.Builder.class
 )
@@ -86,17 +87,17 @@ public final class Playlist implements IPlaylistCreateRequest {
   }
 
   public interface NameStage {
-    PlaylistIdStage name(String name);
+    PlaylistIdStage name(@NotNull String name);
 
     Builder from(Playlist other);
   }
 
   public interface PlaylistIdStage {
-    OwnerIdStage playlistId(PlaylistId playlistId);
+    OwnerIdStage playlistId(@NotNull PlaylistId playlistId);
   }
 
   public interface OwnerIdStage {
-    _FinalStage ownerId(UserId ownerId);
+    _FinalStage ownerId(@NotNull UserId ownerId);
   }
 
   public interface _FinalStage {
@@ -135,22 +136,22 @@ public final class Playlist implements IPlaylistCreateRequest {
 
     @java.lang.Override
     @JsonSetter("name")
-    public PlaylistIdStage name(String name) {
-      this.name = name;
+    public PlaylistIdStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("playlist_id")
-    public OwnerIdStage playlistId(PlaylistId playlistId) {
-      this.playlistId = playlistId;
+    public OwnerIdStage playlistId(@NotNull PlaylistId playlistId) {
+      this.playlistId = Objects.requireNonNull(playlistId, "playlistId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("owner-id")
-    public _FinalStage ownerId(UserId ownerId) {
-      this.ownerId = ownerId;
+    public _FinalStage ownerId(@NotNull UserId ownerId) {
+      this.ownerId = Objects.requireNonNull(ownerId, "ownerId must not be null");
       return this;
     }
 

@@ -101,7 +101,8 @@ export class ExampleGenerator {
             this.endpointSnippets.push({
                 id: {
                     path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
-                    method: endpoint.method
+                    method: endpoint.method,
+                    identifierOverride: endpoint.id
                 },
                 snippet: FernGeneratorExec.EndpointSnippet.ruby({
                     client: exampleNode.write({ startingTabSpaces: 0 })
@@ -135,13 +136,15 @@ export class ExampleGenerator {
                               new FunctionInvocation({
                                   baseFunction: new Function_({ name: "parse", functionBody: [] }),
                                   onObject: new DateReference({ type: "DateTime" }),
-                                  arguments_: [new Argument({ value: dateTimeExample.toISOString(), isNamed: false })]
+                                  arguments_: [
+                                      new Argument({ value: `"${dateTimeExample.toISOString()}"`, isNamed: false })
+                                  ]
                               }),
                           date: (dateExample) =>
                               new FunctionInvocation({
                                   baseFunction: new Function_({ name: "parse", functionBody: [] }),
-                                  onObject: new DateReference({ type: "DateTime" }),
-                                  arguments_: [new Argument({ value: dateExample, isNamed: false })]
+                                  onObject: new DateReference({ type: "Date" }),
+                                  arguments_: [new Argument({ value: `"${dateExample}"`, isNamed: false })]
                               }),
                           _other: () => {
                               throw new Error("Unknown primitive example: " + primitiveExample.type);

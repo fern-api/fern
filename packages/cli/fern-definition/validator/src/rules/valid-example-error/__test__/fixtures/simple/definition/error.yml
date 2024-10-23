@@ -1,0 +1,16 @@
+errors:
+  ForbiddenError:
+    status-code: 403
+    type: string
+    examples:
+      - name: public-key-required-error
+        value: pub_key is required.
+      - name: public-key-invalid-error
+        value: pub_key is invalid.
+      - name: project-public-key-removed-error
+        docs: Project <PUB-KEY> is marked as removed.
+        value: Project 39e3eb895fdada95e7a9 is marked as removed
+      - name: Incorrect-Example
+        value: 
+          foo: 
+            bar: baz

@@ -53,16 +53,16 @@ module SeedTraceClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          method_name = struct["methodName"]
+          method_name = parsed_json["methodName"]
           if parsed_json["signature"].nil?
             signature = nil
           else
             signature = parsed_json["signature"].to_json
             signature = SeedTraceClient::V2::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
           end
-          additional_files = parsed_json["additionalFiles"]&.transform_values do |v|
-            v = v.to_json
-            SeedTraceClient::V2::Problem::Files.from_json(json_object: v)
+          additional_files = parsed_json["additionalFiles"]&.transform_values do |value|
+            value = value.to_json
+            SeedTraceClient::V2::Problem::Files.from_json(json_object: value)
           end
           if parsed_json["basicTestCaseTemplate"].nil?
             basic_test_case_template = nil

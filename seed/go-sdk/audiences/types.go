@@ -14,7 +14,12 @@ type FilteredType struct {
 	PublicProperty  *string `json:"public_property,omitempty" url:"public_property,omitempty"`
 	PrivateProperty int     `json:"private_property" url:"private_property"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (f *FilteredType) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
 }
 
 func (f *FilteredType) UnmarshalJSON(data []byte) error {
@@ -24,6 +29,13 @@ func (f *FilteredType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = FilteredType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
 	f._rawJSON = json.RawMessage(data)
 	return nil
 }

@@ -11,7 +11,7 @@ describe("migrateFromV4ToV3", () => {
             pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
 
-        expect(migrated.types[0]?.examples?.[0]).toEqual(
+        expect(migrated.ir.types[0]?.examples?.[0]).toEqual(
             IrVersions.V3.types.ExampleType.object({
                 properties: [
                     {

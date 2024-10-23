@@ -1,5 +1,24 @@
-irVersion: v23
-docker: fernapi/fern-postman:latest
-dockerCommand: yarn workspace @fern-api/postman-generator dockerTagLatest
+irVersion: v53
+displayName: Postman
+image: fernapi/fern-postman
+changelogLocation: ../../generators/postman/versions.yml
+publish:
+  preBuildCommands:
+    - pnpm --filter @fern-api/postman-generator dist:cli
+  docker:
+    file: ./generators/postman/Dockerfile
+    image: fernapi/fern-postman
+    context: ./generators/postman
+test:
+  docker:
+    image: fernapi/fern-postman:latest
+    command: pnpm --filter @fern-api/postman-generator dockerTagLatest
+fixtures:
+  imdb:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        collection-name: GA Imdb Collection
+      outputFolder: collection-name
 generatorType: Documentation
 defaultOutputMode: local_files

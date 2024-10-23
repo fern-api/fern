@@ -3,6 +3,7 @@
 require_relative "../../requests"
 require "date"
 require_relative "types/user"
+require_relative "types/nested_user"
 require "async"
 
 module SeedQueryParametersClient
@@ -21,20 +22,38 @@ module SeedQueryParametersClient
     # @param date [Date]
     # @param deadline [DateTime]
     # @param bytes [String]
-    # @param user [String]
-    # @param key_value [String]
+    # @param user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param user_list [Array<Hash>] Request of type Array<SeedQueryParametersClient::User::User>, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param optional_deadline [DateTime]
+    # @param key_value [Hash{String => String}]
     # @param optional_string [String]
-    # @param nested_user [String]
-    # @param optional_user [String]
-    # @param exclude_user [String]
+    # @param nested_user [Hash] Request of type SeedQueryParametersClient::User::NestedUser, as a Hash
+    #   * :name (String)
+    #   * :user (Hash)
+    #     * :name (String)
+    #     * :tags (Array<String>)
+    # @param optional_user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param exclude_user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
     # @param filter [String]
     # @param request_options [SeedQueryParametersClient::RequestOptions]
     # @return [SeedQueryParametersClient::User::User]
-    def get_username(limit:, id:, date:, deadline:, bytes:, filter:, user: nil, key_value: nil, optional_string: nil,
-                     nested_user: nil, optional_user: nil, exclude_user: nil, request_options: nil)
+    def get_username(limit:, id:, date:, deadline:, bytes:, user:, user_list:, key_value:, nested_user:, exclude_user:, filter:, optional_deadline: nil,
+                     optional_string: nil, optional_user: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.params = {
           **(request_options&.additional_query_parameters || {}),
           "limit": limit,
@@ -43,6 +62,8 @@ module SeedQueryParametersClient
           "deadline": deadline,
           "bytes": bytes,
           "user": user,
+          "userList": user_list,
+          "optionalDeadline": optional_deadline,
           "keyValue": key_value,
           "optionalString": optional_string,
           "nestedUser": nested_user,
@@ -50,6 +71,9 @@ module SeedQueryParametersClient
           "excludeUser": exclude_user,
           "filter": filter
         }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/user"
       end
       SeedQueryParametersClient::User::User.from_json(json_object: response.body)
@@ -71,21 +95,39 @@ module SeedQueryParametersClient
     # @param date [Date]
     # @param deadline [DateTime]
     # @param bytes [String]
-    # @param user [String]
-    # @param key_value [String]
+    # @param user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param user_list [Array<Hash>] Request of type Array<SeedQueryParametersClient::User::User>, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param optional_deadline [DateTime]
+    # @param key_value [Hash{String => String}]
     # @param optional_string [String]
-    # @param nested_user [String]
-    # @param optional_user [String]
-    # @param exclude_user [String]
+    # @param nested_user [Hash] Request of type SeedQueryParametersClient::User::NestedUser, as a Hash
+    #   * :name (String)
+    #   * :user (Hash)
+    #     * :name (String)
+    #     * :tags (Array<String>)
+    # @param optional_user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param exclude_user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
     # @param filter [String]
     # @param request_options [SeedQueryParametersClient::RequestOptions]
     # @return [SeedQueryParametersClient::User::User]
-    def get_username(limit:, id:, date:, deadline:, bytes:, filter:, user: nil, key_value: nil, optional_string: nil,
-                     nested_user: nil, optional_user: nil, exclude_user: nil, request_options: nil)
+    def get_username(limit:, id:, date:, deadline:, bytes:, user:, user_list:, key_value:, nested_user:, exclude_user:, filter:, optional_deadline: nil,
+                     optional_string: nil, optional_user: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.params = {
             **(request_options&.additional_query_parameters || {}),
             "limit": limit,
@@ -94,6 +136,8 @@ module SeedQueryParametersClient
             "deadline": deadline,
             "bytes": bytes,
             "user": user,
+            "userList": user_list,
+            "optionalDeadline": optional_deadline,
             "keyValue": key_value,
             "optionalString": optional_string,
             "nestedUser": nested_user,
@@ -101,6 +145,9 @@ module SeedQueryParametersClient
             "excludeUser": exclude_user,
             "filter": filter
           }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/user"
         end
         SeedQueryParametersClient::User::User.from_json(json_object: response.body)

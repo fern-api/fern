@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = NonVoidFunctionSignature.Builder.class)
 public final class NonVoidFunctionSignature {
     private final List<Parameter> parameters;
@@ -75,7 +76,7 @@ public final class NonVoidFunctionSignature {
     }
 
     public interface ReturnTypeStage {
-        _FinalStage returnType(VariableType returnType);
+        _FinalStage returnType(@NotNull VariableType returnType);
 
         Builder from(NonVoidFunctionSignature other);
     }
@@ -110,8 +111,8 @@ public final class NonVoidFunctionSignature {
 
         @java.lang.Override
         @JsonSetter("returnType")
-        public _FinalStage returnType(VariableType returnType) {
-            this.returnType = returnType;
+        public _FinalStage returnType(@NotNull VariableType returnType) {
+            this.returnType = Objects.requireNonNull(returnType, "returnType must not be null");
             return this;
         }
 

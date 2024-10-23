@@ -84,10 +84,25 @@ components:
             nullable: true
         eighteen:
           type: string
-          enum:
-            - eighteen
+          const: eighteen
         nineteen:
           $ref: '#/components/schemas/Name'
+        twenty:
+          type: integer
+          format: int64
+          example: 20
+        twentyone:
+          type: integer
+          format: int64
+          example: 21
+        twentytwo:
+          type: integer
+          format: float
+          example: 22.22
+        twentythree:
+          type: integer
+          format: bigint
+          example: '23'
       required:
         - one
         - two
@@ -107,6 +122,10 @@ components:
         - seventeen
         - eighteen
         - nineteen
+        - twenty
+        - twentyone
+        - twentytwo
+        - twentythree
     Name:
       title: Name
       type: object

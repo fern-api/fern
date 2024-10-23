@@ -1,9 +1,10 @@
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { Schema } from "@fern-api/openapi-ir";
 import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
-import { parse } from "@fern-api/openapi-parser";
+import { parse } from "@fern-api/openapi-ir-parser";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { OSSWorkspace } from "@fern-api/workspace-loader";
+import { getAllOpenAPISpecs, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { CliContext } from "../../cli-context/CliContext";
@@ -20,7 +21,7 @@ export async function writeOverridesForWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "oss") {
+                if (workspace instanceof OSSWorkspace) {
                     await writeDefinitionForOpenAPIWorkspace({
                         workspace,
                         context,
@@ -58,11 +59,11 @@ async function writeDefinitionForOpenAPIWorkspace({
     includeModels: boolean;
     context: TaskContext;
 }): Promise<void> {
-    for (const spec of workspace.specs) {
+    const specs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
+    for (const spec of specs) {
         const ir = await parse({
-            workspace: {
-                specs: [spec]
-            },
+            absoluteFilePathToWorkspace: workspace.absoluteFilePath,
+            specs: [spec],
             taskContext: context
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -100,15 +101,9 @@ async function writeDefinitionForOpenAPIWorkspace({
             ? (existingOverrides.path as Record<string, Record<string, unknown>>)
             : {};
         if (includeModels) {
-            for (const [schemaId, schema] of Object.entries(ir.schemas)) {
-                if (schemaId in schemas) {
-                    continue;
-                }
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const typeNameOverride: Record<string, any> = {};
-                typeNameOverride["x-fern-type-name"] =
-                    "nameOverride" in schema ? schema.nameOverride ?? schemaId : schemaId;
-                schemas[schemaId] = typeNameOverride;
+            writeModels(schemas, ir.groupedSchemas.rootSchemas);
+            for (const [_, namespacedSchemas] of Object.entries(ir.groupedSchemas.namespacedSchemas)) {
+                writeModels(schemas, namespacedSchemas);
             }
         }
         const components: Record<string, Record<string, unknown>> = { schemas };
@@ -117,5 +112,17 @@ async function writeDefinitionForOpenAPIWorkspace({
             join(dirname(spec.absoluteFilepath), RelativeFilePath.of("openapi-overrides.yml")),
             yaml.dump({ paths, components })
         );
+    }
+}
+
+function writeModels(existingSchemas: Record<string, Record<string, unknown>>, schemas: Record<string, Schema>) {
+    for (const [schemaId, schema] of Object.entries(schemas)) {
+        if (schemaId in existingSchemas) {
+            continue;
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const typeNameOverride: Record<string, any> = {};
+        typeNameOverride["x-fern-type-name"] = "nameOverride" in schema ? schema.nameOverride ?? schemaId : schemaId;
+        existingSchemas[schemaId] = typeNameOverride;
     }
 }

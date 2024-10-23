@@ -1,4 +1,6 @@
-using SeedIdempotencyHeaders;
+using SeedIdempotencyHeaders.Core;
+
+#nullable enable
 
 namespace SeedIdempotencyHeaders;
 
@@ -6,28 +8,29 @@ public partial class SeedIdempotencyHeadersClient
 {
     private RawClient _client;
 
-    public SeedIdempotencyHeadersClient(string token, ClientOptions clientOptions)
+    public SeedIdempotencyHeadersClient(string? token = null, ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string>
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
-            },
-            clientOptions ?? new ClientOptions()
+                { "X-Fern-SDK-Name", "SeedIdempotencyHeaders" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernidempotency-headers/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         Payment = new PaymentClient(_client);
     }
 
-    public PaymentClient Payment { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public PaymentClient Payment { get; init; }
 }

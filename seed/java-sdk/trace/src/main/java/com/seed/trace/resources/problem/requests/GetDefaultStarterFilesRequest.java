@@ -19,8 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetDefaultStarterFilesRequest.Builder.class)
 public final class GetDefaultStarterFilesRequest {
     private final List<VariableTypeAndName> inputParams;
@@ -99,13 +100,13 @@ public final class GetDefaultStarterFilesRequest {
     }
 
     public interface OutputTypeStage {
-        MethodNameStage outputType(VariableType outputType);
+        MethodNameStage outputType(@NotNull VariableType outputType);
 
         Builder from(GetDefaultStarterFilesRequest other);
     }
 
     public interface MethodNameStage {
-        _FinalStage methodName(String methodName);
+        _FinalStage methodName(@NotNull String methodName);
     }
 
     public interface _FinalStage {
@@ -141,8 +142,8 @@ public final class GetDefaultStarterFilesRequest {
 
         @java.lang.Override
         @JsonSetter("outputType")
-        public MethodNameStage outputType(VariableType outputType) {
-            this.outputType = outputType;
+        public MethodNameStage outputType(@NotNull VariableType outputType) {
+            this.outputType = Objects.requireNonNull(outputType, "outputType must not be null");
             return this;
         }
 
@@ -159,8 +160,8 @@ public final class GetDefaultStarterFilesRequest {
          */
         @java.lang.Override
         @JsonSetter("methodName")
-        public _FinalStage methodName(String methodName) {
-            this.methodName = methodName;
+        public _FinalStage methodName(@NotNull String methodName) {
+            this.methodName = Objects.requireNonNull(methodName, "methodName must not be null");
             return this;
         }
 

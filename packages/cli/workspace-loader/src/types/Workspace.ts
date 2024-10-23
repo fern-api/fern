@@ -1,45 +1,71 @@
-import { dependenciesYml, docsYml, generatorsYml } from "@fern-api/configuration";
+import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
-import { ParsedFernFile } from "./FernFile";
+import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/api-workspace-commons";
 
-export type Workspace = DocsWorkspace | APIWorkspace;
+export type Workspace = DocsWorkspace | AbstractAPIWorkspace<unknown>;
 
 export interface DocsWorkspace {
     type: "docs";
     workspaceName: string | undefined;
-    absoluteFilepath: AbsoluteFilePath;
+    absoluteFilePath: AbsoluteFilePath; // path to the fern folder (dirname(absoluteFilepathToDocsConfig))
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
     config: docsYml.RawSchemas.DocsConfiguration;
 }
 
-export type APIWorkspace = FernWorkspace | OSSWorkspace;
+export type Spec = OpenAPISpec | ProtobufSpec;
 
-/**
- * An OSS workspace is a workspace that contains an OpenAPI or AsyncAPI document.
- */
-export interface OSSWorkspace {
-    type: "oss";
-    absoluteFilepath: AbsoluteFilePath;
-    workspaceName: string | undefined;
-    name: string;
-    specs: Spec[];
-    changelog: APIChangelog | undefined;
-    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
-}
-
-export interface Spec {
+export interface OpenAPISpec {
+    type: "openapi";
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    source: Source;
+    namespace?: string;
+    settings?: SpecImportSettings;
 }
 
-export interface APIChangelog {
-    files: ChangelogFile[];
+export interface ProtobufSpec {
+    type: "protobuf";
+    absoluteFilepathToProtobufRoot: AbsoluteFilePath;
+    absoluteFilepathToProtobufTarget: AbsoluteFilePath;
+    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    generateLocally: boolean;
+    settings?: SpecImportSettings;
 }
 
-export interface ChangelogFile {
-    absoluteFilepath: AbsoluteFilePath;
-    contents: string;
+export interface IdentifiableSource {
+    type: "asyncapi" | "openapi" | "protobuf";
+    id: string;
+    absoluteFilePath: AbsoluteFilePath;
+}
+
+export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
+
+export interface AsyncAPISource {
+    type: "asyncapi";
+    relativePathToDependency?: RelativeFilePath;
+    file: AbsoluteFilePath;
+}
+
+export interface OpenAPISource {
+    type: "openapi";
+    relativePathToDependency?: RelativeFilePath;
+    file: AbsoluteFilePath;
+}
+
+export interface ProtobufSource {
+    type: "protobuf";
+    relativePathToDependency?: RelativeFilePath;
+    root: AbsoluteFilePath;
+    file: AbsoluteFilePath;
+}
+
+export interface SpecImportSettings {
+    audiences: string[];
+    shouldUseTitleAsName: boolean;
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    optionalAdditionalProperties: boolean;
+    asyncApiNaming?: "v1" | "v2";
+    cooerceEnumsToLiterals: boolean;
 }
 
 export interface OpenAPIFile {
@@ -52,25 +78,8 @@ export interface AsyncAPIFile {
     contents: string;
 }
 
-export interface FernWorkspace {
-    type: "fern";
-    name: string;
-    workspaceName: string | undefined;
-    absoluteFilepath: AbsoluteFilePath;
-    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
-    dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
-    definition: FernDefinition;
-    changelog: APIChangelog | undefined;
-}
-
-export interface FernDefinition {
-    absoluteFilepath: AbsoluteFilePath;
-    rootApiFile: ParsedFernFile<RootApiFileSchema>;
-    namedDefinitionFiles: Record<RelativeFilePath, OnDiskNamedDefinitionFile>;
-    packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
-    importedDefinitions: Record<RelativeFilePath, FernDefinition>;
-}
-
-export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFileSchema> {
-    absoluteFilepath: AbsoluteFilePath;
+export interface FernWorkspaceMetadata {
+    workspace: FernWorkspace;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
+    group: generatorsYml.GeneratorGroup;
 }

@@ -13,8 +13,9 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = TestCaseTemplate.Builder.class
 )
@@ -72,17 +73,17 @@ public final class TestCaseTemplate {
   }
 
   public interface TemplateIdStage {
-    NameStage templateId(TestCaseTemplateId templateId);
+    NameStage templateId(@NotNull TestCaseTemplateId templateId);
 
     Builder from(TestCaseTemplate other);
   }
 
   public interface NameStage {
-    ImplementationStage name(String name);
+    ImplementationStage name(@NotNull String name);
   }
 
   public interface ImplementationStage {
-    _FinalStage implementation(TestCaseImplementation implementation);
+    _FinalStage implementation(@NotNull TestCaseImplementation implementation);
   }
 
   public interface _FinalStage {
@@ -112,22 +113,22 @@ public final class TestCaseTemplate {
 
     @java.lang.Override
     @JsonSetter("templateId")
-    public NameStage templateId(TestCaseTemplateId templateId) {
-      this.templateId = templateId;
+    public NameStage templateId(@NotNull TestCaseTemplateId templateId) {
+      this.templateId = Objects.requireNonNull(templateId, "templateId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("name")
-    public ImplementationStage name(String name) {
-      this.name = name;
+    public ImplementationStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("implementation")
-    public _FinalStage implementation(TestCaseImplementation implementation) {
-      this.implementation = implementation;
+    public _FinalStage implementation(@NotNull TestCaseImplementation implementation) {
+      this.implementation = Objects.requireNonNull(implementation, "implementation must not be null");
       return this;
     }
 

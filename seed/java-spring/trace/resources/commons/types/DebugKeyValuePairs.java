@@ -13,8 +13,9 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = DebugKeyValuePairs.Builder.class
 )
@@ -63,13 +64,13 @@ public final class DebugKeyValuePairs {
   }
 
   public interface KeyStage {
-    ValueStage key(DebugVariableValue key);
+    ValueStage key(@NotNull DebugVariableValue key);
 
     Builder from(DebugKeyValuePairs other);
   }
 
   public interface ValueStage {
-    _FinalStage value(DebugVariableValue value);
+    _FinalStage value(@NotNull DebugVariableValue value);
   }
 
   public interface _FinalStage {
@@ -96,15 +97,15 @@ public final class DebugKeyValuePairs {
 
     @java.lang.Override
     @JsonSetter("key")
-    public ValueStage key(DebugVariableValue key) {
-      this.key = key;
+    public ValueStage key(@NotNull DebugVariableValue key) {
+      this.key = Objects.requireNonNull(key, "key must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("value")
-    public _FinalStage value(DebugVariableValue value) {
-      this.value = value;
+    public _FinalStage value(@NotNull DebugVariableValue value) {
+      this.value = Objects.requireNonNull(value, "value must not be null");
       return this;
     }
 

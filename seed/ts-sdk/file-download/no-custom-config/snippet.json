@@ -1,15 +1,4 @@
 {
-    "endpoints": [
-        {
-            "id": {
-                "path": "/",
-                "method": "POST"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedFileDownloadClient } from \"@fern/file-download\";\n\nconst seedFileDownload = new SeedFileDownloadClient;\nawait seedFileDownload.service.downloadFile();\n"
-            }
-        }
-    ],
+    "endpoints": [],
     "types": {}
 }

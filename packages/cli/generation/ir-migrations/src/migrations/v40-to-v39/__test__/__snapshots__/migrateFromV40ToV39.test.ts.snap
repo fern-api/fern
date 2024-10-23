@@ -1,0 +1,824 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`migrateFromV40ToV39 > snapshot 1`] = `
+{
+  "apiDisplayName": null,
+  "apiDocs": null,
+  "apiName": {
+    "camelCase": {
+      "safeName": "simpleAPI",
+      "unsafeName": "simpleAPI",
+    },
+    "originalName": "simple-api",
+    "pascalCase": {
+      "safeName": "SimpleAPI",
+      "unsafeName": "SimpleAPI",
+    },
+    "screamingSnakeCase": {
+      "safeName": "SIMPLE_API",
+      "unsafeName": "SIMPLE_API",
+    },
+    "snakeCase": {
+      "safeName": "simple_api",
+      "unsafeName": "simple_api",
+    },
+  },
+  "auth": {
+    "docs": null,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": null,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "environments": null,
+  "errorDiscriminationStrategy": {
+    "type": "statusCode",
+  },
+  "errors": {},
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "rootPackage": {
+    "docs": null,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": null,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": true,
+    "navigationConfig": null,
+    "service": null,
+    "subpackages": [
+      "subpackage_user",
+    ],
+    "types": [],
+    "webhooks": null,
+    "websocket": null,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version",
+    },
+  },
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {
+      "service_user": [
+        "type_user:User",
+      ],
+    },
+  },
+  "services": {
+    "service_user": {
+      "availability": null,
+      "basePath": {
+        "head": "/",
+        "parts": [],
+      },
+      "displayName": null,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [],
+              "request": {
+                "jsonExample": {
+                  "name": "name",
+                },
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "name",
+                          "unsafeName": "name",
+                        },
+                        "originalName": "name",
+                        "pascalCase": {
+                          "safeName": "Name",
+                          "unsafeName": "Name",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "NAME",
+                          "unsafeName": "NAME",
+                        },
+                        "snakeCase": {
+                          "safeName": "name",
+                          "unsafeName": "name",
+                        },
+                      },
+                      "wireValue": "name",
+                    },
+                    "originalTypeDeclaration": null,
+                    "value": {
+                      "jsonExample": "name",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "name",
+                          },
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                ],
+                "type": "inlinedRequestBody",
+              },
+              "response": {
+                "body": {
+                  "jsonExample": {
+                    "name": "name",
+                  },
+                  "shape": {
+                    "shape": {
+                      "properties": [
+                        {
+                          "name": {
+                            "name": {
+                              "camelCase": {
+                                "safeName": "name",
+                                "unsafeName": "name",
+                              },
+                              "originalName": "name",
+                              "pascalCase": {
+                                "safeName": "Name",
+                                "unsafeName": "Name",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "NAME",
+                                "unsafeName": "NAME",
+                              },
+                              "snakeCase": {
+                                "safeName": "name",
+                                "unsafeName": "name",
+                              },
+                            },
+                            "wireValue": "name",
+                          },
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [
+                                {
+                                  "camelCase": {
+                                    "safeName": "user",
+                                    "unsafeName": "user",
+                                  },
+                                  "originalName": "user",
+                                  "pascalCase": {
+                                    "safeName": "User",
+                                    "unsafeName": "User",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "USER",
+                                    "unsafeName": "USER",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "user",
+                                    "unsafeName": "user",
+                                  },
+                                },
+                              ],
+                              "file": {
+                                "camelCase": {
+                                  "safeName": "user",
+                                  "unsafeName": "user",
+                                },
+                                "originalName": "user",
+                                "pascalCase": {
+                                  "safeName": "User",
+                                  "unsafeName": "User",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "USER",
+                                  "unsafeName": "USER",
+                                },
+                                "snakeCase": {
+                                  "safeName": "user",
+                                  "unsafeName": "user",
+                                },
+                              },
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "user",
+                                "unsafeName": "user",
+                              },
+                              "originalName": "User",
+                              "pascalCase": {
+                                "safeName": "User",
+                                "unsafeName": "User",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "USER",
+                                "unsafeName": "USER",
+                              },
+                              "snakeCase": {
+                                "safeName": "user",
+                                "unsafeName": "user",
+                              },
+                            },
+                            "typeId": "type_user:User",
+                          },
+                          "value": {
+                            "jsonExample": "name",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "name",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        },
+                      ],
+                      "type": "object",
+                    },
+                    "type": "named",
+                    "typeName": {
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "camelCase": {
+                              "safeName": "user",
+                              "unsafeName": "user",
+                            },
+                            "originalName": "user",
+                            "pascalCase": {
+                              "safeName": "User",
+                              "unsafeName": "User",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "USER",
+                              "unsafeName": "USER",
+                            },
+                            "snakeCase": {
+                              "safeName": "user",
+                              "unsafeName": "user",
+                            },
+                          },
+                        ],
+                        "file": {
+                          "camelCase": {
+                            "safeName": "user",
+                            "unsafeName": "user",
+                          },
+                          "originalName": "user",
+                          "pascalCase": {
+                            "safeName": "User",
+                            "unsafeName": "User",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "USER",
+                            "unsafeName": "USER",
+                          },
+                          "snakeCase": {
+                            "safeName": "user",
+                            "unsafeName": "user",
+                          },
+                        },
+                        "packagePath": [],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "user",
+                          "unsafeName": "user",
+                        },
+                        "originalName": "User",
+                        "pascalCase": {
+                          "safeName": "User",
+                          "unsafeName": "User",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "USER",
+                          "unsafeName": "USER",
+                        },
+                        "snakeCase": {
+                          "safeName": "user",
+                          "unsafeName": "user",
+                        },
+                      },
+                      "typeId": "type_user:User",
+                    },
+                  },
+                },
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/user",
+            },
+          ],
+          "fullPath": {
+            "head": "/user",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_user.createUser",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "createUser",
+              "unsafeName": "createUser",
+            },
+            "originalName": "createUser",
+            "pascalCase": {
+              "safeName": "CreateUser",
+              "unsafeName": "CreateUser",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_USER",
+              "unsafeName": "CREATE_USER",
+            },
+            "snakeCase": {
+              "safeName": "create_user",
+              "unsafeName": "create_user",
+            },
+          },
+          "pagination": null,
+          "path": {
+            "head": "/user",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "contentType": null,
+            "extends": [],
+            "name": {
+              "camelCase": {
+                "safeName": "createUserRequest",
+                "unsafeName": "createUserRequest",
+              },
+              "originalName": "CreateUserRequest",
+              "pascalCase": {
+                "safeName": "CreateUserRequest",
+                "unsafeName": "CreateUserRequest",
+              },
+              "screamingSnakeCase": {
+                "safeName": "CREATE_USER_REQUEST",
+                "unsafeName": "CREATE_USER_REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "create_user_request",
+                "unsafeName": "create_user_request",
+              },
+            },
+            "properties": [
+              {
+                "docs": null,
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "name",
+                      "unsafeName": "name",
+                    },
+                    "originalName": "name",
+                    "pascalCase": {
+                      "safeName": "Name",
+                      "unsafeName": "Name",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NAME",
+                      "unsafeName": "NAME",
+                    },
+                    "snakeCase": {
+                      "safeName": "name",
+                      "unsafeName": "name",
+                    },
+                  },
+                  "wireValue": "name",
+                },
+                "valueType": {
+                  "_type": "primitive",
+                  "primitive": "STRING",
+                },
+              },
+            ],
+            "type": "inlinedRequestBody",
+          },
+          "response": {
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "user",
+                        "unsafeName": "user",
+                      },
+                      "originalName": "user",
+                      "pascalCase": {
+                        "safeName": "User",
+                        "unsafeName": "User",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "USER",
+                        "unsafeName": "USER",
+                      },
+                      "snakeCase": {
+                        "safeName": "user",
+                        "unsafeName": "user",
+                      },
+                    },
+                  ],
+                  "file": {
+                    "camelCase": {
+                      "safeName": "user",
+                      "unsafeName": "user",
+                    },
+                    "originalName": "user",
+                    "pascalCase": {
+                      "safeName": "User",
+                      "unsafeName": "User",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "USER",
+                      "unsafeName": "USER",
+                    },
+                    "snakeCase": {
+                      "safeName": "user",
+                      "unsafeName": "user",
+                    },
+                  },
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "user",
+                    "unsafeName": "user",
+                  },
+                  "originalName": "User",
+                  "pascalCase": {
+                    "safeName": "User",
+                    "unsafeName": "User",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "USER",
+                    "unsafeName": "USER",
+                  },
+                  "snakeCase": {
+                    "safeName": "user",
+                    "unsafeName": "user",
+                  },
+                },
+                "typeId": "type_user:User",
+              },
+              "type": "response",
+            },
+          },
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "bodyKey": {
+                "camelCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+                "originalName": "body",
+                "pascalCase": {
+                  "safeName": "Body",
+                  "unsafeName": "Body",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BODY",
+                  "unsafeName": "BODY",
+                },
+                "snakeCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+              },
+              "type": "wrapper",
+              "wrapperName": {
+                "camelCase": {
+                  "safeName": "createUserRequest",
+                  "unsafeName": "createUserRequest",
+                },
+                "originalName": "CreateUserRequest",
+                "pascalCase": {
+                  "safeName": "CreateUserRequest",
+                  "unsafeName": "CreateUserRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATE_USER_REQUEST",
+                  "unsafeName": "CREATE_USER_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "create_user_request",
+                  "unsafeName": "create_user_request",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "user",
+                "unsafeName": "user",
+              },
+              "originalName": "user",
+              "pascalCase": {
+                "safeName": "User",
+                "unsafeName": "User",
+              },
+              "screamingSnakeCase": {
+                "safeName": "USER",
+                "unsafeName": "USER",
+              },
+              "snakeCase": {
+                "safeName": "user",
+                "unsafeName": "user",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "user",
+              "unsafeName": "user",
+            },
+            "originalName": "user",
+            "pascalCase": {
+              "safeName": "User",
+              "unsafeName": "User",
+            },
+            "screamingSnakeCase": {
+              "safeName": "USER",
+              "unsafeName": "USER",
+            },
+            "snakeCase": {
+              "safeName": "user",
+              "unsafeName": "user",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+    },
+  },
+  "subpackages": {
+    "subpackage_user": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "user",
+              "unsafeName": "user",
+            },
+            "originalName": "user",
+            "pascalCase": {
+              "safeName": "User",
+              "unsafeName": "User",
+            },
+            "screamingSnakeCase": {
+              "safeName": "USER",
+              "unsafeName": "USER",
+            },
+            "snakeCase": {
+              "safeName": "user",
+              "unsafeName": "user",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "user",
+            "unsafeName": "user",
+          },
+          "originalName": "user",
+          "pascalCase": {
+            "safeName": "User",
+            "unsafeName": "User",
+          },
+          "screamingSnakeCase": {
+            "safeName": "USER",
+            "unsafeName": "USER",
+          },
+          "snakeCase": {
+            "safeName": "user",
+            "unsafeName": "user",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "user",
+          "unsafeName": "user",
+        },
+        "originalName": "user",
+        "pascalCase": {
+          "safeName": "User",
+          "unsafeName": "User",
+        },
+        "screamingSnakeCase": {
+          "safeName": "USER",
+          "unsafeName": "USER",
+        },
+        "snakeCase": {
+          "safeName": "user",
+          "unsafeName": "user",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_user",
+      "subpackages": [],
+      "types": [
+        "type_user:User",
+      ],
+      "webhooks": null,
+      "websocket": null,
+    },
+  },
+  "types": {
+    "type_user:User": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "user",
+                "unsafeName": "user",
+              },
+              "originalName": "user",
+              "pascalCase": {
+                "safeName": "User",
+                "unsafeName": "User",
+              },
+              "screamingSnakeCase": {
+                "safeName": "USER",
+                "unsafeName": "USER",
+              },
+              "snakeCase": {
+                "safeName": "user",
+                "unsafeName": "user",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "user",
+              "unsafeName": "user",
+            },
+            "originalName": "user",
+            "pascalCase": {
+              "safeName": "User",
+              "unsafeName": "User",
+            },
+            "screamingSnakeCase": {
+              "safeName": "USER",
+              "unsafeName": "USER",
+            },
+            "snakeCase": {
+              "safeName": "user",
+              "unsafeName": "user",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "user",
+            "unsafeName": "user",
+          },
+          "originalName": "User",
+          "pascalCase": {
+            "safeName": "User",
+            "unsafeName": "User",
+          },
+          "screamingSnakeCase": {
+            "safeName": "USER",
+            "unsafeName": "USER",
+          },
+          "snakeCase": {
+            "safeName": "user",
+            "unsafeName": "user",
+          },
+        },
+        "typeId": "type_user:User",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+        ],
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+  "websocketChannels": {},
+}
+`;

@@ -9,12 +9,12 @@ class RootClientDeclarationReferencer(SdkDeclarationReferencer[None]):
         self._client_class_name = client_class_name
         self._client_filename = client_filename
 
-    def get_filepath(self, *, name: None) -> Filepath:
+    def get_filepath(self, *, name: None, as_request: bool = False) -> Filepath:
         return Filepath(
             directories=(),
             # the [:-3] removes the .py extension
             file=Filepath.FilepathPart(module_name=self._client_filename[:-3]),
         )
 
-    def get_class_name(self, *, name: None) -> str:
+    def get_class_name(self, *, name: None, as_request: bool = False) -> str:
         return self._client_class_name

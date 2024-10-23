@@ -1,8 +1,8 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved";
-import { generatorsYml } from "@fern-api/configuration";
 
 export interface CasingsGenerator {
     generateName(name: string, opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema }): Name;
@@ -17,16 +17,21 @@ const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"]
 
 export function constructCasingsGenerator({
     generationLanguage,
+    keywords,
     smartCasing
 }: {
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: string[] | undefined;
     smartCasing: boolean;
 }): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
         generateName: (name, opts) => {
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
-                safeName: sanitizeNameForLanguage(unsafeString, generationLanguage)
+                safeName: sanitizeName({
+                    name: unsafeString,
+                    keywords: getKeywords({ generationLanguage, keywords })
+                })
             });
 
             let camelCaseName = camelCase(name);
@@ -96,21 +101,33 @@ export function constructCasingsGenerator({
     return casingsGenerator;
 }
 
-function sanitizeNameForLanguage(
-    name: string,
-    generationLanguage: generatorsYml.GenerationLanguage | undefined
-): string {
-    if (generationLanguage == null) {
+function sanitizeName({ name, keywords }: { name: string; keywords: Set<string> | undefined }): string {
+    if (keywords == null) {
         return name;
     }
-    const reservedKeywords = RESERVED_KEYWORDS[generationLanguage];
-    if (reservedKeywords.has(name)) {
+    if (keywords.has(name)) {
         return name + "_";
     } else if (startsWithNumber(name)) {
         return "_" + name;
     } else {
         return name;
     }
+}
+
+function getKeywords({
+    generationLanguage,
+    keywords
+}: {
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: string[] | undefined;
+}): Set<string> | undefined {
+    if (keywords != null) {
+        return new Set(keywords);
+    }
+    if (generationLanguage != null) {
+        return RESERVED_KEYWORDS[generationLanguage];
+    }
+    return undefined;
 }
 
 const STARTS_WITH_NUMBER = /^[0-9]/;
@@ -165,10 +182,13 @@ const COMMON_ITIALISMS = new Set<string>([
     "RAM",
     "RHS",
     "RPC",
+    "SAML",
+    "SCIM",
     "SLA",
     "SMTP",
     "SQL",
     "SSH",
+    "SSO",
     "TCP",
     "TLS",
     "TTL",

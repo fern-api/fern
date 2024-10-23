@@ -1,0 +1,26 @@
+<?php
+
+namespace Seed\Service;
+
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+
+class WithDocs extends JsonSerializableType
+{
+    /**
+     * @var string $docs
+     */
+    #[JsonProperty('docs')]
+    public string $docs;
+
+    /**
+     * @param array{
+     *   docs: string,
+     * } $values
+     */
+    public function __construct(
+        array $values,
+    ) {
+        $this->docs = $values['docs'];
+    }
+}

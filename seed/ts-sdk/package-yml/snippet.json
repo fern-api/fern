@@ -3,21 +3,23 @@
         {
             "id": {
                 "path": "/{id}/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_.echo"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPackageYmlClient } from \"@fern/package-yml\";\n\nconst seedPackageYml = new SeedPackageYmlClient;\nawait seedPackageYml.echo(\"Hello world!\");\n"
+                "client": "import { SeedPackageYmlClient } from \"@fern/package-yml\";\n\nconst client = new SeedPackageYmlClient({ environment: \"YOUR_BASE_URL\" });\nawait client.echo({\n    name: \"Hello world!\",\n    size: 20\n});\n"
             }
         },
         {
             "id": {
                 "path": "/{id}/{nestedId}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_service.nop"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPackageYmlClient } from \"@fern/package-yml\";\n\nconst seedPackageYml = new SeedPackageYmlClient;\nawait seedPackageYml.service.nop(\"id-219xca8\");\n"
+                "client": "import { SeedPackageYmlClient } from \"@fern/package-yml\";\n\nconst client = new SeedPackageYmlClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.nop(\"id-219xca8\");\n"
             }
         }
     ],

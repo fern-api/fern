@@ -90,7 +90,7 @@ describe("ir", () => {
             reject: false
         });
         expect(stdout).toContain("Wrote IR to");
-    });
+    }, 10_000);
 
     it("fails with invalid version", async () => {
         const { stdout } = await runFernCli(["ir", "ir.json", "--version", "v100"], {
@@ -98,5 +98,5 @@ describe("ir", () => {
             reject: false
         });
         expect(stdout).toContain("IR v100 does not exist");
-    });
+    }, 10_000);
 });

@@ -1,10 +1,17 @@
 using System.Text.Json.Serialization;
-using SeedPagination;
+using SeedPagination.Core;
+
+#nullable enable
 
 namespace SeedPagination;
 
-public class UserListContainer
+public record UserListContainer
 {
     [JsonPropertyName("users")]
-    public List<List<User>> Users { get; init; }
+    public IEnumerable<User> Users { get; set; } = new List<User>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -8,22 +8,30 @@ import * as SeedTrace from "../../../../index";
  * @example
  *     {
  *         workspaceRunDetails: {
- *             exceptionV2: {
- *                 type: "generic"
- *             },
- *             exception: {},
- *             stdout: "string"
+ *             exceptionV2: undefined,
+ *             exception: undefined,
+ *             stdout: "stdout"
  *         },
  *         traceResponses: [{
  *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
  *                 lineNumber: 1,
- *                 returnValue: {
- *                     type: "integerValue",
- *                     value: 1
+ *                 returnValue: undefined,
+ *                 expressionLocation: undefined,
+ *                 stack: {
+ *                     numStackFrames: 1,
+ *                     topStackFrame: undefined
  *                 },
- *                 expressionLocation: {},
- *                 stack: {},
- *                 stdout: "string"
+ *                 stdout: undefined
+ *             }, {
+ *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+ *                 lineNumber: 1,
+ *                 returnValue: undefined,
+ *                 expressionLocation: undefined,
+ *                 stack: {
+ *                     numStackFrames: 1,
+ *                     topStackFrame: undefined
+ *                 },
+ *                 stdout: undefined
  *             }]
  *     }
  */

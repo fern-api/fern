@@ -4,6 +4,7 @@ from .actor import Actor
 from .actress import Actress
 from .cast_member import CastMember
 from .directory import Directory
+from .entity import Entity
 from .exception import Exception, Exception_Generic, Exception_Timeout
 from .exception_info import ExceptionInfo
 from .extended_movie import ExtendedMovie
@@ -17,6 +18,7 @@ from .movie_id import MovieId
 from .node import Node
 from .request import Request
 from .response import Response
+from .response_type import ResponseType
 from .stunt_double import StuntDouble
 from .test import Test, Test_And, Test_Or
 from .tree import Tree
@@ -26,6 +28,7 @@ __all__ = [
     "Actress",
     "CastMember",
     "Directory",
+    "Entity",
     "Exception",
     "ExceptionInfo",
     "Exception_Generic",
@@ -43,6 +46,7 @@ __all__ = [
     "Node",
     "Request",
     "Response",
+    "ResponseType",
     "StuntDouble",
     "Test",
     "Test_And",

@@ -3,17 +3,19 @@
         {
             "id": {
                 "path": "/{id}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_.echo"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/package-yml/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Echo(\n\tcontext.TODO(),\n\t\"id-ksfd9c1\",\n\t\"Hello world!\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/package-yml/fern\"\n\tfernclient \"github.com/package-yml/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Echo(\n\tcontext.TODO(),\n\t\"id-ksfd9c1\",\n\t\u0026fern.EchoRequest{\n\t\tName: \"Hello world!\",\n\t\tSize: 20,\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/{id}/{nestedId}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_service.nop"
             },
             "snippet": {
                 "type": "go",

@@ -1,11 +1,12 @@
 import { FernToken } from "@fern-api/auth";
 import { Audiences } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
+import { PlaygroundConfig } from "@fern-fern/fdr-cjs-sdk/api/resources/docs/resources/v1/resources/commons";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
 
 export async function registerApi({
@@ -14,32 +15,39 @@ export async function registerApi({
     context,
     token,
     audiences,
-    snippetsConfig
+    snippetsConfig,
+    playgroundConfig
 }: {
     organization: string;
     workspace: FernWorkspace;
     context: TaskContext;
     token: FernToken;
     audiences: Audiences;
-    snippetsConfig: APIV1Write.SnippetsConfig;
-}): Promise<{ id: FdrAPI.ApiDefinitionId; ir: IntermediateRepresentation }> {
+    snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
+    playgroundConfig?: PlaygroundConfig;
+}): Promise<{ id: FdrCjsSdk.ApiDefinitionId; ir: IntermediateRepresentation }> {
     const ir = await generateIntermediateRepresentation({
         workspace,
         audiences,
         generationLanguage: undefined,
+        keywords: undefined,
         smartCasing: false,
-        disableExamples: false
+        disableExamples: false,
+        readme: undefined,
+        version: undefined,
+        packageName: undefined,
+        context
     });
 
     const fdrService = createFdrService({
         token: token.value
     });
 
-    const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig });
+    const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
     context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
     const response = await fdrService.api.v1.register.registerApiDefinition({
-        orgId: organization,
-        apiId: ir.apiName.originalName,
+        orgId: FdrCjsSdk.OrgId(organization),
+        apiId: FdrCjsSdk.ApiId(ir.apiName.originalName),
         definition: apiDefinition
     });
 

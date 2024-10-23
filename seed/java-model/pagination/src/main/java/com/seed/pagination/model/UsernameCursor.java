@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.pagination.core.ObjectMappers;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UsernameCursor.Builder.class)
 public final class UsernameCursor {
     private final UsernamePage cursor;
@@ -74,7 +74,7 @@ public final class UsernameCursor {
         @java.lang.Override
         @JsonSetter("cursor")
         public _FinalStage cursor(UsernamePage cursor) {
-            this.cursor = cursor;
+            this.cursor = Objects.requireNonNull(cursor, "cursor must not be null");
             return this;
         }
 

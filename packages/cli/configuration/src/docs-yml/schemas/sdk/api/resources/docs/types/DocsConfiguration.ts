@@ -5,21 +5,33 @@
 import * as FernDocsConfig from "../../..";
 
 export interface DocsConfiguration {
-    instances: FernDocsConfig.DocsInstances[];
-    /** The navigation config is skipped when multiple versions are present. */
-    navigation?: FernDocsConfig.NavigationConfig;
-    tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
-    versions?: FernDocsConfig.VersionConfig[];
+    instances: FernDocsConfig.DocsInstance[];
     /** used as tab bar title, and in the navbar if no logo is defined */
     title?: string;
+    /**
+     * The `analytics` object allows you to configure analytics for your docs site.
+     * Currently, only Segment is supported.
+     */
+    analytics?: FernDocsConfig.AnalyticsConfig;
+    announcement?: FernDocsConfig.AnnouncementConfig;
+    tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
+    versions?: FernDocsConfig.VersionConfig[];
+    landingPage?: FernDocsConfig.PageConfiguration;
+    /** The navigation config is skipped when multiple versions are present. */
+    navigation?: FernDocsConfig.NavigationConfig;
+    navbarLinks?: FernDocsConfig.NavbarLink[];
+    footerLinks?: FernDocsConfig.FooterLinksConfig;
+    experimental?: FernDocsConfig.ExperimentalConfig;
+    defaultLanguage?: FernDocsConfig.ProgrammingLanguage;
+    metadata?: FernDocsConfig.MetadataConfig;
+    redirects?: FernDocsConfig.RedirectConfig[];
     logo?: FernDocsConfig.LogoConfiguration;
     favicon?: string;
-    /** This background image is used to customize the appearance of your docs site. */
     backgroundImage?: FernDocsConfig.BackgroundImageConfiguration;
     colors?: FernDocsConfig.ColorsConfiguration;
-    navbarLinks?: FernDocsConfig.NavbarLink[];
     typography?: FernDocsConfig.DocsTypographyConfig;
     layout?: FernDocsConfig.LayoutConfig;
+    integrations?: FernDocsConfig.IntegrationsConfig;
     css?: FernDocsConfig.CssConfig;
     js?: FernDocsConfig.JsConfig;
 }

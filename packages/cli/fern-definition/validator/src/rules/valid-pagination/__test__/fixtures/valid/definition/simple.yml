@@ -1,0 +1,221 @@
+imports:
+  root: __package__.yml
+
+types: 
+  Order: 
+    enum: 
+      - asc
+      - desc
+
+  WithCursorPagination:
+    properties:
+      pagination: optional<WithCursor>
+
+  WithCursor:
+    properties:
+      cursor: optional<string>
+
+  WithUsers:
+    properties:
+      users: list<User>
+
+  ListUsersCursorPaginationResponse: 
+    properties: 
+      page: optional<Page>
+      total_count: 
+        type: integer
+        docs: The totall number of /users
+      data: list<User>
+
+  ListUsersOffsetPaginationResponse: 
+    extends:
+      - WithUsers
+    properties: 
+      page: optional<Page>
+      total_count: 
+        type: integer
+        docs: The totall number of /users
+
+  Page: 
+    properties: 
+      page: 
+        type: integer
+        docs: The current page
+      next: optional<NextPage>
+      per_page: integer
+      total_page: integer
+
+  NextPage: 
+    properties: 
+      page: integer
+      starting_after: string
+
+  User: 
+    properties: 
+      name: string
+      id: integer
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    listWithCursorPagination:
+      pagination: 
+        cursor: $request.starting_after
+        next_cursor: $response.page.next.starting_after
+        results: $response.data
+      method: GET
+      path: ""
+      request: 
+        name: ListUsersCursorPaginationRequest
+        query-parameters: 
+          page: 
+            type: optional<integer>
+            docs: Defaults to first page
+          per_page: 
+            type: optional<integer>
+            docs: Defaults to per page
+          order: 
+            type: optional<Order> 
+          starting_after: 
+            type: optional<string>
+            docs: | 
+              The cursor used for pagination in order to fetch 
+              the next page of results.
+      response: ListUsersCursorPaginationResponse
+
+    listWithBodyCursorPagination:
+      pagination: 
+        cursor: $request.starting_after
+        next_cursor: $response.page.next.starting_after
+        results: $response.data
+      method: GET
+      path: ""
+      request: 
+        name: ListUsersBodyCursorPaginationRequest
+        body: 
+          properties:
+            page: 
+              type: optional<integer>
+              docs: Defaults to first page
+            per_page: 
+              type: optional<integer>
+              docs: Defaults to per page
+            order: 
+              type: optional<Order> 
+            starting_after: 
+              type: optional<string>
+              docs: | 
+                The cursor used for pagination in order to fetch 
+                the next page of results.
+      response: ListUsersCursorPaginationResponse
+
+    listWithNestedBodyCursorPagination:
+      pagination: 
+        cursor: $request.pagination.cursor
+        next_cursor: $response.page.next.starting_after
+        results: $response.data
+      method: GET
+      path: ""
+      request: 
+        name: ListUsersNestedBodyCursorPaginationRequest
+        body: 
+          properties:
+            page: 
+              type: optional<integer>
+              docs: Defaults to first page
+            per_page: 
+              type: optional<integer>
+              docs: Defaults to per page
+            order: 
+              type: optional<Order> 
+            pagination: 
+              type: optional<WithCursor>
+              docs: | 
+                The object that contains the cursor used for pagination
+                in order to fetch the next page of results.
+      response: ListUsersCursorPaginationResponse
+
+    listWithReferenceBodyCursorPagination:
+      pagination: 
+        cursor: $request.cursor
+        next_cursor: $response.page.next.starting_after
+        results: $response.data
+      method: GET
+      path: ""
+      request: 
+        body: WithCursor
+      response: ListUsersCursorPaginationResponse
+
+    listWithNestedReferenceBodyCursorPagination:
+      pagination: 
+        cursor: $request.pagination.cursor
+        next_cursor: $response.page.next.starting_after
+        results: $response.data
+      method: GET
+      path: ""
+      request: 
+        body: WithCursorPagination
+      response: ListUsersCursorPaginationResponse
+
+    listWithRootCursorPagination:
+      path: /root/search
+      method: POST
+      pagination:
+        cursor: $request.pagination.starting_after
+        next_cursor: $response.pages.next.starting_after
+        results: $response.data
+      display-name: Search
+      request:
+        body: root.SearchRequest
+      response:
+        type: root.ResultList
+
+    listWithOffsetPagination:
+      pagination: 
+        offset: $request.pageNumber
+        results: $response.users
+      method: GET
+      path: ""
+      request: 
+        name: ListUsersOffsetPaginationRequest
+        query-parameters: 
+          pageNumber: 
+            type: optional<integer>
+            docs: | 
+              The offset used for pagination in order to fetch
+              the next page of results.
+      response: ListUsersOffsetPaginationResponse
+
+    listWithOffsetStepPagination:
+      pagination: 
+        offset: $request.pageNumber
+        results: $response.users
+        step: $request.limit
+      method: GET
+      path: ""
+      request: 
+        name: ListUsersOffsetStepPaginationRequest
+        query-parameters: 
+          limit: 
+            type: optional<integer>
+            docs: | 
+              The maxium number of elements to return.
+        body: 
+          properties:
+            pageNumber: 
+              type: optional<integer>
+              docs: | 
+                The offset used for pagination in order to fetch
+                the next page of results.
+      response: ListUsersOffsetPaginationResponse
+    
+    listWithExternalType:
+      method: GET
+      path: ""
+      pagination: true
+      request: 
+        name: ListUsersOffsetPaginationRequest
+        query-parameters: 
+          cursor: optional<string>
+      response: root.UsernameCursor

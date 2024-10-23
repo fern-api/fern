@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TestCaseExpects.Builder.class)
 public final class TestCaseExpects {
     private final Optional<String> expectedStdout;
@@ -84,7 +84,7 @@ public final class TestCaseExpects {
         }
 
         public Builder expectedStdout(String expectedStdout) {
-            this.expectedStdout = Optional.of(expectedStdout);
+            this.expectedStdout = Optional.ofNullable(expectedStdout);
             return this;
         }
 

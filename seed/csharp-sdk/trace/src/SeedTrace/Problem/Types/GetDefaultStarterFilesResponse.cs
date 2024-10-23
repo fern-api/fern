@@ -1,10 +1,18 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class GetDefaultStarterFilesResponse
+public record GetDefaultStarterFilesResponse
 {
     [JsonPropertyName("files")]
-    public List<Dictionary<Language, ProblemFiles>> Files { get; init; }
+    public Dictionary<Language, ProblemFiles> Files { get; set; } =
+        new Dictionary<Language, ProblemFiles>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

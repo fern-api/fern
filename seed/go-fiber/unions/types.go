@@ -11,6 +11,29 @@ import (
 
 type Bar struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (b *Bar) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *Bar) UnmarshalJSON(data []byte) error {
+	type unmarshaler Bar
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Bar(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
+	return nil
 }
 
 func (b *Bar) String() string {
@@ -22,6 +45,29 @@ func (b *Bar) String() string {
 
 type Foo struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (f *Foo) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *Foo) UnmarshalJSON(data []byte) error {
+	type unmarshaler Foo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Foo(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
+	return nil
 }
 
 func (f *Foo) String() string {
@@ -54,6 +100,9 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "foo":
 		var valueUnmarshaler struct {
@@ -146,6 +195,9 @@ func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 	}
 	u.Type = unmarshaler.Type
 	u.Id = unmarshaler.Id
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "integer":
 		var valueUnmarshaler struct {
@@ -200,16 +252,7 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "foo":
-		var marshaler = struct {
-			Type string `json:"type"`
-			Id   string `json:"id"`
-			*Foo
-		}{
-			Type: "foo",
-			Id:   u.Id,
-			Foo:  u.Foo,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	}
 }
 
@@ -255,6 +298,9 @@ func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant _type", u)
+	}
 	switch unmarshaler.Type {
 	case "foo":
 		var valueUnmarshaler struct {
@@ -338,15 +384,31 @@ func (u *UnionWithLiteral) Fern() string {
 func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
+		Base string `json:"base,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
 	u.Type = unmarshaler.Type
-	u.base = "base"
+	if unmarshaler.Base != "base" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "base", unmarshaler.Base)
+	}
+	u.base = unmarshaler.Base
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "fern":
-		u.fern = "fern"
+		var valueUnmarshaler struct {
+			Fern string `json:"value,omitempty"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		if valueUnmarshaler.Fern != "fern" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "fern", valueUnmarshaler.Fern)
+		}
+		u.fern = valueUnmarshaler.Fern
 	}
 	return nil
 }
@@ -404,6 +466,9 @@ func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "date":
 		var valueUnmarshaler struct {
@@ -488,6 +553,9 @@ func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "integer":
 		var valueUnmarshaler struct {
@@ -550,6 +618,59 @@ func (u *UnionWithPrimitive) Accept(visitor UnionWithPrimitiveVisitor) error {
 	}
 }
 
+type UnionWithSingleElement struct {
+	Type string
+	Foo  *Foo
+}
+
+func NewUnionWithSingleElementFromFoo(value *Foo) *UnionWithSingleElement {
+	return &UnionWithSingleElement{Type: "foo", Foo: value}
+}
+
+func (u *UnionWithSingleElement) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
+	switch unmarshaler.Type {
+	case "foo":
+		value := new(Foo)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.Foo = value
+	}
+	return nil
+}
+
+func (u UnionWithSingleElement) MarshalJSON() ([]byte, error) {
+	switch u.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "foo":
+		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+	}
+}
+
+type UnionWithSingleElementVisitor interface {
+	VisitFoo(*Foo) error
+}
+
+func (u *UnionWithSingleElement) Accept(visitor UnionWithSingleElementVisitor) error {
+	switch u.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "foo":
+		return visitor.VisitFoo(u.Foo)
+	}
+}
+
 type UnionWithTime struct {
 	Type     string
 	Value    int
@@ -577,6 +698,9 @@ func (u *UnionWithTime) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "value":
 		var valueUnmarshaler struct {
@@ -681,6 +805,9 @@ func (u *UnionWithUnknown) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "foo":
 		value := new(Foo)
@@ -703,14 +830,7 @@ func (u UnionWithUnknown) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Foo
-		}{
-			Type: "foo",
-			Foo:  u.Foo,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	case "unknown":
 		var marshaler = struct {
 			Type    string      `json:"type"`
@@ -762,6 +882,9 @@ func (u *UnionWithoutKey) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "foo":
 		value := new(Foo)
@@ -784,23 +907,9 @@ func (u UnionWithoutKey) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Foo
-		}{
-			Type: "foo",
-			Foo:  u.Foo,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	case "bar":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Bar
-		}{
-			Type: "bar",
-			Bar:  u.Bar,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
 	}
 }
 
@@ -822,6 +931,29 @@ func (u *UnionWithoutKey) Accept(visitor UnionWithoutKeyVisitor) error {
 
 type Circle struct {
 	Radius float64 `json:"radius" url:"radius"`
+
+	extraProperties map[string]interface{}
+}
+
+func (c *Circle) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *Circle) UnmarshalJSON(data []byte) error {
+	type unmarshaler Circle
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Circle(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+
+	return nil
 }
 
 func (c *Circle) String() string {
@@ -833,6 +965,29 @@ func (c *Circle) String() string {
 
 type GetShapeRequest struct {
 	Id string `json:"id" url:"id"`
+
+	extraProperties map[string]interface{}
+}
+
+func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
+}
+
+func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetShapeRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetShapeRequest(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+
+	return nil
 }
 
 func (g *GetShapeRequest) String() string {
@@ -844,6 +999,29 @@ func (g *GetShapeRequest) String() string {
 
 type Square struct {
 	Length float64 `json:"length" url:"length"`
+
+	extraProperties map[string]interface{}
+}
+
+func (s *Square) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
+}
+
+func (s *Square) UnmarshalJSON(data []byte) error {
+	type unmarshaler Square
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = Square(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
+	return nil
 }
 
 func (s *Square) String() string {

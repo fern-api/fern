@@ -1,13 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedApi;
+using SeedApi.Core;
+
+#nullable enable
 
 namespace SeedApi;
 
-public class ObjectFieldValue
+public record ObjectFieldValue
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("value")]
-    public FieldValue Value { get; init; }
+    public required object Value { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

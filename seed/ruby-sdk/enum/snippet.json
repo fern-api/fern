@@ -3,60 +3,88 @@
         {
             "id": {
                 "path": "/inlined",
-                "method": "POST"
+                "method": "POST",
+                "identifierOverride": "endpoint_inlined-request.send"
             },
             "snippet": {
-                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(operand: GREATER_THAN, operand_or_color: RED)",
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.inlined_request.send(operand: GREATER_THAN, operand_or_color: RED)",
                 "type": "ruby"
             }
         },
         {
             "id": {
                 "path": "/inlined",
-                "method": "POST"
+                "method": "POST",
+                "identifierOverride": "endpoint_inlined-request.send"
             },
             "snippet": {
-                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(operand: GREATER_THAN, operand_or_color: RED)",
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.inlined_request.send(operand: GREATER_THAN, operand_or_color: RED)",
                 "type": "ruby"
             }
         },
         {
             "id": {
                 "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
-                "method": "POST"
+                "method": "POST",
+                "identifierOverride": "endpoint_path-param.send"
             },
             "snippet": {
-                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(\n  operand: GREATER_THAN,\n  maybe_operand: LESS_THAN,\n  operand_or_color: RED,\n  maybe_operand_or_color: RED\n)",
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.path_param.send(\n  operand: GREATER_THAN,\n  maybe_operand: LESS_THAN,\n  operand_or_color: RED,\n  maybe_operand_or_color: RED\n)",
                 "type": "ruby"
             }
         },
         {
             "id": {
                 "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
-                "method": "POST"
+                "method": "POST",
+                "identifierOverride": "endpoint_path-param.send"
             },
             "snippet": {
-                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(\n  operand: GREATER_THAN,\n  maybe_operand: LESS_THAN,\n  operand_or_color: RED,\n  maybe_operand_or_color: RED\n)",
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.path_param.send(\n  operand: GREATER_THAN,\n  maybe_operand: LESS_THAN,\n  operand_or_color: RED,\n  maybe_operand_or_color: RED\n)",
                 "type": "ruby"
             }
         },
         {
             "id": {
                 "path": "/query",
-                "method": "POST"
+                "method": "POST",
+                "identifierOverride": "endpoint_query-param.send"
             },
             "snippet": {
-                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(operand: GREATER_THAN)",
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.query_param.send(operand: GREATER_THAN, operand_or_color: RED)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/query-list",
+                "method": "POST",
+                "identifierOverride": "endpoint_query-param.sendList"
+            },
+            "snippet": {
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.query_param.send_list(operand: GREATER_THAN, operand_or_color: RED)",
                 "type": "ruby"
             }
         },
         {
             "id": {
                 "path": "/query",
-                "method": "POST"
+                "method": "POST",
+                "identifierOverride": "endpoint_query-param.send"
             },
             "snippet": {
-                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(operand: GREATER_THAN)",
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.query_param.send(operand: GREATER_THAN, operand_or_color: RED)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/query-list",
+                "method": "POST",
+                "identifierOverride": "endpoint_query-param.sendList"
+            },
+            "snippet": {
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.query_param.send_list(operand: GREATER_THAN, operand_or_color: RED)",
                 "type": "ruby"
             }
         }

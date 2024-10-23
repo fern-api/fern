@@ -5,10 +5,10 @@ import typing
 try:
     from typing import NotRequired  # type: ignore
 except ImportError:
-    from typing_extensions import NotRequired  # type: ignore
+    from typing_extensions import NotRequired
 
 
-class RequestOptions(typing.TypedDict):
+class RequestOptions(typing.TypedDict, total=False):
     """
     Additional options for request-specific configuration when calling APIs via the SDK.
     This is used primarily as an optional final parameter for service functions.
@@ -23,6 +23,8 @@ class RequestOptions(typing.TypedDict):
         - additional_query_parameters: typing.Dict[str, typing.Any]. A dictionary containing additional parameters to spread into the request's query parameters dict
 
         - additional_body_parameters: typing.Dict[str, typing.Any]. A dictionary containing additional parameters to spread into the request's body parameters dict
+
+        - chunk_size: int. The size, in bytes, to process each chunk of data being streamed back within the response. This equates to leveraging `chunk_size` within `requests` or `httpx`, and is only leveraged for file downloads.
     """
 
     timeout_in_seconds: NotRequired[int]
@@ -30,3 +32,4 @@ class RequestOptions(typing.TypedDict):
     additional_headers: NotRequired[typing.Dict[str, typing.Any]]
     additional_query_parameters: NotRequired[typing.Dict[str, typing.Any]]
     additional_body_parameters: NotRequired[typing.Dict[str, typing.Any]]
+    chunk_size: NotRequired[int]

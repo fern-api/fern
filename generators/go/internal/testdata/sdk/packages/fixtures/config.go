@@ -3,5 +3,5 @@
 package api
 
 type CreateConfigRequest struct {
-	Id string `json:"id" url:"id"`
+	Id string `json:"id" url:"-"`
 }

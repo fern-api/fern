@@ -1,5 +1,5 @@
-import { FernWorkspace } from "@fern-api/workspace-loader";
-import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
@@ -17,7 +17,8 @@ export function validateTypeExample({
     typeResolver,
     exampleResolver,
     example,
-    workspace
+    workspace,
+    breadcrumbs
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
@@ -26,6 +27,7 @@ export function validateTypeExample({
     exampleResolver: ExampleResolver;
     example: RawSchemas.ExampleTypeValueSchema;
     workspace: FernWorkspace;
+    breadcrumbs: string[];
 }): ExampleViolation[] {
     return visitRawTypeDeclaration(typeDeclaration, {
         alias: (rawAlias) => {
@@ -35,13 +37,15 @@ export function validateTypeExample({
                 typeResolver,
                 exampleResolver,
                 example,
-                workspace
+                workspace,
+                breadcrumbs
             });
         },
         enum: (rawEnum) => {
             return validateEnumExample({
                 rawEnum,
-                example
+                example,
+                breadcrumbs
             });
         },
         object: (rawObject) => {
@@ -53,7 +57,8 @@ export function validateTypeExample({
                 file,
                 typeResolver,
                 exampleResolver,
-                workspace
+                workspace,
+                breadcrumbs
             });
         },
         discriminatedUnion: (rawUnion) => {
@@ -64,7 +69,8 @@ export function validateTypeExample({
                 file,
                 typeResolver,
                 exampleResolver,
-                workspace
+                workspace,
+                breadcrumbs
             });
         },
         undiscriminatedUnion: (rawUnion) => {
@@ -74,7 +80,8 @@ export function validateTypeExample({
                 file,
                 typeResolver,
                 exampleResolver,
-                workspace
+                workspace,
+                breadcrumbs
             });
         }
     });

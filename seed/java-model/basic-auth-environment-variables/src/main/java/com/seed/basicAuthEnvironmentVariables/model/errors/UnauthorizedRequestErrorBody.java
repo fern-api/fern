@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.basicAuthEnvironmentVariables.core.ObjectMappers;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UnauthorizedRequestErrorBody.Builder.class)
 public final class UnauthorizedRequestErrorBody {
     private final String message;
@@ -74,7 +74,7 @@ public final class UnauthorizedRequestErrorBody {
         @java.lang.Override
         @JsonSetter("message")
         public _FinalStage message(String message) {
-            this.message = message;
+            this.message = Objects.requireNonNull(message, "message must not be null");
             return this;
         }
 

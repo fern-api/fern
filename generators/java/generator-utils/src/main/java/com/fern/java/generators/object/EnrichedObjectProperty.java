@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.Literal;
-import com.fern.ir.model.types.Literal.Visitor;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
@@ -97,10 +96,8 @@ public interface EnrichedObjectProperty {
 
     static EnrichedObjectProperty of(ObjectProperty objectProperty, boolean fromInterface, TypeName poetTypeName) {
         Name name = objectProperty.getName().getName();
-        Optional<Literal> maybeLiteral = objectProperty
-                .getValueType()
-                .getContainer()
-                .flatMap(ContainerType::getLiteral);
+        Optional<Literal> maybeLiteral =
+                objectProperty.getValueType().getContainer().flatMap(ContainerType::getLiteral);
         return EnrichedObjectProperty.builder()
                 .camelCaseKey(name.getCamelCase().getSafeName())
                 .pascalCaseKey(name.getPascalCase().getSafeName())

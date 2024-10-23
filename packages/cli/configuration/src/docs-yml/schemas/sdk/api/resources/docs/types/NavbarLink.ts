@@ -8,27 +8,33 @@ export type NavbarLink =
     | FernDocsConfig.NavbarLink.Filled
     | FernDocsConfig.NavbarLink.Outlined
     | FernDocsConfig.NavbarLink.Minimal
+    | FernDocsConfig.NavbarLink.Github
     | FernDocsConfig.NavbarLink.Primary
     | FernDocsConfig.NavbarLink.Secondary;
 
 export declare namespace NavbarLink {
-    interface Filled extends FernDocsConfig.NavbarLinkConfiguration {
+    interface Filled extends FernDocsConfig.NavbarLinkConfig {
         type: "filled";
     }
 
-    interface Outlined extends FernDocsConfig.NavbarLinkConfiguration {
+    interface Outlined extends FernDocsConfig.NavbarLinkConfig {
         type: "outlined";
     }
 
-    interface Minimal extends FernDocsConfig.NavbarLinkConfiguration {
+    interface Minimal extends FernDocsConfig.NavbarLinkConfig {
         type: "minimal";
     }
 
-    interface Primary extends FernDocsConfig.NavbarLinkConfiguration {
+    interface Github {
+        type: "github";
+        value: FernDocsConfig.NavbarGithubConfig;
+    }
+
+    interface Primary extends FernDocsConfig.NavbarLinkConfig {
         type: "primary";
     }
 
-    interface Secondary extends FernDocsConfig.NavbarLinkConfiguration {
+    interface Secondary extends FernDocsConfig.NavbarLinkConfig {
         type: "secondary";
     }
 }

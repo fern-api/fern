@@ -35,9 +35,9 @@ module SeedTraceClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
-            code_by_language = parsed_json["codeByLanguage"]&.transform_values do |v|
-              v = v.to_json
-              SeedTraceClient::V2::V3::Problem::FunctionImplementation.from_json(json_object: v)
+            code_by_language = parsed_json["codeByLanguage"]&.transform_values do |value|
+              value = value.to_json
+              SeedTraceClient::V2::V3::Problem::FunctionImplementation.from_json(json_object: value)
             end
             new(code_by_language: code_by_language, additional_properties: struct)
           end

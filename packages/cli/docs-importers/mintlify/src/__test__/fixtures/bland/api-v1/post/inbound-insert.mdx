@@ -1,0 +1,56 @@
+---
+title: "Upload Inbound Phone Numbers"
+api: "POST https://api.bland.ai/v1/inbound/insert"
+description: "Add inbound numbers to Bland from your own Twilio account. See [Enterprise Twilio Integration](/enterprise-features/custom-twilio) for more information."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+<ParamField header="encrypted_key" type="string" required>
+  The `encrypted_key` of the Twilio account you want to upload numbers from.
+</ParamField>
+
+### Body
+
+<ParamField body="numbers" type="array" required>
+    An array of phone numbers you want to upload to Bland.
+
+    Include the leading `'+'`, country code and the phone number without any special characters.
+
+    Example: `["+12223334444", "+13334445555"]`
+
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  A message saying whether the insertion succeeded, or a helpful message describing why it failed.
+</ResponseField>
+
+<ResponseField name="inserted" type="array">
+  An array of phone numbers that were successfully inserted.
+
+Any phone numbers that failed to be inserted will not be included in this array - for example if they are already in your account or not associated with the sepcified Twilio account.
+
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+  "status": "success",
+  "message": "Successfully inserted numbers",
+  "inserted": [
+    "+12223334444",
+    "+13334445555"
+  ]
+}
+```
+</ResponseExample>

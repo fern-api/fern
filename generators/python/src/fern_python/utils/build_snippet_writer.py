@@ -1,14 +1,8 @@
 from fern_python.generators.context import PydanticGeneratorContext
-from fern_python.generators.pydantic_model import (
-    AliasSnippetGenerator,
-    DiscriminatedUnionSnippetGenerator,
-    EnumSnippetGenerator,
-    ObjectSnippetGenerator,
+from fern_python.generators.pydantic_model.type_declaration_handler import (
+    TypeDeclarationSnippetGeneratorBuilder,
 )
-from fern_python.generators.pydantic_model.type_declaration_handler.undiscriminated_union_generator import (
-    UndiscriminatedUnionSnippetGenerator,
-)
-from fern_python.snippet import SnippetWriter, TypeDeclarationSnippetGenerator
+from fern_python.snippet import SnippetWriter
 
 
 def build_snippet_writer(
@@ -24,30 +18,10 @@ def build_snippet_writer(
         improved_imports=improved_imports,
     )
 
-    type_declaration_snippet_generator = TypeDeclarationSnippetGenerator(
-        alias=lambda example: AliasSnippetGenerator(
-            snippet_writer=snippet_writer,
-            example=example,
-        ).generate_snippet(),
-        enum=lambda name, example: EnumSnippetGenerator(
-            snippet_writer=snippet_writer, name=name, example=example, use_str_enums=use_str_enums
-        ).generate_snippet(),
-        object=lambda name, example: ObjectSnippetGenerator(
-            snippet_writer=snippet_writer,
-            name=name,
-            example=example,
-        ).generate_snippet(),
-        discriminated_union=lambda name, example: DiscriminatedUnionSnippetGenerator(
-            snippet_writer=snippet_writer,
-            name=name,
-            example=example,
-        ).generate_snippet(),
-        undiscriminated_union=lambda name, example: UndiscriminatedUnionSnippetGenerator(
-            snippet_writer=snippet_writer,
-            name=name,
-            example=example,
-        ).generate_snippet(),
-    )
+    type_declaration_snippet_generator = TypeDeclarationSnippetGeneratorBuilder(
+        context=context,
+        snippet_writer=snippet_writer,
+    ).get_generator()
 
     snippet_writer._type_declaration_snippet_generator = type_declaration_snippet_generator
 

@@ -4,7 +4,6 @@ package client
 
 import (
 	context "context"
-	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
 	organization "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/organization"
@@ -50,7 +49,7 @@ func (c *Client) CreateMetricsTag(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "metrics"
+	endpointURL := baseURL + "/metrics"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -58,13 +57,15 @@ func (c *Client) CreateMetricsTag(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     request,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
 		},
 	); err != nil {
 		return nil, err
@@ -86,7 +87,7 @@ func (c *Client) GetMetricsTag(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"metrics/%v", id)
+	endpointURL := core.EncodeURL(baseURL+"/metrics/%v", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -94,12 +95,14 @@ func (c *Client) GetMetricsTag(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return nil, err

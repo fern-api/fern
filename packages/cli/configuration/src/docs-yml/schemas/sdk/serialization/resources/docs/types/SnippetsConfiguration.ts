@@ -14,6 +14,7 @@ export const SnippetsConfiguration: core.serialization.ObjectSchema<
     typescript: core.serialization.lazy(async () => (await import("../../..")).SnippetLanguageConfiguration).optional(),
     go: core.serialization.lazy(async () => (await import("../../..")).SnippetLanguageConfiguration).optional(),
     java: core.serialization.lazy(async () => (await import("../../..")).SnippetLanguageConfiguration).optional(),
+    ruby: core.serialization.lazy(async () => (await import("../../..")).SnippetLanguageConfiguration).optional(),
 });
 
 export declare namespace SnippetsConfiguration {
@@ -22,5 +23,6 @@ export declare namespace SnippetsConfiguration {
         typescript?: serializers.SnippetLanguageConfiguration.Raw | null;
         go?: serializers.SnippetLanguageConfiguration.Raw | null;
         java?: serializers.SnippetLanguageConfiguration.Raw | null;
+        ruby?: serializers.SnippetLanguageConfiguration.Raw | null;
     }
 }

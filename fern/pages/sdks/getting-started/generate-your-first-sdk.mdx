@@ -1,10 +1,10 @@
 ---
 title: Generate your first SDK
-excerpt: Use Fern's CLI tool to generate your first SDK.
+description: Use Fern's CLI tool to generate your first SDK.
 ---
 
 <Warning title='Schedule a Demo'>
-  Generating SDKs often requires understanding the state of your OpenAPI spec as well as 
+  Generating SDKs often requires understanding the state of your OpenAPI Specification as well as 
   your specific requirements. For the ideal experience, we **strongly recommend** scheduling a 
   [demo](https://buildwithfern.com/contact) or [emailing us](mailto:support@buildwithfern.com) to get started. 
 </Warning>
@@ -25,21 +25,21 @@ to generate your first SDK.
 
   <AccordionGroup>
     <Accordion title="OpenAPI">
-      If you have an OpenAPI spec, you can initialize the Fern folder by running the following command:
+      If you have an OpenAPI Specification, you can initialize the Fern folder by running the following command:
 
       ```bash
       fern init --openapi path/to/openapi.yml
       ```
       
-      If your OpenAPI spec is hosted on the web, you can use the URL:
+      If your OpenAPI Specification is hosted on the web, you can use the URL:
 
       ```bash
       fern init --openapi https://api.example.com/openapi.yml
       ```
 
-      This will create a `fern` folder in your current directory with the OpenAPI spec.
+      This will create a `fern` folder in your current directory with the OpenAPI Specification.
 
-      ```sh
+      ```bash
       fern/
         ├─ fern.config.json # root-level configuration
         └─ api/ # your API
@@ -58,16 +58,14 @@ to generate your first SDK.
 
       This will create a `fern` folder in your current directory with the Fern Definition.
 
-      ```sh
+      ```bash
       fern/
         ├─ fern.config.json # root-level configuration
-        └─ api/ # your API
-          ├─ generators.yml # generators you're using
-          └─ definition/
-            ├─ api.yml  # API-level configuration
-            └─ imdb.yml # endpoints, types, and errors
+        ├─ generators.yml # generators you're using
+        └─ definition/
+          ├─ api.yml  # API-level configuration
+          └─ imdb.yml # endpoints, types, and errors
       ```
-
     </Accordion>
   </AccordionGroup>
 
@@ -77,11 +75,11 @@ to generate your first SDK.
   you will need to fix them before proceeding.
 
   <Note>
-    If you're using an OpenAPI spec, check out all of our supported extensions 
-    [here](/learn/configure/openapi/extensions).
+    If you're using an OpenAPI Specification, check out all of our 
+    [supported extensions](/learn/api-definition/openapi/extensions).
   </Note>
 
-  ### Add the SDK Generator
+  ### Add the SDK generator
 
   <Warning title='Pro Features'>
     By default, none of the pro features will be enabled. 
@@ -116,6 +114,11 @@ to generate your first SDK.
       fern add fern-ruby-sdk --group sdk
       ```
     </CodeBlock>
+    <CodeBlock title="C#">
+      ```sh
+      fern add fern-csharp-sdk --group sdk
+      ```
+    </CodeBlock>
   </CodeBlocks>
 
   ### Run `fern generate --group sdk`
@@ -130,7 +133,7 @@ to generate your first SDK.
   Definition. For example, if you're generating a TypeScript SDK, the folder structure
   will look like this:
 
-  ```sh
+  ```bash
   sdks/
     typescript/
       src/

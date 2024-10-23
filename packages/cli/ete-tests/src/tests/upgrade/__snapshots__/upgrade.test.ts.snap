@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`fern upgrade upgrades generators 1`] = `
+exports[`fern upgrade > upgrades generators 1`] = `
 "groups:
   internal:
     generators:

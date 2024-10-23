@@ -44,7 +44,7 @@ func (c *Client) Upload(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "upload-content"
+	endpointURL := baseURL + "/upload-content"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Set("Content-Type", "application/octet-stream")
@@ -54,12 +54,14 @@ func (c *Client) Upload(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     requestBuffer,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         requestBuffer,
 		},
 	); err != nil {
 		return err

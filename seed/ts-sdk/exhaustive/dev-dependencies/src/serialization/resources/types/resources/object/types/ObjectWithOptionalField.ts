@@ -22,6 +22,7 @@ export const ObjectWithOptionalField: core.serialization.ObjectSchema<
     list: core.serialization.list(core.serialization.string()).optional(),
     set: core.serialization.set(core.serialization.string()).optional(),
     map: core.serialization.record(core.serialization.number(), core.serialization.string()).optional(),
+    bigint: core.serialization.string().optional(),
 });
 
 export declare namespace ObjectWithOptionalField {
@@ -38,5 +39,6 @@ export declare namespace ObjectWithOptionalField {
         list?: string[] | null;
         set?: string[] | null;
         map?: Record<number, string> | null;
+        bigint?: string | null;
     }
 }

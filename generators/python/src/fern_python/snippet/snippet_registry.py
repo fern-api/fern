@@ -1,6 +1,7 @@
+import re
 from typing import Dict, List, Optional
 
-import fern.generator_exec.resources as generator_exec
+import fern.generator_exec as generator_exec
 import fern.ir.resources as ir_types
 from typing_extensions import assert_never
 
@@ -10,11 +11,12 @@ from fern_python.source_file_factory import SourceFileFactory
 
 
 class SnippetRegistry:
-    def __init__(self) -> None:
+    def __init__(self, *, source_file_factory: SourceFileFactory) -> None:
         self._snippets: Dict[ir_types.TypeId, AST.Expression] = {}
         self._endpoint_snippets: Dict[ir_types.EndpointId, AST.Expression] = {}
-        self._sync_client_endpoint_snippets: Dict[ir_types.EndpointId, EndpointExpression] = {}
-        self._async_client_endpoint_snippets: Dict[ir_types.EndpointId, EndpointExpression] = {}
+        self._sync_client_endpoint_snippets: Dict[ir_types.EndpointId, List[EndpointExpression]] = {}
+        self._async_client_endpoint_snippets: Dict[ir_types.EndpointId, List[EndpointExpression]] = {}
+        self._source_file_factory = source_file_factory
 
     def snippets(self) -> Optional[generator_exec.Snippets]:
         if (
@@ -26,25 +28,27 @@ class SnippetRegistry:
 
         types: Dict[generator_exec.TypeId, str] = {}
         for typeId, expr in self._snippets.items():
-            types[generator_exec.TypeId(typeId.get_as_str())] = self._expression_to_snippet_str(expr)
+            types[generator_exec.TypeId(typeId)] = self._expression_to_snippet_str(expr)
 
         endpoints: List[generator_exec.Endpoint] = []
-        for endpointId, sync_endpoint_expression in self._sync_client_endpoint_snippets.items():
-            endpoints.append(
-                generator_exec.Endpoint(
-                    id=sync_endpoint_expression.endpoint_id,
-                    snippet=generator_exec.EndpointSnippet.factory.python(
-                        value=generator_exec.PythonEndpointSnippet(
-                            sync_client=self._expression_to_snippet_str(sync_endpoint_expression.expr),
-                            async_client=self._expression_to_snippet_str(
-                                self._async_client_endpoint_snippets[endpointId].expr
+        for endpointId, sync_endpoint_expressions in self._sync_client_endpoint_snippets.items():
+            for idx, expression in enumerate(sync_endpoint_expressions):
+                endpoints.append(
+                    generator_exec.Endpoint(
+                        id=expression.endpoint_id,
+                        example_identifier=expression.example_id,
+                        snippet=generator_exec.EndpointSnippet.factory.python(
+                            value=generator_exec.PythonEndpointSnippet(
+                                sync_client=self._expression_to_snippet_str(expression.expr),
+                                async_client=self._expression_to_snippet_str(
+                                    self._async_client_endpoint_snippets[endpointId][idx].expr
+                                )
+                                if endpointId in self._async_client_endpoint_snippets
+                                else "",
                             )
-                            if endpointId in self._async_client_endpoint_snippets
-                            else "",
-                        )
-                    ),
+                        ),
+                    )
                 )
-            )
 
         return generator_exec.Snippets(
             types=types,
@@ -60,23 +64,37 @@ class SnippetRegistry:
 
     def register_async_client_endpoint_snippet(
         self,
+        *,
         endpoint: ir_types.HttpEndpoint,
         expr: AST.Expression,
+        example_id: str,
     ) -> None:
-        self._async_client_endpoint_snippets[endpoint.id] = EndpointExpression(
-            endpoint_id=self._endpoint_to_identifier(endpoint),
-            expr=expr,
+        init = self._async_client_endpoint_snippets.get(endpoint.id) or []
+        init.append(
+            EndpointExpression(
+                endpoint_id=self._endpoint_to_identifier(endpoint),
+                expr=expr,
+                example_id=example_id,
+            )
         )
+        self._async_client_endpoint_snippets[endpoint.id] = init
 
     def register_sync_client_endpoint_snippet(
         self,
+        *,
         endpoint: ir_types.HttpEndpoint,
         expr: AST.Expression,
+        example_id: str,
     ) -> None:
-        self._sync_client_endpoint_snippets[endpoint.id] = EndpointExpression(
-            endpoint_id=self._endpoint_to_identifier(endpoint),
-            expr=expr,
+        init = self._sync_client_endpoint_snippets.get(endpoint.id) or []
+        init.append(
+            EndpointExpression(
+                endpoint_id=self._endpoint_to_identifier(endpoint),
+                expr=expr,
+                example_id=example_id,
+            )
         )
+        self._sync_client_endpoint_snippets[endpoint.id] = init
 
     def _endpoint_to_identifier(
         self,
@@ -85,6 +103,7 @@ class SnippetRegistry:
         return generator_exec.EndpointIdentifier(
             path=generator_exec.EndpointPath(self._full_path_for_endpoint(endpoint)),
             method=self._ir_method_to_generator_exec_method(endpoint.method),
+            identifier_override=endpoint.id,
         )
 
     def _full_path_for_endpoint(
@@ -92,15 +111,16 @@ class SnippetRegistry:
         endpoint: ir_types.HttpEndpoint,
     ) -> str:
         components: List[str] = []
-        head = endpoint.full_path.head.strip("/")
-        if len(head) > 0:
-            components.append(head)
+        if not endpoint.full_path.head.startswith("/"):
+            components.append("/")
+        if len(endpoint.full_path.head) > 0:
+            components.append(endpoint.full_path.head)
         for part in endpoint.full_path.parts:
             components.append("{" + part.path_parameter + "}")
-            tail = part.tail.strip("/")
-            if len(tail) > 0:
-                components.append(tail)
-        return "/" + "/".join(components)
+            if len(part.tail) > 0:
+                components.append(part.tail)
+        joined_components = "".join(components)
+        return re.sub("/+", "/", joined_components)
 
     def _ir_method_to_generator_exec_method(
         self,
@@ -122,6 +142,6 @@ class SnippetRegistry:
         self,
         expr: AST.Expression,
     ) -> str:
-        snippet = SourceFileFactory.create_snippet()
+        snippet = self._source_file_factory.create_snippet()
         snippet.add_expression(expr)
         return snippet.to_str()

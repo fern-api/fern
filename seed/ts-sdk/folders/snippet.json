@@ -3,61 +3,67 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_.foo"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.foo();\n"
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.foo();\n"
             }
         },
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_a/b.foo"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.a.b.foo();\n"
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.a.b.foo();\n"
             }
         },
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_a/c.foo"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.a.c.foo();\n"
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.a.c.foo();\n"
             }
         },
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_folder.foo"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.folder.foo();\n"
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folder.foo();\n"
             }
         },
         {
             "id": {
                 "path": "/service",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_folder/service.endpoint"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.folder.service.endpoint();\n"
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folder.service.endpoint();\n"
             }
         },
         {
             "id": {
                 "path": "/service",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_folder/service.unknownRequest"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.folder.service.unknownRequest({\n    \"key\": \"value\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folder.service.unknownRequest({\n    \"key\": \"value\"\n});\n"
             }
         }
     ],

@@ -1,10 +1,20 @@
-import { APIS_DIRECTORY, fernConfigJson, FERN_DIRECTORY, getFernDirectory } from "@fern-api/configuration";
+import {
+    APIS_DIRECTORY,
+    ASYNCAPI_DIRECTORY,
+    DEFINITION_DIRECTORY,
+    FERN_DIRECTORY,
+    fernConfigJson,
+    GENERATORS_CONFIGURATION_FILENAME,
+    generatorsYml,
+    getFernDirectory,
+    OPENAPI_DIRECTORY
+} from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
+import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
-import { handleFailedWorkspaceParserResult } from "./handleFailedWorkspaceParserResult";
 import { Project } from "./Project";
 
 export declare namespace loadProject {
@@ -19,35 +29,67 @@ export declare namespace loadProject {
         defaultToAllApiWorkspaces: boolean;
         context: TaskContext;
         nameOverride?: string;
+        sdkLanguage?: generatorsYml.GenerationLanguage;
+    }
+
+    export interface LoadProjectFromDirectoryArgs extends Args {
+        absolutePathToFernDirectory: AbsoluteFilePath;
     }
 }
 
-export async function loadProject({
-    cliName,
-    cliVersion,
-    commandLineApiWorkspace,
-    defaultToAllApiWorkspaces,
-    context,
-    nameOverride
-}: loadProject.Args): Promise<Project> {
+export async function loadProject({ context, nameOverride, ...args }: loadProject.Args): Promise<Project> {
     const fernDirectory = await getFernDirectory(nameOverride);
     if (fernDirectory == null) {
         return context.failAndThrow(`Directory "${nameOverride ?? FERN_DIRECTORY}" not found.`);
     }
 
-    const apiWorkspaces = await loadApis({
-        cliName,
-        fernDirectory,
-        cliVersion,
+    return await loadProjectFromDirectory({
+        absolutePathToFernDirectory: fernDirectory,
         context,
-        commandLineApiWorkspace,
-        defaultToAllApiWorkspaces
+        nameOverride,
+        ...args
     });
+}
+
+export async function loadProjectFromDirectory({
+    absolutePathToFernDirectory,
+    cliName,
+    cliVersion,
+    commandLineApiWorkspace,
+    defaultToAllApiWorkspaces,
+    context
+}: loadProject.LoadProjectFromDirectoryArgs): Promise<Project> {
+    let apiWorkspaces: AbstractAPIWorkspace<unknown>[] = [];
+
+    if (
+        (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(APIS_DIRECTORY)))) ||
+        (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(DEFINITION_DIRECTORY)))) ||
+        (await doesPathExist(
+            join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))
+        )) ||
+        (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(OPENAPI_DIRECTORY)))) ||
+        (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY))))
+    ) {
+        apiWorkspaces = await loadApis({
+            cliName,
+            fernDirectory: absolutePathToFernDirectory,
+            cliVersion,
+            context,
+            commandLineApiWorkspace,
+            defaultToAllApiWorkspaces
+        });
+    }
 
     return {
-        config: await fernConfigJson.loadProjectConfig({ directory: fernDirectory, context }),
+        config: await fernConfigJson.loadProjectConfig({ directory: absolutePathToFernDirectory, context }),
         apiWorkspaces,
-        docsWorkspaces: await loadDocsWorkspace({ fernDirectory, context })
+        docsWorkspaces: await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context }),
+        loadAPIWorkspace: (name: string | undefined): AbstractAPIWorkspace<unknown> | undefined => {
+            if (name == null) {
+                return apiWorkspaces[0];
+            }
+            return apiWorkspaces.find((workspace) => workspace.workspaceName === name);
+        }
     };
 }
 
@@ -65,7 +107,7 @@ export async function loadApis({
     cliVersion: string;
     commandLineApiWorkspace: string | undefined;
     defaultToAllApiWorkspaces: boolean;
-}): Promise<APIWorkspace[]> {
+}): Promise<AbstractAPIWorkspace<unknown>[]> {
     const apisDirectory = join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
     const apisDirectoryExists = await doesPathExist(apisDirectory);
     if (apisDirectoryExists) {
@@ -100,7 +142,7 @@ export async function loadApis({
             return context.failAndThrow(message);
         }
 
-        const apiWorkspaces: APIWorkspace[] = [];
+        const apiWorkspaces: AbstractAPIWorkspace<unknown>[] = [];
 
         const filteredWorkspaces =
             commandLineApiWorkspace != null

@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "client": "require \"fern_version_no_default\"\n\nversion = SeedVersionClient::Client.new(base_url: \"https://api.example.com\")\nversion.user.get_user(user_id: \"userId\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "client": "require \"fern_version_no_default\"\n\nversion = SeedVersionClient::Client.new(base_url: \"https://api.example.com\")\nversion.user.get_user(user_id: \"userId\")",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

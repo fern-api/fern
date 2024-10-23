@@ -1,4 +1,5 @@
 export * from "./WithDocs";
+export * from "./WithDocsAndAvailability";
 export * from "./FernFilepath";
 export * from "./Name";
 export * from "./NameAndWireValue";
@@ -11,7 +12,10 @@ export * from "./EndpointId";
 export * from "./TypeId";
 export * from "./ErrorId";
 export * from "./WebhookGroupId";
+export * from "./WebhookId";
 export * from "./WebSocketChannelId";
+export * from "./FeatureId";
 export * from "./Declaration";
 export * from "./Availability";
 export * from "./AvailabilityStatus";
+export * from "./EndpointReference";

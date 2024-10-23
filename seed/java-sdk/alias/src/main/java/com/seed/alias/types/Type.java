@@ -14,8 +14,9 @@ import com.seed.alias.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Type.Builder.class)
 public final class Type {
     private final String id;
@@ -70,13 +71,13 @@ public final class Type {
     }
 
     public interface IdStage {
-        NameStage id(String id);
+        NameStage id(@NotNull String id);
 
         Builder from(Type other);
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class Type {
 
         @java.lang.Override
         @JsonSetter("id")
-        public NameStage id(String id) {
-            this.id = id;
+        public NameStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
-            this.name = name;
+        public _FinalStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

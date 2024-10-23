@@ -14,8 +14,9 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TracedFile.Builder.class)
 public final class TracedFile {
     private final String filename;
@@ -70,13 +71,13 @@ public final class TracedFile {
     }
 
     public interface FilenameStage {
-        DirectoryStage filename(String filename);
+        DirectoryStage filename(@NotNull String filename);
 
         Builder from(TracedFile other);
     }
 
     public interface DirectoryStage {
-        _FinalStage directory(String directory);
+        _FinalStage directory(@NotNull String directory);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class TracedFile {
 
         @java.lang.Override
         @JsonSetter("filename")
-        public DirectoryStage filename(String filename) {
-            this.filename = filename;
+        public DirectoryStage filename(@NotNull String filename) {
+            this.filename = Objects.requireNonNull(filename, "filename must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("directory")
-        public _FinalStage directory(String directory) {
-            this.directory = directory;
+        public _FinalStage directory(@NotNull String directory) {
+            this.directory = Objects.requireNonNull(directory, "directory must not be null");
             return this;
         }
 

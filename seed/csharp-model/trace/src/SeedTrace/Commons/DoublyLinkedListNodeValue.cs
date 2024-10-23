@@ -1,18 +1,26 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class DoublyLinkedListNodeValue
+public record DoublyLinkedListNodeValue
 {
     [JsonPropertyName("nodeId")]
-    public string NodeId { get; init; }
+    public required string NodeId { get; set; }
 
     [JsonPropertyName("val")]
-    public double Val { get; init; }
+    public required double Val { get; set; }
 
     [JsonPropertyName("next")]
-    public List<string?> Next { get; init; }
+    public string? Next { get; set; }
 
     [JsonPropertyName("prev")]
-    public List<string?> Prev { get; init; }
+    public string? Prev { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

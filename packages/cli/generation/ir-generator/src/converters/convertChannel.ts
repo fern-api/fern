@@ -3,6 +3,7 @@ import {
     ExampleHeader,
     ExampleInlinedRequestBodyProperty,
     ExamplePathParameter,
+    ExampleQueryParameterShape,
     ExampleWebSocketMessage,
     ExampleWebSocketMessageBody,
     ExampleWebSocketSession,
@@ -12,8 +13,8 @@ import {
     WebSocketMessage,
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/workspace-loader";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { getHeaderName } from "..";
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
@@ -145,7 +146,8 @@ export async function convertChannel({
                                       fileContainingRawTypeReference: file,
                                       fileContainingExample: file,
                                       workspace
-                                  })
+                                  }),
+                                  shape: getQueryParamaterDeclationShape({ queryParameter: queryParameterDeclaration })
                               };
                           })
                         : [],
@@ -169,6 +171,14 @@ export async function convertChannel({
             };
         })
     };
+}
+
+function getQueryParamaterDeclationShape({ queryParameter }: { queryParameter: RawSchemas.HttpQueryParameterSchema }) {
+    const isAllowMultiple =
+        typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
+            ? queryParameter["allow-multiple"]
+            : false;
+    return isAllowMultiple ? ExampleQueryParameterShape.exploded() : ExampleQueryParameterShape.single();
 }
 
 function convertExampleWebSocketMessageBody({

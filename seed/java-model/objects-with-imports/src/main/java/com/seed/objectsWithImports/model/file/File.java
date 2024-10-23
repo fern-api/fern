@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.objectsWithImports.core.ObjectMappers;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = File.Builder.class)
 public final class File {
     private final String name;
@@ -104,21 +104,21 @@ public final class File {
         @java.lang.Override
         @JsonSetter("name")
         public ContentsStage name(String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("contents")
         public InfoStage contents(String contents) {
-            this.contents = contents;
+            this.contents = Objects.requireNonNull(contents, "contents must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("info")
         public _FinalStage info(FileInfo info) {
-            this.info = info;
+            this.info = Objects.requireNonNull(info, "info must not be null");
             return this;
         }
 

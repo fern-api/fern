@@ -1,26 +1,34 @@
 import { FernToken } from "@fern-api/auth";
-import { generatorsYml } from "@fern-api/configuration";
+import {
+    DEFINITION_DIRECTORY,
+    fernConfigJson,
+    FERN_DIRECTORY,
+    generatorsYml,
+    PROJECT_CONFIG_FILENAME,
+    ROOT_API_FILENAME
+} from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
-import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import {
     migrateIntermediateRepresentationForGenerator,
     migrateIntermediateRepresentationToVersionForGenerator
 } from "@fern-api/ir-migrations";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace } from "@fern-api/workspace-loader";
+import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
-import { readFile } from "fs/promises";
-import path from "path";
-import tar from "tar";
+import { mkdir, readFile, writeFile } from "fs/promises";
+import yaml from "js-yaml";
+import { relative } from "path";
+import { create as createTar } from "tar";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
-import { substituteEnvVariables } from "./substituteEnvVariables";
 
 export async function createAndStartJob({
+    projectConfig,
     workspace,
     organization,
     intermediateRepresentation,
@@ -33,7 +41,8 @@ export async function createAndStartJob({
     irVersionOverride,
     absolutePathToPreview
 }: {
-    workspace: APIWorkspace;
+    projectConfig: fernConfigJson.ProjectConfig;
+    workspace: FernWorkspace;
     organization: string;
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -46,6 +55,7 @@ export async function createAndStartJob({
     absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const job = await createJob({
+        projectConfig,
         workspace,
         organization,
         generatorInvocation,
@@ -61,6 +71,7 @@ export async function createAndStartJob({
 }
 
 async function createJob({
+    projectConfig,
     workspace,
     organization,
     generatorInvocation,
@@ -71,7 +82,8 @@ async function createJob({
     whitelabel,
     absolutePathToPreview
 }: {
-    workspace: APIWorkspace;
+    projectConfig: fernConfigJson.ProjectConfig;
+    workspace: FernWorkspace;
     organization: string;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
@@ -81,6 +93,8 @@ async function createJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
+    const remoteGenerationService = createFiddleService({ token: token.value });
+
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
         id: generatorInvocation.name,
         version: generatorInvocation.version,
@@ -88,25 +102,67 @@ async function createJob({
         customConfig: generatorInvocation.config,
         publishMetadata: generatorInvocation.publishMetadata
     };
-    const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context);
-    const whitelabelWithEnvVarSubstiutions =
-        whitelabel != null ? substituteEnvVariables(whitelabel, context) : undefined;
-
-    const remoteGenerationService = createFiddleService({ token: token.value });
 
     let fernDefinitionMetadata: FernFiddle.remoteGen.FernDefinitionMetadata | undefined;
     // Only write definition if output mode is github
     if (generatorInvocation.outputMode.type.startsWith("github")) {
         try {
             const tmpDir = await tmp.dir();
-            const tarPath = path.join(tmpDir.path, "definition.tgz");
-            context.logger.debug(`Compressing definition at ${tmpDir.path}`);
-            await tar.create({ file: tarPath, cwd: workspace.absoluteFilepath }, ["."]);
+
+            const absolutePathToTmpDir = AbsoluteFilePath.of(tmpDir.path);
+            context.logger.debug(`Writing mock fern definition to ${absolutePathToTmpDir}`);
+
+            const absolutePathToTmpFernDirectory = join(absolutePathToTmpDir, RelativeFilePath.of(FERN_DIRECTORY));
+            const absolutePathToTmpDefinitionDirectory = join(
+                absolutePathToTmpFernDirectory,
+                RelativeFilePath.of(DEFINITION_DIRECTORY)
+            );
+            await mkdir(absolutePathToTmpDefinitionDirectory, { recursive: true });
+
+            // write api.yml
+            const absolutePathToApiYml = join(
+                absolutePathToTmpDefinitionDirectory,
+                RelativeFilePath.of(ROOT_API_FILENAME)
+            );
+            await writeFile(absolutePathToApiYml, yaml.dump(workspace.definition.rootApiFile.contents));
+            // write definition
+            await writeFernDefinition({
+                absolutePathToDefinitionDirectory: absolutePathToTmpDefinitionDirectory,
+                definition: workspace.definition
+            });
+            // write fern.config.json
+            const absolutePathToFernConfigJson = join(
+                absolutePathToTmpFernDirectory,
+                RelativeFilePath.of(PROJECT_CONFIG_FILENAME)
+            );
+            await writeFile(absolutePathToFernConfigJson, JSON.stringify(projectConfig.rawConfig, undefined, 2));
+            // write sources
+            // TODO: We need handle what happens with source files outside of the fern directory
+            try {
+                const sources = workspace.getSources();
+                for (const source of sources) {
+                    const sourceContents = await readFile(source.absoluteFilePath);
+                    const relativeLocation = relative(workspace.absoluteFilePath, source.absoluteFilePath);
+                    const absolutePathToSourceFile = join(
+                        absolutePathToTmpFernDirectory,
+                        RelativeFilePath.of(relativeLocation)
+                    );
+                    // Make sure the directory exists
+                    await mkdir(dirname(absolutePathToSourceFile), { recursive: true });
+
+                    await writeFile(absolutePathToSourceFile, sourceContents);
+                }
+            } catch (error) {
+                context.logger.debug(`Failed to write source files to disk, continuing: ${error}`);
+            }
+
+            const tarPath = join(absolutePathToTmpDir, RelativeFilePath.of("definition.tgz"));
+            await createTar({ file: tarPath, cwd: absolutePathToTmpFernDirectory }, ["."]);
 
             // Upload definition to S3
             context.logger.debug("Getting upload URL for Fern definition.");
             const definitionUploadUrlRequest = await remoteGenerationService.remoteGen.getDefinitionUploadUrl({
-                apiName: workspace.name,
+                apiName: workspace.definition.rootApiFile.contents.name,
                 organizationName: organization,
                 version
             });
@@ -132,7 +188,8 @@ async function createJob({
                 // Create definition metadata
                 fernDefinitionMetadata = {
                     definitionS3DownloadUrl: definitionUploadUrlRequest.body.s3Url,
-                    outputPath: ".mock"
+                    outputPath: ".mock",
+                    cliVersion: projectConfig.version
                 };
             }
         } catch (error) {
@@ -141,17 +198,17 @@ async function createJob({
     }
 
     const createResponse = await remoteGenerationService.remoteGen.createJobV3({
-        apiName: workspace.name,
+        apiName: workspace.definition.rootApiFile.contents.name,
         version,
         organizationName: organization,
-        generators: [generatorConfigsWithEnvVarSubstitutions],
+        generators: [generatorConfig],
         uploadToS3: shouldUploadToS3({
             outputMode: generatorInvocation.outputMode,
             generatorInvocation,
             absolutePathToPreview,
             shouldLogS3Url
         }),
-        whitelabel: whitelabelWithEnvVarSubstiutions,
+        whitelabel,
         fernDefinitionMetadata,
         preview: absolutePathToPreview != null
     });
@@ -159,7 +216,10 @@ async function createJob({
     if (!createResponse.ok) {
         return convertCreateJobError(createResponse.error as unknown as Fetcher.Error)._visit({
             illegalApiNameError: () => {
-                return context.failAndThrow("API name is invalid: " + workspace.name);
+                return context.failAndThrow("API name is invalid: " + workspace.definition.rootApiFile.contents.name);
+            },
+            illegalApiVersionError: () => {
+                return context.failAndThrow("API version is invalid: " + version);
             },
             cannotPublishToNpmScope: ({ validScope, invalidScope }) => {
                 return context.failAndThrow(
@@ -199,6 +259,43 @@ async function createJob({
     }
 
     return createResponse.body;
+}
+
+async function writeFernDefinition({
+    absolutePathToDefinitionDirectory,
+    definition
+}: {
+    absolutePathToDefinitionDirectory: AbsoluteFilePath;
+    definition: FernDefinition;
+}): Promise<void> {
+    // write *.yml
+    for (const [relativePath, definitionFile] of Object.entries(definition.namedDefinitionFiles)) {
+        const absolutePathToDefinitionFile = join(absolutePathToDefinitionDirectory, RelativeFilePath.of(relativePath));
+        await mkdir(dirname(absolutePathToDefinitionFile), { recursive: true });
+        await writeFile(absolutePathToDefinitionFile, yaml.dump(definitionFile.contents));
+    }
+    // write __package__.yml
+    for (const [relativePath, packageMarker] of Object.entries(definition.packageMarkers)) {
+        if (packageMarker.contents.export == null) {
+            const absolutePathToPackageMarker = join(
+                absolutePathToDefinitionDirectory,
+                RelativeFilePath.of(relativePath)
+            );
+            await mkdir(dirname(absolutePathToPackageMarker), { recursive: true });
+            await writeFile(absolutePathToPackageMarker, yaml.dump(packageMarker.contents));
+        }
+    }
+    // write imported definitions
+    for (const [relativePath, importedDefinition] of Object.entries(definition.importedDefinitions)) {
+        await writeFernDefinition({
+            absolutePathToDefinitionDirectory: join(
+                absolutePathToDefinitionDirectory,
+                RelativeFilePath.of(relativePath)
+            ),
+            // TODO write with the defaulted url
+            definition: importedDefinition.definition
+        });
+    }
 }
 
 async function startJob({

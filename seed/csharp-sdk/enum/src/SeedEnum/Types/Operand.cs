@@ -1,7 +1,12 @@
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using SeedEnum.Core;
+
+#nullable enable
 
 namespace SeedEnum;
 
+[JsonConverter(typeof(StringEnumSerializer<Operand>))]
 public enum Operand
 {
     [EnumMember(Value = ">")]
@@ -11,5 +16,5 @@ public enum Operand
     EqualTo,
 
     [EnumMember(Value = "less_than")]
-    LessThan
+    LessThan,
 }

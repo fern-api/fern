@@ -1,4 +1,7 @@
-using SeedObjectsWithImports;
+using SeedObjectsWithImports.Commons;
+using SeedObjectsWithImports.Core;
+
+#nullable enable
 
 namespace SeedObjectsWithImports;
 
@@ -6,21 +9,31 @@ public partial class SeedObjectsWithImportsClient
 {
     private RawClient _client;
 
-    public SeedObjectsWithImportsClient(ClientOptions clientOptions)
+    public SeedObjectsWithImportsClient(ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedObjectsWithImports" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernobjects-with-imports/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
+        Commons = new CommonsClient(_client);
+        File = new FileClient(_client);
     }
 
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public CommonsClient Commons { get; init; }
+
+    public FileClient File { get; init; }
 }

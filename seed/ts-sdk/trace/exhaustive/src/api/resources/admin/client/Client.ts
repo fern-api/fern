@@ -12,18 +12,33 @@ export declare namespace Admin {
     interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
 export class Admin {
     constructor(protected readonly _options: Admin.Options = {}) {}
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.TestSubmissionStatus} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.TestSubmissionStatus.stopped())
+     */
     public async updateTestSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionStatus,
@@ -32,7 +47,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-test-submission-status/${encodeURIComponent(
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -44,14 +61,17 @@ export class Admin {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.TestSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.TestSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -66,6 +86,17 @@ export class Admin {
         };
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.TestSubmissionUpdate} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+     *         updateTime: "2024-01-15T09:30:00Z",
+     *         updateInfo: SeedTrace.TestSubmissionUpdateInfo.running("QUEUEING_SUBMISSION")
+     *     })
+     */
     public async sendTestSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionUpdate,
@@ -74,7 +105,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status-v2/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-test-submission-status-v2/${encodeURIComponent(
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -86,14 +119,17 @@ export class Admin {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.TestSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.TestSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -108,6 +144,14 @@ export class Admin {
         };
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.WorkspaceSubmissionStatus} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.admin.updateWorkspaceSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.WorkspaceSubmissionStatus.stopped())
+     */
     public async updateWorkspaceSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionStatus,
@@ -116,7 +160,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-workspace-submission-status/${encodeURIComponent(
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -128,14 +174,17 @@ export class Admin {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.WorkspaceSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.WorkspaceSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -150,6 +199,17 @@ export class Admin {
         };
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.WorkspaceSubmissionUpdate} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+     *         updateTime: "2024-01-15T09:30:00Z",
+     *         updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running("QUEUEING_SUBMISSION")
+     *     })
+     */
     public async sendWorkspaceSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionUpdate,
@@ -158,8 +218,8 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status-v2/${await serializers.SubmissionId.jsonOrThrow(
-                    submissionId
+                `/admin/store-workspace-submission-status-v2/${encodeURIComponent(
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
                 )}`
             ),
             method: "POST",
@@ -172,14 +232,17 @@ export class Admin {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -194,6 +257,45 @@ export class Admin {
         };
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {string} testCaseId
+     * @param {SeedTrace.StoreTracedTestCaseRequest} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), "testCaseId", {
+     *         result: {
+     *             result: {
+     *                 expectedResult: SeedTrace.VariableValue.integerValue(1),
+     *                 actualResult: SeedTrace.ActualResult.value(SeedTrace.VariableValue.integerValue(1)),
+     *                 passed: true
+     *             },
+     *             stdout: "stdout"
+     *         },
+     *         traceResponses: [{
+     *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *                 lineNumber: 1,
+     *                 returnValue: undefined,
+     *                 expressionLocation: undefined,
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: undefined
+     *                 },
+     *                 stdout: undefined
+     *             }, {
+     *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *                 lineNumber: 1,
+     *                 returnValue: undefined,
+     *                 expressionLocation: undefined,
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: undefined
+     *                 },
+     *                 stdout: undefined
+     *             }]
+     *     })
+     */
     public async storeTracedTestCase(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: string,
@@ -203,9 +305,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace/submission/${await serializers.SubmissionId.jsonOrThrow(
-                    submissionId
-                )}/testCase/${testCaseId}`
+                `/admin/store-test-trace/submission/${encodeURIComponent(
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}/testCase/${encodeURIComponent(testCaseId)}`
             ),
             method: "POST",
             headers: {
@@ -217,16 +319,17 @@ export class Admin {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.StoreTracedTestCaseRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            requestType: "json",
+            body: serializers.StoreTracedTestCaseRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -241,6 +344,43 @@ export class Admin {
         };
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.v2.TestCaseId} testCaseId
+     * @param {SeedTrace.TraceResponseV2[]} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.admin.storeTracedTestCaseV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.v2.TestCaseId("testCaseId"), [{
+     *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *             lineNumber: 1,
+     *             file: {
+     *                 filename: "filename",
+     *                 directory: "directory"
+     *             },
+     *             returnValue: undefined,
+     *             expressionLocation: undefined,
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: undefined
+     *             },
+     *             stdout: undefined
+     *         }, {
+     *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *             lineNumber: 1,
+     *             file: {
+     *                 filename: "filename",
+     *                 directory: "directory"
+     *             },
+     *             returnValue: undefined,
+     *             expressionLocation: undefined,
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: undefined
+     *             },
+     *             stdout: undefined
+     *         }])
+     */
     public async storeTracedTestCaseV2(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: SeedTrace.v2.TestCaseId,
@@ -250,9 +390,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace-v2/submission/${await serializers.SubmissionId.jsonOrThrow(
-                    submissionId
-                )}/testCase/${await serializers.v2.TestCaseId.jsonOrThrow(testCaseId)}`
+                `/admin/store-test-trace-v2/submission/${encodeURIComponent(
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}/testCase/${encodeURIComponent(serializers.v2.TestCaseId.jsonOrThrow(testCaseId))}`
             ),
             method: "POST",
             headers: {
@@ -264,16 +404,19 @@ export class Admin {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.admin.storeTracedTestCaseV2.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.admin.storeTracedTestCaseV2.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -288,6 +431,41 @@ export class Admin {
         };
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.StoreTracedWorkspaceRequest} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+     *         workspaceRunDetails: {
+     *             exceptionV2: undefined,
+     *             exception: undefined,
+     *             stdout: "stdout"
+     *         },
+     *         traceResponses: [{
+     *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *                 lineNumber: 1,
+     *                 returnValue: undefined,
+     *                 expressionLocation: undefined,
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: undefined
+     *                 },
+     *                 stdout: undefined
+     *             }, {
+     *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *                 lineNumber: 1,
+     *                 returnValue: undefined,
+     *                 expressionLocation: undefined,
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: undefined
+     *                 },
+     *                 stdout: undefined
+     *             }]
+     *     })
+     */
     public async storeTracedWorkspace(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.StoreTracedWorkspaceRequest,
@@ -296,7 +474,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace/submission/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-workspace-trace/submission/${encodeURIComponent(
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -308,16 +488,17 @@ export class Admin {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.StoreTracedWorkspaceRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            requestType: "json",
+            body: serializers.StoreTracedWorkspaceRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -332,6 +513,42 @@ export class Admin {
         };
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.TraceResponseV2[]} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), [{
+     *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *             lineNumber: 1,
+     *             file: {
+     *                 filename: "filename",
+     *                 directory: "directory"
+     *             },
+     *             returnValue: undefined,
+     *             expressionLocation: undefined,
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: undefined
+     *             },
+     *             stdout: undefined
+     *         }, {
+     *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *             lineNumber: 1,
+     *             file: {
+     *                 filename: "filename",
+     *                 directory: "directory"
+     *             },
+     *             returnValue: undefined,
+     *             expressionLocation: undefined,
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: undefined
+     *             },
+     *             stdout: undefined
+     *         }])
+     */
     public async storeTracedWorkspaceV2(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TraceResponseV2[],
@@ -340,7 +557,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace-v2/submission/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-workspace-trace-v2/submission/${encodeURIComponent(
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -352,16 +571,19 @@ export class Admin {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.admin.storeTracedWorkspaceV2.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.admin.storeTracedWorkspaceV2.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {

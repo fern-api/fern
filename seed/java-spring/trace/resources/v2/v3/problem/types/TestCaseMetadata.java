@@ -13,8 +13,9 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = TestCaseMetadata.Builder.class
 )
@@ -71,13 +72,13 @@ public final class TestCaseMetadata {
   }
 
   public interface IdStage {
-    NameStage id(TestCaseId id);
+    NameStage id(@NotNull TestCaseId id);
 
     Builder from(TestCaseMetadata other);
   }
 
   public interface NameStage {
-    HiddenStage name(String name);
+    HiddenStage name(@NotNull String name);
   }
 
   public interface HiddenStage {
@@ -111,15 +112,15 @@ public final class TestCaseMetadata {
 
     @java.lang.Override
     @JsonSetter("id")
-    public NameStage id(TestCaseId id) {
-      this.id = id;
+    public NameStage id(@NotNull TestCaseId id) {
+      this.id = Objects.requireNonNull(id, "id must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("name")
-    public HiddenStage name(String name) {
-      this.name = name;
+    public HiddenStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 

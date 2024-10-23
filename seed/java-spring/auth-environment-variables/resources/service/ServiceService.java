@@ -20,12 +20,14 @@ public interface ServiceService {
       produces = "application/json"
   )
   String getWithApiKey(@RequestHeader("X-FERN-API-KEY") ApiKey auth, Principal principal,
-      @RequestHeader("X-Another-Header") String xAnotherHeader);
+      @RequestHeader("X-Another-Header") String xAnotherHeader,
+      @RequestHeader("X-API-Version") String xApiVersion);
 
   @GetMapping(
       value = "/apiKeyInHeader",
       produces = "application/json"
   )
   String getWithHeader(@RequestHeader("X-Another-Header") String xAnotherHeader,
+      @RequestHeader("X-API-Version") String xApiVersion,
       @RequestHeader("X-Endpoint-Header") String xEndpointHeader);
 }

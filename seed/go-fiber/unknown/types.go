@@ -2,20 +2,4 @@
 
 package unknownasany
 
-import (
-	fmt "fmt"
-	core "github.com/unknown/fern/core"
-)
-
 type MyAlias = interface{}
-
-type MyObject struct {
-	Unknown interface{} `json:"unknown,omitempty" url:"unknown,omitempty"`
-}
-
-func (m *MyObject) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", m)
-}

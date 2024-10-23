@@ -3,11 +3,12 @@
  */
 package com.seed.audiences.resources.foo;
 
-import com.seed.audiences.core.ApiError;
 import com.seed.audiences.core.ClientOptions;
 import com.seed.audiences.core.MediaTypes;
 import com.seed.audiences.core.ObjectMappers;
 import com.seed.audiences.core.RequestOptions;
+import com.seed.audiences.core.SeedAudiencesApiException;
+import com.seed.audiences.core.SeedAudiencesException;
 import com.seed.audiences.resources.foo.requests.FindRequest;
 import com.seed.audiences.resources.foo.types.ImportingType;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class FooClient {
     protected final ClientOptions clientOptions;
@@ -59,20 +61,22 @@ public class FooClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ImportingType.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ImportingType.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedAudiencesApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedAudiencesException("Network error executing HTTP request", e);
         }
     }
 }

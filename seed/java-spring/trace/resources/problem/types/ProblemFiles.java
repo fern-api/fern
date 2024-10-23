@@ -16,9 +16,10 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.FileInfo;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = ProblemFiles.Builder.class
 )
@@ -67,7 +68,7 @@ public final class ProblemFiles {
   }
 
   public interface SolutionFileStage {
-    _FinalStage solutionFile(FileInfo solutionFile);
+    _FinalStage solutionFile(@NotNull FileInfo solutionFile);
 
     Builder from(ProblemFiles other);
   }
@@ -102,8 +103,8 @@ public final class ProblemFiles {
 
     @java.lang.Override
     @JsonSetter("solutionFile")
-    public _FinalStage solutionFile(FileInfo solutionFile) {
-      this.solutionFile = solutionFile;
+    public _FinalStage solutionFile(@NotNull FileInfo solutionFile) {
+      this.solutionFile = Objects.requireNonNull(solutionFile, "solutionFile must not be null");
       return this;
     }
 

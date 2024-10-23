@@ -1,0 +1,122 @@
+openapi: 3.0.1
+info:
+  title: validation
+  version: ''
+paths:
+  /create:
+    post:
+      operationId: create
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                decimal:
+                  type: number
+                  format: double
+                even:
+                  type: integer
+                name:
+                  type: string
+                  format: custom
+                  pattern: ^[a-z]+$
+                shape:
+                  $ref: '#/components/schemas/Shape'
+              required:
+                - decimal
+                - even
+                - name
+                - shape
+  /:
+    get:
+      operationId: get
+      tags:
+        - ''
+      parameters:
+        - name: decimal
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: even
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+            format: custom
+            pattern: ^[a-z]+$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Type'
+components:
+  schemas:
+    SmallInteger:
+      title: SmallInteger
+      type: integer
+    LargeInteger:
+      title: LargeInteger
+      type: integer
+    Double:
+      title: Double
+      type: number
+      format: double
+    Word:
+      title: Word
+      type: string
+    Sentence:
+      title: Sentence
+      type: string
+    Shape:
+      title: Shape
+      type: string
+      enum:
+        - SQUARE
+        - CIRCLE
+        - TRIANGLE
+    Type:
+      title: Type
+      type: object
+      description: Defines properties with default values and validation rules.
+      properties:
+        decimal:
+          type: number
+          format: double
+          example: 1.1
+        even:
+          type: integer
+          example: 2
+        name:
+          type: string
+          format: custom
+          pattern: ^[a-z]+$
+          example: rules
+        shape:
+          $ref: '#/components/schemas/Shape'
+      required:
+        - decimal
+        - even
+        - name
+        - shape
+  securitySchemes: {}

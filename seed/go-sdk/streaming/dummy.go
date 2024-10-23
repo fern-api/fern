@@ -8,15 +8,80 @@ import (
 	core "github.com/fern-api/stream-go/v2/core"
 )
 
-type GenerateStreamRequestzs struct {
-	NumEvents int `json:"num_events" url:"num_events"`
+type Generateequest struct {
+	NumEvents int `json:"num_events" url:"-"`
+	stream    bool
+}
+
+func (g *Generateequest) Stream() bool {
+	return g.stream
+}
+
+func (g *Generateequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler Generateequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*g = Generateequest(body)
+	g.stream = false
+	return nil
+}
+
+func (g *Generateequest) MarshalJSON() ([]byte, error) {
+	type embed Generateequest
+	var marshaler = struct {
+		embed
+		Stream bool `json:"stream"`
+	}{
+		embed:  embed(*g),
+		Stream: false,
+	}
+	return json.Marshal(marshaler)
+}
+
+type GenerateStreamRequest struct {
+	NumEvents int `json:"num_events" url:"-"`
+	stream    bool
+}
+
+func (g *GenerateStreamRequest) Stream() bool {
+	return g.stream
+}
+
+func (g *GenerateStreamRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler GenerateStreamRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*g = GenerateStreamRequest(body)
+	g.stream = true
+	return nil
+}
+
+func (g *GenerateStreamRequest) MarshalJSON() ([]byte, error) {
+	type embed GenerateStreamRequest
+	var marshaler = struct {
+		embed
+		Stream bool `json:"stream"`
+	}{
+		embed:  embed(*g),
+		Stream: true,
+	}
+	return json.Marshal(marshaler)
 }
 
 type StreamResponse struct {
 	Id   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (s *StreamResponse) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *StreamResponse) UnmarshalJSON(data []byte) error {
@@ -26,6 +91,13 @@ func (s *StreamResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StreamResponse(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
 	s._rawJSON = json.RawMessage(data)
 	return nil
 }

@@ -1,4 +1,6 @@
-using SeedBasicAuth;
+using SeedBasicAuth.Core;
+
+#nullable enable
 
 namespace SeedBasicAuth;
 
@@ -6,24 +8,35 @@ public partial class SeedBasicAuthClient
 {
     private RawClient _client;
 
-    public SeedBasicAuthClient(string username, string password, ClientOptions clientOptions)
+    public SeedBasicAuthClient(
+        string? username = null,
+        string? password = null,
+        ClientOptions? clientOptions = null
+    )
     {
-        _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedBasicAuth" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernbasic-auth/0.0.1" },
+            }
         );
-        BasicAuth = new BasicAuthClient(_client);
-    }
-
-    public BasicAuthClient BasicAuth { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
         {
-            throw new Exception(message);
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
         }
-        return value;
+        _client = new RawClient(clientOptions);
+        BasicAuth = new BasicAuthClient(_client);
+        Errors = new ErrorsClient(_client);
     }
+
+    public BasicAuthClient BasicAuth { get; init; }
+
+    public ErrorsClient Errors { get; init; }
 }

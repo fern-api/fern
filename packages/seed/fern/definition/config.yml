@@ -1,38 +1,135 @@
 imports:
   features: features.yml
 types:
+  CliSeedWorkspaceConfiguration:
+    properties:
+      publishGa: PublishCommand
+      publishRc: PublishCommand
+      publishDev: PublishCommand
+      changelogLocation:
+        type: optional<string>
+        docs: |
+          The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
+
   SeedWorkspaceConfiguration:
     properties:
+      image: string
+      displayName: string
       irVersion: string
+      test: TestConfiguration
+      publish: PublishConfiguration
+      changelogLocation:
+        type: optional<string>
+        docs: |
+          The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
+
       language: optional<Language>
+      defaultCustomConfig: optional<map<string, unknown>>
       defaultOutputMode: OutputMode
       generatorType: GeneratorType
-      docker: string
-      dockerCommand: optional<DockerCommand>
-      customFixtureConfig: 
+
+      buildScripts: optional<BuildScripts>
+
+      customFixtureConfig:
         type: optional<FixtureConfigurations>
         docs: |
           Configuration that will be used for any custom fixture specified by --custom-fixture
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
-      scripts: optional<list<ScriptConfig>>
-      allowedFailures: 
+      scripts: optional<list<DockerScriptConfig>>
+      allowedFailures:
         type: optional<list<string>>
-        docs: | 
-          List any fixtures that are okay to fail. For normal fixtures 
+        docs: |
+          List any fixtures that are okay to fail. For normal fixtures
           just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
       features: optional<features.GeneratorFeatures>
 
-  DockerCommand: 
+  PublishDockerConfiguration:
+    properties:
+      context: string
+      image: string
+      file: string
+
+  PublishDocker:
+    docs: |
+      Configuration for publishing from a docker image, assuming a vanilla docker deployment.
+    properties:
+      workingDirectory: optional<string>
+      preBuildCommands: optional<DockerCommand>
+      docker: PublishDockerConfiguration
+
+  PublishCommand:
+    docs: |
+      Configuration for publishing from a command, assuming something packaged up, like with the TypeScript generator.
+      ex. `pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"`
+      Commands can be multi-line, we'll run them all!
+    properties:
+      workingDirectory: optional<string>
+      versionSubstitution:
+        type: optional<string>
+        docs: |
+          The string to substitute for the version in the command. ex. `"$VERSION"`
+      command: DockerCommand
+
+  PublishConfiguration:
     discriminated: false
-    union: 
+    union:
+      - PublishDocker
+      - PublishCommand
+
+  TestDockerConfiguration:
+    properties:
+      image: string
+      command: optional<DockerCommand>
+
+  TestConfiguration:
+    properties:
+      docker: TestDockerConfiguration
+      local: optional<LocalBuildInfo>
+
+  LocalBuildInfo:
+    properties:
+      workingDirectory:
+        type: string
+        docs: |
+          The working directory for the generator.
+      buildCommand:
+        type: list<string>
+        docs: |
+          The command to build the generator locally.
+          `yarn workspace @fern-api/openapi-generator build` for example.
+      runCommand:
+        type: string
+        docs: |
+          The command to run the generator locally.
+          `node generators/openapi/dist/cli.cjs` for example.
+      env:
+        type: optional<map<string, string>>
+        docs: |
+          Environment variables to set when running the generator locally.
+
+  BuildScripts:
+    docs: Scripts pertaining to the artifact produced by this generator and how to build them (e.g. yarn install && yarn build for the TS SDK)
+    properties:
+      preInstallScript: optional<Script>
+      installScript: optional<Script>
+      compileScript: optional<Script>
+      testScript: optional<Script>
+
+  DockerCommand:
+    discriminated: false
+    union:
       - string
       - list<string>
 
-  ScriptConfig:
+  Script:
+    properties:
+      commands: list<string>
+
+  DockerScriptConfig:
+    extends: Script
     properties:
       docker: string
-      commands: list<string>
 
   Language:
     enum:
@@ -42,6 +139,8 @@ types:
       - go
       - ruby
       - csharp
+      - swift
+      - php
 
   GeneratorType:
     enum:
@@ -55,16 +154,35 @@ types:
       publishConfig: unknown
       publishMetadata: unknown
       customConfig: unknown
+      readmeConfig: optional<ReadmeConfig>
       audiences: optional<list<string>>
       outputFolder: string
       outputVersion: optional<string>
-      outputMode: 
+      outputMode:
         type: optional<OutputMode>
         docs: Overrides the default output mode
-  
-  OutputMode: 
-    enum: 
+
+  ReadmeConfig:
+    properties:
+      defaultEndpoint: optional<ReadmeEndpoint>
+      bannerLink: optional<string>
+      apiReferenceLink: optional<string>
+      features: optional<map<string, list<ReadmeEndpoint>>>
+
+  ReadmeEndpoint:
+    discriminated: false
+    union:
+      - string
+      - ReadmeEndpointObject
+
+  ReadmeEndpointObject:
+    properties:
+      method: string
+      path: string
+      stream: optional<boolean>
+
+  OutputMode:
+    enum:
       - github
       - local_files
       - publish
-

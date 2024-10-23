@@ -15,8 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StderrResponse.Builder.class)
 public final class StderrResponse {
     private final UUID submissionId;
@@ -71,13 +72,13 @@ public final class StderrResponse {
     }
 
     public interface SubmissionIdStage {
-        StderrStage submissionId(UUID submissionId);
+        StderrStage submissionId(@NotNull UUID submissionId);
 
         Builder from(StderrResponse other);
     }
 
     public interface StderrStage {
-        _FinalStage stderr(String stderr);
+        _FinalStage stderr(@NotNull String stderr);
     }
 
     public interface _FinalStage {
@@ -104,15 +105,15 @@ public final class StderrResponse {
 
         @java.lang.Override
         @JsonSetter("submissionId")
-        public StderrStage submissionId(UUID submissionId) {
-            this.submissionId = submissionId;
+        public StderrStage submissionId(@NotNull UUID submissionId) {
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("stderr")
-        public _FinalStage stderr(String stderr) {
-            this.stderr = stderr;
+        public _FinalStage stderr(@NotNull String stderr) {
+            this.stderr = Objects.requireNonNull(stderr, "stderr must not be null");
             return this;
         }
 

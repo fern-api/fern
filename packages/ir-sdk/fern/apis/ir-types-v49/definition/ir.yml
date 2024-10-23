@@ -1,0 +1,119 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  types: types.yml
+  errors: errors.yml
+  auth: auth.yml
+  http: http.yml
+  constants: constants.yml
+  environment: environment.yml
+  commons: commons.yml
+  variables: variables.yml
+  webhooks: webhooks.yml
+  websocket: websocket.yml
+types:
+  IntermediateRepresentation:
+    docs: "Complete representation of the API schema"
+    properties:
+      apiName:
+        type: commons.Name
+        docs: This is the human readable unique id for the API.
+      apiDisplayName: optional<string>
+      apiDocs: optional<string>
+      auth: auth.ApiAuth
+      headers:
+        docs: API Wide headers that are sent on every request
+        type: list<http.HttpHeader>
+      idempotencyHeaders:
+        docs: Headers that are sent for idempotent endpoints
+        type: list<http.HttpHeader>
+      types:
+        docs: "The types described by this API"
+        type: map<commons.TypeId, types.TypeDeclaration>
+      services:
+        docs: "The services exposed by this API"
+        type: map<commons.ServiceId, http.HttpService>
+      webhookGroups:
+        docs: "The webhooks sent by this API"
+        type: map<commons.WebhookGroupId, webhooks.WebhookGroup>
+      websocketChannels:
+        docs: "The websocket channels served by this API"
+        type: optional<map<commons.WebSocketChannelId, websocket.WebSocketChannel>>
+      errors: map<commons.ErrorId, errors.ErrorDeclaration>
+      subpackages: map<commons.SubpackageId, Subpackage>
+      rootPackage: Package
+      constants: constants.Constants
+      environments: optional<environment.EnvironmentsConfig>
+      basePath: optional<http.HttpPath>
+      pathParameters: list<http.PathParameter>
+      errorDiscriminationStrategy: ErrorDiscriminationStrategy
+      sdkConfig: SdkConfig
+      variables: list<variables.VariableDeclaration>
+      serviceTypeReferenceInfo: ServiceTypeReferenceInfo
+      readmeConfig: optional<ReadmeConfig>
+  ReadmeConfig:
+    docs: |
+      The configuration used to generate a README.md file. If present, the generator
+      should call the generator-cli to produce a README.md.
+    properties:
+      defaultEndpoint:
+        docs: |
+          If specified, this enpdoint should be used in every snippet (if possible).
+          Note that some endpoints aren't suitable for every feature (e.g. a non-list
+          endpoint for pagination), so the default is a no-op in those cases.
+        type: optional<commons.EndpointId>
+      bannerLink: optional<string>
+      introduction: optional<string>
+      apiReferenceLink: optional<string>
+      features:
+        docs: |
+          If specified, configures the list of endpoints to associate
+          with each feature.
+        type: optional<map<commons.FeatureId, list<commons.EndpointId>>>
+  SdkConfig:
+    properties:
+      isAuthMandatory: boolean
+      hasStreamingEndpoints: boolean
+      hasPaginatedEndpoints: boolean
+      hasFileDownloadEndpoints: boolean
+      platformHeaders: PlatformHeaders
+  PlatformHeaders:
+    properties:
+      language: string
+      sdkName: string
+      sdkVersion: string
+  ErrorDiscriminationStrategy:
+    union:
+      statusCode: {}
+      property: ErrorDiscriminationByPropertyStrategy
+  ErrorDiscriminationByPropertyStrategy:
+    properties:
+      discriminant: commons.NameAndWireValue
+      contentProperty: commons.NameAndWireValue
+  Package:
+    extends: commons.WithDocs
+    properties:
+      fernFilepath: commons.FernFilepath
+      service: optional<commons.ServiceId>
+      types: list<commons.TypeId>
+      errors: list<commons.ErrorId>
+      webhooks: optional<commons.WebhookGroupId>
+      websocket: optional<commons.WebSocketChannelId>
+      subpackages: list<commons.SubpackageId>
+      hasEndpointsInTree: boolean
+      navigationConfig: optional<PackageNavigationConfig>
+  Subpackage:
+    extends: Package
+    properties:
+      name: commons.Name
+  PackageNavigationConfig:
+    properties:
+      pointsTo: commons.SubpackageId
+  ServiceTypeReferenceInfo:
+    properties:
+      typesReferencedOnlyByService:
+        docs: "Types referenced by exactly one service."
+        type: map<commons.ServiceId, list<commons.TypeId>>
+      sharedTypes:
+        docs: "Types referenced by either zero or multiple services."
+        type: list<commons.TypeId>

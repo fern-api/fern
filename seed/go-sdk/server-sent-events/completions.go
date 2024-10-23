@@ -9,14 +9,19 @@ import (
 )
 
 type StreamCompletionRequest struct {
-	Query string `json:"query" url:"query"`
+	Query string `json:"query" url:"-"`
 }
 
 type StreamedCompletion struct {
 	Delta  string `json:"delta" url:"delta"`
 	Tokens *int   `json:"tokens,omitempty" url:"tokens,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (s *StreamedCompletion) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *StreamedCompletion) UnmarshalJSON(data []byte) error {
@@ -26,6 +31,13 @@ func (s *StreamedCompletion) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StreamedCompletion(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
 	s._rawJSON = json.RawMessage(data)
 	return nil
 }

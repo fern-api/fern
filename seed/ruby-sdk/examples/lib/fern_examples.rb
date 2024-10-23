@@ -17,16 +17,16 @@ module SeedExamplesClient
     # @return [SeedExamplesClient::ServiceClient]
     attr_reader :service
 
-    # @param environment [SeedExamplesClient::Environment]
     # @param base_url [String]
+    # @param environment [SeedExamplesClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedExamplesClient::Client]
-    def initialize(token:, environment: nil, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(token:, base_url: nil, environment: nil, max_retries: nil, timeout_in_seconds: nil)
       @request_client = SeedExamplesClient::RequestClient.new(
-        environment: environment,
         base_url: base_url,
+        environment: environment,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
         token: token
@@ -46,7 +46,14 @@ module SeedExamplesClient
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
@@ -62,16 +69,16 @@ module SeedExamplesClient
     # @return [SeedExamplesClient::AsyncServiceClient]
     attr_reader :service
 
-    # @param environment [SeedExamplesClient::Environment]
     # @param base_url [String]
+    # @param environment [SeedExamplesClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedExamplesClient::AsyncClient]
-    def initialize(token:, environment: nil, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(token:, base_url: nil, environment: nil, max_retries: nil, timeout_in_seconds: nil)
       @async_request_client = SeedExamplesClient::AsyncRequestClient.new(
-        environment: environment,
         base_url: base_url,
+        environment: environment,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
         token: token
@@ -91,7 +98,14 @@ module SeedExamplesClient
       response = @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@async_request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@async_request_client.get_url(request_options: request_options)}/"
       end

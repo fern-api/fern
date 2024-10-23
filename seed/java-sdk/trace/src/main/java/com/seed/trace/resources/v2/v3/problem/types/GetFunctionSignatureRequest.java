@@ -14,8 +14,9 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetFunctionSignatureRequest.Builder.class)
 public final class GetFunctionSignatureRequest {
     private final FunctionSignature functionSignature;
@@ -62,7 +63,7 @@ public final class GetFunctionSignatureRequest {
     }
 
     public interface FunctionSignatureStage {
-        _FinalStage functionSignature(FunctionSignature functionSignature);
+        _FinalStage functionSignature(@NotNull FunctionSignature functionSignature);
 
         Builder from(GetFunctionSignatureRequest other);
     }
@@ -88,8 +89,8 @@ public final class GetFunctionSignatureRequest {
 
         @java.lang.Override
         @JsonSetter("functionSignature")
-        public _FinalStage functionSignature(FunctionSignature functionSignature) {
-            this.functionSignature = functionSignature;
+        public _FinalStage functionSignature(@NotNull FunctionSignature functionSignature) {
+            this.functionSignature = Objects.requireNonNull(functionSignature, "functionSignature must not be null");
             return this;
         }
 

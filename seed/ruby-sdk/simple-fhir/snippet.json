@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/account/{account_id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_.getAccount"
+            },
+            "snippet": {
+                "client": "require \"fern_simple_fhir\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.get_account(account_id: \"account_id\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/account/{account_id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_.getAccount"
+            },
+            "snippet": {
+                "client": "require \"fern_simple_fhir\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.get_account(account_id: \"account_id\")",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

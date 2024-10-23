@@ -1,13 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class TracedTestCase
+public record TracedTestCase
 {
     [JsonPropertyName("result")]
-    public TestCaseResultWithStdout Result { get; init; }
+    public required TestCaseResultWithStdout Result { get; set; }
 
     [JsonPropertyName("traceResponsesSize")]
-    public int TraceResponsesSize { get; init; }
+    public required int TraceResponsesSize { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

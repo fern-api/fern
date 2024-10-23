@@ -48,3 +48,11 @@ service:
             X-API-Version: 0.0.1
           response:
             body: $types.Metadata.One
+
+    getResponse:
+      method: POST
+      path: /response
+      response: types.Response
+      examples:
+        - response:
+            body: $types.Response.String

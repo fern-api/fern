@@ -14,8 +14,9 @@ import com.seed.examples.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StuntDouble.Builder.class)
 public final class StuntDouble {
     private final String name;
@@ -70,13 +71,13 @@ public final class StuntDouble {
     }
 
     public interface NameStage {
-        ActorOrActressIdStage name(String name);
+        ActorOrActressIdStage name(@NotNull String name);
 
         Builder from(StuntDouble other);
     }
 
     public interface ActorOrActressIdStage {
-        _FinalStage actorOrActressId(String actorOrActressId);
+        _FinalStage actorOrActressId(@NotNull String actorOrActressId);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class StuntDouble {
 
         @java.lang.Override
         @JsonSetter("name")
-        public ActorOrActressIdStage name(String name) {
-            this.name = name;
+        public ActorOrActressIdStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("actorOrActressId")
-        public _FinalStage actorOrActressId(String actorOrActressId) {
-            this.actorOrActressId = actorOrActressId;
+        public _FinalStage actorOrActressId(@NotNull String actorOrActressId) {
+            this.actorOrActressId = Objects.requireNonNull(actorOrActressId, "actorOrActressId must not be null");
             return this;
         }
 

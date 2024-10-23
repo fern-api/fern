@@ -1,19 +1,26 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class ExecutionSessionResponse
+public record ExecutionSessionResponse
 {
     [JsonPropertyName("sessionId")]
-    public string SessionId { get; init; }
+    public required string SessionId { get; set; }
 
     [JsonPropertyName("executionSessionUrl")]
-    public List<string?> ExecutionSessionUrl { get; init; }
+    public string? ExecutionSessionUrl { get; set; }
 
     [JsonPropertyName("language")]
-    public Language Language { get; init; }
+    public required Language Language { get; set; }
 
     [JsonPropertyName("status")]
-    public ExecutionSessionStatus Status { get; init; }
+    public required ExecutionSessionStatus Status { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

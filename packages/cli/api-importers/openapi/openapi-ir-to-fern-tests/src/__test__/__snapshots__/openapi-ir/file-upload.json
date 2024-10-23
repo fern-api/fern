@@ -1,0 +1,169 @@
+{
+  "title": "Test file upload",
+  "servers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Upload a file",
+      "audiences": [],
+      "operationId": "upload-file",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UploadFileRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "file",
+            "schema": {
+              "isOptional": false,
+              "isArray": false,
+              "type": "file"
+            },
+            "description": "The file to upload"
+          },
+          {
+            "key": "maybe_file",
+            "schema": {
+              "isOptional": true,
+              "isArray": false,
+              "type": "file"
+            }
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "multipart"
+      },
+      "errors": {},
+      "server": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/upload",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Upload a file",
+      "audiences": [],
+      "operationId": "upload-file",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UploadFileRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "file",
+            "schema": {
+              "isOptional": false,
+              "isArray": false,
+              "type": "file"
+            },
+            "description": "The file to upload",
+            "contentType": "application/octet-stream"
+          },
+          {
+            "key": "maybe_file",
+            "schema": {
+              "isOptional": true,
+              "isArray": false,
+              "type": "file"
+            }
+          },
+          {
+            "key": "metadata",
+            "schema": {
+              "value": {
+                "generatedName": "uploadFileRequestMetadata",
+                "value": {
+                  "generatedName": "UploadFileRequestMetadata",
+                  "description": "This is a metadata field",
+                  "key": {
+                    "generatedName": "UploadFileRequestMetadataKey",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "groupName": []
+                  },
+                  "value": {
+                    "generatedName": "UploadFileRequestMetadataValue",
+                    "groupName": [],
+                    "type": "unknown"
+                  },
+                  "groupName": [],
+                  "type": "map"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            },
+            "contentType": "application/json"
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "multipart"
+      },
+      "errors": {},
+      "server": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/upload-with-content-type",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channel": [],
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

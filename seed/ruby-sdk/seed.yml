@@ -1,13 +1,63 @@
-irVersion: v32
-docker: fernapi/fern-ruby-sdk:latest
-dockerCommand: yarn workspace @fern-api/fern-ruby-sdk dockerTagLatest
+irVersion: v39
+displayName: Ruby SDK
+image: fernapi/fern-ruby-sdk
+changelogLocation: ../../generators/ruby/sdk/versions.yml
+
+buildScripts:
+  installScript:
+    commands:
+      - bundle install
+  testScript:
+    commands:
+      - bundle exec rake test
+
+publish:
+  preBuildCommands:
+    - ./.github/actions/install
+    - pnpm --filter @fern-api/fern-ruby-sdk dist:cli
+  docker:
+    file: ./generators/ruby/sdk/Dockerfile
+    image: fernapi/fern-ruby-sdk
+    context: .
+test:
+  docker:
+    image: fernapi/fern-ruby-sdk:latest
+    command: pnpm --filter @fern-api/fern-ruby-sdk dockerTagLatest
 language: ruby
 generatorType: sdk
 defaultOutputMode: github
-fixtures: []
+fixtures:
+  exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        extraDependencies:
+          faraday-multipart:
+            upperBound:
+              version: "1.0.4"
+              specifier: ">="
+            lowerBound:
+              version: "1.0"
+              specifier: "~>"
+        extraDevDependencies:
+          dotenv: "2.1"
+          faraday:
+            upperBound:
+              version: "0.17.3"
+              specifier: ">"
+            lowerBound:
+              version: "0.20.0"
+      outputFolder: extra-deps
+    - customConfig:
+        flattenModuleStructure: true
+      outputFolder: flattened-module-structure
 allowedFailures:
-  - streaming
+  - any-auth
+  - circular-references
+  - mixed-file-directory
   - objects-with-imports
+  - streaming
+  - trace
 features:
   requestOptions: true
   idempotency: false

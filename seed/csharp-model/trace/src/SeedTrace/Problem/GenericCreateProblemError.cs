@@ -1,15 +1,23 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class GenericCreateProblemError
+public record GenericCreateProblemError
 {
     [JsonPropertyName("message")]
-    public string Message { get; init; }
+    public required string Message { get; set; }
 
     [JsonPropertyName("type")]
-    public string Type { get; init; }
+    public required string Type { get; set; }
 
     [JsonPropertyName("stacktrace")]
-    public string Stacktrace { get; init; }
+    public required string Stacktrace { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

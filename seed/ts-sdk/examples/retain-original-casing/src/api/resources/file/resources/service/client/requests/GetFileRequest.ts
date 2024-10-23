@@ -7,16 +7,6 @@
  *     {
  *         "X-File-API-Version": "0.0.2"
  *     }
- *
- * @example
- *     {
- *         "X-File-API-Version": "string"
- *     }
- *
- * @example
- *     {
- *         "X-File-API-Version": "string"
- *     }
  */
 export interface GetFileRequest {
     "X-File-API-Version": string;

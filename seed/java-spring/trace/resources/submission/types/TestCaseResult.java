@@ -13,9 +13,10 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.VariableValue;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = TestCaseResult.Builder.class
 )
@@ -72,13 +73,13 @@ public final class TestCaseResult {
   }
 
   public interface ExpectedResultStage {
-    ActualResultStage expectedResult(VariableValue expectedResult);
+    ActualResultStage expectedResult(@NotNull VariableValue expectedResult);
 
     Builder from(TestCaseResult other);
   }
 
   public interface ActualResultStage {
-    PassedStage actualResult(ActualResult actualResult);
+    PassedStage actualResult(@NotNull ActualResult actualResult);
   }
 
   public interface PassedStage {
@@ -112,15 +113,15 @@ public final class TestCaseResult {
 
     @java.lang.Override
     @JsonSetter("expectedResult")
-    public ActualResultStage expectedResult(VariableValue expectedResult) {
-      this.expectedResult = expectedResult;
+    public ActualResultStage expectedResult(@NotNull VariableValue expectedResult) {
+      this.expectedResult = Objects.requireNonNull(expectedResult, "expectedResult must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("actualResult")
-    public PassedStage actualResult(ActualResult actualResult) {
-      this.actualResult = actualResult;
+    public PassedStage actualResult(@NotNull ActualResult actualResult) {
+      this.actualResult = Objects.requireNonNull(actualResult, "actualResult must not be null");
       return this;
     }
 

@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	uuid "github.com/google/uuid"
 	http "net/http"
+	url "net/url"
 	time "time"
 )
 
@@ -23,6 +24,8 @@ type RequestOptions struct {
 	BaseURL              string
 	HTTPClient           HTTPClient
 	HTTPHeader           http.Header
+	BodyProperties       map[string]interface{}
+	QueryParameters      url.Values
 	MaxAttempts          uint
 	Custom               *[]byte
 	XApiName             string
@@ -43,7 +46,9 @@ type RequestOptions struct {
 // to be used directly; use RequestOption instead.
 func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 	options := &RequestOptions{
-		HTTPHeader: make(http.Header),
+		HTTPHeader:      make(http.Header),
+		BodyProperties:  make(map[string]interface{}),
+		QueryParameters: make(url.Values),
 	}
 	for _, opt := range opts {
 		opt.applyRequestOptions(options)
@@ -123,6 +128,32 @@ func (h *HTTPHeaderOption) applyRequestOptions(opts *RequestOptions) {
 
 func (h *HTTPHeaderOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
 	opts.HTTPHeader = h.HTTPHeader
+}
+
+// BodyPropertiesOption implements the RequestOption interface.
+type BodyPropertiesOption struct {
+	BodyProperties map[string]interface{}
+}
+
+func (b *BodyPropertiesOption) applyRequestOptions(opts *RequestOptions) {
+	opts.BodyProperties = b.BodyProperties
+}
+
+func (b *BodyPropertiesOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.BodyProperties = b.BodyProperties
+}
+
+// QueryParametersOption implements the RequestOption interface.
+type QueryParametersOption struct {
+	QueryParameters url.Values
+}
+
+func (q *QueryParametersOption) applyRequestOptions(opts *RequestOptions) {
+	opts.QueryParameters = q.QueryParameters
+}
+
+func (q *QueryParametersOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.QueryParameters = q.QueryParameters
 }
 
 // MaxAttemptsOption implements the RequestOption interface.

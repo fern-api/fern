@@ -39,6 +39,7 @@ paths:
           required: true
           schema:
             type: string
+          example: notification-hsy129x
           examples:
             Example1:
               value: notification-hsy129x
@@ -71,6 +72,7 @@ paths:
           required: true
           schema:
             type: string
+          example: file.txt
           examples:
             Example1:
               value: file.txt
@@ -105,9 +107,12 @@ paths:
           required: true
           schema:
             type: string
+          example: id-2sdx82h
           examples:
-            Example1:
+            Example0:
               value: id-2sdx82h
+            Example2:
+              value: id-3tey93i
       responses:
         '204':
           description: ''
@@ -128,7 +133,7 @@ paths:
               schema:
                 type: boolean
               examples:
-                Example1:
+                Example0:
                   value: true
       security:
         - BearerAuth: []
@@ -143,6 +148,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/MovieId'
+          example: movie-c06a4ad7
           examples:
             Example1:
               value: movie-c06a4ad7
@@ -172,6 +178,7 @@ paths:
                       ratings:
                         rottenTomatoes: 97
                         imdb: 7.6
+                    revenue: 1000000
   /movie:
     post:
       operationId: service_createMovie
@@ -213,6 +220,7 @@ paths:
                     ratings:
                       rottenTomatoes: 97
                       imdb: 7.6
+                  revenue: 1000000
   /metadata:
     get:
       operationId: service_getMetadata
@@ -225,6 +233,7 @@ paths:
           schema:
             type: boolean
             nullable: true
+          example: false
           examples:
             Example1:
               value: false
@@ -236,6 +245,7 @@ paths:
             items:
               type: string
               nullable: true
+          example: development
           examples:
             Example1:
               value: development
@@ -244,6 +254,7 @@ paths:
           required: true
           schema:
             type: string
+          example: 0.0.1
           examples:
             Example1:
               value: 0.0.1
@@ -265,8 +276,64 @@ paths:
                       - development
                       - public
                     value: <head>...</head>
+  /response:
+    post:
+      operationId: service_getResponse
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              examples:
+                Example1:
+                  value:
+                    response: Initializing...
+                    identifiers:
+                      - type: primitive
+                        value: example
+                        label: Primitive
+                      - type: unknown
+                        value: '{}'
+                        label: Unknown
 components:
   schemas:
+    Type:
+      title: Type
+      oneOf:
+        - $ref: '#/components/schemas/BasicType'
+        - $ref: '#/components/schemas/ComplexType'
+    Identifier:
+      title: Identifier
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+        value:
+          type: string
+        label:
+          type: string
+      required:
+        - type
+        - value
+        - label
+    BasicType:
+      title: BasicType
+      type: string
+      enum:
+        - primitive
+        - literal
+    ComplexType:
+      title: ComplexType
+      type: string
+      enum:
+        - object
+        - union
+        - unknown
     commonsTag:
       title: commonsTag
       type: string
@@ -363,8 +430,7 @@ components:
           example: 8
         type:
           type: string
-          enum:
-            - movie
+          const: movie
         tag:
           $ref: '#/components/schemas/commonsTag'
         book:
@@ -373,6 +439,10 @@ components:
         metadata:
           type: object
           additionalProperties: true
+        revenue:
+          type: integer
+          format: int64
+          example: 1000000
       required:
         - id
         - title
@@ -381,6 +451,7 @@ components:
         - type
         - tag
         - metadata
+        - revenue
     CastMember:
       title: CastMember
       oneOf:
@@ -624,8 +695,21 @@ components:
       type: object
       properties:
         response: {}
+        identifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Identifier'
       required:
         - response
+        - identifiers
+    ResponseType:
+      title: ResponseType
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+      required:
+        - type
     Test:
       title: Test
       oneOf:
@@ -649,6 +733,18 @@ components:
               type: boolean
           required:
             - type
+    Entity:
+      title: Entity
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+        name:
+          type: string
+          example: unknown
+      required:
+        - type
+        - name
   securitySchemes:
     BearerAuth:
       type: http

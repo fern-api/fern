@@ -6,5 +6,6 @@ import * as FernDocsConfig from "../../..";
 
 export interface TabbedNavigationItem {
     tab: FernDocsConfig.TabId;
-    layout: FernDocsConfig.NavigationItem[];
+    /** If `href` is set, `layout` must be null. */
+    layout?: FernDocsConfig.NavigationItem[];
 }

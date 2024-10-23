@@ -41,7 +41,10 @@ public interface ProblemService {
       @RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
       @PathVariable("problemId") ProblemId problemId, @RequestBody CreateProblemRequest body);
 
-  @DeleteMapping("/delete/{problemId}")
+  @DeleteMapping(
+      value = "/delete/{problemId}",
+      produces = "application/json"
+  )
   void deleteProblem(@RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
       @PathVariable("problemId") ProblemId problemId);
 

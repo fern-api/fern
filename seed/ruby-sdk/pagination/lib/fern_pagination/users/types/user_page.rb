@@ -45,7 +45,7 @@ module SeedPaginationClient
           data = parsed_json["data"].to_json
           data = SeedPaginationClient::Users::UserListContainer.from_json(json_object: data)
         end
-        next_ = struct["next"]
+        next_ = parsed_json["next"]
         new(
           data: data,
           next_: next_,

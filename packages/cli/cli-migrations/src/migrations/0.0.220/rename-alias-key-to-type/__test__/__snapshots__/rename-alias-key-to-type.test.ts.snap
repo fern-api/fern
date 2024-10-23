@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`rename-alias-key-to-type > simple 1`] = `
+"types:
+  a: string
+  b:
+    type: boolean
+  c:
+    properties:
+      foo: string
+  d:
+    docs: hello world
+    type: c
+"
+`;

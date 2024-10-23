@@ -1,5 +1,6 @@
 import {
     ExampleEndpointCall,
+    FileProperty,
     HttpHeader,
     InlinedRequestBodyProperty,
     NameAndWireValue,
@@ -19,6 +20,8 @@ export interface GeneratedRequestWrapper extends GeneratedFile<SdkContext> {
     getNonBodyKeys: (context: SdkContext) => RequestWrapperNonBodyProperty[];
     getInlinedRequestBodyPropertyKey: (property: InlinedRequestBodyProperty) => string;
     getInlinedRequestBodyPropertyKeyFromName: (name: NameAndWireValue) => string;
+    getPropertyNameOfFileParameter: (fileProperty: FileProperty) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfFileParameterFromName: (name: NameAndWireValue) => RequestWrapperNonBodyProperty;
     getPropertyNameOfQueryParameter: (queryParameter: QueryParameter) => RequestWrapperNonBodyProperty;
     getPropertyNameOfQueryParameterFromName: (name: NameAndWireValue) => RequestWrapperNonBodyProperty;
     getPropertyNameOfNonLiteralHeader: (header: HttpHeader) => RequestWrapperNonBodyProperty;

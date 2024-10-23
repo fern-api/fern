@@ -1,0 +1,21 @@
+# For unreleased changes, use unreleased.yml
+- version: 0.0.8
+  createdAt: '2024-03-22'
+  changelogEntry:
+    - type: internal
+      summary: Leverage shared generator notification and config parsing logic.
+  irVersion: 32
+
+- version: 0.0.7
+  createdAt: '2024-03-22'
+  changelogEntry:
+    - type: internal
+      summary: Ensure the Ruby generators do not have strict dependencies on the IR
+  irVersion: 32
+
+- version: 0.0.6
+  createdAt: '2024-01-24'
+  changelogEntry:
+    - type: internal
+      summary: Initialize the changelog
+  irVersion: 32

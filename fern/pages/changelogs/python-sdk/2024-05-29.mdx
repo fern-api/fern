@@ -1,0 +1,6 @@
+## 2.5.5
+**`(fix):`** Auto-Pagination now respects optional return values
+
+### What's been fixed
+- Optional lists returned from pagination endpoints are now appropriately flattened such that the `Pager` return types are correctly `Pager[ListItem]` as opposed to `Pager[List[ListItem]]`.
+

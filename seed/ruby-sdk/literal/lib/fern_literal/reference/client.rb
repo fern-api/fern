@@ -20,6 +20,10 @@ module SeedLiteralClient
     #   * :prompt (String)
     #   * :query (String)
     #   * :stream (Boolean)
+    #   * :context (SeedLiteralClient::Reference::SOME_LITERAL)
+    #   * :maybe_context (SeedLiteralClient::Reference::SOME_LITERAL)
+    #   * :container_object (Hash)
+    #     * :nested_objects (Array<SeedLiteralClient::Reference::NestedObjectWithLiterals>)
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     # @example
@@ -28,7 +32,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(request: { prompt: "You are a helpful assistant", stream: false, query: "What is the weather today" })
+    #  literal.reference.send(request: { prompt: "You are a helpful assistant", stream: false, context: "You're super wise", query: "What is the weather today", container_object: { nested_objects: [{ literal_1: "literal1", literal_2: "literal2", str_prop: "strProp" }] } })
     def send(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -37,7 +41,14 @@ module SeedLiteralClient
           req.headers["X-API-Enable-Audit-Logging"] =
             request_options.audit_logging
         end
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/reference"
       end
@@ -59,6 +70,10 @@ module SeedLiteralClient
     #   * :prompt (String)
     #   * :query (String)
     #   * :stream (Boolean)
+    #   * :context (SeedLiteralClient::Reference::SOME_LITERAL)
+    #   * :maybe_context (SeedLiteralClient::Reference::SOME_LITERAL)
+    #   * :container_object (Hash)
+    #     * :nested_objects (Array<SeedLiteralClient::Reference::NestedObjectWithLiterals>)
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     # @example
@@ -67,7 +82,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(request: { prompt: "You are a helpful assistant", stream: false, query: "What is the weather today" })
+    #  literal.reference.send(request: { prompt: "You are a helpful assistant", stream: false, context: "You're super wise", query: "What is the weather today", container_object: { nested_objects: [{ literal_1: "literal1", literal_2: "literal2", str_prop: "strProp" }] } })
     def send(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
@@ -77,7 +92,14 @@ module SeedLiteralClient
             req.headers["X-API-Enable-Audit-Logging"] =
               request_options.audit_logging
           end
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/reference"
         end

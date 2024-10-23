@@ -32,6 +32,12 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("client-class-name")
     Optional<String> clientClassName();
 
+    @JsonProperty("base-api-exception-class-name")
+    Optional<String> baseApiExceptionClassName();
+
+    @JsonProperty("base-exception-class-name")
+    Optional<String> baseExceptionClassName();
+
     @JsonProperty("custom-dependencies")
     Optional<List<String>> customDependencies();
 

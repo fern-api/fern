@@ -1,0 +1,134 @@
+types: 
+  ListUsersResponse: 
+    properties: 
+      page: optional<Page>
+      total_count: 
+        type: integer
+        docs: The totall number of /users
+      data: list<User>
+      hasNextPage: boolean
+      valid: boolean
+
+  Page: 
+    properties: 
+      page: 
+        type: integer
+        docs: The current page
+      next: optional<NextPage>
+      per_page: integer
+      total_page: integer
+
+  NextPage: 
+    properties: 
+      page: integer
+      starting_after: string
+
+  User: 
+    properties: 
+      name: string
+      id: integer
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    listWithPaginationTypos:
+      pagination: 
+        cursor: $request.typo
+        next_cursor: $response.typo.next.starting_after
+        results: $response.typo
+      method: GET
+      path: ""
+      request: 
+        name: ListWithPaginationTyposRequest
+        query-parameters: 
+          starting_after: 
+            type: optional<string>
+            docs: | 
+              The cursor used for pagination in order to fetch 
+              the next page of results.
+      response: ListUsersResponse
+
+    listWithInvalidCursorPaginationType:
+      pagination: 
+        cursor: $request.user
+        next_cursor: $response.valid
+        results: $response.data
+      method: GET
+      path: ""
+      request: 
+        name: ListWithInvalidCursorPaginationTypeRequest
+        query-parameters: 
+          starting_after: 
+            type: optional<string>
+            docs: | 
+              The cursor used for pagination in order to fetch 
+              the next page of results.
+          user: optional<User>
+      response: ListUsersResponse
+
+    listWithInvalidOffsetPaginationType:
+      pagination: 
+        offset: $request.starting_after
+        results: $response.data
+        has-next-page: $response.hasNextPage
+      method: GET
+      path: ""
+      request: 
+        name: ListWithInvalidOffsetPaginationTypeRequest
+        query-parameters: 
+          starting_after: 
+            type: optional<string>
+            docs: | 
+              The cursor used for pagination in order to fetch 
+              the next page of results.
+      response: ListUsersResponse
+
+    listWithInvalidOffsetStepPaginationType:
+      pagination: 
+        offset: $request.starting_after
+        results: $response.data
+        step: $request.limit
+      method: GET
+      path: ""
+      request: 
+        name: ListWithInvalidOffsetStepPaginationTypeRequest
+        query-parameters: 
+          starting_after: 
+            type: optional<integer>
+            docs: | 
+              The cursor used for pagination in order to fetch 
+              the next page of results.
+          limit: 
+            type: optional<string>
+            docs: | 
+              The step size used between every page.
+      response: ListUsersResponse
+
+    listWithInvalidPaginationPrefix:
+      pagination: 
+        cursor: starting_after
+        next_cursor: page.next.starting_after
+        results: data
+      method: GET
+      path: ""
+      request: 
+        name: ListWithInvalidPaginationPrefixRequest
+        query-parameters: 
+          starting_after: 
+            type: optional<string>
+            docs: | 
+              The cursor used for pagination in order to fetch 
+              the next page of results.
+      response: ListUsersResponse
+  
+    listWithInvalidGlobalConfig:
+      method: GET
+      path: ""
+      pagination: true
+      request:
+        name: ListWithInvalidGlobalConfigRequest
+        body:
+          properties:
+            starting_after: optional<string>
+      response: ListUsersResponse

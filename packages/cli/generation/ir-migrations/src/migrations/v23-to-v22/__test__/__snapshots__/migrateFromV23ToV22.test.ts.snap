@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`migrateFromV23ToV22 migrates extensive 1`] = `
+exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
 {
   "apiDisplayName": undefined,
   "apiDocs": undefined,
@@ -179,6 +179,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "type": {
         "_type": "named",
         "_visit": [Function],
+        "default": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -222,6 +223,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
           },
           "packagePath": [],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "badObjectRequestInfo",
@@ -377,6 +379,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "type": {
         "_type": "named",
         "_visit": [Function],
+        "default": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -459,6 +462,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           ],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "weatherReport",
@@ -614,6 +618,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "type": {
         "_type": "named",
         "_visit": [Function],
+        "default": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -696,6 +701,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           ],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "nestedObjectWithOptionalField",
@@ -851,6 +857,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "type": {
         "_type": "named",
         "_visit": [Function],
+        "default": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -933,6 +940,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           ],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "nestedObjectWithRequiredField",
@@ -1088,6 +1096,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "type": {
         "_type": "named",
         "_visit": [Function],
+        "default": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -1170,6 +1179,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           ],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "objectWithOptionalField",
@@ -1325,6 +1335,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "type": {
         "_type": "named",
         "_visit": [Function],
+        "default": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -1407,6 +1418,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           ],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "objectWithRequiredField",
@@ -1562,6 +1574,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "type": {
         "_type": "named",
         "_visit": [Function],
+        "default": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -1644,6 +1657,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           ],
         },
+        "inline": undefined,
         "name": {
           "camelCase": {
             "safeName": "animal",
@@ -1696,12 +1710,14 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
     "isAuthMandatory": false,
     "platformHeaders": {
       "language": "X-Fern-Language",
       "sdkName": "X-Fern-SDK-Name",
       "sdkVersion": "X-Fern-SDK-Version",
+      "userAgent": undefined,
     },
   },
   "serviceTypeReferenceInfo": {
@@ -1898,6 +1914,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 "list": {
                   "_type": "named",
                   "_visit": [Function],
+                  "default": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -1980,6 +1997,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithRequiredField",
@@ -2016,6 +2034,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 "list": {
                   "_type": "named",
                   "_visit": [Function],
+                  "default": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2098,6 +2117,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithRequiredField",
@@ -2155,6 +2175,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   "list": {
                     "_type": "named",
                     "_visit": [Function],
+                    "default": undefined,
                     "fernFilepath": {
                       "allParts": [
                         {
@@ -2237,6 +2258,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                         },
                       ],
                     },
+                    "inline": undefined,
                     "name": {
                       "camelCase": {
                         "safeName": "objectWithRequiredField",
@@ -2433,6 +2455,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 "set": {
                   "_type": "named",
                   "_visit": [Function],
+                  "default": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2515,6 +2538,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithRequiredField",
@@ -2551,6 +2575,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 "set": {
                   "_type": "named",
                   "_visit": [Function],
+                  "default": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2633,6 +2658,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithRequiredField",
@@ -2690,6 +2716,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   "set": {
                     "_type": "named",
                     "_visit": [Function],
+                    "default": undefined,
                     "fernFilepath": {
                       "allParts": [
                         {
@@ -2772,6 +2799,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                         },
                       ],
                     },
+                    "inline": undefined,
                     "name": {
                       "camelCase": {
                         "safeName": "objectWithRequiredField",
@@ -2984,6 +3012,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 "valueType": {
                   "_type": "named",
                   "_visit": [Function],
+                  "default": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -3066,6 +3095,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithRequiredField",
@@ -3106,6 +3136,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 "valueType": {
                   "_type": "named",
                   "_visit": [Function],
+                  "default": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -3188,6 +3219,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithRequiredField",
@@ -3249,6 +3281,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   "valueType": {
                     "_type": "named",
                     "_visit": [Function],
+                    "default": undefined,
                     "fernFilepath": {
                       "allParts": [
                         {
@@ -3331,6 +3364,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                         },
                       ],
                     },
+                    "inline": undefined,
                     "name": {
                       "camelCase": {
                         "safeName": "objectWithRequiredField",
@@ -3509,6 +3543,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "requestBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -3591,6 +3626,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "weatherReport",
@@ -3621,6 +3657,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "responseBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -3703,6 +3740,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "weatherReport",
@@ -3754,6 +3792,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "requestBodyType": {
                 "_type": "named",
                 "_visit": [Function],
+                "default": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -3836,6 +3875,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "weatherReport",
@@ -4138,6 +4178,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "requestBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -4220,6 +4261,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithRequiredField",
@@ -4250,6 +4292,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "responseBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -4332,6 +4375,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -4383,6 +4427,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "requestBodyType": {
                 "_type": "named",
                 "_visit": [Function],
+                "default": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -4465,6 +4510,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "objectWithRequiredField",
@@ -4612,6 +4658,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "requestBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -4694,6 +4741,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithRequiredField",
@@ -4724,6 +4772,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "responseBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -4806,6 +4855,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -4857,6 +4907,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "requestBodyType": {
                 "_type": "named",
                 "_visit": [Function],
+                "default": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -4939,6 +4990,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "objectWithRequiredField",
@@ -5086,6 +5138,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "requestBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -5168,6 +5221,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -5198,6 +5252,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "responseBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -5280,6 +5335,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -5331,6 +5387,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "requestBodyType": {
                 "_type": "named",
                 "_visit": [Function],
+                "default": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -5413,6 +5470,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "objectWithOptionalField",
@@ -5715,6 +5773,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "requestBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -5797,6 +5856,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -5827,6 +5887,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "responseBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -5909,6 +5970,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -5960,6 +6022,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "requestBodyType": {
                 "_type": "named",
                 "_visit": [Function],
+                "default": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -6042,6 +6105,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "objectWithOptionalField",
@@ -6119,6 +6183,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "requestBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6201,6 +6266,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithRequiredField",
@@ -6231,6 +6297,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "responseBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6313,6 +6380,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithRequiredField",
@@ -6364,6 +6432,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "requestBodyType": {
                 "_type": "named",
                 "_visit": [Function],
+                "default": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -6446,6 +6515,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "objectWithRequiredField",
@@ -6523,6 +6593,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "requestBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6605,6 +6676,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "nestedObjectWithOptionalField",
@@ -6635,6 +6707,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "responseBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6717,6 +6790,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "nestedObjectWithOptionalField",
@@ -6768,6 +6842,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "requestBodyType": {
                 "_type": "named",
                 "_visit": [Function],
+                "default": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -6850,6 +6925,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "nestedObjectWithOptionalField",
@@ -6927,6 +7003,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "requestBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -7009,6 +7086,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "nestedObjectWithRequiredField",
@@ -7039,6 +7117,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "responseBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -7121,6 +7200,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "nestedObjectWithRequiredField",
@@ -7172,6 +7252,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "requestBodyType": {
                 "_type": "named",
                 "_visit": [Function],
+                "default": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -7254,6 +7335,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "nestedObjectWithRequiredField",
@@ -9347,6 +9429,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "requestBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -9429,6 +9512,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "animal",
@@ -9459,6 +9543,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "responseBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -9541,6 +9626,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "animal",
@@ -9592,6 +9678,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "requestBodyType": {
                 "_type": "named",
                 "_visit": [Function],
+                "default": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -9674,6 +9761,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                     },
                   ],
                 },
+                "inline": undefined,
                 "name": {
                   "camelCase": {
                     "safeName": "animal",
@@ -9915,7 +10003,10 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
           "requestBody": {
             "_visit": [Function],
             "contentType": undefined,
+            "docs": undefined,
+            "extendedProperties": [],
             "extends": [],
+            "extraProperties": false,
             "name": {
               "camelCase": {
                 "safeName": "postWithObjectBody",
@@ -9937,6 +10028,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
             "properties": [
               {
+                "availability": undefined,
                 "docs": undefined,
                 "name": {
                   "name": {
@@ -9966,6 +10058,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 },
               },
               {
+                "availability": undefined,
                 "docs": undefined,
                 "name": {
                   "name": {
@@ -9995,6 +10088,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 },
               },
               {
+                "availability": undefined,
                 "docs": undefined,
                 "name": {
                   "name": {
@@ -10021,6 +10115,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 "valueType": {
                   "_type": "named",
                   "_visit": [Function],
+                  "default": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -10103,6 +10198,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithOptionalField",
@@ -10135,6 +10231,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "responseBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -10217,6 +10314,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -10638,6 +10736,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "responseBodyType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -10720,6 +10819,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -12795,7 +12895,9 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {
@@ -12949,6 +13051,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "enum",
         "_visit": [Function],
+        "default": undefined,
         "type": "enum",
         "values": [
           {
@@ -13290,7 +13393,9 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {
@@ -13366,6 +13471,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 "optional": {
                   "_type": "named",
                   "_visit": [Function],
+                  "default": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -13448,6 +13554,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                       },
                     ],
                   },
+                  "inline": undefined,
                   "name": {
                     "camelCase": {
                       "safeName": "objectWithOptionalField",
@@ -13697,7 +13804,9 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {
@@ -13763,6 +13872,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "valueType": {
               "_type": "named",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -13845,6 +13955,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "objectWithOptionalField",
@@ -13987,7 +14098,9 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {
@@ -14598,7 +14711,9 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {
@@ -14988,6 +15103,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
         "type": "union",
         "types": [
           {
+            "availability": undefined,
             "discriminantValue": {
               "name": {
                 "camelCase": {
@@ -15010,10 +15126,12 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               },
               "wireValue": "dog",
             },
+            "displayName": undefined,
             "docs": undefined,
             "shape": {
               "_type": "samePropertiesAsObject",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -15096,6 +15214,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "dog",
@@ -15121,6 +15240,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             },
           },
           {
+            "availability": undefined,
             "discriminantValue": {
               "name": {
                 "camelCase": {
@@ -15143,10 +15263,12 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               },
               "wireValue": "cat",
             },
+            "displayName": undefined,
             "docs": undefined,
             "shape": {
               "_type": "samePropertiesAsObject",
               "_visit": [Function],
+              "default": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -15229,6 +15351,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                   },
                 ],
               },
+              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "cat",
@@ -15371,7 +15494,9 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {
@@ -15558,7 +15683,9 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "shape": {
         "_type": "object",
         "_visit": [Function],
+        "extendedProperties": [],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {

@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StreamedCompletion.Builder.class)
 public final class StreamedCompletion {
     private final String delta;
@@ -72,7 +73,7 @@ public final class StreamedCompletion {
     }
 
     public interface DeltaStage {
-        _FinalStage delta(String delta);
+        _FinalStage delta(@NotNull String delta);
 
         Builder from(StreamedCompletion other);
     }
@@ -105,14 +106,14 @@ public final class StreamedCompletion {
 
         @java.lang.Override
         @JsonSetter("delta")
-        public _FinalStage delta(String delta) {
-            this.delta = delta;
+        public _FinalStage delta(@NotNull String delta) {
+            this.delta = Objects.requireNonNull(delta, "delta must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage tokens(Integer tokens) {
-            this.tokens = Optional.of(tokens);
+            this.tokens = Optional.ofNullable(tokens);
             return this;
         }
 

@@ -14,8 +14,9 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SubmissionFileInfo.Builder.class)
 public final class SubmissionFileInfo {
     private final String directory;
@@ -79,17 +80,17 @@ public final class SubmissionFileInfo {
     }
 
     public interface DirectoryStage {
-        FilenameStage directory(String directory);
+        FilenameStage directory(@NotNull String directory);
 
         Builder from(SubmissionFileInfo other);
     }
 
     public interface FilenameStage {
-        ContentsStage filename(String filename);
+        ContentsStage filename(@NotNull String filename);
     }
 
     public interface ContentsStage {
-        _FinalStage contents(String contents);
+        _FinalStage contents(@NotNull String contents);
     }
 
     public interface _FinalStage {
@@ -119,22 +120,22 @@ public final class SubmissionFileInfo {
 
         @java.lang.Override
         @JsonSetter("directory")
-        public FilenameStage directory(String directory) {
-            this.directory = directory;
+        public FilenameStage directory(@NotNull String directory) {
+            this.directory = Objects.requireNonNull(directory, "directory must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("filename")
-        public ContentsStage filename(String filename) {
-            this.filename = filename;
+        public ContentsStage filename(@NotNull String filename) {
+            this.filename = Objects.requireNonNull(filename, "filename must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("contents")
-        public _FinalStage contents(String contents) {
-            this.contents = contents;
+        public _FinalStage contents(@NotNull String contents) {
+            this.contents = Objects.requireNonNull(contents, "contents must not be null");
             return this;
         }
 

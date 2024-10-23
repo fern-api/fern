@@ -42,6 +42,7 @@ export function convertToOpenApi({
     const security = constructEndpointSecurity(ir.auth);
 
     const paths = convertServices({
+        ir,
         httpServices: Object.values(ir.services),
         typesByName,
         errorsByName,

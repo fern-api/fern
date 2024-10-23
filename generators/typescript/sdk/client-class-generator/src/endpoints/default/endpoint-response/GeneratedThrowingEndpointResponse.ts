@@ -1,16 +1,23 @@
 import {
+    CursorPagination,
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
-    HttpResponse,
-    ResponseError
+    HttpResponseBody,
+    Name,
+    NameAndWireValue,
+    OffsetPagination,
+    ResponseError,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import { getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
+import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl";
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation";
-import { GeneratedEndpointResponse } from "./GeneratedEndpointResponse";
+import { getAbortSignalExpression } from "../../utils/requestOptionsParameter";
+import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse";
 import {
     CONTENT_LENGTH_RESPONSE_KEY,
     CONTENT_LENGTH_VARIABLE_NAME,
@@ -23,10 +30,16 @@ export declare namespace GeneratedThrowingEndpointResponse {
     export interface Init {
         packageId: PackageId;
         endpoint: HttpEndpoint;
-        response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | undefined;
+        response:
+            | HttpResponseBody.Json
+            | HttpResponseBody.FileDownload
+            | HttpResponseBody.Streaming
+            | HttpResponseBody.Text
+            | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
         includeContentHeadersOnResponse: boolean;
+        clientClass: GeneratedSdkClientClassImpl;
     }
 }
 
@@ -35,10 +48,16 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
-    private response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | undefined;
+    private response:
+        | HttpResponseBody.Json
+        | HttpResponseBody.FileDownload
+        | HttpResponseBody.Streaming
+        | HttpResponseBody.Text
+        | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
     private includeContentHeadersOnResponse: boolean;
+    private clientClass: GeneratedSdkClientClassImpl;
 
     constructor({
         packageId,
@@ -46,7 +65,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         response,
         errorDiscriminationStrategy,
         errorResolver,
-        includeContentHeadersOnResponse
+        includeContentHeadersOnResponse,
+        clientClass
     }: GeneratedThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -54,6 +74,300 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;
         this.errorResolver = errorResolver;
         this.includeContentHeadersOnResponse = includeContentHeadersOnResponse;
+        this.clientClass = clientClass;
+    }
+
+    private getItemTypeFromListOrOptionalList(typeReference: TypeReference): TypeReference | undefined {
+        if (typeReference.type === "container" && typeReference.container.type === "list") {
+            return typeReference.container.list;
+        }
+        if (typeReference.type === "container" && typeReference.container.type === "optional") {
+            return this.getItemTypeFromListOrOptionalList(typeReference.container.optional);
+        }
+        return undefined;
+    }
+
+    public getPaginationInfo(context: SdkContext): PaginationResponseInfo | undefined {
+        const successReturnType = getSuccessReturnType(this.response, context, {
+            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
+        });
+
+        if (this.endpoint.pagination != null) {
+            switch (this.endpoint.pagination.type) {
+                case "cursor":
+                    return this.getCursorPaginationInfo({
+                        context,
+                        cursor: this.endpoint.pagination,
+                        successReturnType
+                    });
+                case "offset":
+                    return this.getOffsetPaginationInfo({
+                        context,
+                        offset: this.endpoint.pagination,
+                        successReturnType
+                    });
+            }
+        }
+
+        return undefined;
+    }
+
+    private getCursorPaginationInfo({
+        context,
+        cursor,
+        successReturnType
+    }: {
+        context: SdkContext;
+        cursor: CursorPagination;
+        successReturnType: ts.TypeNode;
+    }): PaginationResponseInfo | undefined {
+        const itemValueType = cursor.results.property.valueType;
+
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+        if (itemTypeReference == null) {
+            return undefined;
+        }
+
+        const itemType = context.type.getReferenceToType(itemTypeReference).typeNode;
+
+        // hasNextPage checks if next property is not null
+        const nextProperty = this.getNameFromWireValue({ name: cursor.next.property.name, context });
+        const nextPropertyPath = [
+            "response",
+            ...(cursor.next.propertyPath ?? []).map((name) => this.getName({ name, context }))
+        ].join("?.");
+        const nextPropertyAccess = ts.factory.createPropertyAccessChain(
+            ts.factory.createIdentifier(nextPropertyPath),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(nextProperty)
+        );
+        const hasNextPage = ts.factory.createBinaryExpression(
+            nextPropertyAccess,
+            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+            ts.factory.createNull()
+        );
+
+        // getItems gets the items
+        const itemsProperty = this.getNameFromWireValue({ name: cursor.results.property.name, context });
+        const itemsPropertyPath = [
+            "response",
+            ...(cursor.results.propertyPath ?? []).map((name) => this.getName({ name, context }))
+        ].join("?.");
+        const getItems = ts.factory.createBinaryExpression(
+            ts.factory.createPropertyAccessChain(
+                ts.factory.createIdentifier(itemsPropertyPath),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createIdentifier(itemsProperty)
+            ),
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            ts.factory.createArrayLiteralExpression([], false)
+        );
+
+        // loadPage
+        const pageProperty = this.getNameFromWireValue({ name: cursor.page.property.name, context });
+        const pagePropertyPathForSet = [
+            ...(cursor.page.propertyPath ?? []).map((name) => this.getName({ name, context })),
+            pageProperty
+        ].join(".");
+        const loadPage = [
+            ts.factory.createReturnStatement(
+                ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
+                    context.coreUtilities.utils.setObjectProperty._invoke({
+                        referenceToObject: ts.factory.createIdentifier("request"),
+                        path: pagePropertyPathForSet,
+                        value: nextPropertyAccess
+                    })
+                ])
+            )
+        ];
+
+        return {
+            type: "cursor",
+            itemType,
+            responseType: successReturnType,
+            hasNextPage,
+            getItems,
+            loadPage
+        };
+    }
+
+    private getOffsetPaginationInfo({
+        context,
+        offset,
+        successReturnType
+    }: {
+        context: SdkContext;
+        offset: OffsetPagination;
+        successReturnType: ts.TypeNode;
+    }): PaginationResponseInfo | undefined {
+        const itemValueType = offset.results.property.valueType;
+
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+        if (itemTypeReference == null) {
+            return undefined;
+        }
+
+        const itemType = context.type.getReferenceToType(itemTypeReference).typeNode;
+
+        // initializeOffset uses the offset property if set
+        const pageProperty = this.getNameFromWireValue({ name: offset.page.property.name, context });
+        const pagePropertyPath = [
+            "request",
+            ...(offset.page.propertyPath ?? []).map((name) => this.getName({ name, context }))
+        ].join("?.");
+        const pagePropertyPathForSet = [
+            ...(offset.page.propertyPath ?? []).map((name) => this.getName({ name, context })),
+            pageProperty
+        ].join(".");
+        const pagePropertyAccess = ts.factory.createPropertyAccessChain(
+            ts.factory.createIdentifier(pagePropertyPath),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(pageProperty)
+        );
+        const initializeOffset = ts.factory.createVariableStatement(
+            undefined,
+            ts.factory.createVariableDeclarationList(
+                [
+                    ts.factory.createVariableDeclaration(
+                        ts.factory.createIdentifier("_offset"),
+                        undefined,
+                        undefined,
+                        ts.factory.createConditionalExpression(
+                            ts.factory.createBinaryExpression(
+                                pagePropertyAccess,
+                                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                            pagePropertyAccess,
+                            ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                            ts.factory.createNumericLiteral("1")
+                        )
+                    )
+                ],
+                ts.NodeFlags.Let
+            )
+        );
+
+        // hasNextPage checks if the items are not empty
+        const itemsProperty = this.getNameFromWireValue({ name: offset.results.property.name, context });
+        const itemsPropertyPathComponents = [
+            "response",
+            ...(offset.results.propertyPath ?? []).map((name) => this.getName({ name, context }))
+        ];
+        const itemsPropertyPath = itemsPropertyPathComponents.join("?.");
+        const itemsPropertyPathWithoutOptional = itemsPropertyPathComponents.join(".");
+        const itemsPropertyAccess = ts.factory.createPropertyAccessChain(
+            ts.factory.createIdentifier(itemsPropertyPath),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(itemsProperty)
+        );
+        let hasNextPage: ts.Expression = ts.factory.createBinaryExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createParenthesizedExpression(
+                    ts.factory.createBinaryExpression(
+                        itemsPropertyAccess,
+                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                        ts.factory.createArrayLiteralExpression([], false)
+                    )
+                ),
+                ts.factory.createIdentifier("length")
+            ),
+            ts.factory.createToken(ts.SyntaxKind.GreaterThanToken),
+            ts.factory.createNumericLiteral("0")
+        );
+        if (offset.hasNextPage != null) {
+            const hasNextPagePropertyComponents = [
+                "response",
+                ...(offset.hasNextPage.propertyPath ?? []).map((name) => this.getName({ name, context }))
+            ];
+            const hasNextPageProperty = this.getNameFromWireValue({ name: offset.hasNextPage.property.name, context });
+            const hasNextPagePropertyAccess = ts.factory.createPropertyAccessChain(
+                ts.factory.createIdentifier(hasNextPagePropertyComponents.join("?.")),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createIdentifier(hasNextPageProperty)
+            );
+            hasNextPage = ts.factory.createBinaryExpression(
+                hasNextPagePropertyAccess,
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                hasNextPage
+            );
+        }
+
+        // getItems gets the items
+        const getItems = ts.factory.createBinaryExpression(
+            ts.factory.createPropertyAccessChain(
+                ts.factory.createIdentifier(itemsPropertyPath),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createIdentifier(itemsProperty)
+            ),
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            ts.factory.createArrayLiteralExpression([], false)
+        );
+
+        // loadPage
+        const incrementOffset =
+            offset.step != null
+                ? ts.factory.createExpressionStatement(
+                      ts.factory.createBinaryExpression(
+                          ts.factory.createIdentifier("_offset"),
+                          ts.factory.createToken(ts.SyntaxKind.PlusEqualsToken),
+                          ts.factory.createConditionalExpression(
+                              ts.factory.createBinaryExpression(
+                                  itemsPropertyAccess,
+                                  ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                  ts.factory.createNull()
+                              ),
+                              ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                              ts.factory.createPropertyAccessExpression(
+                                  ts.factory.createPropertyAccessExpression(
+                                      ts.factory.createIdentifier(itemsPropertyPathWithoutOptional),
+                                      ts.factory.createIdentifier(itemsProperty)
+                                  ),
+                                  ts.factory.createIdentifier("length")
+                              ),
+                              ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                              ts.factory.createNumericLiteral("1")
+                          )
+                      )
+                  )
+                : ts.factory.createExpressionStatement(
+                      ts.factory.createBinaryExpression(
+                          ts.factory.createIdentifier("_offset"),
+                          ts.factory.createToken(ts.SyntaxKind.PlusEqualsToken),
+                          ts.factory.createNumericLiteral("1")
+                      )
+                  );
+        const callEndpoint = ts.factory.createReturnStatement(
+            ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
+                context.coreUtilities.utils.setObjectProperty._invoke({
+                    referenceToObject: ts.factory.createIdentifier("request"),
+                    path: pagePropertyPathForSet,
+                    value: ts.factory.createIdentifier("_offset")
+                })
+            ])
+        );
+        const loadPage = [incrementOffset, callEndpoint];
+
+        return {
+            type: offset.step != null ? "offset-step" : "offset",
+            initializeOffset,
+            itemType,
+            responseType: successReturnType,
+            hasNextPage,
+            getItems,
+            loadPage
+        };
+    }
+
+    private getName({ name, context }: { name: Name; context: SdkContext }): string {
+        return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
+    }
+
+    private getNameFromWireValue({ name, context }: { name: NameAndWireValue; context: SdkContext }): string {
+        return context.retainOriginalCasing || !context.includeSerdeLayer
+            ? name.wireValue
+            : name.name.camelCase.safeName;
     }
 
     public getResponseVariableName(): string {
@@ -148,6 +462,25 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 )
             ];
         } else if (this.response?.type === "streaming") {
+            const eventShape = this.response.value._visit<
+                StreamingFetcher.MessageEventShape | StreamingFetcher.SSEEventShape
+            >({
+                sse: (sse) => ({
+                    type: "sse",
+                    streamTerminator: ts.factory.createStringLiteral(sse.terminator ?? "[DONE]")
+                }),
+                json: (json) => ({
+                    type: "json",
+                    messageTerminator: ts.factory.createStringLiteral(json.terminator ?? "\n")
+                }),
+
+                text: () => {
+                    throw new Error("Text response type is not supported for streaming responses");
+                },
+                _other: ({ type }) => {
+                    throw new Error(`Unknown response type: ${type}`);
+                }
+            });
             return [
                 ts.factory.createReturnStatement(
                     context.coreUtilities.streamUtils.Stream._construct({
@@ -158,7 +491,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                 context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
                             )
                         ),
-                        terminator: this.response.terminator ?? "\n",
+                        eventShape,
+                        signal: getAbortSignalExpression({
+                            abortSignalReference: this.clientClass.getReferenceToAbortSignal.bind(this.clientClass)
+                        }),
                         parse: ts.factory.createArrowFunction(
                             [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
                             undefined,
@@ -442,7 +778,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     private getReturnStatementsForOkResponse(context: SdkContext): ts.Statement[] {
-        return this.endpoint.response != null
+        return this.endpoint.response?.body != null
             ? this.getReturnStatementsForOkResponseBody(context)
             : [ts.factory.createReturnStatement(undefined)];
     }

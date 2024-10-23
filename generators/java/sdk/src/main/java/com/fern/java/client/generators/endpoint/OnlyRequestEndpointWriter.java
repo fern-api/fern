@@ -16,6 +16,8 @@
 
 package com.fern.java.client.generators.endpoint;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.http.BytesRequest;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.HttpRequestBodyReference;
@@ -32,17 +34,17 @@ import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
-import com.squareup.javapoet.ArrayTypeName;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
@@ -62,7 +64,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedClientOptions generatedClientOptions,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             SdkRequestBodyType sdkRequestBodyType,
-            SdkRequest sdkRequest) {
+            SdkRequest sdkRequest,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 httpService,
                 httpEndpoint,
@@ -70,7 +73,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 clientGeneratorContext,
                 clientOptionsField,
                 generatedClientOptions,
-                generatedEnvironmentsClass);
+                generatedEnvironmentsClass,
+                generatedErrors);
         this.clientGeneratorContext = clientGeneratorContext;
         this.httpEndpoint = httpEndpoint;
         this.sdkRequestBodyType = sdkRequestBodyType;
@@ -87,7 +91,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedClientOptions generatedClientOptions,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedWrappedRequest generatedWrappedRequest,
-            SdkRequest sdkRequest) {
+            SdkRequest sdkRequest,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 httpService,
                 httpEndpoint,
@@ -95,7 +100,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 clientGeneratorContext,
                 clientOptionsField,
                 generatedClientOptions,
-                generatedEnvironmentsClass);
+                generatedEnvironmentsClass,
+                generatedErrors);
         this.clientGeneratorContext = clientGeneratorContext;
         this.httpEndpoint = httpEndpoint;
         this.sdkRequestBodyType = null;
@@ -115,14 +121,18 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
     @Override
     public List<ParameterSpec> additionalParameters() {
+        return List.of(requestParameterSpec().get());
+    }
+
+    @Override
+    public Optional<ParameterSpec> requestParameterSpec() {
         if (generatedWrappedRequest != null) {
-            return Collections.singletonList(ParameterSpec.builder(
+            return Optional.of(ParameterSpec.builder(
                             generatedWrappedRequest.getClassName(),
                             sdkRequest.getRequestParameterName().getCamelCase().getSafeName())
                     .build());
         } else if (sdkRequestBodyType != null) {
-            ParameterSpec parameterSpec = sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<ParameterSpec>() {
-
+            ParameterSpec parameterSpec = sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<>() {
                 @Override
                 public ParameterSpec visitTypeReference(HttpRequestBodyReference typeReference) {
                     return ParameterSpec.builder(
@@ -138,17 +148,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
                 @Override
                 public ParameterSpec visitBytes(BytesRequest bytes) {
-                    TypeName typeName = ArrayTypeName.of(byte.class);
-                    if (bytes.getIsOptional()) {
-                        typeName = ParameterizedTypeName.get(ClassName.get(Optional.class), typeName);
-                    }
-                    return ParameterSpec.builder(
-                                    typeName,
-                                    sdkRequest
-                                            .getRequestParameterName()
-                                            .getCamelCase()
-                                            .getSafeName())
-                            .build();
+                    return getBytesRequestParameterSpec(bytes, sdkRequest, TypeName.get(InputStream.class));
                 }
 
                 @Override
@@ -156,7 +156,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     throw new RuntimeException("Encountered unknown sdk request body type: " + unknownType);
                 }
             });
-            return Collections.singletonList(parameterSpec);
+            return Optional.of(parameterSpec);
         } else {
             throw new RuntimeException("Unexpected, both generatedWrappedRequest and sdkRequestBodyType are null");
         }
@@ -201,10 +201,6 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
                     @Override
                     public Void visitBytes(BytesRequest bytes) {
-                        builder.add(
-                                ".addHeader($S, $S)\n",
-                                AbstractEndpointWriter.CONTENT_TYPE_HEADER,
-                                bytes.getContentType().orElse(AbstractEndpointWriter.APPLICATION_OCTET_STREAM));
                         return null;
                     }
 
@@ -284,8 +280,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 codeBlock.endControlFlow();
             }
             codeBlock
-                    .beginControlFlow("catch($T e)", Exception.class)
-                    .addStatement("throw new $T(e)", RuntimeException.class)
+                    .beginControlFlow("catch($T e)", JsonProcessingException.class)
+                    .addStatement("throw new $T($S, e)", baseErrorClassName, "Failed to serialize request")
                     .endControlFlow();
             return null;
         }
@@ -293,10 +289,12 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
         @Override
         public Void visitBytes(BytesRequest bytes) {
             codeBlock.addStatement(
-                    "$T $L = $T.create($L)",
+                    "$T $L = new $T($T.parse($S), $L)",
                     RequestBody.class,
                     getOkhttpRequestBodyName(),
-                    RequestBody.class,
+                    clientGeneratorContext.getPoetClassNameFactory().getInputStreamRequestBodyClassName(),
+                    MediaType.class,
+                    bytes.getContentType().orElse(APPLICATION_OCTET_STREAM),
                     sdkRequest.getRequestParameterName().getCamelCase().getSafeName());
             return null;
         }

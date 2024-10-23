@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`convertColorsConfiguration should support accentPrimaryDeprecated 1`] = `
+exports[`convertColorsConfiguration > should support accentPrimaryDeprecated 1`] = `
 {
   "accentPrimary": {
     "a": 1,
@@ -9,9 +9,11 @@ exports[`convertColorsConfiguration should support accentPrimaryDeprecated 1`] =
     "r": 93,
   },
   "background": undefined,
+  "backgroundImage": undefined,
   "border": undefined,
   "cardBackground": undefined,
   "headerBackground": undefined,
+  "logo": undefined,
   "sidebarBackground": undefined,
   "type": "light",
 }

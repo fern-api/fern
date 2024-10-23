@@ -4,7 +4,6 @@ package client
 
 import (
 	context "context"
-	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
@@ -49,7 +48,7 @@ func (c *Client) Check(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"organization/%v", id)
+	endpointURL := core.EncodeURL(baseURL+"/organization/%v", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -57,12 +56,14 @@ func (c *Client) Check(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return nil, err

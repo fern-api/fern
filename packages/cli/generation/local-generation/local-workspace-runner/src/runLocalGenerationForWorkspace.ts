@@ -1,6 +1,6 @@
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, getOSSWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import os from "os";
 import path from "path";
@@ -15,7 +15,7 @@ export async function runLocalGenerationForWorkspace({
     context
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
-    workspace: FernWorkspace;
+    workspace: AbstractAPIWorkspace<unknown>;
     generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
@@ -30,20 +30,28 @@ export async function runLocalGenerationForWorkspace({
                         "Cannot generate because output location is not local-file-system"
                     );
                 } else {
+                    const fernWorkspace = await workspace.toFernWorkspace(
+                        { context },
+                        getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                    );
+
                     await writeFilesToDiskAndRunGenerator({
                         organization: projectConfig.organization,
                         absolutePathToFernConfig: projectConfig._absolutePath,
-                        workspace,
+                        workspace: fernWorkspace,
                         generatorInvocation,
                         absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
                         absolutePathToLocalSnippetJSON: undefined,
+                        absolutePathToLocalSnippetTemplateJSON: undefined,
                         audiences: generatorGroup.audiences,
                         workspaceTempDir,
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride: generatorInvocation.irVersionOverride,
                         outputVersionOverride: undefined,
-                        writeUnitTests: false
+                        writeUnitTests: false,
+                        generateOauthClients: false,
+                        generatePaginatedClients: false
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)

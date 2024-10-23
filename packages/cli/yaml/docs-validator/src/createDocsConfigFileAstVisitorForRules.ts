@@ -1,10 +1,10 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { NodePath } from "@fern-api/fern-definition-schema";
 import {
     DocsConfigFileAstNodeTypes,
     DocsConfigFileAstNodeVisitor,
-    DocsConfigFileAstVisitor,
-    NodePath
-} from "@fern-api/yaml-schema";
+    DocsConfigFileAstVisitor
+} from "./docsAst/DocsConfigFileAstVisitor";
 import { RuleVisitor } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 
@@ -47,6 +47,7 @@ export function createDocsConfigFileAstVisitorForRules({
         ...createAstNodeVisitor("file"),
         ...createAstNodeVisitor("filepath"),
         ...createAstNodeVisitor("markdownPage"),
-        ...createAstNodeVisitor("versionFile")
+        ...createAstNodeVisitor("versionFile"),
+        ...createAstNodeVisitor("apiSection")
     };
 }

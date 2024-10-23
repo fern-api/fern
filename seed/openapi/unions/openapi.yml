@@ -170,8 +170,7 @@ components:
                 - fern
             value:
               type: string
-              enum:
-                - fern
+              const: fern
           required:
             - type
       required:
@@ -179,8 +178,7 @@ components:
       properties:
         base:
           type: string
-          enum:
-            - base
+          const: base
     UnionWithBaseProperties:
       title: UnionWithBaseProperties
       oneOf:
@@ -280,6 +278,20 @@ components:
               type: string
               format: date-time
               nullable: true
+          required:
+            - type
+    UnionWithSingleElement:
+      title: UnionWithSingleElement
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - foo
+            - $ref: '#/components/schemas/Foo'
           required:
             - type
     Foo:

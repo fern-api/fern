@@ -2,20 +2,25 @@ import {
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
-    HttpResponse
+    HttpResponseBody
 } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
-import { GeneratedEndpointResponse } from "./GeneratedEndpointResponse";
+import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse";
 import { getSuccessReturnType } from "./getSuccessReturnType";
 
 export declare namespace GeneratedNonThrowingEndpointResponse {
     export interface Init {
         packageId: PackageId;
         endpoint: HttpEndpoint;
-        response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | undefined;
+        response:
+            | HttpResponseBody.Json
+            | HttpResponseBody.FileDownload
+            | HttpResponseBody.Streaming
+            | HttpResponseBody.Text
+            | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
         includeSerdeLayer: boolean;
@@ -27,7 +32,12 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
-    private response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | undefined;
+    private response:
+        | HttpResponseBody.Json
+        | HttpResponseBody.FileDownload
+        | HttpResponseBody.Streaming
+        | HttpResponseBody.Text
+        | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
     private includeSerdeLayer: boolean;
@@ -46,6 +56,10 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;
         this.errorResolver = errorResolver;
         this.includeSerdeLayer = includeSerdeLayer;
+    }
+
+    public getPaginationInfo(): PaginationResponseInfo | undefined {
+        return undefined;
     }
 
     public getResponseVariableName(): string {
@@ -111,7 +125,9 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
     private getReturnValueForOkResponse(context: SdkContext): ts.Expression | undefined {
         return context.coreUtilities.fetcher.APIResponse.SuccessfulResponse._build(
-            this.endpoint.response != null ? this.getOkResponseBody(context) : ts.factory.createIdentifier("undefined")
+            this.endpoint.response?.body != null
+                ? this.getOkResponseBody(context)
+                : ts.factory.createIdentifier("undefined")
         );
     }
 

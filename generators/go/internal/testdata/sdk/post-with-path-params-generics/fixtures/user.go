@@ -9,7 +9,7 @@ import (
 )
 
 type SetNameRequest struct {
-	UserName string `json:"userName" url:"userName"`
+	UserName string `json:"userName" url:"-"`
 }
 
 type SetNameRequestV3 struct {
@@ -90,7 +90,12 @@ func (s *SetNameRequestV5) MarshalJSON() ([]byte, error) {
 type Filter struct {
 	Tag string `json:"tag" url:"tag"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (f *Filter) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
 }
 
 func (f *Filter) UnmarshalJSON(data []byte) error {
@@ -100,6 +105,13 @@ func (f *Filter) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = Filter(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
 	f._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -119,7 +131,12 @@ func (f *Filter) String() string {
 type SetNameRequestV3Body struct {
 	UserName string `json:"userName" url:"userName"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (s *SetNameRequestV3Body) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *SetNameRequestV3Body) UnmarshalJSON(data []byte) error {
@@ -129,6 +146,13 @@ func (s *SetNameRequestV3Body) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SetNameRequestV3Body(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
 	s._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -167,6 +191,9 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "foo":
 		value := new(Foo)
@@ -189,23 +216,9 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Foo
-		}{
-			Type: "foo",
-			Foo:  u.Foo,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	case "bar":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Bar
-		}{
-			Type: "bar",
-			Bar:  u.Bar,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
 	}
 }
 
@@ -228,9 +241,9 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 type UpdateRequest struct {
 	Tag            string                   `json:"-" url:"tag"`
 	Extra          *string                  `json:"-" url:"extra,omitempty"`
-	Union          *Union                   `json:"union,omitempty" url:"union,omitempty"`
-	Filter         *Filter                  `json:"filter,omitempty" url:"filter,omitempty"`
-	OptionalUnion  *core.Optional[Union]    `json:"optionalUnion,omitempty" url:"optionalUnion,omitempty"`
-	OptionalFilter *core.Optional[Filter]   `json:"optionalFilter,omitempty" url:"optionalFilter,omitempty"`
-	OptionalTags   *core.Optional[[]string] `json:"optionalTags,omitempty" url:"optionalTags,omitempty"`
+	Union          *Union                   `json:"union,omitempty" url:"-"`
+	Filter         *Filter                  `json:"filter,omitempty" url:"-"`
+	OptionalUnion  *core.Optional[Union]    `json:"optionalUnion,omitempty" url:"-"`
+	OptionalFilter *core.Optional[Filter]   `json:"optionalFilter,omitempty" url:"-"`
+	OptionalTags   *core.Optional[[]string] `json:"optionalTags,omitempty" url:"-"`
 }

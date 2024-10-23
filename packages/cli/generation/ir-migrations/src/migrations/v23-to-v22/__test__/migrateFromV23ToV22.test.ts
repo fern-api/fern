@@ -12,7 +12,7 @@ describe("migrateFromV23ToV22", () => {
         const migrated = await runMigration({
             pathToFixture
         });
-        expect(migrated).toMatchSnapshot();
+        expect(await migrated.jsonify()).toMatchSnapshot();
     });
 
     it("skips when definition contains bytes", async () => {
@@ -28,7 +28,7 @@ describe("migrateFromV23ToV22", () => {
                 taskContext: context
             }
         });
-        const numEndpoints = Object.entries(migrated.services)[0]?.[1].endpoints.length;
+        const numEndpoints = Object.entries(migrated.ir.services)[0]?.[1].endpoints.length;
         expect(numEndpoints).toEqual(0);
         expect(output).toContain("does not support bytes requests");
     });

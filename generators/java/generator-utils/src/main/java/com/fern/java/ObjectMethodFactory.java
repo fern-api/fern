@@ -84,7 +84,12 @@ public class ObjectMethodFactory {
         return Optional.of(hashCodeBuilder.build());
     }
 
-    public static MethodSpec createToStringMethod(ClassName className, List<FieldSpec> fieldSpecs) {
+    public static MethodSpec createToStringMethodFromFieldSpecs(ClassName className, List<FieldSpec> fieldSpecs) {
+        return createToStringMethod(
+                className, fieldSpecs.stream().map(ToStringSpec::of).collect(Collectors.toList()));
+    }
+
+    public static MethodSpec createToStringMethod(ClassName className, List<ToStringSpec> toStringSpecs) {
         StringBuilder codeBlock;
         if (className.enclosingClassName() != null) {
             codeBlock = new StringBuilder(
@@ -92,20 +97,20 @@ public class ObjectMethodFactory {
         } else {
             codeBlock = new StringBuilder("\"" + className.simpleName() + "{\"");
         }
-        for (int i = 0; i < fieldSpecs.size(); ++i) {
-            FieldSpec fieldSpec = fieldSpecs.get(i);
+        for (int i = 0; i < toStringSpecs.size(); ++i) {
+            ToStringSpec fieldSpec = toStringSpecs.get(i);
             if (i == 0) {
                 codeBlock
                         .append(" + \"")
-                        .append(fieldSpec.name)
+                        .append(fieldSpec.fieldName)
                         .append(": \" + ")
-                        .append(fieldSpec.name);
+                        .append(fieldSpec.fieldValue);
             } else {
                 codeBlock
                         .append(" + \", ")
-                        .append(fieldSpec.name)
+                        .append(fieldSpec.fieldName)
                         .append(": \" + ")
-                        .append(fieldSpec.name);
+                        .append(fieldSpec.fieldValue);
             }
         }
         codeBlock.append(" + \"}\"");
@@ -115,6 +120,24 @@ public class ObjectMethodFactory {
                 .returns(String.class)
                 .addStatement("return " + codeBlock)
                 .build();
+    }
+
+    public static final class ToStringSpec {
+        private final String fieldName;
+        private final String fieldValue;
+
+        private ToStringSpec(String fieldName, String fieldValue) {
+            this.fieldName = fieldName;
+            this.fieldValue = fieldValue;
+        }
+
+        public static ToStringSpec of(FieldSpec fieldSpec) {
+            return new ToStringSpec(fieldSpec.name, fieldSpec.name);
+        }
+
+        public static ToStringSpec of(String fieldName, String getterMethodName) {
+            return new ToStringSpec(fieldName, getterMethodName + "()");
+        }
     }
 
     public static final class EqualsMethod {

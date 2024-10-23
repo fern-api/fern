@@ -19,12 +19,28 @@ module SeedBasicAuthEnvironmentVariablesClient
     #
     # @param request_options [SeedBasicAuthEnvironmentVariablesClient::RequestOptions]
     # @return [Boolean]
+    # @example
+    #  basic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    username: "YOUR_USERNAME",
+    #    password: "YOUR_PASSWORD"
+    #  )
+    #  basic_auth_environment_variables.basic_auth.get_with_basic_auth
     def get_with_basic_auth(request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers["username"] = request_options.username unless request_options&.username.nil?
-        req.headers["password"] = request_options.password unless request_options&.password.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers["Authorization"] = request_options.basic_auth_token unless request_options&.basic_auth_token.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/basic-auth"
       end
       JSON.parse(response.body)
@@ -35,12 +51,25 @@ module SeedBasicAuthEnvironmentVariablesClient
     # @param request [Object]
     # @param request_options [SeedBasicAuthEnvironmentVariablesClient::RequestOptions]
     # @return [Boolean]
+    # @example
+    #  basic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    username: "YOUR_USERNAME",
+    #    password: "YOUR_PASSWORD"
+    #  )
+    #  basic_auth_environment_variables.basic_auth.post_with_basic_auth(request: {"key":"value"})
     def post_with_basic_auth(request: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers["username"] = request_options.username unless request_options&.username.nil?
-        req.headers["password"] = request_options.password unless request_options&.password.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers["Authorization"] = request_options.basic_auth_token unless request_options&.basic_auth_token.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/basic-auth"
       end
@@ -62,13 +91,29 @@ module SeedBasicAuthEnvironmentVariablesClient
     #
     # @param request_options [SeedBasicAuthEnvironmentVariablesClient::RequestOptions]
     # @return [Boolean]
+    # @example
+    #  basic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    username: "YOUR_USERNAME",
+    #    password: "YOUR_PASSWORD"
+    #  )
+    #  basic_auth_environment_variables.basic_auth.get_with_basic_auth
     def get_with_basic_auth(request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers["username"] = request_options.username unless request_options&.username.nil?
-          req.headers["password"] = request_options.password unless request_options&.password.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers["Authorization"] = request_options.basic_auth_token unless request_options&.basic_auth_token.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/basic-auth"
         end
         parsed_json = JSON.parse(response.body)
@@ -81,13 +126,26 @@ module SeedBasicAuthEnvironmentVariablesClient
     # @param request [Object]
     # @param request_options [SeedBasicAuthEnvironmentVariablesClient::RequestOptions]
     # @return [Boolean]
+    # @example
+    #  basic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    username: "YOUR_USERNAME",
+    #    password: "YOUR_PASSWORD"
+    #  )
+    #  basic_auth_environment_variables.basic_auth.post_with_basic_auth(request: {"key":"value"})
     def post_with_basic_auth(request: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers["username"] = request_options.username unless request_options&.username.nil?
-          req.headers["password"] = request_options.password unless request_options&.password.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers["Authorization"] = request_options.basic_auth_token unless request_options&.basic_auth_token.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/basic-auth"
         end

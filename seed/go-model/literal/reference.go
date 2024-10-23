@@ -9,9 +9,18 @@ import (
 )
 
 type SendRequest struct {
-	Query  string `json:"query" url:"query"`
-	prompt string
-	stream bool
+	Query           string           `json:"query" url:"query"`
+	Context         SomeLiteral      `json:"context,omitempty" url:"context,omitempty"`
+	MaybeContext    *SomeLiteral     `json:"maybeContext,omitempty" url:"maybeContext,omitempty"`
+	ContainerObject *ContainerObject `json:"containerObject,omitempty" url:"containerObject,omitempty"`
+	prompt          string
+	stream          bool
+
+	extraProperties map[string]interface{}
+}
+
+func (s *SendRequest) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *SendRequest) Prompt() string {
@@ -26,6 +35,8 @@ func (s *SendRequest) UnmarshalJSON(data []byte) error {
 	type embed SendRequest
 	var unmarshaler = struct {
 		embed
+		Prompt string `json:"prompt"`
+		Stream bool   `json:"stream"`
 	}{
 		embed: embed(*s),
 	}
@@ -33,8 +44,21 @@ func (s *SendRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SendRequest(unmarshaler.embed)
-	s.prompt = "You are a helpful assistant"
-	s.stream = false
+	if unmarshaler.Prompt != "You are a helpful assistant" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, "You are a helpful assistant", unmarshaler.Prompt)
+	}
+	s.prompt = unmarshaler.Prompt
+	if unmarshaler.Stream != false {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, false, unmarshaler.Stream)
+	}
+	s.stream = unmarshaler.Stream
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s, "prompt", "stream")
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
 	return nil
 }
 

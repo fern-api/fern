@@ -67,9 +67,9 @@ module SeedTraceClient
             implementation = parsed_json["implementation"].to_json
             implementation = SeedTraceClient::V2::Problem::TestCaseImplementationReference.from_json(json_object: implementation)
           end
-          arguments = parsed_json["arguments"]&.transform_values do |v|
-            v = v.to_json
-            SeedTraceClient::Commons::VariableValue.from_json(json_object: v)
+          arguments = parsed_json["arguments"]&.transform_values do |value|
+            value = value.to_json
+            SeedTraceClient::Commons::VariableValue.from_json(json_object: value)
           end
           if parsed_json["expects"].nil?
             expects = nil

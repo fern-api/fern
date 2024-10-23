@@ -32,9 +32,9 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        variables = parsed_json["variables"]&.transform_values do |v|
-          v = v.to_json
-          SeedTraceClient::Commons::DebugVariableValue.from_json(json_object: v)
+        variables = parsed_json["variables"]&.transform_values do |value|
+          value = value.to_json
+          SeedTraceClient::Commons::DebugVariableValue.from_json(json_object: value)
         end
         new(variables: variables, additional_properties: struct)
       end

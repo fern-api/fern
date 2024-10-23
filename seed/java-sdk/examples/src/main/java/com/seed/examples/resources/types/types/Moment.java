@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Moment.Builder.class)
 public final class Moment {
     private final UUID id;
@@ -80,17 +81,17 @@ public final class Moment {
     }
 
     public interface IdStage {
-        DateStage id(UUID id);
+        DateStage id(@NotNull UUID id);
 
         Builder from(Moment other);
     }
 
     public interface DateStage {
-        DatetimeStage date(String date);
+        DatetimeStage date(@NotNull String date);
     }
 
     public interface DatetimeStage {
-        _FinalStage datetime(OffsetDateTime datetime);
+        _FinalStage datetime(@NotNull OffsetDateTime datetime);
     }
 
     public interface _FinalStage {
@@ -120,22 +121,22 @@ public final class Moment {
 
         @java.lang.Override
         @JsonSetter("id")
-        public DateStage id(UUID id) {
-            this.id = id;
+        public DateStage id(@NotNull UUID id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("date")
-        public DatetimeStage date(String date) {
-            this.date = date;
+        public DatetimeStage date(@NotNull String date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("datetime")
-        public _FinalStage datetime(OffsetDateTime datetime) {
-            this.datetime = datetime;
+        public _FinalStage datetime(@NotNull OffsetDateTime datetime) {
+            this.datetime = Objects.requireNonNull(datetime, "datetime must not be null");
             return this;
         }
 

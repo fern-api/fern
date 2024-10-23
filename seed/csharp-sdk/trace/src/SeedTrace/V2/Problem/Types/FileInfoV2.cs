@@ -1,18 +1,26 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace.V2;
 
-public class FileInfoV2
+public record FileInfoV2
 {
     [JsonPropertyName("filename")]
-    public string Filename { get; init; }
+    public required string Filename { get; set; }
 
     [JsonPropertyName("directory")]
-    public string Directory { get; init; }
+    public required string Directory { get; set; }
 
     [JsonPropertyName("contents")]
-    public string Contents { get; init; }
+    public required string Contents { get; set; }
 
     [JsonPropertyName("editable")]
-    public bool Editable { get; init; }
+    public required bool Editable { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

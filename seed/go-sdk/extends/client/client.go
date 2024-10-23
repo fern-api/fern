@@ -3,6 +3,8 @@
 package client
 
 import (
+	context "context"
+	fern "github.com/extends/fern"
 	core "github.com/extends/fern/core"
 	option "github.com/extends/fern/option"
 	http "net/http"
@@ -26,4 +28,40 @@ func NewClient(opts ...option.RequestOption) *Client {
 		),
 		header: options.ToHeader(),
 	}
+}
+
+func (c *Client) ExtendedInlineRequestBody(
+	ctx context.Context,
+	request *fern.Inlined,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
+	endpointURL := baseURL + "/extends/extended-inline-request-body"
+
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+		},
+	); err != nil {
+		return err
+	}
+	return nil
 }

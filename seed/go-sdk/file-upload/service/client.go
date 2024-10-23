@@ -129,6 +129,21 @@ func (c *Client) Post(
 	if err := core.WriteMultipartJSON(writer, "listOfObjects", request.ListOfObjects); err != nil {
 		return err
 	}
+	if request.OptionalMetadata != nil {
+		if err := core.WriteMultipartJSON(writer, "optionalMetadata", request.OptionalMetadata); err != nil {
+			return err
+		}
+	}
+	if request.OptionalObjectType != nil {
+		if err := core.WriteMultipartJSON(writer, "optionalObjectType", *request.OptionalObjectType); err != nil {
+			return err
+		}
+	}
+	if request.OptionalId != nil {
+		if err := core.WriteMultipartJSON(writer, "optionalId", *request.OptionalId); err != nil {
+			return err
+		}
+	}
 	if err := writer.Close(); err != nil {
 		return err
 	}
@@ -137,12 +152,14 @@ func (c *Client) Post(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     requestBuffer,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         requestBuffer,
 		},
 	); err != nil {
 		return err
@@ -164,7 +181,7 @@ func (c *Client) JustFile(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "just-file"
+	endpointURL := baseURL + "/just-file"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -189,12 +206,14 @@ func (c *Client) JustFile(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     requestBuffer,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         requestBuffer,
 		},
 	); err != nil {
 		return err
@@ -217,7 +236,7 @@ func (c *Client) JustFileWithQueryParams(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "just-file-with-query-params"
+	endpointURL := baseURL + "/just-file-with-query-params"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {
@@ -250,12 +269,75 @@ func (c *Client) JustFileWithQueryParams(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     requestBuffer,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         requestBuffer,
+		},
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *Client) WithContentType(
+	ctx context.Context,
+	file io.Reader,
+	request *fern.WithContentTypeRequest,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
+	endpointURL := baseURL + "/with-content-type"
+
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+
+	requestBuffer := bytes.NewBuffer(nil)
+	writer := multipart.NewWriter(requestBuffer)
+	fileFilename := "file_filename"
+	if named, ok := file.(interface{ Name() string }); ok {
+		fileFilename = named.Name()
+	}
+	filePart, err := writer.CreateFormFile("file", fileFilename)
+	if err != nil {
+		return err
+	}
+	if _, err := io.Copy(filePart, file); err != nil {
+		return err
+	}
+	if err := writer.WriteField("foo", fmt.Sprintf("%v", request.Foo)); err != nil {
+		return err
+	}
+	if err := core.WriteMultipartJSON(writer, "bar", request.Bar); err != nil {
+		return err
+	}
+	if err := writer.Close(); err != nil {
+		return err
+	}
+	headers.Set("Content-Type", writer.FormDataContentType())
+
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         requestBuffer,
 		},
 	); err != nil {
 		return err

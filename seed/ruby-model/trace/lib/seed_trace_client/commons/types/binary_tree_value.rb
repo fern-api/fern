@@ -38,10 +38,10 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        root = struct["root"]
-        nodes = parsed_json["nodes"]&.transform_values do |v|
-          v = v.to_json
-          SeedTraceClient::Commons::BinaryTreeNodeValue.from_json(json_object: v)
+        root = parsed_json["root"]
+        nodes = parsed_json["nodes"]&.transform_values do |value|
+          value = value.to_json
+          SeedTraceClient::Commons::BinaryTreeNodeValue.from_json(json_object: value)
         end
         new(
           root: root,

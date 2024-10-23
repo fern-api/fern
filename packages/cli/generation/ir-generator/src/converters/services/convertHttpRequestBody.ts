@@ -3,12 +3,19 @@ import {
     FileUploadRequestProperty,
     HttpRequestBody,
     HttpRequestBodyReference,
-    InlinedRequestBodyProperty
+    InlinedRequestBodyProperty,
+    Availability
 } from "@fern-api/ir-sdk";
-import { isInlineRequestBody, parseBytesRequest, parseFileUploadRequest, RawSchemas } from "@fern-api/yaml-schema";
+import {
+    isInlineRequestBody,
+    parseBytesRequest,
+    parseFileUploadRequest,
+    RawSchemas
+} from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
+import { convertAvailability } from "../convertDeclaration";
 
 export function convertHttpRequestBody({
     request,
@@ -21,7 +28,8 @@ export function convertHttpRequestBody({
     if (bytesRequest != null) {
         return HttpRequestBody.bytes({
             isOptional: bytesRequest.isOptional,
-            contentType: typeof request === "string" ? undefined : request?.["content-type"]
+            contentType: typeof request === "string" ? undefined : request?.["content-type"],
+            docs: typeof request === "string" ? undefined : request?.docs
         });
     }
 
@@ -51,7 +59,8 @@ export function convertHttpRequestBody({
                                     wireValue: property.key,
                                     name: property.key
                                 }),
-                                isOptional: property.isOptional
+                                isOptional: property.isOptional,
+                                contentType: property.contentType
                             })
                         );
                     } else {
@@ -61,21 +70,25 @@ export function convertHttpRequestBody({
                                     wireValue: property.key,
                                     name: property.key
                                 }),
-                                isOptional: property.isOptional
+                                isOptional: property.isOptional,
+                                contentType: property.contentType
                             })
                         );
                     }
                 } else {
-                    return FileUploadRequestProperty.bodyProperty(
-                        convertInlinedRequestProperty({
+                    return FileUploadRequestProperty.bodyProperty({
+                        ...convertInlinedRequestProperty({
                             propertyKey: property.key,
                             propertyDefinition: property.propertyType,
                             docs: property.docs,
+                            availability: convertAvailability(property.availability),
                             file
-                        })
-                    );
+                        }),
+                        contentType: property.contentType
+                    });
                 }
-            })
+            }),
+            docs: request.docs
         });
     }
 
@@ -90,6 +103,7 @@ export function convertHttpRequestBody({
                 parseTypeName({ typeName: extended, file })
             ),
             contentType: request["content-type"],
+            docs: request.docs,
             properties:
                 request.body.properties != null
                     ? Object.entries(request.body.properties).map(([propertyKey, propertyDefinition]) =>
@@ -97,10 +111,16 @@ export function convertHttpRequestBody({
                               propertyKey,
                               propertyDefinition,
                               docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
+                              availability:
+                                  typeof propertyDefinition !== "string"
+                                      ? convertAvailability(propertyDefinition.availability)
+                                      : undefined,
                               file
                           })
                       )
-                    : []
+                    : [],
+            extraProperties: request.body["extra-properties"] ?? false,
+            extendedProperties: undefined
         });
     }
 
@@ -133,15 +153,18 @@ function convertInlinedRequestProperty({
     propertyKey,
     propertyDefinition,
     docs,
+    availability,
     file
 }: {
     propertyKey: string;
     propertyDefinition: RawSchemas.ObjectPropertySchema;
     docs: string | undefined;
+    availability: Availability | undefined;
     file: FernFileContext;
 }): InlinedRequestBodyProperty {
     return {
         docs,
+        availability,
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: propertyKey,
             name: getPropertyName({ propertyKey, property: propertyDefinition }).name

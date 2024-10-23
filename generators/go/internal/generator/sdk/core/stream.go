@@ -6,10 +6,20 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
-const defaultStreamDelimiter = '\n'
+const (
+	// DefaultDataPrefix is the default prefix used for SSE streaming.
+	DefaultSSEDataPrefix = "data: "
+
+	// DefaultTerminator is the default terminator used for SSE streaming.
+	DefaultSSETerminator = "[DONE]"
+
+	// The default stream delimiter used to split messages.
+	defaultStreamDelimiter = '\n'
+)
 
 // Streamer calls APIs and streams responses using a *Stream.
 type Streamer[T any] struct {
@@ -27,19 +37,31 @@ func NewStreamer[T any](caller *Caller) *Streamer[T] {
 
 // StreamParams represents the parameters used to issue an API streaming call.
 type StreamParams struct {
-	URL          string
-	Method       string
-	Delimiter    string
-	MaxAttempts  uint
-	Headers      http.Header
-	Client       HTTPClient
-	Request      interface{}
-	ErrorDecoder ErrorDecoder
+	URL             string
+	Method          string
+	Prefix          string
+	Delimiter       string
+	Terminator      string
+	MaxAttempts     uint
+	Headers         http.Header
+	BodyProperties  map[string]interface{}
+	QueryParameters url.Values
+	Client          HTTPClient
+	Request         interface{}
+	ErrorDecoder    ErrorDecoder
 }
 
 // Stream issues an API streaming call according to the given stream parameters.
 func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*Stream[T], error) {
-	req, err := newRequest(ctx, params.URL, params.Method, params.Headers, params.Request)
+	url := buildURL(params.URL, params.QueryParameters)
+	req, err := newRequest(
+		ctx,
+		url,
+		params.Method,
+		params.Headers,
+		params.Request,
+		params.BodyProperties,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -86,6 +108,13 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*Stream
 	if params.Delimiter != "" {
 		opts = append(opts, WithDelimiter(params.Delimiter))
 	}
+	if params.Prefix != "" {
+		opts = append(opts, WithPrefix(params.Prefix))
+	}
+	if params.Terminator != "" {
+		opts = append(opts, WithTerminator(params.Terminator))
+	}
+
 	return NewStream[T](resp, opts...), nil
 }
 
@@ -107,6 +136,24 @@ func WithDelimiter(delimiter string) StreamOption {
 	}
 }
 
+// WithPrefix overrides the prefix for the Stream.
+//
+// By default, the Stream doesn't have a prefix.
+func WithPrefix(prefix string) StreamOption {
+	return func(opts *streamOptions) {
+		opts.prefix = prefix
+	}
+}
+
+// WithTerminator overrides the terminator for the Stream.
+//
+// By default, the Stream terminates on EOF.
+func WithTerminator(terminator string) StreamOption {
+	return func(opts *streamOptions) {
+		opts.terminator = terminator
+	}
+}
+
 // NewStream constructs a new Stream from the given *http.Response.
 func NewStream[T any](response *http.Response, opts ...StreamOption) *Stream[T] {
 	options := new(streamOptions)
@@ -114,7 +161,7 @@ func NewStream[T any](response *http.Response, opts ...StreamOption) *Stream[T] 
 		opt(options)
 	}
 	return &Stream[T]{
-		reader: newStreamReader(response.Body, options.delimiter),
+		reader: newStreamReader(response.Body, options),
 		closer: response.Body,
 	}
 }
@@ -149,9 +196,12 @@ type streamReader interface {
 // By default, the streamReader uses a simple a *bufio.Reader
 // which splits on newlines, and otherwise use a *bufio.Scanner to
 // split on custom delimiters.
-func newStreamReader(reader io.Reader, delimiter string) streamReader {
-	if len(delimiter) > 0 {
-		return newScannerStreamReader(reader, delimiter)
+func newStreamReader(reader io.Reader, options *streamOptions) streamReader {
+	if !options.isEmpty() {
+		if options.delimiter == "" {
+			options.delimiter = string(defaultStreamDelimiter)
+		}
+		return newScannerStreamReader(reader, options)
 	}
 	return newBufferStreamReader(reader)
 }
@@ -176,37 +226,69 @@ func (b *bufferStreamReader) ReadFromStream() ([]byte, error) {
 // configurable delimiters.
 type scannerStreamReader struct {
 	scanner *bufio.Scanner
+	options *streamOptions
 }
 
-func newScannerStreamReader(reader io.Reader, delimiter string) *scannerStreamReader {
+func newScannerStreamReader(
+	reader io.Reader,
+	options *streamOptions,
+) *scannerStreamReader {
 	scanner := bufio.NewScanner(reader)
-	scanner.Split(func(data []byte, atEOF bool) (int, []byte, error) {
-		if atEOF && len(data) == 0 {
+	stream := &scannerStreamReader{
+		scanner: scanner,
+		options: options,
+	}
+	scanner.Split(func(bytes []byte, atEOF bool) (int, []byte, error) {
+		if atEOF && len(bytes) == 0 {
 			return 0, nil, nil
 		}
-		if i := strings.Index(string(data), delimiter); i >= 0 {
-			return i + len(delimiter), data[0:i], nil
+		n, data, err := stream.parse(bytes)
+		if stream.isTerminated(data) {
+			return 0, nil, io.EOF
 		}
-		if atEOF {
-			return len(data), data, nil
-		}
-		return 0, nil, nil
+		return n, data, err
 	})
-	return &scannerStreamReader{
-		scanner: scanner,
-	}
+	return stream
 }
 
-func (b *scannerStreamReader) ReadFromStream() ([]byte, error) {
-	if b.scanner.Scan() {
-		return b.scanner.Bytes(), nil
+func (s *scannerStreamReader) ReadFromStream() ([]byte, error) {
+	if s.scanner.Scan() {
+		return s.scanner.Bytes(), nil
 	}
-	if err := b.scanner.Err(); err != nil {
+	if err := s.scanner.Err(); err != nil {
 		return nil, err
 	}
 	return nil, io.EOF
 }
 
+func (s *scannerStreamReader) parse(bytes []byte) (int, []byte, error) {
+	var start int
+	if s.options != nil && s.options.prefix != "" {
+		if i := strings.Index(string(bytes), s.options.prefix); i >= 0 {
+			start = i + len(s.options.prefix)
+		}
+	}
+	data := bytes[start:]
+	if i := strings.Index(string(data), s.options.delimiter); i >= 0 {
+		data = data[:i+len(s.options.delimiter)]
+	}
+	n := start + len(data) + len(s.options.delimiter)
+	return n, data, nil
+}
+
+func (s *scannerStreamReader) isTerminated(bytes []byte) bool {
+	if s.options == nil || s.options.terminator == "" {
+		return false
+	}
+	return strings.Contains(string(bytes), s.options.terminator)
+}
+
 type streamOptions struct {
-	delimiter string
+	delimiter  string
+	prefix     string
+	terminator string
+}
+
+func (s *streamOptions) isEmpty() bool {
+	return s.delimiter == "" && s.prefix == "" && s.terminator == ""
 }

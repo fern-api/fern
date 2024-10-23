@@ -14,8 +14,9 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DeepEqualityCorrectnessCheck.Builder.class)
 public final class DeepEqualityCorrectnessCheck {
     private final String expectedValueParameterId;
@@ -62,7 +63,7 @@ public final class DeepEqualityCorrectnessCheck {
     }
 
     public interface ExpectedValueParameterIdStage {
-        _FinalStage expectedValueParameterId(String expectedValueParameterId);
+        _FinalStage expectedValueParameterId(@NotNull String expectedValueParameterId);
 
         Builder from(DeepEqualityCorrectnessCheck other);
     }
@@ -88,8 +89,9 @@ public final class DeepEqualityCorrectnessCheck {
 
         @java.lang.Override
         @JsonSetter("expectedValueParameterId")
-        public _FinalStage expectedValueParameterId(String expectedValueParameterId) {
-            this.expectedValueParameterId = expectedValueParameterId;
+        public _FinalStage expectedValueParameterId(@NotNull String expectedValueParameterId) {
+            this.expectedValueParameterId =
+                    Objects.requireNonNull(expectedValueParameterId, "expectedValueParameterId must not be null");
             return this;
         }
 

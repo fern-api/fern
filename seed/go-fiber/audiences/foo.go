@@ -3,18 +3,42 @@
 package audiences
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/audiences/fern/core"
 )
 
 type FindRequest struct {
 	OptionalString  OptionalString `query:"optionalString"`
-	PublicProperty  *string        `json:"publicProperty,omitempty" url:"publicProperty,omitempty"`
-	PrivateProperty *int           `json:"privateProperty,omitempty" url:"privateProperty,omitempty"`
+	PublicProperty  *string        `json:"publicProperty,omitempty" url:"-"`
+	PrivateProperty *int           `json:"privateProperty,omitempty" url:"-"`
 }
 
 type ImportingType struct {
 	Imported Imported `json:"imported" url:"imported"`
+
+	extraProperties map[string]interface{}
+}
+
+func (i *ImportingType) GetExtraProperties() map[string]interface{} {
+	return i.extraProperties
+}
+
+func (i *ImportingType) UnmarshalJSON(data []byte) error {
+	type unmarshaler ImportingType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*i = ImportingType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+
+	return nil
 }
 
 func (i *ImportingType) String() string {

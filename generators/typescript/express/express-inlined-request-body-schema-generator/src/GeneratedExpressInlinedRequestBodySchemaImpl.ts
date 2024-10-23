@@ -10,6 +10,7 @@ export declare namespace GeneratedExpressInlinedRequestBodySchemaImpl {
         endpoint: HttpEndpoint;
         inlinedRequestBody: InlinedRequestBody;
         includeSerdeLayer: boolean;
+        skipRequestValidation: boolean;
     }
 }
 
@@ -21,12 +22,14 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
     private endpoint: HttpEndpoint;
     private inlinedRequestBody: InlinedRequestBody;
     private includeSerdeLayer: boolean;
+    private skipRequestValidation: boolean;
 
     constructor({
         packageId,
         endpoint,
         inlinedRequestBody,
         includeSerdeLayer,
+        skipRequestValidation,
         ...superInit
     }: GeneratedExpressInlinedRequestBodySchemaImpl.Init) {
         super(superInit);
@@ -34,6 +37,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
         this.endpoint = endpoint;
         this.inlinedRequestBody = inlinedRequestBody;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.skipRequestValidation = skipRequestValidation;
     }
 
     public writeToFile(context: ExpressContext): void {
@@ -44,12 +48,23 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
         if (!this.includeSerdeLayer) {
             return referenceToRawRequest;
         }
+        if (this.skipRequestValidation) {
+            return this.getReferenceToZurgSchema(context).parse(referenceToRawRequest, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedEnumValues: true,
+                allowUnrecognizedUnionMembers: true,
+                skipValidation: true,
+                breadcrumbsPrefix: [],
+                omitUndefined: false
+            });
+        }
         return this.getReferenceToZurgSchema(context).parse(referenceToRawRequest, {
             unrecognizedObjectKeys: "fail",
             allowUnrecognizedEnumValues: false,
             allowUnrecognizedUnionMembers: false,
             skipValidation: false,
-            breadcrumbsPrefix: []
+            breadcrumbsPrefix: [],
+            omitUndefined: false
         });
     }
 

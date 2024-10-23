@@ -49,12 +49,18 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"size\": \"example\"\n}",
+              "raw": "{\n    \"size\": \"size\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -62,7 +68,49 @@
               }
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/ec2/boot",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ec2",
+                    "boot"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"size\": \"size\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     },
@@ -88,12 +136,18 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"s3Key\": \"example\"\n}",
+              "raw": "{\n    \"s3Key\": \"s3Key\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -101,7 +155,49 @@
               }
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/s3/presigned-url",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "s3",
+                    "presigned-url"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"s3Key\": \"s3Key\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "\"string\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

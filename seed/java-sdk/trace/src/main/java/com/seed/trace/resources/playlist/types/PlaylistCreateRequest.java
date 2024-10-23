@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PlaylistCreateRequest.Builder.class)
 public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
     private final String name;
@@ -75,7 +76,7 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(PlaylistCreateRequest other);
     }
@@ -110,8 +111,8 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
-            this.name = name;
+        public _FinalStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

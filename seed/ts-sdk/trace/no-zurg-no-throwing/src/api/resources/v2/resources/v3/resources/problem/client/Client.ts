@@ -11,12 +11,19 @@ export declare namespace Problem {
     interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
@@ -26,8 +33,10 @@ export class Problem {
     /**
      * Returns lightweight versions of all problems
      *
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await seedTrace.v2.v3.problem.getLightweightProblems()
+     *     await client.v2.v3.problem.getLightweightProblems()
      */
     public async getLightweightProblems(
         requestOptions?: Problem.RequestOptions
@@ -52,12 +61,15 @@ export class Problem {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -75,8 +87,10 @@ export class Problem {
     /**
      * Returns latest versions of all problems
      *
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await seedTrace.v2.v3.problem.getProblems()
+     *     await client.v2.v3.problem.getProblems()
      */
     public async getProblems(
         requestOptions?: Problem.RequestOptions
@@ -96,12 +110,15 @@ export class Problem {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -119,8 +136,11 @@ export class Problem {
     /**
      * Returns latest version of a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await seedTrace.v2.v3.problem.getLatestProblem("string")
+     *     await client.v2.v3.problem.getLatestProblem("problemId")
      */
     public async getLatestProblem(
         problemId: SeedTrace.ProblemId,
@@ -129,7 +149,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${problemId}`
+                `/problems-v2/problem-info/${encodeURIComponent(problemId)}`
             ),
             method: "GET",
             headers: {
@@ -141,12 +161,15 @@ export class Problem {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -164,8 +187,12 @@ export class Problem {
     /**
      * Returns requested version of a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {number} problemVersion
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await seedTrace.v2.v3.problem.getProblemVersion("string", 1)
+     *     await client.v2.v3.problem.getProblemVersion("problemId", 1)
      */
     public async getProblemVersion(
         problemId: SeedTrace.ProblemId,
@@ -175,7 +202,9 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${problemId}/version/${problemVersion}`
+                `/problems-v2/problem-info/${encodeURIComponent(problemId)}/version/${encodeURIComponent(
+                    problemVersion
+                )}`
             ),
             method: "GET",
             headers: {
@@ -187,12 +216,15 @@ export class Problem {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {

@@ -17,8 +17,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Movie.Builder.class)
 public final class Movie implements IMovie {
     private final String id;
@@ -37,6 +38,8 @@ public final class Movie implements IMovie {
 
     private final Map<String, Object> metadata;
 
+    private final long revenue;
+
     private final Map<String, Object> additionalProperties;
 
     private Movie(
@@ -48,6 +51,7 @@ public final class Movie implements IMovie {
             String tag,
             Optional<String> book,
             Map<String, Object> metadata,
+            long revenue,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.prequel = prequel;
@@ -57,6 +61,7 @@ public final class Movie implements IMovie {
         this.tag = tag;
         this.book = book;
         this.metadata = metadata;
+        this.revenue = revenue;
         this.additionalProperties = additionalProperties;
     }
 
@@ -117,6 +122,12 @@ public final class Movie implements IMovie {
         return metadata;
     }
 
+    @JsonProperty("revenue")
+    @java.lang.Override
+    public long getRevenue() {
+        return revenue;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -136,13 +147,22 @@ public final class Movie implements IMovie {
                 && rating == other.rating
                 && tag.equals(other.tag)
                 && book.equals(other.book)
-                && metadata.equals(other.metadata);
+                && metadata.equals(other.metadata)
+                && revenue == other.revenue;
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.id, this.prequel, this.title, this.from, this.rating, this.tag, this.book, this.metadata);
+                this.id,
+                this.prequel,
+                this.title,
+                this.from,
+                this.rating,
+                this.tag,
+                this.book,
+                this.metadata,
+                this.revenue);
     }
 
     @java.lang.Override
@@ -155,17 +175,17 @@ public final class Movie implements IMovie {
     }
 
     public interface IdStage {
-        TitleStage id(String id);
+        TitleStage id(@NotNull String id);
 
         Builder from(Movie other);
     }
 
     public interface TitleStage {
-        FromStage title(String title);
+        FromStage title(@NotNull String title);
     }
 
     public interface FromStage {
-        RatingStage from(String from);
+        RatingStage from(@NotNull String from);
     }
 
     public interface RatingStage {
@@ -173,7 +193,11 @@ public final class Movie implements IMovie {
     }
 
     public interface TagStage {
-        _FinalStage tag(String tag);
+        RevenueStage tag(@NotNull String tag);
+    }
+
+    public interface RevenueStage {
+        _FinalStage revenue(long revenue);
     }
 
     public interface _FinalStage {
@@ -195,7 +219,8 @@ public final class Movie implements IMovie {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, TitleStage, FromStage, RatingStage, TagStage, _FinalStage {
+    public static final class Builder
+            implements IdStage, TitleStage, FromStage, RatingStage, TagStage, RevenueStage, _FinalStage {
         private String id;
 
         private String title;
@@ -205,6 +230,8 @@ public final class Movie implements IMovie {
         private double rating;
 
         private String tag;
+
+        private long revenue;
 
         private Map<String, Object> metadata = new LinkedHashMap<>();
 
@@ -227,27 +254,28 @@ public final class Movie implements IMovie {
             tag(other.getTag());
             book(other.getBook());
             metadata(other.getMetadata());
+            revenue(other.getRevenue());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
-        public TitleStage id(String id) {
-            this.id = id;
+        public TitleStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("title")
-        public FromStage title(String title) {
-            this.title = title;
+        public FromStage title(@NotNull String title) {
+            this.title = Objects.requireNonNull(title, "title must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("from")
-        public RatingStage from(String from) {
-            this.from = from;
+        public RatingStage from(@NotNull String from) {
+            this.from = Objects.requireNonNull(from, "from must not be null");
             return this;
         }
 
@@ -264,8 +292,15 @@ public final class Movie implements IMovie {
 
         @java.lang.Override
         @JsonSetter("tag")
-        public _FinalStage tag(String tag) {
-            this.tag = tag;
+        public RevenueStage tag(@NotNull String tag) {
+            this.tag = Objects.requireNonNull(tag, "tag must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("revenue")
+        public _FinalStage revenue(long revenue) {
+            this.revenue = revenue;
             return this;
         }
 
@@ -291,7 +326,7 @@ public final class Movie implements IMovie {
 
         @java.lang.Override
         public _FinalStage book(String book) {
-            this.book = Optional.of(book);
+            this.book = Optional.ofNullable(book);
             return this;
         }
 
@@ -304,7 +339,7 @@ public final class Movie implements IMovie {
 
         @java.lang.Override
         public _FinalStage prequel(String prequel) {
-            this.prequel = Optional.of(prequel);
+            this.prequel = Optional.ofNullable(prequel);
             return this;
         }
 
@@ -317,7 +352,7 @@ public final class Movie implements IMovie {
 
         @java.lang.Override
         public Movie build() {
-            return new Movie(id, prequel, title, from, rating, tag, book, metadata, additionalProperties);
+            return new Movie(id, prequel, title, from, rating, tag, book, metadata, revenue, additionalProperties);
         }
     }
 }

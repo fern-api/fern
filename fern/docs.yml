@@ -6,313 +6,557 @@ instances:
         owner: fern-api
         repo: fern
         branch: main
-  # - url: fern-beta.docs.buildwithfern.com/learn
-  #   custom-domain: staging.buildwithfern.com/learn
+  - url: fern.docs.dev.buildwithfern.com/learn
+    edit-this-page:
+      github:
+        owner: fern-api
+        repo: fern
+        branch: main
 title: Fern
 
 tabs:
   home:
     display-name: Home
+    icon: fa-regular fa-home
     slug: home
-  overview:
-    display-name: Overview
+  api-definition:
+    display-name: API Definition
+    icon: fa-regular fa-book
+    slug: api-definition
   docs:
     display-name: Docs
+    icon: fa-regular fa-browser
     slug: docs
   sdks:
     display-name: SDKs
+    icon: fa-brands fa-codepen
     slug: sdks
-  api:
-    display-name: API Reference
-    slug: api
-  configure:
-    display-name: Configuration
-    slug: configure
+  cli-api:
+    display-name: CLI & API Reference
+    icon: fa-regular fa-code
+    slug: cli-api
 
 css: ./assets/styles.css
+
+redirects:
+  - source: /api-definition/fern/api-yml-reference
+    destination: /api-definition/fern/api-yml/overview
 
 navigation:
   - tab: home
     layout:
       - page: Welcome
         path: pages/welcome.mdx
-  - tab: sdks
+  - tab: api-definition
     layout:
       - section: Introduction
-        contents: 
-          - page: Overview
-            path: ./pages/sdks/introduction/overview.mdx
-      - section: Getting Started
-        contents: 
-          - page: Generate your first SDK
-            path: ./pages/sdks/getting-started/generate-your-first-sdk.mdx
-      - section: Features
         contents:
-          - page: Strongly typed
-            path: ./pages/sdks/features/strongly-typed.mdx
-          - page: Idiomatic method names
-            path: ./pages/sdks/features/idiomatic-method-names.mdx
-          - page: Schema validation
-            path: ./pages/sdks/features/schema-validation.mdx
-          - page: Multipart form data
-            path: ./pages/sdks/features/multipart-form-data.mdx
-          - page: Forward compatibility
-            path: ./pages/sdks/features/forward-compatibility.mdx
-          - page: Registry publishing
-            path: ./pages/sdks/features/publish-to-registries.mdx
-            icon: pro
-          - page: Auto-Pagination
-            path: ./pages/sdks/features/auto-pagination.mdx
-            icon: pro
-          - page: Retries with backoff
-            path: ./pages/sdks/features/retries-with-backoff.mdx
-            icon: pro
-          - page: Webhook signature verification
-            path: ./pages/sdks/features/webhook-signature-verification.mdx
-            icon: pro
-          - page: Idempotency headers
-            path: ./pages/sdks/features/idempotency-headers.mdx
-            icon: pro
-          - page: Server-Sent events
-            path: ./pages/sdks/features/server-sent-events.mdx
-            icon: pro
-          - page: Integration tests
-            path: ./pages/sdks/features/integration-tests.mdx
-            icon: pro
-          - page: Code Snippets
-            path: ./pages/sdks/features/code-snippets.mdx
-            icon: pro
-          - page: Augment with custom code
-            path: ./pages/sdks/features/augment-with-custom-code.mdx
-            icon: pro
-          - page: Merging multiple APIs
-            path: ./pages/sdks/features/merging-multiple-apis.mdx
-            icon: pro
-          - page: WebSockets
-            path: ./pages/sdks/features/websockets.mdx
-            icon: pro
-          # - page: OAuth token refresh
-          #   path: ./pages/sdks/features/dummy.mdx
-          #   icon: pro
-          # - page: Object oriented SDKs
-          #   path: ./pages/sdks/features/dummy.mdx
-          #   icon: pro
-          # - page: Polling
-          #   path: ./pages/sdks/features/dummy.mdx
-          #   icon: pro
-          # - page: GitHub integration
-          #   path: ./pages/sdks/features/dummy.mdx
-          #   icon: pro
-
-      # - section: Other generators
-      #   contents:
-      #     - section: Server-side
-      #       contents:
-      #         - page: Express.js
-      #           path: ./pages/fern-sdks/other-generators/server-side/express.mdx
-      #           slug: express
-      #         - page: FastAPI
-      #           path: ./pages/fern-sdks/other-generators/server-side/fastapi.mdx
-      #           slug: fastapi
-      #         - page: Spring
-      #           path: ./pages/fern-sdks/other-generators/server-side/spring.mdx
-      #     - section: Specification
-      #       slug: spec
-      #       contents:
-      #         - page: OpenAPI generator
-      #           slug: openapi
-      #           path: ./pages/fern-sdks/other-generators/spec/openapi-generator.mdx
-      #         - page: Postman Collection generator
-      #           slug: postman
-      #           path: ./pages/fern-sdks/other-generators/spec/postman-collection.mdx
-      # - section: Guides
-      #   contents:
-      #     - page: Publish to Maven Central
-      #       path: ./pages/fern-sdks/guides/publish-to-maven-central.mdx
-      #       slug: publish-maven
-      #     - page: Update SDKs with Fern's GitHub Bot
-      #       path: ./pages/fern-sdks/guides/github-bot.mdx
-      #       slug: github-bot
-      #       icon: 
-  - tab: docs
-    layout:
-      - page: Overview
-        path: ./pages/fern-docs/docs-overview.mdx
-      - section: Quickstarts
-        slug: quickstarts
-        contents:
-          - page: Use OpenAPI
-            slug: openapi
-            path: ./pages/fern-docs/docs-quickstarts/docs-quickstart-openapi.mdx
-          - page: Use a Fern Definition
-            slug: ferndef
-            path: ./pages/fern-docs/docs-quickstarts/docs-quickstart-ferndef.mdx
-      - section: Configuration
-        slug: config
-        contents:
-          - page: Overview
-            path: ./pages/fern-docs/config/config-overview.mdx
-          - page: Navigation
-            path: ./pages/fern-docs/config/navigation.mdx
-          - page: PR previews
-            slug: previews
-            path: ./pages/fern-docs/config/previews.mdx
-          - section: Customize branding
-            slug: branding
-            contents:
-              - page: Colors, fonts, and background image
-                path: ./pages/fern-docs/config/branding/colors-fonts-background-image.mdx
-                slug: colors-fonts-background-image
-              - page: Logo and favicon
-                path: ./pages/fern-docs/config/branding/logo-and-favicon.mdx
-              - page: Custom domain
-                path: ./pages/fern-docs/config/branding/custom-domain.mdx
-
-      - section: Write content
-        slug: content
-        contents:
-          - page: Write Markdown content
-            path: ./pages/fern-docs/content/write-markdown.mdx
-            slug: write-markdown
-          - page: Frontmatter
-            path: ./pages/fern-docs/content/front-matter.mdx
-          - page: Code snippets
-            path: ./pages/fern-docs/content/code-snippets.mdx
-
-      - section: API references
-        contents:
-          - page: Generate API reference
-            path: ./pages/fern-docs/content/generate-api-ref.mdx
-            slug: generate-api-ref
-          - page: Audiences
-            path: ./pages/fern-docs/config/audiences.mdx
-          - page: SDK snippets
-            path: ./pages/fern-docs/config/sdk-snippets.mdx
-          - page: Endpoint errors
-            path: ./pages/fern-docs/config/endpoint-errors.mdx
-
-      - section: Components
-        slug: components
-        contents:
-          - page: Accordion
-            path: ./pages/fern-docs/components/accordion.mdx
-          - page: Availability
-            path: ./pages/fern-docs/components/availability.mdx
-          - page: Callout
-            path: ./pages/fern-docs/components/callout.mdx
-          - page: Cards
-            path: ./pages/fern-docs/components/card.mdx
-          - page: Code Blocks
-            path: ./pages/fern-docs/components/codeblocks.mdx
-            slug: codeblocks
-          - page: Endpoint Snippets
-            path: ./pages/fern-docs/components/endpoint-snippets.mdx
-          - page: Icon
-            path: ./pages/fern-docs/components/icon.mdx
-          - page: Steps
-            path: ./pages/fern-docs/components/steps.mdx
-          - page: Tabs
-            path: ./pages/fern-docs/components/tabs.mdx
-  - tab: api
-    layout:
-      - api: API Reference
-        api-name: public-api
-        # audiences:
-        #   - external
-        snippets:
-          python: fern-api
-          typescript: "@fern-api/node-sdk"
-  - tab: configure
-    layout:
-      - section: OpenAPI
+          - page: What is an API Definition?
+            icon: fa-regular fa-question-circle
+            path: ./pages/api-definition/introduction/what-is-an-api-definition.mdx
+          - page: What is the Fern Folder?
+            icon: fa-regular fa-folder
+            path: ./pages/api-definition/introduction/what-is-the-fern-folder.mdx
+      - section: OpenAPI Specification
         slug: openapi
         contents:
           - page: Overview
-            path: ./pages/overview/define-your-api/openapi/openapi-overview.mdx
-          - page: OpenAPI Extensions
-            path: ./pages/overview/define-your-api/openapi/extensions.mdx
-            slug: extensions
-          - page: OpenAPI Examples
-            path: ./pages/overview/define-your-api/openapi/examples.mdx
-            slug: examples
-      - section: Fern Definition
-        slug: ferndef
-        contents:
-          - page: Overview
-            path: ./pages/overview/define-your-api/ferndef/ferndef-overview.mdx
-          - page: Export to OpenAPI
-            slug: export-openapi
-            path: ./pages/overview/define-your-api/ferndef/export-openapi.mdx
-          - page: Types
-            path: ./pages/overview/define-your-api/ferndef/types.mdx
-          - page: Endpoints
-            path: ./pages/overview/define-your-api/ferndef/endpoints.mdx
-          - page: Errors
-            path: ./pages/overview/define-your-api/ferndef/errors.mdx
-          - page: Imports
-            path: ./pages/overview/define-your-api/ferndef/imports.mdx
-          - page: Examples
-            path: ./pages/overview/define-your-api/ferndef/examples.mdx
-          - page: Audiences
-            path: ./pages/overview/define-your-api/ferndef/audiences.mdx
-          - page: Availability
-            path: ./pages/overview/define-your-api/ferndef/availability.mdx
-          - page: api.yml reference
-            path: ./pages/overview/define-your-api/ferndef/api-yml.mdx
-          - page: Packages
-            path: ./pages/overview/define-your-api/ferndef/packages.mdx
-          - page: Comparison with OpenAPI
-            path: ./pages/overview/define-your-api/ferndef/comparison.mdx
-      - section: Fern CLI tool
-        slug: cli
-        contents:
-          - page: Overview
-            path: ./pages/overview/cli/cli-overview.mdx
-          - section: CLI commands
-            slug: commands
+            icon: fa-regular fa-brackets-curly
+            path: ./pages/api-definition/openapi/overview.mdx
+          - page: Authentication
+            icon: fa-regular fa-lock-keyhole
+            path: ./pages/api-definition/openapi/auth.mdx
+          # - page: OpenAPI Examples
+          #   icon: fa-regular fa-square-terminal
+          #   path: ./pages/api-definition/openapi/examples.mdx
+          #   slug: examples
+          - section: Endpoints
+            icon: fa-regular fa-object-intersect
+            slug: endpoints
             contents:
-              - page: fern generate
-                path: ./pages/overview/cli/cli-commands/fern-generate.mdx
-              - page: fern check
-                path: ./pages/overview/cli/cli-commands/fern-check.mdx
-              - page: fern add
-                path: ./pages/overview/cli/cli-commands/fern-add.mdx
-              - page: fern init
-                path: ./pages/overview/cli/cli-commands/fern-init.mdx
-              - page: fern write-definition
-                path: ./pages/overview/cli/cli-commands/fern-write-definition.mdx
-              - page: fern upgrade
-                path: ./pages/overview/cli/cli-commands/fern-upgrade.mdx
-              - page: fern token
-                path: ./pages/overview/cli/cli-commands/fern-token.mdx
-              - page: fern login
-                path: ./pages/overview/cli/cli-commands/fern-login.mdx
-              - page: fern format
-                path: ./pages/overview/cli/cli-commands/fern-format.mdx
-              - page: fern help
-                path: ./pages/overview/cli/cli-commands/fern-help.mdx
-              - page: fern version
-                path: ./pages/overview/cli/cli-commands/fern-version.mdx
+              - page: HTTP JSON Endpoints
+                icon: fa-regular fa-display-code
+                path: ./pages/api-definition/openapi/endpoints/rest.mdx
+                slug: http
+              - page: Multipart Form Uploads
+                icon: fa-regular fa-file
+                path: ./pages/api-definition/openapi/endpoints/multipart.mdx
+                slug: multipart
+              - page: Server Sent Events
+                path: ./pages/api-definition/openapi/endpoints/sse.mdx
+                icon: fa-regular fa-signal-stream
+                slug: sse
+          - page: Webhooks
+            path: ./pages/api-definition/openapi/webhooks.mdx
+            icon: fa-regular fa-webhook
+          - page: Audiences
+            icon: fa-duotone fa-users
+            path: ./pages/api-definition/openapi/extensions/audiences.mdx
+            slug: audiences
+          - section: Extensions
+            icon: fa-regular fa-object-intersect
+            slug: extensions
+            contents:
+              - page: SDK Method Names
+                icon: fa-regular fa-display-code
+                path: ./pages/api-definition/openapi/extensions/method-names.mdx
+                slug: method-names
+              - page: Parameter Names
+                icon: fa-regular fa-input-text
+                path: ./pages/api-definition/openapi/extensions/parameter-names.mdx
+                slug: parameter-names
+              - page: Other
+                icon: fa-regular fa-ellipsis-h
+                path: ./pages/api-definition/openapi/extensions/others.mdx
+                slug: others
+          - page: Overlay Customizations
+            icon: fa-regular fa-shuffle
+            path: ./pages/api-definition/openapi/overrides.mdx
+          - page: Automatic Updates
+            icon: fa-regular fa-arrows-rotate
+            path: ./pages/api-definition/openapi/automation.mdx            
+          - section: Integrate your Server Framework
+            icon: fa-regular fa-server
+            slug: frameworks
+            contents:
+              - page: FastAPI
+                icon: fa-regular fa-circle-bolt
+                path: ./pages/api-definition/openapi/server-frameworks/fastapi.mdx
+                slug: fastapi
+      - section: Fern Definition
+        slug: fern
+        contents:
+          - page: Overview
+            icon: fa-regular fa-seedling
+            path: ./pages/api-definition/fern-definition/overview.mdx
+          - page: Authentication
+            icon: fa-regular fa-lock-keyhole
+            path: ./pages/api-definition/fern-definition/auth.mdx
+          - page: Types
+            icon: fa-regular fa-shapes
+            path: ./pages/api-definition/fern-definition/types.mdx
+          - section: Endpoints
+            icon: fa-regular fa-plug
+            path: ./pages/api-definition/fern-definition/endpoints.mdx
+            contents: 
+              - page: HTTP JSON Endpoints
+                icon: fa-regular fa-display-code
+                path: ./pages/api-definition/fern-definition/endpoints/rest.mdx
+                slug: http
+              - page: Multipart Form Uploads
+                icon: fa-regular fa-file
+                path: ./pages/api-definition/fern-definition/endpoints/multipart.mdx
+                slug: multipart
+          - page: Webhooks
+            icon: fa-regular fa-webhook
+            path: ./pages/api-definition/fern-definition/webhooks.mdx
+          - page: WebSockets
+            icon: fa-regular fa-globe
+            path: ./pages/api-definition/fern-definition/websockets.mdx
+          - page: Errors
+            icon: fa-regular fa-exclamation-triangle
+            path: ./pages/api-definition/fern-definition/errors.mdx
+          - page: Imports
+            icon: fa-regular fa-download
+            path: ./pages/api-definition/fern-definition/imports.mdx
+          - page: Examples
+            icon: fa-regular fa-square-terminal
+            path: ./pages/api-definition/fern-definition/examples.mdx
+          - page: Audiences
+            icon: fa-duotone fa-users
+            path: ./pages/api-definition/fern-definition/audiences.mdx
+          - page: Availability
+            icon: fa-regular fa-clock-rotate-left
+            path: ./pages/api-definition/fern-definition/availability.mdx
+          - section: api.yml Reference
+            icon: fa-regular fa-books
+            slug: api-yml
+            contents:
+              - page: Overview
+                icon: fa-regular fa-book
+                path: ./pages/api-definition/fern-definition/api-yml/overview.mdx
+              - page: Environments
+                icon: fa-regular fa-circle-wifi
+                path: ./pages/api-definition/fern-definition/api-yml/environments.mdx
+              - page: Global Headers
+                icon: fa-regular fa-globe
+                path: ./pages/api-definition/fern-definition/api-yml/global-configuration.mdx
+              - page: Errors
+                icon: fa-regular fa-exclamation-triangle
+                path: ./pages/api-definition/fern-definition/api-yml/errors.mdx
+          - page: Packages
+            icon: fa-regular fa-box-open
+            path: ./pages/api-definition/fern-definition/packages.mdx
+          - page: Depending on Other APIs
+            icon: fa-regular fa-link
+            path: ./pages/api-definition/fern-definition/depending-on-other-apis.mdx
+          - page: Export to OpenAPI
+            icon: fa-regular fa-file-export
+            slug: export-openapi
+            path: ./pages/api-definition/fern-definition/export-openapi.mdx
+  - tab: sdks
+    layout:
+      - section: Introduction
+        contents:
+          - page: Overview
+            path: ./pages/sdks/introduction/overview.mdx
+          - page: Configuration
+            path: ./pages/sdks/introduction/configuration.mdx
+          - section: Changelogs
+            slug: changelog
+            contents:
+              - changelog: ./pages/changelogs/python-sdk
+                title: Python
+                slug: python
+              - changelog: ./pages/changelogs/go-sdk
+                title: Go
+                slug: go
+              - changelog: ./pages/changelogs/csharp-sdk
+                title: .NET
+                slug: csharp
+              - changelog: ./pages/changelogs/java-sdk
+                title: Java
+                slug: java
+              - changelog: ./pages/changelogs/ruby-sdk
+                title: Ruby
+                slug: ruby
+      - section: Getting Started
+        contents:
+          - page: Generate your First SDK
+            path: ./pages/sdks/getting-started/generate-your-first-sdk.mdx
+          - page: Preview your SDK Locally
+            path: ./pages/sdks/getting-started/preview-your-sdk-locally.mdx
+          - page: Publish a Public-Facing SDK
+            path: ./pages/sdks/publish-sdk/publish-your-sdk.mdx
+            hidden: true
+      - section: Features
+        contents:
+          - page: Strongly Typed
+            path: ./pages/sdks/features/strongly-typed.mdx
+          - page: Idiomatic Method Names
+            path: ./pages/sdks/features/idiomatic-method-names.mdx
+          - page: Schema Validation
+            path: ./pages/sdks/features/schema-validation.mdx
+          - page: Discriminated Unions
+            path: ./pages/sdks/features/discriminated-unions.mdx
+          - page: Multipart Form Data
+            path: ./pages/sdks/features/multipart-form-data.mdx
+          - page: Forward Compatibility
+            path: ./pages/sdks/features/forward-compatibility.mdx
+          - page: Registry Publishing
+            path: ./pages/sdks/features/publish-to-registries.mdx
+            icon: fa-regular fa-pro
+          - page: Auto-Pagination
+            path: ./pages/sdks/features/auto-pagination.mdx
+            icon: fa-regular fa-pro
+          - page: OAuth Token Refresh
+            path: ./pages/sdks/features/oauth.mdx
+            icon: fa-regular fa-pro
+          - page: Retries with Backoff
+            path: ./pages/sdks/features/retries-with-backoff.mdx
+            icon: fa-regular fa-pro
+          - page: Webhook Signature Verification
+            path: ./pages/sdks/features/webhook-signature-verification.mdx
+            icon: fa-regular fa-pro
+          - page: Idempotency Headers
+            path: ./pages/sdks/features/idempotency-headers.mdx
+            icon: fa-regular fa-pro
+          - page: Server-Sent Events
+            path: ./pages/sdks/features/server-sent-events.mdx
+            icon: fa-regular fa-pro
+          - page: Integration Tests
+            path: ./pages/sdks/features/integration-tests.mdx
+            icon: fa-regular fa-pro
+          - page: Code Snippets
+            path: ./pages/sdks/features/code-snippets.mdx
+            icon: fa-regular fa-pro
+          - page: Augment with Custom Code
+            path: ./pages/sdks/features/augment-with-custom-code.mdx
+            icon: fa-regular fa-pro
+          - page: Merging Multiple APIs
+            path: ./pages/sdks/features/merging-multiple-apis.mdx
+            icon: fa-regular fa-pro
+          - page: WebSockets
+            path: ./pages/sdks/features/websockets.mdx
+            icon: fa-regular fa-pro
+          #   icon: fa-regular fa-pro
+          # - page: Object oriented SDKs
+          #   path: ./pages/sdks/features/dummy.mdx
+          #   icon: fa-regular fa-pro
+          # - page: Polling
+          #   path: ./pages/sdks/features/dummy.mdx
+          #   icon: fa-regular fa-pro
+          # - page: GitHub integration
+          #   path: ./pages/sdks/features/dummy.mdx
+          #   icon: fa-regular fa-pro
+      - section: Package Managers
+        contents:
+          - page: NPM
+            path: ./pages/sdks/integration/npm.mdx
+          - page: PyPI
+            slug: pypi
+            path: ./pages/sdks/integration/pypi.mdx
+          - page: NuGet
+            slug: nuget
+            path: ./pages/sdks/integration/nuget.mdx
+          - page: Maven Central
+            slug: maven-central
+            path: ./pages/sdks/integration/maven-central.mdx
+
+      - section: Alternatives
+        hidden: true
+        contents:
+          - page: Speakeasy
+            path: ./pages/sdks/comparison/speakeasy.mdx
+  - tab: docs
+    layout:
+      - section: Getting Started
+        contents:
+          - page: Quickstart
+            slug: quickstart
+            path: ./pages/docs/getting-started/quickstart.mdx
+            icon: fa-regular fa-rocket
+          - page: Development
+            slug: development
+            path: ./pages/docs/getting-started/development.mdx
+            icon: fa-regular fa-terminal
+          - page: Global Configuration
+            slug: global-configuration
+            path: ./pages/docs/getting-started/global-configuration.mdx
+            icon: fa-regular fa-wrench
+          - page: Project Structure
+            slug: project-structure
+            path: ./pages/docs/getting-started/project-structure.mdx
+            icon: fa-regular fa-map
+
+      - section: Building Your Docs
+        contents:
+          - page: Navigation
+            icon: fa-regular fa-compass
+            path: ./pages/docs/building-your-docs/navigation.mdx
+          - page: Announcement Banner
+            icon: fa-regular fa-bullhorn
+            path: ./pages/docs/building-your-docs/announcement-banner.mdx
+          - page: Links and Redirects
+            icon: fa-regular fa-link
+            path: ./pages/docs/building-your-docs/links-and-redirects.mdx
+          - page: Customizing Slugs
+            icon: fa-regular fa-input-text
+            path: ./pages/docs/building-your-docs/customizing-slugs.mdx
+          - page: Hiding Content
+            icon: fa-regular fa-eye-slash
+            path: ./pages/docs/building-your-docs/hiding-content.mdx
+          - page: Custom CSS & Global JS
+            icon: fa-regular fa-paintbrush
+            path: ./pages/docs/building-your-docs/custom-css-js.mdx
+          - page: Pull Request Preview
+            icon: fa-regular fa-file-magnifying-glass
+            path: ./pages/docs/building-your-docs/pr-preview.mdx
+          - page: Custom Domain
+            icon: fa-regular fa-globe-pointer
+            path: ./pages/docs/building-your-docs/custom-domain.mdx
+          - page: Edit This Page and User Feedback
+            icon: fa-regular fa-comment
+            path: ./pages/docs/building-your-docs/user-feedback.mdx
+
+      - section: Writing Content
+        slug: content
+        contents:
+          - page: Write Markdown content
+            icon: fa-regular fa-font
+            path: ./pages/fern-docs/content/write-markdown.mdx
+            slug: write-markdown
+          - section: Components
+            icon: fa-regular fa-toolbox
+            slug: components
+            # path: ./pages/docs/components/overview.mdx
+            contents:
+              - page: Overview
+                icon: fa-regular fa-wrench
+                path: ./pages/docs/components/overview.mdx
+              - page: Accordions
+                path: ./pages/docs/components/accordions.mdx
+                slug: accordions
+                icon: "square-caret-down"
+              - page: Accordion Groups
+                path: ./pages/docs/components/accordion-groups.mdx
+                icon: table-rows
+                slug: accordion-groups
+              - page: Aside
+                path: ./pages/docs/components/asides.mdx
+                icon: align-right
+                slug: aside
+              - page: Callouts
+                path: ./pages/docs/components/callouts.mdx
+                icon: "circle-exclamation"
+                slug: callouts
+              - page: Cards
+                path: ./pages/docs/components/cards.mdx
+                icon: "rectangle"
+                slug: cards
+              - page: Card Groups
+                path: ./pages/docs/components/card-groups.mdx
+                icon: "rectangles-mixed"
+                slug: card-groups
+              - page: Code Blocks
+                path: ./pages/docs/components/code-blocks.mdx
+                slug: code-blocks
+                icon: "rectangle-code"
+              - page: Steps
+                path: ./pages/docs/components/steps.mdx
+                icon: "fa-solid fa-arrow-progress"
+                slug: steps
+              - page: Frames
+                path: ./pages/docs/components/frames.mdx
+                icon: "frame"
+                slug: frames
+              - page: Tabs
+                path: ./pages/docs/components/tabs.mdx
+                icon: "window-restore"
+                slug: tabs
+              - page: Endpoint Request Snippet
+                path: ./pages/docs/components/endpoint-request-snippet.mdx
+                icon: "turn-up"
+                slug: request-snippet
+              - page: Endpoint Response Snippet
+                path: ./pages/docs/components/endpoint-response-snippet.mdx
+                icon: "turn-down"
+                slug: response-snippet
+          - page: Frontmatter
+            icon: fa-regular fa-sliders
+            path: ./pages/fern-docs/content/front-matter.mdx
+          - page: Reusable Snippets
+            icon: fa-regular fa-recycle
+            path: ./pages/fern-docs/content/reusable-snippets.mdx
+          - page: Changelog
+            path: ./pages/docs/writing-content/changelog.mdx
+            icon: fa-regular fa-clock
+
+      - section: API References
+        contents:
+          - page: Generate API Reference
+            icon: fa-regular fa-gear-code
+            path: ./pages/fern-docs/content/generate-api-ref.mdx
+            slug: generate-api-ref
+          - page: SDK Snippets
+            icon: fa-regular fa-message-code
+            path: ./pages/fern-docs/config/sdk-snippets.mdx
+          - page: Endpoint Errors
+            icon: fa-regular fa-exclamation-triangle
+            path: ./pages/fern-docs/config/endpoint-errors.mdx
+          - page: Customize API Reference Layout
+            icon: fa-regular fa-arrow-up-arrow-down
+            path: ./pages/fern-docs/content/customize-api-ref.mdx
+          - page: Write Markdown in API Reference
+            icon: fa-regular fa-pencil
+            path: ./pages/fern-docs/content/api-ref-content.mdx
+          - page: Customize API Playground
+            icon: fa-regular fa-square-terminal
+            path: ./pages/fern-docs/content/customize-api-playground.mdx
+
+      - section: Integrations
+        slug: integrations
+        contents:
+          - page: Overview
+            icon: fa-regular fa-link
+            slug: overview
+            path: ./pages/docs/integrations/overview.mdx
+          - section: Analytics
+            icon: fa-regular fa-chart-simple
+            slug: analytics
+            contents:
+              - page: PostHog
+                path: ./pages/docs/integrations/analytics/posthog.mdx
+                slug: posthog
+              - page: Fullstory
+                path: ./pages/docs/integrations/analytics/fullstory.mdx
+              - page: Segment
+                path: ./pages/docs/integrations/analytics/segment.mdx
+          - section: Support
+            icon: fa-regular fa-headset
+            slug: support
+            contents:
+              - page: Intercom
+                path: ./pages/docs/integrations/support/intercom.mdx
+          - page: Postman
+            slug: postman
+            path: ./pages/docs/integrations/postman.mdx
+
+      - section: Developer Tools
+        contents:
+          - page: GitLab
+            slug: gitlab
+            icon: fa-brands fa-gitlab
+            path: ./pages/docs/developer-tools/gitlab.mdx
+          - page: Vale
+            icon: fa-regular fa-list-check
+            path: ./pages/docs/developer-tools/vale.mdx
+
+      - section: Alternatives
+        hidden: true
+        contents:
+          - page: ReadMe
+            slug: readme
+            path: ./pages/docs/comparison/readme.mdx
+
+  - tab: cli-api
+    layout:
+      - section: CLI Reference
+        contents:
+          - page: CLI Overview
+            path: ./pages/cli-api/overview.mdx
+          - page: Global Options
+            path: ./pages/cli-api/global-options.mdx
+          - page: Commands
+            path: ./pages/cli-api/commands.mdx
+          - changelog: ./pages/changelogs/cli
+      - api: API Reference
+        api-name: public-api
+        summary: ./pages/cli-api/api-summary.mdx
+        paginated: true
+        audiences:
+          - external
+        layout:
+          - page: Overview
+            path: ./pages/cli-api/api-summary.mdx
+        # snippets:
+        #   python: fern-api
+        #   typescript: "@fern-api/node-sdk"
 
 navbar-links:
+  - type: minimal
+    text: Join our community
+    url: https://join.slack.com/t/fern-community/shared_invite/zt-2q7ev4mki-mhO5anKslwRowp4oExWf4A
   - type: filled
     text: Book a demo
     url: https://buildwithfern.com/contact
 
+typography:
+  bodyFont:
+    name: GT-Planar
+    path: ./assets/GT-Planar.woff2
+    weight: 400
+  headingsFont:
+    name: GT-Planar
+    path: ./assets/GT-Planar-Bold.woff2
+
 logo:
   href: https://www.buildwithfern.com
-  light: ./images/logo-green.png
-  dark: ./images/logo-white.png
+  light: ./images/logo-primary.svg
+  dark: ./images/logo-white.svg
   height: 30
 # background-image:
 #   dark: ./images/background.svg
 colors:
   accentPrimary:
-    dark: "#ADFF8C"
-    light: "#209d63"
+    dark: "#1DA32B"
+    light: "#1DA32B"
   background:
-    dark: "#000000"
-    light: "#FFFFFF"
+    dark: "#081008"
+    light: "#FBFFFA"
+  header-background:
+    dark: "#081008"
+    light: "#FBFFFA"
 favicon: ./images/favicon.ico
 
 layout:
@@ -320,3 +564,9 @@ layout:
   header-height: 75px
   searchbar-placement: header
   tabs-placement: header
+
+js:
+  - ./js/koala.js
+analytics:
+  posthog:
+    api-key: ${POSTHOG_API_KEY}

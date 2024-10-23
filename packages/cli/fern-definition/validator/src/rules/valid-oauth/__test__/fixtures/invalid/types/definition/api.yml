@@ -1,0 +1,13 @@
+name: invalid
+imports:
+  auth: auth.yml
+
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    get-token:
+      endpoint: auth.getToken
+      request-properties:
+        scopes: $request.scopes

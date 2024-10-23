@@ -15,6 +15,7 @@ export interface Zurg {
     booleanLiteral: (literal: boolean) => Zurg.Schema;
     date: () => Zurg.Schema;
     number: () => Zurg.Schema;
+    bigint: () => Zurg.Schema;
     boolean: () => Zurg.Schema;
     any: () => Zurg.Schema;
     unknown: () => Zurg.Schema;

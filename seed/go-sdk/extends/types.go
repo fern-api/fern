@@ -8,10 +8,21 @@ import (
 	core "github.com/extends/fern/core"
 )
 
+type Inlined struct {
+	Docs   string `json:"docs" url:"-"`
+	Name   string `json:"name" url:"-"`
+	Unique string `json:"unique" url:"-"`
+}
+
 type Docs struct {
 	Docs string `json:"docs" url:"docs"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (d *Docs) GetExtraProperties() map[string]interface{} {
+	return d.extraProperties
 }
 
 func (d *Docs) UnmarshalJSON(data []byte) error {
@@ -21,6 +32,13 @@ func (d *Docs) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = Docs(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+
 	d._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -41,7 +59,12 @@ type ExampleType struct {
 	Docs string `json:"docs" url:"docs"`
 	Name string `json:"name" url:"name"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (e *ExampleType) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
 }
 
 func (e *ExampleType) UnmarshalJSON(data []byte) error {
@@ -51,6 +74,13 @@ func (e *ExampleType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+
 	e._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -71,7 +101,12 @@ type Json struct {
 	Docs string `json:"docs" url:"docs"`
 	Raw  string `json:"raw" url:"raw"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (j *Json) GetExtraProperties() map[string]interface{} {
+	return j.extraProperties
 }
 
 func (j *Json) UnmarshalJSON(data []byte) error {
@@ -81,6 +116,13 @@ func (j *Json) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*j = Json(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *j)
+	if err != nil {
+		return err
+	}
+	j.extraProperties = extraProperties
+
 	j._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -102,7 +144,12 @@ type NestedType struct {
 	Raw  string `json:"raw" url:"raw"`
 	Name string `json:"name" url:"name"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (n *NestedType) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
 }
 
 func (n *NestedType) UnmarshalJSON(data []byte) error {
@@ -112,6 +159,13 @@ func (n *NestedType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NestedType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
 	n._rawJSON = json.RawMessage(data)
 	return nil
 }

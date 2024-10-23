@@ -1,15 +1,23 @@
 using System.Text.Json.Serialization;
+using SeedLiteral.Core;
+
+#nullable enable
 
 namespace SeedLiteral;
 
-public class SendResponse
+public record SendResponse
 {
     [JsonPropertyName("message")]
-    public string Message { get; init; }
+    public required string Message { get; set; }
 
     [JsonPropertyName("status")]
-    public int Status { get; init; }
+    public required int Status { get; set; }
 
     [JsonPropertyName("success")]
-    public List<bool> Success { get; init; }
+    public required bool Success { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

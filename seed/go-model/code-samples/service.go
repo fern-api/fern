@@ -3,6 +3,7 @@
 package codesamples
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/code-samples/fern/core"
 )
@@ -10,6 +11,29 @@ import (
 type MyResponse struct {
 	Id   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (m *MyResponse) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
+}
+
+func (m *MyResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MyResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MyResponse(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
+	return nil
 }
 
 func (m *MyResponse) String() string {

@@ -61,6 +61,11 @@ export declare namespace ExpressGenerator {
         outputEsm: boolean;
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;
+        skipRequestValidation: boolean;
+        skipResponseValidation: boolean;
+        requestValidationStatusCode: number;
+        useBigInt: boolean;
+        noOptionalProperties: boolean;
     }
 }
 
@@ -183,25 +188,31 @@ export class ExpressGenerator {
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
-            noOptionalProperties: false
+            noOptionalProperties: config.noOptionalProperties
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
-            noOptionalProperties: false
+            noOptionalProperties: config.noOptionalProperties
         });
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
         this.expressInlinedRequestBodyGenerator = new ExpressInlinedRequestBodyGenerator();
         this.expressInlinedRequestBodySchemaGenerator = new ExpressInlinedRequestBodySchemaGenerator({
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            skipRequestValidation: config.skipRequestValidation
         });
         this.expressEndpointTypeSchemasGenerator = new ExpressEndpointTypeSchemasGenerator({
             includeSerdeLayer: config.includeSerdeLayer,
-            allowExtraFields: config.allowExtraFields
+            allowExtraFields: config.allowExtraFields,
+            skipRequestValidation: config.skipRequestValidation,
+            skipResponseValidation: config.skipResponseValidation
         });
         this.expressServiceGenerator = new ExpressServiceGenerator({
             packageResolver: this.packageResolver,
             doNotHandleUnrecognizedErrors: config.doNotHandleUnrecognizedErrors,
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            skipRequestValidation: config.skipRequestValidation,
+            skipResponseValidation: config.skipResponseValidation,
+            requestValidationStatusCode: config.requestValidationStatusCode
         });
         this.expressRegisterGenerator = new ExpressRegisterGenerator({
             packageResolver: this.packageResolver,
@@ -236,6 +247,7 @@ export class ExpressGenerator {
         this.exportsManager.writeExportsToProject(this.rootDirectory);
 
         return new SimpleTypescriptProject({
+            runScripts: true,
             npmPackage: this.npmPackage,
             dependencies: this.dependencyManager.getDependencies(),
             tsMorphProject: this.project,
@@ -244,14 +256,24 @@ export class ExpressGenerator {
             extraDevDependencies: {},
             extraFiles: {},
             extraScripts: {},
+            extraPeerDependencies: {},
+            extraPeerDependenciesMeta: {},
             resolutions: {
                 "@types/mime": "3.0.4"
-            }
+            },
+            extraConfigs: undefined,
+            outputJsr: false
         });
     }
 
-    public async copyCoreUtilities({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc });
+    public async copyCoreUtilities({
+        pathToSrc,
+        pathToRoot
+    }: {
+        pathToSrc: AbsoluteFilePath;
+        pathToRoot: AbsoluteFilePath;
+    }): Promise<void> {
+        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
     }
 
     private generateTypeDeclarations() {
@@ -486,7 +508,8 @@ export class ExpressGenerator {
             expressErrorSchemaDeclarationReferencer: this.expressErrorSchemaDeclarationReferencer,
             expressErrorSchemaGenerator: this.expressErrorSchemaGenerator,
             includeSerdeLayer: this.config.includeSerdeLayer,
-            retainOriginalCasing: this.config.retainOriginalCasing
+            retainOriginalCasing: this.config.retainOriginalCasing,
+            useBigInt: this.config.useBigInt
         });
     }
 }

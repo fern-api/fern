@@ -14,8 +14,9 @@ import com.seed.exhaustive.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetWithMultipleQuery.Builder.class)
 public final class GetWithMultipleQuery {
     private final String query;
@@ -70,7 +71,7 @@ public final class GetWithMultipleQuery {
     }
 
     public interface QueryStage {
-        NumerStage query(String query);
+        NumerStage query(@NotNull String query);
 
         Builder from(GetWithMultipleQuery other);
     }
@@ -103,8 +104,8 @@ public final class GetWithMultipleQuery {
 
         @java.lang.Override
         @JsonSetter("query")
-        public NumerStage query(String query) {
-            this.query = query;
+        public NumerStage query(@NotNull String query) {
+            this.query = Objects.requireNonNull(query, "query must not be null");
             return this;
         }
 

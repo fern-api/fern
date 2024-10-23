@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "impl": {
+      "type": "string"
+    },
+    "imports": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "impl"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

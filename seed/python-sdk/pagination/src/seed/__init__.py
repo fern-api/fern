@@ -2,7 +2,9 @@
 
 from .types import UsernameCursor, UsernamePage
 from . import users
+from .client import AsyncSeedPagination, SeedPagination
 from .users import (
+    ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
     ListUsersPaginationResponse,
     NextPage,
@@ -10,23 +12,34 @@ from .users import (
     Page,
     User,
     UserListContainer,
+    UserOptionalListContainer,
+    UserOptionalListPage,
     UserPage,
     UsernameContainer,
+    WithCursor,
+    WithPage,
 )
 from .version import __version__
 
 __all__ = [
+    "AsyncSeedPagination",
+    "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
     "ListUsersPaginationResponse",
     "NextPage",
     "Order",
     "Page",
+    "SeedPagination",
     "User",
     "UserListContainer",
+    "UserOptionalListContainer",
+    "UserOptionalListPage",
     "UserPage",
     "UsernameContainer",
     "UsernameCursor",
     "UsernamePage",
+    "WithCursor",
+    "WithPage",
     "__version__",
     "users",
 ]

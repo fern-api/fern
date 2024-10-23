@@ -1,0 +1,54 @@
+openapi: 3.0.1
+info:
+  title: oauth-client-credentials-default
+  version: ''
+paths:
+  /token:
+    post:
+      operationId: auth_getToken
+      tags:
+        - Auth
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                grant_type:
+                  type: string
+                  const: client_credentials
+              required:
+                - client_id
+                - client_secret
+                - grant_type
+components:
+  schemas:
+    TokenResponse:
+      title: TokenResponse
+      type: object
+      description: An OAuth token response.
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+      required:
+        - access_token
+        - expires_in
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

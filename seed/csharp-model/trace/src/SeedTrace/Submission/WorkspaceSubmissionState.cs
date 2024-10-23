@@ -1,10 +1,17 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
-public class WorkspaceSubmissionState
+public record WorkspaceSubmissionState
 {
     [JsonPropertyName("status")]
-    public WorkspaceSubmissionStatus Status { get; init; }
+    public required object Status { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

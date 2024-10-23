@@ -1,22 +1,29 @@
 using System.Text.Json.Serialization;
-using SeedPagination;
+using SeedPagination.Core;
+
+#nullable enable
 
 namespace SeedPagination;
 
-public class Page
+public record Page
 {
     /// <summary>
     /// The current page
     /// </summary>
     [JsonPropertyName("page")]
-    public int Page_ { get; init; }
+    public required int Page_ { get; set; }
 
     [JsonPropertyName("next")]
-    public List<NextPage?> Next { get; init; }
+    public NextPage? Next { get; set; }
 
     [JsonPropertyName("per_page")]
-    public int PerPage { get; init; }
+    public required int PerPage { get; set; }
 
     [JsonPropertyName("total_page")]
-    public int TotalPage { get; init; }
+    public required int TotalPage { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,20 +1,83 @@
-irVersion: v38
-docker: fernapi/fern-python-sdk:latest
-dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
+irVersion: v53
+displayName: Python SDK
+image: fernapi/fern-python-sdk
+changelogLocation: ../../generators/python/sdk/versions.yml
+
+buildScripts:
+  installScript:
+    commands:
+      - poetry install
+  compileScript:
+    commands:
+      - poetry run mypy .
+  testScript:
+    # TODO: we need to acttually run the mock server tests as well
+    # Note: not all versions of the generator have this test directory which brings in the unit tests we write
+    # as a result, the script here only runs pytest if the directory exists, and exits 0 if it does not (e.g. just passes)
+    commands:
+      - export PYTHON_TEST_DIR="./tests/utils"
+      - if [ -d "$PYTHON_TEST_DIR" ]; then poetry run pytest -rP "$PYTHON_TEST_DIR"; else echo "Test directory not found. Skipping tests."; fi
+
+publish:
+  workingDirectory: generators/python
+  preBuildCommands:
+    - pip install poetry
+    - poetry config virtualenvs.in-project true
+    - poetry install
+  docker:
+    file: ./generators/python/sdk/Dockerfile
+    image: fernapi/fern-python-sdk
+    context: ./generators/python
+test:
+  docker:
+    image: fernapi/fern-python-sdk:latest
+    command: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
+  local:
+    workingDirectory: generators/python
+    buildCommand:
+      - chmod +x setup-python.sh && ./setup-python.sh
+      - poetry config virtualenvs.in-project true
+      - poetry install
+    # The envvar is needed to trick the generator to look in the right place for the core_utils files
+    runCommand: poetry run python -m src.fern_python.generators.sdk.cli
+    env:
+      PYTEST_CURRENT_TEST: "some value"
+
 language: python
 generatorType: sdk
 defaultOutputMode: github
+customFixtureConfig:
+  customConfig:
+    use_typeddict_requests: true
+  outputFolder: client-filename
 fixtures:
-  examples: 
+  file-download:
     - customConfig: null
       outputFolder: no-custom-config
-    - customConfig: 
-        client: 
+    - customConfig:
+        default_bytes_stream_chunk_size: 1024
+      outputFolder: default-chunk-size
+  examples:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        client:
           filename: base_client.py
           class_name: BaseSeedExhaustive
           exported_filename: client.py
           exported_class_name: SeedExhaustive
       outputFolder: client-filename
+    - customConfig: null
+      readmeConfig:
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        features:
+          asyncClient:
+            - GET /movie/{movieId}
+            - method: POST
+              path: /movie
+      outputFolder: readme
   enum:
     - customConfig: null
       outputFolder: no-custom-config
@@ -22,6 +85,14 @@ fixtures:
         pydantic_config:
           use_str_enums: true
       outputFolder: strenum
+    - customConfig:
+        pydantic_config:
+          enum_type: "forward_compatible_python_enums"
+      outputFolder: real-enum-forward-compat
+    - customConfig:
+        pydantic_config:
+          enum_type: "python_enums"
+      outputFolder: real-enum
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
@@ -41,12 +112,61 @@ fixtures:
       outputFolder: pydantic-v1
     - customConfig:
         pydantic_config:
+          version: v1
+          wrapped_aliases: True
+      outputFolder: pydantic-v1-wrapped
+    - customConfig:
+        pydantic_config:
+          version: v1
+          include_union_utils: true
+      outputFolder: pydantic-v1-with-utils
+    - customConfig:
+        pydantic_config:
           extra_fields: "allow"
       outputFolder: pydantic-extra-fields
     - customConfig:
+        pyproject_python_version: "^3.8.1"
         extra_dependencies:
           boto3: 1.28.57
+          langchain:
+            version: "^0.1.20"
+            optional: true
+        extras:
+          telemetry: ["langchain", "boto3"]
       outputFolder: extra_dependencies
+    - customConfig:
+        pyproject_python_version: "^3.8.1"
+        extra_dev_dependencies:
+          langchain: "^0.1.3"
+          openai: "^1.9.0"
+          langchain-openai: "^0.0.3"
+          covcheck:
+            version: "^0.4.3"
+            extras: ["toml"]
+        extra_dependencies:
+          boto3: 1.28.57
+      outputFolder: deps_with_min_python_version
+    - customConfig:
+        extra_dev_dependencies:
+          requests_mock: 1.12.1
+        extra_dependencies:
+          boto3: 1.28.57
+      outputFolder: extra_dev_dependencies
+    - customConfig:
+        pyproject_python_version: "^3.8.1"
+        extra_dev_dependencies:
+          covcheck:
+            version: "^0.4.3"
+            extras: ["toml"]
+        pyproject_toml: |
+          [tool.covcheck.group.unit.coverage]
+          branch = 26.0
+          line = 62.0
+
+          [tool.covcheck.group.service.coverage]
+          branch = 30.0
+          line = 67.0
+      outputFolder: pyproject_extras
     - customConfig:
         additional_init_exports:
           - from: client_additions
@@ -62,9 +182,44 @@ fixtures:
           skip_validation: true
       outputFolder: skip-pydantic-validation
     - customConfig:
-        pydantic_config:
         follow_redirects_by_default: true
       outputFolder: follow_redirects_by_default
+    - customConfig:
+        inline_request_params: true
+      outputFolder: inline_request_params
+    - customConfig:
+        pydantic_config:
+          use_pydantic_field_aliases: true
+          skip_validation: true
+      outputFolder: aliases_without_validation
+    - customConfig:
+        pydantic_config:
+          use_pydantic_field_aliases: true
+      outputFolder: aliases_with_validation
+  unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          include_union_utils: true
+      outputFolder: union-utils
+    - customConfig:
+        pydantic_config:
+          union_naming: v1
+      outputFolder: union-naming-v1
+  validation:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          use_provided_defaults: true
+      outputFolder: with-defaults
+  literal:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_typeddict_requests: true
+      outputFolder: use_typeddict_requests
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -73,18 +228,72 @@ fixtures:
           skip_validation: true
       outputFolder: skip-pydantic-validation
 scripts:
-  # Tests now run a mock server, you can always run seed with --skip-scripts to save time
+  # Test Pydantic V2
   - docker: fernapi/python-seed
     commands:
-      # The global python version is 3.8
+      # Tests now run a mock server, you can always run seed with --skip-scripts to save time
+      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+      - export HOME="$(pwd)/"
+      - poetry config virtualenvs.path .
+      - poetry add pydantic=^2.8
+      - poetry lock
       - poetry install
-      # Remove mypy for now given the issue where it falsely flags the use of field aliases.
-      # - poetry run mypy .
-      - fern test --command "poetry run pytest -rP ."
-allowedFailures: 
-  - response-property
+      - poetry run mypy ./src ./tests
+      - FERN_NO_VERSION_REDIRECTION=true node /fern/cli.cjs test --command "poetry run pytest -rP ."
+  # Test Pydantic V1
+  - docker: fernapi/python-seed
+    commands:
+      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+      - export HOME="$(pwd)/"
+      - poetry config virtualenvs.path .
+      - poetry add pydantic=^1.10
+      - poetry lock
+      - poetry install
+      - poetry run mypy ./src ./tests
+      - FERN_NO_VERSION_REDIRECTION=true node /fern/cli.cjs test --command "poetry run pytest -rP ."
+allowedFailures:
+  # This is the only one that should always fail
+  - exhaustive:additional_init_exports
+  # This should only succeed in Pydantic V1 tests
+  - exhaustive:pydantic-v1-wrapped
+  - exhaustive:pydantic-v1-with-utils
+
+  # TODO(FER-1837): Address this list
   - websocket
   - exhaustive:union-utils
-  - exhaustive:additional_init_exports
+  - extra-properties
   - trace
-  - circular-references-advanced
+
+  # Remove the following fixtures soon as a CLI is released with
+  # default enum value support, the latest primitive types, and gRPC
+  # configuration. This otherwise causes a 'fern check' issue when
+  # 'fern test' is run.
+  - grpc-proto-exhaustive
+  - grpc-proto
+  - object
+  - validation:no-custom-config
+  - validation:with-defaults
+  # === Allowed failures due to unit testing ===
+  - pagination
+  # ===========================================
+  # We are not currently generating the examples correctly,
+  # so the mock server and the expectations in the unit
+  # tests are not correct (`status` on `Resource_User`).
+  - mixed-case
+  # We are not generating the correct snippets for union-utils
+  # types (e.g. we generate `Shape_Square` instead of Shape.factory.square())
+  - unions:union-utils
+
+  # Complex circular refs
+  - simple-fhir
+
+  # TODO(FER-2946): Support deep object query parameter arrays in the mock
+  # server the mock server today doesn't take into account the shape of the
+  # request from the IR and so doesn't know the shape to explicitly coerce
+  # the query string into
+  - query-parameters
+
+  - any-auth
+
+  - cross-package-type-names
+  - audiences

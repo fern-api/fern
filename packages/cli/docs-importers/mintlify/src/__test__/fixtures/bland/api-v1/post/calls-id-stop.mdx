@@ -1,0 +1,37 @@
+---
+title: "Stop Active Call"
+api: "POST https://api.bland.ai/v1/calls/{call_id}/stop"
+description: "End an active phone call by call_id."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="call_id" type="string" required>
+  The unique identifier for the call you want to end.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  If the status is `success`, the message will say "Call ended successfully." Otherwise, if the status is `error`, the
+  message will say "SID not found for the given c_id." or "Internal server error."
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+  "status": "success",
+  "message": "Call ended successfully."
+}
+```
+</ResponseExample>

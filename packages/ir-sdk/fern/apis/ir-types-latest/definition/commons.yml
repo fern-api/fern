@@ -4,6 +4,10 @@ types:
   WithDocs:
     properties:
       docs: optional<string>
+  WithDocsAndAvailability:
+    extends: WithDocs
+    properties:
+      availability: optional<Availability>
   FernFilepath:
     properties:
       allParts: list<Name>
@@ -55,7 +59,9 @@ types:
   TypeId: string
   ErrorId: string
   WebhookGroupId: string
+  WebhookId: string
   WebSocketChannelId: string
+  FeatureId: string
 
   # declarations
 
@@ -73,3 +79,15 @@ types:
       - PRE_RELEASE
       - GENERAL_AVAILABILITY
       - DEPRECATED
+
+  # references
+
+  EndpointReference:
+    properties:
+      endpointId: EndpointId
+      serviceId: ServiceId
+      subpackageId:
+        type: optional<SubpackageId>
+        docs: |
+          The subpackage that defines the endpoint. If empty, the endpoint is
+          defined in the root package.

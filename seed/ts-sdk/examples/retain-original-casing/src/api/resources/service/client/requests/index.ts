@@ -1,1 +1,1 @@
-export { GetMetadataRequest } from "./GetMetadataRequest";
+export { type GetMetadataRequest } from "./GetMetadataRequest";

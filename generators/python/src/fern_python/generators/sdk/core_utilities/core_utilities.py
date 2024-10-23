@@ -2,14 +2,19 @@ import os
 from typing import Optional, Set
 
 from fern_python.codegen import AST, Filepath, Project
+from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies.pydantic import (
+    PYDANTIC_CORE_DEPENDENCY,
     PYDANTIC_DEPENDENCY,
-    Pydantic,
+    PYDANTIC_V1_DEPENDENCY,
+    PYDANTIC_V2_DEPENDENCY,
     PydanticVersionCompatibility,
 )
 from fern_python.external_dependencies.typing_extensions import (
     TYPING_EXTENSIONS_DEPENDENCY,
 )
+from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
+from fern_python.generators.sdk.custom_config import SDKCustomConfig
 from fern_python.source_file_factory import SourceFileFactory
 
 
@@ -17,12 +22,22 @@ class CoreUtilities:
     ASYNC_CLIENT_WRAPPER_CLASS_NAME = "AsyncClientWrapper"
     SYNC_CLIENT_WRAPPER_CLASS_NAME = "SyncClientWrapper"
 
-    def __init__(self, allow_skipping_validation: bool) -> None:
+    def __init__(
+        self,
+        has_paginated_endpoints: bool,
+        project_module_path: AST.ModulePath,
+        custom_config: SDKCustomConfig,
+    ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         # Promotes usage of `from ... import core`
         self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1])  # type: ignore
-        self._allow_skipping_validation = allow_skipping_validation
+        self._allow_skipping_validation = custom_config.pydantic_config.skip_validation
+        self._use_typeddict_requests = custom_config.pydantic_config.use_typeddict_requests
+        self._has_paginated_endpoints = has_paginated_endpoints
+        self._version = custom_config.pydantic_config.version
+        self._project_module_path = project_module_path
+        self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -70,6 +85,7 @@ class CoreUtilities:
             ),
             exports={"RequestOptions"},
         )
+
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="file.py",
@@ -77,7 +93,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="file"),
             ),
-            exports={"File", "convert_file_dict_to_httpx_tuples"},
+            exports={"File", "convert_file_dict_to_httpx_tuples", "with_content_type"},
         )
         self._copy_file_to_project(
             project=project,
@@ -91,13 +107,56 @@ class CoreUtilities:
 
         self._copy_file_to_project(
             project=project,
-            relative_filepath_on_disk="pydantic_utilities.py",
+            # Multi-plex between different versions of the file, depending on if we're using Pydantic aliases or not
+            relative_filepath_on_disk="with_pydantic_aliases/pydantic_utilities.py"
+            if self._use_pydantic_field_aliases
+            else "pydantic_utilities.py",
             filepath_in_project=Filepath(
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
-            exports={"pydantic_v1"},
+            exports={
+                "parse_obj_as",
+                "UniversalBaseModel",
+                "IS_PYDANTIC_V2",
+                "universal_root_validator",
+                "universal_field_validator",
+                "update_forward_refs",
+                "UniversalRootModel",
+            },
         )
+        project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
+
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="query_encoder.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="query_encoder"),
+            ),
+            exports={"encode_query"},
+        )
+
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="serialization.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="serialization"),
+            ),
+            exports={"FieldMetadata", "convert_and_respect_annotation_metadata"},
+        )
+
+        if self._has_paginated_endpoints:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="pagination.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="pagination"),
+                ),
+                exports={"SyncPager", "AsyncPager"},
+            )
 
         if self._allow_skipping_validation:
             self._copy_file_to_project(
@@ -111,7 +170,12 @@ class CoreUtilities:
             )
 
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
-        project.add_dependency(PYDANTIC_DEPENDENCY)
+        if self._version == PydanticVersionCompatibility.V1:
+            project.add_dependency(PYDANTIC_V1_DEPENDENCY)
+        elif self._version == PydanticVersionCompatibility.V2:
+            project.add_dependency(PYDANTIC_V2_DEPENDENCY)
+        else:
+            project.add_dependency(PYDANTIC_DEPENDENCY)
 
     def _copy_file_to_project(
         self, *, project: Project, relative_filepath_on_disk: str, filepath_in_project: Filepath, exports: Set[str]
@@ -128,11 +192,23 @@ class CoreUtilities:
             exports=exports,
         )
 
-    def get_reference_to_api_error(self) -> AST.ClassReference:
+    def get_reference_to_api_error(self, as_snippet: bool = False) -> AST.ClassReference:
+        module_path = self._project_module_path + self._module_path if as_snippet else self._module_path
+        module = (
+            AST.Module.snippet(module_path=(module_path + ("api_error",)))
+            if as_snippet
+            else AST.Module.local(*module_path, "api_error")
+        )
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(module=module, named_import="ApiError"),
+        )
+
+    def get_oauth_token_provider(self) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "api_error"), named_import="ApiError"
+                module=AST.Module.local(*self._module_path, "oauth_token_provider"), named_import="OAuthTokenProvider"
             ),
         )
 
@@ -189,6 +265,28 @@ class CoreUtilities:
                     named_import=CoreUtilities.SYNC_CLIENT_WRAPPER_CLASS_NAME,
                 ),
             )
+
+    def convert_and_respect_annotation_metadata(
+        self,
+        object_: AST.Expression,
+        annotation: AST.TypeHint,
+    ) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "serialization"),
+                        named_import="convert_and_respect_annotation_metadata",
+                    ),
+                ),
+                kwargs=[
+                    ("object_", object_),
+                    ("annotation", AST.Expression(annotation)),
+                    ("direction", AST.Expression(expression=f'"write"')),
+                ],
+            )
+        )
 
     def remove_none_from_dict(self, headers: AST.Expression) -> AST.Expression:
         return AST.Expression(
@@ -261,7 +359,34 @@ class CoreUtilities:
             )
         )
 
-    def http_client(self, obj: AST.Expression, is_async: bool) -> AST.Expression:
+    def with_content_type(self, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=("with_content_type",),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path_unnamed), named_import="core"
+                    ),
+                ),
+                args=[obj],
+            )
+        )
+
+    def http_client(
+        self,
+        base_client: AST.Expression,
+        base_url: Optional[AST.Expression],
+        base_headers: AST.Expression,
+        base_timeout: AST.Expression,
+        is_async: bool,
+    ) -> AST.Expression:
+        func_args = [
+            ("httpx_client", base_client),
+            ("base_headers", base_headers),
+            ("base_timeout", base_timeout),
+        ]
+        if base_url is not None:
+            func_args.append(("base_url", base_url))
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
@@ -271,9 +396,19 @@ class CoreUtilities:
                         named_import="HttpClient" if not is_async else "AsyncHttpClient",
                     ),
                 ),
-                kwargs=[("httpx_client", obj)],
+                kwargs=func_args,
             )
         )
+
+    def get_field_metadata(self) -> FieldMetadata:
+        field_metadata_reference = AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "serialization"), named_import="FieldMetadata"
+            ),
+        )
+
+        return FieldMetadata(reference=field_metadata_reference)
 
     def get_union_metadata(self) -> AST.Reference:
         return AST.Reference(
@@ -284,11 +419,16 @@ class CoreUtilities:
         )
 
     def get_unchecked_pydantic_base_model(self) -> AST.Reference:
-        return AST.Reference(
-            qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="UncheckedBaseModel"
-            ),
+        return (
+            AST.ClassReference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "unchecked_base_model"),
+                    named_import="UncheckedBaseModel",
+                ),
+            )
+            if self._allow_skipping_validation
+            else self.get_universal_base_model()
         )
 
     def get_construct_type(self) -> AST.Reference:
@@ -300,22 +440,29 @@ class CoreUtilities:
         )
 
     def _construct_type(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+        def write_value_being_casted(writer: NodeWriter) -> None:
+            writer.write_reference(self.get_construct_type())
+            writer.write("(")
+            writer.write_newline_if_last_line_not()
+            with writer.indent():
+                writer.write("type_ =")
+                AST.Expression(type_of_obj).write(writer=writer)
+                writer.write(", ")
+                writer.write(" # type: ignore")
+                writer.write_newline_if_last_line_not()
+
+                writer.write("object_ =")
+                obj.write(writer=writer)
+                writer.write_newline_if_last_line_not()
+            writer.write(")")
+
         def write(writer: AST.NodeWriter) -> None:
             writer.write_node(
                 AST.TypeHint.invoke_cast(
                     type_casted_to=type_of_obj,
-                    value_being_casted=AST.Expression(
-                        AST.FunctionInvocation(
-                            function_definition=self.get_construct_type(),
-                            kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
-                        )
-                    ),
+                    value_being_casted=AST.Expression(AST.CodeWriter(write_value_being_casted)),
                 )
             )
-
-            # mypy gets confused when passing unions for the Type argument
-            # https://github.com/pydantic/pydantic/issues/1847
-            writer.write_line("# type: ignore")
 
         return AST.Expression(AST.CodeWriter(write))
 
@@ -323,13 +470,137 @@ class CoreUtilities:
         return (
             self._construct_type(type_of_obj, obj)
             if self._allow_skipping_validation
-            else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
+            else self._parse_obj_as(type_of_obj, obj)
         )
 
-    def get_pydantic_version_import(self) -> AST.Reference:
+    def get_update_forward_refs(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="pydantic_v1"
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                named_import="update_forward_refs",
             ),
+        )
+
+    def get_paginator_reference(self, is_async: bool) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pagination"),
+                named_import="AsyncPager" if is_async else "SyncPager",
+            ),
+        )
+
+    def get_paginator_type(self, inner_type: AST.TypeHint, is_async: bool) -> AST.TypeHint:
+        return AST.TypeHint(
+            type=self.get_paginator_reference(is_async),
+            type_parameters=[AST.TypeParameter(inner_type)],
+        )
+
+    def instantiate_paginator(
+        self, is_async: bool, has_next: AST.Expression, items: AST.Expression, get_next: AST.Expression
+    ) -> AST.Expression:
+        return AST.Expression(
+            AST.ClassInstantiation(
+                class_=self.get_paginator_reference(is_async),
+                args=[],
+                kwargs=[
+                    ("has_next", has_next),
+                    ("items", items),
+                    ("get_next", get_next),
+                ],
+            )
+        )
+
+    def get_encode_query(self, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "query_encoder"),
+                        named_import="encode_query",
+                    ),
+                ),
+                args=[obj],
+            )
+        )
+
+    def get_universal_base_model(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"),
+                named_import="UncheckedBaseModel",
+            ),
+        )
+
+    def _parse_obj_as(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+        def write_value_being_casted(writer: NodeWriter) -> None:
+            writer.write_reference(self.get_parse_obj_as())
+            writer.write("(")
+            writer.write_newline_if_last_line_not()
+            with writer.indent():
+                writer.write("type_ =")
+                AST.Expression(type_of_obj).write(writer=writer)
+                writer.write(", ")
+                writer.write(" # type: ignore")
+                writer.write_newline_if_last_line_not()
+
+                writer.write("object_ =")
+                obj.write(writer=writer)
+                writer.write_newline_if_last_line_not()
+            writer.write(")")
+
+        def write(writer: AST.NodeWriter) -> None:
+            writer.write_node(
+                AST.TypeHint.invoke_cast(
+                    type_casted_to=type_of_obj,
+                    value_being_casted=AST.Expression(AST.CodeWriter(write_value_being_casted)),
+                )
+            )
+
+        return AST.Expression(AST.CodeWriter(write))
+
+    def get_parse_obj_as(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="parse_obj_as"
+            ),
+        )
+
+    def get_is_pydantic_v2(self) -> AST.Expression:
+        return AST.Expression(
+            AST.Reference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="IS_PYDANTIC_V2"
+                ),
+            )
+        )
+
+    def universal_root_validator(self, pre: bool = False) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=AST.Reference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                    named_import="universal_root_validator",
+                ),
+            ),
+            kwargs=[("pre", AST.Expression(expression="True" if pre else "False"))],
+        )
+
+    def universal_field_validator(self, field_name: str, pre: bool = False) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=AST.Reference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                    named_import="universal_field_validator",
+                ),
+            ),
+            args=[AST.Expression(expression=f'"{field_name}"')],
+            kwargs=[("pre", AST.Expression(expression="True" if pre else "False"))],
         )

@@ -27,16 +27,25 @@ public interface ParamsService {
   String getWithPath(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @PathVariable("param") String param);
 
-  @GetMapping("")
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
   void getWithQuery(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @RequestParam("query") String query, @RequestParam("number") Integer number);
 
-  @GetMapping("")
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
   void getWithAllowMultipleQuery(@RequestHeader("Authorization") BearerAuth auth,
       Principal principal, @RequestParam("query") String query,
       @RequestParam("numer") Integer numer);
 
-  @GetMapping("/path-query/{param}")
+  @GetMapping(
+      value = "/path-query/{param}",
+      produces = "application/json"
+  )
   void getWithPathAndQuery(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @PathVariable("param") String param, @RequestParam("query") String query);
 

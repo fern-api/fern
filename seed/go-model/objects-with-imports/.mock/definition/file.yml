@@ -1,0 +1,29 @@
+types:
+  File:
+    properties:
+      name: string
+      contents: string
+      info: FileInfo
+    examples:
+      - name: One
+        value:
+          name: file.txt
+          contents: ...
+          info: REGULAR
+      - name: Two
+        value:
+          name: another_file.txt
+          contents: ...
+          info: REGULAR
+
+  FileInfo:
+    enum:
+      - value: REGULAR
+        docs: A regular file (e.g. foo.txt).
+      - value: DIRECTORY
+        docs: A directory (e.g. foo/).
+    examples:
+      - name: Regular
+        value: REGULAR
+      - name: Directory
+        value: DIRECTORY

@@ -1,5 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ErrorDiscriminationStrategy, HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import {
+    ErrorDiscriminationStrategy,
+    HttpEndpoint,
+    HttpService,
+    PrimitiveTypeV1,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -21,6 +27,7 @@ export declare namespace GeneratedSdkEndpointTypeSchemasImpl {
         skipResponseValidation: boolean;
         includeSerdeLayer: boolean;
         allowExtraFields: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -37,6 +44,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private skipResponseValidation: boolean;
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
+    private omitUndefined: boolean;
 
     constructor({
         packageId,
@@ -47,12 +55,14 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         shouldGenerateErrors,
         skipResponseValidation,
         includeSerdeLayer,
-        allowExtraFields
+        allowExtraFields,
+        omitUndefined
     }: GeneratedSdkEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
         this.skipResponseValidation = skipResponseValidation;
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
+        this.omitUndefined = omitUndefined;
 
         if (this.includeSerdeLayer) {
             // only generate request schemas for referenced request bodies.  inlined
@@ -80,8 +90,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 }
             }
 
-            if (endpoint.response?.type === "json") {
-                switch (endpoint.response.value.responseBodyType.type) {
+            if (endpoint.response?.body?.type === "json") {
+                switch (endpoint.response.body.value.responseBodyType.type) {
                     case "primitive":
                     case "container":
                         this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -89,7 +99,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                             service,
                             endpoint,
                             typeName: GeneratedSdkEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                            type: endpoint.response.value.responseBodyType
+                            type: endpoint.response.body.value.responseBodyType
                         });
                         break;
                     // named response bodies are not generated - consumers should
@@ -99,15 +109,15 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     case "unknown":
                         break;
                     default:
-                        assertNever(endpoint.response.value.responseBodyType);
+                        assertNever(endpoint.response.body.value.responseBodyType);
                 }
             }
 
-            if (endpoint.response?.type === "streaming") {
-                if (endpoint.response.dataEventType.type === "text") {
+            if (endpoint.response?.body?.type === "streaming") {
+                if (endpoint.response.body.value.type === "text") {
                     throw new Error("Non-json responses are not supportd");
                 }
-                switch (endpoint.response.dataEventType.json.type) {
+                switch (endpoint.response.body.value.payload.type) {
                     case "primitive":
                     case "container":
                         this.generatedStreamDataSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -115,7 +125,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                             service,
                             endpoint,
                             typeName: GeneratedSdkEndpointTypeSchemasImpl.STREAM_DATA_SCHEMA_NAME,
-                            type: endpoint.response.dataEventType.json
+                            type: endpoint.response.body.value.payload
                         });
                         break;
                     // named response bodies are not generated - consumers should
@@ -125,7 +135,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     case "unknown":
                         break;
                     default:
-                        assertNever(endpoint.response.dataEventType.json);
+                        assertNever(endpoint.response.body.value.payload);
                 }
             }
 
@@ -216,7 +226,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToParsedRequest, {
                         ...getSchemaOptions({
-                            allowExtraFields: this.allowExtraFields
+                            allowExtraFields: this.allowExtraFields,
+                            omitUndefined: this.omitUndefined
                         })
                     });
             case "primitive":
@@ -228,7 +239,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     .getReferenceToZurgSchema(context)
                     .jsonOrThrow(referenceToParsedRequest, {
                         ...getSchemaOptions({
-                            allowExtraFields: this.allowExtraFields
+                            allowExtraFields: this.allowExtraFields,
+                            omitUndefined: this.omitUndefined
                         })
                     });
             default:
@@ -237,42 +249,52 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     }
 
     public deserializeResponse(referenceToRawResponse: ts.Expression, context: SdkContext): ts.Expression {
-        if (this.endpoint.response == null) {
+        if (this.endpoint.response?.body == null) {
             throw new Error("Cannot deserialize response because it's not defined");
         }
-        if (this.endpoint.response.type === "streaming") {
+        if (this.endpoint.response.body.type === "streaming") {
+            throw new Error("Cannot deserailize streaming response in deserializeResponse");
+        }
+        if (this.endpoint.response.body.type === "streamParameter") {
             throw new Error("Cannot deserailize streaming response in deserializeResponse");
         }
 
-        if (this.endpoint.response.type === "fileDownload") {
+        if (this.endpoint.response.body.type === "fileDownload") {
             return referenceToRawResponse;
         }
 
-        if (this.endpoint.response.type === "text") {
-            throw new Error("Text response is not supported");
+        if (this.endpoint.response.body.type === "text") {
+            return ts.factory.createAsExpression(
+                referenceToRawResponse,
+                context.type.getReferenceToType(TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: undefined }))
+                    .typeNode
+            );
         }
 
-        if (this.endpoint.response.value.responseBodyType.type === "unknown") {
+        if (this.endpoint.response.body.value.responseBodyType.type === "unknown") {
             return referenceToRawResponse;
         }
 
         if (!this.includeSerdeLayer) {
             return ts.factory.createAsExpression(
                 referenceToRawResponse,
-                context.type.getReferenceToType(this.endpoint.response.value.responseBodyType).typeNode
+                context.type.getReferenceToType(this.endpoint.response.body.value.responseBodyType).typeNode
             );
         }
 
-        switch (this.endpoint.response.value.responseBodyType.type) {
+        switch (this.endpoint.response.body.value.responseBodyType.type) {
             case "named":
                 return context.typeSchema
-                    .getSchemaOfNamedType(this.endpoint.response.value.responseBodyType, { isGeneratingSchema: false })
+                    .getSchemaOfNamedType(this.endpoint.response.body.value.responseBodyType, {
+                        isGeneratingSchema: false
+                    })
                     .parseOrThrow(referenceToRawResponse, {
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
-                        breadcrumbsPrefix: ["response"]
+                        breadcrumbsPrefix: ["response"],
+                        omitUndefined: false
                     });
             case "primitive":
             case "container":
@@ -286,10 +308,11 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
-                        breadcrumbsPrefix: ["response"]
+                        breadcrumbsPrefix: ["response"],
+                        omitUndefined: false
                     });
             default:
-                assertNever(this.endpoint.response.value.responseBodyType);
+                assertNever(this.endpoint.response.body.value.responseBodyType);
         }
     }
 
@@ -305,7 +328,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             allowUnrecognizedUnionMembers: true,
             unrecognizedObjectKeys: "passthrough",
             skipValidation: this.skipResponseValidation,
-            breadcrumbsPrefix: ["response"]
+            breadcrumbsPrefix: ["response"],
+            omitUndefined: false
         });
     }
 
@@ -316,25 +340,26 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         referenceToRawStreamData: ts.Expression;
         context: SdkContext;
     }): ts.Expression {
-        if (this.endpoint.response?.type !== "streaming") {
+        if (this.endpoint.response?.body?.type !== "streaming") {
             throw new Error("Cannot deserialize stream data because it's not defined");
         }
-        if (this.endpoint.response.dataEventType.type === "text") {
+        if (this.endpoint.response.body?.value.type === "text") {
             throw new Error("Cannot deserialize non-json stream data");
         }
 
-        switch (this.endpoint.response.dataEventType.json.type) {
+        switch (this.endpoint.response.body?.value.payload.type) {
             case "unknown":
                 return referenceToRawStreamData;
             case "named":
                 return context.typeSchema
-                    .getSchemaOfNamedType(this.endpoint.response.dataEventType.json, { isGeneratingSchema: false })
+                    .getSchemaOfNamedType(this.endpoint.response.body?.value.payload, { isGeneratingSchema: false })
                     .parseOrThrow(referenceToRawStreamData, {
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
-                        breadcrumbsPrefix: ["response"]
+                        breadcrumbsPrefix: ["response"],
+                        omitUndefined: false
                     });
             case "primitive":
             case "container":
@@ -348,10 +373,11 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
-                        breadcrumbsPrefix: ["response"]
+                        breadcrumbsPrefix: ["response"],
+                        omitUndefined: false
                     });
             default:
-                assertNever(this.endpoint.response.dataEventType.json);
+                assertNever(this.endpoint.response.body?.value.payload);
         }
     }
 }

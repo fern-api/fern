@@ -27,6 +27,7 @@ public interface HomepageService {
 
   @PostMapping(
       value = "",
+      produces = "application/json",
       consumes = "application/json"
   )
   void setHomepageProblems(@RequestHeader("X-Random-Header") Optional<String> xRandomHeader,

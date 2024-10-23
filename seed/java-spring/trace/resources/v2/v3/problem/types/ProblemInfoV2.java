@@ -18,11 +18,12 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.Language;
 import resources.commons.types.ProblemId;
 import resources.problem.types.ProblemDescription;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = ProblemInfoV2.Builder.class
 )
@@ -139,17 +140,17 @@ public final class ProblemInfoV2 {
   }
 
   public interface ProblemIdStage {
-    ProblemDescriptionStage problemId(ProblemId problemId);
+    ProblemDescriptionStage problemId(@NotNull ProblemId problemId);
 
     Builder from(ProblemInfoV2 other);
   }
 
   public interface ProblemDescriptionStage {
-    ProblemNameStage problemDescription(ProblemDescription problemDescription);
+    ProblemNameStage problemDescription(@NotNull ProblemDescription problemDescription);
   }
 
   public interface ProblemNameStage {
-    ProblemVersionStage problemName(String problemName);
+    ProblemVersionStage problemName(@NotNull String problemName);
   }
 
   public interface ProblemVersionStage {
@@ -157,11 +158,11 @@ public final class ProblemInfoV2 {
   }
 
   public interface CustomFilesStage {
-    GeneratedFilesStage customFiles(CustomFiles customFiles);
+    GeneratedFilesStage customFiles(@NotNull CustomFiles customFiles);
   }
 
   public interface GeneratedFilesStage {
-    IsPublicStage generatedFiles(GeneratedFiles generatedFiles);
+    IsPublicStage generatedFiles(@NotNull GeneratedFiles generatedFiles);
   }
 
   public interface IsPublicStage {
@@ -234,22 +235,22 @@ public final class ProblemInfoV2 {
 
     @java.lang.Override
     @JsonSetter("problemId")
-    public ProblemDescriptionStage problemId(ProblemId problemId) {
-      this.problemId = problemId;
+    public ProblemDescriptionStage problemId(@NotNull ProblemId problemId) {
+      this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("problemDescription")
-    public ProblemNameStage problemDescription(ProblemDescription problemDescription) {
-      this.problemDescription = problemDescription;
+    public ProblemNameStage problemDescription(@NotNull ProblemDescription problemDescription) {
+      this.problemDescription = Objects.requireNonNull(problemDescription, "problemDescription must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("problemName")
-    public ProblemVersionStage problemName(String problemName) {
-      this.problemName = problemName;
+    public ProblemVersionStage problemName(@NotNull String problemName) {
+      this.problemName = Objects.requireNonNull(problemName, "problemName must not be null");
       return this;
     }
 
@@ -262,15 +263,15 @@ public final class ProblemInfoV2 {
 
     @java.lang.Override
     @JsonSetter("customFiles")
-    public GeneratedFilesStage customFiles(CustomFiles customFiles) {
-      this.customFiles = customFiles;
+    public GeneratedFilesStage customFiles(@NotNull CustomFiles customFiles) {
+      this.customFiles = Objects.requireNonNull(customFiles, "customFiles must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("generatedFiles")
-    public IsPublicStage generatedFiles(GeneratedFiles generatedFiles) {
-      this.generatedFiles = generatedFiles;
+    public IsPublicStage generatedFiles(@NotNull GeneratedFiles generatedFiles) {
+      this.generatedFiles = Objects.requireNonNull(generatedFiles, "generatedFiles must not be null");
       return this;
     }
 

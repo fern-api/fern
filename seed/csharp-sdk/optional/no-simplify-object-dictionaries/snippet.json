@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/send-optional-body",
+                "method": "POST",
+                "identifier_override": "endpoint_optional.sendOptionalBody"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalBodyAsync(null);\n"
+            }
+        }
+    ]
+}

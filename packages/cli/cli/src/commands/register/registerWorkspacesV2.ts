@@ -16,19 +16,21 @@ export async function registerWorkspacesV2({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "oss") {
-                    context.failWithoutThrowing("Cannot register OpenAPI workspace");
-                } else {
-                    await registerApi({
-                        organization: project.config.organization,
-                        workspace,
-                        context,
-                        token,
-                        audiences: { type: "all" },
-                        snippetsConfig: {}
-                    });
-                    context.logger.info(chalk.green("Registered API"));
-                }
+                await registerApi({
+                    organization: project.config.organization,
+                    workspace: await workspace.toFernWorkspace({ context }),
+                    context,
+                    token,
+                    audiences: { type: "all" },
+                    snippetsConfig: {
+                        typescriptSdk: undefined,
+                        pythonSdk: undefined,
+                        javaSdk: undefined,
+                        rubySdk: undefined,
+                        goSdk: undefined
+                    }
+                });
+                context.logger.info(chalk.green("Registered API"));
             });
         })
     );

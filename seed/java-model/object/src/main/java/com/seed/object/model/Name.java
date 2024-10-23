@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.object.core.ObjectMappers;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Name.Builder.class)
 public final class Name {
     private final String id;
@@ -89,14 +89,14 @@ public final class Name {
         @java.lang.Override
         @JsonSetter("id")
         public ValueStage id(String id) {
-            this.id = id;
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("value")
         public _FinalStage value(String value) {
-            this.value = value;
+            this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }
 

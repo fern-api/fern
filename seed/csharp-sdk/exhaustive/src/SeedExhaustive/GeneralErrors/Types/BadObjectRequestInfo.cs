@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedExhaustive;
 
-public class BadObjectRequestInfo
+public record BadObjectRequestInfo
 {
     [JsonPropertyName("message")]
-    public string Message { get; init; }
+    public required string Message { get; }
 }

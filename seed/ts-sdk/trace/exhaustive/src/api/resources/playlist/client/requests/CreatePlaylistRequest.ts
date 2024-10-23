@@ -7,11 +7,10 @@ import * as SeedTrace from "../../../../index";
 /**
  * @example
  *     {
- *         datetime: new Date("2024-01-15T09:30:00.000Z"),
- *         optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
+ *         datetime: "2024-01-15T09:30:00Z",
  *         body: {
- *             name: "string",
- *             problems: [SeedTrace.ProblemId("string")]
+ *             name: "name",
+ *             problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")]
  *         }
  *     }
  */

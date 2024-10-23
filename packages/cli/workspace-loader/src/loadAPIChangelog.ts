@@ -1,7 +1,7 @@
 import { CHANGELOG_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { listFiles } from "./listFiles";
-import { APIChangelog } from "./types/Workspace";
+import { listFernFiles } from "./listFernFiles";
+import { APIChangelog } from "@fern-api/api-workspace-commons";
 
 export async function loadAPIChangelog({
     absolutePathToWorkspace
@@ -14,12 +14,12 @@ export async function loadAPIChangelog({
         return undefined;
     }
 
-    const mdFiles = await listFiles(absolutePathToChangelogDirectory, "{md,mdx}");
+    const mdFiles = await listFernFiles(absolutePathToChangelogDirectory, "{md,mdx}");
     return {
         files: await Promise.all(
             mdFiles.map((file) => {
                 return {
-                    absoluteFilepath: join(absolutePathToChangelogDirectory, file.filepath),
+                    absoluteFilepath: file.absoluteFilepath,
                     contents: file.fileContents
                 };
             })

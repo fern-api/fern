@@ -1,5 +1,5 @@
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { Fetcher, PackageId } from "@fern-typescript/commons";
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
@@ -7,6 +7,7 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
 import {
+    getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
@@ -23,6 +24,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
         request: GeneratedEndpointRequest;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -38,6 +40,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     private request: GeneratedEndpointRequest;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
+    private omitUndefined: boolean;
 
     constructor({
         endpoint,
@@ -47,7 +50,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         defaultTimeoutInSeconds,
         request,
         includeSerdeLayer,
-        retainOriginalCasing
+        retainOriginalCasing,
+        omitUndefined
     }: GeneratedStreamingEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -57,10 +61,92 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.request = request;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
     }
 
-    public getExample(): ts.Expression | undefined {
-        return undefined;
+    public getExample(args: {
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
+        clientReference: ts.Identifier;
+    }): ts.Expression | undefined {
+        const exampleParameters = this.request.getExampleEndpointParameters({
+            context: args.context,
+            example: args.example,
+            opts: args.opts
+        });
+        if (exampleParameters == null) {
+            return undefined;
+        }
+        return ts.factory.createAwaitExpression(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    this.generatedSdkClientClass.accessFromRootClient({
+                        referenceToRootClient: args.clientReference
+                    }),
+                    ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
+                ),
+                undefined,
+                exampleParameters
+            )
+        );
+    }
+
+    public maybeLeverageInvocation({
+        invocation,
+        context
+    }: {
+        invocation: ts.Expression;
+        context: SdkContext;
+    }): ts.Node[] {
+        const responseVariableName = "response";
+        const itemVaribaleName = "item";
+        return [
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier(responseVariableName),
+                            undefined,
+                            undefined,
+                            invocation
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            ),
+            ts.factory.createForOfStatement(
+                ts.factory.createToken(ts.SyntaxKind.AwaitKeyword),
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier(itemVaribaleName),
+                            undefined,
+                            undefined,
+                            undefined
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                ),
+                ts.factory.createIdentifier(responseVariableName),
+                ts.factory.createBlock(
+                    [
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("console"),
+                                    ts.factory.createIdentifier("log")
+                                ),
+                                undefined,
+                                [ts.factory.createIdentifier(itemVaribaleName)]
+                            )
+                        )
+                    ],
+                    true
+                )
+            )
+        ];
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -106,7 +192,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             generatedClientClass: this.generatedSdkClientClass,
             context,
             includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            omitUndefined: this.omitUndefined
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
@@ -131,7 +218,12 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                     this.generatedSdkClientClass
                 )
             }),
-            responseType: "streaming",
+            abortSignal: getAbortSignalExpression({
+                abortSignalReference: this.generatedSdkClientClass.getReferenceToAbortSignal.bind(
+                    this.generatedSdkClientClass
+                )
+            }),
+            responseType: "sse",
             withCredentials: this.includeCredentialsOnCrossOriginRequests
         };
 

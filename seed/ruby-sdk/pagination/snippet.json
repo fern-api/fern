@@ -1,4 +1,225 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithCursorPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_cursor_pagination",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifierOverride": "endpoint_users.listWithBodyCursorPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_body_cursor_pagination",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithOffsetPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_offset_pagination",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifierOverride": "endpoint_users.listWithBodyOffsetPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_body_offset_pagination",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithOffsetStepPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_offset_step_pagination",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_offset_pagination_has_next_page",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithExtendedResults"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_extended_results",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithExtendedResultsAndOptionalData"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_extended_results_and_optional_data",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listUsernames"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_usernames",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithGlobalConfig"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_global_config",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithCursorPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_cursor_pagination",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifierOverride": "endpoint_users.listWithBodyCursorPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_body_cursor_pagination",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithOffsetPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_offset_pagination",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifierOverride": "endpoint_users.listWithBodyOffsetPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_body_offset_pagination",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithOffsetStepPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_offset_step_pagination",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_offset_pagination_has_next_page",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithExtendedResults"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_extended_results",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithExtendedResultsAndOptionalData"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_extended_results_and_optional_data",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listUsernames"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_usernames",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithGlobalConfig"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_global_config",
+                "type": "ruby"
+            }
+        }
+    ],
     "types": {}
 }

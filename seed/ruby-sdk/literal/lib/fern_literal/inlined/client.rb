@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
+require_relative "types/some_aliased_literal"
+require_relative "types/a_top_level_literal"
 require_relative "../types/send_response"
 require "async"
 
@@ -15,10 +17,13 @@ module SeedLiteralClient
       @request_client = request_client
     end
 
-    # @param prompt [String]
     # @param query [String]
     # @param temperature [Float]
-    # @param stream [Boolean]
+    # @param aliased_context [SeedLiteralClient::Inlined::SOME_ALIASED_LITERAL]
+    # @param maybe_context [SeedLiteralClient::Inlined::SOME_ALIASED_LITERAL]
+    # @param object_with_literal [Hash] Request of type SeedLiteralClient::Inlined::ATopLevelLiteral, as a Hash
+    #   * :nested_literal (Hash)
+    #     * :my_literal (String)
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     # @example
@@ -27,13 +32,14 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(
-    #    prompt: "You are a helpful assistant",
+    #  literal.inlined.send(
     #    query: "What is the weather today",
     #    temperature: 10.1,
-    #    stream: false
+    #    aliased_context: "You're super wise",
+    #    maybe_context: "You're super wise",
+    #    object_with_literal: { nested_literal: { my_literal: "How super cool" } }
     #  )
-    def send(prompt:, query:, stream:, temperature: nil, request_options: nil)
+    def send(query:, aliased_context:, object_with_literal:, temperature: nil, maybe_context: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
@@ -41,13 +47,24 @@ module SeedLiteralClient
           req.headers["X-API-Enable-Audit-Logging"] =
             request_options.audit_logging
         end
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
-          prompt: prompt,
+          "prompt": "You are a helpful assistant",
+          "context": "You're super wise",
+          "stream": false,
           query: query,
           temperature: temperature,
-          stream: stream
+          aliasedContext: aliased_context,
+          maybeContext: maybe_context,
+          objectWithLiteral: object_with_literal
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/inlined"
       end
@@ -65,10 +82,13 @@ module SeedLiteralClient
       @request_client = request_client
     end
 
-    # @param prompt [String]
     # @param query [String]
     # @param temperature [Float]
-    # @param stream [Boolean]
+    # @param aliased_context [SeedLiteralClient::Inlined::SOME_ALIASED_LITERAL]
+    # @param maybe_context [SeedLiteralClient::Inlined::SOME_ALIASED_LITERAL]
+    # @param object_with_literal [Hash] Request of type SeedLiteralClient::Inlined::ATopLevelLiteral, as a Hash
+    #   * :nested_literal (Hash)
+    #     * :my_literal (String)
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     # @example
@@ -77,13 +97,14 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(
-    #    prompt: "You are a helpful assistant",
+    #  literal.inlined.send(
     #    query: "What is the weather today",
     #    temperature: 10.1,
-    #    stream: false
+    #    aliased_context: "You're super wise",
+    #    maybe_context: "You're super wise",
+    #    object_with_literal: { nested_literal: { my_literal: "How super cool" } }
     #  )
-    def send(prompt:, query:, stream:, temperature: nil, request_options: nil)
+    def send(query:, aliased_context:, object_with_literal:, temperature: nil, maybe_context: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -92,13 +113,24 @@ module SeedLiteralClient
             req.headers["X-API-Enable-Audit-Logging"] =
               request_options.audit_logging
           end
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
-            prompt: prompt,
+            "prompt": "You are a helpful assistant",
+            "context": "You're super wise",
+            "stream": false,
             query: query,
             temperature: temperature,
-            stream: stream
+            aliasedContext: aliased_context,
+            maybeContext: maybe_context,
+            objectWithLiteral: object_with_literal
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/inlined"
         end
