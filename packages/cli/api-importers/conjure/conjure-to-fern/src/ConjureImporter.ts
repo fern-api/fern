@@ -136,7 +136,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         auth: true,
                         path: endpointLocator.path,
                         method: endpointLocator.method,
-                        response: endpointDeclaration.returns
+                        response: endpointDeclaration.returns === "binary" ? "file" : endpointDeclaration.returns
                     };
 
                     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
@@ -165,11 +165,13 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                             continue;
                         }
                         if (typeof argDeclaration === "string") {
-                            endpoint.request = { body: { type: argDeclaration } };
+                            endpoint.request = { body: argDeclaration === "binary" ? "bytes" : argDeclaration };
                         } else {
                             switch (argDeclaration.paramType) {
                                 case "body":
-                                    endpoint.request = { body: { type: argDeclaration.type } };
+                                    endpoint.request = {
+                                        body: argDeclaration.type === "binary" ? "bytes" : argDeclaration.type
+                                    };
                                     break;
                                 case "query": {
                                     if (endpoint.request == null) {
@@ -246,18 +248,20 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                 union: (value) => {
                     this.fernDefinitionBuilder.addType(fernFilePath, {
                         name: typeName,
-                        schema: Object.fromEntries(
-                            Object.entries(value.union).map(([key, type]) => {
-                                return [
-                                    key,
-                                    {
-                                        type: typeof type === "string" ? type : type.type,
-                                        docs: typeof type === "string" ? undefined : type.docs,
-                                        key
-                                    }
-                                ];
-                            })
-                        )
+                        schema: {
+                            union: Object.fromEntries(
+                                Object.entries(value.union).map(([key, type]) => {
+                                    return [
+                                        key,
+                                        {
+                                            type: typeof type === "string" ? type : type.type,
+                                            docs: typeof type === "string" ? undefined : type.docs,
+                                            key
+                                        }
+                                    ];
+                                })
+                            )
+                        }
                     });
                 }
             });
