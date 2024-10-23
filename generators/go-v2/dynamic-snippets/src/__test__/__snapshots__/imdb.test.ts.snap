@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`imdb > 'GET /movies/{movieId} (simple)' 1`] = `
+"package example
+
+import (
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetMovie(
+		"movie_xyz",
+	)
+}
+"
+`;
+
+exports[`imdb > 'POST /movies/create-movie (simple)' 1`] = `
+"package example
+
+import (
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.CreateMovie(
+		&sdk.CreateMovieRequest{
+			Title:  "The Matrix",
+			Rating: 8.2,
+		},
+	)
+}
+"
+`;

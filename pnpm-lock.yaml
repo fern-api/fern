@@ -398,11 +398,60 @@ importers:
         specifier: workspace:*
         version: link:../../commons
       '@fern-fern/ir-sdk':
-        specifier: ^53.7.0
-        version: 53.9.0
+        specifier: ^53.15.0
+        version: 53.15.0
       '@wasm-fmt/gofmt':
         specifier: ^0.4.9
         version: 0.4.9
+      zod:
+        specifier: ^3.22.3
+        version: 3.23.8
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  generators/go-v2/dynamic-snippets:
+    dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../../packages/cli/fern-definition/schema
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/generator-commons':
+        specifier: workspace:*
+        version: link:../../commons
+      '@fern-api/go-codegen':
+        specifier: workspace:*
+        version: link:../codegen
+      '@fern-fern/ir-sdk':
+        specifier: ^53.15.0
+        version: 53.15.0
       zod:
         specifier: ^3.22.3
         version: 3.23.8
@@ -7508,6 +7557,9 @@ packages:
 
   '@fern-fern/ir-sdk@39.0.0':
     resolution: {integrity: sha512-cx8g0hX3gS/JveQPKanSWAyhM8SGhVOiQEcovqmcF/j9wvpjO8FXXNNI1+ZR1Wdmkcggx9UIqXDbS7jzefh6Rw==}
+
+  '@fern-fern/ir-sdk@53.15.0':
+    resolution: {integrity: sha512-3ouCapVwfv9KAjgLLCAgGmt0A/GyXgZxtmEB5hVE31BVGHdEmGyoYKxtZy+EYULhZXFXZww5sekphKdAGGY0cg==}
 
   '@fern-fern/ir-sdk@53.7.0':
     resolution: {integrity: sha512-PoCj8yOep3kFeDZYORAzqPwVtCSNmbT2SfR/AoxKCcikeZ5i+4Um4ZXx1e6UaAy7dIYF5kWeRc6lptFBRoj7Gw==}
@@ -14624,6 +14676,8 @@ snapshots:
       - encoding
 
   '@fern-fern/ir-sdk@39.0.0': {}
+
+  '@fern-fern/ir-sdk@53.15.0': {}
 
   '@fern-fern/ir-sdk@53.7.0': {}
 
