@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_service:Organization": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Organization",
@@ -285,6 +286,7 @@
             "docs": null
         },
         "type_service:User": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "User",
@@ -959,6 +961,7 @@
             "docs": null
         },
         "type_service:NestedUser": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "NestedUser",
@@ -1911,6 +1914,7 @@
             "docs": null
         },
         "type_service:ResourceStatus": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ResourceStatus",
@@ -2046,6 +2050,7 @@
             "docs": null
         },
         "type_service:Resource": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Resource",

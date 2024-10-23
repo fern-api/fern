@@ -279,6 +279,9 @@ public class GetProblemsTest : BaseMockServerTest
                         "type": "integerValue",
                         "value": 1
                       }
+                    },
+                    "expects": {
+                      "expectedStdout": "expectedStdout"
                     }
                   },
                   {
@@ -296,6 +299,9 @@ public class GetProblemsTest : BaseMockServerTest
                         "type": "integerValue",
                         "value": 1
                       }
+                    },
+                    "expects": {
+                      "expectedStdout": "expectedStdout"
                     }
                   }
                 ],
@@ -564,6 +570,9 @@ public class GetProblemsTest : BaseMockServerTest
                         "type": "integerValue",
                         "value": 1
                       }
+                    },
+                    "expects": {
+                      "expectedStdout": "expectedStdout"
                     }
                   },
                   {
@@ -581,6 +590,9 @@ public class GetProblemsTest : BaseMockServerTest
                         "type": "integerValue",
                         "value": 1
                       }
+                    },
+                    "expects": {
+                      "expectedStdout": "expectedStdout"
                     }
                   }
                 ],

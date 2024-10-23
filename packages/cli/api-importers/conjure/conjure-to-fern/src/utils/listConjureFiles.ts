@@ -39,7 +39,6 @@ async function createConjureFile({
         .replaceAll(": safelong", ": long")
         .replaceAll("<safelong>", "<long>")
         .replaceAll("safelong>", "long>")
-        .replaceAll(": binary", ": file")
         .replaceAll(": any", ": unknown")
         .replaceAll("<any>", "<unknown>")
         .replaceAll("any>", "unknown>");

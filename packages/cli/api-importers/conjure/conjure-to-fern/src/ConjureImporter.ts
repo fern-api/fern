@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, relativize, getFilename } from "@fern-api/fs-utils";
 import { DefinitionFile } from "@fern-api/conjure-sdk";
-import { APIDefinitionImporter, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
+import { APIDefinitionImporter, FernDefinitionBuilderImpl, HttpServiceInfo } from "@fern-api/importer-commons";
 import { visitConjureTypeDeclaration } from "./utils/visitConjureTypeDeclaration";
 import { parseEndpointLocator, removeSuffix } from "@fern-api/core-utils";
 import { listConjureFiles } from "./utils/listConjureFiles";
@@ -100,6 +100,15 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                 const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: "Service" });
                 const fernFilePath = RelativeFilePath.of(`${unsuffixedServiceName}/__package__.yml`);
 
+                const httpServiceInfo: HttpServiceInfo = {};
+                if (serviceDeclaration.basePath != null) {
+                    httpServiceInfo["base-path"] = serviceDeclaration.basePath;
+                }
+                if (serviceDeclaration.docs != null) {
+                    httpServiceInfo.docs = serviceDeclaration.docs;
+                }
+                this.fernDefinitionBuilder.setServiceInfo(fernFilePath, httpServiceInfo);
+
                 this.importAllTypes({ conjureFile: definition, fernFilePath });
 
                 for (const [import_, importedFilepath] of Object.entries(definition.types?.conjureImports ?? {})) {
@@ -127,7 +136,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         auth: true,
                         path: endpointLocator.path,
                         method: endpointLocator.method,
-                        response: endpointDeclaration.returns
+                        response: endpointDeclaration.returns === "binary" ? "file" : endpointDeclaration.returns
                     };
 
                     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
@@ -156,11 +165,13 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                             continue;
                         }
                         if (typeof argDeclaration === "string") {
-                            endpoint.request = { body: { type: argDeclaration } };
+                            endpoint.request = { body: argDeclaration === "binary" ? "bytes" : argDeclaration };
                         } else {
                             switch (argDeclaration.paramType) {
                                 case "body":
-                                    endpoint.request = { body: { type: argDeclaration.type } };
+                                    endpoint.request = {
+                                        body: argDeclaration.type === "binary" ? "bytes" : argDeclaration.type
+                                    };
                                     break;
                                 case "query": {
                                     if (endpoint.request == null) {
@@ -237,7 +248,20 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                 union: (value) => {
                     this.fernDefinitionBuilder.addType(fernFilePath, {
                         name: typeName,
-                        schema: value
+                        schema: {
+                            union: Object.fromEntries(
+                                Object.entries(value.union).map(([key, type]) => {
+                                    return [
+                                        key,
+                                        {
+                                            type: typeof type === "string" ? type : type.type,
+                                            docs: typeof type === "string" ? undefined : type.docs,
+                                            key
+                                        }
+                                    ];
+                                })
+                            )
+                        }
                     });
                 }
             });

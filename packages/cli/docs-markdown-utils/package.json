@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@types/diff": "^5.2.1",
-    "@types/node": "^18.7.18",
+    "@types/node": "18.7.18",
     "depcheck": "^1.4.6",
     "diff": "^5.2.0",
     "eslint": "^8.56.0",

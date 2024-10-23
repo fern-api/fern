@@ -1,0 +1,14 @@
+{
+  "extends": "../../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "include": ["./src/**/*"],
+  "references": [
+    { "path": "../../../commons/core-utils" },
+    { "path": "../../../ir-sdk" },
+    { "path": "../../task-context" },
+    { "path": "../../../commons/fs-utils" },
+    { "path": "../../workspace-loader" },
+    { "path": "../../project-loader" },
+    { "path": "../../generation/ir-generator" }
+  ]
+}

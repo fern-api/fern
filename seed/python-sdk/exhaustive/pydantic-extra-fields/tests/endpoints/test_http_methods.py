@@ -17,20 +17,34 @@ async def test_test_get(client: SeedExhaustive, async_client: AsyncSeedExhaustiv
 
 
 async def test_test_post(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response: typing.Any = {}
+    expected_response: typing.Any = {
+        "string": "string",
+        "integer": 1,
+        "long": 1000000,
+        "double": 1.1,
+        "bool": True,
+        "datetime": "2024-01-15T09:30:00Z",
+        "date": "2023-01-15",
+        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        "base64": "SGVsbG8gd29ybGQh",
+        "list": ["list", "list"],
+        "set": ["set"],
+        "map": {"1": "map"},
+        "bigint": "1000000",
+    }
     expected_types: typing.Any = {
         "string": None,
-        "integer": None,
+        "integer": "integer",
         "long": None,
         "double": None,
         "bool": None,
-        "datetime": None,
-        "date": None,
-        "uuid": None,
+        "datetime": "datetime",
+        "date": "date",
+        "uuid": "uuid",
         "base64": None,
-        "list": None,
-        "set": None,
-        "map": None,
+        "list": ("list", {0: None, 1: None}),
+        "set": ("set", {0: None}),
+        "map": ("dict", {0: ("integer", None)}),
         "bigint": None,
     }
     response = client.endpoints.http_methods.test_post(string="string")
@@ -41,20 +55,34 @@ async def test_test_post(client: SeedExhaustive, async_client: AsyncSeedExhausti
 
 
 async def test_test_put(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response: typing.Any = {}
+    expected_response: typing.Any = {
+        "string": "string",
+        "integer": 1,
+        "long": 1000000,
+        "double": 1.1,
+        "bool": True,
+        "datetime": "2024-01-15T09:30:00Z",
+        "date": "2023-01-15",
+        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        "base64": "SGVsbG8gd29ybGQh",
+        "list": ["list", "list"],
+        "set": ["set"],
+        "map": {"1": "map"},
+        "bigint": "1000000",
+    }
     expected_types: typing.Any = {
         "string": None,
-        "integer": None,
+        "integer": "integer",
         "long": None,
         "double": None,
         "bool": None,
-        "datetime": None,
-        "date": None,
-        "uuid": None,
+        "datetime": "datetime",
+        "date": "date",
+        "uuid": "uuid",
         "base64": None,
-        "list": None,
-        "set": None,
-        "map": None,
+        "list": ("list", {0: None, 1: None}),
+        "set": ("set", {0: None}),
+        "map": ("dict", {0: ("integer", None)}),
         "bigint": None,
     }
     response = client.endpoints.http_methods.test_put(id="id", string="string")
@@ -65,20 +93,34 @@ async def test_test_put(client: SeedExhaustive, async_client: AsyncSeedExhaustiv
 
 
 async def test_test_patch(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response: typing.Any = {}
+    expected_response: typing.Any = {
+        "string": "string",
+        "integer": 1,
+        "long": 1000000,
+        "double": 1.1,
+        "bool": True,
+        "datetime": "2024-01-15T09:30:00Z",
+        "date": "2023-01-15",
+        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        "base64": "SGVsbG8gd29ybGQh",
+        "list": ["list", "list"],
+        "set": ["set"],
+        "map": {"1": "map"},
+        "bigint": "1000000",
+    }
     expected_types: typing.Any = {
         "string": None,
-        "integer": None,
+        "integer": "integer",
         "long": None,
         "double": None,
         "bool": None,
-        "datetime": None,
-        "date": None,
-        "uuid": None,
+        "datetime": "datetime",
+        "date": "date",
+        "uuid": "uuid",
         "base64": None,
-        "list": None,
-        "set": None,
-        "map": None,
+        "list": ("list", {0: None, 1: None}),
+        "set": ("set", {0: None}),
+        "map": ("dict", {0: ("integer", None)}),
         "bigint": None,
     }
     response = client.endpoints.http_methods.test_patch(id="id")

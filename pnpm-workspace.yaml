@@ -6,3 +6,5 @@ packages:
   - "generators/**"
   - "!generators/**/lib"
   - "!generators/**/dist"
+  - "!packages/cli/cli/dist/dev"
+  - "!packages/cli/cli/dist/prod"
