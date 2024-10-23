@@ -43,6 +43,7 @@ import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
+import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
 import { setGlobalDispatcher, Agent } from "undici";
 
 setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
@@ -142,6 +143,7 @@ async function tryRunCli(cliContext: CliContext) {
     addIrCommand(cli, cliContext);
     addFdrCommand(cli, cliContext);
     addOpenAPIIrCommand(cli, cliContext);
+    addDynamicIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
     addRegisterV2Command(cli, cliContext);
@@ -509,6 +511,54 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
                 sdkLanguage: argv.language
+            });
+        }
+    );
+}
+
+function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "dynamic-ir <path-to-output>",
+        false,
+        (yargs) =>
+            yargs
+                .positional("path-to-output", {
+                    type: "string",
+                    description: "Path to write intermediate representation (IR)",
+                    demandOption: true
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                })
+                .option("version", {
+                    string: true,
+                    description: "The version of IR to produce"
+                })
+                .option("language", {
+                    choices: Object.values(generatorsYml.GenerationLanguage),
+                    description: "Generate IR for a particular language"
+                })
+                .option("audience", {
+                    type: "array",
+                    string: true,
+                    default: new Array<string>(),
+                    description: "Filter the IR for certain audiences"
+                }),
+        async (argv) => {
+            await generateDynamicIrForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false,
+                    sdkLanguage: argv.language
+                }),
+                irFilepath: resolve(cwd(), argv.pathToOutput),
+                cliContext,
+                generationLanguage: argv.language,
+                audiences: { type: "all" },
+                version: argv.version,
+                keywords: undefined,
+                smartCasing: false
             });
         }
     );
