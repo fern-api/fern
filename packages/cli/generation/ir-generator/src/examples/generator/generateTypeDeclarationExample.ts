@@ -146,7 +146,7 @@ export function generateTypeDeclarationExample({
                             );
                         }
                         const objectExample = generateObjectDeclarationExample({
-                            currentDepth,
+                            currentDepth: currentDepth + 1,
                             maxDepth,
                             fieldName,
                             objectTypeDeclaration: typeDeclaration.shape,
@@ -178,7 +178,7 @@ export function generateTypeDeclarationExample({
                     },
                     singleProperty: (value) => {
                         const singlePropertyExample = generateTypeReferenceExample({
-                            currentDepth,
+                            currentDepth: currentDepth + 1,
                             maxDepth,
                             fieldName,
                             typeReference: value.type,

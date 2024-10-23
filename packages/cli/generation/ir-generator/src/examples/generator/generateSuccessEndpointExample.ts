@@ -21,6 +21,7 @@ import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 import { isOptional } from "./isTypeReferenceOptional";
 import hash from "object-hash";
+import { TaskContext } from "@fern-api/task-context";
 
 export declare namespace generateEndpointExample {
     interface Args {

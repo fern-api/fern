@@ -140,6 +140,11 @@ export async function runPreviewServer({
             } else {
                 context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
             }
+            if (err instanceof Error) {
+                if (err instanceof Error && err.stack) {
+                    context.logger.debug(`${err.message}\n${err.stack}`);
+                }
+            }
             return docsDefinition;
         }
     };

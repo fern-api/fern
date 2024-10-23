@@ -35,3 +35,4 @@ export { parseReferenceToEndpointName, type ReferenceToEndpointName } from "./ut
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";
 export { IdGenerator } from "./IdGenerator";
 export { convertToFernFilepath } from "./utils/convertToFernFilepath";
+export { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
