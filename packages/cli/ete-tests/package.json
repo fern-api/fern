@@ -37,9 +37,7 @@
     "js-yaml": "^4.1.0",
     "node-fetch": "2.7.0",
     "strip-ansi": "^7.1.0",
-    "tmp-promise": "^3.0.3",
-    "url-join": "^5.0.0",
-    "qs": "6.11.2"
+    "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
