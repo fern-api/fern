@@ -4177,9 +4177,6 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../logger
       '@fern-api/project-loader':
         specifier: workspace:*
         version: link:../project-loader
@@ -4241,12 +4238,18 @@ importers:
       node-fetch:
         specifier: 2.7.0
         version: 2.7.0
+      qs:
+        specifier: 6.11.2
+        version: 6.11.2
       strip-ansi:
         specifier: ^7.1.0
         version: 7.1.0
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12

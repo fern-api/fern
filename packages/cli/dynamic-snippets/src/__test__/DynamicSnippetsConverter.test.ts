@@ -4,6 +4,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import path from "path";
 import { generateAndSnapshotDynamicIR } from "./generateAndSnapshotDynamicIR";
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("test definitions", async () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../test-definitions");
     const apiWorkspaces = await loadApis({
