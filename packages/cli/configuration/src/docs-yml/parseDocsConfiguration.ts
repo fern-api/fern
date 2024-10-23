@@ -121,6 +121,7 @@ export async function parseDocsConfiguration({
         title,
         // absoluteFilepath: absoluteFilepathToDocsConfig,
         instances,
+        audiences: rawDocsConfiguration.audiences,
 
         /* filepath of page to contents */
         pages,

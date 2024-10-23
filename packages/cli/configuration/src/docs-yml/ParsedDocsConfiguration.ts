@@ -11,6 +11,9 @@ export interface ParsedDocsConfiguration {
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
 
+    /* audiences (allowlist) */
+    audiences: string[] | undefined;
+
     /* navigation */
     landingPage: DocsNavigationItem.Page | undefined;
     navigation: DocsNavigationConfiguration;

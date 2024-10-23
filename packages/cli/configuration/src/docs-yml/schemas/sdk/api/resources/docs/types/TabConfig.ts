@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface TabConfig {
+export interface TabConfig extends FernDocsConfig.WithAudience {
     displayName: string;
     icon?: string;
     slug?: string;
@@ -17,5 +17,4 @@ export interface TabConfig {
      */
     href?: string;
     changelog?: FernDocsConfig.ChangelogFolderRelativePath;
-    audience?: FernDocsConfig.Audience;
 }

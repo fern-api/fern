@@ -9,22 +9,23 @@ import * as core from "../../../../core";
 export const ApiReferencePackageConfigurationWithOptions: core.serialization.ObjectSchema<
     serializers.ApiReferencePackageConfigurationWithOptions.Raw,
     FernDocsConfig.ApiReferencePackageConfigurationWithOptions
-> = core.serialization.object({
-    title: core.serialization.string().optional(),
-    summary: core.serialization.string().optional(),
-    contents: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).ApiReferenceLayoutItem))
-        .optional(),
-    slug: core.serialization.string().optional(),
-    icon: core.serialization.string().optional(),
-    hidden: core.serialization.boolean().optional(),
-    skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
-    playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
-    audience: core.serialization.lazy(async () => (await import("../../..")).Audience).optional(),
-});
+> = core.serialization
+    .object({
+        title: core.serialization.string().optional(),
+        summary: core.serialization.string().optional(),
+        contents: core.serialization
+            .list(core.serialization.lazy(async () => (await import("../../..")).ApiReferenceLayoutItem))
+            .optional(),
+        slug: core.serialization.string().optional(),
+        icon: core.serialization.string().optional(),
+        hidden: core.serialization.boolean().optional(),
+        skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+        playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
+    })
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAudience));
 
 export declare namespace ApiReferencePackageConfigurationWithOptions {
-    interface Raw {
+    interface Raw extends serializers.WithAudience.Raw {
         title?: string | null;
         summary?: string | null;
         contents?: serializers.ApiReferenceLayoutItem.Raw[] | null;
@@ -33,6 +34,5 @@ export declare namespace ApiReferencePackageConfigurationWithOptions {
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
         playground?: serializers.PlaygroundSettings.Raw | null;
-        audience?: serializers.Audience.Raw | null;
     }
 }

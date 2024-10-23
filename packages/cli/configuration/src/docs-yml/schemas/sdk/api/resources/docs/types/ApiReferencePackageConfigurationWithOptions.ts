@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface ApiReferencePackageConfigurationWithOptions {
+export interface ApiReferencePackageConfigurationWithOptions extends FernDocsConfig.WithAudience {
     title?: string;
     /** Relative path to the markdown file. This summary is displayed at the top of the API section. */
     summary?: string;
@@ -15,5 +15,4 @@ export interface ApiReferencePackageConfigurationWithOptions {
     skipSlug?: boolean;
     /** Settings for the api playground that is applied only to descendants of this api package. */
     playground?: FernDocsConfig.PlaygroundSettings;
-    audience?: FernDocsConfig.Audience;
 }

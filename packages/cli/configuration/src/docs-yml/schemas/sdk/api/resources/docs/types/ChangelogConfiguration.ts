@@ -4,11 +4,10 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface ChangelogConfiguration {
+export interface ChangelogConfiguration extends FernDocsConfig.WithAudience {
     changelog: FernDocsConfig.ChangelogFolderRelativePath;
     title?: string;
     slug?: string;
     icon?: string;
     hidden?: boolean;
-    audience?: FernDocsConfig.Audience;
 }

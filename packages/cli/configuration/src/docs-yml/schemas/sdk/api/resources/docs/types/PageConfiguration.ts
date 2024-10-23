@@ -4,11 +4,10 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface PageConfiguration {
+export interface PageConfiguration extends FernDocsConfig.WithAudience {
     page: string;
     path: string;
     slug?: string;
     icon?: string;
     hidden?: boolean;
-    audience?: FernDocsConfig.Audience;
 }

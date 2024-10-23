@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface VersionConfig {
+export interface VersionConfig extends FernDocsConfig.WithAudience {
     displayName: string;
     /** The relative path to the version's docs.yml file. */
     path: string;
@@ -12,5 +12,4 @@ export interface VersionConfig {
     slug?: string;
     /** If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site. */
     availability?: FernDocsConfig.VersionAvailability;
-    audience?: FernDocsConfig.Audience;
 }

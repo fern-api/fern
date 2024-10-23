@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface ApiReferenceEndpointConfiguration {
+export interface ApiReferenceEndpointConfiguration extends FernDocsConfig.WithAudience {
     endpoint: string;
     title?: string;
     slug?: string;
@@ -12,5 +12,4 @@ export interface ApiReferenceEndpointConfiguration {
     hidden?: boolean;
     /** Settings for the api playground that affect this endpoint specifically. */
     playground?: FernDocsConfig.PlaygroundSettings;
-    audience?: FernDocsConfig.Audience;
 }

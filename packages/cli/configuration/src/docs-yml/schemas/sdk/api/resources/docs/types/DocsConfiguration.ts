@@ -14,6 +14,8 @@ export interface DocsConfiguration {
      */
     analytics?: FernDocsConfig.AnalyticsConfig;
     announcement?: FernDocsConfig.AnnouncementConfig;
+    /** Global list of audiences that can be used to filter API endpoints and webhooks. */
+    audiences?: FernDocsConfig.AudienceId[];
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     versions?: FernDocsConfig.VersionConfig[];
     landingPage?: FernDocsConfig.PageConfiguration;

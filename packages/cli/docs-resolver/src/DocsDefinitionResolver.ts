@@ -1,4 +1,4 @@
-import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
+import { Audiences, docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
@@ -24,7 +24,6 @@ import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
-import { withAudience } from "./utils/withAudience";
 import { wrapWithHttps } from "./wrapWithHttps";
 
 dayjs.extend(utc);
@@ -250,7 +249,7 @@ export class DocsDefinitionResolver {
             logoHeight: this.parsedDocsConfig.logo?.height,
             logoHref: this.parsedDocsConfig.logo?.href ? DocsV1Write.Url(this.parsedDocsConfig.logo?.href) : undefined,
             favicon: this.getFileId(this.parsedDocsConfig.favicon),
-            navigation: undefined,
+            navigation: undefined, // <-- this is now deprecated
             root,
             colorsV3: this.convertColorConfigImageReferences(),
             navbarLinks: this.parsedDocsConfig.navbarLinks?.map((navbarLink) => ({
@@ -340,6 +339,7 @@ export class DocsDefinitionResolver {
             id,
             child,
             slug: slug.get(),
+            // TODO: should this be "Documentation" by default? Or can we use the org name here?
             title: this.parsedDocsConfig.title ?? "Documentation",
             hidden: false,
             icon: undefined,
@@ -383,11 +383,30 @@ export class DocsDefinitionResolver {
             slug: slug.get(),
             icon: landingPageConfig.icon,
             hidden: landingPageConfig.hidden,
-            audience: withAudience(landingPageConfig.audiences),
+            audience: this.withAudience(landingPageConfig.audiences),
             pageId,
             authed: undefined,
             noindex: undefined
         };
+    }
+
+    /**
+     * @param audiences - the audiences to convert
+     * @returns the audience IDs, or undefined if the audiences are empty
+     */
+    private withAudience(audiences: Audiences): APIV1Write.AudienceId[] | undefined {
+        if (audiences.type === "select") {
+            const audiencesNotInConfig = audiences.audiences.filter(
+                (audience) => !this._parsedDocsConfig?.audiences?.includes(audience)
+            );
+            // Note: this should never happen because `fern check` will fail if this is the case
+            if (audiencesNotInConfig.length > 0) {
+                throw new Error(`Audience ${audiencesNotInConfig.join(", ")} not found in audiences`);
+            }
+        }
+        return audiences.type === "select" && audiences.audiences.length > 0
+            ? audiences.audiences.map((audience) => FernNavigation.AudienceId(audience))
+            : undefined;
     }
 
     private async toUnversionedNode({
@@ -420,6 +439,7 @@ export class DocsDefinitionResolver {
         return {
             id,
             type: "versioned",
+            // TODO: should the first version always be default? We should make this configurable.
             children: await Promise.all(
                 versioned.versions.map((item, idx) => this.toVersionNode(item, parentSlug, idx === 0))
             )
@@ -444,12 +464,13 @@ export class DocsDefinitionResolver {
             title: version.version,
             slug: slug.get(),
             child,
+            // TODO: the `default` property should be deprecated, and moved to the parent `versioned` node
             default: isDefault,
             availability: version.availability != null ? convertAvailability(version.availability) : undefined,
             landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, parentSlug) : undefined,
             hidden: undefined,
             authed: undefined,
-            audience: withAudience(version.audiences),
+            audience: this.withAudience(version.audiences),
             icon: undefined,
             pointsTo: undefined
         };
@@ -545,7 +566,8 @@ export class DocsDefinitionResolver {
             workspace,
             this.docsWorkspace,
             this.taskContext,
-            this.markdownFilesToFullSlugs
+            this.markdownFilesToFullSlugs,
+            this.withAudience.bind(this)
         );
         return node.get();
     }
@@ -558,7 +580,8 @@ export class DocsDefinitionResolver {
             this.markdownFilesToFullSlugs,
             item.changelog,
             this.docsWorkspace,
-            this.#idgen
+            this.#idgen,
+            this.withAudience.bind(this)
         );
 
         return changelogResolver.toChangelogNode({
@@ -598,7 +621,7 @@ export class DocsDefinitionResolver {
             title: item.title,
             icon: item.icon,
             hidden: item.hidden,
-            audience: withAudience(item.audiences),
+            audience: this.withAudience(item.audiences),
             pageId,
             authed: undefined,
             noindex: undefined
@@ -629,7 +652,7 @@ export class DocsDefinitionResolver {
             icon: item.icon,
             collapsed: item.collapsed,
             hidden: item.hidden,
-            audience: withAudience(item.audiences),
+            audience: this.withAudience(item.audiences),
             children: [],
             authed: undefined,
             pointsTo: undefined,
@@ -671,7 +694,8 @@ export class DocsDefinitionResolver {
             this.markdownFilesToFullSlugs,
             changelog,
             this.docsWorkspace,
-            this.#idgen
+            this.#idgen,
+            this.withAudience.bind(this)
         );
         return changelogResolver.toChangelogNode({
             parentSlug,
@@ -712,7 +736,7 @@ export class DocsDefinitionResolver {
             icon: item.icon,
             hidden: item.hidden,
             authed: undefined,
-            audience: withAudience(item.audiences),
+            audience: this.withAudience(item.audiences),
             pointsTo: undefined,
             child: await this.toSidebarRootNode(id, layout, slug)
         };

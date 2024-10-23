@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface SectionConfiguration {
+export interface SectionConfiguration extends FernDocsConfig.WithAudience {
     section: string;
     /** The relative path to the markdown file that will be displayed when the section is clicked. */
     path?: string;
@@ -14,5 +14,4 @@ export interface SectionConfiguration {
     icon?: string;
     hidden?: boolean;
     skipSlug?: boolean;
-    audience?: FernDocsConfig.Audience;
 }

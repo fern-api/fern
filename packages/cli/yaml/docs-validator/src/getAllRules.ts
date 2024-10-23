@@ -1,5 +1,6 @@
 import { Rule } from "./Rule";
 import { AccentColorContrastRule } from "./rules/accent-color-contrast";
+import { AllAudiencesMustBeDeclaredRule } from "./rules/all-audiences-must-be-declared";
 import { FilepathsExistRule } from "./rules/filepaths-exist";
 import { OnlyVersionedNavigation } from "./rules/only-versioned-navigation";
 import { PlaygroundEnvironmentsExistRule } from "./rules/playground-environments-exist";
@@ -19,6 +20,7 @@ export function getAllRules(): Rule[] {
         ValidMarkdownLinks,
         ValidFileTypes,
         PlaygroundEnvironmentsExistRule,
-        ValidDocsEndpoints
+        ValidDocsEndpoints,
+        AllAudiencesMustBeDeclaredRule
     ];
 }

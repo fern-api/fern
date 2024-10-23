@@ -1,6 +1,6 @@
-import { docsYml } from "@fern-api/configuration";
+import { Audiences, docsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
-import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, APIV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -12,7 +12,6 @@ import { NodeIdGenerator } from "./NodeIdGenerator";
 import { isSubpackage } from "./utils/isSubpackage";
 import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { withAudience } from "./utils/withAudience";
 
 export class ApiReferenceNodeConverter {
     apiDefinitionId: FernNavigation.V1.ApiDefinitionId;
@@ -35,6 +34,7 @@ export class ApiReferenceNodeConverter {
         private docsWorkspace: DocsWorkspace,
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
+        private withAudience: (audiences: Audiences) => APIV1Write.AudienceId[] | undefined,
         idgen?: NodeIdGenerator
     ) {
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
@@ -95,7 +95,8 @@ export class ApiReferenceNodeConverter {
                 this.markdownFilesToFullSlugs,
                 this.workspace.changelog?.files.map((file) => file.absoluteFilepath),
                 this.docsWorkspace,
-                this.#idgen
+                this.#idgen,
+                this.withAudience
             ).toChangelogNode({
                 parentSlug: this.#slug,
                 audiences: { type: "all" }
@@ -106,7 +107,7 @@ export class ApiReferenceNodeConverter {
             noindex: undefined,
             playground: this.#convertPlaygroundSettings(this.apiSection.playground),
             authed: undefined,
-            audience: withAudience(this.apiSection.audiences)
+            audience: this.withAudience(this.apiSection.audiences)
         };
     }
 
@@ -160,7 +161,7 @@ export class ApiReferenceNodeConverter {
             hidden: page.hidden,
             noindex: page.noindex,
             authed: undefined,
-            audience: withAudience(page.audiences)
+            audience: this.withAudience(page.audiences)
         };
     }
 
@@ -220,7 +221,7 @@ export class ApiReferenceNodeConverter {
                 noindex: undefined,
                 playground: this.#convertPlaygroundSettings(pkg.playground),
                 authed: undefined,
-                audience: withAudience(pkg.audiences)
+                audience: this.withAudience(pkg.audiences)
             };
         } else {
             this.taskContext.logger.warn(
@@ -248,7 +249,7 @@ export class ApiReferenceNodeConverter {
                 noindex: undefined,
                 playground: this.#convertPlaygroundSettings(pkg.playground),
                 authed: undefined,
-                audience: withAudience(pkg.audiences)
+                audience: this.withAudience(pkg.audiences)
             };
         }
     }
@@ -314,7 +315,7 @@ export class ApiReferenceNodeConverter {
             noindex: undefined,
             playground: this.#convertPlaygroundSettings(section.playground),
             authed: undefined,
-            audience: withAudience(section.audiences)
+            audience: this.withAudience(section.audiences)
         };
     }
 
@@ -416,7 +417,7 @@ export class ApiReferenceNodeConverter {
                 hidden: endpointItem.hidden,
                 playground: this.#convertPlaygroundSettings(endpointItem.playground),
                 authed: undefined,
-                audience: withAudience(endpointItem.audiences)
+                audience: this.withAudience(endpointItem.audiences)
             };
         }
 
@@ -451,7 +452,7 @@ export class ApiReferenceNodeConverter {
                 availability: FernNavigation.V1.convertAvailability(webSocket.availability),
                 playground: this.#convertPlaygroundSettings(endpointItem.playground),
                 authed: undefined,
-                audience: withAudience(endpointItem.audiences)
+                audience: this.withAudience(endpointItem.audiences)
             };
         }
 
@@ -486,7 +487,7 @@ export class ApiReferenceNodeConverter {
                 apiDefinitionId: this.apiDefinitionId,
                 availability: undefined,
                 authed: undefined,
-                audience: withAudience(endpointItem.audiences)
+                audience: this.withAudience(endpointItem.audiences)
             };
         }
 

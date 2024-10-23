@@ -1,5 +1,5 @@
 import { Audiences } from "@fern-api/configuration";
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
@@ -7,7 +7,6 @@ import utc from "dayjs/plugin/utc";
 import { kebabCase, last } from "lodash-es";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle";
-import { withAudience } from "./utils/withAudience";
 
 dayjs.extend(utc);
 
@@ -31,7 +30,8 @@ export class ChangelogNodeConverter {
         private markdownToFullSlug: Map<AbsoluteFilePath, string>,
         private changelogFiles: AbsoluteFilePath[] | undefined,
         private docsWorkspace: DocsWorkspace,
-        private idgen: NodeIdGenerator
+        private idgen: NodeIdGenerator,
+        private withAudience: (audiences: Audiences) => APIV1Write.AudienceId[] | undefined
     ) {}
 
     public toChangelogNode(opts: ConvertOptions): FernNavigation.V1.ChangelogNode {
@@ -113,7 +113,7 @@ export class ChangelogNodeConverter {
             overviewPageId,
             noindex: undefined,
             authed: undefined,
-            audience: withAudience(opts.audiences)
+            audience: this.withAudience(opts.audiences)
         };
     }
 

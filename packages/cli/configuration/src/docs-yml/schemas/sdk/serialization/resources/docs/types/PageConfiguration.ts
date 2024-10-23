@@ -9,22 +9,22 @@ import * as core from "../../../../core";
 export const PageConfiguration: core.serialization.ObjectSchema<
     serializers.PageConfiguration.Raw,
     FernDocsConfig.PageConfiguration
-> = core.serialization.object({
-    page: core.serialization.string(),
-    path: core.serialization.string(),
-    slug: core.serialization.string().optional(),
-    icon: core.serialization.string().optional(),
-    hidden: core.serialization.boolean().optional(),
-    audience: core.serialization.lazy(async () => (await import("../../..")).Audience).optional(),
-});
+> = core.serialization
+    .object({
+        page: core.serialization.string(),
+        path: core.serialization.string(),
+        slug: core.serialization.string().optional(),
+        icon: core.serialization.string().optional(),
+        hidden: core.serialization.boolean().optional(),
+    })
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAudience));
 
 export declare namespace PageConfiguration {
-    interface Raw {
+    interface Raw extends serializers.WithAudience.Raw {
         page: string;
         path: string;
         slug?: string | null;
         icon?: string | null;
         hidden?: boolean | null;
-        audience?: serializers.Audience.Raw | null;
     }
 }
