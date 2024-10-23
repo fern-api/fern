@@ -146,7 +146,7 @@ export function generateTypeDeclarationExample({
                             );
                         }
                         const objectExample = generateObjectDeclarationExample({
-                            currentDepth: currentDepth,
+                            currentDepth,
                             maxDepth,
                             fieldName,
                             objectTypeDeclaration: typeDeclaration.shape,
