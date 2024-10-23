@@ -1,4 +1,3 @@
-import SwaggerParser from "@apidevtools/swagger-parser";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { bundle, Config, Source } from "@redocly/openapi-core";
@@ -116,5 +115,5 @@ async function parseOpenAPI({
                   ...options,
                   ref: absolutePathToOpenAPI
               });
-    return await SwaggerParser.parse(result.bundle.parsed);
+    return result.bundle.parsed;
 }

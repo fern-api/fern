@@ -39,7 +39,7 @@ export function generatePrimitiveExample({
                     datetime: new Date(Examples.DATE_TIME),
                     raw: Examples.DATE_TIME
                 }),
-                jsonExample: Examples.BASE64
+                jsonExample: Examples.DATE_TIME
             };
         }
         case "DOUBLE": {

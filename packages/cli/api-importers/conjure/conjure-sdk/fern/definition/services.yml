@@ -26,7 +26,7 @@ types:
   ConjureArgument: 
     discriminated: false
     union: 
-      - types.ConjureTypeReference
+      - string
       - ConjureArgumentWithParamType
   
   ConjureArgumentWithParamType: 
@@ -34,7 +34,7 @@ types:
       - commons.WithDocs
     properties: 
       param-type: ConjureParamType
-      type: types.ConjureTypeReference
+      type: string
   
   ConjureParamType: 
     enum: 

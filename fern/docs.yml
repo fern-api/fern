@@ -138,6 +138,9 @@ navigation:
           - page: Webhooks
             icon: fa-regular fa-webhook
             path: ./pages/api-definition/fern-definition/webhooks.mdx
+          - page: WebSockets
+            icon: fa-regular fa-globe
+            path: ./pages/api-definition/fern-definition/websockets.mdx
           - page: Errors
             icon: fa-regular fa-exclamation-triangle
             path: ./pages/api-definition/fern-definition/errors.mdx

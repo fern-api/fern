@@ -14,7 +14,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "sideEffects": false,
-  "bin": "./dist/bundle.cjs",
+  "bin": "./dist/cli.cjs",
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -26,7 +26,6 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
     "dist:cli": "pnpm compile && tsup ./src/cli.ts && cp -R ../codegen/src/asIs dist",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-php-sdk:latest ../../.."
@@ -45,8 +44,7 @@
     "@types/node": "^18.7.18",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
-    "env-cmd": "toddbluhm/env-cmd",
-    "esbuild": "^0.15.7",
+    "esbuild": "^0.24.0",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",

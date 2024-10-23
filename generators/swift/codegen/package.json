@@ -14,9 +14,6 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "sideEffects": false,
-  "bin": {
-    "fern-swift-sdk": "./dist/bundle.cjs"
-  },
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -27,12 +24,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck",
-    "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "dist:cli": "pnpm compile && node build.cjs",
-    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
-    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-swift-sdk:latest ../../..",
-    "dockerTagVersion": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-swift-sdk:${0} ../../.."
+    "depcheck": "depcheck"
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
@@ -44,8 +36,7 @@
     "@types/node": "^18.7.18",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
-    "env-cmd": "toddbluhm/env-cmd",
-    "esbuild": "^0.15.7",
+    "esbuild": "^0.24.0",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",

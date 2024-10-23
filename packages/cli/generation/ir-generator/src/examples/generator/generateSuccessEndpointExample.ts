@@ -14,14 +14,15 @@ import {
     ExampleHeader,
     ExampleEndpointSuccessResponse,
     ExampleRequestBody,
-    ExampleInlinedRequestBodyProperty
+    ExampleInlinedRequestBodyProperty,
+    ErrorDeclaration
 } from "@fern-api/ir-sdk";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 import { isOptional } from "./isTypeReferenceOptional";
 import hash from "object-hash";
 
-export declare namespace generateSuccessEndpointExample {
+export declare namespace generateEndpointExample {
     interface Args {
         ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">;
         service: HttpService;
@@ -29,6 +30,19 @@ export declare namespace generateSuccessEndpointExample {
         typeDeclarations: Record<TypeId, TypeDeclaration>;
 
         skipOptionalRequestProperties: boolean;
+
+        generationResponse: GenerationResponseType;
+    }
+
+    type GenerationResponseType = SuccessResponseType | ErrorResponseType;
+
+    interface SuccessResponseType {
+        type: "success";
+    }
+
+    interface ErrorResponseType {
+        type: "error";
+        declaration: ErrorDeclaration;
     }
 
     interface ParameterGroup<T, K> {
@@ -37,13 +51,14 @@ export declare namespace generateSuccessEndpointExample {
     }
 }
 
-export function generateSuccessEndpointExample({
+export function generateEndpointExample({
     ir,
     endpoint,
     service,
     typeDeclarations,
-    skipOptionalRequestProperties
-}: generateSuccessEndpointExample.Args): ExampleGenerationResult<ExampleEndpointCall> {
+    skipOptionalRequestProperties,
+    generationResponse
+}: generateEndpointExample.Args): ExampleGenerationResult<ExampleEndpointCall> {
     const result: Omit<ExampleEndpointCall, "id" | "url"> = {
         name: undefined,
         endpointHeaders: [],
@@ -57,7 +72,7 @@ export function generateSuccessEndpointExample({
         docs: undefined
     };
 
-    const pathParameterGroups: generateSuccessEndpointExample.ParameterGroup<PathParameter, ExamplePathParameter>[] = [
+    const pathParameterGroups: generateEndpointExample.ParameterGroup<PathParameter, ExamplePathParameter>[] = [
         {
             params: endpoint.pathParameters,
             add: (example: ExamplePathParameter) => result.endpointPathParameters.push(example)
@@ -121,7 +136,7 @@ export function generateSuccessEndpointExample({
         });
     }
 
-    const headerGroup: generateSuccessEndpointExample.ParameterGroup<HttpHeader, ExampleHeader>[] = [
+    const headerGroup: generateEndpointExample.ParameterGroup<HttpHeader, ExampleHeader>[] = [
         {
             params: endpoint.headers,
             add: (example: ExampleHeader) => result.endpointHeaders.push(example)
@@ -222,7 +237,7 @@ export function generateSuccessEndpointExample({
         }
     }
 
-    if (endpoint.response?.body != null) {
+    if (generationResponse.type === "success" && endpoint.response?.body != null) {
         switch (endpoint.response.body.type) {
             case "fileDownload":
                 return { type: "failure", message: "File download unsupported" };
@@ -249,6 +264,29 @@ export function generateSuccessEndpointExample({
                 return { type: "failure", message: "Text unsupported" };
             default:
                 assertNever(endpoint.response.body);
+        }
+    } else if (generationResponse.type === "error") {
+        if (generationResponse.declaration.type == null) {
+            result.response = ExampleResponse.error({
+                body: undefined,
+                error: generationResponse.declaration.name
+            });
+        } else {
+            const generatedExample = generateTypeReferenceExample({
+                currentDepth: 0,
+                maxDepth: 10,
+                typeDeclarations,
+                typeReference: generationResponse.declaration.type,
+                skipOptionalProperties: skipOptionalRequestProperties
+            });
+            if (generatedExample.type === "failure") {
+                return generatedExample;
+            }
+            const { example } = generatedExample;
+            result.response = ExampleResponse.error({
+                body: example,
+                error: generationResponse.declaration.name
+            });
         }
     }
 
