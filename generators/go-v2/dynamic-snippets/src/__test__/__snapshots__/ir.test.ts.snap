@@ -159,6 +159,57 @@ func do() {
 "
 `;
 
+exports[`test definitions > auth-environment-variables 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+		option.WithXAnotherHeader(),
+		option.WithXAPIVersion(),
+	)
+	client.GetWithAPIKey(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+		option.WithXAnotherHeader(),
+		option.WithXAPIVersion(),
+	)
+	client.GetWithHeader(
+		context.TODO(),
+		&sdk.HeaderAuthRequest{
+			XEndpointHeader: "X-Endpoint-Header",
+		},
+	)
+}
+"
+`;
+
 exports[`test definitions > bearer-token-environment-variable 1`] = `
 "package example
 
@@ -1134,6 +1185,23 @@ func do() {
 exports[`test definitions > object 1`] = `"<none>"`;
 
 exports[`test definitions > objects-with-imports 1`] = `"<none>"`;
+
+exports[`test definitions > optional 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.SendOptionalBody(
+		context.TODO(),
+	)
+}
+"
+`;
 
 exports[`test definitions > package-yml 1`] = `
 "package example
