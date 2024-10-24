@@ -28,7 +28,7 @@ export class TestResult {
         let s = "";
         this.snippets.forEach((snippet, idx) => {
             if (idx > 0) {
-                s += "\n\n";
+                s += "\n------------------------\n\n";
             }
             s += snippet;
         });
