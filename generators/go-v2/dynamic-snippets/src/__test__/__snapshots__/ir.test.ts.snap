@@ -39,6 +39,53 @@ func do() {
 "
 `;
 
+exports[`test definitions > any-auth 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetToken(
+		context.TODO(),
+		&sdk.GetTokenRequest{
+			ClientID:     "client_id",
+			ClientSecret: "client_secret",
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Get(
+		context.TODO(),
+	)
+}
+"
+`;
+
 exports[`test definitions > api-wide-base-path 1`] = `
 "package example
 
@@ -55,6 +102,55 @@ func do() {
 		"serviceParam",
 		"resourceParam",
 		1,
+	)
+}
+"
+`;
+
+exports[`test definitions > audiences 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.FolderA.GetDirectThread(
+		context.TODO(),
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.FolderD.GetDirectThread(
+		context.TODO(),
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Find(
+		context.TODO(),
+		&sdk.FindRequest{},
 	)
 }
 "
@@ -87,6 +183,55 @@ exports[`test definitions > bytes 1`] = `"<none>"`;
 exports[`test definitions > circular-references 1`] = `"<none>"`;
 
 exports[`test definitions > circular-references-advanced 1`] = `"<none>"`;
+
+exports[`test definitions > cross-package-type-names 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.FolderA.GetDirectThread(
+		context.TODO(),
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.FolderA.GetDirectThread(
+		context.TODO(),
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Find(
+		context.TODO(),
+		&sdk.FindRequest{},
+	)
+}
+"
+`;
 
 exports[`test definitions > csharp-namespace-conflict 1`] = `
 "package example
@@ -189,6 +334,316 @@ func do() {
 		&sdk.CreateMovieRequest{
 			Title:  "title",
 			Rating: 1.1,
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > grpc-proto 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Create(
+		context.TODO(),
+		&sdk.CreateRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Create(
+		context.TODO(),
+		&sdk.CreateRequest{},
+	)
+}
+"
+`;
+
+exports[`test definitions > grpc-proto-exhaustive 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Upload(
+		context.TODO(),
+		&sdk.UploadRequest{
+			Columns: []*sdk.Column{
+				&sdk.Column{
+					ID: "id",
+					Values: []float64{
+						1.1,
+					},
+				},
+			},
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Upload(
+		context.TODO(),
+		&sdk.UploadRequest{
+			Columns: []*sdk.Column{
+				&sdk.Column{
+					ID: "id",
+					Values: []float64{
+						1.1,
+						1.1,
+					},
+				},
+				&sdk.Column{
+					ID: "id",
+					Values: []float64{
+						1.1,
+						1.1,
+					},
+				},
+			},
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Delete(
+		context.TODO(),
+		&sdk.DeleteRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Delete(
+		context.TODO(),
+		&sdk.DeleteRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Describe(
+		context.TODO(),
+		&sdk.DescribeRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Describe(
+		context.TODO(),
+		&sdk.DescribeRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Fetch(
+		context.TODO(),
+		&sdk.FetchRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Fetch(
+		context.TODO(),
+		&sdk.FetchRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.List(
+		context.TODO(),
+		&sdk.ListRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.List(
+		context.TODO(),
+		&sdk.ListRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Query(
+		context.TODO(),
+		&sdk.QueryRequest{
+			TopK: 1,
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Query(
+		context.TODO(),
+		&sdk.QueryRequest{
+			TopK: 1,
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Update(
+		context.TODO(),
+		&sdk.UpdateRequest{
+			ID: "id",
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Update(
+		context.TODO(),
+		&sdk.UpdateRequest{
+			ID: "id",
 		},
 	)
 }
@@ -443,6 +898,43 @@ func do() {
 "
 `;
 
+exports[`test definitions > multi-line-docs 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetUser(
+		context.TODO(),
+		"userId",
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.CreateUser(
+		context.TODO(),
+		&sdk.CreateUserRequest{
+			Name: "name",
+		},
+	)
+}
+"
+`;
+
 exports[`test definitions > multi-url-environment 1`] = `
 "package example
 
@@ -587,6 +1079,28 @@ func do() {
 "
 `;
 
+exports[`test definitions > oauth-client-credentials-nested-root 1`] = `
+"package example
+
+import (
+	context "context"
+	auth "sdk/auth"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Auth.GetToken(
+		context.TODO(),
+		&auth.GetTokenRequest{
+			ClientID:     "client_id",
+			ClientSecret: "client_secret",
+		},
+	)
+}
+"
+`;
+
 exports[`test definitions > object 1`] = `"<none>"`;
 
 exports[`test definitions > objects-with-imports 1`] = `"<none>"`;
@@ -664,6 +1178,228 @@ func do() {
 		context.TODO(),
 		"id",
 		"nestedId",
+	)
+}
+"
+`;
+
+exports[`test definitions > pagination 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithCursorPagination(
+		context.TODO(),
+		&sdk.ListUsersCursorPaginationRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithBodyCursorPagination(
+		context.TODO(),
+		&sdk.ListUsersBodyCursorPaginationRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithCursorPagination(
+		context.TODO(),
+		&sdk.ListUsersCursorPaginationRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithBodyCursorPagination(
+		context.TODO(),
+		&sdk.ListUsersBodyCursorPaginationRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithCursorPagination(
+		context.TODO(),
+		&sdk.ListUsersCursorPaginationRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithCursorPagination(
+		context.TODO(),
+		&sdk.ListUsersCursorPaginationRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithCursorPagination(
+		context.TODO(),
+		&sdk.ListUsersCursorPaginationRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithCursorPagination(
+		context.TODO(),
+		&sdk.ListUsersCursorPaginationRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithCursorPagination(
+		context.TODO(),
+		&sdk.ListUsersCursorPaginationRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithCursorPagination(
+		context.TODO(),
+		&sdk.ListUsersCursorPaginationRequest{},
 	)
 }
 "

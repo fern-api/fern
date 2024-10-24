@@ -18,6 +18,9 @@ export class DynamicTypeInstantiationMapper {
     }
 
     public convert(args: DynamicTypeInstantiationMapper.Args): go.TypeInstantiation {
+        if (args.value == null) {
+            return go.TypeInstantiation.nop();
+        }
         switch (args.typeReference.type) {
             case "list":
                 return this.convertList({ list: args.typeReference.value, value: args.value });
@@ -30,7 +33,9 @@ export class DynamicTypeInstantiationMapper {
                 return this.convertNamed({ named, value: args.value });
             }
             case "optional":
-                return go.TypeInstantiation.optional(this.convert(args));
+                return go.TypeInstantiation.optional(
+                    this.convert({ typeReference: args.typeReference.value, value: args.value })
+                );
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value });
             case "set":
@@ -49,9 +54,6 @@ export class DynamicTypeInstantiationMapper {
         list: DynamicSnippets.TypeReference;
         value: unknown;
     }): go.TypeInstantiation {
-        if (value == null) {
-            return go.TypeInstantiation.nop();
-        }
         if (!Array.isArray(value)) {
             throw new Error(`Expected array but got: ${JSON.stringify(value)}`);
         }
@@ -62,9 +64,6 @@ export class DynamicTypeInstantiationMapper {
     }
 
     private convertMap({ map, value }: { map: DynamicSnippets.MapType; value: unknown }): go.TypeInstantiation {
-        if (value == null) {
-            return go.TypeInstantiation.nop();
-        }
         if (typeof value !== "object" || value == null) {
             throw new Error(`Expected object but got: ${JSON.stringify(value)}`);
         }
@@ -205,10 +204,12 @@ export class DynamicTypeInstantiationMapper {
     }
 
     private getEnumValueNameOrThrow({ enum_, value }: { enum_: DynamicSnippets.EnumType; value: unknown }): string {
-        const target = value as string;
-        const enumValue = enum_.values.find((v) => v.wireValue === target);
+        if (typeof value !== "string") {
+            throw new Error(`Expected enum value string, got: ${JSON.stringify(value)}`);
+        }
+        const enumValue = enum_.values.find((v) => v.wireValue === value);
         if (enumValue == null) {
-            throw new Error(`An enum value named "${target}" does not exist in this context`);
+            throw new Error(`An enum value named "${value}" does not exist in this context`);
         }
         return `${this.context.getTypeName(enum_.declaration.name)}${this.context.getTypeName(enumValue.name)}`;
     }
