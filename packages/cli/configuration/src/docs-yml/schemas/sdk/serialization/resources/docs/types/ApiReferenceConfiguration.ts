@@ -13,7 +13,9 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
     .object({
         api: core.serialization.string(),
         apiName: core.serialization.property("api-name", core.serialization.string().optional()),
-        audiences: core.serialization.list(core.serialization.string()).optional(),
+        audiences: core.serialization
+            .list(core.serialization.lazy(async () => (await import("../../..")).AudienceId))
+            .optional(),
         displayErrors: core.serialization.property("display-errors", core.serialization.boolean().optional()),
         snippets: core.serialization
             .lazyObject(async () => (await import("../../..")).SnippetsConfiguration)
@@ -31,13 +33,13 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         paginated: core.serialization.boolean().optional(),
         playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAudience));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
 
 export declare namespace ApiReferenceConfiguration {
-    interface Raw extends serializers.WithAudience.Raw {
+    interface Raw extends serializers.WithPermissions.Raw {
         api: string;
         "api-name"?: string | null;
-        audiences?: string[] | null;
+        audiences?: serializers.AudienceId.Raw[] | null;
         "display-errors"?: boolean | null;
         snippets?: serializers.SnippetsConfiguration.Raw | null;
         summary?: string | null;

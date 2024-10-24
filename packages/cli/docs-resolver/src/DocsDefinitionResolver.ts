@@ -383,7 +383,7 @@ export class DocsDefinitionResolver {
             slug: slug.get(),
             icon: landingPageConfig.icon,
             hidden: landingPageConfig.hidden,
-            audience: this.withAudience(landingPageConfig.audiences),
+            audience: this.withAudience(landingPageConfig.viewers),
             pageId,
             authed: undefined,
             noindex: undefined
@@ -394,19 +394,17 @@ export class DocsDefinitionResolver {
      * @param audiences - the audiences to convert
      * @returns the audience IDs, or undefined if the audiences are empty
      */
-    private withAudience(audiences: Audiences): APIV1Write.AudienceId[] | undefined {
-        if (audiences.type === "select") {
-            const audiencesNotInConfig = audiences.audiences.filter(
-                (audience) => !this._parsedDocsConfig?.audiences?.includes(audience)
-            );
-            // Note: this should never happen because `fern check` will fail if this is the case
-            if (audiencesNotInConfig.length > 0) {
-                throw new Error(`Audience ${audiencesNotInConfig.join(", ")} not found in audiences`);
-            }
+    private withAudience(viewers: string[]): APIV1Write.AudienceId[] | undefined {
+        if (viewers.length === 0) {
+            return undefined;
         }
-        return audiences.type === "select" && audiences.audiences.length > 0
-            ? audiences.audiences.map((audience) => FernNavigation.AudienceId(audience))
-            : undefined;
+        return viewers.map((viewer) => {
+            if (this.parsedDocsConfig.roles == null || !this.parsedDocsConfig.roles.includes(viewer)) {
+                // Note: this should never happen because `fern check` will fail if this is the case
+                throw new Error(`Role "${viewer}" not found in roles`);
+            }
+            return FernNavigation.AudienceId(viewer);
+        });
     }
 
     private async toUnversionedNode({
@@ -470,7 +468,7 @@ export class DocsDefinitionResolver {
             landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, parentSlug) : undefined,
             hidden: undefined,
             authed: undefined,
-            audience: this.withAudience(version.audiences),
+            audience: this.withAudience(version.viewers),
             icon: undefined,
             pointsTo: undefined
         };
@@ -551,7 +549,6 @@ export class DocsDefinitionResolver {
             packageName: undefined,
             context: this.taskContext
         });
-        // console.log(JSON.stringify(ir, undefined, 2));
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
@@ -588,7 +585,7 @@ export class DocsDefinitionResolver {
             parentSlug,
             title: item.title,
             icon: item.icon,
-            audiences: item.audiences,
+            viewers: item.viewers,
             hidden: item.hidden,
             slug: item.slug
         });
@@ -621,7 +618,7 @@ export class DocsDefinitionResolver {
             title: item.title,
             icon: item.icon,
             hidden: item.hidden,
-            audience: this.withAudience(item.audiences),
+            audience: this.withAudience(item.viewers),
             pageId,
             authed: undefined,
             noindex: undefined
@@ -652,7 +649,7 @@ export class DocsDefinitionResolver {
             icon: item.icon,
             collapsed: item.collapsed,
             hidden: item.hidden,
-            audience: this.withAudience(item.audiences),
+            audience: this.withAudience(item.viewers),
             children: [],
             authed: undefined,
             pointsTo: undefined,
@@ -701,7 +698,7 @@ export class DocsDefinitionResolver {
             parentSlug,
             title: item.title,
             icon: item.icon,
-            audiences: item.audiences,
+            viewers: item.viewers,
             hidden: item.hidden,
             slug: item.slug
         });
@@ -736,7 +733,7 @@ export class DocsDefinitionResolver {
             icon: item.icon,
             hidden: item.hidden,
             authed: undefined,
-            audience: this.withAudience(item.audiences),
+            audience: this.withAudience(item.viewers),
             pointsTo: undefined,
             child: await this.toSidebarRootNode(id, layout, slug)
         };

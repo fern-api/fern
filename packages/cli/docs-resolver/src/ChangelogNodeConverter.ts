@@ -18,7 +18,7 @@ interface ConvertOptions {
     icon?: string;
     hidden?: boolean;
     slug?: string;
-    audiences: Audiences;
+    viewers: string[];
     // skipUrlSlug?: boolean;
 }
 
@@ -31,7 +31,7 @@ export class ChangelogNodeConverter {
         private changelogFiles: AbsoluteFilePath[] | undefined,
         private docsWorkspace: DocsWorkspace,
         private idgen: NodeIdGenerator,
-        private withAudience: (audiences: Audiences) => APIV1Write.AudienceId[] | undefined
+        private withAudience: (viewers: string[]) => APIV1Write.AudienceId[] | undefined
     ) {}
 
     public toChangelogNode(opts: ConvertOptions): FernNavigation.V1.ChangelogNode {
@@ -113,7 +113,7 @@ export class ChangelogNodeConverter {
             overviewPageId,
             noindex: undefined,
             authed: undefined,
-            audience: this.withAudience(opts.audiences)
+            audience: this.withAudience(opts.viewers)
         };
     }
 

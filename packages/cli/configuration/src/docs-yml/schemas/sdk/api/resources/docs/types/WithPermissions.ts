@@ -4,6 +4,6 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface WithAudience {
-    audience?: FernDocsConfig.Audience;
+export interface WithPermissions {
+    viewers?: FernDocsConfig.Role;
 }
