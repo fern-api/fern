@@ -6,4 +6,6 @@ import * as FernDocsConfig from "../../..";
 
 export interface WithPermissions {
     viewers?: FernDocsConfig.Role;
+    /** When `orphaned` is set to `true`, the roles will not inherit from parents. */
+    orphaned?: boolean;
 }

@@ -447,6 +447,9 @@ types:
   WithPermissions:
     properties:
       viewers: optional<Role>
+      orphaned:
+        type: optional<boolean>
+        docs: When `orphaned` is set to `true`, the roles will not inherit from parents.
 
   FontConfig:
     properties:

@@ -345,7 +345,8 @@ export class DocsDefinitionResolver {
             icon: undefined,
             pointsTo: undefined,
             authed: undefined,
-            audience: undefined
+            viewers: undefined,
+            orphaned: undefined
         };
     }
 
@@ -383,28 +384,12 @@ export class DocsDefinitionResolver {
             slug: slug.get(),
             icon: landingPageConfig.icon,
             hidden: landingPageConfig.hidden,
-            audience: this.withAudience(landingPageConfig.viewers),
+            viewers: landingPageConfig.viewers,
+            orphaned: landingPageConfig.orphaned,
             pageId,
             authed: undefined,
             noindex: undefined
         };
-    }
-
-    /**
-     * @param audiences - the audiences to convert
-     * @returns the audience IDs, or undefined if the audiences are empty
-     */
-    private withAudience(viewers: string[]): APIV1Write.AudienceId[] | undefined {
-        if (viewers.length === 0) {
-            return undefined;
-        }
-        return viewers.map((viewer) => {
-            if (this.parsedDocsConfig.roles == null || !this.parsedDocsConfig.roles.includes(viewer)) {
-                // Note: this should never happen because `fern check` will fail if this is the case
-                throw new Error(`Role "${viewer}" not found in roles`);
-            }
-            return FernNavigation.AudienceId(viewer);
-        });
     }
 
     private async toUnversionedNode({
@@ -468,7 +453,8 @@ export class DocsDefinitionResolver {
             landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, parentSlug) : undefined,
             hidden: undefined,
             authed: undefined,
-            audience: this.withAudience(version.viewers),
+            viewers: version.viewers,
+            orphaned: version.orphaned,
             icon: undefined,
             pointsTo: undefined
         };
@@ -563,8 +549,7 @@ export class DocsDefinitionResolver {
             workspace,
             this.docsWorkspace,
             this.taskContext,
-            this.markdownFilesToFullSlugs,
-            this.withAudience.bind(this)
+            this.markdownFilesToFullSlugs
         );
         return node.get();
     }
@@ -577,8 +562,7 @@ export class DocsDefinitionResolver {
             this.markdownFilesToFullSlugs,
             item.changelog,
             this.docsWorkspace,
-            this.#idgen,
-            this.withAudience.bind(this)
+            this.#idgen
         );
 
         return changelogResolver.toChangelogNode({
@@ -618,7 +602,8 @@ export class DocsDefinitionResolver {
             title: item.title,
             icon: item.icon,
             hidden: item.hidden,
-            audience: this.withAudience(item.viewers),
+            viewers: item.viewers,
+            orphaned: item.orphaned,
             pageId,
             authed: undefined,
             noindex: undefined
@@ -649,7 +634,8 @@ export class DocsDefinitionResolver {
             icon: item.icon,
             collapsed: item.collapsed,
             hidden: item.hidden,
-            audience: this.withAudience(item.viewers),
+            viewers: item.viewers,
+            orphaned: item.orphaned,
             children: [],
             authed: undefined,
             pointsTo: undefined,
@@ -691,8 +677,7 @@ export class DocsDefinitionResolver {
             this.markdownFilesToFullSlugs,
             changelog,
             this.docsWorkspace,
-            this.#idgen,
-            this.withAudience.bind(this)
+            this.#idgen
         );
         return changelogResolver.toChangelogNode({
             parentSlug,
@@ -733,7 +718,8 @@ export class DocsDefinitionResolver {
             icon: item.icon,
             hidden: item.hidden,
             authed: undefined,
-            audience: this.withAudience(item.viewers),
+            viewers: item.viewers,
+            orphaned: item.orphaned,
             pointsTo: undefined,
             child: await this.toSidebarRootNode(id, layout, slug)
         };

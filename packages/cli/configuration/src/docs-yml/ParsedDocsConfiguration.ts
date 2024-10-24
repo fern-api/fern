@@ -138,20 +138,19 @@ export interface VersionedDocsNavigation {
     versions: VersionInfo[];
 }
 
-export interface VersionInfo {
+export interface VersionInfo extends CjsFdrSdk.navigation.v1.WithPermissions {
     landingPage: DocsNavigationItem.Page | undefined;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
     availability: VersionAvailability | undefined;
     slug: string | undefined;
-    viewers: string[];
 }
 
 export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation | VersionedDocsNavigation;
 
 export type UnversionedNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation;
 
-export interface TabbedNavigation {
+export interface TabbedNavigation extends CjsFdrSdk.navigation.v1.WithPermissions {
     // tab: string;
     title: string;
     icon: string | undefined;
@@ -159,7 +158,6 @@ export interface TabbedNavigation {
     skipUrlSlug: boolean | undefined;
     hidden: boolean | undefined;
     child: TabbedNavigationChild;
-    viewers: string[];
 }
 
 type TabbedNavigationChild =
@@ -192,7 +190,7 @@ export type DocsNavigationItem =
     | DocsNavigationItem.Changelog;
 
 export declare namespace DocsNavigationItem {
-    export interface Page {
+    export interface Page extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "page";
         title: string;
         icon: string | undefined;
@@ -200,10 +198,9 @@ export declare namespace DocsNavigationItem {
         slug: string | undefined;
         hidden: boolean | undefined;
         noindex: boolean | undefined;
-        viewers: string[];
     }
 
-    export interface Section {
+    export interface Section extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "section";
         title: string;
         icon: string | undefined;
@@ -213,10 +210,9 @@ export declare namespace DocsNavigationItem {
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
-        viewers: string[];
     }
 
-    export interface ApiSection {
+    export interface ApiSection extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "apiSection";
         title: string;
         icon: string | undefined;
@@ -233,7 +229,6 @@ export declare namespace DocsNavigationItem {
         flattened: boolean;
         paginated: boolean;
         playground: PlaygroundSettings | undefined;
-        viewers: string[];
     }
 
     export interface Link {
@@ -243,14 +238,13 @@ export declare namespace DocsNavigationItem {
         icon: string | undefined;
     }
 
-    export interface Changelog {
+    export interface Changelog extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "changelog";
         changelog: AbsoluteFilePath[];
         title: string;
         icon: string | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
-        viewers: string[];
     }
 
     export interface VersionedSnippetLanguageConfiguration {
@@ -268,7 +262,7 @@ export declare namespace DocsNavigationItem {
 }
 
 export declare namespace ParsedApiReferenceLayoutItem {
-    export interface Section {
+    export interface Section extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "section";
         title: string; // title
         referencedSubpackages: string[]; // subpackage IDs
@@ -279,9 +273,8 @@ export declare namespace ParsedApiReferenceLayoutItem {
         icon: string | undefined;
         skipUrlSlug: boolean | undefined;
         playground: PlaygroundSettings | undefined;
-        viewers: string[];
     }
-    export interface Package {
+    export interface Package extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "package";
         title: string | undefined; // defaults to subpackage title
         package: string; // subpackage ID
@@ -292,10 +285,9 @@ export declare namespace ParsedApiReferenceLayoutItem {
         icon: string | undefined;
         skipUrlSlug: boolean | undefined;
         playground: PlaygroundSettings | undefined;
-        viewers: string[];
     }
 
-    export interface Endpoint {
+    export interface Endpoint extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "endpoint";
         endpoint: string; // endpoint locator
         title: string | undefined;
@@ -303,7 +295,6 @@ export declare namespace ParsedApiReferenceLayoutItem {
         slug: string | undefined;
         hidden: boolean | undefined;
         playground: PlaygroundSettings | undefined;
-        viewers: string[];
     }
 
     export interface Item {
