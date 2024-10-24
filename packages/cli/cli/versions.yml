@@ -16,6 +16,13 @@
         ```
       type: feat
   irVersion: 53
+  version: 0.45.0-rc19
+
+- changelogEntry:
+    - summary: |
+        - Add additional debug logging to the CLI when downloading docs preview bundle
+      type: fix
+  irVersion: 53
   version: 0.45.0-rc18
 
 - changelogEntry:
