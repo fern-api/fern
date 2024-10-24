@@ -1,7 +1,7 @@
 - changelogEntry:
     - summary: |
         - Add additional debug logging to the CLI when downloading docs preview bundle
-      type: feature
+      type: fix
   irVersion: 53
   version: 0.45.0-rc18
 
