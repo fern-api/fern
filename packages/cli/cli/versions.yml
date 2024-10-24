@@ -1,4 +1,24 @@
 - changelogEntry:
+    - summary: |
+        The Fern CLI now supports audiences in your docs configuration:
+
+        ```yml docs.yml
+        # all audiences must be declared at the top level
+        audiences:
+          - internal
+        
+        navigation:
+          - section: Internal Section
+            audience: internal # audience is optional
+            contents:
+              - page: Internal Page
+                path: ./internal/page.mdx
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc18
+
+- changelogEntry:
     - summary: | 
         - Improved union example generation by increasing depth for better handling of recursive structures.
         - Updated Conjure importer to represent binary types as bytes for requests and file for responses in Fern.
