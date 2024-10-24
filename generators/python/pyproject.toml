@@ -17,9 +17,8 @@ fern_fern_ir_v53 = "53.12.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.4.2"
-typing_extensions = ">=4.10.0,<5"
-mypy = "1.11.1"
-black = "^23.9.1"
+mypy = "^1.13.0"
+black = "^24.3.0"
 flake8 = "^5.0.4"
 isort = "^5.10.1"
 pre-commit = "^2.20.0"
