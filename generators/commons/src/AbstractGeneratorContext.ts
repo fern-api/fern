@@ -1,5 +1,6 @@
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { FernGeneratorExec, GeneratorNotificationService } from "./GeneratorNotificationService";
+import { getSdkVersion } from "./utils";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
     [LogLevel.Debug]: FernGeneratorExec.logging.LogLevel.Debug,
@@ -32,11 +33,6 @@ export abstract class AbstractGeneratorContext {
             }
         });
 
-        this.version = config?.output?.mode?._visit({
-            downloadFiles: () => undefined,
-            github: (github) => github.version,
-            publish: (publish) => publish.version,
-            _other: () => undefined
-        });
+        this.version = getSdkVersion(config);
     }
 }

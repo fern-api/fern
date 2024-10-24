@@ -1,0 +1,11 @@
+{
+    "ignores": [
+        "@types/jest",
+        "globals",
+        "@types/node",
+        "@fern-fern/ir-sdk"
+    ],
+    "ignore-patterns": [
+        "lib"
+    ]
+}

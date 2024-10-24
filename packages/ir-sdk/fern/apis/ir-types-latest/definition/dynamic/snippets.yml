@@ -21,7 +21,7 @@ types:
       queryParameters: optional<Values>
       headers: optional<Values>
       requestBody: optional<unknown>
-  
+
   EndpointSnippetResponse:
     docs: |
       The user-facing response type containing the generated snippet.

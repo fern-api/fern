@@ -641,100 +641,6 @@
                                 "_type": "named",
                                 "value": "type_service:ResourceStatus"
                             }
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "userName",
-                                    "camelCase": {
-                                        "unsafeName": "userName",
-                                        "safeName": "userName"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "user_name",
-                                        "safeName": "user_name"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "USER_NAME",
-                                        "safeName": "USER_NAME"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "UserName",
-                                        "safeName": "UserName"
-                                    }
-                                },
-                                "wireValue": "userName"
-                            },
-                            "typeReference": {
-                                "_type": "primitive",
-                                "value": "STRING"
-                            }
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "metadata_tags",
-                                    "camelCase": {
-                                        "unsafeName": "metadataTags",
-                                        "safeName": "metadataTags"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "metadata_tags",
-                                        "safeName": "metadata_tags"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "METADATA_TAGS",
-                                        "safeName": "METADATA_TAGS"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "MetadataTags",
-                                        "safeName": "MetadataTags"
-                                    }
-                                },
-                                "wireValue": "metadata_tags"
-                            },
-                            "typeReference": {
-                                "_type": "list",
-                                "value": {
-                                    "_type": "primitive",
-                                    "value": "STRING"
-                                }
-                            }
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "EXTRA_PROPERTIES",
-                                    "camelCase": {
-                                        "unsafeName": "extraProperties",
-                                        "safeName": "extraProperties"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "extra_properties",
-                                        "safeName": "extra_properties"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "EXTRA_PROPERTIES",
-                                        "safeName": "EXTRA_PROPERTIES"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "ExtraProperties",
-                                        "safeName": "ExtraProperties"
-                                    }
-                                },
-                                "wireValue": "EXTRA_PROPERTIES"
-                            },
-                            "typeReference": {
-                                "_type": "map",
-                                "key": {
-                                    "_type": "primitive",
-                                    "value": "STRING"
-                                },
-                                "value": {
-                                    "_type": "primitive",
-                                    "value": "STRING"
-                                }
-                            }
                         }
                     ]
                 },
@@ -790,34 +696,6 @@
                             "typeReference": {
                                 "_type": "named",
                                 "value": "type_service:ResourceStatus"
-                            }
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "name",
-                                    "camelCase": {
-                                        "unsafeName": "name",
-                                        "safeName": "name"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "name",
-                                        "safeName": "name"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "NAME",
-                                        "safeName": "NAME"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Name",
-                                        "safeName": "Name"
-                                    }
-                                },
-                                "wireValue": "name"
-                            },
-                            "typeReference": {
-                                "_type": "primitive",
-                                "value": "STRING"
                             }
                         }
                     ]

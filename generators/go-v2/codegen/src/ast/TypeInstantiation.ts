@@ -18,6 +18,7 @@ type InternalTypeInstantiation =
     | Int
     | Int64
     | Map
+    | Nil
     | Nop
     | Optional
     | Slice
@@ -87,6 +88,10 @@ interface MapEntry {
     value: TypeInstantiation;
 }
 
+interface Nil {
+    type: "nil";
+}
+
 interface Nop {
     type: "nop";
 }
@@ -153,6 +158,9 @@ export class TypeInstantiation extends AstNode {
                 break;
             case "map":
                 this.writeMap({ writer, map: this.internalType });
+                break;
+            case "nil":
+                writer.write("nil");
                 break;
             case "nop":
                 break; // no-op
@@ -257,6 +265,12 @@ export class TypeInstantiation extends AstNode {
         });
     }
 
+    public static nil(): TypeInstantiation {
+        return new this({
+            type: "nil"
+        });
+    }
+
     public static nop(): TypeInstantiation {
         return new this({
             type: "nop"
@@ -296,6 +310,23 @@ export class TypeInstantiation extends AstNode {
             type: "struct",
             typeReference,
             fields
+        });
+    }
+
+    public static structPointer({
+        typeReference,
+        fields
+    }: {
+        typeReference: GoTypeReference;
+        fields: StructField[];
+    }): TypeInstantiation {
+        return new this({
+            type: "optional",
+            value: new this({
+                type: "struct",
+                typeReference,
+                fields
+            })
         });
     }
 
