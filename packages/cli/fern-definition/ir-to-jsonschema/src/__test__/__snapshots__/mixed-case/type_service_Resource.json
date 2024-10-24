@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "properties": {
+    "resource_type": {
+      "type": "string",
+      "enum": [
+        "user",
+        "Organization"
+      ]
+    }
+  },
+  "required": [
+    "resource_type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "resource_type": {
+          "const": "user"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "metadata_tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "EXTRA_PROPERTIES": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "resource_type",
+        "userName",
+        "metadata_tags",
+        "EXTRA_PROPERTIES"
+      ]
+    },
+    {
+      "properties": {
+        "resource_type": {
+          "const": "Organization"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "resource_type",
+        "name"
+      ]
+    }
+  ],
+  "definitions": {}
+}

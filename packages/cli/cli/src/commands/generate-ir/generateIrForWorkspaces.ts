@@ -34,7 +34,7 @@ export async function generateIrForWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                cliContext.logger.info(`Generating IR for workspace ${workspace.workspaceName}`);
+                cliContext.logger.info(`Generating IR for workspace ${workspace.workspaceName ?? "api"}`);
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
 
                 const intermediateRepresentation = await getIntermediateRepresentation({

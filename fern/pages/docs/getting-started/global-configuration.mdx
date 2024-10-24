@@ -99,20 +99,40 @@ instances:
 
 ```yaml docs.yml
 colors: 
-  accentPrimary: 
+  accent-primary: 
     light: "#418326"
     dark: "#ADFF8C"
   background: 
     light: "#ffffff"
-    dark: "#0d0e11"    
+    dark: "#0d0e11"   
 ```
 
-<ParamField path="accentPrimary" type="object" required={true}>
+<ParamField path="accent-primary" type="object" required={true}>
   The configured accent primary color for light and dark mode. 
 </ParamField>
 
 <ParamField path="background" type="object" required={false}>
   The configured background colors for light and dark mode. 
+</ParamField>
+
+<ParamField path="border" type="object" required={false}>
+  The border color is used for the borders of cards and other elements.
+</ParamField>
+
+<ParamField path="sidebar-background" type="object" required={false}>
+  If `sidebarBackground` is set, the sidebar will also render a 1px border on the right side.
+
+  By default, the sidebar will render with a transparent background without a border.
+</ParamField>
+
+<ParamField path="header-background" type="object" required={false}>
+  If `headerBackground` is set, the header will render with a solid background, with a 1px solid border on the bottom.
+
+  By default, the header will render with a transparent background, with a 1px faded border on the bottom.
+</ParamField>
+
+<ParamField path="card-background" type="object" required={false}>
+  The background color of cards and code blocks.
 </ParamField>
 
 ## Logo configuration
@@ -188,11 +208,11 @@ navbar-links:
 </ParamField>
 
 <ParamField path="icon" type="string" required={false}>
-  The [Font Awesome icon](https://fontawesome.com/icons) to be used in the button. This icon will appear to the **left** of the text content. 
+  The [Font Awesome icon](https://fontawesome.com/icons) to be used in the button. This icon will appear to the **left** of the text content. Pro and Brand Icons from Font Awesome are supported.
 </ParamField>
 
 <ParamField path="rightIcon" type="string" required={false}>
-  The [Font Awesome icon](https://fontawesome.com/icons) to be used in the button. This icon will appear to the **right** of the text content. 
+  The [Font Awesome icon](https://fontawesome.com/icons) to be used in the button. This icon will appear to the **right** of the text content. Pro and Brand Icons from Font Awesome are supported.
 
   By default, the `rightIcon` for a `filled` button is set to `arrow-right`.
 </ParamField>

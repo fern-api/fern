@@ -23,7 +23,7 @@ async function main() {
             DOCS_DOMAIN_SUFFIX: "dev.docs.buildwithfern.com",
             DOCS_PREVIEW_BUCKET: 'https://dev2-local-preview-bundle2.s3.amazonaws.com/',
             CLI_NAME: "fern-dev",
-            CLI_VERSION: packageJson.version,
+            CLI_VERSION: process.argv[2] || packageJson.version,
             CLI_PACKAGE_NAME: "@fern-api/fern-api-dev",
         },
     });
@@ -35,11 +35,11 @@ async function main() {
         "package.json",
         JSON.stringify(
             {
-                name: "fern-api",
-                version: packageJson.version,
+                name: "@fern-api/fern-api-dev",
+                version: process.argv[2] || packageJson.version,
                 repository: packageJson.repository,
-                files: ["bundle.cjs", "cli.cjs"],
-                bin: { fern: "cli.cjs" }
+                files: ["cli.cjs"],
+                bin: { "fern-dev": "cli.cjs" }
             },
             undefined,
             2

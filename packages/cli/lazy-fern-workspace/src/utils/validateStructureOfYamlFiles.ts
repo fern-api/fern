@@ -1,11 +1,13 @@
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
-import { entries } from "@fern-api/core-utils";
+import { entries, validateAgainstJsonSchema } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
+import { PackageMarkerFileSchema, RootApiFileSchema, RawSchemas } from "@fern-api/fern-definition-schema";
 import path from "path";
-import { ZodError } from "zod";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
 import { OnDiskNamedDefinitionFile, ParsedFernFile } from "@fern-api/api-workspace-commons";
+import * as DefinitionFileJsonSchema from "../fern.schema.json";
+import * as RootApiFileJsonSchema from "../api-yml.schema.json";
+import * as PackageMarkerFileJsonSchema from "../package-yml.schema.json";
 
 export declare namespace validateStructureOfYamlFiles {
     export type Return = SuccessfulResult | FailedResult;
@@ -21,7 +23,7 @@ export declare namespace validateStructureOfYamlFiles {
         didSucceed: false;
         failures: Record<
             RelativeFilePath,
-            WorkspaceLoader.StructureValidationFailure | WorkspaceLoader.MissingFileFailure
+            WorkspaceLoader.JsonSchemaValidationFailure | WorkspaceLoader.MissingFileFailure
         >;
     }
 }
@@ -39,55 +41,58 @@ export function validateStructureOfYamlFiles({
 
     const failures: Record<
         RelativeFilePath,
-        WorkspaceLoader.StructureValidationFailure | WorkspaceLoader.MissingFileFailure
+        WorkspaceLoader.JsonSchemaValidationFailure | WorkspaceLoader.MissingFileFailure
     > = {};
 
     for (const [relativeFilepath, file] of entries(files)) {
         const parsedFileContents = file.contents;
 
-        const addFailure = (error: ZodError) => {
+        const addFailure = (error: validateAgainstJsonSchema.ValidationFailure) => {
             failures[relativeFilepath] = {
-                type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION,
+                type: WorkspaceLoaderFailureType.JSONSCHEMA_VALIDATION,
                 error
             };
         };
 
         if (relativeFilepath === ROOT_API_FILENAME) {
-            const maybeValidFileContents = RootApiFileSchema.safeParse(parsedFileContents);
-            if (maybeValidFileContents.success) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const result = validateAgainstJsonSchema(parsedFileContents, RootApiFileJsonSchema as any);
+            if (result.success) {
+                const contents = RawSchemas.serialization.RootApiFileSchema.parseOrThrow(parsedFileContents);
                 rootApiFile = {
-                    defaultUrl: maybeValidFileContents.data["default-url"],
-                    contents: maybeValidFileContents.data,
+                    defaultUrl: contents["default-url"],
+                    contents,
                     rawContents: file.rawContents
                 };
             } else {
-                addFailure(maybeValidFileContents.error);
+                addFailure(result);
             }
         } else if (path.basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME) {
-            const maybeValidFileContents = PackageMarkerFileSchema.safeParse(parsedFileContents);
-            if (maybeValidFileContents.success) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const result = validateAgainstJsonSchema(parsedFileContents, PackageMarkerFileJsonSchema as any);
+            if (result.success) {
+                const contents = RawSchemas.serialization.PackageMarkerFileSchema.parseOrThrow(parsedFileContents);
                 packageMarkers[relativeFilepath] = {
-                    defaultUrl:
-                        typeof maybeValidFileContents.data.export === "object"
-                            ? maybeValidFileContents.data.export.url
-                            : undefined,
-                    contents: maybeValidFileContents.data,
+                    defaultUrl: typeof contents.export === "object" ? contents.export.url : undefined,
+                    contents,
                     rawContents: file.rawContents
                 };
             } else {
-                addFailure(maybeValidFileContents.error);
+                addFailure(result);
             }
         } else {
-            const maybeValidFileContents = DefinitionFileSchema.safeParse(parsedFileContents);
-            if (maybeValidFileContents.success) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const result = validateAgainstJsonSchema(parsedFileContents, DefinitionFileJsonSchema as any);
+            if (result.success) {
+                const contents = RawSchemas.serialization.DefinitionFileSchema.parseOrThrow(parsedFileContents);
                 namesDefinitionFiles[relativeFilepath] = {
                     defaultUrl: undefined,
-                    contents: maybeValidFileContents.data,
+                    contents,
                     rawContents: file.rawContents,
                     absoluteFilePath: join(absolutePathToDefinition, relativeFilepath)
                 };
             } else {
-                addFailure(maybeValidFileContents.error);
+                addFailure(result);
             }
         }
     }

@@ -1,5 +1,138 @@
 - changelogEntry:
     - summary: | 
+        - Improved union example generation by increasing depth for better handling of recursive structures.
+        - Updated Conjure importer to represent binary types as bytes for requests and file for responses in Fern.
+        - Added detailed error messages when 'fern docs dev' fails, accessible with --log-level debug.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc17
+
+- changelogEntry:
+    - summary: |
+        The Conjure importer now correctly keys the union subvariant by the property of the discriminant. 
+
+        ```conjure
+        union:
+          discriminant: type
+          union:
+            square: Square
+            circle: Circle
+        ```
+
+        is equal to the following Fern Definition:
+
+        ```yml fern
+        union:
+          discriminant: type
+          types:
+            square: 
+              type: Square
+              key: square
+            circle: 
+              type: Circle
+              key: circle
+        ```
+
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc16
+
+- changelogEntry:
+    - summary: |
+        The Conjure importer now correctly imports base-path and docs from your conjure definition.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc15
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now uses a longer timeout to make HTTP requests, which should fix some flakyness with the docs registration process.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc14
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now uses a longer timeout to make HTTP requests, which should fix some flakyness with the docs registration process.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc13
+
+- changelogEntry:
+    - summary: |
+        Undiscriminated unions are now represented using `anyOf` in the generated JSON Schema
+        Nullable properties are now correctly propagated to the JSON Schema
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc12
+
+- changelogEntry:
+    - summary: |
+        Improved JSON Schema generation for object inheritance:
+        - Removed the use of `allOf` for representing object extensions
+        - Properties from parent objects are now directly added to the child object in the JSON Schema
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc11
+
+- changelogEntry:
+    - summary: |
+        Added support for `additionalProperties` on export to JSON Schema.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc10
+
+- changelogEntry: 
+    - summary: | 
+        Improved JSON Schema generation for object extensions and const values:
+        - Object extensions are now properly represented using `allOf` in the JSON Schema
+        - Literal values (string and boolean) are now correctly represented using `const` in the JSON Schema
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc9
+
+- changelogEntry: 
+    - summary: | 
+        Add `#!/usr/bin/env node` to the CLI to prevent runtime errors.
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc8
+
+- changelogEntry: 
+    - summary: | 
+        Stop minifying the CLI to prevent javascript runtime errors.
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc7
+
+- changelogEntry: 
+    - summary: | 
+        Update the CLI package.json to include the correct files.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc6
+
+- changelogEntry: 
+    - summary: | 
+        Introduce a new command `fern jsonschema <output-file> --type <type-name>`
+        that outputs the JSON Schema for a given type in your Fern Definition.
+
+        ```sh
+        fern jsonschema ./schema.json --type MyType
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc5
+
+- changelogEntry: 
+    - summary: | 
+        SCIM has been added as a common initialism. 
+      type: chore
+  irVersion: 53
+  version: 0.45.0-rc4
+
+- changelogEntry:
+    - summary: | 
         Numerous fixes to the Conjure API Importer such as reading in request bodies and query parameters. 
       type: fix
   irVersion: 53

@@ -1112,8 +1112,14 @@
                 "type": "json"
               },
               "responseStatusCode": 200,
+              "responseBody": {
+                "string": "string"
+              },
               "responseBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": {
+                  "string": "string"
+                }
               },
               "codeSamples": []
             }
@@ -1333,10 +1339,52 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "string": "string",
+                "integer": 1,
+                "long": 1000000,
+                "double": 1.1,
+                "bool": true,
+                "datetime": "2024-01-15T09:30:00Z",
+                "date": "2023-01-15",
+                "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                "base64": "SGVsbG8gd29ybGQh",
+                "list": [
+                  "list",
+                  "list"
+                ],
+                "set": [
+                  "set"
+                ],
+                "map": {
+                  "1": "map"
+                },
+                "bigint": "1000000"
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "string": "string",
+                  "integer": 1,
+                  "long": 1000000,
+                  "double": 1.1,
+                  "bool": true,
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "date": "2023-01-15",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "list": [
+                    "list",
+                    "list"
+                  ],
+                  "set": [
+                    "set"
+                  ],
+                  "map": {
+                    "1": "map"
+                  },
+                  "bigint": "1000000"
+                }
               },
               "codeSamples": []
             }
@@ -1422,10 +1470,52 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "string": "string",
+                "integer": 1,
+                "long": 1000000,
+                "double": 1.1,
+                "bool": true,
+                "datetime": "2024-01-15T09:30:00Z",
+                "date": "2023-01-15",
+                "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                "base64": "SGVsbG8gd29ybGQh",
+                "list": [
+                  "list",
+                  "list"
+                ],
+                "set": [
+                  "set"
+                ],
+                "map": {
+                  "1": "map"
+                },
+                "bigint": "1000000"
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "string": "string",
+                  "integer": 1,
+                  "long": 1000000,
+                  "double": 1.1,
+                  "bool": true,
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "date": "2023-01-15",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "list": [
+                    "list",
+                    "list"
+                  ],
+                  "set": [
+                    "set"
+                  ],
+                  "map": {
+                    "1": "map"
+                  },
+                  "bigint": "1000000"
+                }
               },
               "codeSamples": []
             }
@@ -1507,10 +1597,52 @@
                 "value": {}
               },
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "string": "string",
+                "integer": 1,
+                "long": 1000000,
+                "double": 1.1,
+                "bool": true,
+                "datetime": "2024-01-15T09:30:00Z",
+                "date": "2023-01-15",
+                "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                "base64": "SGVsbG8gd29ybGQh",
+                "list": [
+                  "list",
+                  "list"
+                ],
+                "set": [
+                  "set"
+                ],
+                "map": {
+                  "1": "map"
+                },
+                "bigint": "1000000"
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "string": "string",
+                  "integer": 1,
+                  "long": 1000000,
+                  "double": 1.1,
+                  "bool": true,
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "date": "2023-01-15",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "list": [
+                    "list",
+                    "list"
+                  ],
+                  "set": [
+                    "set"
+                  ],
+                  "map": {
+                    "1": "map"
+                  },
+                  "bigint": "1000000"
+                }
               },
               "codeSamples": []
             }
@@ -1652,10 +1784,52 @@
                 "value": {}
               },
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "string": "string",
+                "integer": 1,
+                "long": 1000000,
+                "double": 1.1,
+                "bool": true,
+                "datetime": "2024-01-15T09:30:00Z",
+                "date": "2023-01-15",
+                "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                "base64": "SGVsbG8gd29ybGQh",
+                "list": [
+                  "list",
+                  "list"
+                ],
+                "set": [
+                  "set"
+                ],
+                "map": {
+                  "1": "map"
+                },
+                "bigint": "1000000"
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "string": "string",
+                  "integer": 1,
+                  "long": 1000000,
+                  "double": 1.1,
+                  "bool": true,
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "date": "2023-01-15",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "list": [
+                    "list",
+                    "list"
+                  ],
+                  "set": [
+                    "set"
+                  ],
+                  "map": {
+                    "1": "map"
+                  },
+                  "bigint": "1000000"
+                }
               },
               "codeSamples": []
             }
@@ -1879,10 +2053,58 @@
                 "value": {}
               },
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "string": "string",
+                "NestedObject": {
+                  "string": "string",
+                  "integer": 1,
+                  "long": 1000000,
+                  "double": 1.1,
+                  "bool": true,
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "date": "2023-01-15",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "list": [
+                    "list",
+                    "list"
+                  ],
+                  "set": [
+                    "set"
+                  ],
+                  "map": {
+                    "1": "map"
+                  },
+                  "bigint": "1000000"
+                }
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "string": "string",
+                  "NestedObject": {
+                    "string": "string",
+                    "integer": 1,
+                    "long": 1000000,
+                    "double": 1.1,
+                    "bool": true,
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "date": "2023-01-15",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "list": [
+                      "list",
+                      "list"
+                    ],
+                    "set": [
+                      "set"
+                    ],
+                    "map": {
+                      "1": "map"
+                    },
+                    "bigint": "1000000"
+                  }
+                }
               },
               "codeSamples": []
             }
@@ -1972,13 +2194,55 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "string": "string",
-                "NestedObject": {}
+                "NestedObject": {
+                  "string": "string",
+                  "integer": 1,
+                  "long": 1000000,
+                  "double": 1.1,
+                  "bool": true,
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "date": "2023-01-15",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "list": [
+                    "list",
+                    "list"
+                  ],
+                  "set": [
+                    "set"
+                  ],
+                  "map": {
+                    "1": "map"
+                  },
+                  "bigint": "1000000"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "string": "string",
-                  "NestedObject": {}
+                  "NestedObject": {
+                    "string": "string",
+                    "integer": 1,
+                    "long": 1000000,
+                    "double": 1.1,
+                    "bool": true,
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "date": "2023-01-15",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "list": [
+                      "list",
+                      "list"
+                    ],
+                    "set": [
+                      "set"
+                    ],
+                    "map": {
+                      "1": "map"
+                    },
+                    "bigint": "1000000"
+                  }
                 }
               },
               "codeSamples": []
@@ -2064,13 +2328,55 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "string": "string",
-                "NestedObject": {}
+                "NestedObject": {
+                  "string": "string",
+                  "integer": 1,
+                  "long": 1000000,
+                  "double": 1.1,
+                  "bool": true,
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "date": "2023-01-15",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "list": [
+                    "list",
+                    "list"
+                  ],
+                  "set": [
+                    "set"
+                  ],
+                  "map": {
+                    "1": "map"
+                  },
+                  "bigint": "1000000"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "string": "string",
-                  "NestedObject": {}
+                  "NestedObject": {
+                    "string": "string",
+                    "integer": 1,
+                    "long": 1000000,
+                    "double": 1.1,
+                    "bool": true,
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "date": "2023-01-15",
+                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    "base64": "SGVsbG8gd29ybGQh",
+                    "list": [
+                      "list",
+                      "list"
+                    ],
+                    "set": [
+                      "set"
+                    ],
+                    "map": {
+                      "1": "map"
+                    },
+                    "bigint": "1000000"
+                  }
                 }
               },
               "codeSamples": []
@@ -3280,10 +3586,52 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "string": "string",
+                "integer": 1,
+                "long": 1000000,
+                "double": 1.1,
+                "bool": true,
+                "datetime": "2024-01-15T09:30:00Z",
+                "date": "2023-01-15",
+                "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                "base64": "SGVsbG8gd29ybGQh",
+                "list": [
+                  "list",
+                  "list"
+                ],
+                "set": [
+                  "set"
+                ],
+                "map": {
+                  "1": "map"
+                },
+                "bigint": "1000000"
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "string": "string",
+                  "integer": 1,
+                  "long": 1000000,
+                  "double": 1.1,
+                  "bool": true,
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "date": "2023-01-15",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "list": [
+                    "list",
+                    "list"
+                  ],
+                  "set": [
+                    "set"
+                  ],
+                  "map": {
+                    "1": "map"
+                  },
+                  "bigint": "1000000"
+                }
               },
               "codeSamples": []
             }
@@ -3432,10 +3780,52 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "string": "string",
+                "integer": 1,
+                "long": 1000000,
+                "double": 1.1,
+                "bool": true,
+                "datetime": "2024-01-15T09:30:00Z",
+                "date": "2023-01-15",
+                "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                "base64": "SGVsbG8gd29ybGQh",
+                "list": [
+                  "list",
+                  "list"
+                ],
+                "set": [
+                  "set"
+                ],
+                "map": {
+                  "1": "map"
+                },
+                "bigint": "1000000"
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "string": "string",
+                  "integer": 1,
+                  "long": 1000000,
+                  "double": 1.1,
+                  "bool": true,
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "date": "2023-01-15",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "list": [
+                    "list",
+                    "list"
+                  ],
+                  "set": [
+                    "set"
+                  ],
+                  "map": {
+                    "1": "map"
+                  },
+                  "bigint": "1000000"
+                }
               },
               "codeSamples": []
             }

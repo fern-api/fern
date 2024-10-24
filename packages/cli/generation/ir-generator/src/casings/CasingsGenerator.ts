@@ -183,6 +183,7 @@ const COMMON_ITIALISMS = new Set<string>([
     "RHS",
     "RPC",
     "SAML",
+    "SCIM",
     "SLA",
     "SMTP",
     "SQL",

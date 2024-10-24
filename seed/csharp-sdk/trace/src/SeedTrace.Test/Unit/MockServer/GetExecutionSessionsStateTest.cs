@@ -18,12 +18,15 @@ public class GetExecutionSessionsStateTest : BaseMockServerTest
             {
               "states": {
                 "states": {
+                  "lastTimeContacted": "lastTimeContacted",
                   "sessionId": "sessionId",
                   "isWarmInstance": true,
+                  "awsTaskId": "awsTaskId",
                   "language": "JAVA",
                   "status": "CREATING_CONTAINER"
                 }
               },
+              "numWarmingInstances": 1,
               "warmingSessionIds": [
                 "warmingSessionIds",
                 "warmingSessionIds"

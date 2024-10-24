@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Operand": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Operand",
@@ -251,6 +252,7 @@
             "docs": "Tests enum name and value can be\ndifferent."
         },
         "type_:Color": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Color",
@@ -397,6 +399,7 @@
             "docs": null
         },
         "type_:ColorOrOperand": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ColorOrOperand",

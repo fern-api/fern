@@ -32,7 +32,20 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "responseBodyV3": {
+                "type": "filename",
+                "value": "<bytes>"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

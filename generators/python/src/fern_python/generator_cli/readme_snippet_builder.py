@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional
 
 import fern.generator_exec as generator_exec
 import fern.ir.resources as ir_types

@@ -1,0 +1,85 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "submissionIdNotFound",
+        "customTestCasesUnsupported",
+        "unexpectedLanguage"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "submissionIdNotFound"
+        },
+        "missingSubmissionId": {
+          "$ref": "#/definitions/submission.SubmissionId"
+        }
+      },
+      "required": [
+        "type",
+        "missingSubmissionId"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "customTestCasesUnsupported"
+        },
+        "problemId": {
+          "$ref": "#/definitions/commons.ProblemId"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission.SubmissionId"
+        }
+      },
+      "required": [
+        "type",
+        "problemId",
+        "submissionId"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "unexpectedLanguage"
+        },
+        "expectedLanguage": {
+          "$ref": "#/definitions/commons.Language"
+        },
+        "actualLanguage": {
+          "$ref": "#/definitions/commons.Language"
+        }
+      },
+      "required": [
+        "type",
+        "expectedLanguage",
+        "actualLanguage"
+      ]
+    }
+  ],
+  "definitions": {
+    "submission.SubmissionId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "commons.ProblemId": {
+      "type": "string"
+    },
+    "commons.Language": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    }
+  }
+}

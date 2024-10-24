@@ -519,8 +519,20 @@
                 "value": "string"
               },
               "responseStatusCode": 200,
+              "responseBody": {
+                "data": {
+                  "id": "id",
+                  "name": "name"
+                }
+              },
               "responseBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": {
+                  "data": {
+                    "id": "id",
+                    "name": "name"
+                  }
+                }
               },
               "codeSamples": []
             }
@@ -584,8 +596,14 @@
                 "value": "string"
               },
               "responseStatusCode": 200,
+              "responseBody": {
+                "docs": "docs"
+              },
               "responseBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": {
+                  "docs": "docs"
+                }
               },
               "codeSamples": []
             }
@@ -649,8 +667,14 @@
                 "value": "string"
               },
               "responseStatusCode": 200,
+              "responseBody": {
+                "data": "data"
+              },
               "responseBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": {
+                  "data": "data"
+                }
               },
               "codeSamples": []
             }

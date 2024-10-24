@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:ExampleType": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ExampleType",
@@ -341,6 +342,7 @@
             "docs": null
         },
         "type_:NestedType": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "NestedType",
@@ -753,6 +755,7 @@
             "docs": null
         },
         "type_:Docs": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Docs",
@@ -931,6 +934,7 @@
             "docs": null
         },
         "type_:JSON": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "JSON",

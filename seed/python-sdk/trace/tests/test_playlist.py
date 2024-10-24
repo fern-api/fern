@@ -58,16 +58,13 @@ async def test_get_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> 
 
 
 async def test_update_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert (
-        client.playlist.update_playlist(service_param=1, playlist_id="playlistId")  # type: ignore[func-returns-value]
-        is None
-    )
+    expected_response: typing.Any = {"playlist_id": "playlist_id", "owner-id": "owner-id"}
+    expected_types: typing.Any = {"playlist_id": None, "owner-id": None}
+    response = client.playlist.update_playlist(service_param=1, playlist_id="playlistId")
+    validate_response(response, expected_response, expected_types)
 
-    assert (
-        await async_client.playlist.update_playlist(service_param=1, playlist_id="playlistId")  # type: ignore[func-returns-value]
-        is None
-    )
+    async_response = await async_client.playlist.update_playlist(service_param=1, playlist_id="playlistId")
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:

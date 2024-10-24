@@ -194,7 +194,8 @@ public class GetProblemVersionTest : BaseMockServerTest
                         "code": {
                           "codeByLanguage": {
                             "JAVA": {
-                              "impl": "impl"
+                              "impl": "impl",
+                              "imports": "imports"
                             }
                           }
                         }
@@ -249,7 +250,8 @@ public class GetProblemVersionTest : BaseMockServerTest
                         "code": {
                           "codeByLanguage": {
                             "JAVA": {
-                              "impl": "impl"
+                              "impl": "impl",
+                              "imports": "imports"
                             }
                           }
                         }
@@ -278,6 +280,9 @@ public class GetProblemVersionTest : BaseMockServerTest
                       "type": "integerValue",
                       "value": 1
                     }
+                  },
+                  "expects": {
+                    "expectedStdout": "expectedStdout"
                   }
                 },
                 {
@@ -295,6 +300,9 @@ public class GetProblemVersionTest : BaseMockServerTest
                       "type": "integerValue",
                       "value": 1
                     }
+                  },
+                  "expects": {
+                    "expectedStdout": "expectedStdout"
                   }
                 }
               ],

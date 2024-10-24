@@ -3,19 +3,21 @@ import { TaskContext } from "@fern-api/task-context";
 import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEntries";
 import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, readdir, rm } from "fs/promises";
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
 
 export async function generateGeneratorChangelog({
     context,
     generator,
     outputPath,
-    fdrClient
+    fdrClient,
+    cleanOutputDirectory
 }: {
     context: TaskContext;
     generator: GeneratorWorkspace;
     outputPath: string | undefined;
     fdrClient: FernRegistryClient;
+    cleanOutputDirectory: boolean;
 }): Promise<void> {
     const resolvedOutputPath =
         outputPath == null
@@ -23,12 +25,26 @@ export async function generateGeneratorChangelog({
             : outputPath.startsWith("/")
             ? AbsoluteFilePath.of(outputPath)
             : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(outputPath));
+
     await mkdir(resolvedOutputPath, { recursive: true });
+
+    if (cleanOutputDirectory) {
+        const files = await readdir(resolvedOutputPath, { withFileTypes: true });
+        for (const file of files) {
+            const filePath = join(resolvedOutputPath, RelativeFilePath.of(file.name));
+            if (file.isDirectory()) {
+                // This shouldn't happen, but let's skip if it does to be safe
+                continue;
+            } else {
+                await rm(filePath);
+            }
+        }
+    }
 
     const generatorConfig = generator.workspaceConfig;
     if (generatorConfig.changelogLocation == null) {
         context.logger.error(
-            "No changelog location specified, unable to generate changelog. To register generator releases, specify a changelog location at: `changelogLocation`."
+            `No changelog location specified, unable to generate changelog. To register releases for generator ${generator.workspaceName}, specify a changelog location at: \`changelogLocation\`.`
         );
         return;
     }

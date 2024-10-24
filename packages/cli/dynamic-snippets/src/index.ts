@@ -1,0 +1,1 @@
+export { convertIrToDynamicSnippetsIr } from "./convertIrToDynamicSnippetsIr";

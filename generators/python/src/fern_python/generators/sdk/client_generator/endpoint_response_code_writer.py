@@ -41,6 +41,7 @@ class EndpointResponseCodeWriter:
         streaming_parameter: Optional[StreamingParameterType] = None,
         pagination: Optional[ir_types.Pagination],
         pagination_snippet_config: PaginationSnippetConfig,
+        chunk_size_parameter: Optional[str] = None,
     ):
         self._context = context
         self._response = response
@@ -49,6 +50,7 @@ class EndpointResponseCodeWriter:
         self._is_async = is_async
         self._pagination = pagination
         self._pagination_snippet_config = pagination_snippet_config
+        self._chunk_size_parameter = chunk_size_parameter
 
     def get_writer(self) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
@@ -236,10 +238,16 @@ class EndpointResponseCodeWriter:
         writer.write_newline_if_last_line_not()
 
     def _handle_success_file_download(self, *, writer: AST.NodeWriter) -> None:
+        maybe_chunk_size_default = self._context.custom_config.default_bytes_stream_chunk_size
+        defaulted_chunk_size_default = maybe_chunk_size_default if maybe_chunk_size_default is not None else "None"
+        chunk_size_variable = "_chunk_size"
+        writer.write_line(
+            f'{chunk_size_variable} = request_options.get("chunk_size", {defaulted_chunk_size_default}) if request_options is not None else {defaulted_chunk_size_default}'
+        )
         if self._is_async:
             writer.write("async ")
         writer.write_line(
-            f"for {EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_bytes_method(is_async=self._is_async)}(): "
+            f"for {EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_bytes_method(is_async=self._is_async)}(chunk_size={chunk_size_variable}):"
         )
         with writer.indent():
             writer.write(f"yield {EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE}")
