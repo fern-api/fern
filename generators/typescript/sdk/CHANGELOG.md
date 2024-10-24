@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.41.0-rc2] - 2024-10-08
 
+- Improvement: Add a variable jitter to the exponential backoff and retry. 
+
+## [0.41.0-rc2] - 2024-10-08
+
 - Improvement: Generated READMEs now include improved usage snippets for pagination and streaming endpoints.
 
 ## [0.41.0-rc1] - 2024-10-08
