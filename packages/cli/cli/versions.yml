@@ -1,4 +1,11 @@
 - changelogEntry:
+    - summary: |
+        - Add additional debug logging to the CLI when downloading docs preview bundle
+      type: feature
+  irVersion: 53
+  version: 0.45.0-rc18
+
+- changelogEntry:
     - summary: | 
         - Improved union example generation by increasing depth for better handling of recursive structures.
         - Updated Conjure importer to represent binary types as bytes for requests and file for responses in Fern.
