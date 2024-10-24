@@ -473,6 +473,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^53.15.0
         version: 53.15.0
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       zod:
         specifier: ^3.22.3
         version: 3.23.8
@@ -483,6 +486,9 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
+      '@types/url-join':
+        specifier: 4.0.1
+        version: 4.0.1
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6

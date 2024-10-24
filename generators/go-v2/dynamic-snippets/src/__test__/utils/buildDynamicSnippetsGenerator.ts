@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { DynamicSnippetsGenerator } from "../../DynamicSnippetsGenerator";
 import { FernGeneratorExec } from "@fern-api/generator-commons";
 import { readFileSync } from "fs";

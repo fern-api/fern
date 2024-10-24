@@ -1,0 +1,1106 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`test definitions > alias 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Get(
+		context.TODO(),
+		"typeId",
+	)
+}
+"
+`;
+
+exports[`test definitions > alias-extends 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.ExtendedInlineRequestBody(
+		context.TODO(),
+		&sdk.InlinedChildRequest{
+			Child: "child",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > api-wide-base-path 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Post(
+		context.TODO(),
+		"pathParam",
+		"serviceParam",
+		"resourceParam",
+		1,
+	)
+}
+"
+`;
+
+exports[`test definitions > bearer-token-environment-variable 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<token>",
+		),
+	)
+	client.GetWithBearerToken(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`test definitions > bytes 1`] = `"<none>"`;
+
+exports[`test definitions > circular-references 1`] = `"<none>"`;
+
+exports[`test definitions > circular-references-advanced 1`] = `"<none>"`;
+
+exports[`test definitions > csharp-namespace-conflict 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Hello(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`test definitions > error-property 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.ThrowError(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`test definitions > extends 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.ExtendedInlineRequestBody(
+		context.TODO(),
+		&sdk.Inlined{
+			Unique: "unique",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > extra-properties 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.CreateUser(
+		context.TODO(),
+		&sdk.CreateUserRequest{
+			Name: "name",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > file-download 1`] = `"<none>"`;
+
+exports[`test definitions > file-upload 1`] = `"<none>"`;
+
+exports[`test definitions > go-content-type 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.CreateMovie(
+		context.TODO(),
+		&sdk.CreateMovieRequest{
+			Title:  "title",
+			Rating: 1.1,
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > idempotency-headers 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Create(
+		context.TODO(),
+		&sdk.CreatePaymentRequest{
+			Amount:   1,
+			Currency: sdk.CurrencyUsd,
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Delete(
+		context.TODO(),
+		"paymentId",
+	)
+}
+"
+`;
+
+exports[`test definitions > imdb 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.CreateMovie(
+		context.TODO(),
+		&sdk.CreateMovieRequest{
+			Title:  "title",
+			Rating: 1.1,
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetMovie(
+		context.TODO(),
+		"movieId",
+	)
+}
+"
+`;
+
+exports[`test definitions > mixed-case 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetResource(
+		context.TODO(),
+		"rsc-xyz",
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetResource(
+		context.TODO(),
+		"ResourceID",
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.ListResources(
+		context.TODO(),
+		&sdk.ListResourcesRequest{
+			PageLimit: 10,
+			BeforeDate: sdk.MustParseDateTime(
+				"2023-01-01",
+			),
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.ListResources(
+		context.TODO(),
+		&sdk.ListResourcesRequest{
+			PageLimit: 1,
+			BeforeDate: sdk.MustParseDateTime(
+				"2023-01-15",
+			),
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > mixed-file-directory 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Create(
+		context.TODO(),
+		&sdk.CreateOrganizationRequest{
+			Name: "name",
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.List(
+		context.TODO(),
+		&sdk.ListUsersRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	user "sdk/user"
+)
+
+func do() {
+	client := client.NewClient()
+	client.User.ListEvents(
+		context.TODO(),
+		&user.ListUserEventsRequest{},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	events "sdk/user/events"
+)
+
+func do() {
+	client := client.NewClient()
+	client.User.Events.GetMetadata(
+		context.TODO(),
+		&events.GetEventMetadataRequest{
+			ID: "id",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > multi-url-environment 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.BootInstance(
+		context.TODO(),
+		&sdk.BootInstanceRequest{
+			Size: "size",
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetPresignedURL(
+		context.TODO(),
+		&sdk.GetPresignedURLRequest{
+			S3Key: "s3Key",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > multi-url-environment-no-default 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.BootInstance(
+		context.TODO(),
+		&sdk.BootInstanceRequest{
+			Size: "size",
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetPresignedURL(
+		context.TODO(),
+		&sdk.GetPresignedURLRequest{
+			S3Key: "s3Key",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > no-environment 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetDummy(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`test definitions > oauth-client-credentials-default 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetToken(
+		context.TODO(),
+		&sdk.GetTokenRequest{
+			ClientID:     "client_id",
+			ClientSecret: "client_secret",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > object 1`] = `"<none>"`;
+
+exports[`test definitions > objects-with-imports 1`] = `"<none>"`;
+
+exports[`test definitions > package-yml 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Echo(
+		context.TODO(),
+		"id-ksfd9c1",
+		&sdk.EchoRequest{
+			Name: "Hello world!",
+			Size: 20,
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Echo(
+		context.TODO(),
+		"id",
+		&sdk.EchoRequest{
+			Name: "name",
+			Size: 1,
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Nop(
+		context.TODO(),
+		"id-a2ijs82",
+		"id-219xca8",
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Nop(
+		context.TODO(),
+		"id",
+		"nestedId",
+	)
+}
+"
+`;
+
+exports[`test definitions > plain-text 1`] = `"<none>"`;
+
+exports[`test definitions > query-parameters 1`] = `"<none>"`;
+
+exports[`test definitions > reserved-keywords 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Test(
+		context.TODO(),
+		&sdk.TestRequest{
+			For: "for",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > response-property 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetMovie(
+		context.TODO(),
+		"string",
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetMovie(
+		context.TODO(),
+		"string",
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetMovie(
+		context.TODO(),
+		"string",
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetMovie(
+		context.TODO(),
+		"string",
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetMovie(
+		context.TODO(),
+		"string",
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetMovie(
+		context.TODO(),
+		"string",
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetMovie(
+		context.TODO(),
+		"string",
+	)
+}
+"
+`;
+
+exports[`test definitions > server-sent-event-examples 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Stream(
+		context.TODO(),
+		&sdk.StreamCompletionRequest{
+			Query: "foo",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > server-sent-events 1`] = `"<none>"`;
+
+exports[`test definitions > simple-fhir 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetAccount(
+		context.TODO(),
+		"account_id",
+	)
+}
+"
+`;
+
+exports[`test definitions > single-url-environment-default 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetDummy(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`test definitions > single-url-environment-no-default 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetDummy(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`test definitions > streaming 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Generate(
+		context.TODO(),
+		&sdk.Generateequest{
+			NumEvents: 5,
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Generate(
+		context.TODO(),
+		&sdk.Generateequest{
+			NumEvents: 1,
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > streaming-parameter 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Generate(
+		context.TODO(),
+		&sdk.GenerateRequest{
+			Stream:    false,
+			NumEvents: 5,
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > ts-express-casing 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.CreateMovie(
+		context.TODO(),
+		&sdk.CreateMovieRequest{
+			ID:          "id",
+			MovieTitle:  "movie_title",
+			MovieRating: 1.1,
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetMovie(
+		context.TODO(),
+		"movie_id",
+	)
+}
+"
+`;
+
+exports[`test definitions > validation 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Create(
+		context.TODO(),
+		&sdk.CreateRequest{
+			Decimal: 1.1,
+			Even:    1,
+			Name:    "name",
+			Shape:   sdk.ShapeSquare,
+		},
+	)
+}
+
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Get(
+		context.TODO(),
+		&sdk.GetRequest{
+			Decimal: 1.1,
+			Even:    1,
+			Name:    "name",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > variables 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Post(
+		context.TODO(),
+		"endpointParam",
+	)
+}
+"
+`;
+
+exports[`test definitions > version 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetUser(
+		context.TODO(),
+		"userId",
+	)
+}
+"
+`;
+
+exports[`test definitions > version-no-default 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetUser(
+		context.TODO(),
+		"userId",
+	)
+}
+"
+`;
+
+exports[`test definitions > websocket 1`] = `"<none>"`;
