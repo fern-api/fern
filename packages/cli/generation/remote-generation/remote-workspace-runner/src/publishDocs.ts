@@ -46,8 +46,6 @@ export async function publishDocs({
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
     preview: boolean;
-    // TODO: implement audience support in generateIR
-    audiences: docsYml.RawSchemas.FernDocsConfig.AudiencesConfig | undefined;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
 }): Promise<void> {
