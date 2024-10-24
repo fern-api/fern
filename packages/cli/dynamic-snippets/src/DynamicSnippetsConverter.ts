@@ -438,11 +438,10 @@ export class DynamicSnippetsConverter {
         discriminantValue: NameAndWireValue;
         declaredTypeName: DeclaredTypeName;
     }): DynamicSnippets.SingleDiscriminatedUnionType {
-        const properties = [...inheritedProperties, ...this.resolveProperties([declaredTypeName])];
         return DynamicSnippets.SingleDiscriminatedUnionType.samePropertiesAsObject({
             typeId: declaredTypeName.typeId,
             discriminantValue,
-            properties: this.convertWireValueParameters({ wireValueParameters: properties })
+            properties: this.convertWireValueParameters({ wireValueParameters: inheritedProperties })
         });
     }
 

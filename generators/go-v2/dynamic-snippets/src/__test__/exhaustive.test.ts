@@ -5,32 +5,14 @@ import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
 import { AuthValues } from "@fern-fern/ir-sdk/api/resources/dynamic";
 import { TestCase } from "./utils/TestCase";
 
-describe("imdb", () => {
+describe("exhaustive", () => {
     const testCases: TestCase[] = [
         {
-            description: "GET /movies/{movieId} (simple)",
-            giveRequest: {
-                endpoint: {
-                    method: "GET",
-                    path: "/movies/{movieId}"
-                },
-                auth: AuthValues.bearer({
-                    token: "<YOUR_API_KEY>"
-                }),
-                pathParameters: {
-                    movieId: "movie_xyz"
-                },
-                queryParameters: undefined,
-                headers: undefined,
-                requestBody: undefined
-            }
-        },
-        {
-            description: "POST /movies/create-movie (simple)",
+            description: "POST /container/list-of-primitives (simple)",
             giveRequest: {
                 endpoint: {
                     method: "POST",
-                    path: "/movies/create-movie"
+                    path: "/container/list-of-primitives"
                 },
                 auth: AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
@@ -38,15 +20,38 @@ describe("imdb", () => {
                 pathParameters: undefined,
                 queryParameters: undefined,
                 headers: undefined,
-                requestBody: {
-                    title: "The Matrix",
-                    rating: 8.2
-                }
+                requestBody: ["one", "two", "three"]
+            }
+        },
+        {
+            description: "POST /container/list-of-objects (simple)",
+            giveRequest: {
+                endpoint: {
+                    method: "POST",
+                    path: "/container/list-of-objects"
+                },
+                auth: AuthValues.bearer({
+                    token: "<YOUR_API_KEY>"
+                }),
+                pathParameters: undefined,
+                queryParameters: undefined,
+                headers: undefined,
+                requestBody: [
+                    {
+                        string: "one"
+                    },
+                    {
+                        string: "two"
+                    },
+                    {
+                        string: "three"
+                    }
+                ]
             }
         }
     ];
     const generator = buildDynamicSnippetsGenerator({
-        irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("imdb.json")),
+        irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("exhaustive.json")),
         config: buildGeneratorConfig()
     });
     test.each(testCases)("$description", async ({ giveRequest }) => {

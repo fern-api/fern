@@ -1,0 +1,62 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Endpoints.GetAndReturnListOfObjects(
+		context.TODO(),
+		[]*types.ObjectWithRequiredField{
+			&types.ObjectWithRequiredField{
+				String: "one",
+			},
+			&types.ObjectWithRequiredField{
+				String: "two",
+			},
+			&types.ObjectWithRequiredField{
+				String: "three",
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Endpoints.GetAndReturnListOfPrimitives(
+		context.TODO(),
+		[]string{
+			"one",
+			"two",
+			"three",
+		},
+	)
+}
+"
+`;

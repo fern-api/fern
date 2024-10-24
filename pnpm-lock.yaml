@@ -434,9 +434,15 @@ importers:
 
   generators/go-v2/dynamic-snippets:
     dependencies:
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../../packages/cli/configuration
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../../packages/cli/dynamic-snippets
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../../packages/cli/fern-definition/schema
@@ -449,6 +455,21 @@ importers:
       '@fern-api/go-codegen':
         specifier: workspace:*
         version: link:../codegen
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../../packages/cli/generation/ir-generator
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../packages/ir-sdk
+      '@fern-api/project-loader':
+        specifier: workspace:*
+        version: link:../../../packages/cli/project-loader
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../../packages/cli/task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../../packages/cli/workspace-loader
       '@fern-fern/ir-sdk':
         specifier: ^53.15.0
         version: 53.15.0

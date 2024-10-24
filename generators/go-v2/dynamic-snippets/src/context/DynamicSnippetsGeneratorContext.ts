@@ -1,9 +1,12 @@
 import { FernGeneratorExec } from "@fern-api/generator-commons";
 import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-codegen";
-import { FernFilepath, dynamic as DynamicSnippets, TypeId } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, dynamic as DynamicSnippets, TypeId, Name, NameAndWireValue } from "@fern-fern/ir-sdk/api";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { TypeInstance } from "../TypeInstance";
+import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstance";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
+import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
+import { go } from "@fern-api/go-codegen";
 import path from "path";
 
 export class DynamicSnippetsGeneratorContext {
@@ -11,6 +14,7 @@ export class DynamicSnippetsGeneratorContext {
     public config: FernGeneratorExec.config.GeneratorConfig;
     public customConfig: BaseGoCustomConfigSchema;
     public dynamicTypeMapper: DynamicTypeMapper;
+    public dynamicTypeInstantiationMapper: DynamicTypeInstantiationMapper;
     public rootImportPath: string;
 
     private httpEndpointReferenceParser: HttpEndpointReferenceParser;
@@ -26,6 +30,7 @@ export class DynamicSnippetsGeneratorContext {
         this.config = config;
         this.customConfig = config.customConfig as BaseGoCustomConfigSchema;
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
+        this.dynamicTypeInstantiationMapper = new DynamicTypeInstantiationMapper({ context: this });
         this.rootImportPath = resolveRootImportPath({ config, customConfig: this.customConfig });
         this.httpEndpointReferenceParser = new HttpEndpointReferenceParser();
     }
@@ -53,10 +58,13 @@ export class DynamicSnippetsGeneratorContext {
     }
 
     public getRecordOrThrow(value: unknown): Record<string, unknown> {
-        if (typeof value === "object" && value != null) {
-            return value as Record<string, unknown>;
+        if (typeof value !== "object" || Array.isArray(value)) {
+            throw new Error(`Expected object with key, value pairs but got: ${JSON.stringify(value)}`);
         }
-        throw new Error(`Expected object with key, value pairs but got: ${JSON.stringify(value)}`);
+        if (value == null) {
+            return {};
+        }
+        return value as Record<string, unknown>;
     }
 
     public resolveNamedTypeOrThrow({ typeId }: { typeId: TypeId }): DynamicSnippets.NamedType {
@@ -67,13 +75,13 @@ export class DynamicSnippetsGeneratorContext {
         return namedType;
     }
 
-    public resolveDiscriminatedUnionTypeOrThrow({
+    public resolveDiscriminatedUnionTypeInstanceOrThrow({
         discriminatedUnion,
         value
     }: {
         discriminatedUnion: DynamicSnippets.DiscriminatedUnionType;
         value: unknown;
-    }): { typeReference: DynamicSnippets.TypeReference; value: unknown } {
+    }): DiscriminatedUnionTypeInstance {
         const record = this.getRecordOrThrow(value);
 
         const discriminant = record[discriminatedUnion.discriminant.wireValue];
@@ -88,23 +96,48 @@ export class DynamicSnippetsGeneratorContext {
             throw new Error(`Expected discriminant value to be a string but got: ${JSON.stringify(discriminant)}`);
         }
 
-        // TODO: Convert the DiscriminatedUnionType into a TypeReference.
-        const typeReference = discriminatedUnion.types[discriminant];
-        if (typeReference == null) {
+        const singleDiscriminatedUnionType = discriminatedUnion.types[discriminant];
+        if (singleDiscriminatedUnionType == null) {
             throw new Error(`No type found for discriminant value "${discriminant}"`);
         }
 
         // Remove the discriminant from the record so that the value is valid for the type.
         const { [discriminant]: _, ...filtered } = record;
         return {
-            typeReference: this.convertSingleDiscriminatedUnionTypeToTypeReference(typeReference),
+            singleDiscriminatedUnionType,
+            discriminantValue: singleDiscriminatedUnionType.discriminantValue,
             value: filtered
         };
+    }
+
+    public getMethodName(name: Name): string {
+        return name.pascalCase.unsafeName;
+    }
+
+    public getTypeName(name: Name): string {
+        return name.pascalCase.unsafeName;
     }
 
     public getImportPath(fernFilepath: FernFilepath): string {
         const parts = fernFilepath.packagePath.map((path) => path.pascalCase.unsafeName.toLowerCase());
         return [this.rootImportPath, ...parts].join("/");
+    }
+
+    public getContextTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "Context",
+            importPath: "context"
+        });
+    }
+
+    public getContextTodoFunctionInvocation(): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({
+                name: "TODO",
+                importPath: "context"
+            }),
+            arguments_: []
+        });
     }
 
     public getClientImportPath(): string {
@@ -132,10 +165,15 @@ export class DynamicSnippetsGeneratorContext {
         throw new Error(`Failed to find endpoint identified by "${JSON.stringify(location)}"`);
     }
 
-    private convertSingleDiscriminatedUnionTypeToTypeReference(
-        singleDiscriminatedUnionType: DynamicSnippets.SingleDiscriminatedUnionType
-    ): DynamicSnippets.TypeReference {
-        throw new Error("TODO: Implement me!");
+    public getGoTypeReferenceFromDeclaration({
+        declaration
+    }: {
+        declaration: DynamicSnippets.Declaration;
+    }): go.TypeReference {
+        return go.typeReference({
+            name: declaration.name.pascalCase.unsafeName,
+            importPath: this.getImportPath(declaration.fernFilepath)
+        });
     }
 
     private parsedEndpointMatches({

@@ -1,5 +1,4 @@
 import { FernGeneratorExec } from "@fern-api/generator-commons";
-import path from "path";
 import { go } from "@fern-api/go-codegen";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
@@ -73,7 +72,7 @@ export class DynamicSnippetsGenerator {
         return go.invokeMethod({
             on: go.codeblock(CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
-            arguments_: this.getMethodArgs({ endpoint, snippet })
+            arguments_: [this.context.getContextTodoFunctionInvocation(), ...this.getMethodArgs({ endpoint, snippet })]
         });
     }
 
@@ -89,7 +88,6 @@ export class DynamicSnippetsGenerator {
             if (snippet.auth != null) {
                 args.push(this.getConstructorAuthArg({ auth: endpoint.auth, values: snippet.auth }));
             } else {
-                // TODO: Collect these errors on the context instead of throwing.
                 throw new Error(`Auth with ${endpoint.auth.type} configuration is required for this endpoint`);
             }
         }
@@ -183,7 +181,7 @@ export class DynamicSnippetsGenerator {
                         importPath: this.context.getOptionImportPath()
                     }),
                     arguments_: [
-                        this.context.dynamicTypeMapper.convert({
+                        this.context.dynamicTypeInstantiationMapper.convert({
                             typeReference: auth.header.typeReference,
                             value: values.value
                         })
@@ -222,7 +220,7 @@ export class DynamicSnippetsGenerator {
                         importPath: this.context.getOptionImportPath()
                     }),
                     arguments_: [
-                        this.context.dynamicTypeMapper.convert({
+                        this.context.dynamicTypeInstantiationMapper.convert({
                             typeReference: header.typeReference,
                             value
                         })
@@ -253,8 +251,8 @@ export class DynamicSnippetsGenerator {
     }: {
         request: DynamicSnippets.BodyRequest;
         snippet: DynamicSnippets.EndpointSnippetRequest;
-    }): go.AstNode[] {
-        const args: go.AstNode[] = [];
+    }): go.TypeInstantiation[] {
+        const args: go.TypeInstantiation[] = [];
         if (request.pathParameters != null) {
             args.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
         }
@@ -270,17 +268,17 @@ export class DynamicSnippetsGenerator {
     }: {
         body: DynamicSnippets.ReferencedRequestBodyType;
         value: unknown;
-    }): go.AstNode {
+    }): go.TypeInstantiation {
         switch (body.type) {
             case "bytes": {
                 return this.getBytesBodyRequestArg({ value });
             }
             case "typeReference":
-                return this.context.dynamicTypeMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
         }
     }
 
-    private getBytesBodyRequestArg({ value }: { value: unknown }): go.AstNode {
+    private getBytesBodyRequestArg({ value }: { value: unknown }): go.TypeInstantiation {
         if (typeof value !== "string") {
             throw new Error("Expected bytes value to be a string, got " + typeof value);
         }
@@ -293,8 +291,8 @@ export class DynamicSnippetsGenerator {
     }: {
         request: DynamicSnippets.InlinedRequest;
         snippet: DynamicSnippets.EndpointSnippetRequest;
-    }): go.AstNode[] {
-        const args: go.AstNode[] = [];
+    }): go.TypeInstantiation[] {
+        const args: go.TypeInstantiation[] = [];
         if (request.pathParameters != null) {
             args.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
         }
@@ -308,7 +306,7 @@ export class DynamicSnippetsGenerator {
     }: {
         request: DynamicSnippets.InlinedRequest;
         snippet: DynamicSnippets.EndpointSnippetRequest;
-    }): go.AstNode {
+    }): go.TypeInstantiation {
         const fields: go.StructField[] = [];
 
         const parameters = [
@@ -324,7 +322,7 @@ export class DynamicSnippetsGenerator {
         for (const parameter of parameters) {
             fields.push({
                 name: parameter.name.pascalCase.unsafeName,
-                value: this.context.dynamicTypeMapper.convert(parameter)
+                value: this.context.dynamicTypeInstantiationMapper.convert(parameter)
             });
         }
 
@@ -332,16 +330,13 @@ export class DynamicSnippetsGenerator {
             fields.push(...this.getInlinedRequestBodyStructFields({ body: request.body, value: snippet.requestBody }));
         }
 
-        // All in-lined requests are generated as pointers, so we wrap the struct in an optional.
-        return go.TypeInstantiation.optional(
-            go.TypeInstantiation.struct({
-                typeReference: go.typeReference({
-                    name: request.declaration.name.pascalCase.unsafeName,
-                    importPath: this.context.getImportPath(request.declaration.fernFilepath)
-                }),
-                fields
-            })
-        );
+        return go.TypeInstantiation.structPointer({
+            typeReference: go.typeReference({
+                name: this.context.getMethodName(request.declaration.name),
+                importPath: this.context.getImportPath(request.declaration.fernFilepath)
+            }),
+            fields
+        });
     }
 
     private getInlinedRequestBodyStructFields({
@@ -355,9 +350,37 @@ export class DynamicSnippetsGenerator {
             case "properties":
                 return this.getInlinedRequestBodyPropertyStructFields({ parameters: body.value, value });
             case "referenced":
-                throw new Error("TODO: Implement me!");
+                return [this.getReferencedRequestBodyPropertyStructField({ body, value })];
             case "fileUpload":
                 throw new Error("TODO: Implement me!");
+        }
+    }
+
+    private getReferencedRequestBodyPropertyStructField({
+        body,
+        value
+    }: {
+        body: DynamicSnippets.ReferencedRequestBody;
+        value: unknown;
+    }): go.StructField {
+        return {
+            name: this.context.getTypeName(body.bodyKey),
+            value: this.getReferencedRequestBodyPropertyTypeInstantiation({ body: body.bodyType, value })
+        };
+    }
+
+    private getReferencedRequestBodyPropertyTypeInstantiation({
+        body,
+        value
+    }: {
+        body: DynamicSnippets.ReferencedRequestBodyType;
+        value: unknown;
+    }): go.TypeInstantiation {
+        switch (body.type) {
+            case "bytes":
+                return this.getBytesBodyRequestArg({ value });
+            case "typeReference":
+                return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
         }
     }
 
@@ -376,8 +399,8 @@ export class DynamicSnippetsGenerator {
         });
         for (const parameter of bodyProperties) {
             fields.push({
-                name: parameter.name.pascalCase.unsafeName,
-                value: this.context.dynamicTypeMapper.convert(parameter)
+                name: this.context.getTypeName(parameter.name),
+                value: this.context.dynamicTypeInstantiationMapper.convert(parameter)
             });
         }
 
@@ -390,19 +413,15 @@ export class DynamicSnippetsGenerator {
     }: {
         namedParameters: DynamicSnippets.NamedParameter[];
         snippet: DynamicSnippets.EndpointSnippetRequest;
-    }): go.AstNode[] {
-        const args: go.AstNode[] = [];
+    }): go.TypeInstantiation[] {
+        const args: go.TypeInstantiation[] = [];
 
         const pathParameters = this.context.associateByWireValue({
             parameters: namedParameters,
             values: snippet.pathParameters ?? {}
         });
         for (const parameter of pathParameters) {
-            args.push(
-                go.codeblock((writer) => {
-                    writer.writeNode(this.context.dynamicTypeMapper.convert(parameter));
-                })
-            );
+            args.push(this.context.dynamicTypeInstantiationMapper.convert(parameter));
         }
 
         return args;
@@ -411,10 +430,10 @@ export class DynamicSnippetsGenerator {
     private getMethod({ endpoint }: { endpoint: DynamicSnippets.Endpoint }): string {
         if (endpoint.declaration.fernFilepath.packagePath.length > 0) {
             return `${endpoint.declaration.fernFilepath.packagePath
-                .map((val) => val.pascalCase.unsafeName)
-                .join(".")}.${endpoint.declaration.name.pascalCase.unsafeName}`;
+                .map((val) => this.context.getMethodName(val))
+                .join(".")}.${this.context.getMethodName(endpoint.declaration.name)}`;
         }
-        return endpoint.declaration.name.pascalCase.unsafeName;
+        return this.context.getMethodName(endpoint.declaration.name);
     }
 
     private getRootClientFuncInvocation(arguments_: go.AstNode[]): go.FuncInvocation {

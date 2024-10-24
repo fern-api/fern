@@ -51,7 +51,7 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     public getClassName(name: Name): string {
-        return name.pascalCase.safeName;
+        return name.pascalCase.unsafeName;
     }
 
     public getRootImportPath(): string {
