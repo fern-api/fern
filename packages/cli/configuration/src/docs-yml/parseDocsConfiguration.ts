@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import { Audiences } from "../commons/Audiences";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages, loadAllPages } from "./getAllPages";
@@ -120,6 +121,7 @@ export async function parseDocsConfiguration({
         title,
         // absoluteFilepath: absoluteFilepathToDocsConfig,
         instances,
+        audiences: rawDocsConfiguration.audiences,
 
         /* filepath of page to contents */
         pages,
@@ -388,7 +390,8 @@ async function getNavigationConfiguration({
                 version: version.displayName,
                 navigation,
                 availability: version.availability,
-                slug: version.slug
+                slug: version.slug,
+                audiences: parseAudiences(version.audience)
             });
         }
         return {
@@ -537,7 +540,8 @@ async function convertNavigationTabConfiguration({
             child: {
                 type: "layout",
                 layout
-            }
+            },
+            audiences: parseAudiences(tab.audience)
         };
     }
 
@@ -551,7 +555,8 @@ async function convertNavigationTabConfiguration({
             child: {
                 type: "link",
                 href: tab.href
-            }
+            },
+            audiences: parseAudiences(tab.audience)
         };
     }
 
@@ -565,7 +570,8 @@ async function convertNavigationTabConfiguration({
             child: {
                 type: "changelog",
                 changelog: await listFiles(resolveFilepath(tab.changelog, absolutePathToConfig), "{md,mdx}")
-            }
+            },
+            audiences: parseAudiences(tab.audience)
         };
     }
 
@@ -643,7 +649,8 @@ async function convertNavigationItem({
             collapsed: rawConfig.collapsed ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
             skipUrlSlug: rawConfig.skipSlug ?? false,
-            overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig)
+            overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
+            audiences: parseAudiences(rawConfig.audience)
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
@@ -686,7 +693,8 @@ async function convertNavigationItem({
             hidden: rawConfig.hidden ?? false,
             icon: rawConfig.icon,
             title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
-            slug: rawConfig.slug
+            slug: rawConfig.slug,
+            audiences: parseAudiences(rawConfig.audience)
         };
     }
     assertNever(rawConfig);
@@ -715,7 +723,8 @@ function parsePageConfig(
         icon: item.icon,
         hidden: item.hidden,
         // TODO: implement noindex
-        noindex: undefined
+        noindex: undefined,
+        audiences: parseAudiences(item.audience)
     };
 }
 
@@ -752,7 +761,8 @@ function parseApiReferenceLayoutItem(
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
                 icon: item.icon,
-                playground: item.playground
+                playground: item.playground,
+                audiences: parseAudiences(item.audience)
             }
         ];
     } else if (isRawApiRefEndpointConfiguration(item)) {
@@ -764,7 +774,8 @@ function parseApiReferenceLayoutItem(
                 icon: item.icon,
                 slug: item.slug,
                 hidden: item.hidden,
-                playground: item.playground
+                playground: item.playground,
+                audiences: parseAudiences(item.audience)
             }
         ];
     }
@@ -781,7 +792,8 @@ function parseApiReferenceLayoutItem(
                 hidden: value.hidden,
                 skipUrlSlug: value.skipSlug,
                 icon: value.icon,
-                playground: value.playground
+                playground: value.playground,
+                audiences: parseAudiences(value.audience)
             };
         }
         return {
@@ -794,7 +806,8 @@ function parseApiReferenceLayoutItem(
             slug: undefined,
             skipUrlSlug: false,
             icon: undefined,
-            playground: undefined
+            playground: undefined,
+            audiences: { type: "all" }
         };
     });
 }
@@ -970,4 +983,13 @@ async function convertFilepathOrUrl(
 
     // If the file does not exist, fallback to a URL
     return { type: "url", value };
+}
+
+function parseAudiences(raw: string | string[] | undefined): Audiences {
+    if (raw == null) {
+        return { type: "all" };
+    } else if (typeof raw === "string") {
+        return { type: "select", audiences: [raw] };
+    }
+    return { type: "select", audiences: raw };
 }

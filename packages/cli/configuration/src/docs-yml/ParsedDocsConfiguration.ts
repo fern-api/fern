@@ -11,6 +11,9 @@ export interface ParsedDocsConfiguration {
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
 
+    /* audiences (allowlist) */
+    audiences: string[] | undefined;
+
     /* navigation */
     landingPage: DocsNavigationItem.Page | undefined;
     navigation: DocsNavigationConfiguration;
@@ -141,6 +144,7 @@ export interface VersionInfo {
     version: string;
     availability: VersionAvailability | undefined;
     slug: string | undefined;
+    audiences: Audiences;
 }
 
 export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation | VersionedDocsNavigation;
@@ -155,6 +159,7 @@ export interface TabbedNavigation {
     skipUrlSlug: boolean | undefined;
     hidden: boolean | undefined;
     child: TabbedNavigationChild;
+    audiences: Audiences;
 }
 
 type TabbedNavigationChild =
@@ -195,6 +200,7 @@ export declare namespace DocsNavigationItem {
         slug: string | undefined;
         hidden: boolean | undefined;
         noindex: boolean | undefined;
+        audiences: Audiences;
     }
 
     export interface Section {
@@ -207,6 +213,7 @@ export declare namespace DocsNavigationItem {
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
+        audiences: Audiences;
     }
 
     export interface ApiSection {
@@ -242,6 +249,7 @@ export declare namespace DocsNavigationItem {
         icon: string | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
+        audiences: Audiences;
     }
 
     export interface VersionedSnippetLanguageConfiguration {
@@ -270,6 +278,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         icon: string | undefined;
         skipUrlSlug: boolean | undefined;
         playground: PlaygroundSettings | undefined;
+        audiences: Audiences;
     }
     export interface Package {
         type: "package";
@@ -282,6 +291,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         icon: string | undefined;
         skipUrlSlug: boolean | undefined;
         playground: PlaygroundSettings | undefined;
+        audiences: Audiences;
     }
 
     export interface Endpoint {
@@ -292,6 +302,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         slug: string | undefined;
         hidden: boolean | undefined;
         playground: PlaygroundSettings | undefined;
+        audiences: Audiences;
     }
 
     export interface Item {
