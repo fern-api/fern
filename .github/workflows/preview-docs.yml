@@ -2,10 +2,6 @@ name: preview-docs
 
 on:
   pull_request:
-    paths:
-      - "fern/**"
-      - "fern/apis/public-api/**"
-      - "fern/docs.yml"
     branches:
       - main
   workflow_dispatch:
