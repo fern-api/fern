@@ -37,6 +37,7 @@
     { "path": "../cli-migrations" },
     { "path": "../fern-definition/schema" },
     { "path": "../fern-definition/ir-to-jsonschema" },
-    { "path": "../docs-resolver" }
+    { "path": "../docs-resolver" },
+    { "path": "../../../generators/typescript/utils/commons"}
   ]
 }

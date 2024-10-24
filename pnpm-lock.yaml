@@ -3565,6 +3565,9 @@ importers:
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
+      '@fern-typescript/fetcher':
+        specifier: workspace:*
+        version: link:../../../generators/typescript/utils/core-utilities/fetcher
       '@types/axios':
         specifier: ^0.14.0
         version: 0.14.0

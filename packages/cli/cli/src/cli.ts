@@ -46,10 +46,13 @@ import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJ
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
 import { setGlobalDispatcher, Agent } from "undici";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
+import { RUNTIME } from "@fern-typescript/fetcher";
 
 setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
 
 void runCli();
+
+const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 async function runCli() {
     const cliContext = new CliContext(process.stdout);
@@ -57,6 +60,14 @@ async function runCli() {
     const exit = async () => {
         await cliContext.exit();
     };
+
+    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion < 18) {
+        cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
+        cliContext.failWithoutThrowing();
+        await exit();
+        return;
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     process.on("SIGINT", async () => {
         cliContext.suppressUpgradeMessage();
@@ -85,7 +96,10 @@ async function runCli() {
                 error
             }
         });
-        if (error instanceof FernCliError) {
+        if ((error as Error)?.message.includes("globalThis")) {
+            cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
+            cliContext.failWithoutThrowing();
+        } else if (error instanceof FernCliError) {
             // thrower is responsible for logging, so we generally don't need to log here.
             cliContext.failWithoutThrowing();
         } else if (error instanceof LoggableFernCliError) {
