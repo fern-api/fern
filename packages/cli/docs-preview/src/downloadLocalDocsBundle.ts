@@ -92,13 +92,21 @@ export async function downloadBundle({
         }
     }
 
+    logger.debug("Creating tmp directory to download docs preview bundle");
     // create tmp directory
     const dir = await tmp.dir({ prefix: "fern" });
     const absoluteDirectoryToTmpDir = AbsoluteFilePath.of(dir.path);
-    logger.debug(`Created tmp directory ${absoluteDirectoryToTmpDir}`);
 
+    logger.debug(`Downloading docs preview bundle from ${path.join(bucketUrl, key)}`);
     // download docs bundle
     const docsBundleZipResponse = await fetch(`${path.join(bucketUrl, key)}`);
+
+    if (!docsBundleZipResponse.ok) {
+        logger.error(`Failed to download docs preview bundle. ${docsBundleZipResponse.statusText}`);
+        return {
+            type: "failure"
+        };
+    }
     const outputZipPath = join(absoluteDirectoryToTmpDir, RelativeFilePath.of("output.zip"));
 
     const contents = docsBundleZipResponse.body;
