@@ -2,15 +2,15 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class NamespaceSummary extends SerializableType
+class NamespaceSummary extends JsonSerializableType
 {
     /**
      * @var ?int $count
      */
-    #[JsonProperty("count")]
+    #[JsonProperty('count')]
     public ?int $count;
 
     /**
@@ -19,7 +19,7 @@ class NamespaceSummary extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->count = $values['count'] ?? null;
     }

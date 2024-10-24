@@ -2,21 +2,21 @@
 
 namespace Seed\Users\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class UserPage extends SerializableType
+class UserPage extends JsonSerializableType
 {
     /**
      * @var UserListContainer $data
      */
-    #[JsonProperty("data")]
+    #[JsonProperty('data')]
     public UserListContainer $data;
 
     /**
      * @var ?string $next
      */
-    #[JsonProperty("next")]
+    #[JsonProperty('next')]
     public ?string $next;
 
     /**

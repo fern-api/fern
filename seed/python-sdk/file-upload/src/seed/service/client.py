@@ -75,15 +75,6 @@ class ServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        from seed import SeedFileUpload
-
-        client = SeedFileUpload(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.post()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
@@ -127,15 +118,6 @@ class ServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        from seed import SeedFileUpload
-
-        client = SeedFileUpload(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.just_file()
         """
         _response = self._client_wrapper.httpx_client.request(
             "just-file",
@@ -188,21 +170,6 @@ class ServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        from seed import SeedFileUpload
-
-        client = SeedFileUpload(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.just_file_with_query_params(
-            maybe_string="string",
-            integer=1,
-            maybe_integer=1,
-            list_of_strings="string",
-            optional_list_of_strings="string",
-        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "just-file-with-query-params",
@@ -248,15 +215,6 @@ class ServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        from seed import SeedFileUpload
-
-        client = SeedFileUpload(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.with_content_type()
         """
         _response = self._client_wrapper.httpx_client.request(
             "with-content-type",
@@ -338,23 +296,6 @@ class AsyncServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedFileUpload
-
-        client = AsyncSeedFileUpload(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.post()
-
-
-        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
@@ -398,23 +339,6 @@ class AsyncServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedFileUpload
-
-        client = AsyncSeedFileUpload(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.just_file()
-
-
-        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "just-file",
@@ -467,29 +391,6 @@ class AsyncServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedFileUpload
-
-        client = AsyncSeedFileUpload(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.just_file_with_query_params(
-                maybe_string="string",
-                integer=1,
-                maybe_integer=1,
-                list_of_strings="string",
-                optional_list_of_strings="string",
-            )
-
-
-        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "just-file-with-query-params",
@@ -535,23 +436,6 @@ class AsyncServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedFileUpload
-
-        client = AsyncSeedFileUpload(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.with_content_type()
-
-
-        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "with-content-type",

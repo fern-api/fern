@@ -1,0 +1,17 @@
+{
+  "$ref": "#/definitions/Parent",
+  "definitions": {
+    "Parent": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "parent"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

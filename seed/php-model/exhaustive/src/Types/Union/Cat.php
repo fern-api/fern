@@ -2,21 +2,21 @@
 
 namespace Seed\Types\Union;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Cat extends SerializableType
+class Cat extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var bool $likesToMeow
      */
-    #[JsonProperty("likesToMeow")]
+    #[JsonProperty('likesToMeow')]
     public bool $likesToMeow;
 
     /**

@@ -2,14 +2,17 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Seed\Commons\Types\Language;
-use Seed\Core\JsonApiRequest;
+use Seed\Submission\Types\ExecutionSessionResponse;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
+use Seed\Core\Json\JsonApiRequest;
 use Seed\Environments;
-use Seed\Core\HttpMethod;
+use Seed\Core\Client\HttpMethod;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Submission\Types\GetExecutionSessionStateResponse;
 
 class SubmissionClient
 {
@@ -28,73 +31,100 @@ class SubmissionClient
     }
 
     /**
-    * Returns sessionId and execution server URL for session. Spins up server.
-     * @param Language $language
-     * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * Returns sessionId and execution server URL for session. Spins up server.
+     *
+     * @param value-of<Language> $language
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return ExecutionSessionResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
-    public function createExecutionSession(Language $language, ?array $options = null): mixed
+    public function createExecutionSession(string $language, ?array $options = null): ExecutionSessionResponse
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sessions/create-session/$language",
                     method: HttpMethod::POST,
                 ),
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ExecutionSessionResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
-    * Returns execution server URL for session. Returns empty if session isn't registered.
+     * Returns execution server URL for session. Returns empty if session isn't registered.
+     *
      * @param string $sessionId
-     * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return ?ExecutionSessionResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
-    public function getExecutionSession(string $sessionId, ?array $options = null): mixed
+    public function getExecutionSession(string $sessionId, ?array $options = null): ?ExecutionSessionResponse
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sessions/$sessionId",
                     method: HttpMethod::GET,
                 ),
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ExecutionSessionResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
-    * Stops execution session.
+     * Stops execution session.
+     *
      * @param string $sessionId
-     * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
-    public function stopExecutionSession(string $sessionId, ?array $options = null): mixed
+    public function stopExecutionSession(string $sessionId, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sessions/stop/$sessionId",
                     method: HttpMethod::DELETE,
                 ),
@@ -104,35 +134,47 @@ class SubmissionClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return GetExecutionSessionStateResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
-    public function getExecutionSessionsState(?array $options = null): mixed
+    public function getExecutionSessionsState(?array $options = null): GetExecutionSessionStateResponse
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sessions/execution-sessions-state",
                     method: HttpMethod::GET,
                 ),
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return GetExecutionSessionStateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

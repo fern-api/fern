@@ -2,22 +2,22 @@
 
 namespace Seed\Package;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class Record extends SerializableType
+class Record extends JsonSerializableType
 {
     /**
      * @var array<string, string> $foo
      */
-    #[JsonProperty("foo"), ArrayType(["string" => "string"])]
+    #[JsonProperty('foo'), ArrayType(['string' => 'string'])]
     public array $foo;
 
     /**
      * @var int $_3D
      */
-    #[JsonProperty("3d")]
+    #[JsonProperty('3d')]
     public int $_3D;
 
     /**

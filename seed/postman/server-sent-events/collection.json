@@ -17,39 +17,7 @@
       "_type": "container",
       "description": null,
       "name": "Completions",
-      "item": [
-        {
-          "_type": "endpoint",
-          "name": "Stream",
-          "request": {
-            "description": null,
-            "url": {
-              "raw": "{{baseUrl}}/stream",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "stream"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"query\": \"example\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": []
-        }
-      ]
+      "item": []
     }
   ]
 }

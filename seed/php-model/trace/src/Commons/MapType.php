@@ -2,21 +2,21 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class MapType extends SerializableType
+class MapType extends JsonSerializableType
 {
     /**
      * @var mixed $keyType
      */
-    #[JsonProperty("keyType")]
+    #[JsonProperty('keyType')]
     public mixed $keyType;
 
     /**
      * @var mixed $valueType
      */
-    #[JsonProperty("valueType")]
+    #[JsonProperty('valueType')]
     public mixed $valueType;
 
     /**

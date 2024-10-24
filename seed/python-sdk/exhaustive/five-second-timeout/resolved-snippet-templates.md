@@ -4,6 +4,7 @@ from seed import SeedExhaustive
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.container.get_and_return_list_of_primitives(
 	request=[
+		"string",
 		"string"
 	]
 )
@@ -18,6 +19,9 @@ from seed.types.object import ObjectWithRequiredField
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.container.get_and_return_list_of_objects(
 	request=[
+		ObjectWithRequiredField(
+			string="string"
+		),
 		ObjectWithRequiredField(
 			string="string"
 		)
@@ -80,14 +84,9 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
-client.endpoints.container.get_and_return_optional(
-	request=ObjectWithRequiredField(
-		string="string"
-	)
-)
+undefined
  
 ```                        
 
@@ -106,7 +105,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.http_methods.test_get(
-	id="string"
+	id="id"
 )
  
 ```                        
@@ -128,7 +127,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.http_methods.test_put(
-	id="string",
+	id="id",
 	string="string"
 )
  
@@ -140,23 +139,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.http_methods.test_patch(
-	id="string",
-	string="string",
-	integer=1,
-	long_=1000000,
-	double=1.1,
-	bool_=true,
-	datetime="2024-01-15T09:30:00Z",
-	date="2023-01-15",
-	uuid_="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-	base_64="SGVsbG8gd29ybGQh",
-	list_=[
-		"string"
-	],
-	map_={
-		"1": "string"
-	},
-	bigint="123456789123456789"
+	id="id"
 )
  
 ```                        
@@ -167,7 +150,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.http_methods.test_delete(
-	id="string"
+	id="id"
 )
  
 ```                        
@@ -177,24 +160,7 @@ client.endpoints.http_methods.test_delete(
 from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
-client.endpoints.object.get_and_return_with_optional_field(
-	string="string",
-	integer=1,
-	long_=1000000,
-	double=1.1,
-	bool_=true,
-	datetime="2024-01-15T09:30:00Z",
-	date="2023-01-15",
-	uuid_="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-	base_64="SGVsbG8gd29ybGQh",
-	list_=[
-		"string"
-	],
-	map_={
-		"1": "string"
-	},
-	bigint="123456789123456789"
-)
+undefined
  
 ```                        
 
@@ -216,8 +182,8 @@ from seed import SeedExhaustive
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.object.get_and_return_with_map_of_map(
 	map_={
-		"string": {
-			"string": "string"
+		"map": {
+			"map": "map"
 		}
 	}
 )
@@ -227,60 +193,20 @@ client.endpoints.object.get_and_return_with_map_of_map(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.object import ObjectWithOptionalField
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
-client.endpoints.object.get_and_return_nested_with_optional_field(
-	string="string",
-	nested_object=ObjectWithOptionalField(
-		string="string",
-		integer=1,
-		long_=1000000,
-		double=1.1,
-		bool_=true,
-		datetime="2024-01-15T09:30:00Z",
-		date="2023-01-15",
-		uuid_="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-		base_64="SGVsbG8gd29ybGQh",
-		list_=[
-			"string"
-		],
-		map_={
-			"1": "string"
-		},
-		bigint="123456789123456789"
-	)
-)
+undefined
  
 ```                        
 
 
 ```python
 from seed import SeedExhaustive
-from seed.types.object import ObjectWithOptionalField
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.object.get_and_return_nested_with_required_field(
 	string="string",
-	string="string",
-	nested_object=ObjectWithOptionalField(
-		string="string",
-		integer=1,
-		long_=1000000,
-		double=1.1,
-		bool_=true,
-		datetime="2024-01-15T09:30:00Z",
-		date="2023-01-15",
-		uuid_="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-		base_64="SGVsbG8gd29ybGQh",
-		list_=[
-			"string"
-		],
-		map_={
-			"1": "string"
-		},
-		bigint="123456789123456789"
-	)
+	string="string"
 )
  
 ```                        
@@ -289,28 +215,15 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 ```python
 from seed import SeedExhaustive
 from seed.types.object import NestedObjectWithRequiredField
-from seed.types.object import ObjectWithOptionalField
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.object.get_and_return_nested_with_required_field_as_list(
 	request=[
 		NestedObjectWithRequiredField(
-			string="string",
-			nested_object=ObjectWithOptionalField(
-				string="string",
-				integer=1,
-				long_=1000000,
-				double=1.1,
-				bool_=true,
-				datetime="2024-01-15T09:30:00Z",
-				date="2023-01-15",
-				uuid_="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-				base_64="SGVsbG8gd29ybGQh",
-				map_={
-					"1": "string"
-				},
-				bigint="123456789123456789"
-			)
+			string="string"
+		),
+		NestedObjectWithRequiredField(
+			string="string"
 		)
 	]
 )
@@ -323,7 +236,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.params.get_with_path(
-	param="string"
+	param="param"
 )
  
 ```                        
@@ -334,7 +247,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.params.get_with_query(
-	query="string",
+	query="query",
 	number=1
 )
  
@@ -346,7 +259,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.params.get_with_allow_multiple_query(
-	query="string",
+	query="query",
 	numer=1
 )
  
@@ -358,8 +271,8 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.params.get_with_path_and_query(
-	param="string",
-	query="string"
+	param="param",
+	query="query"
 )
  
 ```                        
@@ -370,7 +283,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.params.modify_with_path(
-	param="string",
+	param="param",
 	request="string"
 )
  
@@ -482,7 +395,7 @@ from seed.types.union import Animal_Dog
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.union.get_and_return_union(
-	request=request=Animal_Dog(name="string", likes_to_woof=true, )
+	request=request=Animal_Dog(name="name", likes_to_woof=true, )
 )
  
 ```                        
@@ -490,72 +403,11 @@ client.endpoints.union.get_and_return_union(
 
 ```python
 from seed import SeedExhaustive
-from seed.types.object import ObjectWithOptionalField
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.inlined_requests.post_with_object_bodyand_response(
 	string="string",
-	integer=1,
-	nested_object=ObjectWithOptionalField(
-		string="string",
-		integer=1,
-		long_=1000000,
-		double=1.1,
-		bool_=true,
-		datetime="2024-01-15T09:30:00Z",
-		date="2023-01-15",
-		uuid_="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-		base_64="SGVsbG8gd29ybGQh",
-		list_=[
-			"string"
-		],
-		map_={
-			"1": "string"
-		},
-		bigint="123456789123456789"
-	)
-)
- 
-```                        
-
-
-```python
-from seed import SeedExhaustive
-from seed.types.object import ObjectWithOptionalField
-
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
-client.inlined_requests.post_with_object_bodyand_response(
-	string="string",
-	integer=1,
-	nested_object=ObjectWithOptionalField(
-		string="string",
-		integer=1,
-		long_=1000000,
-		double=1.1,
-		bool_=true,
-		datetime="2024-01-15T09:30:00Z",
-		date="2023-01-15",
-		uuid_="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-		base_64="SGVsbG8gd29ybGQh",
-		list_=[
-			"string"
-		],
-		map_={
-			"1": "string"
-		},
-		bigint="123456789123456789"
-	)
-)
- 
-```                        
-
-
-```python
-from seed import SeedExhaustive
-
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
-client.no_auth.post_with_no_auth(
-	request={"key":"value"}
+	integer=1
 )
  
 ```                        
@@ -599,7 +451,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.req_with_headers.get_with_custom_header(
-	x_test_endpoint_header="string",
+	x_test_endpoint_header="X-TEST-ENDPOINT-HEADER",
 	request="string"
 )
  

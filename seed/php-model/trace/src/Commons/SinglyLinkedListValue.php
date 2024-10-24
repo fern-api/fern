@@ -2,22 +2,22 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class SinglyLinkedListValue extends SerializableType
+class SinglyLinkedListValue extends JsonSerializableType
 {
     /**
      * @var ?string $head
      */
-    #[JsonProperty("head")]
+    #[JsonProperty('head')]
     public ?string $head;
 
     /**
      * @var array<string, SinglyLinkedListNodeValue> $nodes
      */
-    #[JsonProperty("nodes"), ArrayType(["string" => SinglyLinkedListNodeValue::class])]
+    #[JsonProperty('nodes'), ArrayType(['string' => SinglyLinkedListNodeValue::class])]
     public array $nodes;
 
     /**

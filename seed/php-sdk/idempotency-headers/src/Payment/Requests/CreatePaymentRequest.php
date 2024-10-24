@@ -2,27 +2,28 @@
 
 namespace Seed\Payment\Requests;
 
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Payment\Types\Currency;
 
-class CreatePaymentRequest
+class CreatePaymentRequest extends JsonSerializableType
 {
     /**
      * @var int $amount
      */
-    #[JsonProperty("amount")]
+    #[JsonProperty('amount')]
     public int $amount;
 
     /**
-     * @var Currency $currency
+     * @var value-of<Currency> $currency
      */
-    #[JsonProperty("currency")]
-    public Currency $currency;
+    #[JsonProperty('currency')]
+    public string $currency;
 
     /**
      * @param array{
      *   amount: int,
-     *   currency: Currency,
+     *   currency: value-of<Currency>,
      * } $values
      */
     public function __construct(

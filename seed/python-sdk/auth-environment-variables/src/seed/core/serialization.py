@@ -71,6 +71,24 @@ def convert_and_respect_annotation_metadata(
     if typing_extensions.is_typeddict(clean_type) and isinstance(object_, typing.Mapping):
         return _convert_mapping(object_, clean_type, direction)
 
+    if (
+        typing_extensions.get_origin(clean_type) == typing.Dict
+        or typing_extensions.get_origin(clean_type) == dict
+        or clean_type == typing.Dict
+    ) and isinstance(object_, typing.Dict):
+        key_type = typing_extensions.get_args(clean_type)[0]
+        value_type = typing_extensions.get_args(clean_type)[1]
+
+        return {
+            key: convert_and_respect_annotation_metadata(
+                object_=value,
+                annotation=annotation,
+                inner_type=value_type,
+                direction=direction,
+            )
+            for key, value in object_.items()
+        }
+
     # If you're iterating on a string, do not bother to coerce it to a sequence.
     if not isinstance(object_, str):
         if (

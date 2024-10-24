@@ -2,27 +2,27 @@
 
 namespace Seed\Types\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ExceptionInfo extends SerializableType
+class ExceptionInfo extends JsonSerializableType
 {
     /**
      * @var string $exceptionType
      */
-    #[JsonProperty("exceptionType")]
+    #[JsonProperty('exceptionType')]
     public string $exceptionType;
 
     /**
      * @var string $exceptionMessage
      */
-    #[JsonProperty("exceptionMessage")]
+    #[JsonProperty('exceptionMessage')]
     public string $exceptionMessage;
 
     /**
      * @var string $exceptionStacktrace
      */
-    #[JsonProperty("exceptionStacktrace")]
+    #[JsonProperty('exceptionStacktrace')]
     public string $exceptionStacktrace;
 
     /**

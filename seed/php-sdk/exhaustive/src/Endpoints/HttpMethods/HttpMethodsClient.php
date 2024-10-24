@@ -2,11 +2,13 @@
 
 namespace Seed\Endpoints\HttpMethods;
 
-use Seed\Core\RawClient;
-use Seed\Core\JsonApiRequest;
-use Seed\Core\HttpMethod;
+use Seed\Core\Client\RawClient;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
+use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\HttpMethod;
+use Seed\Core\Json\JsonDecoder;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Types\Object\Types\ObjectWithRequiredField;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
@@ -29,42 +31,55 @@ class HttpMethodsClient
 
     /**
      * @param string $id
-     * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return string
+     * @throws SeedException
+     * @throws SeedApiException
      */
-    public function testGet(string $id, ?array $options = null): mixed
+    public function testGet(string $id, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/http-methods/$id",
                     method: HttpMethod::GET,
                 ),
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
      * @param ObjectWithRequiredField $request
-     * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return ObjectWithOptionalField
+     * @throws SeedException
+     * @throws SeedApiException
      */
-    public function testPost(ObjectWithRequiredField $request, ?array $options = null): mixed
+    public function testPost(ObjectWithRequiredField $request, ?array $options = null): ObjectWithOptionalField
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/http-methods",
                     method: HttpMethod::POST,
                     body: $request,
@@ -72,28 +87,37 @@ class HttpMethodsClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
      * @param string $id
      * @param ObjectWithRequiredField $request
-     * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return ObjectWithOptionalField
+     * @throws SeedException
+     * @throws SeedApiException
      */
-    public function testPut(string $id, ObjectWithRequiredField $request, ?array $options = null): mixed
+    public function testPut(string $id, ObjectWithRequiredField $request, ?array $options = null): ObjectWithOptionalField
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/http-methods/$id",
                     method: HttpMethod::PUT,
                     body: $request,
@@ -101,28 +125,37 @@ class HttpMethodsClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
      * @param string $id
      * @param ObjectWithOptionalField $request
-     * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return ObjectWithOptionalField
+     * @throws SeedException
+     * @throws SeedApiException
      */
-    public function testPatch(string $id, ObjectWithOptionalField $request, ?array $options = null): mixed
+    public function testPatch(string $id, ObjectWithOptionalField $request, ?array $options = null): ObjectWithOptionalField
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/http-methods/$id",
                     method: HttpMethod::PATCH,
                     body: $request,
@@ -130,41 +163,54 @@ class HttpMethodsClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
      * @param string $id
-     * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return bool
+     * @throws SeedException
+     * @throws SeedApiException
      */
-    public function testDelete(string $id, ?array $options = null): mixed
+    public function testDelete(string $id, ?array $options = null): bool
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/http-methods/$id",
                     method: HttpMethod::DELETE,
                 ),
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

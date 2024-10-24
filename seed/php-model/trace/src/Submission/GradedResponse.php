@@ -2,22 +2,22 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class GradedResponse extends SerializableType
+class GradedResponse extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var array<string, TestCaseResultWithStdout> $testCases
      */
-    #[JsonProperty("testCases"), ArrayType(["string" => TestCaseResultWithStdout::class])]
+    #[JsonProperty('testCases'), ArrayType(['string' => TestCaseResultWithStdout::class])]
     public array $testCases;
 
     /**

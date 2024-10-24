@@ -1,0 +1,58 @@
+{
+  "title": "Acme API",
+  "description": "The Acme API.",
+  "basePath": "/v1",
+  "servers": [
+    {
+      "url": "https://api.acme.com"
+    },
+    {
+      "url": "https://api.acme.com"
+    }
+  ],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Example endpoint",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetExampleRequest",
+      "errors": {},
+      "server": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/example",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../swagger.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channel": [],
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

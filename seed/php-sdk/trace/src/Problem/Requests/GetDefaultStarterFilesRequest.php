@@ -2,22 +2,23 @@
 
 namespace Seed\Problem\Requests;
 
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Problem\Types\VariableTypeAndName;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class GetDefaultStarterFilesRequest
+class GetDefaultStarterFilesRequest extends JsonSerializableType
 {
     /**
      * @var array<VariableTypeAndName> $inputParams
      */
-    #[JsonProperty("inputParams"), ArrayType([VariableTypeAndName::class])]
+    #[JsonProperty('inputParams'), ArrayType([VariableTypeAndName::class])]
     public array $inputParams;
 
     /**
      * @var mixed $outputType
      */
-    #[JsonProperty("outputType")]
+    #[JsonProperty('outputType')]
     public mixed $outputType;
 
     /**
@@ -29,7 +30,7 @@ class GetDefaultStarterFilesRequest
       - Period `.`
 
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**

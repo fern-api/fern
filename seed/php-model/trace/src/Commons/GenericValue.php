@@ -2,21 +2,21 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class GenericValue extends SerializableType
+class GenericValue extends JsonSerializableType
 {
     /**
      * @var ?string $stringifiedType
      */
-    #[JsonProperty("stringifiedType")]
+    #[JsonProperty('stringifiedType')]
     public ?string $stringifiedType;
 
     /**
      * @var string $stringifiedValue
      */
-    #[JsonProperty("stringifiedValue")]
+    #[JsonProperty('stringifiedValue')]
     public string $stringifiedValue;
 
     /**

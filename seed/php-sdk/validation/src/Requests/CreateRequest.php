@@ -2,41 +2,42 @@
 
 namespace Seed\Requests;
 
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Types\Shape;
 
-class CreateRequest
+class CreateRequest extends JsonSerializableType
 {
     /**
      * @var float $decimal
      */
-    #[JsonProperty("decimal")]
+    #[JsonProperty('decimal')]
     public float $decimal;
 
     /**
      * @var int $even
      */
-    #[JsonProperty("even")]
+    #[JsonProperty('even')]
     public int $even;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @var Shape $shape
+     * @var value-of<Shape> $shape
      */
-    #[JsonProperty("shape")]
-    public Shape $shape;
+    #[JsonProperty('shape')]
+    public string $shape;
 
     /**
      * @param array{
      *   decimal: float,
      *   even: int,
      *   name: string,
-     *   shape: Shape,
+     *   shape: value-of<Shape>,
      * } $values
      */
     public function __construct(

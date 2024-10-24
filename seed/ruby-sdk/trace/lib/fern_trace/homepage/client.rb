@@ -54,7 +54,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.homepage.set_homepage_problems(request: ["string"])
+    #  trace.homepage.set_homepage_problems(request: ["string", "string"])
     def set_homepage_problems(request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -126,7 +126,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.homepage.set_homepage_problems(request: ["string"])
+    #  trace.homepage.set_homepage_problems(request: ["string", "string"])
     def set_homepage_problems(request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|

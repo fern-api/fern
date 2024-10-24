@@ -2,16 +2,16 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class Tree extends SerializableType
+class Tree extends JsonSerializableType
 {
     /**
      * @var ?array<Node> $nodes
      */
-    #[JsonProperty("nodes"), ArrayType([Node::class])]
+    #[JsonProperty('nodes'), ArrayType([Node::class])]
     public ?array $nodes;
 
     /**
@@ -20,7 +20,7 @@ class Tree extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->nodes = $values['nodes'] ?? null;
     }

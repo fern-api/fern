@@ -2,53 +2,53 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\Language;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 
-class SubmitRequestV2 extends SerializableType
+class SubmitRequestV2 extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
-     * @var Language $language
+     * @var value-of<Language> $language
      */
-    #[JsonProperty("language")]
-    public Language $language;
+    #[JsonProperty('language')]
+    public string $language;
 
     /**
      * @var array<SubmissionFileInfo> $submissionFiles
      */
-    #[JsonProperty("submissionFiles"), ArrayType([SubmissionFileInfo::class])]
+    #[JsonProperty('submissionFiles'), ArrayType([SubmissionFileInfo::class])]
     public array $submissionFiles;
 
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var ?int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public ?int $problemVersion;
 
     /**
      * @var ?string $userId
      */
-    #[JsonProperty("userId")]
+    #[JsonProperty('userId')]
     public ?string $userId;
 
     /**
      * @param array{
      *   submissionId: string,
-     *   language: Language,
+     *   language: value-of<Language>,
      *   submissionFiles: array<SubmissionFileInfo>,
      *   problemId: string,
      *   problemVersion?: ?int,

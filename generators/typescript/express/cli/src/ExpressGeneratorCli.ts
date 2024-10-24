@@ -5,6 +5,7 @@ import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressGenerator } from "@fern-typescript/express-generator";
 import { camelCase, upperFirst } from "lodash-es";
+import { custom } from "zod";
 import { ExpressCustomConfig } from "./custom-config/ExpressCustomConfig";
 import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomConfigSchema";
 
@@ -27,7 +28,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             allowExtraFields: parsed?.allowExtraFields ?? false,
             skipRequestValidation: parsed?.skipRequestValidation ?? false,
             skipResponseValidation: parsed?.skipResponseValidation ?? false,
-            useBigInt: parsed?.useBigInt ?? false
+            useBigInt: parsed?.useBigInt ?? false,
+            noOptionalProperties: parsed?.noOptionalProperties ?? false
         };
     }
 
@@ -65,7 +67,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 skipRequestValidation: customConfig.skipRequestValidation,
                 skipResponseValidation: customConfig.skipResponseValidation,
                 requestValidationStatusCode: customConfig.requestValidationStatusCode,
-                useBigInt: customConfig.useBigInt
+                useBigInt: customConfig.useBigInt,
+                noOptionalProperties: customConfig.noOptionalProperties
             }
         });
 

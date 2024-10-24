@@ -1,13 +1,15 @@
-import { ASYNCAPI_DIRECTORY, DEFINITION_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
+import { DEFINITION_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIChangelog } from "./loadAPIChangelog";
-import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
-import { getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { Spec } from "./types/Workspace";
-import { OSSWorkspace } from "./workspaces";
-import { LazyFernWorkspace } from "./workspaces/FernWorkspace";
+import {
+    OSSWorkspace,
+    LazyFernWorkspace,
+    WorkspaceLoader,
+    WorkspaceLoaderFailureType,
+    ConjureWorkspace
+} from "@fern-api/lazy-fern-workspace";
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -67,7 +69,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
                     shouldUseUndiscriminatedUnionsWithLiterals:
                         definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                    optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true
+                    optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
+                    cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true
                 }
             });
             continue;
@@ -107,7 +110,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 shouldUseUndiscriminatedUnionsWithLiterals:
                     definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                 asyncApiNaming: definition.settings?.asyncApiMessageNaming,
-                optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true
+                optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
+                cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true
             },
             source: {
                 type: "openapi",
@@ -140,6 +144,21 @@ export async function loadAPIWorkspace({
     try {
         changelog = await loadAPIChangelog({ absolutePathToWorkspace });
     } catch (err) {}
+
+    if (generatorsConfiguration?.api != null && generatorsConfiguration?.api.type === "conjure") {
+        return {
+            didSucceed: true,
+            workspace: new ConjureWorkspace({
+                workspaceName,
+                absoluteFilePath: absolutePathToWorkspace,
+                generatorsConfiguration,
+                changelog,
+                cliVersion,
+                context,
+                relativePathToConjureDirectory: RelativeFilePath.of(generatorsConfiguration.api.pathToConjureDefinition)
+            })
+        };
+    }
 
     if (
         generatorsConfiguration?.api != null &&
@@ -190,7 +209,7 @@ export async function loadAPIWorkspace({
             workspace: new OSSWorkspace({
                 specs,
                 workspaceName,
-                absoluteFilepath: absolutePathToWorkspace,
+                absoluteFilePath: absolutePathToWorkspace,
                 generatorsConfiguration,
                 changelog,
                 cliVersion
@@ -200,12 +219,13 @@ export async function loadAPIWorkspace({
 
     if (await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
         const fernWorkspace = new LazyFernWorkspace({
-            absoluteFilepath: absolutePathToWorkspace,
+            absoluteFilePath: absolutePathToWorkspace,
             generatorsConfiguration,
             workspaceName,
             changelog,
             context,
-            cliVersion
+            cliVersion,
+            loadAPIWorkspace
         });
 
         return {

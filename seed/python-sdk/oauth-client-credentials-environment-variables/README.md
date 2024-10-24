@@ -1,6 +1,6 @@
 # Seed Python Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_oauth-client-credentials-environment-variables)](https://pypi.python.org/pypi/fern_oauth-client-credentials-environment-variables)
 
 The Seed Python library provides convenient access to the Seed API from Python.
@@ -10,6 +10,10 @@ The Seed Python library provides convenient access to the Seed API from Python.
 ```sh
 pip install fern_oauth-client-credentials-environment-variables
 ```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -24,9 +28,8 @@ client = SeedOauthClientCredentialsEnvironmentVariables(
     client_secret="YOUR_CLIENT_SECRET",
 )
 client.auth.get_token_with_client_credentials(
-    client_id="string",
-    client_secret="string",
-    scope="string",
+    client_id="client_id",
+    client_secret="client_secret",
 )
 ```
 
@@ -48,9 +51,8 @@ client = AsyncSeedOauthClientCredentialsEnvironmentVariables(
 
 async def main() -> None:
     await client.auth.get_token_with_client_credentials(
-        client_id="string",
-        client_secret="string",
-        scope="string",
+        client_id="client_id",
+        client_secret="client_secret",
     )
 
 
@@ -89,7 +91,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.auth.get_token_with_client_credentials(..., {
+client.auth.get_token_with_client_credentials(..., request_options={
     "max_retries": 1
 })
 ```
@@ -109,7 +111,7 @@ client = SeedOauthClientCredentialsEnvironmentVariables(
 
 
 # Override timeout for a specific method
-client.auth.get_token_with_client_credentials(..., {
+client.auth.get_token_with_client_credentials(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

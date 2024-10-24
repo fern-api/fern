@@ -1,6 +1,6 @@
 # Seed C# Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
 [![nuget shield](https://img.shields.io/nuget/v/SeedOauthClientCredentials)](https://nuget.org/packages/SeedOauthClientCredentials)
 
 The Seed C# library provides convenient access to the Seed API from C#.
@@ -19,15 +19,15 @@ Instantiate and use the client with the following:
 using SeedOauthClientCredentials.Auth;
 using SeedOauthClientCredentials;
 
-var client = new SeedOauthClientCredentialsClient();
+var client = new SeedOauthClientCredentialsClient("CLIENT_ID", "CLIENT_SECRET");
 await client.Auth.GetTokenAsync(
     new GetTokenRequest
     {
-        ClientId = "string",
-        ClientSecret = "string",
+        ClientId = "client_id",
+        ClientSecret = "client_secret",
         Audience = "https://api.example.com",
         GrantType = "client_credentials",
-        Scope = "string",
+        Scope = null,
     }
 );
 ```

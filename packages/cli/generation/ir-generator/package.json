@@ -35,7 +35,8 @@
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-api/fern-definition-schema": "workspace:*", 
+    "@fern-api/api-workspace-commons": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
     "lodash-es": "^4.17.21",
     "object-hash": "^3.0.0",
     "prettier": "^2.7.1",
@@ -43,7 +44,7 @@
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "^18.7.18",
+    "@types/node": "18.7.18",
     "@types/object-hash": "^3.0.6",
     "@types/prettier": "^2.7.1",
     "@types/url-join": "4.0.1",

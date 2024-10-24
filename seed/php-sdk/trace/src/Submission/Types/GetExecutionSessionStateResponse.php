@@ -2,28 +2,28 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class GetExecutionSessionStateResponse extends SerializableType
+class GetExecutionSessionStateResponse extends JsonSerializableType
 {
     /**
      * @var array<string, ExecutionSessionState> $states
      */
-    #[JsonProperty("states"), ArrayType(["string" => ExecutionSessionState::class])]
+    #[JsonProperty('states'), ArrayType(['string' => ExecutionSessionState::class])]
     public array $states;
 
     /**
      * @var ?int $numWarmingInstances
      */
-    #[JsonProperty("numWarmingInstances")]
+    #[JsonProperty('numWarmingInstances')]
     public ?int $numWarmingInstances;
 
     /**
      * @var array<string> $warmingSessionIds
      */
-    #[JsonProperty("warmingSessionIds"), ArrayType(["string"])]
+    #[JsonProperty('warmingSessionIds'), ArrayType(['string'])]
     public array $warmingSessionIds;
 
     /**

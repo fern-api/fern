@@ -31,13 +31,13 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
+    "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "chalk": "^5.3.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/node": "^18.7.18",
+    "@types/node": "18.7.18",
     "@types/prettier": "^2.7.1",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

@@ -1,0 +1,52 @@
+{
+  "anyOf": [
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ast.JsonLike"
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/ast.JsonLike"
+      }
+    },
+    {
+      "type": "string"
+    },
+    {
+      "type": "integer"
+    },
+    {
+      "type": "boolean"
+    }
+  ],
+  "definitions": {
+    "ast.JsonLike": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ast.JsonLike"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/ast.JsonLike"
+          }
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    }
+  }
+}

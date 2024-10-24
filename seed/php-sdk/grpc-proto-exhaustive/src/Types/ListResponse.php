@@ -2,34 +2,34 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class ListResponse extends SerializableType
+class ListResponse extends JsonSerializableType
 {
     /**
      * @var ?array<ListElement> $columns
      */
-    #[JsonProperty("columns"), ArrayType([ListElement::class])]
+    #[JsonProperty('columns'), ArrayType([ListElement::class])]
     public ?array $columns;
 
     /**
      * @var ?Pagination $pagination
      */
-    #[JsonProperty("pagination")]
+    #[JsonProperty('pagination')]
     public ?Pagination $pagination;
 
     /**
      * @var ?string $namespace
      */
-    #[JsonProperty("namespace")]
+    #[JsonProperty('namespace')]
     public ?string $namespace;
 
     /**
      * @var ?Usage $usage
      */
-    #[JsonProperty("usage")]
+    #[JsonProperty('usage')]
     public ?Usage $usage;
 
     /**
@@ -41,7 +41,7 @@ class ListResponse extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->columns = $values['columns'] ?? null;
         $this->pagination = $values['pagination'] ?? null;

@@ -21,7 +21,7 @@ client = SeedMultiUrlEnvironmentNoDefault(
     environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
 )
 client.ec_2.boot_instance(
-    size="string",
+    size="size",
 )
 
 ```
@@ -80,7 +80,7 @@ client = SeedMultiUrlEnvironmentNoDefault(
     environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
 )
 client.s_3.get_presigned_url(
-    s_3_key="string",
+    s_3_key="s3Key",
 )
 
 ```

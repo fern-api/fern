@@ -1,0 +1,16 @@
+## 0.44.1
+**`(feat):`** The OpenAPI importer used to try and coerce all enums into a literals.
+In some cases this is not desirable, so we now expose an option called
+`coerce-enums-to-literals` in your generators.yml.
+
+```yml generators.yml
+api:
+  specs:
+    - openapi: ../openapi.json
+      overrides: ../openapi-overrides.yml
+      settings:
+        title-as-schema-name: false
+        coerce-enums-to-literals: false
+```
+
+

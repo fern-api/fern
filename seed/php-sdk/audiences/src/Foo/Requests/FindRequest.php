@@ -2,9 +2,10 @@
 
 namespace Seed\Foo\Requests;
 
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class FindRequest
+class FindRequest extends JsonSerializableType
 {
     /**
      * @var ?string $optionalString
@@ -14,13 +15,13 @@ class FindRequest
     /**
      * @var ?string $publicProperty
      */
-    #[JsonProperty("publicProperty")]
+    #[JsonProperty('publicProperty')]
     public ?string $publicProperty;
 
     /**
      * @var ?int $privateProperty
      */
-    #[JsonProperty("privateProperty")]
+    #[JsonProperty('privateProperty')]
     public ?int $privateProperty;
 
     /**
@@ -31,7 +32,7 @@ class FindRequest
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->optionalString = $values['optionalString'] ?? null;
         $this->publicProperty = $values['publicProperty'] ?? null;

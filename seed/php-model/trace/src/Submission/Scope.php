@@ -2,16 +2,16 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class Scope extends SerializableType
+class Scope extends JsonSerializableType
 {
     /**
      * @var array<string, mixed> $variables
      */
-    #[JsonProperty("variables"), ArrayType(["string" => "mixed"])]
+    #[JsonProperty('variables'), ArrayType(['string' => 'mixed'])]
     public array $variables;
 
     /**

@@ -3,9 +3,8 @@
 namespace Seed;
 
 use Seed\BasicAuth\BasicAuthClient;
-use Seed\Errors\ErrorsClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
@@ -15,12 +14,11 @@ class SeedClient
     public BasicAuthClient $basicAuth;
 
     /**
-     * @var ErrorsClient $errors
-     */
-    public ErrorsClient $errors;
-
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -32,7 +30,11 @@ class SeedClient
     /**
      * @param string $username The username to use for authentication.
      * @param string $password The username to use for authentication.
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         string $username,
@@ -56,6 +58,5 @@ class SeedClient
         );
 
         $this->basicAuth = new BasicAuthClient($this->client);
-        $this->errors = new ErrorsClient($this->client);
     }
 }

@@ -10,11 +10,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Composer
-        uses: php-actions/composer@v6
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          php_version: "8.1"
-          version: "2.7.9"
+          php-version: "8.1"
 
       - name: Install tools
         run: |
@@ -24,6 +23,10 @@ jobs:
         run: |
           composer build
 
+      - name: Analyze
+        run: |
+          composer analyze
+
   unit-tests:
     runs-on: ubuntu-latest
 
@@ -31,11 +34,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Composer
-        uses: php-actions/composer@v6
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          php_version: "8.1"
-          version: "2.7.9"
+          php-version: "8.1"
 
       - name: Install tools
         run: |

@@ -15,5 +15,13 @@ export interface GeneratedSdkClientClass extends GeneratedFile<SdkContext> {
         example: ExampleEndpointCall;
         clientReference: ts.Identifier;
     }): ts.Expression | undefined;
+
     getEndpoint(args: { context: SdkContext; endpointId: string }): GeneratedEndpointImplementation | undefined;
+
+    maybeLeverageInvocation: (args: {
+        context: SdkContext;
+        endpointId: EndpointId;
+        example: ExampleEndpointCall;
+        clientReference: ts.Identifier;
+    }) => ts.Node[] | undefined;
 }

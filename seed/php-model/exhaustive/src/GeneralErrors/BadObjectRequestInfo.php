@@ -2,15 +2,15 @@
 
 namespace Seed\GeneralErrors;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class BadObjectRequestInfo extends SerializableType
+class BadObjectRequestInfo extends JsonSerializableType
 {
     /**
      * @var string $message
      */
-    #[JsonProperty("message")]
+    #[JsonProperty('message')]
     public string $message;
 
     /**

@@ -1,6 +1,6 @@
 # Seed TypeScript Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
 [![npm shield](https://img.shields.io/npm/v/@fern/imdb)](https://www.npmjs.com/package/@fern/imdb)
 
 The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
@@ -11,16 +11,20 @@ The Seed TypeScript library provides convenient access to the Seed API from Type
 npm i -s @fern/imdb
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/imdb";
+import { SeedApiClient, SeedApi } from "@fern/imdb";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.imdb.createMovie({
-    title: "string",
+    title: "title",
     rating: 1.1,
 });
 ```

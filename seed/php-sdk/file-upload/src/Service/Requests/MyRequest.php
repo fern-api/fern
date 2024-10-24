@@ -2,6 +2,8 @@
 
 namespace Seed\Service\Requests;
 
-class MyRequest
+use Seed\Core\Json\JsonSerializableType;
+
+class MyRequest extends JsonSerializableType
 {
 }

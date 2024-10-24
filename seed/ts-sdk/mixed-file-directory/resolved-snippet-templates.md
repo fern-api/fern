@@ -5,7 +5,7 @@ const client = new SeedMixedFileDirectoryClient({
   environment: "YOUR_BASE_URL",
 });
 await client.organization.create({
-  name: "string",
+  name: "name",
 });
  
 ```                        
@@ -17,9 +17,7 @@ import { SeedMixedFileDirectoryClient } from "@fern/mixed-file-directory";
 const client = new SeedMixedFileDirectoryClient({
   environment: "YOUR_BASE_URL",
 });
-await client.user.list({
-  limit: 1,
-});
+undefined;
  
 ```                        
 
@@ -30,9 +28,7 @@ import { SeedMixedFileDirectoryClient } from "@fern/mixed-file-directory";
 const client = new SeedMixedFileDirectoryClient({
   environment: "YOUR_BASE_URL",
 });
-await client.user.events.listEvents({
-  limit: 1,
-});
+undefined;
  
 ```                        
 
@@ -44,7 +40,7 @@ const client = new SeedMixedFileDirectoryClient({
   environment: "YOUR_BASE_URL",
 });
 await client.user.events.metadata.getMetadata({
-  id: "string",
+  id: "id",
 });
  
 ```                        

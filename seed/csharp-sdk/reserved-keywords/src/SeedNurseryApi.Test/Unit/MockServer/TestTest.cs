@@ -16,14 +16,14 @@ public class TestTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/")
-                    .WithParam("for", "string")
+                    .WithParam("for", "for")
                     .UsingPost()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(
             async () =>
-                await Client.Package.TestAsync(new TestRequest { For = "string" }, RequestOptions)
+                await Client.Package.TestAsync(new TestRequest { For = "for" }, RequestOptions)
         );
     }
 }

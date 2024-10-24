@@ -2,34 +2,34 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class LightweightProblemInfoV2 extends SerializableType
+class LightweightProblemInfoV2 extends JsonSerializableType
 {
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var string $problemName
      */
-    #[JsonProperty("problemName")]
+    #[JsonProperty('problemName')]
     public string $problemName;
 
     /**
      * @var int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public int $problemVersion;
 
     /**
      * @var array<mixed> $variableTypes
      */
-    #[JsonProperty("variableTypes"), ArrayType(["mixed"])]
+    #[JsonProperty('variableTypes'), ArrayType(['mixed'])]
     public array $variableTypes;
 
     /**

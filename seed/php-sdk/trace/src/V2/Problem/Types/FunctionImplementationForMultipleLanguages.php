@@ -2,22 +2,22 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\Types\Language;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class FunctionImplementationForMultipleLanguages extends SerializableType
+class FunctionImplementationForMultipleLanguages extends JsonSerializableType
 {
     /**
-     * @var array<Language, FunctionImplementation> $codeByLanguage
+     * @var array<value-of<Language>, FunctionImplementation> $codeByLanguage
      */
-    #[JsonProperty("codeByLanguage"), ArrayType([Language::class => FunctionImplementation::class])]
+    #[JsonProperty('codeByLanguage'), ArrayType(['string' => FunctionImplementation::class])]
     public array $codeByLanguage;
 
     /**
      * @param array{
-     *   codeByLanguage: array<Language, FunctionImplementation>,
+     *   codeByLanguage: array<value-of<Language>, FunctionImplementation>,
      * } $values
      */
     public function __construct(

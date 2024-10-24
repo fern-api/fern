@@ -1,13 +1,13 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
 import { createFiddleService } from "@fern-api/core";
 import { Project } from "@fern-api/project-loader";
-import { OSSWorkspace } from "@fern-api/workspace-loader";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { YAML_SCHEMA_VERSION } from "@fern-api/fern-definition-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import { readFile } from "fs/promises";
 import path from "path";
-import tar from "tar";
+import { create as createTar } from "tar";
 import tmp from "tmp-promise";
 import { CliContext } from "../../cli-context/CliContext";
 
@@ -40,7 +40,7 @@ export async function registerWorkspacesV1({
                     context.failWithoutThrowing("Registering from OpenAPI not currently supported.");
                     return;
                 }
-                const resolvedWorkspace = await workspace.toFernWorkspace({});
+                const resolvedWorkspace = await workspace.toFernWorkspace({ context });
                 const registerApiResponse = await fiddle.definitionRegistry.registerUsingOrgToken({
                     apiId: FernFiddle.ApiId(resolvedWorkspace.definition.rootApiFile.contents.name),
                     version,
@@ -63,7 +63,7 @@ export async function registerWorkspacesV1({
                 const tarPath = path.join(tmpDir.path, "definition.tgz");
 
                 context.logger.debug(`Compressing definition at ${tmpDir.path}`);
-                await tar.create({ file: tarPath, cwd: resolvedWorkspace.absoluteFilepath }, ["."]);
+                await createTar({ file: tarPath, cwd: resolvedWorkspace.absoluteFilePath }, ["."]);
 
                 context.logger.info("Uploading definition...");
                 await axios.put(registerApiResponse.body.definitionS3UploadUrl, await readFile(tarPath));

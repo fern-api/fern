@@ -2,15 +2,15 @@
 
 namespace Seed\Types\Object;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class DoubleOptional extends SerializableType
+class DoubleOptional extends JsonSerializableType
 {
     /**
      * @var ?string $optionalAlias
      */
-    #[JsonProperty("optionalAlias")]
+    #[JsonProperty('optionalAlias')]
     public ?string $optionalAlias;
 
     /**
@@ -19,7 +19,7 @@ class DoubleOptional extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->optionalAlias = $values['optionalAlias'] ?? null;
     }

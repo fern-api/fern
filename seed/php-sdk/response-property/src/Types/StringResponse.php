@@ -2,15 +2,15 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class StringResponse extends SerializableType
+class StringResponse extends JsonSerializableType
 {
     /**
      * @var string $data
      */
-    #[JsonProperty("data")]
+    #[JsonProperty('data')]
     public string $data;
 
     /**

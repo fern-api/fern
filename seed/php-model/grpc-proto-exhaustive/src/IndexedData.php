@@ -2,22 +2,22 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class IndexedData extends SerializableType
+class IndexedData extends JsonSerializableType
 {
     /**
      * @var array<int> $indices
      */
-    #[JsonProperty("indices"), ArrayType(["integer"])]
+    #[JsonProperty('indices'), ArrayType(['integer'])]
     public array $indices;
 
     /**
      * @var array<float> $values
      */
-    #[JsonProperty("values"), ArrayType(["float"])]
+    #[JsonProperty('values'), ArrayType(['float'])]
     public array $values;
 
     /**

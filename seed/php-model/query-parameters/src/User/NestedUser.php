@@ -2,21 +2,21 @@
 
 namespace Seed\User;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class NestedUser extends SerializableType
+class NestedUser extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var User $user
      */
-    #[JsonProperty("user")]
+    #[JsonProperty('user')]
     public User $user;
 
     /**

@@ -2,36 +2,36 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\Types\Language;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class GeneratedFiles extends SerializableType
+class GeneratedFiles extends JsonSerializableType
 {
     /**
-     * @var array<Language, Files> $generatedTestCaseFiles
+     * @var array<value-of<Language>, Files> $generatedTestCaseFiles
      */
-    #[JsonProperty("generatedTestCaseFiles"), ArrayType([Language::class => Files::class])]
+    #[JsonProperty('generatedTestCaseFiles'), ArrayType(['string' => Files::class])]
     public array $generatedTestCaseFiles;
 
     /**
-     * @var array<Language, Files> $generatedTemplateFiles
+     * @var array<value-of<Language>, Files> $generatedTemplateFiles
      */
-    #[JsonProperty("generatedTemplateFiles"), ArrayType([Language::class => Files::class])]
+    #[JsonProperty('generatedTemplateFiles'), ArrayType(['string' => Files::class])]
     public array $generatedTemplateFiles;
 
     /**
-     * @var array<Language, Files> $other
+     * @var array<value-of<Language>, Files> $other
      */
-    #[JsonProperty("other"), ArrayType([Language::class => Files::class])]
+    #[JsonProperty('other'), ArrayType(['string' => Files::class])]
     public array $other;
 
     /**
      * @param array{
-     *   generatedTestCaseFiles: array<Language, Files>,
-     *   generatedTemplateFiles: array<Language, Files>,
-     *   other: array<Language, Files>,
+     *   generatedTestCaseFiles: array<value-of<Language>, Files>,
+     *   generatedTemplateFiles: array<value-of<Language>, Files>,
+     *   other: array<value-of<Language>, Files>,
      * } $values
      */
     public function __construct(

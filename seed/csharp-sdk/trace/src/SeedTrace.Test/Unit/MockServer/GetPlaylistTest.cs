@@ -16,12 +16,8 @@ public class GetPlaylistTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "playlist_id": "string",
-              "owner-id": "string",
-              "name": "string",
-              "problems": [
-                "string"
-              ]
+              "playlist_id": "playlist_id",
+              "owner-id": "owner-id"
             }
             """;
 
@@ -29,7 +25,7 @@ public class GetPlaylistTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/v2/playlist/1/string")
+                    .WithPath("/v2/playlist/1/playlistId")
                     .UsingGet()
             )
             .RespondWith(
@@ -39,7 +35,7 @@ public class GetPlaylistTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Playlist.GetPlaylistAsync(1, "string", RequestOptions);
+        var response = await Client.Playlist.GetPlaylistAsync(1, "playlistId", RequestOptions);
         JToken
             .Parse(mockResponse)
             .Should()

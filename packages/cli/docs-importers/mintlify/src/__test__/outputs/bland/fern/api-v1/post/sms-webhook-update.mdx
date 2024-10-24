@@ -1,0 +1,31 @@
+---
+title: Update SMS Webhook
+subtitle: Update the webhook for a given phone number.
+slug: api-v1/post/sms-webhook-update
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+### Body
+
+<ParamField body="phone_number" type="string">
+  The phone number to update.
+</ParamField>
+
+<ParamField body="webhook" type="string">
+  The webhook to fire when an SMS is received.
+</ParamField>
+
+<ResponseExample>
+
+```json Response
+{
+  "status": "success"
+}
+```
+
+</ResponseExample>

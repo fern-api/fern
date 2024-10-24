@@ -2,47 +2,47 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\Language;
 
-class ExecutionSessionState extends SerializableType
+class ExecutionSessionState extends JsonSerializableType
 {
     /**
      * @var ?string $lastTimeContacted
      */
-    #[JsonProperty("lastTimeContacted")]
+    #[JsonProperty('lastTimeContacted')]
     public ?string $lastTimeContacted;
 
     /**
      * @var string $sessionId The auto-generated session id. Formatted as a uuid.
      */
-    #[JsonProperty("sessionId")]
+    #[JsonProperty('sessionId')]
     public string $sessionId;
 
     /**
      * @var bool $isWarmInstance
      */
-    #[JsonProperty("isWarmInstance")]
+    #[JsonProperty('isWarmInstance')]
     public bool $isWarmInstance;
 
     /**
      * @var ?string $awsTaskId
      */
-    #[JsonProperty("awsTaskId")]
+    #[JsonProperty('awsTaskId')]
     public ?string $awsTaskId;
 
     /**
-     * @var Language $language
+     * @var value-of<Language> $language
      */
-    #[JsonProperty("language")]
-    public Language $language;
+    #[JsonProperty('language')]
+    public string $language;
 
     /**
-     * @var ExecutionSessionStatus $status
+     * @var value-of<ExecutionSessionStatus> $status
      */
-    #[JsonProperty("status")]
-    public ExecutionSessionStatus $status;
+    #[JsonProperty('status')]
+    public string $status;
 
     /**
      * @param array{
@@ -50,8 +50,8 @@ class ExecutionSessionState extends SerializableType
      *   sessionId: string,
      *   isWarmInstance: bool,
      *   awsTaskId?: ?string,
-     *   language: Language,
-     *   status: ExecutionSessionStatus,
+     *   language: value-of<Language>,
+     *   status: value-of<ExecutionSessionStatus>,
      * } $values
      */
     public function __construct(

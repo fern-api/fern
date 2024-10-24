@@ -90,7 +90,11 @@ export class Unknown {
      * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.unknown.postObject({})
+     *     await client.unknown.postObject({
+     *         unknown: {
+     *             "key": "value"
+     *         }
+     *     })
      */
     public async postObject(
         request: SeedUnknownAsAny.MyObject,

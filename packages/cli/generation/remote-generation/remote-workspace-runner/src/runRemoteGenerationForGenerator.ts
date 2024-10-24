@@ -62,10 +62,19 @@ export async function runRemoteGenerationForGenerator({
     });
 
     const sources = workspace.getSources();
-    const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig: {} });
+    const apiDefinition = convertIrToFdrApi({
+        ir,
+        snippetsConfig: {
+            typescriptSdk: undefined,
+            pythonSdk: undefined,
+            javaSdk: undefined,
+            rubySdk: undefined,
+            goSdk: undefined
+        }
+    });
     const response = await fdr.api.v1.register.registerApiDefinition({
-        orgId: organization,
-        apiId: ir.apiName.originalName,
+        orgId: FdrAPI.OrgId(organization),
+        apiId: FdrAPI.ApiId(ir.apiName.originalName),
         definition: apiDefinition,
         sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
     });
@@ -112,6 +121,7 @@ export async function runRemoteGenerationForGenerator({
         version,
         intermediateRepresentation: {
             ...ir,
+            fdrApiDefinitionId,
             publishConfig: getPublishConfig({ generatorInvocation: generatorInvocationWithEnvVarSubstitutions })
         },
         shouldLogS3Url,

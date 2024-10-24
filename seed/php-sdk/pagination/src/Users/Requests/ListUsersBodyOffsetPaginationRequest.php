@@ -2,17 +2,18 @@
 
 namespace Seed\Users\Requests;
 
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Users\Types\WithPage;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
-class ListUsersBodyOffsetPaginationRequest
+class ListUsersBodyOffsetPaginationRequest extends JsonSerializableType
 {
     /**
      * @var ?WithPage $pagination The object that contains the offset used for pagination
     in order to fetch the next page of results.
 
      */
-    #[JsonProperty("pagination")]
+    #[JsonProperty('pagination')]
     public ?WithPage $pagination;
 
     /**
@@ -21,7 +22,7 @@ class ListUsersBodyOffsetPaginationRequest
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->pagination = $values['pagination'] ?? null;
     }

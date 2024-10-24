@@ -2,21 +2,21 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseWithActualResultImplementation extends SerializableType
+class TestCaseWithActualResultImplementation extends JsonSerializableType
 {
     /**
      * @var NonVoidFunctionDefinition $getActualResult
      */
-    #[JsonProperty("getActualResult")]
+    #[JsonProperty('getActualResult')]
     public NonVoidFunctionDefinition $getActualResult;
 
     /**
      * @var mixed $assertCorrectnessCheck
      */
-    #[JsonProperty("assertCorrectnessCheck")]
+    #[JsonProperty('assertCorrectnessCheck')]
     public mixed $assertCorrectnessCheck;
 
     /**

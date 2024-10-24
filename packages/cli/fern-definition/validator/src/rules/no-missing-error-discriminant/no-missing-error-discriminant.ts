@@ -1,4 +1,4 @@
-import { FernWorkspace, getAllNamedDefinitionFiles } from "@fern-api/workspace-loader";
+import { FernWorkspace, getAllNamedDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { isEmpty } from "lodash-es";
 import { Rule } from "../../Rule";
 

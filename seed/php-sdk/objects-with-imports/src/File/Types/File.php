@@ -2,34 +2,34 @@
 
 namespace Seed\File\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class File extends SerializableType
+class File extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var string $contents
      */
-    #[JsonProperty("contents")]
+    #[JsonProperty('contents')]
     public string $contents;
 
     /**
-     * @var FileInfo $info
+     * @var value-of<FileInfo> $info
      */
-    #[JsonProperty("info")]
-    public FileInfo $info;
+    #[JsonProperty('info')]
+    public string $info;
 
     /**
      * @param array{
      *   name: string,
      *   contents: string,
-     *   info: FileInfo,
+     *   info: value-of<FileInfo>,
      * } $values
      */
     public function __construct(

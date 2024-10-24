@@ -2,18 +2,24 @@ irVersion: v46
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
+
+buildScripts:
+  compileScript:
+    commands:
+      - ./gradlew compileJava
+
 publish:
   workingDirectory: generators/java
   preBuildCommands:
     - ./gradlew :sdk:distTar
-  docker: 
+  docker:
     file: ./generators/java/sdk/Dockerfile
     image: fernapi/fern-java-sdk
     context: ./generators/java/sdk
 test:
   docker:
     image: fernapi/fern-java-sdk:latest
-    command: 
+    command:
       - cd generators/java
       - ./gradlew :sdk:distTar
       - docker build -f sdk/Dockerfile -t fernapi/fern-java-sdk:latest sdk/
@@ -63,9 +69,9 @@ fixtures:
         coordinate: com.fern:exhaustive
         registryUrl: "definitelyMavenCentral"
         signature:
-            keyId: "test_kid"
-            password: "test_password"
-            secretKey: "test_secretkey"
+          keyId: "test_kid"
+          password: "test_password"
+          secretKey: "test_secretkey"
       publishMetadata:
         packageDescription: My very good and lengthy description
         publisherEmail: "me@gmail.com"

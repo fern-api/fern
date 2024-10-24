@@ -2,21 +2,21 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Memo extends SerializableType
+class Memo extends JsonSerializableType
 {
     /**
      * @var string $description
      */
-    #[JsonProperty("description")]
+    #[JsonProperty('description')]
     public string $description;
 
     /**
      * @var ?Account $account
      */
-    #[JsonProperty("account")]
+    #[JsonProperty('account')]
     public ?Account $account;
 
     /**

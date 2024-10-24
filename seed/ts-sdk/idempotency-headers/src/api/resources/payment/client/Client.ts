@@ -103,7 +103,7 @@ export class Payment {
      * @param {Payment.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.payment.delete("string")
+     *     await client.payment.delete("paymentId")
      */
     public async delete(paymentId: string, requestOptions?: Payment.RequestOptions): Promise<void> {
         const _response = await core.fetcher({

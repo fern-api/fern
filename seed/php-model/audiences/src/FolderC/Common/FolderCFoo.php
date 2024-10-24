@@ -2,15 +2,15 @@
 
 namespace Seed\FolderC\Common;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class FolderCFoo extends SerializableType
+class FolderCFoo extends JsonSerializableType
 {
     /**
      * @var string $barProperty
      */
-    #[JsonProperty("bar_property")]
+    #[JsonProperty('bar_property')]
     public string $barProperty;
 
     /**

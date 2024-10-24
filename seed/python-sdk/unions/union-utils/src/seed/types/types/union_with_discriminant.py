@@ -64,6 +64,14 @@ class UnionWithDiscriminant(UniversalRootModel):
         if unioned_value.type == "bar":
             return bar(unioned_value.bar)
 
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+
 
 class _UnionWithDiscriminant:
     class Foo(UniversalBaseModel):

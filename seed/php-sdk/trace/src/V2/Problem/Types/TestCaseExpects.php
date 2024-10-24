@@ -2,15 +2,15 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseExpects extends SerializableType
+class TestCaseExpects extends JsonSerializableType
 {
     /**
      * @var ?string $expectedStdout
      */
-    #[JsonProperty("expectedStdout")]
+    #[JsonProperty('expectedStdout')]
     public ?string $expectedStdout;
 
     /**
@@ -19,7 +19,7 @@ class TestCaseExpects extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->expectedStdout = $values['expectedStdout'] ?? null;
     }

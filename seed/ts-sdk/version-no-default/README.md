@@ -1,6 +1,6 @@
 # Seed TypeScript Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
 [![npm shield](https://img.shields.io/npm/v/@fern/version-no-default)](https://www.npmjs.com/package/@fern/version-no-default)
 
 The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
@@ -11,15 +11,19 @@ The Seed TypeScript library provides convenient access to the Seed API from Type
 npm i -s @fern/version-no-default
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedVersionClient } from "@fern/version-no-default";
+import { SeedVersionClient, SeedVersion } from "@fern/version-no-default";
 
 const client = new SeedVersionClient({ environment: "YOUR_BASE_URL", xApiVersion: "1.0.0" });
-await client.user.getUser("string");
+await client.user.getUser("userId");
 ```
 
 ## Exception Handling

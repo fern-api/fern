@@ -2,16 +2,16 @@
 
 namespace Seed\Types\Object;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class ObjectWithMapOfMap extends SerializableType
+class ObjectWithMapOfMap extends JsonSerializableType
 {
     /**
      * @var array<string, array<string, string>> $map
      */
-    #[JsonProperty("map"), ArrayType(["string" => ["string" => "string"]])]
+    #[JsonProperty('map'), ArrayType(['string' => ['string' => 'string']])]
     public array $map;
 
     /**

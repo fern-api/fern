@@ -81,9 +81,6 @@ class Animal(UniversalRootModel):
                 )
             )
 
-    class Partial(typing.TypedDict):
-        pass
-
     class Validators:
         """
         Use this class to add validators to the Pydantic model.

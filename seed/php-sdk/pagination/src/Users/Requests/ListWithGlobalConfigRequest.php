@@ -2,7 +2,9 @@
 
 namespace Seed\Users\Requests;
 
-class ListWithGlobalConfigRequest
+use Seed\Core\Json\JsonSerializableType;
+
+class ListWithGlobalConfigRequest extends JsonSerializableType
 {
     /**
      * @var ?int $offset
@@ -15,7 +17,7 @@ class ListWithGlobalConfigRequest
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->offset = $values['offset'] ?? null;
     }

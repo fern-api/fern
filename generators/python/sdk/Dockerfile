@@ -5,7 +5,6 @@ ENV NODE_VERSION=18.20.1
 RUN apt install -y curl
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 ENV NVM_DIR=/root/.nvm
-RUN . "$NVM_DIR/nvm.sh" && nvm ls-remote
 RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
@@ -34,8 +33,8 @@ RUN poetry install
 
 ENTRYPOINT ["python", "-m", "src.fern_python.generators.sdk.cli"]
 
-## NOTE: Uncomment the below to generate a flame graph for the python generator. 
-##       To visualize the flamegraph you can run: 
+## NOTE: Uncomment the below to generate a flame graph for the python generator.
+##       To visualize the flamegraph you can run:
 ##         - poetry add snakeviz
 ##         - poetry run snakeviz output.prof
 # RUN mkdir -p /fern/output

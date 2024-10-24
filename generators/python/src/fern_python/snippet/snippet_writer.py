@@ -1,4 +1,3 @@
-import json
 from typing import Any, Dict, List, Optional
 
 import fern.ir.resources as ir_types
@@ -205,7 +204,7 @@ class SnippetWriter:
             uint=lambda uint: AST.Expression(str(uint)),
             uint_64=lambda uint_64: AST.Expression(str(uint_64)),
             float_=lambda float_: AST.Expression(str(float_)),
-            base_64=lambda base_64: AST.Expression(str(base_64)),
+            base_64=lambda base_64: AST.Expression(repr(base_64)),
             big_integer=lambda big_integer: AST.Expression(str(big_integer)),
         )
 
@@ -262,7 +261,14 @@ class SnippetWriter:
         self,
         unknown: Any,
     ) -> AST.Expression:
-        return AST.Expression(json.dumps(unknown))
+        if unknown is not None:
+
+            def write_unknown(writer: AST.NodeWriter) -> None:
+                maybe_stringify_unknown = repr(unknown) if type(unknown) is str else unknown
+                writer.write_line(f"{maybe_stringify_unknown}")
+
+            return AST.Expression(AST.CodeWriter(write_unknown))
+        return AST.Expression("None")
 
     def _get_snippet_for_list_or_set(
         self,

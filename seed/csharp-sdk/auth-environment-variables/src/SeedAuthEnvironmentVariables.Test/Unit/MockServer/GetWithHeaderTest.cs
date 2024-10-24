@@ -24,7 +24,7 @@ public class GetWithHeaderTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/apiKeyInHeader")
-                    .WithHeader("X-Endpoint-Header", "string")
+                    .WithHeader("X-Endpoint-Header", "X-Endpoint-Header")
                     .UsingGet()
             )
             .RespondWith(
@@ -35,7 +35,7 @@ public class GetWithHeaderTest : BaseMockServerTest
             );
 
         var response = await Client.Service.GetWithHeaderAsync(
-            new HeaderAuthRequest { XEndpointHeader = "string" },
+            new HeaderAuthRequest { XEndpointHeader = "X-Endpoint-Header" },
             RequestOptions
         );
         JToken

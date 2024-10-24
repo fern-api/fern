@@ -2,34 +2,34 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class QueryResponse extends SerializableType
+class QueryResponse extends JsonSerializableType
 {
     /**
      * @var ?array<QueryResult> $results
      */
-    #[JsonProperty("results"), ArrayType([QueryResult::class])]
+    #[JsonProperty('results'), ArrayType([QueryResult::class])]
     public ?array $results;
 
     /**
      * @var ?array<ScoredColumn> $matches
      */
-    #[JsonProperty("matches"), ArrayType([ScoredColumn::class])]
+    #[JsonProperty('matches'), ArrayType([ScoredColumn::class])]
     public ?array $matches;
 
     /**
      * @var ?string $namespace
      */
-    #[JsonProperty("namespace")]
+    #[JsonProperty('namespace')]
     public ?string $namespace;
 
     /**
      * @var ?Usage $usage
      */
-    #[JsonProperty("usage")]
+    #[JsonProperty('usage')]
     public ?Usage $usage;
 
     /**
@@ -41,7 +41,7 @@ class QueryResponse extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->results = $values['results'] ?? null;
         $this->matches = $values['matches'] ?? null;

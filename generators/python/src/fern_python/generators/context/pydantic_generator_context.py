@@ -9,6 +9,7 @@ from ordered_set import OrderedSet
 
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
+from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
@@ -27,12 +28,16 @@ class PydanticGeneratorContext(ABC):
         use_str_enums: bool,
         skip_formatting: bool,
         union_naming_version: UnionNamingVersions,
+        use_pydantic_field_aliases: bool,
+        pydantic_compatibility: PydanticVersionCompatibility,
     ):
         self.ir = ir
         self.generator_config = generator_config
         self.core_utilities = CoreUtilities(
             allow_skipping_validation=allow_skipping_validation,
             use_typeddict_requests=use_typeddict_requests,
+            use_pydantic_field_aliases=use_pydantic_field_aliases,
+            pydantic_compatibility=pydantic_compatibility,
         )
         self.use_typeddict_requests = use_typeddict_requests
         self.type_declaration_referencer = type_declaration_referencer

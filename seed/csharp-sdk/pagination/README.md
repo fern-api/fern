@@ -1,6 +1,6 @@
 # Seed C# Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
 [![nuget shield](https://img.shields.io/nuget/v/SeedPagination)](https://nuget.org/packages/SeedPagination)
 
 The Seed C# library provides convenient access to the Seed API from C#.
@@ -20,7 +20,7 @@ using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
 await client.Users.ListWithBodyCursorPaginationAsync(
-    new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = "string" } }
+    new ListUsersBodyCursorPaginationRequest { Pagination = null }
 );
 ```
 

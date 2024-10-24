@@ -3,6 +3,8 @@ import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
+import { Arguments, UnnamedArgument } from "@fern-api/generator-commons";
+import { upperFirst } from "lodash-es";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -15,6 +17,7 @@ export declare namespace EndpointGenerator {
     }
 }
 
+const JSON_VARIABLE_NAME = "$json";
 const RESPONSE_VARIABLE_NAME = "$response";
 const STATUS_CODE_VARIABLE_NAME = "$statusCode";
 
@@ -32,15 +35,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 type: php.Type.optional(this.context.getRequestOptionsType())
             })
         );
-        // TODO: Support deserializing the JSON response.
-        //
-        // const return_ = getEndpointReturnType({ context: this.context, endpoint });
+        const return_ = getEndpointReturnType({ context: this.context, endpoint });
         return php.method({
             name: this.context.getEndpointMethodName(endpoint),
             access: "public",
             parameters,
             docs: endpoint.docs,
-            return_: php.Type.mixed(),
+            return_,
+            throws: [this.context.getBaseExceptionClassReference(), this.context.getBaseApiExceptionClassReference()],
             body: php.codeblock((writer) => {
                 const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
                 if (queryParameterCodeBlock != null) {
@@ -70,7 +72,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     })
                 );
                 writer.writeTextStatement(`${STATUS_CODE_VARIABLE_NAME} = ${RESPONSE_VARIABLE_NAME}->getStatusCode()`);
-                const successResponseStatements = this.getEndpointSuccessResponseStatements({ endpoint });
+                const successResponseStatements = this.getEndpointSuccessResponseStatements({ endpoint, return_ });
                 if (successResponseStatements != null) {
                     writer.writeNode(successResponseStatements);
                 }
@@ -79,9 +81,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeNode(this.context.getClientExceptionInterfaceClassReference());
                 writer.writeLine(" $e) {");
                 writer.indent();
-                writer.write("throw new ");
-                writer.writeNode(this.context.getBaseApiExceptionClassReference());
-                writer.writeTextStatement("($e->getMessage())");
+                writer.writeNodeStatement(
+                    this.throwNewBaseException({
+                        message: php.codeblock("$e->getMessage()")
+                    })
+                );
                 writer.dedent();
                 writer.writeLine("}");
 
@@ -99,7 +103,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             const defaultBaseUrl = this.context.getDefaultBaseUrlForEndpoint(endpoint);
 
             writer.write(
-                `$this->${requestOptionName}['${baseUrlOptionName}'] ?? $this->${rawClientFieldName}->${clientOptionsName}['${baseUrlOptionName}'] ?? `
+                `$${requestOptionName}['${baseUrlOptionName}'] ?? $this->${rawClientFieldName}->${clientOptionsName}['${baseUrlOptionName}'] ?? `
             );
             writer.writeNode(defaultBaseUrl);
         });
@@ -107,13 +111,22 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getEndpointErrorHandling({ endpoint }: { endpoint: HttpEndpoint }): php.CodeBlock {
         return php.codeblock((writer) => {
-            writer.write("throw new ");
-            writer.writeNode(this.context.getBaseApiExceptionClassReference());
-            writer.writeTextStatement(`("Error with status code " . ${STATUS_CODE_VARIABLE_NAME})`);
+            writer.writeNodeStatement(
+                this.throwNewBaseAPiException({
+                    message: php.codeblock("'API request failed'"),
+                    body: php.codeblock(`${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`)
+                })
+            );
         });
     }
 
-    private getEndpointSuccessResponseStatements({ endpoint }: { endpoint: HttpEndpoint }): php.CodeBlock | undefined {
+    private getEndpointSuccessResponseStatements({
+        endpoint,
+        return_
+    }: {
+        endpoint: HttpEndpoint;
+        return_: php.Type | undefined;
+    }): php.CodeBlock | undefined {
         if (endpoint.response?.body == null) {
             return php.codeblock((writer) => {
                 writer.controlFlow(
@@ -130,24 +143,33 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 streamParameter: () => this.context.logger.error("Stream parameters not supported"),
                 fileDownload: () => this.context.logger.error("File download not supported"),
                 json: (_reference) => {
-                    // TODO: Deserialize the response body into the correct type.
-                    //
-                    // const astType = this.context.phpTypeMapper.convert({ reference: reference.responseBodyType });
                     writer.controlFlow(
                         "if",
                         php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
                     );
-                    writer.writeTextStatement(
-                        `return json_decode(${RESPONSE_VARIABLE_NAME}->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR)`
-                    );
+                    if (return_ == null) {
+                        writer.write("return;");
+                        writer.endControlFlow();
+                        return;
+                    }
+                    writer.writeNodeStatement(this.getResponseBodyContent());
+                    if (return_.isOptional()) {
+                        writer.controlFlow("if", php.codeblock(`empty(${JSON_VARIABLE_NAME})`));
+                        writer.writeTextStatement("return null");
+                        writer.endControlFlow();
+                    }
+                    writer.write("return ");
+                    writer.writeNode(this.decodeJsonResponse(return_));
                     writer.endControlFlow();
                     writer.write("} catch (");
                     writer.writeNode(this.context.getJsonExceptionClassReference());
                     writer.writeLine(" $e) {");
                     writer.indent();
-                    writer.write("throw new ");
-                    writer.writeNode(this.context.getBaseExceptionClassReference());
-                    writer.writeTextStatement('("Failed to deserialize response", 0, $e)');
+                    writer.writeNodeStatement(
+                        this.throwNewBaseException({
+                            message: php.codeblock('"Failed to deserialize response: {$e->getMessage()}"')
+                        })
+                    );
                     writer.dedent();
                 },
                 streaming: () => this.context.logger.error("Streaming not supported"),
@@ -161,6 +183,202 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 },
                 _other: () => undefined
             });
+        });
+    }
+
+    private decodeJsonResponse(return_: php.Type | undefined): php.CodeBlock {
+        if (return_ == null) {
+            return php.codeblock("");
+        }
+        const arguments_: UnnamedArgument[] = [php.codeblock(JSON_VARIABLE_NAME)];
+        const internalType = return_.underlyingType().internalType;
+        switch (internalType.type) {
+            case "reference":
+                return this.decodeJsonResponseForClassReference({
+                    arguments_,
+                    classReference: internalType.value
+                });
+            case "array":
+            case "map":
+                return this.decodeJsonResponseForArray({
+                    arguments_,
+                    type: return_.underlyingType()
+                });
+            case "int":
+            case "float":
+            case "string":
+            case "bool":
+            case "date":
+            case "dateTime":
+            case "mixed":
+                return this.decodeJsonResponseForPrimitive({
+                    arguments_,
+                    methodSuffix: upperFirst(internalType.type)
+                });
+            case "enumString":
+                return this.decodeJsonResponseForPrimitive({
+                    arguments_,
+                    methodSuffix: "String"
+                });
+            case "union":
+                return this.decodeJsonResponseForUnion({
+                    arguments_,
+                    types: internalType.types
+                });
+            case "object":
+            case "optional":
+            case "typeDict":
+                throw new Error(`Internal error; '${internalType.type}' type is not a supported return type`);
+        }
+    }
+
+    private decodeJsonResponseForClassReference({
+        arguments_,
+        classReference
+    }: {
+        arguments_: Arguments;
+        classReference: php.ClassReference;
+    }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.writeNodeStatement(
+                php.invokeMethod({
+                    on: classReference,
+                    method: "fromJson",
+                    arguments_,
+                    static_: true
+                })
+            );
+        });
+    }
+
+    private decodeJsonResponseForArray({
+        arguments_,
+        type
+    }: {
+        arguments_: UnnamedArgument[];
+        type: php.Type;
+    }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.writeNode(
+                php.invokeMethod({
+                    on: this.context.getJsonDecoderClassReference(),
+                    method: "decodeArray",
+                    arguments_: [...arguments_, this.context.phpAttributeMapper.getTypeAttributeArgument(type)],
+                    static_: true
+                })
+            );
+            writer.write(";");
+            if (this.context.isMixedArray(type)) {
+                writer.newLine();
+                return;
+            }
+            writer.writeLine(" // @phpstan-ignore-line");
+        });
+    }
+
+    private decodeJsonResponseForPrimitive({
+        arguments_,
+        methodSuffix
+    }: {
+        arguments_: Arguments;
+        methodSuffix: string;
+    }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.writeNodeStatement(
+                php.invokeMethod({
+                    on: this.context.getJsonDecoderClassReference(),
+                    method: `decode${methodSuffix}`,
+                    arguments_,
+                    static_: true
+                })
+            );
+        });
+    }
+
+    private decodeJsonResponseForUnion({
+        arguments_,
+        types
+    }: {
+        arguments_: UnnamedArgument[];
+        types: php.Type[];
+    }): php.CodeBlock {
+        const unionTypeParameters = this.context.phpAttributeMapper.getUnionTypeParameters({ types });
+        // if deduping in getUnionTypeParameters results in one type, treat it like just that type
+        if (unionTypeParameters.length === 1) {
+            return this.decodeJsonResponse(types[0]);
+        }
+        return php.codeblock((writer) => {
+            writer.writeNode(
+                php.invokeMethod({
+                    on: this.context.getJsonDecoderClassReference(),
+                    method: "decodeUnion",
+                    arguments_: [
+                        ...arguments_,
+                        this.context.phpAttributeMapper.getUnionTypeClassRepresentation(unionTypeParameters)
+                    ],
+                    static_: true
+                })
+            );
+            writer.writeLine("; // @phpstan-ignore-line");
+        });
+    }
+
+    private getResponseBodyContent(): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.write(`${JSON_VARIABLE_NAME} = ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+        });
+    }
+
+    private throwNewBaseException({ message }: { message: php.CodeBlock }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.write("throw ");
+            writer.writeNode(
+                php.instantiateClass({
+                    classReference: this.context.getBaseExceptionClassReference(),
+                    arguments_: [
+                        {
+                            name: "message",
+                            assignment: message
+                        },
+                        {
+                            name: "previous",
+                            assignment: php.codeblock("$e")
+                        }
+                    ]
+                })
+            );
+        });
+    }
+
+    private throwNewBaseAPiException({
+        message,
+        body
+    }: {
+        message: php.CodeBlock;
+        body: php.CodeBlock;
+    }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.write("throw ");
+            writer.writeNode(
+                php.instantiateClass({
+                    classReference: this.context.getBaseApiExceptionClassReference(),
+                    arguments_: [
+                        {
+                            name: "message",
+                            assignment: message
+                        },
+                        {
+                            name: "statusCode",
+                            assignment: php.codeblock(STATUS_CODE_VARIABLE_NAME)
+                        },
+                        {
+                            name: "body",
+                            assignment: body
+                        }
+                    ],
+                    multiline: true
+                })
+            );
         });
     }
 }

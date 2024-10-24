@@ -1,5 +1,5 @@
 import { GeneratorName } from "./GeneratorName";
-import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
+import { GeneratorInvocationSchema } from "./schemas";
 
 export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocationSchema, "name">> = {
     [GeneratorName.JAVA]: {
@@ -142,6 +142,16 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         output: {
             location: "local-file-system",
             path: "../sdks/swift/sdk"
+        }
+    },
+    [GeneratorName.PHP_MODEL]: {
+        version: "0.0.0"
+    },
+    [GeneratorName.PHP_SDK]: {
+        version: "0.1.0",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/php/sdk"
         }
     }
 };

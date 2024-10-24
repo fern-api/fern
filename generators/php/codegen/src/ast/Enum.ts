@@ -1,6 +1,10 @@
+import { ClassReference } from "./ClassReference";
+import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Method } from "./Method";
+import { Type } from "./Type";
 
 export declare namespace Enum {
     interface Args {
@@ -12,6 +16,8 @@ export declare namespace Enum {
         backing?: "string" | "int";
         /* Docs associated with the class */
         docs?: string;
+        /* Whether the class should implement the JsonSerializable interface */
+        serializable?: boolean;
     }
 
     interface Member {
@@ -28,13 +34,15 @@ export class Enum extends AstNode {
     public readonly backing: "string" | "int" | undefined;
     public readonly docs: string | undefined;
     public readonly members: Enum.Member[] = [];
+    public readonly serializable: boolean;
 
-    constructor({ name, namespace, backing, docs }: Enum.Args) {
+    constructor({ name, namespace, backing, docs, serializable }: Enum.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.backing = backing;
         this.docs = docs;
+        this.serializable = serializable ?? false;
     }
 
     public addMember(member: Enum.Member): void {
@@ -48,8 +56,16 @@ export class Enum extends AstNode {
         if (this.backing != null) {
             writer.write(` : ${this.backing}`);
         }
+        if (this.serializable) {
+            writer.addReference(
+                new ClassReference({
+                    name: "JsonSerializable",
+                    namespace: ""
+                })
+            );
+            writer.writeLine(" implements JsonSerializable");
+        }
         writer.writeLine(" {");
-
         writer.indent();
         for (const member of this.members) {
             writer.write(`case ${member.name}`);
@@ -62,6 +78,19 @@ export class Enum extends AstNode {
             }
             writer.writeTextStatement("");
         }
+        if (this.serializable) {
+            writer.newLine();
+            writer.writeNode(
+                new Method({
+                    name: "jsonSerialize",
+                    return_: Type.string(),
+                    access: "public",
+                    parameters: [],
+                    body: new CodeBlock("return $this->value;")
+                })
+            );
+        }
+
         writer.writeNewLineIfLastLineNot();
         writer.dedent();
         writer.writeLine("}");

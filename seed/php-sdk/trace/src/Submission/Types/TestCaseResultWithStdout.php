@@ -2,21 +2,21 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseResultWithStdout extends SerializableType
+class TestCaseResultWithStdout extends JsonSerializableType
 {
     /**
      * @var TestCaseResult $result
      */
-    #[JsonProperty("result")]
+    #[JsonProperty('result')]
     public TestCaseResult $result;
 
     /**
      * @var string $stdout
      */
-    #[JsonProperty("stdout")]
+    #[JsonProperty('stdout')]
     public string $stdout;
 
     /**

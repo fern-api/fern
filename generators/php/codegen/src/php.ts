@@ -1,7 +1,9 @@
+import { Ternary } from "@fern-api/generator-commons";
 import {
     Array as Array_,
     Attribute,
     Class,
+    Trait,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
@@ -24,6 +26,10 @@ export function attribute(args: Attribute.Args): Attribute {
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
+}
+
+export function trait(args: Trait.Args): Trait {
+    return new Trait(args);
 }
 
 export function classReference(args: ClassReference.Args): ClassReference {
@@ -66,11 +72,16 @@ export function parameter(args: Parameter.Args): Parameter {
     return new Parameter(args);
 }
 
+export function ternary(args: Ternary.Args): Ternary {
+    return new Ternary(args);
+}
+
 export { AstNode } from "./ast/core/AstNode";
 export {
     Array,
     Attribute,
     Class,
+    Trait,
     ClassInstantiation,
     ClassReference,
     CodeBlock,

@@ -6,6 +6,7 @@ import { fromMarkdown } from "mdast-util-from-markdown";
 import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
 import { visit } from "unist-util-visit";
+import { parseMarkdownToTree } from "./parseMarkdownToTree";
 
 interface AbsolutePathMetadata {
     absolutePathToMdx: AbsoluteFilePath;
@@ -48,10 +49,7 @@ export function parseImagePaths(
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
 
-    const tree = fromMarkdown(content, {
-        extensions: [mdx()],
-        mdastExtensions: [mdxFromMarkdown()]
-    });
+    const tree = parseMarkdownToTree(content);
 
     let offset = 0;
 
@@ -384,8 +382,8 @@ function visitFrontmatterImages(
             if (typeof value === "object") {
                 if (value.type === "fileId") {
                     data[key] = {
-                        ...value,
-                        value: mapImage(value.value) ?? value.value
+                        type: "fileId",
+                        value: CjsFdrSdk.FileId(mapImage(value.value) ?? value.value)
                     };
                 }
             } else if (typeof value === "string") {
@@ -393,11 +391,11 @@ function visitFrontmatterImages(
                 data[key] = mappedImage
                     ? {
                           type: "fileId",
-                          value: mappedImage
+                          value: CjsFdrSdk.FileId(mappedImage)
                       }
                     : {
                           type: "url",
-                          value
+                          value: CjsFdrSdk.Url(value)
                       };
             }
             // else do nothing

@@ -2,22 +2,22 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class VoidFunctionSignatureThatTakesActualResult extends SerializableType
+class VoidFunctionSignatureThatTakesActualResult extends JsonSerializableType
 {
     /**
      * @var array<Parameter> $parameters
      */
-    #[JsonProperty("parameters"), ArrayType([Parameter::class])]
+    #[JsonProperty('parameters'), ArrayType([Parameter::class])]
     public array $parameters;
 
     /**
      * @var mixed $actualResultType
      */
-    #[JsonProperty("actualResultType")]
+    #[JsonProperty('actualResultType')]
     public mixed $actualResultType;
 
     /**

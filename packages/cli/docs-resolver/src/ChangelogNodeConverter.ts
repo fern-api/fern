@@ -12,7 +12,7 @@ dayjs.extend(utc);
 const DEFAULT_CHANGELOG_TITLE = "Changelog";
 
 interface ConvertOptions {
-    parentSlug: FernNavigation.SlugGenerator;
+    parentSlug: FernNavigation.V1.SlugGenerator;
     title?: string;
     icon?: string;
     hidden?: boolean;
@@ -31,7 +31,7 @@ export class ChangelogNodeConverter {
         private idgen: NodeIdGenerator
     ) {}
 
-    public convert(opts: ConvertOptions): FernNavigation.ChangelogNode | undefined {
+    public convert(opts: ConvertOptions): FernNavigation.V1.ChangelogNode | undefined {
         if (this.changelogFiles == null || this.changelogFiles.length === 0) {
             return undefined;
         }
@@ -74,7 +74,7 @@ export class ChangelogNodeConverter {
         });
 
         // sort changelog items by date, in descending order
-        const changelogItems = unsortedChangelogItems.map((item): FernNavigation.ChangelogEntryNode => {
+        const changelogItems = unsortedChangelogItems.map((item): FernNavigation.V1.ChangelogEntryNode => {
             const date = dayjs.utc(item.date);
             return {
                 id: this.idgen.append(date.format("YYYY-M-D")).get(),
@@ -112,10 +112,10 @@ export class ChangelogNodeConverter {
     }
 
     private groupByYear(
-        entries: FernNavigation.ChangelogEntryNode[],
-        parentSlug: FernNavigation.SlugGenerator
-    ): FernNavigation.ChangelogYearNode[] {
-        const years = new Map<number, FernNavigation.ChangelogEntryNode[]>();
+        entries: FernNavigation.V1.ChangelogEntryNode[],
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): FernNavigation.V1.ChangelogYearNode[] {
+        const years = new Map<number, FernNavigation.V1.ChangelogEntryNode[]>();
         for (const entry of entries) {
             const year = dayjs.utc(entry.date).year();
             const yearEntries = years.get(year) ?? [];
@@ -142,10 +142,10 @@ export class ChangelogNodeConverter {
     }
 
     private groupByMonth(
-        entries: FernNavigation.ChangelogEntryNode[],
-        parentSlug: FernNavigation.SlugGenerator
-    ): FernNavigation.ChangelogMonthNode[] {
-        const months = new Map<number, FernNavigation.ChangelogEntryNode[]>();
+        entries: FernNavigation.V1.ChangelogEntryNode[],
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): FernNavigation.V1.ChangelogMonthNode[] {
+        const months = new Map<number, FernNavigation.V1.ChangelogEntryNode[]>();
         for (const entry of entries) {
             const month = dayjs.utc(entry.date).month() + 1;
             const monthEntries = months.get(month) ?? [];
@@ -177,7 +177,7 @@ export class ChangelogNodeConverter {
         if (filepath == null) {
             return undefined;
         }
-        return relative(this.docsWorkspace.absoluteFilepath, filepath);
+        return relative(this.docsWorkspace.absoluteFilePath, filepath);
     }
 }
 

@@ -1,6 +1,6 @@
 # Seed Python Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_validation)](https://pypi.python.org/pypi/fern_validation)
 
 The Seed Python library provides convenient access to the Seed API from Python.
@@ -10,6 +10,10 @@ The Seed Python library provides convenient access to the Seed API from Python.
 ```sh
 pip install fern_validation
 ```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -24,7 +28,7 @@ client = SeedValidation(
 client.create(
     decimal=1.1,
     even=1,
-    name="string",
+    name="name",
     shape="SQUARE",
 )
 ```
@@ -47,7 +51,7 @@ async def main() -> None:
     await client.create(
         decimal=1.1,
         even=1,
-        name="string",
+        name="name",
         shape="SQUARE",
     )
 
@@ -87,7 +91,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.create(..., {
+client.create(..., request_options={
     "max_retries": 1
 })
 ```
@@ -107,7 +111,7 @@ client = SeedValidation(
 
 
 # Override timeout for a specific method
-client.create(..., {
+client.create(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

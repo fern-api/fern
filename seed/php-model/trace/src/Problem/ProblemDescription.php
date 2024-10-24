@@ -2,16 +2,16 @@
 
 namespace Seed\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class ProblemDescription extends SerializableType
+class ProblemDescription extends JsonSerializableType
 {
     /**
      * @var array<mixed> $boards
      */
-    #[JsonProperty("boards"), ArrayType(["mixed"])]
+    #[JsonProperty('boards'), ArrayType(['mixed'])]
     public array $boards;
 
     /**

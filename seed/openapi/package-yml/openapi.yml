@@ -3,12 +3,21 @@ info:
   title: package-yml
   version: ''
 paths:
-  /:
+  /{id}/:
     post:
       operationId: echo
       tags:
         - ''
-      parameters: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: id-ksfd9c1
+          examples:
+            Example1:
+              value: id-ksfd9c1
       responses:
         '200':
           description: ''
@@ -30,17 +39,27 @@ paths:
                 value:
                   name: Hello world!
                   size: 20
-  /{nestedId}:
+  /{id}//{nestedId}:
     get:
       operationId: service_nop
       tags:
         - Service
       parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: id-a2ijs82
+          examples:
+            Example1:
+              value: id-a2ijs82
         - name: nestedId
           in: path
           required: true
           schema:
             type: string
+          example: id-219xca8
           examples:
             Example1:
               value: id-219xca8

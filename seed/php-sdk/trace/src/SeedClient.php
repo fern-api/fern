@@ -4,16 +4,14 @@ namespace Seed;
 
 use Seed\V2\V2Client;
 use Seed\Admin\AdminClient;
-use Seed\Commons\CommonsClient;
 use Seed\Homepage\HomepageClient;
-use Seed\LangServer\LangServerClient;
 use Seed\Migration\MigrationClient;
 use Seed\Playlist\PlaylistClient;
 use Seed\Problem\ProblemClient;
 use Seed\Submission\SubmissionClient;
 use Seed\Sysprop\SyspropClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
@@ -28,19 +26,9 @@ class SeedClient
     public AdminClient $admin;
 
     /**
-     * @var CommonsClient $commons
-     */
-    public CommonsClient $commons;
-
-    /**
      * @var HomepageClient $homepage
      */
     public HomepageClient $homepage;
-
-    /**
-     * @var LangServerClient $langServer
-     */
-    public LangServerClient $langServer;
 
     /**
      * @var MigrationClient $migration
@@ -68,7 +56,11 @@ class SeedClient
     public SyspropClient $sysprop;
 
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -80,7 +72,11 @@ class SeedClient
     /**
      * @param ?string $token The token to use for authentication.
      * @param ?string $xRandomHeader
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         ?string $token = null,
@@ -111,9 +107,7 @@ class SeedClient
 
         $this->v2 = new V2Client($this->client);
         $this->admin = new AdminClient($this->client);
-        $this->commons = new CommonsClient($this->client);
         $this->homepage = new HomepageClient($this->client);
-        $this->langServer = new LangServerClient($this->client);
         $this->migration = new MigrationClient($this->client);
         $this->playlist = new PlaylistClient($this->client);
         $this->problem = new ProblemClient($this->client);

@@ -22,11 +22,7 @@ module SeedOauthClientCredentialsClient
     # @return [SeedOauthClientCredentialsClient::Auth::TokenResponse]
     # @example
     #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
-    #  oauth_client_credentials.auth.get_token_with_client_credentials(
-    #    client_id: "string",
-    #    client_secret: "string",
-    #    scope: "string"
-    #  )
+    #  oauth_client_credentials.auth.get_token_with_client_credentials(client_id: "client_id", client_secret: "client_secret")
     def get_token_with_client_credentials(client_id:, client_secret:, scope: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -61,10 +57,9 @@ module SeedOauthClientCredentialsClient
     # @example
     #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
     #  oauth_client_credentials.auth.refresh_token(
-    #    client_id: "string",
-    #    client_secret: "string",
-    #    refresh_token: "string",
-    #    scope: "string"
+    #    client_id: "client_id",
+    #    client_secret: "client_secret",
+    #    refresh_token: "refresh_token"
     #  )
     def refresh_token(client_id:, client_secret:, refresh_token:, scope: nil, request_options: nil)
       response = @request_client.conn.post do |req|
@@ -110,11 +105,7 @@ module SeedOauthClientCredentialsClient
     # @return [SeedOauthClientCredentialsClient::Auth::TokenResponse]
     # @example
     #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
-    #  oauth_client_credentials.auth.get_token_with_client_credentials(
-    #    client_id: "string",
-    #    client_secret: "string",
-    #    scope: "string"
-    #  )
+    #  oauth_client_credentials.auth.get_token_with_client_credentials(client_id: "client_id", client_secret: "client_secret")
     def get_token_with_client_credentials(client_id:, client_secret:, scope: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
@@ -151,10 +142,9 @@ module SeedOauthClientCredentialsClient
     # @example
     #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
     #  oauth_client_credentials.auth.refresh_token(
-    #    client_id: "string",
-    #    client_secret: "string",
-    #    refresh_token: "string",
-    #    scope: "string"
+    #    client_id: "client_id",
+    #    client_secret: "client_secret",
+    #    refresh_token: "refresh_token"
     #  )
     def refresh_token(client_id:, client_secret:, refresh_token:, scope: nil, request_options: nil)
       Async do

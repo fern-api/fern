@@ -2,15 +2,15 @@
 
 namespace Seed\Union\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Circle extends SerializableType
+class Circle extends JsonSerializableType
 {
     /**
      * @var float $radius
      */
-    #[JsonProperty("radius")]
+    #[JsonProperty('radius')]
     public float $radius;
 
     /**

@@ -2,15 +2,15 @@
 
 namespace Seed\Inlined\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ATopLevelLiteral extends SerializableType
+class ATopLevelLiteral extends JsonSerializableType
 {
     /**
      * @var ANestedLiteral $nestedLiteral
      */
-    #[JsonProperty("nestedLiteral")]
+    #[JsonProperty('nestedLiteral')]
     public ANestedLiteral $nestedLiteral;
 
     /**

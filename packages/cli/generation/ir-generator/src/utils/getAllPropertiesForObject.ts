@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
+import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 import { getPropertyName } from "../converters/type-declarations/convertObjectTypeDeclaration";

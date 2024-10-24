@@ -2,7 +2,9 @@
 
 namespace Seed\Service\Requests;
 
-class GetMetadataRequest
+use Seed\Core\Json\JsonSerializableType;
+
+class GetMetadataRequest extends JsonSerializableType
 {
     /**
      * @var string $xApiVersion

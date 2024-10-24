@@ -2,15 +2,15 @@
 
 namespace Seed\Types\Object;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ObjectWithRequiredField extends SerializableType
+class ObjectWithRequiredField extends JsonSerializableType
 {
     /**
      * @var string $string
      */
-    #[JsonProperty("string")]
+    #[JsonProperty('string')]
     public string $string;
 
     /**

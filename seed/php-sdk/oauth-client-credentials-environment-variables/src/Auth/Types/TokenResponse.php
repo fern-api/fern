@@ -2,30 +2,30 @@
 
 namespace Seed\Auth\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
 /**
-* An OAuth token response.
+ * An OAuth token response.
  */
-class TokenResponse extends SerializableType
+class TokenResponse extends JsonSerializableType
 {
     /**
      * @var string $accessToken
      */
-    #[JsonProperty("access_token")]
+    #[JsonProperty('access_token')]
     public string $accessToken;
 
     /**
      * @var int $expiresIn
      */
-    #[JsonProperty("expires_in")]
+    #[JsonProperty('expires_in')]
     public int $expiresIn;
 
     /**
      * @var ?string $refreshToken
      */
-    #[JsonProperty("refresh_token")]
+    #[JsonProperty('refresh_token')]
     public ?string $refreshToken;
 
     /**

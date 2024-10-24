@@ -13,15 +13,7 @@
 <dd>
 
 ```csharp
-await client.Optional.SendOptionalBodyAsync(
-    new Dictionary<string, object>()
-    {
-        {
-            "string",
-            new Dictionary<object, object?>() { { "key", "value" } }
-        },
-    }
-);
+await client.Optional.SendOptionalBodyAsync(null);
 ```
 </dd>
 </dl>

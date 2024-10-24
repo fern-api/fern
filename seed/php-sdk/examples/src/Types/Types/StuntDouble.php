@@ -2,21 +2,21 @@
 
 namespace Seed\Types\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class StuntDouble extends SerializableType
+class StuntDouble extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var string $actorOrActressId
      */
-    #[JsonProperty("actorOrActressId")]
+    #[JsonProperty('actorOrActressId')]
     public string $actorOrActressId;
 
     /**

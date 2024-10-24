@@ -1,3 +1,17 @@
+- version: 0.27.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for SSE (Server-Sent Events) streaming responses. The user-facing
+        interface for streaming responses remains the same between standard HTTP
+        streaming and SSE.
+  irVersion: 40
+- version: 0.26.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for sending custom Content-Type header values defined in the API.
+  irVersion: 40
 - version: 0.25.0
   changelogEntry:
     - type: feat

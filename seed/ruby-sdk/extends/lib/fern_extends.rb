@@ -24,7 +24,7 @@ module SeedExtendsClient
     # @return [Void]
     # @example
     #  extends = SeedExtendsClient::Client.new(base_url: "https://api.example.com")
-    #  extends.extended_inline_request_body(unique: "string")
+    #  extends.extended_inline_request_body(unique: "unique")
     def extended_inline_request_body(name:, docs:, unique:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -67,7 +67,7 @@ module SeedExtendsClient
     # @return [Void]
     # @example
     #  extends = SeedExtendsClient::Client.new(base_url: "https://api.example.com")
-    #  extends.extended_inline_request_body(unique: "string")
+    #  extends.extended_inline_request_body(unique: "unique")
     def extended_inline_request_body(name:, docs:, unique:, request_options: nil)
       @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

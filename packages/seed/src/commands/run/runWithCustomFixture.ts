@@ -8,10 +8,9 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import {
-    APIWorkspace,
+    AbstractAPIWorkspace,
     FernWorkspace,
-    getOSSWorkspaceSettingsFromGeneratorInvocation,
-    OSSWorkspace
+    getOSSWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
 import { group } from "yargs";
@@ -50,7 +49,7 @@ export async function runWithCustomFixture({
         taskContextFactory,
         skipScripts: true,
         keepDocker: true,
-        scriptRunner: new ScriptRunner(workspace, false)
+        scriptRunner: new ScriptRunner(workspace, false, taskContext)
     });
 
     const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
@@ -74,18 +73,10 @@ export async function runWithCustomFixture({
     }
 
     try {
-        let fernWorkspace: FernWorkspace;
-        if (apiWorkspace instanceof OSSWorkspace) {
-            fernWorkspace = await apiWorkspace.toFernWorkspace(
-                { context: taskContext },
-                getOSSWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
-            );
-        } else {
-            fernWorkspace = await apiWorkspace.toFernWorkspace(
-                {},
-                getOSSWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
-            );
-        }
+        let fernWorkspace: FernWorkspace = await apiWorkspace.toFernWorkspace(
+            { context: taskContext },
+            getOSSWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
+        );
 
         await dockerGeneratorRunner.build();
         await dockerGeneratorRunner.runGeneratorFromGroup({
@@ -110,7 +101,7 @@ function getGeneratorGroup({
     image,
     absolutePathToOutput
 }: {
-    apiWorkspace: APIWorkspace;
+    apiWorkspace: AbstractAPIWorkspace<unknown>;
     image: string;
     absolutePathToOutput: AbsoluteFilePath;
 }): { group: GeneratorGroup; invocation: GeneratorInvocation } | undefined {

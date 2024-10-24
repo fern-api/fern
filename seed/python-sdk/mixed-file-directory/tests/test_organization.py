@@ -8,17 +8,20 @@ from .utilities import validate_response
 
 async def test_create(client: SeedMixedFileDirectory, async_client: AsyncSeedMixedFileDirectory) -> None:
     expected_response: typing.Any = {
-        "id": "string",
-        "name": "string",
-        "users": [{"id": "string", "name": "string", "age": 1}],
+        "id": "id",
+        "name": "name",
+        "users": [{"id": "id", "name": "name", "age": 1}, {"id": "id", "name": "name", "age": 1}],
     }
     expected_types: typing.Any = {
         "id": None,
         "name": None,
-        "users": ("list", {0: {"id": None, "name": None, "age": "integer"}}),
+        "users": (
+            "list",
+            {0: {"id": None, "name": None, "age": "integer"}, 1: {"id": None, "name": None, "age": "integer"}},
+        ),
     }
-    response = client.organization.create(name="string")
+    response = client.organization.create(name="name")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.organization.create(name="string")
+    async_response = await async_client.organization.create(name="name")
     validate_response(async_response, expected_response, expected_types)

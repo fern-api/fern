@@ -2,40 +2,46 @@
 
 namespace Seed\Reference\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class SendRequest extends SerializableType
+class SendRequest extends JsonSerializableType
 {
     /**
      * @var string $prompt
      */
-    #[JsonProperty("prompt")]
+    #[JsonProperty('prompt')]
     public string $prompt;
 
     /**
      * @var string $query
      */
-    #[JsonProperty("query")]
+    #[JsonProperty('query')]
     public string $query;
 
     /**
      * @var bool $stream
      */
-    #[JsonProperty("stream")]
+    #[JsonProperty('stream')]
     public bool $stream;
 
     /**
      * @var string $context
      */
-    #[JsonProperty("context")]
+    #[JsonProperty('context')]
     public string $context;
 
     /**
      * @var ?string $maybeContext
      */
-    #[JsonProperty("maybeContext")]
+    #[JsonProperty('maybeContext')]
     public ?string $maybeContext;
+
+    /**
+     * @var ContainerObject $containerObject
+     */
+    #[JsonProperty('containerObject')]
+    public ContainerObject $containerObject;
 
     /**
      * @param array{
@@ -44,6 +50,7 @@ class SendRequest extends SerializableType
      *   stream: bool,
      *   context: string,
      *   maybeContext?: ?string,
+     *   containerObject: ContainerObject,
      * } $values
      */
     public function __construct(
@@ -54,5 +61,6 @@ class SendRequest extends SerializableType
         $this->stream = $values['stream'];
         $this->context = $values['context'];
         $this->maybeContext = $values['maybeContext'] ?? null;
+        $this->containerObject = $values['containerObject'];
     }
 }

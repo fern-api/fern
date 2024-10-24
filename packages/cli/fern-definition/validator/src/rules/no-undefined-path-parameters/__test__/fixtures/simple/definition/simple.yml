@@ -27,3 +27,10 @@ service:
       path-parameters:
         x: $someVariable
       method: POST
+    
+    overridenPathParameters:
+      base-path: /{y}
+      path: /override
+      path-parameters:
+        y: string
+      method: POST

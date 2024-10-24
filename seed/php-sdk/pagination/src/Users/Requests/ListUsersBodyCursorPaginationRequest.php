@@ -2,17 +2,18 @@
 
 namespace Seed\Users\Requests;
 
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Users\Types\WithCursor;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
-class ListUsersBodyCursorPaginationRequest
+class ListUsersBodyCursorPaginationRequest extends JsonSerializableType
 {
     /**
      * @var ?WithCursor $pagination The object that contains the cursor used for pagination
     in order to fetch the next page of results.
 
      */
-    #[JsonProperty("pagination")]
+    #[JsonProperty('pagination')]
     public ?WithCursor $pagination;
 
     /**
@@ -21,7 +22,7 @@ class ListUsersBodyCursorPaginationRequest
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->pagination = $values['pagination'] ?? null;
     }

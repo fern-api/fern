@@ -2,22 +2,23 @@
 
 namespace Seed\Dataservice\Requests;
 
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Types\Column;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class UploadRequest
+class UploadRequest extends JsonSerializableType
 {
     /**
      * @var array<Column> $columns
      */
-    #[JsonProperty("columns"), ArrayType([Column::class])]
+    #[JsonProperty('columns'), ArrayType([Column::class])]
     public array $columns;
 
     /**
      * @var ?string $namespace
      */
-    #[JsonProperty("namespace")]
+    #[JsonProperty('namespace')]
     public ?string $namespace;
 
     /**

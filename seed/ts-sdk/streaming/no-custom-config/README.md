@@ -1,6 +1,6 @@
 # Seed TypeScript Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
 [![npm shield](https://img.shields.io/npm/v/@fern/streaming)](https://www.npmjs.com/package/@fern/streaming)
 
 The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
@@ -11,16 +11,20 @@ The Seed TypeScript library provides convenient access to the Seed API from Type
 npm i -s @fern/streaming
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedStreamingClient } from "@fern/streaming";
+import { SeedStreamingClient, SeedStreaming } from "@fern/streaming";
 
 const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
-await client.dummy.generateStream({
-    numEvents: 1,
+await client.dummy.generate({
+    numEvents: 5,
 });
 ```
 
@@ -46,7 +50,7 @@ will be thrown.
 import { SeedStreamingError } from "@fern/streaming";
 
 try {
-    await client.dummy.generateStream(...);
+    await client.dummy.generate(...);
 } catch (err) {
     if (err instanceof SeedStreamingError) {
         console.log(err.statusCode);
@@ -73,7 +77,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.dummy.generateStream(..., {
+const response = await client.dummy.generate(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -83,7 +87,7 @@ const response = await client.dummy.generateStream(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.dummy.generateStream(..., {
+const response = await client.dummy.generate(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -94,7 +98,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.dummy.generateStream(..., {
+const response = await client.dummy.generate(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

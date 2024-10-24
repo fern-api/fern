@@ -5,7 +5,7 @@ namespace Seed;
 use Seed\Auth\AuthClient;
 use Seed\User\UserClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Exception;
 
 class SeedClient
@@ -21,7 +21,11 @@ class SeedClient
     public UserClient $user;
 
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -33,7 +37,11 @@ class SeedClient
     /**
      * @param ?string $token The token to use for authentication.
      * @param ?string $apiKey The apiKey to use for authentication.
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         ?string $token = null,
@@ -67,12 +75,11 @@ class SeedClient
     /**
      * @param string $env
      * @param string $message
-     * @returns string
+     * @return string
      */
     private function getFromEnvOrThrow(string $env, string $message): string
     {
         $value = getenv($env);
         return $value ? (string) $value : throw new Exception($message);
     }
-
 }

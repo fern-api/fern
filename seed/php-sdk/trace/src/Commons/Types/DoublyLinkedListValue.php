@@ -2,22 +2,22 @@
 
 namespace Seed\Commons\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class DoublyLinkedListValue extends SerializableType
+class DoublyLinkedListValue extends JsonSerializableType
 {
     /**
      * @var ?string $head
      */
-    #[JsonProperty("head")]
+    #[JsonProperty('head')]
     public ?string $head;
 
     /**
      * @var array<string, DoublyLinkedListNodeValue> $nodes
      */
-    #[JsonProperty("nodes"), ArrayType(["string" => DoublyLinkedListNodeValue::class])]
+    #[JsonProperty('nodes'), ArrayType(['string' => DoublyLinkedListNodeValue::class])]
     public array $nodes;
 
     /**

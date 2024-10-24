@@ -1,0 +1,9 @@
+## 0.2.0
+**`(feat):`** Add support for idempotency headers
+
+### What's changed
+- Ruby enum construct now leverages class constants instead of hashes to support better autocomplete
+- Discriminated unions are no longer wrapped within a parent object, rather, any field or parameter that depends on a discriminated union now explicitly references the member types in support of better autocomplete.
+- Undiscriminated unions are no longer allowed as hashes as input to SDK functions, this is in support of better autocomplete as well.
+- The generated Ruby SDKs now support idempotency headers, users may specify idempotency headers within the RequestOptions object
+

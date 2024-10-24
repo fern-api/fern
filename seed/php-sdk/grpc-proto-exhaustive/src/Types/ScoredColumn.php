@@ -2,40 +2,41 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
+use Seed\Core\Types\Union;
 
-class ScoredColumn extends SerializableType
+class ScoredColumn extends JsonSerializableType
 {
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var ?float $score
      */
-    #[JsonProperty("score")]
+    #[JsonProperty('score')]
     public ?float $score;
 
     /**
      * @var ?array<float> $values
      */
-    #[JsonProperty("values"), ArrayType(["float"])]
+    #[JsonProperty('values'), ArrayType(['float'])]
     public ?array $values;
 
     /**
-     * @var mixed $metadata
+     * @var array<string, float|string|bool>|array<string, mixed>|null $metadata
      */
-    #[JsonProperty("metadata")]
-    public mixed $metadata;
+    #[JsonProperty('metadata'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'], 'null')]
+    public array|null $metadata;
 
     /**
      * @var ?IndexedData $indexedData
      */
-    #[JsonProperty("indexedData")]
+    #[JsonProperty('indexedData')]
     public ?IndexedData $indexedData;
 
     /**
@@ -43,7 +44,7 @@ class ScoredColumn extends SerializableType
      *   id: string,
      *   score?: ?float,
      *   values?: ?array<float>,
-     *   metadata: mixed,
+     *   metadata?: array<string, float|string|bool>|array<string, mixed>|null,
      *   indexedData?: ?IndexedData,
      * } $values
      */
@@ -53,7 +54,7 @@ class ScoredColumn extends SerializableType
         $this->id = $values['id'];
         $this->score = $values['score'] ?? null;
         $this->values = $values['values'] ?? null;
-        $this->metadata = $values['metadata'];
+        $this->metadata = $values['metadata'] ?? null;
         $this->indexedData = $values['indexedData'] ?? null;
     }
 }

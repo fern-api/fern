@@ -21,7 +21,7 @@ public partial class OrganizationClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "string" });
+    /// await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
     /// </code>
     /// </example>
     public async Task<Organization> CreateAsync(

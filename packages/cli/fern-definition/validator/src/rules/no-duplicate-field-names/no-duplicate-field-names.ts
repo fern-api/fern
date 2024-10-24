@@ -7,7 +7,7 @@ import {
     getUnionDiscriminantName,
     TypeResolverImpl
 } from "@fern-api/ir-generator";
-import { getDefinitionFile } from "@fern-api/workspace-loader";
+import { getDefinitionFile } from "@fern-api/api-workspace-commons";
 import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
@@ -94,6 +94,12 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                         : typeof singleUnionType.type === "string"
                                         ? singleUnionType.type
                                         : undefined;
+
+                                // if the union type has a key, we don't need to check for conflicts
+                                // because the variant is nested under the key
+                                if (typeof singleUnionType === "object" && singleUnionType.key != null) {
+                                    continue;
+                                }
 
                                 if (specifiedType != null) {
                                     const resolvedType = typeResolver.resolveType({

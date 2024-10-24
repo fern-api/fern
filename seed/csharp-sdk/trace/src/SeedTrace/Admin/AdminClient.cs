@@ -180,7 +180,7 @@ public partial class AdminClient
     /// <code>
     /// await client.Admin.StoreTracedTestCaseAsync(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     "string",
+    ///     "testCaseId",
     ///     new StoreTracedTestCaseRequest
     ///     {
     ///         Result = new TestCaseResultWithStdout
@@ -188,10 +188,10 @@ public partial class AdminClient
     ///             Result = new TestCaseResult
     ///             {
     ///                 ExpectedResult = 1,
-    ///                 ActualResult = new Dictionary<object, object?>() { { "key", "value" } },
+    ///                 ActualResult = 1,
     ///                 Passed = true,
     ///             },
-    ///             Stdout = "string",
+    ///             Stdout = "stdout",
     ///         },
     ///         TraceResponses = new List<TraceResponse>()
     ///         {
@@ -199,31 +199,19 @@ public partial class AdminClient
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = 1,
-    ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-    ///                 Stack = new StackInformation
-    ///                 {
-    ///                     NumStackFrames = 1,
-    ///                     TopStackFrame = new StackFrame
-    ///                     {
-    ///                         MethodName = "string",
-    ///                         LineNumber = 1,
-    ///                         Scopes = new List<Scope>()
-    ///                         {
-    ///                             new Scope
-    ///                             {
-    ///                                 Variables = new Dictionary<string, object>()
-    ///                                 {
-    ///                                     {
-    ///                                         "string",
-    ///                                         new Dictionary<object, object?>() { { "key", "value" } }
-    ///                                     },
-    ///                                 },
-    ///                             },
-    ///                         },
-    ///                     },
-    ///                 },
-    ///                 Stdout = "string",
+    ///                 ReturnValue = null,
+    ///                 ExpressionLocation = null,
+    ///                 Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+    ///                 Stdout = null,
+    ///             },
+    ///             new TraceResponse
+    ///             {
+    ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///                 LineNumber = 1,
+    ///                 ReturnValue = null,
+    ///                 ExpressionLocation = null,
+    ///                 Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+    ///                 Stdout = null,
     ///             },
     ///         },
     ///     }
@@ -265,39 +253,28 @@ public partial class AdminClient
     /// <code>
     /// await client.Admin.StoreTracedTestCaseV2Async(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     "string",
+    ///     "testCaseId",
     ///     new List<TraceResponseV2>()
     ///     {
     ///         new TraceResponseV2
     ///         {
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
-    ///             File = new TracedFile { Filename = "string", Directory = "string" },
-    ///             ReturnValue = 1,
-    ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-    ///             Stack = new StackInformation
-    ///             {
-    ///                 NumStackFrames = 1,
-    ///                 TopStackFrame = new StackFrame
-    ///                 {
-    ///                     MethodName = "string",
-    ///                     LineNumber = 1,
-    ///                     Scopes = new List<Scope>()
-    ///                     {
-    ///                         new Scope
-    ///                         {
-    ///                             Variables = new Dictionary<string, object>()
-    ///                             {
-    ///                                 {
-    ///                                     "string",
-    ///                                     new Dictionary<object, object?>() { { "key", "value" } }
-    ///                                 },
-    ///                             },
-    ///                         },
-    ///                     },
-    ///                 },
-    ///             },
-    ///             Stdout = "string",
+    ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
+    ///             ReturnValue = null,
+    ///             ExpressionLocation = null,
+    ///             Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+    ///             Stdout = null,
+    ///         },
+    ///         new TraceResponseV2
+    ///         {
+    ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///             LineNumber = 1,
+    ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
+    ///             ReturnValue = null,
+    ///             ExpressionLocation = null,
+    ///             Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+    ///             Stdout = null,
     ///         },
     ///     }
     /// );
@@ -343,19 +320,9 @@ public partial class AdminClient
     ///     {
     ///         WorkspaceRunDetails = new WorkspaceRunDetails
     ///         {
-    ///             ExceptionV2 = new ExceptionInfo
-    ///             {
-    ///                 ExceptionType = "string",
-    ///                 ExceptionMessage = "string",
-    ///                 ExceptionStacktrace = "string",
-    ///             },
-    ///             Exception = new ExceptionInfo
-    ///             {
-    ///                 ExceptionType = "string",
-    ///                 ExceptionMessage = "string",
-    ///                 ExceptionStacktrace = "string",
-    ///             },
-    ///             Stdout = "string",
+    ///             ExceptionV2 = null,
+    ///             Exception = null,
+    ///             Stdout = "stdout",
     ///         },
     ///         TraceResponses = new List<TraceResponse>()
     ///         {
@@ -363,31 +330,19 @@ public partial class AdminClient
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = 1,
-    ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-    ///                 Stack = new StackInformation
-    ///                 {
-    ///                     NumStackFrames = 1,
-    ///                     TopStackFrame = new StackFrame
-    ///                     {
-    ///                         MethodName = "string",
-    ///                         LineNumber = 1,
-    ///                         Scopes = new List<Scope>()
-    ///                         {
-    ///                             new Scope
-    ///                             {
-    ///                                 Variables = new Dictionary<string, object>()
-    ///                                 {
-    ///                                     {
-    ///                                         "string",
-    ///                                         new Dictionary<object, object?>() { { "key", "value" } }
-    ///                                     },
-    ///                                 },
-    ///                             },
-    ///                         },
-    ///                     },
-    ///                 },
-    ///                 Stdout = "string",
+    ///                 ReturnValue = null,
+    ///                 ExpressionLocation = null,
+    ///                 Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+    ///                 Stdout = null,
+    ///             },
+    ///             new TraceResponse
+    ///             {
+    ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///                 LineNumber = 1,
+    ///                 ReturnValue = null,
+    ///                 ExpressionLocation = null,
+    ///                 Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+    ///                 Stdout = null,
     ///             },
     ///         },
     ///     }
@@ -434,32 +389,21 @@ public partial class AdminClient
     ///         {
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
-    ///             File = new TracedFile { Filename = "string", Directory = "string" },
-    ///             ReturnValue = 1,
-    ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-    ///             Stack = new StackInformation
-    ///             {
-    ///                 NumStackFrames = 1,
-    ///                 TopStackFrame = new StackFrame
-    ///                 {
-    ///                     MethodName = "string",
-    ///                     LineNumber = 1,
-    ///                     Scopes = new List<Scope>()
-    ///                     {
-    ///                         new Scope
-    ///                         {
-    ///                             Variables = new Dictionary<string, object>()
-    ///                             {
-    ///                                 {
-    ///                                     "string",
-    ///                                     new Dictionary<object, object?>() { { "key", "value" } }
-    ///                                 },
-    ///                             },
-    ///                         },
-    ///                     },
-    ///                 },
-    ///             },
-    ///             Stdout = "string",
+    ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
+    ///             ReturnValue = null,
+    ///             ExpressionLocation = null,
+    ///             Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+    ///             Stdout = null,
+    ///         },
+    ///         new TraceResponseV2
+    ///         {
+    ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///             LineNumber = 1,
+    ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
+    ///             ReturnValue = null,
+    ///             ExpressionLocation = null,
+    ///             Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+    ///             Stdout = null,
     ///         },
     ///     }
     /// );

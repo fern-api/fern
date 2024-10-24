@@ -1,6 +1,6 @@
 # Seed Python Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_extends)](https://pypi.python.org/pypi/fern_extends)
 
 The Seed Python library provides convenient access to the Seed API from Python.
@@ -10,6 +10,10 @@ The Seed Python library provides convenient access to the Seed API from Python.
 ```sh
 pip install fern_extends
 ```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -22,9 +26,7 @@ client = SeedExtends(
     base_url="https://yourhost.com/path/to/api",
 )
 client.extended_inline_request_body(
-    unique="string",
-    name="string",
-    docs="string",
+    unique="unique",
 )
 ```
 
@@ -44,9 +46,7 @@ client = AsyncSeedExtends(
 
 async def main() -> None:
     await client.extended_inline_request_body(
-        unique="string",
-        name="string",
-        docs="string",
+        unique="unique",
     )
 
 
@@ -85,7 +85,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.extended_inline_request_body({
+client.extended_inline_request_body(request_options={
     "max_retries": 1
 })
 ```
@@ -105,7 +105,7 @@ client = SeedExtends(
 
 
 # Override timeout for a specific method
-client.extended_inline_request_body({
+client.extended_inline_request_body(request_options={
     "timeout_in_seconds": 1
 })
 ```

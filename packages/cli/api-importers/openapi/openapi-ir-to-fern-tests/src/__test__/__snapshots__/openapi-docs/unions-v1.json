@@ -1,0 +1,56 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "EnticingTitle": {
+            "docs": undefined,
+            "properties": {
+              "id": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  EnticingTitle:
+    properties:
+      id:
+        type: optional<string>
+        validation:
+          format: uuid
+    source:
+      openapi: ../openapi.json
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test setting to disable usage of title param",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test setting to disable usage of title param
+",
+  },
+}

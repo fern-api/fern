@@ -2,42 +2,42 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Language;
 
-class ExecutionSessionResponse extends SerializableType
+class ExecutionSessionResponse extends JsonSerializableType
 {
     /**
      * @var string $sessionId
      */
-    #[JsonProperty("sessionId")]
+    #[JsonProperty('sessionId')]
     public string $sessionId;
 
     /**
      * @var ?string $executionSessionUrl
      */
-    #[JsonProperty("executionSessionUrl")]
+    #[JsonProperty('executionSessionUrl')]
     public ?string $executionSessionUrl;
 
     /**
-     * @var Language $language
+     * @var value-of<Language> $language
      */
-    #[JsonProperty("language")]
-    public Language $language;
+    #[JsonProperty('language')]
+    public string $language;
 
     /**
-     * @var ExecutionSessionStatus $status
+     * @var value-of<ExecutionSessionStatus> $status
      */
-    #[JsonProperty("status")]
-    public ExecutionSessionStatus $status;
+    #[JsonProperty('status')]
+    public string $status;
 
     /**
      * @param array{
      *   sessionId: string,
      *   executionSessionUrl?: ?string,
-     *   language: Language,
-     *   status: ExecutionSessionStatus,
+     *   language: value-of<Language>,
+     *   status: value-of<ExecutionSessionStatus>,
      * } $values
      */
     public function __construct(

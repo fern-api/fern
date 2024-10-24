@@ -2,21 +2,21 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class StackInformation extends SerializableType
+class StackInformation extends JsonSerializableType
 {
     /**
      * @var int $numStackFrames
      */
-    #[JsonProperty("numStackFrames")]
+    #[JsonProperty('numStackFrames')]
     public int $numStackFrames;
 
     /**
      * @var ?StackFrame $topStackFrame
      */
-    #[JsonProperty("topStackFrame")]
+    #[JsonProperty('topStackFrame')]
     public ?StackFrame $topStackFrame;
 
     /**

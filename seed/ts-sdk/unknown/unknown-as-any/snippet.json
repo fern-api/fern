@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnknownAsAnyClient, SeedUnknownAsAny } from \"@fern/unknown\";\n\nconst client = new SeedUnknownAsAnyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.unknown.postObject({});\n"
+                "client": "import { SeedUnknownAsAnyClient } from \"@fern/unknown\";\n\nconst client = new SeedUnknownAsAnyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.unknown.postObject({\n    unknown: {\n        \"key\": \"value\"\n    }\n});\n"
             }
         }
     ],

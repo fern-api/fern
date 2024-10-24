@@ -253,7 +253,7 @@ await client.Admin.SendWorkspaceSubmissionUpdateAsync(
 ```csharp
 await client.Admin.StoreTracedTestCaseAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    "string",
+    "testCaseId",
     new StoreTracedTestCaseRequest
     {
         Result = new TestCaseResultWithStdout
@@ -261,10 +261,10 @@ await client.Admin.StoreTracedTestCaseAsync(
             Result = new TestCaseResult
             {
                 ExpectedResult = 1,
-                ActualResult = new Dictionary<object, object?>() { { "key", "value" } },
+                ActualResult = 1,
                 Passed = true,
             },
-            Stdout = "string",
+            Stdout = "stdout",
         },
         TraceResponses = new List<TraceResponse>()
         {
@@ -272,31 +272,19 @@ await client.Admin.StoreTracedTestCaseAsync(
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = 1,
-                ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-                Stack = new StackInformation
-                {
-                    NumStackFrames = 1,
-                    TopStackFrame = new StackFrame
-                    {
-                        MethodName = "string",
-                        LineNumber = 1,
-                        Scopes = new List<Scope>()
-                        {
-                            new Scope
-                            {
-                                Variables = new Dictionary<string, object>()
-                                {
-                                    {
-                                        "string",
-                                        new Dictionary<object, object?>() { { "key", "value" } }
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                Stdout = "string",
+                ReturnValue = null,
+                ExpressionLocation = null,
+                Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+                Stdout = null,
+            },
+            new TraceResponse
+            {
+                SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                LineNumber = 1,
+                ReturnValue = null,
+                ExpressionLocation = null,
+                Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+                Stdout = null,
             },
         },
     }
@@ -358,39 +346,28 @@ await client.Admin.StoreTracedTestCaseAsync(
 ```csharp
 await client.Admin.StoreTracedTestCaseV2Async(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    "string",
+    "testCaseId",
     new List<TraceResponseV2>()
     {
         new TraceResponseV2
         {
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
-            File = new TracedFile { Filename = "string", Directory = "string" },
-            ReturnValue = 1,
-            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-            Stack = new StackInformation
-            {
-                NumStackFrames = 1,
-                TopStackFrame = new StackFrame
-                {
-                    MethodName = "string",
-                    LineNumber = 1,
-                    Scopes = new List<Scope>()
-                    {
-                        new Scope
-                        {
-                            Variables = new Dictionary<string, object>()
-                            {
-                                {
-                                    "string",
-                                    new Dictionary<object, object?>() { { "key", "value" } }
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-            Stdout = "string",
+            File = new TracedFile { Filename = "filename", Directory = "directory" },
+            ReturnValue = null,
+            ExpressionLocation = null,
+            Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+            Stdout = null,
+        },
+        new TraceResponseV2
+        {
+            SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            LineNumber = 1,
+            File = new TracedFile { Filename = "filename", Directory = "directory" },
+            ReturnValue = null,
+            ExpressionLocation = null,
+            Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+            Stdout = null,
         },
     }
 );
@@ -455,19 +432,9 @@ await client.Admin.StoreTracedWorkspaceAsync(
     {
         WorkspaceRunDetails = new WorkspaceRunDetails
         {
-            ExceptionV2 = new ExceptionInfo
-            {
-                ExceptionType = "string",
-                ExceptionMessage = "string",
-                ExceptionStacktrace = "string",
-            },
-            Exception = new ExceptionInfo
-            {
-                ExceptionType = "string",
-                ExceptionMessage = "string",
-                ExceptionStacktrace = "string",
-            },
-            Stdout = "string",
+            ExceptionV2 = null,
+            Exception = null,
+            Stdout = "stdout",
         },
         TraceResponses = new List<TraceResponse>()
         {
@@ -475,31 +442,19 @@ await client.Admin.StoreTracedWorkspaceAsync(
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = 1,
-                ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-                Stack = new StackInformation
-                {
-                    NumStackFrames = 1,
-                    TopStackFrame = new StackFrame
-                    {
-                        MethodName = "string",
-                        LineNumber = 1,
-                        Scopes = new List<Scope>()
-                        {
-                            new Scope
-                            {
-                                Variables = new Dictionary<string, object>()
-                                {
-                                    {
-                                        "string",
-                                        new Dictionary<object, object?>() { { "key", "value" } }
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                Stdout = "string",
+                ReturnValue = null,
+                ExpressionLocation = null,
+                Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+                Stdout = null,
+            },
+            new TraceResponse
+            {
+                SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                LineNumber = 1,
+                ReturnValue = null,
+                ExpressionLocation = null,
+                Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+                Stdout = null,
             },
         },
     }
@@ -559,32 +514,21 @@ await client.Admin.StoreTracedWorkspaceV2Async(
         {
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
-            File = new TracedFile { Filename = "string", Directory = "string" },
-            ReturnValue = 1,
-            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-            Stack = new StackInformation
-            {
-                NumStackFrames = 1,
-                TopStackFrame = new StackFrame
-                {
-                    MethodName = "string",
-                    LineNumber = 1,
-                    Scopes = new List<Scope>()
-                    {
-                        new Scope
-                        {
-                            Variables = new Dictionary<string, object>()
-                            {
-                                {
-                                    "string",
-                                    new Dictionary<object, object?>() { { "key", "value" } }
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-            Stdout = "string",
+            File = new TracedFile { Filename = "filename", Directory = "directory" },
+            ReturnValue = null,
+            ExpressionLocation = null,
+            Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+            Stdout = null,
+        },
+        new TraceResponseV2
+        {
+            SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            LineNumber = 1,
+            File = new TracedFile { Filename = "filename", Directory = "directory" },
+            ReturnValue = null,
+            ExpressionLocation = null,
+            Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
+            Stdout = null,
         },
     }
 );
@@ -661,7 +605,7 @@ await client.Homepage.GetHomepageProblemsAsync();
 <dd>
 
 ```csharp
-await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string" });
+await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string", "string" });
 ```
 </dd>
 </dl>
@@ -703,7 +647,7 @@ await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string" });
 
 ```csharp
 await client.Migration.GetAttemptedMigrationsAsync(
-    new GetAttemptedMigrationsRequest { AdminKeyHeader = "string" }
+    new GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" }
 );
 ```
 </dd>
@@ -764,11 +708,10 @@ await client.Playlist.CreatePlaylistAsync(
     new CreatePlaylistRequest
     {
         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         Body = new PlaylistCreateRequest
         {
-            Name = "string",
-            Problems = new List<string>() { "string" },
+            Name = "name",
+            Problems = new List<string>() { "problems", "problems" },
         },
     }
 );
@@ -837,11 +780,9 @@ await client.Playlist.GetPlaylistsAsync(
     1,
     new GetPlaylistsRequest
     {
-        Limit = 1,
-        OtherField = "string",
-        MultiLineDocs = "string",
-        OptionalMultipleField = ["string"],
-        MultipleField = ["string"],
+        OtherField = "otherField",
+        MultiLineDocs = "multiLineDocs",
+        MultipleField = ["multipleField"],
     }
 );
 ```
@@ -905,7 +846,7 @@ Returns a playlist
 <dd>
 
 ```csharp
-await client.Playlist.GetPlaylistAsync(1, "string");
+await client.Playlist.GetPlaylistAsync(1, "playlistId");
 ```
 </dd>
 </dl>
@@ -967,15 +908,7 @@ Updates a playlist
 <dd>
 
 ```csharp
-await client.Playlist.UpdatePlaylistAsync(
-    1,
-    "string",
-    new UpdatePlaylistRequest
-    {
-        Name = "string",
-        Problems = new List<string>() { "string" },
-    }
-);
+await client.Playlist.UpdatePlaylistAsync(1, "playlistId", null);
 ```
 </dd>
 </dl>
@@ -1045,7 +978,7 @@ Deletes a playlist
 <dd>
 
 ```csharp
-await client.Playlist.DeletePlaylistAsync(1, "string");
+await client.Playlist.DeletePlaylistAsync(1, "playlist_id");
 ```
 </dd>
 </dl>
@@ -1111,25 +1044,30 @@ Creates a problem
 await client.Problem.CreateProblemAsync(
     new CreateProblemRequest
     {
-        ProblemName = "string",
-        ProblemDescription = new ProblemDescription { Boards = new List<object>() { "string" } },
+        ProblemName = "problemName",
+        ProblemDescription = new ProblemDescription
+        {
+            Boards = new List<object>() { "boards", "boards" },
+        },
         Files = new Dictionary<Language, ProblemFiles>()
         {
             {
                 Language.Java,
                 new ProblemFiles
                 {
-                    SolutionFile = new FileInfo { Filename = "string", Contents = "string" },
+                    SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
                     ReadOnlyFiles = new List<FileInfo>()
                     {
-                        new FileInfo { Filename = "string", Contents = "string" },
+                        new FileInfo { Filename = "filename", Contents = "contents" },
+                        new FileInfo { Filename = "filename", Contents = "contents" },
                     },
                 }
             },
         },
         InputParams = new List<VariableTypeAndName>()
         {
-            new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
         },
         OutputType = "no-properties-union",
         Testcases = new List<TestCaseWithExpectedResult>()
@@ -1138,13 +1076,22 @@ await client.Problem.CreateProblemAsync(
             {
                 TestCase = new TestCase
                 {
-                    Id = "string",
-                    Params = new List<object>() { 1 },
+                    Id = "id",
+                    Params = new List<object>() { 1, 1 },
+                },
+                ExpectedResult = 1,
+            },
+            new TestCaseWithExpectedResult
+            {
+                TestCase = new TestCase
+                {
+                    Id = "id",
+                    Params = new List<object>() { 1, 1 },
                 },
                 ExpectedResult = 1,
             },
         },
-        MethodName = "string",
+        MethodName = "methodName",
     }
 );
 ```
@@ -1201,28 +1148,33 @@ Updates a problem
 
 ```csharp
 await client.Problem.UpdateProblemAsync(
-    "string",
+    "problemId",
     new CreateProblemRequest
     {
-        ProblemName = "string",
-        ProblemDescription = new ProblemDescription { Boards = new List<object>() { "string" } },
+        ProblemName = "problemName",
+        ProblemDescription = new ProblemDescription
+        {
+            Boards = new List<object>() { "boards", "boards" },
+        },
         Files = new Dictionary<Language, ProblemFiles>()
         {
             {
                 Language.Java,
                 new ProblemFiles
                 {
-                    SolutionFile = new FileInfo { Filename = "string", Contents = "string" },
+                    SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
                     ReadOnlyFiles = new List<FileInfo>()
                     {
-                        new FileInfo { Filename = "string", Contents = "string" },
+                        new FileInfo { Filename = "filename", Contents = "contents" },
+                        new FileInfo { Filename = "filename", Contents = "contents" },
                     },
                 }
             },
         },
         InputParams = new List<VariableTypeAndName>()
         {
-            new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
         },
         OutputType = "no-properties-union",
         Testcases = new List<TestCaseWithExpectedResult>()
@@ -1231,13 +1183,22 @@ await client.Problem.UpdateProblemAsync(
             {
                 TestCase = new TestCase
                 {
-                    Id = "string",
-                    Params = new List<object>() { 1 },
+                    Id = "id",
+                    Params = new List<object>() { 1, 1 },
+                },
+                ExpectedResult = 1,
+            },
+            new TestCaseWithExpectedResult
+            {
+                TestCase = new TestCase
+                {
+                    Id = "id",
+                    Params = new List<object>() { 1, 1 },
                 },
                 ExpectedResult = 1,
             },
         },
-        MethodName = "string",
+        MethodName = "methodName",
     }
 );
 ```
@@ -1301,7 +1262,7 @@ Soft deletes a problem
 <dd>
 
 ```csharp
-await client.Problem.DeleteProblemAsync("string");
+await client.Problem.DeleteProblemAsync("problemId");
 ```
 </dd>
 </dl>
@@ -1360,10 +1321,11 @@ await client.Problem.GetDefaultStarterFilesAsync(
     {
         InputParams = new List<VariableTypeAndName>()
         {
-            new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
         },
         OutputType = "no-properties-union",
-        MethodName = "string",
+        MethodName = "methodName",
     }
 );
 ```
@@ -1474,7 +1436,7 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```csharp
-await client.Submission.GetExecutionSessionAsync("string");
+await client.Submission.GetExecutionSessionAsync("sessionId");
 ```
 </dd>
 </dl>
@@ -1528,7 +1490,7 @@ Stops execution session.
 <dd>
 
 ```csharp
-await client.Submission.StopExecutionSessionAsync("string");
+await client.Submission.StopExecutionSessionAsync("sessionId");
 ```
 </dd>
 </dl>
@@ -1760,7 +1722,7 @@ Returns latest version of a problem
 <dd>
 
 ```csharp
-await client.V2.Problem.GetLatestProblemAsync("string");
+await client.V2.Problem.GetLatestProblemAsync("problemId");
 ```
 </dd>
 </dl>
@@ -1814,7 +1776,7 @@ Returns requested version of a problem
 <dd>
 
 ```csharp
-await client.V2.Problem.GetProblemVersionAsync("string", 1);
+await client.V2.Problem.GetProblemVersionAsync("problemId", 1);
 ```
 </dd>
 </dl>
@@ -1955,7 +1917,7 @@ Returns latest version of a problem
 <dd>
 
 ```csharp
-await client.V2.V3.Problem.GetLatestProblemAsync("string");
+await client.V2.V3.Problem.GetLatestProblemAsync("problemId");
 ```
 </dd>
 </dl>
@@ -2009,7 +1971,7 @@ Returns requested version of a problem
 <dd>
 
 ```csharp
-await client.V2.V3.Problem.GetProblemVersionAsync("string", 1);
+await client.V2.V3.Problem.GetProblemVersionAsync("problemId", 1);
 ```
 </dd>
 </dl>

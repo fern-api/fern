@@ -37,6 +37,7 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
+    "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generator-exec-sdk": "^0.0.898",
     "@fern-api/sdk": "0.12.3",
@@ -47,7 +48,7 @@
   "devDependencies": {
     "@types/decompress": "^4.2.7",
     "@types/jest": "^29.5.12",
-    "@types/node": "^18.7.18",
+    "@types/node": "18.7.18",
     "@types/tmp": "^0.2.4",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

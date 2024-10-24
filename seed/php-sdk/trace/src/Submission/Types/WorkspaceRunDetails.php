@@ -2,27 +2,27 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class WorkspaceRunDetails extends SerializableType
+class WorkspaceRunDetails extends JsonSerializableType
 {
     /**
      * @var mixed $exceptionV2
      */
-    #[JsonProperty("exceptionV2")]
+    #[JsonProperty('exceptionV2')]
     public mixed $exceptionV2;
 
     /**
      * @var ?ExceptionInfo $exception
      */
-    #[JsonProperty("exception")]
+    #[JsonProperty('exception')]
     public ?ExceptionInfo $exception;
 
     /**
      * @var string $stdout
      */
-    #[JsonProperty("stdout")]
+    #[JsonProperty('stdout')]
     public string $stdout;
 
     /**

@@ -2,21 +2,21 @@
 
 namespace Seed\Foo\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class FilteredType extends SerializableType
+class FilteredType extends JsonSerializableType
 {
     /**
      * @var ?string $publicProperty
      */
-    #[JsonProperty("public_property")]
+    #[JsonProperty('public_property')]
     public ?string $publicProperty;
 
     /**
      * @var int $privateProperty
      */
-    #[JsonProperty("private_property")]
+    #[JsonProperty('private_property')]
     public int $privateProperty;
 
     /**

@@ -2,21 +2,21 @@
 
 namespace Seed\Commons\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseWithExpectedResult extends SerializableType
+class TestCaseWithExpectedResult extends JsonSerializableType
 {
     /**
      * @var TestCase $testCase
      */
-    #[JsonProperty("testCase")]
+    #[JsonProperty('testCase')]
     public TestCase $testCase;
 
     /**
      * @var mixed $expectedResult
      */
-    #[JsonProperty("expectedResult")]
+    #[JsonProperty('expectedResult')]
     public mixed $expectedResult;
 
     /**

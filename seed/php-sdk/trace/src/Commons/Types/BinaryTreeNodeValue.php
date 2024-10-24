@@ -2,33 +2,33 @@
 
 namespace Seed\Commons\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class BinaryTreeNodeValue extends SerializableType
+class BinaryTreeNodeValue extends JsonSerializableType
 {
     /**
      * @var string $nodeId
      */
-    #[JsonProperty("nodeId")]
+    #[JsonProperty('nodeId')]
     public string $nodeId;
 
     /**
      * @var float $val
      */
-    #[JsonProperty("val")]
+    #[JsonProperty('val')]
     public float $val;
 
     /**
      * @var ?string $right
      */
-    #[JsonProperty("right")]
+    #[JsonProperty('right')]
     public ?string $right;
 
     /**
      * @var ?string $left
      */
-    #[JsonProperty("left")]
+    #[JsonProperty('left')]
     public ?string $left;
 
     /**

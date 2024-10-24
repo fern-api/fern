@@ -2,7 +2,9 @@
 
 namespace Seed\Query\Requests;
 
-class SendLiteralsInQueryRequest
+use Seed\Core\Json\JsonSerializableType;
+
+class SendLiteralsInQueryRequest extends JsonSerializableType
 {
     /**
      * @var string $prompt

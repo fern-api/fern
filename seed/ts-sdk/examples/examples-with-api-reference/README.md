@@ -2,7 +2,7 @@
 
 ![](https://www.fernapi.com)
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
 [![npm shield](https://img.shields.io/npm/v/@fern/examples)](https://www.npmjs.com/package/@fern/examples)
 
 The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
@@ -17,12 +17,16 @@ API reference documentation is available [here](https://www.docs.fernapi.com).
 npm i -s @fern/examples
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedExamplesEnvironment, SeedExamplesClient } from "@fern/examples";
+import { SeedExamplesEnvironment, SeedExamplesClient, SeedExamples } from "@fern/examples";
 
 const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });
 await client.service.createMovie({

@@ -2,72 +2,72 @@
 
 namespace Seed\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\Language;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 use Seed\Commons\Types\TestCaseWithExpectedResult;
 
-class ProblemInfo extends SerializableType
+class ProblemInfo extends JsonSerializableType
 {
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var ProblemDescription $problemDescription
      */
-    #[JsonProperty("problemDescription")]
+    #[JsonProperty('problemDescription')]
     public ProblemDescription $problemDescription;
 
     /**
      * @var string $problemName
      */
-    #[JsonProperty("problemName")]
+    #[JsonProperty('problemName')]
     public string $problemName;
 
     /**
      * @var int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public int $problemVersion;
 
     /**
-     * @var array<Language, ProblemFiles> $files
+     * @var array<value-of<Language>, ProblemFiles> $files
      */
-    #[JsonProperty("files"), ArrayType([Language::class => ProblemFiles::class])]
+    #[JsonProperty('files'), ArrayType(['string' => ProblemFiles::class])]
     public array $files;
 
     /**
      * @var array<VariableTypeAndName> $inputParams
      */
-    #[JsonProperty("inputParams"), ArrayType([VariableTypeAndName::class])]
+    #[JsonProperty('inputParams'), ArrayType([VariableTypeAndName::class])]
     public array $inputParams;
 
     /**
      * @var mixed $outputType
      */
-    #[JsonProperty("outputType")]
+    #[JsonProperty('outputType')]
     public mixed $outputType;
 
     /**
      * @var array<TestCaseWithExpectedResult> $testcases
      */
-    #[JsonProperty("testcases"), ArrayType([TestCaseWithExpectedResult::class])]
+    #[JsonProperty('testcases'), ArrayType([TestCaseWithExpectedResult::class])]
     public array $testcases;
 
     /**
      * @var string $methodName
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**
      * @var bool $supportsCustomTestCases
      */
-    #[JsonProperty("supportsCustomTestCases")]
+    #[JsonProperty('supportsCustomTestCases')]
     public bool $supportsCustomTestCases;
 
     /**
@@ -76,7 +76,7 @@ class ProblemInfo extends SerializableType
      *   problemDescription: ProblemDescription,
      *   problemName: string,
      *   problemVersion: int,
-     *   files: array<Language, ProblemFiles>,
+     *   files: array<value-of<Language>, ProblemFiles>,
      *   inputParams: array<VariableTypeAndName>,
      *   outputType: mixed,
      *   testcases: array<TestCaseWithExpectedResult>,

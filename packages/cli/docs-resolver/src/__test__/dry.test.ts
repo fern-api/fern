@@ -1,4 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
@@ -29,5 +30,5 @@ it.skip("converts to api reference node", async () => {
 
     const resolved = await resolver.resolve();
 
-    expect(resolved.pages["page.mdx"]?.markdown).toMatchSnapshot();
+    expect(resolved.pages[FernNavigation.PageId("page.mdx")]?.markdown).toMatchSnapshot();
 });

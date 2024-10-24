@@ -34,8 +34,10 @@ class FastApiGeneratorContext(ABC):
             use_str_enums=use_str_enums,
             skip_formatting=custom_config.skip_formatting,
             union_naming_version=custom_config.pydantic_config.union_naming,
+            use_pydantic_field_aliases=custom_config.pydantic_config.use_pydantic_field_aliases,
+            pydantic_compatibility=custom_config.pydantic_config.version,
         )
-        self.core_utilities = CoreUtilities()
+        self.core_utilities = CoreUtilities(custom_config=custom_config)
         self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)
 
     @abstractmethod

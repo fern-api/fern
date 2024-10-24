@@ -281,11 +281,11 @@ class ClientWrapperGenerator:
             writer.write_node(
                 self._context.core_utilities.http_client(
                     base_client=AST.Expression(ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME),
-                    base_url=AST.Expression(f"self.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}()")
+                    base_url=AST.Expression(f"self.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}")
                     if has_base_url
                     else None,
-                    base_headers=AST.Expression(f"self.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}()"),
-                    base_timeout=AST.Expression(f"self.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}()"),
+                    base_headers=AST.Expression(f"self.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}"),
+                    base_timeout=AST.Expression(f"self.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}"),
                     is_async=is_async,
                 )
             )

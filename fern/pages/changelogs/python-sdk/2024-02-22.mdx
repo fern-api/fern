@@ -1,0 +1,9 @@
+## 0.11.3
+**`(fix):`** Transition from lists to sequences within function calls
+
+### What's been fixed
+- Transition from lists to sequences within function calls, this is a fix as a result of how mypy handles type variance. This fix is only for function calls as testing shows that we do not hit the same issue within mypy with list[union[*]] fields on pydantic objects.
+
+### What's changed
+- Improvement: The Python SDK generator now defaults to `require_optional_fields = False`. This means that any requests that have optional fields no longer require a user to input data (or a `None` value) in.
+

@@ -2,27 +2,27 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class SinglyLinkedListNodeValue extends SerializableType
+class SinglyLinkedListNodeValue extends JsonSerializableType
 {
     /**
      * @var string $nodeId
      */
-    #[JsonProperty("nodeId")]
+    #[JsonProperty('nodeId')]
     public string $nodeId;
 
     /**
      * @var float $val
      */
-    #[JsonProperty("val")]
+    #[JsonProperty('val')]
     public float $val;
 
     /**
      * @var ?string $next
      */
-    #[JsonProperty("next")]
+    #[JsonProperty('next')]
     public ?string $next;
 
     /**

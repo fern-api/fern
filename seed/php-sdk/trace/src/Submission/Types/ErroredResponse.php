@@ -2,21 +2,21 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ErroredResponse extends SerializableType
+class ErroredResponse extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var mixed $errorInfo
      */
-    #[JsonProperty("errorInfo")]
+    #[JsonProperty('errorInfo')]
     public mixed $errorInfo;
 
     /**

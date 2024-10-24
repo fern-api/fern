@@ -2,15 +2,15 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class WorkspaceSubmissionState extends SerializableType
+class WorkspaceSubmissionState extends JsonSerializableType
 {
     /**
      * @var mixed $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public mixed $status;
 
     /**

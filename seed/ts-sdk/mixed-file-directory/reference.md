@@ -31,7 +31,7 @@ Create a new organization.
 
 ```typescript
 await client.organization.create({
-    name: "string",
+    name: "name",
 });
 ```
 
@@ -97,9 +97,7 @@ List all users.
 <dd>
 
 ```typescript
-await client.user.list({
-    limit: 1,
-});
+await client.user.list();
 ```
 
 </dd>
@@ -164,9 +162,7 @@ List all user events.
 <dd>
 
 ```typescript
-await client.user.events.listEvents({
-    limit: 1,
-});
+await client.user.events.listEvents();
 ```
 
 </dd>
@@ -232,7 +228,7 @@ Get event metadata.
 
 ```typescript
 await client.user.events.metadata.getMetadata({
-    id: "string",
+    id: "id",
 });
 ```
 

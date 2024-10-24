@@ -2,22 +2,22 @@
 
 namespace Seed\Commons\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class TestCase extends SerializableType
+class TestCase extends JsonSerializableType
 {
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var array<mixed> $params
      */
-    #[JsonProperty("params"), ArrayType(["mixed"])]
+    #[JsonProperty('params'), ArrayType(['mixed'])]
     public array $params;
 
     /**

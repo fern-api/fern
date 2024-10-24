@@ -4,6 +4,7 @@ import { createFdrService } from "@fern-api/core";
 import { MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { convertToFernHostRelativeFilePath } from "@fern-api/fs-utils";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -87,23 +88,26 @@ export async function publishDocs({
                     return;
                 }
                 const imageFilePath = {
-                    filePath: filePath.relativeFilePath,
+                    filePath: CjsFdrSdk.docs.v1.write.FilePath(
+                        convertToFernHostRelativeFilePath(filePath.relativeFilePath)
+                    ),
                     width: image.width,
                     height: image.height,
-                    blurDataUrl: image.blurDataUrl
+                    blurDataUrl: image.blurDataUrl,
+                    alt: undefined
                 };
                 images.push(imageFilePath);
             });
 
             const filepaths = files
                 .filter(({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath))
-                .map(({ relativeFilePath }) => relativeFilePath);
+                .map(({ relativeFilePath }) => convertToFernHostRelativeFilePath(relativeFilePath));
 
             if (preview) {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
-                    orgId: organization,
+                    orgId: CjsFdrSdk.OrgId(organization),
                     authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
-                    filepaths,
+                    filepaths: filepaths.map((filePath) => CjsFdrSdk.docs.v1.write.FilePath(filePath)),
                     images,
                     basePath
                 });
@@ -112,13 +116,13 @@ export async function publishDocs({
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
                     await uploadFiles(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilepath,
+                        docsWorkspace.absoluteFilePath,
                         context,
                         UPLOAD_FILE_BATCH_SIZE
                     );
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilepath
+                        docsWorkspace.absoluteFilePath
                     );
                 } else {
                     return await startDocsRegisterFailed(startDocsRegisterResponse.error, context);
@@ -128,34 +132,34 @@ export async function publishDocs({
                     domain,
                     customDomains,
                     authConfig,
-                    apiId: "",
-                    orgId: organization,
-                    filepaths,
+                    apiId: CjsFdrSdk.ApiId(""),
+                    orgId: CjsFdrSdk.OrgId(organization),
+                    filepaths: filepaths.map((filePath) => CjsFdrSdk.docs.v1.write.FilePath(filePath)),
                     images
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
                     await uploadFiles(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilepath,
+                        docsWorkspace.absoluteFilePath,
                         context,
                         UPLOAD_FILE_BATCH_SIZE
                     );
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilepath
+                        docsWorkspace.absoluteFilePath
                     );
                 } else {
                     return startDocsRegisterFailed(startDocsRegisterResponse.error, context);
                 }
             }
         },
-        async ({ ir, snippetsConfig, playgroundConfig }) => {
+        async ({ ir, snippetsConfig, playgroundConfig, apiName }) => {
             const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
             context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
             const response = await fdr.api.v1.register.registerApiDefinition({
-                orgId: organization,
-                apiId: ir.apiName.originalName,
+                orgId: CjsFdrSdk.OrgId(organization),
+                apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
                 definition: apiDefinition
             });
 
@@ -171,7 +175,11 @@ export async function publishDocs({
                         );
                     }
                     default:
-                        return context.failAndThrow("Failed to register API", response.error);
+                        if (apiName != null) {
+                            return context.failAndThrow(`Failed to register API ${apiName}`, response.error);
+                        } else {
+                            return context.failAndThrow("Failed to register API", response.error);
+                        }
                 }
             }
         }
@@ -184,9 +192,12 @@ export async function publishDocs({
     }
 
     context.logger.debug("Calling registerDocs... ", JSON.stringify(docsDefinition, undefined, 4));
-    const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(docsRegistrationId, {
-        docsDefinition
-    });
+    const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
+        CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
+        {
+            docsDefinition
+        }
+    );
 
     if (registerDocsResponse.ok) {
         const url = wrapWithHttps(urlToOutput);

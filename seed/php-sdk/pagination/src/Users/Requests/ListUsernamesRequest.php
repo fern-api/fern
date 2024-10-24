@@ -2,7 +2,9 @@
 
 namespace Seed\Users\Requests;
 
-class ListUsernamesRequest
+use Seed\Core\Json\JsonSerializableType;
+
+class ListUsernamesRequest extends JsonSerializableType
 {
     /**
      * @var ?string $startingAfter The cursor used for pagination in order to fetch
@@ -16,7 +18,7 @@ class ListUsernamesRequest
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->startingAfter = $values['startingAfter'] ?? null;
     }

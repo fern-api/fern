@@ -2,16 +2,16 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class Files extends SerializableType
+class Files extends JsonSerializableType
 {
     /**
      * @var array<FileInfoV2> $files
      */
-    #[JsonProperty("files"), ArrayType([FileInfoV2::class])]
+    #[JsonProperty('files'), ArrayType([FileInfoV2::class])]
     public array $files;
 
     /**

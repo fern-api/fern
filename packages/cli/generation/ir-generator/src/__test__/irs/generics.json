@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_imdb:MovieId": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "MovieId",
@@ -133,6 +134,7 @@
             "docs": "The unique identifier for a Movie in the database"
         },
         "type_imdb:Movie": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Movie",
@@ -490,6 +492,7 @@
             "docs": null
         },
         "type_imdb:CreateMovieRequest": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "CreateMovieRequest",
@@ -649,6 +652,7 @@
             "docs": null
         },
         "type_imdb:Cast": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Cast",
@@ -912,6 +916,7 @@
             "docs": null
         },
         "type_imdb:Name": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Name",
@@ -1014,6 +1019,7 @@
             "docs": null
         },
         "type_imdb:GenericApplication": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "GenericApplication",
@@ -1293,6 +1299,7 @@
             "docs": "This is a generic application type"
         },
         "type_imdb:Sample": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "Sample",
@@ -1571,6 +1578,7 @@
             "docs": null
         },
         "type_imdb:VanillaAlias": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "VanillaAlias",

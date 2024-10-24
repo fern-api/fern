@@ -2,33 +2,33 @@
 
 namespace Seed\Users;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Page extends SerializableType
+class Page extends JsonSerializableType
 {
     /**
      * @var int $page The current page
      */
-    #[JsonProperty("page")]
+    #[JsonProperty('page')]
     public int $page;
 
     /**
      * @var ?NextPage $next
      */
-    #[JsonProperty("next")]
+    #[JsonProperty('next')]
     public ?NextPage $next;
 
     /**
      * @var int $perPage
      */
-    #[JsonProperty("per_page")]
+    #[JsonProperty('per_page')]
     public int $perPage;
 
     /**
      * @var int $totalPage
      */
-    #[JsonProperty("total_page")]
+    #[JsonProperty('total_page')]
     public int $totalPage;
 
     /**

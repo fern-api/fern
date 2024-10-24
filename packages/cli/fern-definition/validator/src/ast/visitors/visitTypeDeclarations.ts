@@ -90,7 +90,6 @@ export async function visitTypeDeclaration({
                         await visitTypeReference(extendedType, nodePathForExtension);
                     }
                 },
-                extensions: noop,
                 properties: async (properties) => {
                     if (properties == null) {
                         return;
@@ -182,7 +181,8 @@ export async function visitTypeDeclaration({
                                 docs: createDocsVisitor(visitor, nodePathForUnionType),
                                 type: async (type) => {
                                     await visitTypeReference(type, [...nodePathForType, "type"]);
-                                }
+                                },
+                                "display-name": noop
                             });
                         }
                     }

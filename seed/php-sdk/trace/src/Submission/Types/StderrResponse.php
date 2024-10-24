@@ -2,21 +2,21 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class StderrResponse extends SerializableType
+class StderrResponse extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var string $stderr
      */
-    #[JsonProperty("stderr")]
+    #[JsonProperty('stderr')]
     public string $stderr;
 
     /**

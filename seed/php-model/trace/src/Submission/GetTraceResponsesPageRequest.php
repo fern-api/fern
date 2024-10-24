@@ -2,15 +2,15 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class GetTraceResponsesPageRequest extends SerializableType
+class GetTraceResponsesPageRequest extends JsonSerializableType
 {
     /**
      * @var ?int $offset
      */
-    #[JsonProperty("offset")]
+    #[JsonProperty('offset')]
     public ?int $offset;
 
     /**
@@ -19,7 +19,7 @@ class GetTraceResponsesPageRequest extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->offset = $values['offset'] ?? null;
     }

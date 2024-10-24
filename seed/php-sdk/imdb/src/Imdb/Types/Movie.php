@@ -2,27 +2,27 @@
 
 namespace Seed\Imdb\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Movie extends SerializableType
+class Movie extends JsonSerializableType
 {
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var string $title
      */
-    #[JsonProperty("title")]
+    #[JsonProperty('title')]
     public string $title;
 
     /**
      * @var float $rating The rating scale is one to five stars
      */
-    #[JsonProperty("rating")]
+    #[JsonProperty('rating')]
     public float $rating;
 
     /**

@@ -2,15 +2,15 @@
 
 namespace Seed\Errors;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class UnauthorizedRequestErrorBody extends SerializableType
+class UnauthorizedRequestErrorBody extends JsonSerializableType
 {
     /**
      * @var string $message
      */
-    #[JsonProperty("message")]
+    #[JsonProperty('message')]
     public string $message;
 
     /**

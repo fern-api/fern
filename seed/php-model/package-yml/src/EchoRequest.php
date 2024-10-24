@@ -2,21 +2,21 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class EchoRequest extends SerializableType
+class EchoRequest extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var int $size
      */
-    #[JsonProperty("size")]
+    #[JsonProperty('size')]
     public int $size;
 
     /**

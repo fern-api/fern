@@ -1,9 +1,9 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { ScriptConfig } from "../../config/api";
+import { DockerScriptConfig } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../Semaphore";
 
@@ -26,7 +26,7 @@ export declare namespace ScriptRunner {
     }
 }
 
-interface RunningScriptConfig extends ScriptConfig {
+interface RunningScriptConfig extends DockerScriptConfig {
     containerId: string;
 }
 
@@ -38,9 +38,13 @@ export class ScriptRunner {
     private scripts: RunningScriptConfig[] = [];
     private lock = new Semaphore(1);
 
-    constructor(private readonly workspace: GeneratorWorkspace, private readonly skipScripts: boolean) {
+    constructor(
+        private readonly workspace: GeneratorWorkspace,
+        private readonly skipScripts: boolean,
+        private readonly context: TaskContext
+    ) {
         if (!skipScripts) {
-            this.startContainersFn = this.startContainers();
+            this.startContainersFn = this.startContainers(context);
         }
     }
 
@@ -78,7 +82,7 @@ export class ScriptRunner {
         outputDir: AbsoluteFilePath;
         taskContext: TaskContext;
         containerId: string;
-        script: ScriptConfig;
+        script: DockerScriptConfig;
     }): Promise<ScriptRunner.RunResponse> {
         taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${id}`);
 
@@ -153,10 +157,25 @@ export class ScriptRunner {
         }
     }
 
-    private async startContainers(): Promise<void> {
+    private async buildFernCli(context: TaskContext): Promise<AbsoluteFilePath> {
+        const rootDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../../.."));
+        await loggingExeca(context.logger, "pnpm", ["fern:build"], { cwd: rootDir });
+        return join(rootDir, RelativeFilePath.of("packages/cli/cli/dist/prod"));
+    }
+
+    private async startContainers(context: TaskContext): Promise<void> {
+        const absoluteFilePathToFernCli = await this.buildFernCli(context);
+        const cliVolumeBind = `${absoluteFilePathToFernCli}:/fern`;
         // Start running a docker container for each script instance
         for (const script of this.workspace.workspaceConfig.scripts ?? []) {
-            const startSeedCommand = await loggingExeca(undefined, "docker", ["run", "-dit", script.docker, "/bin/sh"]);
+            const startSeedCommand = await loggingExeca(undefined, "docker", [
+                "run",
+                "-dit",
+                "-v",
+                cliVolumeBind,
+                script.docker,
+                "/bin/sh"
+            ]);
             const containerId = startSeedCommand.stdout;
             this.scripts.push({ ...script, containerId });
         }

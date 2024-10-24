@@ -2,9 +2,10 @@
 
 namespace Seed\Users\Requests;
 
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Users\Types\Order;
 
-class ListUsersOffsetPaginationRequest
+class ListUsersOffsetPaginationRequest extends JsonSerializableType
 {
     /**
      * @var ?int $page Defaults to first page
@@ -17,9 +18,9 @@ class ListUsersOffsetPaginationRequest
     public ?int $perPage;
 
     /**
-     * @var ?Order $order
+     * @var ?value-of<Order> $order
      */
-    public ?Order $order;
+    public ?string $order;
 
     /**
      * @var ?string $startingAfter The cursor used for pagination in order to fetch
@@ -31,12 +32,12 @@ class ListUsersOffsetPaginationRequest
      * @param array{
      *   page?: ?int,
      *   perPage?: ?int,
-     *   order?: ?Order,
+     *   order?: ?value-of<Order>,
      *   startingAfter?: ?string,
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->page = $values['page'] ?? null;
         $this->perPage = $values['perPage'] ?? null;

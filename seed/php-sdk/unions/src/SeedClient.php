@@ -2,25 +2,23 @@
 
 namespace Seed;
 
-use Seed\Types\TypesClient;
 use Seed\Union\UnionClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
-    /**
-     * @var TypesClient $types
-     */
-    public TypesClient $types;
-
     /**
      * @var UnionClient $union
      */
     public UnionClient $union;
 
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -30,7 +28,11 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         ?array $options = null,
@@ -51,7 +53,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->types = new TypesClient($this->client);
         $this->union = new UnionClient($this->client);
     }
 }

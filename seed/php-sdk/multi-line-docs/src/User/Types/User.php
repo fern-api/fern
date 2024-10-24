@@ -2,21 +2,21 @@
 
 namespace Seed\User\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
 /**
-* A user object. This type is used throughout the following APIs:
-*
-* - createUser
-* - getUser
+ * A user object. This type is used throughout the following APIs:
+ *
+ * - createUser
+ * - getUser
  */
-class User extends SerializableType
+class User extends JsonSerializableType
 {
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
@@ -26,13 +26,13 @@ class User extends SerializableType
     - Bob
     - Charlie
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var ?int $age The user's age.
      */
-    #[JsonProperty("age")]
+    #[JsonProperty('age')]
     public ?int $age;
 
     /**

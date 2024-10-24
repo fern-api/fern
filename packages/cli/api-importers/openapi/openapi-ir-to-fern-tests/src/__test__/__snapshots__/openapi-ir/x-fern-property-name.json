@@ -1,0 +1,57 @@
+{
+  "title": "Test extension `x-fern-property-name`",
+  "servers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channel": [],
+  "groupedSchemas": {
+    "rootSchemas": {
+      "BaseUser": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "baseUserId",
+            "key": "id",
+            "schema": {
+              "generatedName": "baseUserId",
+              "value": {
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "BaseUserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "nameOverride": "renamed_id"
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "BaseUser",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

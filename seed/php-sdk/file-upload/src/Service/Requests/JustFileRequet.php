@@ -2,6 +2,8 @@
 
 namespace Seed\Service\Requests;
 
-class JustFileRequet
+use Seed\Core\Json\JsonSerializableType;
+
+class JustFileRequet extends JsonSerializableType
 {
 }

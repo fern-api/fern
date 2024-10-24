@@ -18,16 +18,30 @@ public class SendTest : BaseMockServerTest
         const string requestJson = """
             {
               "prompt": "You are a helpful assistant",
+              "query": "query",
               "stream": false,
               "context": "You're super wise",
-              "query": "What is the weather today"
+              "containerObject": {
+                "nestedObjects": [
+                  {
+                    "literal1": "literal1",
+                    "literal2": "literal2",
+                    "strProp": "strProp"
+                  },
+                  {
+                    "literal1": "literal1",
+                    "literal2": "literal2",
+                    "strProp": "strProp"
+                  }
+                ]
+              }
             }
             """;
 
         const string mockResponse = """
             {
-              "message": "The weather is sunny",
-              "status": 200,
+              "message": "message",
+              "status": 1,
               "success": true
             }
             """;
@@ -51,9 +65,28 @@ public class SendTest : BaseMockServerTest
             new SendRequest
             {
                 Prompt = "You are a helpful assistant",
+                Query = "query",
                 Stream = false,
                 Context = "You're super wise",
-                Query = "What is the weather today",
+                MaybeContext = null,
+                ContainerObject = new ContainerObject
+                {
+                    NestedObjects = new List<NestedObjectWithLiterals>()
+                    {
+                        new NestedObjectWithLiterals
+                        {
+                            Literal1 = "literal1",
+                            Literal2 = "literal2",
+                            StrProp = "strProp",
+                        },
+                        new NestedObjectWithLiterals
+                        {
+                            Literal1 = "literal1",
+                            Literal2 = "literal2",
+                            StrProp = "strProp",
+                        },
+                    },
+                },
             },
             RequestOptions
         );
@@ -71,7 +104,16 @@ public class SendTest : BaseMockServerTest
               "prompt": "You are a helpful assistant",
               "stream": false,
               "context": "You're super wise",
-              "query": "What is the weather today"
+              "query": "What is the weather today",
+              "containerObject": {
+                "nestedObjects": [
+                  {
+                    "literal1": "literal1",
+                    "literal2": "literal2",
+                    "strProp": "strProp"
+                  }
+                ]
+              }
             }
             """;
 
@@ -105,6 +147,18 @@ public class SendTest : BaseMockServerTest
                 Stream = false,
                 Context = "You're super wise",
                 Query = "What is the weather today",
+                ContainerObject = new ContainerObject
+                {
+                    NestedObjects = new List<NestedObjectWithLiterals>()
+                    {
+                        new NestedObjectWithLiterals
+                        {
+                            Literal1 = "literal1",
+                            Literal2 = "literal2",
+                            StrProp = "strProp",
+                        },
+                    },
+                },
             },
             RequestOptions
         );

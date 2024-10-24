@@ -75,7 +75,7 @@ export async function parseIR<IR>({ absolutePathToIR, parse }: parseIR.Args<IR>)
     if (!parsedIR.ok) {
         // eslint-disable-next-line no-console
         console.log(`Failed to parse ${absolutePathToIR}`);
-        throw new Error(`Failed to parse IR: ${parsedIR.errors}`);
+        throw new Error(`Failed to parse IR: ${JSON.stringify(parsedIR.errors, null, 4)}`);
     }
 
     return parsedIR.value;

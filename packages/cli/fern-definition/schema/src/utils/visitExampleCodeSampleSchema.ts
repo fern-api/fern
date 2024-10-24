@@ -1,9 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    ExampleCodeSampleSchema,
-    ExampleCodeSampleSchemaLanguage,
-    ExampleCodeSampleSchemaSdk
-} from "../schemas/ExampleCodeSampleSchema";
+import { ExampleCodeSampleSchema, ExampleCodeSampleSchemaLanguage, ExampleCodeSampleSchemaSdk } from "../schemas";
 
 export interface ExampleCodeSampleVisitor<R> {
     language: (languageScheme: ExampleCodeSampleSchemaLanguage) => R;

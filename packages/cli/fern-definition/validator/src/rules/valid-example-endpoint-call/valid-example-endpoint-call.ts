@@ -50,11 +50,14 @@ export const ValidExampleEndpointCallRule: Rule = {
                     { relativeFilepath, contents: definitionFile }
                 ) => {
                     return validateExampleEndpointCallParameters({
-                        allDeclarations: {
-                            ...workspace.definition.rootApiFile.contents["path-parameters"],
-                            ...service["path-parameters"],
-                            ...endpoint["path-parameters"]
-                        },
+                        allDeclarations:
+                            endpoint["base-path"] != null
+                                ? { ...endpoint["path-parameters"] }
+                                : {
+                                      ...workspace.definition.rootApiFile.contents["path-parameters"],
+                                      ...service["path-parameters"],
+                                      ...endpoint["path-parameters"]
+                                  },
                         examples,
                         parameterDisplayName: "path parameter",
                         typeResolver,

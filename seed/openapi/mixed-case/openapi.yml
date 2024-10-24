@@ -14,6 +14,7 @@ paths:
           required: true
           schema:
             type: string
+          example: rsc-xyz
           examples:
             Example1:
               value: rsc-xyz
@@ -46,6 +47,7 @@ paths:
           required: true
           schema:
             type: integer
+          example: 10
           examples:
             One:
               value: 10
@@ -55,6 +57,7 @@ paths:
           schema:
             type: string
             format: date
+          example: '2023-01-01'
           examples:
             One:
               value: '2023-01-01'

@@ -19,6 +19,8 @@ import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.ErrorGenerator;
+import com.fern.java.client.generators.FileStreamGenerator;
+import com.fern.java.client.generators.InputStreamRequestBodyGenerator;
 import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
@@ -197,6 +199,12 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         ResponseBodyInputStreamGenerator responseBodyInputStreamGenerator =
                 new ResponseBodyInputStreamGenerator(context);
         this.addGeneratedFile(responseBodyInputStreamGenerator.generateFile());
+
+        InputStreamRequestBodyGenerator inputStreamRequestBodyGenerator = new InputStreamRequestBodyGenerator(context);
+        this.addGeneratedFile(inputStreamRequestBodyGenerator.generateFile());
+
+        FileStreamGenerator fileStreamGenerator = new FileStreamGenerator(context);
+        this.addGeneratedFile(fileStreamGenerator.generateFile());
 
         ResponseBodyReaderGenerator responseBodyReaderGenerator = new ResponseBodyReaderGenerator(context);
         this.addGeneratedFile(responseBodyReaderGenerator.generateFile());

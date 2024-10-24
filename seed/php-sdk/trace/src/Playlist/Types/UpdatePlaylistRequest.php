@@ -2,22 +2,22 @@
 
 namespace Seed\Playlist\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class UpdatePlaylistRequest extends SerializableType
+class UpdatePlaylistRequest extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var array<string> $problems The problems that make up the playlist.
      */
-    #[JsonProperty("problems"), ArrayType(["string"])]
+    #[JsonProperty('problems'), ArrayType(['string'])]
     public array $problems;
 
     /**

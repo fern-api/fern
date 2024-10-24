@@ -2,28 +2,28 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class FetchResponse extends SerializableType
+class FetchResponse extends JsonSerializableType
 {
     /**
      * @var ?array<string, Column> $columns
      */
-    #[JsonProperty("columns"), ArrayType(["string" => Column::class])]
+    #[JsonProperty('columns'), ArrayType(['string' => Column::class])]
     public ?array $columns;
 
     /**
      * @var ?string $namespace
      */
-    #[JsonProperty("namespace")]
+    #[JsonProperty('namespace')]
     public ?string $namespace;
 
     /**
      * @var ?Usage $usage
      */
-    #[JsonProperty("usage")]
+    #[JsonProperty('usage')]
     public ?Usage $usage;
 
     /**
@@ -34,7 +34,7 @@ class FetchResponse extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->columns = $values['columns'] ?? null;
         $this->namespace = $values['namespace'] ?? null;

@@ -16,7 +16,7 @@ public class GetDirectThreadTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "foo": "string"
+              "foo": "foo"
             }
             """;
 

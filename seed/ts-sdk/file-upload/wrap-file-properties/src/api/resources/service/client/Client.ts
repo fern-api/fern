@@ -4,7 +4,6 @@
 
 import * as core from "../../../../core";
 import * as SeedFileUpload from "../../../index";
-import * as fs from "fs";
 import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
@@ -29,12 +28,6 @@ export class Service {
     /**
      * @param {SeedFileUpload.MyRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.post({
-     *         file: fs.createReadStream("/path/to/your/file"),
-     *         fileList: [fs.createReadStream("/path/to/your/file")]
-     *     })
      */
     public async post(request: SeedFileUpload.MyRequest, requestOptions?: Service.RequestOptions): Promise<void> {
         const _request = await core.newFormData();
@@ -45,7 +38,7 @@ export class Service {
         await _request.append("integer", request.integer.toString());
         await _request.appendFile("file", request.file);
         for (const _file of request.fileList) {
-            await _request.append("fileList", _file);
+            await _request.appendFile("fileList", _file);
         }
 
         if (request.maybeFile != null) {
@@ -54,7 +47,7 @@ export class Service {
 
         if (request.maybeFileList != null) {
             for (const _file of request.maybeFileList) {
-                await _request.append("maybeFileList", _file);
+                await _request.appendFile("maybeFileList", _file);
             }
         }
 
@@ -74,12 +67,12 @@ export class Service {
 
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                for (const _item of request.optionalMetadata) {
+                {for (const _item of request.optionalMetadata) {
                     await _request.append(
                         "optionalMetadata",
                         typeof _item === "string" ? _item : JSON.stringify(_item)
                     );
-                }
+                }}
         }
 
         if (request.optionalObjectType != null) {
@@ -139,11 +132,6 @@ export class Service {
     /**
      * @param {SeedFileUpload.JustFileRequet} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.justFile({
-     *         file: fs.createReadStream("/path/to/your/file")
-     *     })
      */
     public async justFile(
         request: SeedFileUpload.JustFileRequet,
@@ -200,16 +188,6 @@ export class Service {
     /**
      * @param {SeedFileUpload.JustFileWithQueryParamsRequet} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.justFileWithQueryParams({
-     *         file: fs.createReadStream("/path/to/your/file"),
-     *         maybeString: "string",
-     *         integer: 1,
-     *         maybeInteger: 1,
-     *         listOfStrings: "string",
-     *         optionalListOfStrings: "string"
-     *     })
      */
     public async justFileWithQueryParams(
         request: SeedFileUpload.JustFileWithQueryParamsRequet,
@@ -291,11 +269,6 @@ export class Service {
     /**
      * @param {SeedFileUpload.WithContentTypeRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.withContentType({
-     *         file: fs.createReadStream("/path/to/your/file")
-     *     })
      */
     public async withContentType(
         request: SeedFileUpload.WithContentTypeRequest,

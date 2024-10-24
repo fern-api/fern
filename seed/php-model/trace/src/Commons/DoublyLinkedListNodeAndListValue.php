@@ -2,21 +2,21 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class DoublyLinkedListNodeAndListValue extends SerializableType
+class DoublyLinkedListNodeAndListValue extends JsonSerializableType
 {
     /**
      * @var string $nodeId
      */
-    #[JsonProperty("nodeId")]
+    #[JsonProperty('nodeId')]
     public string $nodeId;
 
     /**
      * @var DoublyLinkedListValue $fullList
      */
-    #[JsonProperty("fullList")]
+    #[JsonProperty('fullList')]
     public DoublyLinkedListValue $fullList;
 
     /**

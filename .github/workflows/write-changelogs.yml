@@ -1,0 +1,60 @@
+name: Write Changelogs
+
+on:
+  pull_request:
+    paths:
+      # Changelogs
+      - "packages/cli/cli/versions.yml"
+      - "generators/csharp/model/versions.yml"
+      - "generators/csharp/sdk/versions.yml"
+      - "generators/python/fastapi/versions.yml"
+      - "generators/go/model/versions.yml"
+      - "generators/go/sdk/versions.yml"
+      - "generators/java/model/versions.yml"
+      - "generators/java/sdk/versions.yml"
+      - "generators/java/spring/versions.yml"
+      - "generators/openapi/versions.yml"
+      - "generators/postman/versions.yml"
+      - "generators/python/pydantic/versions.yml"
+      - "generators/python/sdk/versions.yml"
+      - "generators/ruby/model/versions.yml"
+      - "generators/ruby/sdk/versions.yml"
+      - "generators/php/sdk/versions.yml"
+      - "generators/php/model/versions.yml"
+      - "generators/typescript/express/versions.yml"
+      # This file
+      - ".github/workflows/write-changelogs.yml"
+
+jobs:
+  write-changelogs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Write generator changelogs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          echo "Generating changelogs for generators"
+          pnpm seed:local generate changelog generator -o ./fern/pages/changelogs/ --clean-directory
+
+      - name: Write CLI changelogs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          echo "Generating changelogs for CLI"
+          pnpm seed:local generate changelog cli -o ./fern/pages/changelogs/cli/ --clean-directory
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update changelog"
+          add_options: -A
+          file_pattern: fern/pages/changelogs/

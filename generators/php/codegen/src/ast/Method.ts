@@ -15,6 +15,8 @@ export declare namespace Method {
         access: Access;
         /* The parameters of the method */
         parameters: Parameter[];
+        /* The exceptions that can be thrown, if any */
+        throws?: ClassReference[];
         /* The return type of the method */
         return_?: Type;
         /* The body of the method */
@@ -29,17 +31,19 @@ export declare namespace Method {
 export class Method extends AstNode {
     public readonly name: string;
     public readonly access: Access;
-    public readonly parameters: Parameter[] = [];
+    public readonly parameters: Parameter[];
+    public readonly throws: ClassReference[];
     public readonly return_: Type | undefined;
     public readonly body: CodeBlock | undefined;
     public readonly docs: string | undefined;
     public readonly classReference: ClassReference | undefined;
 
-    constructor({ name, access, parameters, return_, body, docs, classReference }: Method.Args) {
+    constructor({ name, access, parameters, throws, return_, body, docs, classReference }: Method.Args) {
         super();
         this.name = name;
         this.access = access;
         this.parameters = parameters;
+        this.throws = throws ?? [];
         this.return_ = return_;
         this.body = body;
         this.docs = docs;
@@ -82,11 +86,16 @@ export class Method extends AstNode {
         }
         if (this.return_ != null) {
             comment.addTag({
-                tagType: "returns",
+                tagType: "return",
                 type: this.return_
             });
         }
-        // TODO: Write throws tags.
+        for (const throw_ of this.throws) {
+            comment.addTag({
+                tagType: "throws",
+                type: Type.reference(throw_)
+            });
+        }
         writer.writeNode(comment);
     }
 }

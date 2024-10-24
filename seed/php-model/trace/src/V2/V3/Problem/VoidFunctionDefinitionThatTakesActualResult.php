@@ -2,25 +2,25 @@
 
 namespace Seed\V2\V3\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
 /**
-* The generated signature will include an additional param, actualResult
+ * The generated signature will include an additional param, actualResult
  */
-class VoidFunctionDefinitionThatTakesActualResult extends SerializableType
+class VoidFunctionDefinitionThatTakesActualResult extends JsonSerializableType
 {
     /**
      * @var array<Parameter> $additionalParameters
      */
-    #[JsonProperty("additionalParameters"), ArrayType([Parameter::class])]
+    #[JsonProperty('additionalParameters'), ArrayType([Parameter::class])]
     public array $additionalParameters;
 
     /**
      * @var FunctionImplementationForMultipleLanguages $code
      */
-    #[JsonProperty("code")]
+    #[JsonProperty('code')]
     public FunctionImplementationForMultipleLanguages $code;
 
     /**

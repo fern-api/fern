@@ -1,0 +1,343 @@
+---
+title: Get corrected transcripts
+subtitle: Analyzes a call of calls based using questions and goals.
+slug: api-v1/get/calls-corrected-transcript
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="call_id" type="string" required>
+  The unique identifier for the call to be corrected.
+</ParamField>
+
+### Response
+
+<ResponseField type="object" name="status">
+  Will be `success` if the request was successful.
+</ResponseField>
+
+<ResponseField type="string" name="message">
+  Confirms the request was successful, or provides an error message if the request failed.
+</ResponseField>
+
+<ResponseField type="array" name="corrected">
+This will contain an array of objects. Each object will be constructed as the following. 
+```json
+{
+"start": 0.069, // start time of the transcript
+"end": 2.551, // end time of the transcript
+"text": " Hi, I'm calling about a pizza order.", // the corrected text
+"speaker": 0 // the identified speaker diarization. Can be 0,1,2,3 etc
+}
+```
+</ResponseField>
+<ResponseField type="array" name="aligned">
+Corrected transcripts provides us with a raw output that is generally unusable because we can't eveen neccessarily align the 'assistant' and 'user' roles. To fix this, we provide our version of an 'aligned' transcript. This means essentailly a transcript where the roles are matched to the pieces of text.
+
+We do this by vectorizing the text, taking the cosine similarity, and adding a predictive layer based off of the `wait_for_greeting` param (essentially how sure are we that assistant or user spoke first).
+
+This will contain an array of objects. Each object will be constructed as the following.
+
+```json
+{
+"id": 3056004,
+"created_at": "2024-02-29T18:40:41.26799+00:00",
+"text": "Great, Thanks John. Could you tell me about the pizza order you placed?", // the corrected text
+"user": "assistant", // the presumed role
+"c_id": "bfaf99a1-b7c0-4f96-9630-90bc41cea488"
+},
+```
+
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "corrected": [
+        {
+            "start": 0.069,
+            "end": 2.551,
+            "text": " Hi, I'm calling about a pizza order.",
+            "speaker": 0
+        },
+        {
+            "start": 2.551,
+            "end": 4.932,
+            "text": "Could I get your name, please?",
+            "speaker": 0
+        },
+        {
+            "start": 4.932,
+            "end": 8.074,
+            "text": "Yeah, my name is John.",
+            "speaker": 1
+        },
+        {
+            "start": 8.074,
+            "end": 8.875,
+            "text": "Great.",
+            "speaker": 0
+        },
+        {
+            "start": 8.875,
+            "end": 9.876,
+            "text": "Thanks, John.",
+            "speaker": 0
+        },
+        {
+            "start": 9.876,
+            "end": 13.038,
+            "text": "Could you tell me about the pizza order you placed?",
+            "speaker": 0
+        },
+        {
+            "start": 13.038,
+            "end": 16.36,
+            "text": "Yeah, I want a pepperoni.",
+            "speaker": 2
+        },
+        {
+            "start": 16.36,
+            "end": 17.1,
+            "text": "Oh, okay.",
+            "speaker": 0
+        },
+        {
+            "start": 17.1,
+            "end": 18.521,
+            "text": "One pepperoni pizza.",
+            "speaker": 0
+        },
+        {
+            "start": 18.521,
+            "end": 19.682,
+            "text": "Anything else with that order?",
+            "speaker": 0
+        },
+        {
+            "start": 19.682,
+            "end": 23.665,
+            "text": "No, actually, can we cancel it?",
+            "speaker": 1
+        },
+        {
+            "start": 23.665,
+            "end": 26.306,
+            "text": "I gotta go.",
+            "speaker": 1
+        },
+        {
+            "start": 26.306,
+            "end": 27.427,
+            "text": "No problem.",
+            "speaker": 0
+        },
+        {
+            "start": 27.427,
+            "end": 28.668,
+            "text": "I'll cancel the order for you.",
+            "speaker": 0
+        },
+        {
+            "start": 29.144,
+            "end": 30.587,
+            "text": " Thanks for letting me know.",
+            "speaker": 0
+        },
+        {
+            "start": 30.587,
+            "end": 31.189,
+            "text": "Have a good one.",
+            "speaker": 0
+        }
+    ],
+    "status": "success",
+    "aligned": [
+        {
+            "start": 0.069,
+            "end": 2.551,
+            "text": " Hi, I'm calling about a pizza order.",
+            "speaker": "assistant",
+            "similarity": 0.686406472983644
+        },
+        {
+            "start": 2.551,
+            "end": 4.932,
+            "text": "Could I get your name, please?",
+            "speaker": "assistant",
+            "similarity": 0.6793662204867575
+        },
+        {
+            "start": 4.932,
+            "end": 8.074,
+            "text": "Yeah, my name is John.",
+            "speaker": "user",
+            "similarity": 0.9999999999999998
+        },
+        {
+            "start": 8.074,
+            "end": 8.875,
+            "text": "Great.",
+            "speaker": "assistant",
+            "similarity": 0.2581988897471611
+        },
+        {
+            "start": 8.875,
+            "end": 9.876,
+            "text": "Thanks, John.",
+            "speaker": "assistant",
+            "similarity": 0.36514837167011066
+        },
+        {
+            "start": 9.876,
+            "end": 13.038,
+            "text": "Could you tell me about the pizza order you placed?",
+            "speaker": "assistant",
+            "similarity": 0.894427190999916
+        },
+        {
+            "start": 13.038,
+            "end": 16.36,
+            "text": "Yeah, I want a pepperoni.",
+            "speaker": "user",
+            "similarity": 0.7999999999999998
+        },
+        {
+            "start": 16.36,
+            "end": 17.1,
+            "text": "Oh, okay.",
+            "speaker": "user",
+            "similarity": 0.4999999999999999
+        },
+        {
+            "start": 17.1,
+            "end": 18.521,
+            "text": "One pepperoni pizza.",
+            "speaker": "assistant",
+            "similarity": 0.5773502691896257
+        },
+        {
+            "start": 18.521,
+            "end": 19.682,
+            "text": "Anything else with that order?",
+            "speaker": "assistant",
+            "similarity": 0.7453559924999299
+        },
+        {
+            "start": 19.682,
+            "end": 23.665,
+            "text": "No, actually, can we cancel it?",
+            "speaker": "user",
+            "similarity": 0.8164965809277261
+        },
+        {
+            "start": 23.665,
+            "end": 26.306,
+            "text": "I gotta go.",
+            "speaker": "user",
+            "similarity": 0.5773502691896257
+        },
+        {
+            "start": 26.306,
+            "end": 27.427,
+            "text": "No problem.",
+            "speaker": "assistant",
+            "similarity": 0.32444284226152503
+        },
+        {
+            "start": 27.427,
+            "end": 28.668,
+            "text": "I'll cancel the order for you.",
+            "speaker": "assistant",
+            "similarity": 0.5202659817144719
+        },
+        {
+            "start": 29.144,
+            "end": 30.587,
+            "text": " Thanks for letting me know.",
+            "speaker": "assistant",
+            "similarity": 0.6155870112510924
+        },
+        {
+            "start": 30.587,
+            "end": 31.189,
+            "text": "Have a good one.",
+            "speaker": "agent-action",
+            "similarity": 0.5
+        }
+    ],
+    "original": [
+        {
+            "id": 3056032,
+            "created_at": "2024-02-29T18:40:49.592012+00:00",
+            "text": "Okay, One pepperoni pizza. Anything else with that order?",
+            "user": "assistant",
+            "c_id": "bfaf99a1-b7c0-4f96-9630-90bc41cea488"
+        },
+        {
+            "id": 3056054,
+            "created_at": "2024-02-29T18:40:59.641211+00:00",
+            "text": "No problem, Ill cancel the order for you. Thanks for letting me know, Have a good one!",
+            "user": "assistant",
+            "c_id": "bfaf99a1-b7c0-4f96-9630-90bc41cea488"
+        },
+        {
+            "id": 3055999,
+            "created_at": "2024-02-29T18:40:40.39336+00:00",
+            "text": "Yeah. My name is John. ",
+            "user": "user",
+            "c_id": "bfaf99a1-b7c0-4f96-9630-90bc41cea488"
+        },
+        {
+            "id": 3056064,
+            "created_at": "2024-02-29T18:41:08.152963+00:00",
+            "text": "Okay. Bye. ",
+            "user": "user",
+            "c_id": "bfaf99a1-b7c0-4f96-9630-90bc41cea488"
+        },
+        {
+            "id": 3055975,
+            "created_at": "2024-02-29T18:40:33.362607+00:00",
+            "text": "Hi, Im calling about a pizza order. Could I get your name please?",
+            "user": "assistant",
+            "c_id": "bfaf99a1-b7c0-4f96-9630-90bc41cea488"
+        },
+        {
+            "id": 3056028,
+            "created_at": "2024-02-29T18:40:48.597915+00:00",
+            "text": "Yeah. I want the pepperoni. ",
+            "user": "user",
+            "c_id": "bfaf99a1-b7c0-4f96-9630-90bc41cea488"
+        },
+        {
+            "id": 3056066,
+            "created_at": "2024-02-29T18:41:09.563502+00:00",
+            "text": "Ended call: Thanks, you too! Have a good day.",
+            "user": "agent-action",
+            "c_id": "bfaf99a1-b7c0-4f96-9630-90bc41cea488"
+        },
+        {
+            "id": 3056004,
+            "created_at": "2024-02-29T18:40:41.26799+00:00",
+            "text": "Great, Thanks John. Could you tell me about the pizza order you placed?",
+            "user": "assistant",
+            "c_id": "bfaf99a1-b7c0-4f96-9630-90bc41cea488"
+        },
+        {
+            "id": 3056053,
+            "created_at": "2024-02-29T18:40:58.62518+00:00",
+            "text": "No. Actually, can we cancel it? I gotta go. ",
+            "user": "user",
+            "c_id": "bfaf99a1-b7c0-4f96-9630-90bc41cea488"
+        }
+    ]
+}
+```
+</ResponseExample>

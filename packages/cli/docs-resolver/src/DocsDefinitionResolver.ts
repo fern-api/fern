@@ -7,7 +7,7 @@ import {
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, relativize, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -49,6 +49,7 @@ export class DocsDefinitionResolver {
             ir: IntermediateRepresentation;
             snippetsConfig: APIV1Write.SnippetsConfig;
             playgroundConfig?: DocsV1Write.PlaygroundConfig;
+            apiName?: string;
         }) => Promise<string>
     ) {}
 
@@ -65,14 +66,14 @@ export class DocsDefinitionResolver {
         this._parsedDocsConfig = await docsYml.parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
             context: this.taskContext,
-            absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
+            absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig
         });
 
         // track all changelog markdown files in parsedDocsConfig.pages
         this.fernWorkspaces.forEach((workspace) => {
             workspace.changelog?.files.forEach((file) => {
-                const relativePath = relative(this.docsWorkspace.absoluteFilepath, file.absoluteFilepath);
+                const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
                 this.parsedDocsConfig.pages[relativePath] = file.contents;
             });
         });
@@ -86,7 +87,7 @@ export class DocsDefinitionResolver {
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
                 markdown,
-                absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMdx: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
@@ -96,7 +97,7 @@ export class DocsDefinitionResolver {
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
                 markdown,
-                absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMdx: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
@@ -108,7 +109,7 @@ export class DocsDefinitionResolver {
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
                 absolutePathToMdx: this.resolveFilepath(relativePath),
-                absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
             });
 
             // store the updated markdown in pages
@@ -147,7 +148,7 @@ export class DocsDefinitionResolver {
                 ),
                 {
                     absolutePathToMdx: this.resolveFilepath(relativePath),
-                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath
+                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
                 },
                 this.taskContext
             );
@@ -156,9 +157,10 @@ export class DocsDefinitionResolver {
         const pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
 
         Object.entries(this.parsedDocsConfig.pages).forEach(([relativePageFilepath, markdown]) => {
-            pages[relativePageFilepath] = {
+            const url = createEditThisPageUrl(this.editThisPage, relativePageFilepath);
+            pages[DocsV1Write.PageId(relativePageFilepath)] = {
                 markdown,
-                editThisPageUrl: createEditThisPageUrl(this.editThisPage, relativePageFilepath)
+                editThisPageUrl: url ? DocsV1Write.Url(url) : undefined
             };
         });
 
@@ -170,18 +172,18 @@ export class DocsDefinitionResolver {
             const jsFilePaths = new Set<AbsoluteFilePath>();
             await Promise.all(
                 this._parsedDocsConfig.experimental.mdxComponents.map(async (filepath) => {
-                    const absoluteFilePath = resolve(this.docsWorkspace.absoluteFilepath, filepath);
+                    const absoluteFilePath = resolve(this.docsWorkspace.absoluteFilePath, filepath);
 
                     // check if absoluteFilePath is a directory or a file
                     const stats = await stat(absoluteFilePath);
 
                     if (stats.isDirectory()) {
-                        const files = await listFiles(absoluteFilePath, "{js,ts,jsx,tsx}");
+                        const files = await listFiles(absoluteFilePath, "{js,ts,jsx,tsx,md,mdx}");
 
                         files.forEach((file) => {
                             jsFilePaths.add(file);
                         });
-                    } else if (absoluteFilePath.match(/\.(js|ts|jsx|tsx)$/) != null) {
+                    } else if (absoluteFilePath.match(/\.(js|ts|jsx|tsx|md|mdx)$/) != null) {
                         jsFilePaths.add(absoluteFilePath);
                     }
                 })
@@ -207,7 +209,7 @@ export class DocsDefinitionResolver {
         if (unresolvedFilepath == null) {
             return undefined;
         }
-        return resolve(this.docsWorkspace.absoluteFilepath, unresolvedFilepath);
+        return resolve(this.docsWorkspace.absoluteFilePath, unresolvedFilepath);
     }
 
     private toRelativeFilepath(filepath: AbsoluteFilePath): RelativeFilePath;
@@ -216,7 +218,7 @@ export class DocsDefinitionResolver {
         if (filepath == null) {
             return undefined;
         }
-        return relative(this.docsWorkspace.absoluteFilepath, filepath);
+        return relative(this.docsWorkspace.absoluteFilePath, filepath);
     }
 
     // currently this only supports slugs that are included in frontmatter
@@ -243,11 +245,14 @@ export class DocsDefinitionResolver {
         const config: WithoutQuestionMarks<DocsV1Write.DocsConfig> = {
             title: this.parsedDocsConfig.title,
             logoHeight: this.parsedDocsConfig.logo?.height,
-            logoHref: this.parsedDocsConfig.logo?.href,
+            logoHref: this.parsedDocsConfig.logo?.href ? DocsV1Write.Url(this.parsedDocsConfig.logo?.href) : undefined,
             favicon: this.getFileId(this.parsedDocsConfig.favicon),
             navigation: convertedNavigation,
             colorsV3: this.convertColorConfigImageReferences(),
-            navbarLinks: this.parsedDocsConfig.navbarLinks,
+            navbarLinks: this.parsedDocsConfig.navbarLinks?.map((navbarLink) => ({
+                ...navbarLink,
+                url: DocsV1Write.Url(navbarLink.url)
+            })),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
             css: this.parsedDocsConfig.css,
@@ -255,9 +260,40 @@ export class DocsDefinitionResolver {
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
             integrations: this.parsedDocsConfig.integrations,
-            footerLinks: this.parsedDocsConfig.footerLinks,
+            footerLinks: this.parsedDocsConfig.footerLinks?.map((footerLink) => ({
+                ...footerLink,
+                value: DocsV1Write.Url(footerLink.value)
+            })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
-            analyticsConfig: this.parsedDocsConfig.analyticsConfig,
+            analyticsConfig: {
+                ...this.parsedDocsConfig.analyticsConfig,
+                segment: this.parsedDocsConfig.analyticsConfig?.segment,
+                fullstory: this.parsedDocsConfig.analyticsConfig?.fullstory,
+                intercom: this.parsedDocsConfig.analyticsConfig?.intercom
+                    ? {
+                          appId: this.parsedDocsConfig.analyticsConfig.intercom.appId,
+                          apiBase: this.parsedDocsConfig.analyticsConfig.intercom.apiBase
+                      }
+                    : undefined,
+                posthog: this.parsedDocsConfig.analyticsConfig?.posthog
+                    ? {
+                          apiKey: this.parsedDocsConfig.analyticsConfig.posthog.apiKey,
+                          endpoint: this.parsedDocsConfig.analyticsConfig.posthog.endpoint
+                      }
+                    : undefined,
+                gtm: undefined,
+                ga4: undefined,
+                amplitude: undefined,
+                mixpanel: undefined,
+                hotjar: undefined,
+                koala: undefined,
+                logrocket: undefined,
+                pirsch: undefined,
+                plausible: undefined,
+                fathom: undefined,
+                clearbit: undefined,
+                heap: undefined
+            },
             announcement:
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
@@ -289,7 +325,7 @@ export class DocsDefinitionResolver {
     }
 
     private async convertNavigationConfig(): Promise<DocsV1Write.NavigationConfig> {
-        const slug = FernNavigation.SlugGenerator.init(FernNavigation.utils.slugjoin(this.getDocsBasePath()));
+        const slug = FernNavigation.V1.SlugGenerator.init(FernNavigation.slugjoin(this.getDocsBasePath()));
         switch (this.parsedDocsConfig.navigation.type) {
             case "versioned": {
                 const versions = await Promise.all(
@@ -302,7 +338,7 @@ export class DocsDefinitionResolver {
                                 parentSlug: versionSlug
                             });
                             return {
-                                version: version.version,
+                                version: FernNavigation.VersionId(version.version),
                                 config: convertedNavigation,
                                 availability:
                                     version.availability != null
@@ -329,7 +365,7 @@ export class DocsDefinitionResolver {
 
     private async convertNavigationItem(
         item: docsYml.DocsNavigationItem,
-        parentSlug: FernNavigation.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<DocsV1Write.NavigationItem> {
         switch (item.type) {
             case "page": {
@@ -337,7 +373,7 @@ export class DocsDefinitionResolver {
                     type: "page",
                     title: item.title,
                     icon: item.icon,
-                    id: this.toRelativeFilepath(item.absolutePath),
+                    id: FernNavigation.PageId(this.toRelativeFilepath(item.absolutePath)),
                     urlSlugOverride: item.slug,
                     fullSlug: this.markdownFilesToFullSlugs.get(item.absolutePath)?.split("/"),
                     hidden: item.hidden
@@ -352,6 +388,7 @@ export class DocsDefinitionResolver {
                 const sectionItems = await Promise.all(
                     item.contents.map((nestedItem) => this.convertNavigationItem(nestedItem, slug))
                 );
+                const relativeFilePath = this.toRelativeFilepath(item.overviewAbsolutePath);
                 return {
                     type: "section",
                     title: item.title,
@@ -362,7 +399,8 @@ export class DocsDefinitionResolver {
                     icon: item.icon,
                     hidden: item.hidden,
                     skipUrlSlug: item.skipUrlSlug,
-                    overviewPageId: this.toRelativeFilepath(item.overviewAbsolutePath)
+                    overviewPageId: relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined,
+                    fullSlug: undefined
                 };
             }
             case "apiSection": {
@@ -380,10 +418,12 @@ export class DocsDefinitionResolver {
                     packageName: undefined,
                     context: this.taskContext
                 });
+                // console.log(JSON.stringify(ir, undefined, 2));
                 const apiDefinitionId = await this.registerApi({
                     ir,
                     snippetsConfig,
-                    playgroundConfig: { oauth: item.playground?.oauth }
+                    playgroundConfig: { oauth: item.playground?.oauth },
+                    apiName: item.apiName
                 });
                 const api = convertIrToApiDefinition(ir, apiDefinitionId, { oauth: item.playground?.oauth });
                 const node = new ApiReferenceNodeConverter(
@@ -401,12 +441,14 @@ export class DocsDefinitionResolver {
             case "link": {
                 return {
                     type: "link",
+                    icon: item.icon,
                     title: item.text,
-                    url: item.url
+                    url: APIV1Write.Url(item.url)
                 };
             }
             case "changelog": {
-                const idgen = NodeIdGenerator.init(parentSlug.get());
+                const slug = item.slug ?? kebabCase(item.title);
+                const idgen = NodeIdGenerator.init(parentSlug.get()).append(slug);
                 const node = new ChangelogNodeConverter(
                     this.markdownFilesToFullSlugs,
                     item.changelog,
@@ -415,18 +457,24 @@ export class DocsDefinitionResolver {
                 ).convert({
                     parentSlug,
                     title: item.title,
-                    icon: item.icon,
                     hidden: item.hidden,
-                    slug: item.slug
+                    slug: item.slug,
+                    icon: item.icon
                 });
+
+                const relativeFilePath = this.toRelativeFilepath(item.changelog[0]);
                 return {
                     type: "changelogV3",
                     node: node ?? {
                         id: idgen.append("changelog").get(),
                         type: "changelog",
                         title: item.title,
-                        slug: parentSlug.append(item.slug ?? kebabCase(item.title)).get(),
-                        children: []
+                        slug: parentSlug.append(slug).get(),
+                        children: [],
+                        icon: item.icon,
+                        hidden: item.hidden,
+                        overviewPageId: relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined,
+                        noindex: false
                     }
                 };
             }
@@ -442,12 +490,12 @@ export class DocsDefinitionResolver {
     }: {
         landingPage: docsYml.DocsNavigationItem.Page | undefined;
         navigationConfig: docsYml.UnversionedNavigationConfiguration;
-        parentSlug: FernNavigation.SlugGenerator;
+        parentSlug: FernNavigation.V1.SlugGenerator;
     }): Promise<DocsV1Write.UnversionedNavigationConfig> {
         const landingPage =
             landingPageConfig != null
                 ? {
-                      id: this.toRelativeFilepath(landingPageConfig.absolutePath),
+                      id: FernNavigation.PageId(this.toRelativeFilepath(landingPageConfig.absolutePath)),
                       urlSlugOverride: landingPageConfig.slug,
                       fullSlug: this.markdownFilesToFullSlugs.get(landingPageConfig.absolutePath)?.split("/"),
                       hidden: landingPageConfig.hidden,
@@ -468,6 +516,7 @@ export class DocsDefinitionResolver {
             case "tabbed": {
                 return {
                     landingPage,
+                    tabs: undefined,
                     tabsV2: await this.convertTabbedNavigation(navigationConfig.items, parentSlug)
                 };
             }
@@ -478,7 +527,7 @@ export class DocsDefinitionResolver {
 
     private async convertTabbedNavigation(
         items: docsYml.TabbedNavigation[],
-        parentSlug: FernNavigation.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<DocsV1Write.NavigationTabV2[]> {
         return Promise.all(
             items.map(async (tab): Promise<WithoutQuestionMarks<DocsV1Write.NavigationTabV2>> => {
@@ -487,7 +536,7 @@ export class DocsDefinitionResolver {
                         type: "link",
                         title: tab.title,
                         icon: tab.icon,
-                        url: tab.child.href
+                        url: APIV1Write.Url(tab.child.href)
                     };
                 }
 
@@ -505,6 +554,7 @@ export class DocsDefinitionResolver {
                         hidden: tab.hidden,
                         slug: tab.slug
                     });
+                    const relativeFilePath = this.toRelativeFilepath(tab.child.changelog[0]);
                     return {
                         type: "changelogV3",
                         node: node ?? {
@@ -512,7 +562,11 @@ export class DocsDefinitionResolver {
                             type: "changelog",
                             title: tab.title,
                             slug: parentSlug.append(tab.slug ?? kebabCase(tab.title)).get(),
-                            children: []
+                            children: [],
+                            icon: tab.icon,
+                            hidden: tab.hidden,
+                            overviewPageId: relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined,
+                            noindex: false
                         }
                     };
                 }
@@ -554,7 +608,7 @@ export class DocsDefinitionResolver {
         if (fileId == null) {
             return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
         }
-        return fileId;
+        return DocsV1Write.FileId(fileId);
     }
 
     private convertColorConfigImageReferences(): DocsV1Write.ColorsConfigV3 | undefined {
@@ -574,7 +628,8 @@ export class DocsDefinitionResolver {
                 ...colors,
                 ...this.convertLogoAndBackgroundImage({
                     theme: "light"
-                })
+                }),
+                type: "light"
             };
         } else {
             return {
@@ -650,8 +705,16 @@ export class DocsDefinitionResolver {
         }
         return {
             files: this.parsedDocsConfig.js.files
-                .map(({ absolutePath, strategy }) => ({ fileId: this.getFileId(absolutePath), strategy }))
-                .filter(isNonNullish)
+                .map(({ absolutePath, strategy }) => ({
+                    fileId: this.getFileId(absolutePath),
+                    strategy
+                }))
+                .filter(isNonNullish),
+            remote: this.parsedDocsConfig.js.remote?.map((remote) => ({
+                ...remote,
+                url: DocsV1Write.Url(remote.url)
+            })),
+            inline: undefined
         };
     }
 
@@ -684,7 +747,7 @@ export class DocsDefinitionResolver {
                 type: "fileId",
                 value: this.getFileId(value)
             }),
-            url: ({ value }) => ({ type: "url", value }),
+            url: ({ value }) => ({ type: "url", value: DocsV1Write.Url(value) }),
             _other: () => this.taskContext.failAndThrow("Invalid metadata configuration")
         });
     }
@@ -703,16 +766,16 @@ function createEditThisPageUrl(
     return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}`;
 }
 
-function convertAvailability(availability: docsYml.RawSchemas.VersionAvailability): DocsV1Write.VersionAvailability {
+function convertAvailability(availability: docsYml.RawSchemas.VersionAvailability): DocsV1Write.Availability {
     switch (availability) {
         case "beta":
-            return DocsV1Write.VersionAvailability.Beta;
+            return DocsV1Write.Availability.Beta;
         case "deprecated":
-            return DocsV1Write.VersionAvailability.Deprecated;
+            return DocsV1Write.Availability.Deprecated;
         case "ga":
-            return DocsV1Write.VersionAvailability.GenerallyAvailable;
+            return DocsV1Write.Availability.GenerallyAvailable;
         case "stable":
-            return DocsV1Write.VersionAvailability.Stable;
+            return DocsV1Write.Availability.Stable;
         default:
             assertNever(availability);
     }

@@ -2,12 +2,13 @@
 
 namespace Seed\QueryParam;
 
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Seed\QueryParam\Requests\SendEnumAsQueryParamRequest;
-use Seed\Core\JsonApiRequest;
-use Seed\Core\HttpMethod;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
+use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Exception;
 use Seed\QueryParam\Requests\SendEnumListAsQueryParamRequest;
 
 class QueryParamClient
@@ -28,16 +29,19 @@ class QueryParamClient
 
     /**
      * @param SendEnumAsQueryParamRequest $request
-     * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
-    public function send(SendEnumAsQueryParamRequest $request, ?array $options = null): mixed
+    public function send(SendEnumAsQueryParamRequest $request, ?array $options = null): void
     {
         $query = [];
-        $query['operand'] = $request->operand->value;
+        $query['operand'] = $request->operand;
         $query['operandOrColor'] = $request->operandOrColor;
         if ($request->maybeOperand != null) {
-            $query['maybeOperand'] = $request->maybeOperand->value;
+            $query['maybeOperand'] = $request->maybeOperand;
         }
         if ($request->maybeOperandOrColor != null) {
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
@@ -45,7 +49,7 @@ class QueryParamClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "query",
                     method: HttpMethod::POST,
                     query: $query,
@@ -56,23 +60,30 @@ class QueryParamClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
      * @param SendEnumListAsQueryParamRequest $request
-     * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
-    public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options = null): mixed
+    public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options = null): void
     {
         $query = [];
-        $query['operand'] = $request->operand->value;
+        $query['operand'] = $request->operand;
         $query['operandOrColor'] = $request->operandOrColor;
         if ($request->maybeOperand != null) {
-            $query['maybeOperand'] = $request->maybeOperand->value;
+            $query['maybeOperand'] = $request->maybeOperand;
         }
         if ($request->maybeOperandOrColor != null) {
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
@@ -80,7 +91,7 @@ class QueryParamClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "query-list",
                     method: HttpMethod::POST,
                     query: $query,
@@ -91,9 +102,12 @@ class QueryParamClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

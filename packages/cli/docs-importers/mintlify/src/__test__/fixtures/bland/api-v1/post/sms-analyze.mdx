@@ -1,0 +1,52 @@
+---
+title: "SMS Conversation Analysis"
+api: "POST https://api.bland.ai/v1/sms/analyze"
+description: "Answer questions and extract information from an SMS conversation."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+### Body
+
+<ParamField body="goal" type="string" required>
+  An overarching goal for the information you want to extract from the SMS messages.
+</ParamField>
+
+<ParamField body="answers" type="array" required>
+An array of questions that you want the AI to answer, along with their return types.
+
+For example:
+
+```json
+{
+  "answers": [
+    ["When does Bob want to move?", "time"],
+    ["Summarize the call.", "summary"]
+  ]
+}
+```
+
+</ParamField>
+
+<ParamField body="to" type="string" required>
+  The phone number that received the messages.
+</ParamField>
+
+<ParamField body="from" type="string" required>
+  The human/other phone number in the conversation.
+</ParamField>
+
+<ResponseExample>
+
+```json Response
+{
+  "status": "success",
+  "message": "Successfully analyzed SMS messages.",
+  "answers": ["Bob prefers to have movers come in the morning.", "..."]
+}
+```
+
+</ResponseExample>

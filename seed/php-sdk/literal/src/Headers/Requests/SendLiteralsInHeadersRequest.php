@@ -2,9 +2,10 @@
 
 namespace Seed\Headers\Requests;
 
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class SendLiteralsInHeadersRequest
+class SendLiteralsInHeadersRequest extends JsonSerializableType
 {
     /**
      * @var string $endpointVersion
@@ -19,7 +20,7 @@ class SendLiteralsInHeadersRequest
     /**
      * @var string $query
      */
-    #[JsonProperty("query")]
+    #[JsonProperty('query')]
     public string $query;
 
     /**

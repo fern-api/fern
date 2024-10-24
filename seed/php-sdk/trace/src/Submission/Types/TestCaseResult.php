@@ -2,27 +2,27 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseResult extends SerializableType
+class TestCaseResult extends JsonSerializableType
 {
     /**
      * @var mixed $expectedResult
      */
-    #[JsonProperty("expectedResult")]
+    #[JsonProperty('expectedResult')]
     public mixed $expectedResult;
 
     /**
      * @var mixed $actualResult
      */
-    #[JsonProperty("actualResult")]
+    #[JsonProperty('actualResult')]
     public mixed $actualResult;
 
     /**
      * @var bool $passed
      */
-    #[JsonProperty("passed")]
+    #[JsonProperty('passed')]
     public bool $passed;
 
     /**

@@ -2,7 +2,9 @@
 
 namespace Seed\User\Events\Metadata\Requests;
 
-class GetEventMetadataRequest
+use Seed\Core\Json\JsonSerializableType;
+
+class GetEventMetadataRequest extends JsonSerializableType
 {
     /**
      * @var string $id

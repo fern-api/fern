@@ -5,7 +5,7 @@ import { formatLog, Logger } from "@fern-api/logger";
 import chalk from "chalk";
 import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "@fern-api/lazy-fern-workspace";
 
 export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.FailedResult, logger: Logger): void {
     for (const [relativeFilepath, failure] of entries(result.failures)) {
@@ -79,6 +79,19 @@ function handleWorkspaceParserFailureForFile({
             break;
         case WorkspaceLoaderFailureType.EXPORTING_PACKAGE_MARKER_OTHER_KEYS:
             logger.error(`${failure.pathOfPackageMarker} has an export so it cannot define other keys.`);
+            break;
+        case WorkspaceLoaderFailureType.JSONSCHEMA_VALIDATION:
+            if (failure.error.error != null) {
+                logger.error(
+                    formatLog({
+                        title: failure.error.error.message ?? "Unknown error",
+                        breadcrumbs: [
+                            relativeFilepath,
+                            ...failure.error.error.instancePath.split("/").filter((part) => part !== "")
+                        ]
+                    })
+                );
+            }
             break;
         default:
             assertNever(failure);

@@ -2,36 +2,38 @@
 
 namespace Seed\QueryParam\Requests;
 
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Types\Operand;
+use Seed\Types\Color;
 
-class SendEnumAsQueryParamRequest
+class SendEnumAsQueryParamRequest extends JsonSerializableType
 {
     /**
-     * @var Operand $operand
+     * @var value-of<Operand> $operand
      */
-    public Operand $operand;
+    public string $operand;
 
     /**
-     * @var ?Operand $maybeOperand
+     * @var ?value-of<Operand> $maybeOperand
      */
-    public ?Operand $maybeOperand;
+    public ?string $maybeOperand;
 
     /**
-     * @var mixed $operandOrColor
+     * @var value-of<Color>|value-of<Operand> $operandOrColor
      */
-    public mixed $operandOrColor;
+    public string $operandOrColor;
 
     /**
-     * @var mixed $maybeOperandOrColor
+     * @var value-of<Color>|value-of<Operand>|null $maybeOperandOrColor
      */
-    public mixed $maybeOperandOrColor;
+    public string|null $maybeOperandOrColor;
 
     /**
      * @param array{
-     *   operand: Operand,
-     *   maybeOperand?: ?Operand,
-     *   operandOrColor: mixed,
-     *   maybeOperandOrColor: mixed,
+     *   operand: value-of<Operand>,
+     *   maybeOperand?: ?value-of<Operand>,
+     *   operandOrColor: value-of<Color>|value-of<Operand>,
+     *   maybeOperandOrColor?: value-of<Color>|value-of<Operand>|null,
      * } $values
      */
     public function __construct(
@@ -40,6 +42,6 @@ class SendEnumAsQueryParamRequest
         $this->operand = $values['operand'];
         $this->maybeOperand = $values['maybeOperand'] ?? null;
         $this->operandOrColor = $values['operandOrColor'];
-        $this->maybeOperandOrColor = $values['maybeOperandOrColor'];
+        $this->maybeOperandOrColor = $values['maybeOperandOrColor'] ?? null;
     }
 }

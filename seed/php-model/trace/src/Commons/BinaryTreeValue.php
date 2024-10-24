@@ -2,22 +2,22 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class BinaryTreeValue extends SerializableType
+class BinaryTreeValue extends JsonSerializableType
 {
     /**
      * @var ?string $root
      */
-    #[JsonProperty("root")]
+    #[JsonProperty('root')]
     public ?string $root;
 
     /**
      * @var array<string, BinaryTreeNodeValue> $nodes
      */
-    #[JsonProperty("nodes"), ArrayType(["string" => BinaryTreeNodeValue::class])]
+    #[JsonProperty('nodes'), ArrayType(['string' => BinaryTreeNodeValue::class])]
     public array $nodes;
 
     /**

@@ -1,4 +1,103 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.3
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The generator now writes the reference.md configuration correctly, using `.dict()` instead of `.json()`.
+        
+- version: 4.3.2
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The generator will now correctly default to the configured global `default_bytes_stream_chunk_size` when the `request_options` parameter is not provided.
+        
+- version: 4.3.1
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Requests for file download will now allow users to pass in a `chunk_size` option that allows them to receive chunks of a specific size
+        from the resultant `iter_bytes` invocation on the response byte stream.
+
+        Concretely, a user would leverage the following:
+        ```python
+        client.download(
+          ...,
+          request_options={
+            "chunk_size": 1024    # 1MB
+          }
+        )
+        ```
+
+- version: 4.2.8
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The snippet writer now correctly handles base64 strings.
+
+- version: 4.2.7
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The generated README will now have a section that links to the generated
+        SDK Reference (in `reference.md`).
+
+        ```md
+        ## Reference
+
+        A full reference for this library can be found [here](./reference.md).
+        ```
+
+- version: 4.2.7-rc4
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: Generated readmes now include the parameter name required for the request options parameter within the example snippets.
+
+- version: 4.2.7-rc3
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Now, when sending Snippet Templates back to Fern, the generator will not try to coerce a potentially missing ID into the `api_definition_id` field.
+        This, had been a cause of the error log `Failed to upload snippet templates to FDR, this is ok: one of the hex, bytes, bytes_le, fields, or int arguments must be given`.
+
+- version: 4.2.7-rc2
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Pydantic utilities now correctly handles cases where you have a Pydantic model, with a list of pydantic models as a field, where those models have literals.
+        Effectively, `deep_union_pydantic_objects` now handles lists of objects and merges them appropriately.
+
+- version: 4.2.7-rc1
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        When leveraging the `include_union_utils` configuration flag, the Pydantic models will no longer include transitive dependencies within
+        `update_forward_ref` calls, since these should not be necessary. This effectively scopes back the changes introduced in 4.0.0-rc5, which included
+        changes to improve circular reference handling in Pydantic models.
+
+- version: 4.2.7-rc0
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Dynamic header suppliers, as used within the OAuth provider are now invoked on every request, not just the first.
+        This was a regression introduced within an earlier version that is now fixed. As a results of this fix, the `refresh_token` is now correctly refreshed.
+
+- version: 4.2.6
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Serialization utilities (necessary when pydantic aliases are removed) now respects dictionaries as well.
+
 - version: 4.2.5
   irVersion: 53
   changelogEntry:

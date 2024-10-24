@@ -1,6 +1,6 @@
 # Seed Python Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_pagination)](https://pypi.python.org/pypi/fern_pagination)
 
 The Seed Python library provides convenient access to the Seed API from Python.
@@ -11,23 +11,22 @@ The Seed Python library provides convenient access to the Seed API from Python.
 pip install fern_pagination
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
 
 ```python
 from seed import SeedPagination
-from seed.users import WithCursor
 
 client = SeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_with_body_cursor_pagination(
-    pagination=WithCursor(
-        cursor="string",
-    ),
-)
+response = client.users.list_with_body_cursor_pagination()
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -43,7 +42,6 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 
 from seed import AsyncSeedPagination
-from seed.users import WithCursor
 
 client = AsyncSeedPagination(
     token="YOUR_TOKEN",
@@ -52,11 +50,7 @@ client = AsyncSeedPagination(
 
 
 async def main() -> None:
-    response = await client.users.list_with_body_cursor_pagination(
-        pagination=WithCursor(
-            cursor="string",
-        ),
-    )
+    response = await client.users.list_with_body_cursor_pagination()
     async for item in response:
         yield item
     # alternatively, you can paginate page-by-page
@@ -93,12 +87,7 @@ client = SeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_with_cursor_pagination(
-    page=1,
-    per_page=1,
-    order="asc",
-    starting_after="string",
-)
+response = client.users.list_with_cursor_pagination()
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -123,7 +112,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.list_with_body_cursor_pagination(..., {
+client.users.list_with_body_cursor_pagination(..., request_options={
     "max_retries": 1
 })
 ```
@@ -143,7 +132,7 @@ client = SeedPagination(
 
 
 # Override timeout for a specific method
-client.users.list_with_body_cursor_pagination(..., {
+client.users.list_with_body_cursor_pagination(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

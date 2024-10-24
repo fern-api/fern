@@ -14,6 +14,7 @@ import {
     HttpRequestBody,
     HttpResponse,
     HttpService,
+    IntermediateRepresentation,
     PathParameter,
     QueryParameter,
     ResponseError,
@@ -25,12 +26,14 @@ import {
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
+import { isNonNullish } from "../../../commons/node_modules/@fern-api/core-utils/src";
 import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi";
 import { Mode } from "../writeOpenApi";
 import { convertObject } from "./convertObject";
 import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
 
 export function convertServices({
+    ir,
     httpServices,
     typesByName,
     errorsByName,
@@ -39,6 +42,7 @@ export function convertServices({
     environments,
     mode
 }: {
+    ir: IntermediateRepresentation;
     httpServices: HttpService[];
     typesByName: Record<string, TypeDeclaration>;
     errorsByName: Record<string, ErrorDeclaration>;
@@ -51,6 +55,7 @@ export function convertServices({
     httpServices.forEach((httpService) => {
         httpService.endpoints.forEach((httpEndpoint) => {
             const { fullPath, convertedHttpMethod, operationObject } = convertHttpEndpoint({
+                ir,
                 httpEndpoint,
                 httpService,
                 typesByName,
@@ -84,8 +89,10 @@ function convertHttpEndpoint({
     errorDiscriminationStrategy,
     security,
     environments,
-    mode
+    mode,
+    ir
 }: {
+    ir: IntermediateRepresentation;
     httpEndpoint: HttpEndpoint;
     httpService: HttpService;
     typesByName: Record<string, TypeDeclaration>;
@@ -95,22 +102,47 @@ function convertHttpEndpoint({
     environments: EnvironmentsConfig | undefined;
     mode: Mode;
 }): ConvertedHttpEndpoint {
-    let fullPath = urlJoin(convertHttpPathToString(httpService.basePath), convertHttpPathToString(httpEndpoint.path));
+    let fullPath = urlJoin(
+        ir.basePath != null ? convertHttpPathToString(ir.basePath) : "",
+        convertHttpPathToString(httpService.basePath),
+        convertHttpPathToString(httpEndpoint.path)
+    );
     fullPath = !fullPath.startsWith("/") ? `/${fullPath}` : fullPath;
     const convertedHttpMethod = convertHttpMethod(httpEndpoint.method);
+    const convertedGlobalPathParameters = ir.pathParameters.map((pathParameter) =>
+        convertPathParameter({
+            pathParameter,
+            examples: httpEndpoint.userSpecifiedExamples.map((ex) => ex.example).filter(isNonNullish) ?? []
+        })
+    );
     const convertedServicePathParameters = httpService.pathParameters.map((pathParameter) =>
-        convertPathParameter({ pathParameter, examples: httpEndpoint.examples })
+        convertPathParameter({
+            pathParameter,
+            examples: httpEndpoint.userSpecifiedExamples.map((ex) => ex.example).filter(isNonNullish) ?? []
+        })
     );
     const convertedEndpointPathParameters = httpEndpoint.pathParameters.map((pathParameter) =>
-        convertPathParameter({ pathParameter, examples: httpEndpoint.examples })
+        convertPathParameter({
+            pathParameter,
+            examples: httpEndpoint.userSpecifiedExamples.map((ex) => ex.example).filter(isNonNullish) ?? []
+        })
     );
     const convertedQueryParameters = httpEndpoint.queryParameters.map((queryParameter) =>
-        convertQueryParameter({ queryParameter, typesByName, examples: httpEndpoint.examples })
+        convertQueryParameter({
+            queryParameter,
+            typesByName,
+            examples: httpEndpoint.userSpecifiedExamples.map((ex) => ex.example).filter(isNonNullish) ?? []
+        })
     );
     const convertedHeaders = httpEndpoint.headers.map((header) =>
-        convertHeader({ httpHeader: header, typesByName, examples: httpEndpoint.examples })
+        convertHeader({
+            httpHeader: header,
+            typesByName,
+            examples: httpEndpoint.userSpecifiedExamples.map((ex) => ex.example).filter(isNonNullish) ?? []
+        })
     );
     const parameters: OpenAPIV3.ParameterObject[] = [
+        ...convertedGlobalPathParameters,
         ...convertedServicePathParameters,
         ...convertedEndpointPathParameters,
         ...convertedQueryParameters,
@@ -130,15 +162,13 @@ function convertHttpEndpoint({
         ].join("_"),
         tags: [tag],
         parameters,
-        responses: {
-            ...convertResponse({
-                httpResponse: httpEndpoint.response,
-                responseErrors: httpEndpoint.errors,
-                errorsByName,
-                errorDiscriminationStrategy,
-                examples: httpEndpoint.examples
-            })
-        },
+        responses: convertResponse({
+            httpResponse: httpEndpoint.response,
+            responseErrors: httpEndpoint.errors,
+            errorsByName,
+            errorDiscriminationStrategy,
+            examples: httpEndpoint.userSpecifiedExamples.map((ex) => ex.example).filter(isNonNullish) ?? []
+        }),
         summary: httpEndpoint.displayName ?? undefined
     };
 
@@ -168,7 +198,7 @@ function convertHttpEndpoint({
         operationObject.requestBody = convertRequestBody({
             httpRequest: httpEndpoint.requestBody,
             typesByName,
-            examples: httpEndpoint.examples
+            examples: httpEndpoint.userSpecifiedExamples.map((ex) => ex.example).filter(isNonNullish) ?? []
         });
     }
     return {
@@ -234,7 +264,7 @@ function convertRequestBody({
                         let exampleProperty: ExampleInlinedRequestBodyProperty | undefined = undefined;
                         if (examples.length > 0 && examples[0]?.request?.type === "inlinedRequestBody") {
                             exampleProperty = examples[0]?.request.properties.find((example) => {
-                                return example.wireKey === property.name.wireValue;
+                                return example.name.wireValue === property.name.wireValue;
                             });
                         }
                         return {
@@ -333,25 +363,25 @@ function convertResponse({
     examples: ExampleEndpointCall[];
 }): Record<string, OpenAPIV3.ResponseObject> {
     const responseByStatusCode: Record<string, OpenAPIV3.ResponseObject> = {};
-    if (httpResponse == null) {
-        responseByStatusCode["204"] = {
-            description: ""
-        };
-    } else if (httpResponse.type === "json") {
+    if (httpResponse?.body?.type === "json") {
         const convertedResponse: OpenAPIV3.MediaTypeObject = {
-            schema: convertTypeReference(httpResponse.responseBodyType)
+            schema: convertTypeReference(httpResponse.body.value.responseBodyType)
         };
 
         const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
         for (const example of examples) {
-            if (example.response.type === "ok" && example.response.body != null) {
+            if (
+                example.response.type === "ok" &&
+                example.response.value.type === "body" &&
+                example.response.value.value != null
+            ) {
                 if (example.name && example.name.originalName !== "") {
                     openapiExamples[example.name.originalName] = {
-                        value: example.response.body.jsonExample
+                        value: example.response.value.value.jsonExample
                     };
                 } else {
                     openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                        value: example.response.body.jsonExample
+                        value: example.response.value.value.jsonExample
                     };
                 }
             }
@@ -361,10 +391,14 @@ function convertResponse({
         }
 
         responseByStatusCode["200"] = {
-            description: httpResponse.docs ?? "",
+            description: httpResponse.body.value.docs ?? "",
             content: {
                 "application/json": convertedResponse
             }
+        };
+    } else {
+        responseByStatusCode["204"] = {
+            description: ""
         };
     }
 
@@ -567,9 +601,11 @@ function convertPathParameter({
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
     for (const example of examples) {
-        const pathParameterExample = [...example.servicePathParameters, ...example.endpointPathParameters].find(
-            (param) => param.key === pathParameter.name.originalName
-        );
+        const pathParameterExample = [
+            ...example.rootPathParameters,
+            ...example.servicePathParameters,
+            ...example.endpointPathParameters
+        ].find((param) => param.name.originalName === pathParameter.name.originalName);
         if (pathParameterExample != null) {
             if (example.name && example.name.originalName !== "") {
                 openapiExamples[example.name.originalName] = {
@@ -579,6 +615,10 @@ function convertPathParameter({
                 openapiExamples[`Example${size(openapiExamples) + 1}`] = {
                     value: pathParameterExample.value.jsonExample
                 };
+            }
+
+            if (convertedParameter.example == null) {
+                convertedParameter.example = pathParameterExample.value.jsonExample;
             }
         }
     }
@@ -611,7 +651,7 @@ function convertQueryParameter({
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
     for (const example of examples) {
         const queryParameterExample = example.queryParameters.find(
-            (param) => param.wireKey === queryParameter.name.wireValue
+            (param) => param.name.wireValue === queryParameter.name.wireValue
         );
         if (queryParameterExample != null) {
             if (example.name && example.name.originalName !== "") {
@@ -622,6 +662,10 @@ function convertQueryParameter({
                 openapiExamples[`Example${size(openapiExamples) + 1}`] = {
                     value: queryParameterExample.value.jsonExample
                 };
+            }
+
+            if (convertedParameter.example == null) {
+                convertedParameter.example = queryParameterExample.value.jsonExample;
             }
         }
     }
@@ -652,7 +696,7 @@ function convertHeader({
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
     for (const example of examples) {
         const headerExample = [...example.serviceHeaders, ...example.endpointHeaders].find(
-            (headerFromExample) => headerFromExample.wireKey === httpHeader.name.wireValue
+            (headerFromExample) => headerFromExample.name.wireValue === httpHeader.name.wireValue
         );
         if (headerExample != null) {
             if (example.name && example.name.originalName !== "") {
@@ -663,6 +707,10 @@ function convertHeader({
                 openapiExamples[`Example${size(openapiExamples) + 1}`] = {
                     value: headerExample.value.jsonExample
                 };
+            }
+
+            if (convertedParameter.example == null) {
+                convertedParameter.example = headerExample.value.jsonExample;
             }
         }
     }

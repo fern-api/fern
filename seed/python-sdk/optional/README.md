@@ -1,6 +1,6 @@
 # Seed Python Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_optional)](https://pypi.python.org/pypi/fern_optional)
 
 The Seed Python library provides convenient access to the Seed API from Python.
@@ -10,6 +10,10 @@ The Seed Python library provides convenient access to the Seed API from Python.
 ```sh
 pip install fern_optional
 ```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -21,9 +25,7 @@ from seed import SeedObjectsWithImports
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
 )
-client.optional.send_optional_body(
-    request={"string": {"key": "value"}},
-)
+client.optional.send_optional_body()
 ```
 
 ## Async Client
@@ -41,9 +43,7 @@ client = AsyncSeedObjectsWithImports(
 
 
 async def main() -> None:
-    await client.optional.send_optional_body(
-        request={"string": {"key": "value"}},
-    )
+    await client.optional.send_optional_body()
 
 
 asyncio.run(main())
@@ -81,7 +81,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.optional.send_optional_body({
+client.optional.send_optional_body(request_options={
     "max_retries": 1
 })
 ```
@@ -101,7 +101,7 @@ client = SeedObjectsWithImports(
 
 
 # Override timeout for a specific method
-client.optional.send_optional_body({
+client.optional.send_optional_body(request_options={
     "timeout_in_seconds": 1
 })
 ```

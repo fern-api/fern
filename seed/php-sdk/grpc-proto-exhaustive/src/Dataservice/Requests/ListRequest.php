@@ -2,7 +2,9 @@
 
 namespace Seed\Dataservice\Requests;
 
-class ListRequest
+use Seed\Core\Json\JsonSerializableType;
+
+class ListRequest extends JsonSerializableType
 {
     /**
      * @var ?string $prefix
@@ -33,7 +35,7 @@ class ListRequest
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->prefix = $values['prefix'] ?? null;
         $this->limit = $values['limit'] ?? null;

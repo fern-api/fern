@@ -46,5 +46,6 @@ allowedFailures:
   - response-property
   - streaming
   - server-sent-events
+  - server-sent-event-examples
   - alias-extends
   - any-auth

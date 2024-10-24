@@ -2,32 +2,32 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Identifier extends SerializableType
+class Identifier extends JsonSerializableType
 {
     /**
-     * @var mixed $type
+     * @var value-of<BasicType>|value-of<ComplexType> $type
      */
-    #[JsonProperty("type")]
-    public mixed $type;
+    #[JsonProperty('type')]
+    public string $type;
 
     /**
      * @var string $value
      */
-    #[JsonProperty("value")]
+    #[JsonProperty('value')]
     public string $value;
 
     /**
      * @var string $label
      */
-    #[JsonProperty("label")]
+    #[JsonProperty('label')]
     public string $label;
 
     /**
      * @param array{
-     *   type: mixed,
+     *   type: value-of<BasicType>|value-of<ComplexType>,
      *   value: string,
      *   label: string,
      * } $values

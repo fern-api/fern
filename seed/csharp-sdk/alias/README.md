@@ -1,6 +1,6 @@
 # Seed C# Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
 [![nuget shield](https://img.shields.io/nuget/v/SeedAlias)](https://nuget.org/packages/SeedAlias)
 
 The Seed C# library provides convenient access to the Seed API from C#.
@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedAlias;
 
 var client = new SeedAliasClient();
-await client.GetAsync("type-kaljhv87");
+await client.GetAsync("typeId");
 ```
 
 ## Exception Handling

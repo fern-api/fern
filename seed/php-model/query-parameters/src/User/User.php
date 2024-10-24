@@ -2,22 +2,22 @@
 
 namespace Seed\User;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class User extends SerializableType
+class User extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var array<string> $tags
      */
-    #[JsonProperty("tags"), ArrayType(["string"])]
+    #[JsonProperty('tags'), ArrayType(['string'])]
     public array $tags;
 
     /**

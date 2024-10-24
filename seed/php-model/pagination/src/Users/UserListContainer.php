@@ -2,16 +2,16 @@
 
 namespace Seed\Users;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class UserListContainer extends SerializableType
+class UserListContainer extends JsonSerializableType
 {
     /**
      * @var array<User> $users
      */
-    #[JsonProperty("users"), ArrayType([User::class])]
+    #[JsonProperty('users'), ArrayType([User::class])]
     public array $users;
 
     /**

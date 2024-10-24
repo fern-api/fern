@@ -15,7 +15,7 @@
 <dd>
 
 ```typescript
-await client.service.post("string", "string", 1);
+await client.service.post("serviceParam", "resourceParam", 1);
 ```
 
 </dd>

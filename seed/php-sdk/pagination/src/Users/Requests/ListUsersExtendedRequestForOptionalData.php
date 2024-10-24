@@ -2,7 +2,9 @@
 
 namespace Seed\Users\Requests;
 
-class ListUsersExtendedRequestForOptionalData
+use Seed\Core\Json\JsonSerializableType;
+
+class ListUsersExtendedRequestForOptionalData extends JsonSerializableType
 {
     /**
      * @var ?string $cursor
@@ -15,7 +17,7 @@ class ListUsersExtendedRequestForOptionalData
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->cursor = $values['cursor'] ?? null;
     }

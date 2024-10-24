@@ -1,0 +1,63 @@
+---
+title: Onboarding a Business
+subtitle: Onboard one of your business customers to Layer
+slug: guides/business-onboarding
+---
+
+
+The first step when using Layer is to onboard your customer to Layer using the [Create a business](/api-reference/create-new-business) endpoint.
+
+This endpoint creates the record for your customer in Layer’s systems. There are many optional features, such as specifying external accounts connected via Plaid. The [Create a business](/api-reference/create-new-business) endpoint lists the full set of options.
+
+```bash Request
+curl -X POST https://sandbox.layerfi.com/v1/businesses \
+  -H "Authorization: Bearer <access_token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "external_id": "test-acme-id",
+    "legal_name": "ACME LLC",
+    "tin": null,
+    "us_state": "CA",
+    "entity_type": "LLC",
+    "phone_number": "+18005555555",
+    "unit_ids": [{"unit_id": "111111"}]
+  }'
+```
+
+
+### Plaid credentials
+If you've added Plaid credentials (see [Plaid Configuration](/api-reference/plaid)), link Plaid accounts by including Plaid item ids & access tokens in the `plaid_items` field.
+```json
+"plaid_items": [
+	{ "item_id": "item-id-1", "access_token": "access_token_1" },
+	{ "item_id": "item-id-3", "access_token": "access_token_3" }
+]
+```
+
+The Layer API will respond with the created [Business](/api-reference/business) object. Within the object will be a unique id, which you will use to make calls on behalf of the business in subsequent steps.
+
+```json Response
+{
+  "data": {
+    "id": "863ed926-e30d-40f4-8e7e-b0d5387ce4fb",
+    "type": "Business",
+    "external_id": "test-acme-id",
+    "legal_name": "ACME LLC",
+    "tin": null,
+    "business_activity_code": null,
+    "us_state": "CA",
+    "entityType": "LLC",
+    "phone_number": "+16504651359",
+    "imported_at": "2023-06-15T22:12:05.467940Z",
+    "updated_at": "2023-06-15T22:12:05.467940Z",
+    "archived_at": null,
+    "unit_accounts": [
+      {
+        "id": "111111",
+        "imported_at": "2023-06-15T22:12:05.467940Z"
+      }
+    ]
+  },
+  "meta": {}
+}
+```

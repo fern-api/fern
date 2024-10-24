@@ -2,33 +2,33 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseNonHiddenGrade extends SerializableType
+class TestCaseNonHiddenGrade extends JsonSerializableType
 {
     /**
      * @var bool $passed
      */
-    #[JsonProperty("passed")]
+    #[JsonProperty('passed')]
     public bool $passed;
 
     /**
      * @var mixed $actualResult
      */
-    #[JsonProperty("actualResult")]
+    #[JsonProperty('actualResult')]
     public mixed $actualResult;
 
     /**
      * @var mixed $exception
      */
-    #[JsonProperty("exception")]
+    #[JsonProperty('exception')]
     public mixed $exception;
 
     /**
      * @var string $stdout
      */
-    #[JsonProperty("stdout")]
+    #[JsonProperty('stdout')]
     public string $stdout;
 
     /**

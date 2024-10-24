@@ -14,7 +14,7 @@ client.service.get_resource(
 
 client = SeedMixedCase(base_url="https://yourhost.com/path/to/api", )        
 client.service.get_resource(
-	resource_id="string"
+	resource_id="ResourceID"
 )
  
 ```                        

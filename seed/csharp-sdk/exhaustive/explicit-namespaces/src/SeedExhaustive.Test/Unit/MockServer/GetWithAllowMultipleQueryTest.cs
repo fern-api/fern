@@ -16,7 +16,7 @@ public class GetWithAllowMultipleQueryTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/params")
-                    .WithParam("query", "string")
+                    .WithParam("query", "query")
                     .WithParam("numer", "1")
                     .UsingGet()
             )
@@ -25,7 +25,7 @@ public class GetWithAllowMultipleQueryTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-                    new GetWithMultipleQuery { Query = ["string"], Numer = [1] },
+                    new GetWithMultipleQuery { Query = ["query"], Numer = [1] },
                     RequestOptions
                 )
         );

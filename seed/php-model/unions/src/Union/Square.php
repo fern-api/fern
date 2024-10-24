@@ -2,15 +2,15 @@
 
 namespace Seed\Union;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Square extends SerializableType
+class Square extends JsonSerializableType
 {
     /**
      * @var float $length
      */
-    #[JsonProperty("length")]
+    #[JsonProperty('length')]
     public float $length;
 
     /**

@@ -2,15 +2,15 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Usage extends SerializableType
+class Usage extends JsonSerializableType
 {
     /**
      * @var ?int $units
      */
-    #[JsonProperty("units")]
+    #[JsonProperty('units')]
     public ?int $units;
 
     /**
@@ -19,7 +19,7 @@ class Usage extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->units = $values['units'] ?? null;
     }

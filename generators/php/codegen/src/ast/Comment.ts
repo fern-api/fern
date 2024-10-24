@@ -3,11 +3,11 @@ import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
-export type TagType = "param" | "returns" | "throws" | "var";
+export type TagType = "param" | "return" | "throws" | "var";
 
 export const TagType = {
     Param: "param",
-    Returns: "returns",
+    Returns: "return",
     Throws: "throws",
     Var: "var"
 } as const;
@@ -51,8 +51,11 @@ export class Comment extends AstNode {
         writer.writeLine("/**");
         if (this.docs != null) {
             this.docs.split("\n").forEach((line) => {
-                writer.writeLine(`* ${line}`);
+                writer.writeLine(` * ${line}`);
             });
+            if (this.tags.length > 0) {
+                writer.writeLine(" *");
+            }
         }
         for (const tag of this.tags) {
             this.writeTag({ writer, tag });

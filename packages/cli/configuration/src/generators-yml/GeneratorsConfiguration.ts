@@ -3,10 +3,10 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Audiences } from "../commons";
-import { APIDefinitionSettingsSchema } from "./schemas/APIConfigurationSchema";
-import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
-import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
-import { ReadmeSchema } from "./schemas/ReadmeSchema";
+import { ApiDefinitionSettingsSchema } from "./schemas";
+import { GeneratorInvocationSchema } from "./schemas";
+import { GeneratorsConfigurationSchema } from "./schemas";
+import { ReadmeSchema } from "./schemas";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
@@ -19,7 +19,7 @@ export interface GeneratorsConfiguration {
     absolutePathToConfiguration: AbsoluteFilePath;
 }
 
-export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition;
+export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition | ConjureAPIDefinition;
 
 export interface SingleNamespaceAPIDefinition
     extends RawSchemas.WithEnvironmentsSchema,
@@ -38,11 +38,20 @@ export interface MultiNamespaceAPIDefinition
     definitions: Record<string, APIDefinitionLocation[]>;
 }
 
+export interface ConjureAPIDefinition
+    extends RawSchemas.WithEnvironmentsSchema,
+        RawSchemas.WithAuthSchema,
+        RawSchemas.WithHeadersSchema {
+    type: "conjure";
+    pathToConjureDefinition: string;
+}
+
 export interface APIDefinitionSettings {
     shouldUseTitleAsName: boolean | undefined;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean | undefined;
     asyncApiMessageNaming: "v1" | "v2" | undefined;
     shouldUseOptionalAdditionalProperties: boolean | undefined;
+    coerceEnumsToLiterals: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {
@@ -101,7 +110,7 @@ export interface GeneratorInvocation {
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
     readme: ReadmeSchema | undefined;
-    settings: APIDefinitionSettingsSchema | undefined;
+    settings: ApiDefinitionSettingsSchema | undefined;
 }
 
 export const GenerationLanguage = {

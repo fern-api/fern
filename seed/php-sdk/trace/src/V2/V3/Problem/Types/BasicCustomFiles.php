@@ -2,42 +2,42 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\Language;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 
-class BasicCustomFiles extends SerializableType
+class BasicCustomFiles extends JsonSerializableType
 {
     /**
      * @var string $methodName
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**
      * @var NonVoidFunctionSignature $signature
      */
-    #[JsonProperty("signature")]
+    #[JsonProperty('signature')]
     public NonVoidFunctionSignature $signature;
 
     /**
-     * @var array<Language, Files> $additionalFiles
+     * @var array<value-of<Language>, Files> $additionalFiles
      */
-    #[JsonProperty("additionalFiles"), ArrayType([Language::class => Files::class])]
+    #[JsonProperty('additionalFiles'), ArrayType(['string' => Files::class])]
     public array $additionalFiles;
 
     /**
      * @var BasicTestCaseTemplate $basicTestCaseTemplate
      */
-    #[JsonProperty("basicTestCaseTemplate")]
+    #[JsonProperty('basicTestCaseTemplate')]
     public BasicTestCaseTemplate $basicTestCaseTemplate;
 
     /**
      * @param array{
      *   methodName: string,
      *   signature: NonVoidFunctionSignature,
-     *   additionalFiles: array<Language, Files>,
+     *   additionalFiles: array<value-of<Language>, Files>,
      *   basicTestCaseTemplate: BasicTestCaseTemplate,
      * } $values
      */

@@ -5,7 +5,7 @@ import {
     getDefinitionFile,
     visitAllDefinitionFiles,
     visitAllPackageMarkers
-} from "@fern-api/workspace-loader";
+} from "@fern-api/api-workspace-commons";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { CASINGS_GENERATOR } from "../utils/getAllPropertiesForObject";
 import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointName";

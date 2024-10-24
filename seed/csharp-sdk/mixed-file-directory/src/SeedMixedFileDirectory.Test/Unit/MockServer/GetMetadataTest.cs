@@ -17,7 +17,7 @@ public class GetMetadataTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "id": "string",
+              "id": "id",
               "value": {
                 "key": "value"
               }
@@ -29,7 +29,7 @@ public class GetMetadataTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/users/events/metadata/")
-                    .WithParam("id", "string")
+                    .WithParam("id", "id")
                     .UsingGet()
             )
             .RespondWith(
@@ -40,7 +40,7 @@ public class GetMetadataTest : BaseMockServerTest
             );
 
         var response = await Client.User.Events.Metadata.GetMetadataAsync(
-            new GetEventMetadataRequest { Id = "string" },
+            new GetEventMetadataRequest { Id = "id" },
             RequestOptions
         );
         JToken

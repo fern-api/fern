@@ -158,7 +158,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"query\": \"What is the weather today\"\n}",
+                  "raw": "{\n    \"query\": \"query\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -167,7 +167,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "body": "{\n    \"message\": \"message\",\n    \"status\": 1,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -283,7 +283,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"temperature\": 10.1,\n    \"prompt\": \"You are a helpful assistant\",\n    \"context\": \"You're super wise\",\n    \"aliasedContext\": \"You're super wise\",\n    \"maybeContext\": \"You're super wise\",\n    \"objectWithLiteral\": {\n        \"nestedLiteral\": {\n            \"myLiteral\": \"How super cool\"\n        }\n    },\n    \"stream\": false,\n    \"query\": \"What is the weather today\"\n}",
+                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"query\": \"query\",\n    \"stream\": false,\n    \"aliasedContext\": \"You're super wise\",\n    \"objectWithLiteral\": {\n        \"nestedLiteral\": {\n            \"myLiteral\": \"How super cool\"\n        }\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -292,7 +292,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "body": "{\n    \"message\": \"message\",\n    \"status\": 1,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -414,7 +414,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "body": "{\n    \"message\": \"message\",\n    \"status\": 1,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -525,7 +525,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/query?prompt=You+are+a+helpful+assistant&query=string&stream=false",
+                  "raw": "{{baseUrl}}/query?prompt=You+are+a+helpful+assistant&query=query&stream=false",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -541,7 +541,7 @@
                     {
                       "key": "query",
                       "description": null,
-                      "value": "string"
+                      "value": "query"
                     },
                     {
                       "key": "stream",
@@ -563,7 +563,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "body": "{\n    \"message\": \"message\",\n    \"status\": 1,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -602,7 +602,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\"\n}",
+              "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\",\n    \"containerObject\": {\n        \"nestedObjects\": [\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"strProp\": \"strProp\"\n            }\n        ]\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -639,7 +639,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\"\n}",
+                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\",\n    \"containerObject\": {\n        \"nestedObjects\": [\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"strProp\": \"strProp\"\n            }\n        ]\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -679,7 +679,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\"\n}",
+                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"query\": \"query\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"containerObject\": {\n        \"nestedObjects\": [\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"strProp\": \"strProp\"\n            },\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"strProp\": \"strProp\"\n            }\n        ]\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -688,7 +688,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "body": "{\n    \"message\": \"message\",\n    \"status\": 1,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
             }
           ]

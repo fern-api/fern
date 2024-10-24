@@ -2,8 +2,8 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class UpdateResponse extends SerializableType
+class UpdateResponse extends JsonSerializableType
 {
 }

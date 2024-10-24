@@ -9,3 +9,4 @@ export {
     hasNamedArgument,
     isNamedArgument
 } from "./Argument";
+export { Ternary } from "./Ternary";

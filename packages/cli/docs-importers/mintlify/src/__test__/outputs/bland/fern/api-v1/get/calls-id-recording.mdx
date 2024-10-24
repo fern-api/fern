@@ -1,0 +1,63 @@
+---
+title: Audio Recording
+subtitle: Retrieve your call's audio recording.
+slug: api-v1/get/calls-id-recording
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string">
+  Your API key for authentication.
+</ParamField>
+
+<ParamField header="accept" type="string">
+  Must be `application/json` to receive a url, or `audio/mpeg` to receive the audio file.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="call_id" type="string">
+  The ID of the call to retrieve the recording for.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  If the status is `success`, the `url` field will be present.
+  
+  A 404 error will be returned if the call does not exist or the recording is not available. We can only retrieve recordings if the call was created with `record` set to `true`.
+
+A 400/500 error will be returned if there is an error retrieving the recording.
+
+</ResponseField>
+
+<ResponseField name="url" type="string">
+  If the status is `success`, the `url` will provide the exact location of the MP3 file storing the call's audio.
+</ResponseField>
+
+<ResponseExample>
+
+```json Success response
+{
+  "status": "success",
+  "url": "https://URL-TO-FILE.mp3"
+}
+```
+
+```json Success response 'audio/mpeg'
+(returns the audio file)
+```
+
+```json Error response
+{
+  "status": "error",
+  "message": "Error fetching recording"
+}
+```
+
+</ResponseExample>

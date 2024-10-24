@@ -2,21 +2,21 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class InvalidRequestResponse extends SerializableType
+class InvalidRequestResponse extends JsonSerializableType
 {
     /**
      * @var mixed $request
      */
-    #[JsonProperty("request")]
+    #[JsonProperty('request')]
     public mixed $request;
 
     /**
      * @var mixed $cause
      */
-    #[JsonProperty("cause")]
+    #[JsonProperty('cause')]
     public mixed $cause;
 
     /**

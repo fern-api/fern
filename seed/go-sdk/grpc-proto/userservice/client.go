@@ -47,6 +47,7 @@ func (c *Client) Create(
 	endpointURL := baseURL + "/users"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers.Set("Content-Type", "application/json")
 
 	var response *fern.CreateResponse
 	if err := c.caller.Call(

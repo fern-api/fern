@@ -2,9 +2,10 @@
 
 namespace Seed\Users\Requests;
 
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Users\Types\Order;
 
-class ListWithOffsetPaginationHasNextPageRequest
+class ListWithOffsetPaginationHasNextPageRequest extends JsonSerializableType
 {
     /**
      * @var ?int $page Defaults to first page
@@ -19,19 +20,19 @@ class ListWithOffsetPaginationHasNextPageRequest
     public ?int $limit;
 
     /**
-     * @var ?Order $order
+     * @var ?value-of<Order> $order
      */
-    public ?Order $order;
+    public ?string $order;
 
     /**
      * @param array{
      *   page?: ?int,
      *   limit?: ?int,
-     *   order?: ?Order,
+     *   order?: ?value-of<Order>,
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->page = $values['page'] ?? null;
         $this->limit = $values['limit'] ?? null;

@@ -2,16 +2,16 @@
 
 namespace Seed\FolderB\Common\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\FolderC\Common\Types\Foo;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
-class Foo extends SerializableType
+class Foo extends JsonSerializableType
 {
     /**
      * @var ?Foo $foo
      */
-    #[JsonProperty("foo")]
+    #[JsonProperty('foo')]
     public ?Foo $foo;
 
     /**
@@ -20,7 +20,7 @@ class Foo extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->foo = $values['foo'] ?? null;
     }

@@ -609,7 +609,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         return result;
     }
 
-    private relativePathToWindowsPath(relativePath: RelativeFilePath): RelativeFilePath {
-        return RelativeFilePath.of(path.win32.normalize(relativePath));
+    private relativePathToWindowsPath(relativePath: RelativeFilePath): string {
+        return path.win32.normalize(relativePath);
     }
 }

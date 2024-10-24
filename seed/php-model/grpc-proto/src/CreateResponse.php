@@ -2,15 +2,15 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class CreateResponse extends SerializableType
+class CreateResponse extends JsonSerializableType
 {
     /**
      * @var ?UserModel $user
      */
-    #[JsonProperty("user")]
+    #[JsonProperty('user')]
     public ?UserModel $user;
 
     /**
@@ -19,7 +19,7 @@ class CreateResponse extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->user = $values['user'] ?? null;
     }

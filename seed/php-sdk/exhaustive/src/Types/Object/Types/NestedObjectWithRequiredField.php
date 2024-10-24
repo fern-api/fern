@@ -2,21 +2,21 @@
 
 namespace Seed\Types\Object\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class NestedObjectWithRequiredField extends SerializableType
+class NestedObjectWithRequiredField extends JsonSerializableType
 {
     /**
      * @var string $string
      */
-    #[JsonProperty("string")]
+    #[JsonProperty('string')]
     public string $string;
 
     /**
      * @var ObjectWithOptionalField $nestedObject
      */
-    #[JsonProperty("NestedObject")]
+    #[JsonProperty('NestedObject')]
     public ObjectWithOptionalField $nestedObject;
 
     /**

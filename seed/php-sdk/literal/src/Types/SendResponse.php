@@ -2,27 +2,27 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class SendResponse extends SerializableType
+class SendResponse extends JsonSerializableType
 {
     /**
      * @var string $message
      */
-    #[JsonProperty("message")]
+    #[JsonProperty('message')]
     public string $message;
 
     /**
      * @var int $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public int $status;
 
     /**
      * @var bool $success
      */
-    #[JsonProperty("success")]
+    #[JsonProperty('success')]
     public bool $success;
 
     /**

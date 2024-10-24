@@ -1,0 +1,61 @@
+---
+title: "Authorize a Web Agent Call"
+api: "POST https://web.bland.ai/v1/agents/{agent_id}/authorize"
+description: "Create a single-use session token for a client to talk with your web agent."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+
+Example web call usage (client side):
+
+```javascript
+import { BlandWebClient } from "bland-client-js-sdk";
+
+const agentId = "YOUR-AGENT-ID";
+const sessionToken = "YOUR-SESSION-TOKEN";
+
+document.addEventListener("DOMContentLoaded", async () => {
+  document.getElementById("btn").addEventListener("click", async () => {
+    const blandClient = new BlandWebClient(agentId, sessionToken);
+    await blandClient.initConversation({
+      sampleRate: 44100,
+    });
+  });
+});
+```
+
+</ParamField>
+
+### Path
+
+<ParamField path="agent_id" type="string" required>
+  The web agent to authorize a call for.
+
+Special note: While in Beta, this request must be made to the `web.bland.ai` domain.
+
+</ParamField>
+
+### Response
+
+<ResponseField name="token" type="string">
+  The single-use session token that can be sent to the client.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  A message saying whether the token creation succeeded, or a helpful message describing why it failed.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+  "token": "22480c52-0ff1-4214-bcb7-50649b508432"
+}
+```
+</ResponseExample>

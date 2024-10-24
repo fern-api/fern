@@ -5,6 +5,7 @@ package undiscriminated
 import (
 	json "encoding/json"
 	fmt "fmt"
+	core "github.com/fern-api/undiscriminated-go/core"
 )
 
 type Key struct {
@@ -82,4 +83,45 @@ func NewKeyTypeFromString(s string) (KeyType, error) {
 
 func (k KeyType) Ptr() *KeyType {
 	return &k
+}
+
+type TypeWithOptionalUnion struct {
+	MyUnion *MyUnion `json:"myUnion,omitempty" url:"myUnion,omitempty"`
+
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
+}
+
+func (t *TypeWithOptionalUnion) UnmarshalJSON(data []byte) error {
+	type unmarshaler TypeWithOptionalUnion
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TypeWithOptionalUnion(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
+	t._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TypeWithOptionalUnion) String() string {
+	if len(t._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(t._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }

@@ -136,28 +136,45 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.write(")");
             });
         }
-        if (this.context.isEnum(reference)) {
-            return php.codeblock(`${parameter}->value`);
+        const maybeLiteral = this.context.maybeLiteral(reference);
+        if (maybeLiteral != null) {
+            return php.codeblock(this.context.getLiteralAsString(maybeLiteral));
         }
-        return php.codeblock(`${parameter}`);
+        const type = this.context.phpTypeMapper.convert({ reference });
+        const underlyingInternalType = type.underlyingType().internalType;
+        if (underlyingInternalType.type === "union") {
+            return this.serializeJsonForUnion({
+                bodyArgument: php.codeblock(parameter),
+                types: underlyingInternalType.types,
+                isOptional: false
+            });
+        }
+        return php.codeblock(parameter);
     }
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
+        const bodyArgument = this.getRequestBodyArgument();
+        return bodyArgument != null
+            ? {
+                  requestBodyReference: this.serializeJsonRequest({
+                      bodyArgument
+                  })
+              }
+            : undefined;
+    }
+
+    private getRequestBodyArgument(): php.CodeBlock | undefined {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
         return this.endpoint.requestBody._visit({
             reference: () => {
-                return {
-                    requestBodyReference: `${this.getRequestParameterName()}->${this.context.getPropertyName(
-                        this.wrapper.bodyKey
-                    )}`
-                };
+                return php.codeblock(
+                    `${this.getRequestParameterName()}->${this.context.getPropertyName(this.wrapper.bodyKey)}`
+                );
             },
             inlinedRequestBody: (_inlinedRequestBody) => {
-                return {
-                    requestBodyReference: `${this.getRequestParameterName()}`
-                };
+                return php.codeblock(`${this.getRequestParameterName()}`);
             },
             fileUpload: () => undefined,
             bytes: () => undefined,

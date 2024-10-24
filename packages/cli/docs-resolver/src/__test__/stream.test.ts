@@ -26,7 +26,7 @@ it.skip("converts to api reference node", async () => {
     const parsedDocsConfig = await docsYml.parseDocsConfiguration({
         rawDocsConfiguration: docsWorkspace.config,
         context,
-        absolutePathToFernFolder: docsWorkspace.absoluteFilepath,
+        absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
         absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
     });
 
@@ -57,7 +57,7 @@ it.skip("converts to api reference node", async () => {
         throw new Error("Expected fern workspace");
     }
 
-    const slug = FernNavigation.SlugGenerator.init("/base/path");
+    const slug = FernNavigation.V1.SlugGenerator.init("/base/path");
 
     const ir = await generateIntermediateRepresentation({
         workspace: apiWorkspace,

@@ -2,27 +2,27 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseTemplate extends SerializableType
+class TestCaseTemplate extends JsonSerializableType
 {
     /**
      * @var string $templateId
      */
-    #[JsonProperty("templateId")]
+    #[JsonProperty('templateId')]
     public string $templateId;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var TestCaseImplementation $implementation
      */
-    #[JsonProperty("implementation")]
+    #[JsonProperty('implementation')]
     public TestCaseImplementation $implementation;
 
     /**

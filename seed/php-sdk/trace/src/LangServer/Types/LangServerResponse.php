@@ -2,15 +2,15 @@
 
 namespace Seed\LangServer\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class LangServerResponse extends SerializableType
+class LangServerResponse extends JsonSerializableType
 {
     /**
      * @var mixed $response
      */
-    #[JsonProperty("response")]
+    #[JsonProperty('response')]
     public mixed $response;
 
     /**

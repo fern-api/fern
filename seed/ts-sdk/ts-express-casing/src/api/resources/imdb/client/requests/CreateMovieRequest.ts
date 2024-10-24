@@ -7,8 +7,8 @@ import * as SeedApi from "../../../../index";
 /**
  * @example
  *     {
- *         id: "string",
- *         movieTitle: "string",
+ *         id: "id",
+ *         movieTitle: "movie_title",
  *         movieRating: 1.1
  *     }
  */

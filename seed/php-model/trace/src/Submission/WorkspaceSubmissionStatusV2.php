@@ -2,16 +2,16 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class WorkspaceSubmissionStatusV2 extends SerializableType
+class WorkspaceSubmissionStatusV2 extends JsonSerializableType
 {
     /**
      * @var array<WorkspaceSubmissionUpdate> $updates
      */
-    #[JsonProperty("updates"), ArrayType([WorkspaceSubmissionUpdate::class])]
+    #[JsonProperty('updates'), ArrayType([WorkspaceSubmissionUpdate::class])]
     public array $updates;
 
     /**

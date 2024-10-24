@@ -2,27 +2,27 @@
 
 namespace Seed\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class GenericCreateProblemError extends SerializableType
+class GenericCreateProblemError extends JsonSerializableType
 {
     /**
      * @var string $message
      */
-    #[JsonProperty("message")]
+    #[JsonProperty('message')]
     public string $message;
 
     /**
      * @var string $type
      */
-    #[JsonProperty("type")]
+    #[JsonProperty('type')]
     public string $type;
 
     /**
      * @var string $stacktrace
      */
-    #[JsonProperty("stacktrace")]
+    #[JsonProperty('stacktrace')]
     public string $stacktrace;
 
     /**

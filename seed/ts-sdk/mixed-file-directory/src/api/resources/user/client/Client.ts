@@ -34,9 +34,7 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.list({
-     *         limit: 1
-     *     })
+     *     await client.user.list()
      */
     public async list(
         request: SeedMixedFileDirectory.ListUsersRequest = {},

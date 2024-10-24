@@ -2,90 +2,90 @@
 
 namespace Seed\Types\Object\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use DateTime;
-use Seed\Core\DateType;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\Date;
+use Seed\Core\Types\ArrayType;
 
-class ObjectWithOptionalField extends SerializableType
+class ObjectWithOptionalField extends JsonSerializableType
 {
     /**
      * @var ?string $string This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
      */
-    #[JsonProperty("string")]
+    #[JsonProperty('string')]
     public ?string $string;
 
     /**
      * @var ?int $integer
      */
-    #[JsonProperty("integer")]
+    #[JsonProperty('integer')]
     public ?int $integer;
 
     /**
      * @var ?int $long
      */
-    #[JsonProperty("long")]
+    #[JsonProperty('long')]
     public ?int $long;
 
     /**
      * @var ?float $double
      */
-    #[JsonProperty("double")]
+    #[JsonProperty('double')]
     public ?float $double;
 
     /**
      * @var ?bool $bool
      */
-    #[JsonProperty("bool")]
+    #[JsonProperty('bool')]
     public ?bool $bool;
 
     /**
      * @var ?DateTime $datetime
      */
-    #[JsonProperty("datetime"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('datetime'), Date(Date::TYPE_DATETIME)]
     public ?DateTime $datetime;
 
     /**
      * @var ?DateTime $date
      */
-    #[JsonProperty("date"), DateType(DateType::TYPE_DATE)]
+    #[JsonProperty('date'), Date(Date::TYPE_DATE)]
     public ?DateTime $date;
 
     /**
      * @var ?string $uuid
      */
-    #[JsonProperty("uuid")]
+    #[JsonProperty('uuid')]
     public ?string $uuid;
 
     /**
      * @var ?string $base64
      */
-    #[JsonProperty("base64")]
+    #[JsonProperty('base64')]
     public ?string $base64;
 
     /**
      * @var ?array<string> $list
      */
-    #[JsonProperty("list"), ArrayType(["string"])]
+    #[JsonProperty('list'), ArrayType(['string'])]
     public ?array $list;
 
     /**
      * @var ?array<string> $set
      */
-    #[JsonProperty("set"), ArrayType(["string"])]
+    #[JsonProperty('set'), ArrayType(['string'])]
     public ?array $set;
 
     /**
      * @var ?array<int, string> $map
      */
-    #[JsonProperty("map"), ArrayType(["integer" => "string"])]
+    #[JsonProperty('map'), ArrayType(['integer' => 'string'])]
     public ?array $map;
 
     /**
      * @var ?string $bigint
      */
-    #[JsonProperty("bigint")]
+    #[JsonProperty('bigint')]
     public ?string $bigint;
 
     /**
@@ -106,7 +106,7 @@ class ObjectWithOptionalField extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->string = $values['string'] ?? null;
         $this->integer = $values['integer'] ?? null;

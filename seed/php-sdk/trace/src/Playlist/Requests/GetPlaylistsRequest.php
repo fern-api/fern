@@ -2,7 +2,9 @@
 
 namespace Seed\Playlist\Requests;
 
-class GetPlaylistsRequest
+use Seed\Core\Json\JsonSerializableType;
+
+class GetPlaylistsRequest extends JsonSerializableType
 {
     /**
      * @var ?int $limit

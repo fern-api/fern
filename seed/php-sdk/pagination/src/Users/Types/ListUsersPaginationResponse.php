@@ -2,34 +2,34 @@
 
 namespace Seed\Users\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class ListUsersPaginationResponse extends SerializableType
+class ListUsersPaginationResponse extends JsonSerializableType
 {
     /**
      * @var ?bool $hasNextPage
      */
-    #[JsonProperty("hasNextPage")]
+    #[JsonProperty('hasNextPage')]
     public ?bool $hasNextPage;
 
     /**
      * @var ?Page $page
      */
-    #[JsonProperty("page")]
+    #[JsonProperty('page')]
     public ?Page $page;
 
     /**
      * @var int $totalCount The totall number of /users
      */
-    #[JsonProperty("total_count")]
+    #[JsonProperty('total_count')]
     public int $totalCount;
 
     /**
      * @var array<User> $data
      */
-    #[JsonProperty("data"), ArrayType([User::class])]
+    #[JsonProperty('data'), ArrayType([User::class])]
     public array $data;
 
     /**

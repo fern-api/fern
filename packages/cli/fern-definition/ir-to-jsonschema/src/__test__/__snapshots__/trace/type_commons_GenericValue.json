@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "stringifiedType": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "stringifiedValue": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "stringifiedValue"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

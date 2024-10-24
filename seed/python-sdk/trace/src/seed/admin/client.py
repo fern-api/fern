@@ -306,15 +306,9 @@ class AdminClient:
         import uuid
 
         from seed import SeedTrace
-        from seed.commons import (
-            DebugVariableValue_IntegerValue,
-            VariableValue_IntegerValue,
-        )
+        from seed.commons import VariableValue_IntegerValue
         from seed.submission import (
             ActualResult_Value,
-            ExpressionLocation,
-            Scope,
-            StackFrame,
             StackInformation,
             TestCaseResult,
             TestCaseResultWithStdout,
@@ -329,16 +323,16 @@ class AdminClient:
             submission_id=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
-            test_case_id="string",
+            test_case_id="testCaseId",
             result=TestCaseResultWithStdout(
                 result=TestCaseResult(
                     expected_result=VariableValue_IntegerValue(value=1),
                     actual_result=ActualResult_Value(
-                        value=VariableValue_IntegerValue(value={"key": "value"})
+                        value=VariableValue_IntegerValue(value=1)
                     ),
                     passed=True,
                 ),
-                stdout="string",
+                stdout="stdout",
             ),
             trace_responses=[
                 TraceResponse(
@@ -346,25 +340,19 @@ class AdminClient:
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                     line_number=1,
-                    return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(
-                        start=1,
-                        offset=1,
-                    ),
                     stack=StackInformation(
                         num_stack_frames=1,
-                        top_stack_frame=StackFrame(
-                            method_name="string",
-                            line_number=1,
-                            scopes=[
-                                Scope(
-                                    variables={"string": {"key": "value"}},
-                                )
-                            ],
-                        ),
                     ),
-                    stdout="string",
-                )
+                ),
+                TraceResponse(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                    ),
+                ),
             ],
         )
         """
@@ -419,15 +407,7 @@ class AdminClient:
         import uuid
 
         from seed import SeedTrace
-        from seed.commons import DebugVariableValue_IntegerValue
-        from seed.submission import (
-            ExpressionLocation,
-            Scope,
-            StackFrame,
-            StackInformation,
-            TracedFile,
-            TraceResponseV2,
-        )
+        from seed.submission import StackInformation, TracedFile, TraceResponseV2
 
         client = SeedTrace(
             x_random_header="YOUR_X_RANDOM_HEADER",
@@ -437,7 +417,7 @@ class AdminClient:
             submission_id=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
-            test_case_id="string",
+            test_case_id="testCaseId",
             request=[
                 TraceResponseV2(
                     submission_id=uuid.UUID(
@@ -445,28 +425,26 @@ class AdminClient:
                     ),
                     line_number=1,
                     file=TracedFile(
-                        filename="string",
-                        directory="string",
-                    ),
-                    return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(
-                        start=1,
-                        offset=1,
+                        filename="filename",
+                        directory="directory",
                     ),
                     stack=StackInformation(
                         num_stack_frames=1,
-                        top_stack_frame=StackFrame(
-                            method_name="string",
-                            line_number=1,
-                            scopes=[
-                                Scope(
-                                    variables={"string": {"key": "value"}},
-                                )
-                            ],
-                        ),
                     ),
-                    stdout="string",
-                )
+                ),
+                TraceResponseV2(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    file=TracedFile(
+                        filename="filename",
+                        directory="directory",
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                    ),
+                ),
             ],
         )
         """
@@ -516,17 +494,7 @@ class AdminClient:
         import uuid
 
         from seed import SeedTrace
-        from seed.commons import DebugVariableValue_IntegerValue
-        from seed.submission import (
-            ExceptionInfo,
-            ExceptionV2_Generic,
-            ExpressionLocation,
-            Scope,
-            StackFrame,
-            StackInformation,
-            TraceResponse,
-            WorkspaceRunDetails,
-        )
+        from seed.submission import StackInformation, TraceResponse, WorkspaceRunDetails
 
         client = SeedTrace(
             x_random_header="YOUR_X_RANDOM_HEADER",
@@ -537,17 +505,7 @@ class AdminClient:
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             workspace_run_details=WorkspaceRunDetails(
-                exception_v_2=ExceptionV2_Generic(
-                    exception_type="string",
-                    exception_message="string",
-                    exception_stacktrace="string",
-                ),
-                exception=ExceptionInfo(
-                    exception_type="string",
-                    exception_message="string",
-                    exception_stacktrace="string",
-                ),
-                stdout="string",
+                stdout="stdout",
             ),
             trace_responses=[
                 TraceResponse(
@@ -555,25 +513,19 @@ class AdminClient:
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                     line_number=1,
-                    return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(
-                        start=1,
-                        offset=1,
-                    ),
                     stack=StackInformation(
                         num_stack_frames=1,
-                        top_stack_frame=StackFrame(
-                            method_name="string",
-                            line_number=1,
-                            scopes=[
-                                Scope(
-                                    variables={"string": {"key": "value"}},
-                                )
-                            ],
-                        ),
                     ),
-                    stdout="string",
-                )
+                ),
+                TraceResponse(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                    ),
+                ),
             ],
         )
         """
@@ -625,15 +577,7 @@ class AdminClient:
         import uuid
 
         from seed import SeedTrace
-        from seed.commons import DebugVariableValue_IntegerValue
-        from seed.submission import (
-            ExpressionLocation,
-            Scope,
-            StackFrame,
-            StackInformation,
-            TracedFile,
-            TraceResponseV2,
-        )
+        from seed.submission import StackInformation, TracedFile, TraceResponseV2
 
         client = SeedTrace(
             x_random_header="YOUR_X_RANDOM_HEADER",
@@ -650,28 +594,26 @@ class AdminClient:
                     ),
                     line_number=1,
                     file=TracedFile(
-                        filename="string",
-                        directory="string",
-                    ),
-                    return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(
-                        start=1,
-                        offset=1,
+                        filename="filename",
+                        directory="directory",
                     ),
                     stack=StackInformation(
                         num_stack_frames=1,
-                        top_stack_frame=StackFrame(
-                            method_name="string",
-                            line_number=1,
-                            scopes=[
-                                Scope(
-                                    variables={"string": {"key": "value"}},
-                                )
-                            ],
-                        ),
                     ),
-                    stdout="string",
-                )
+                ),
+                TraceResponseV2(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    file=TracedFile(
+                        filename="filename",
+                        directory="directory",
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                    ),
+                ),
             ],
         )
         """
@@ -1006,15 +948,9 @@ class AsyncAdminClient:
         import uuid
 
         from seed import AsyncSeedTrace
-        from seed.commons import (
-            DebugVariableValue_IntegerValue,
-            VariableValue_IntegerValue,
-        )
+        from seed.commons import VariableValue_IntegerValue
         from seed.submission import (
             ActualResult_Value,
-            ExpressionLocation,
-            Scope,
-            StackFrame,
             StackInformation,
             TestCaseResult,
             TestCaseResultWithStdout,
@@ -1032,16 +968,16 @@ class AsyncAdminClient:
                 submission_id=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
-                test_case_id="string",
+                test_case_id="testCaseId",
                 result=TestCaseResultWithStdout(
                     result=TestCaseResult(
                         expected_result=VariableValue_IntegerValue(value=1),
                         actual_result=ActualResult_Value(
-                            value=VariableValue_IntegerValue(value={"key": "value"})
+                            value=VariableValue_IntegerValue(value=1)
                         ),
                         passed=True,
                     ),
-                    stdout="string",
+                    stdout="stdout",
                 ),
                 trace_responses=[
                     TraceResponse(
@@ -1049,25 +985,19 @@ class AsyncAdminClient:
                             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         ),
                         line_number=1,
-                        return_value=DebugVariableValue_IntegerValue(value=1),
-                        expression_location=ExpressionLocation(
-                            start=1,
-                            offset=1,
-                        ),
                         stack=StackInformation(
                             num_stack_frames=1,
-                            top_stack_frame=StackFrame(
-                                method_name="string",
-                                line_number=1,
-                                scopes=[
-                                    Scope(
-                                        variables={"string": {"key": "value"}},
-                                    )
-                                ],
-                            ),
                         ),
-                        stdout="string",
-                    )
+                    ),
+                    TraceResponse(
+                        submission_id=uuid.UUID(
+                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        ),
+                        line_number=1,
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                        ),
+                    ),
                 ],
             )
 
@@ -1126,15 +1056,7 @@ class AsyncAdminClient:
         import uuid
 
         from seed import AsyncSeedTrace
-        from seed.commons import DebugVariableValue_IntegerValue
-        from seed.submission import (
-            ExpressionLocation,
-            Scope,
-            StackFrame,
-            StackInformation,
-            TracedFile,
-            TraceResponseV2,
-        )
+        from seed.submission import StackInformation, TracedFile, TraceResponseV2
 
         client = AsyncSeedTrace(
             x_random_header="YOUR_X_RANDOM_HEADER",
@@ -1147,7 +1069,7 @@ class AsyncAdminClient:
                 submission_id=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
-                test_case_id="string",
+                test_case_id="testCaseId",
                 request=[
                     TraceResponseV2(
                         submission_id=uuid.UUID(
@@ -1155,28 +1077,26 @@ class AsyncAdminClient:
                         ),
                         line_number=1,
                         file=TracedFile(
-                            filename="string",
-                            directory="string",
-                        ),
-                        return_value=DebugVariableValue_IntegerValue(value=1),
-                        expression_location=ExpressionLocation(
-                            start=1,
-                            offset=1,
+                            filename="filename",
+                            directory="directory",
                         ),
                         stack=StackInformation(
                             num_stack_frames=1,
-                            top_stack_frame=StackFrame(
-                                method_name="string",
-                                line_number=1,
-                                scopes=[
-                                    Scope(
-                                        variables={"string": {"key": "value"}},
-                                    )
-                                ],
-                            ),
                         ),
-                        stdout="string",
-                    )
+                    ),
+                    TraceResponseV2(
+                        submission_id=uuid.UUID(
+                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        ),
+                        line_number=1,
+                        file=TracedFile(
+                            filename="filename",
+                            directory="directory",
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                        ),
+                    ),
                 ],
             )
 
@@ -1230,17 +1150,7 @@ class AsyncAdminClient:
         import uuid
 
         from seed import AsyncSeedTrace
-        from seed.commons import DebugVariableValue_IntegerValue
-        from seed.submission import (
-            ExceptionInfo,
-            ExceptionV2_Generic,
-            ExpressionLocation,
-            Scope,
-            StackFrame,
-            StackInformation,
-            TraceResponse,
-            WorkspaceRunDetails,
-        )
+        from seed.submission import StackInformation, TraceResponse, WorkspaceRunDetails
 
         client = AsyncSeedTrace(
             x_random_header="YOUR_X_RANDOM_HEADER",
@@ -1254,17 +1164,7 @@ class AsyncAdminClient:
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
                 workspace_run_details=WorkspaceRunDetails(
-                    exception_v_2=ExceptionV2_Generic(
-                        exception_type="string",
-                        exception_message="string",
-                        exception_stacktrace="string",
-                    ),
-                    exception=ExceptionInfo(
-                        exception_type="string",
-                        exception_message="string",
-                        exception_stacktrace="string",
-                    ),
-                    stdout="string",
+                    stdout="stdout",
                 ),
                 trace_responses=[
                     TraceResponse(
@@ -1272,25 +1172,19 @@ class AsyncAdminClient:
                             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         ),
                         line_number=1,
-                        return_value=DebugVariableValue_IntegerValue(value=1),
-                        expression_location=ExpressionLocation(
-                            start=1,
-                            offset=1,
-                        ),
                         stack=StackInformation(
                             num_stack_frames=1,
-                            top_stack_frame=StackFrame(
-                                method_name="string",
-                                line_number=1,
-                                scopes=[
-                                    Scope(
-                                        variables={"string": {"key": "value"}},
-                                    )
-                                ],
-                            ),
                         ),
-                        stdout="string",
-                    )
+                    ),
+                    TraceResponse(
+                        submission_id=uuid.UUID(
+                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        ),
+                        line_number=1,
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                        ),
+                    ),
                 ],
             )
 
@@ -1346,15 +1240,7 @@ class AsyncAdminClient:
         import uuid
 
         from seed import AsyncSeedTrace
-        from seed.commons import DebugVariableValue_IntegerValue
-        from seed.submission import (
-            ExpressionLocation,
-            Scope,
-            StackFrame,
-            StackInformation,
-            TracedFile,
-            TraceResponseV2,
-        )
+        from seed.submission import StackInformation, TracedFile, TraceResponseV2
 
         client = AsyncSeedTrace(
             x_random_header="YOUR_X_RANDOM_HEADER",
@@ -1374,28 +1260,26 @@ class AsyncAdminClient:
                         ),
                         line_number=1,
                         file=TracedFile(
-                            filename="string",
-                            directory="string",
-                        ),
-                        return_value=DebugVariableValue_IntegerValue(value=1),
-                        expression_location=ExpressionLocation(
-                            start=1,
-                            offset=1,
+                            filename="filename",
+                            directory="directory",
                         ),
                         stack=StackInformation(
                             num_stack_frames=1,
-                            top_stack_frame=StackFrame(
-                                method_name="string",
-                                line_number=1,
-                                scopes=[
-                                    Scope(
-                                        variables={"string": {"key": "value"}},
-                                    )
-                                ],
-                            ),
                         ),
-                        stdout="string",
-                    )
+                    ),
+                    TraceResponseV2(
+                        submission_id=uuid.UUID(
+                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        ),
+                        line_number=1,
+                        file=TracedFile(
+                            filename="filename",
+                            directory="directory",
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                        ),
+                    ),
                 ],
             )
 

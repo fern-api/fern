@@ -2,23 +2,23 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use DateTime;
-use Seed\Core\JsonProperty;
-use Seed\Core\DateType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\Date;
 
-class WorkspaceSubmissionUpdate extends SerializableType
+class WorkspaceSubmissionUpdate extends JsonSerializableType
 {
     /**
      * @var DateTime $updateTime
      */
-    #[JsonProperty("updateTime"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('updateTime'), Date(Date::TYPE_DATETIME)]
     public DateTime $updateTime;
 
     /**
      * @var mixed $updateInfo
      */
-    #[JsonProperty("updateInfo")]
+    #[JsonProperty('updateInfo')]
     public mixed $updateInfo;
 
     /**

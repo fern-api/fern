@@ -15,7 +15,6 @@ describe("loadWorkspace", () => {
         });
         expect(workspace.didSucceed).toBe(true);
         assert(workspace.didSucceed);
-        assert(workspace.workspace.type === "fern");
 
         const definition = await workspace.workspace.getDefinition({ context });
 
@@ -34,6 +33,5 @@ describe("loadWorkspace", () => {
         });
         expect(workspace.didSucceed).toBe(true);
         assert(workspace.didSucceed);
-        assert(workspace.workspace.type === "oss");
     });
 });

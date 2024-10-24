@@ -1,0 +1,170 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "primitive_value",
+        "object_value",
+        "container_value"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "primitive_value"
+        },
+        "value": {
+          "$ref": "#/definitions/ast.PrimitiveValue"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "object_value"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "container_value"
+        },
+        "value": {
+          "$ref": "#/definitions/ast.ContainerValue"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {
+    "ast.PrimitiveValue": {
+      "type": "string",
+      "enum": [
+        "STRING",
+        "NUMBER"
+      ]
+    },
+    "ast.FieldValue": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "primitive_value",
+            "object_value",
+            "container_value"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "primitive_value"
+            },
+            "value": {
+              "$ref": "#/definitions/ast.PrimitiveValue"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "object_value"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "container_value"
+            },
+            "value": {
+              "$ref": "#/definitions/ast.ContainerValue"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "ast.ContainerValue": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "list",
+            "optional"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "list"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.FieldValue"
+              }
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "optional"
+            },
+            "value": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/ast.FieldValue"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    }
+  }
+}

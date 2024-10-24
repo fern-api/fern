@@ -2,21 +2,21 @@
 
 namespace Seed\Dummy\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class StreamResponse extends SerializableType
+class StreamResponse extends JsonSerializableType
 {
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var ?string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public ?string $name;
 
     /**

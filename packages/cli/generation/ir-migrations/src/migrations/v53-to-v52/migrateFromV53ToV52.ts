@@ -28,7 +28,7 @@ export const V53_TO_V52_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_FASTAPI]: "1.1.0-rc0",
         [GeneratorName.PYTHON_PYDANTIC]: "1.1.0-rc0",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.OPENAPI]: "0.1.0",
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: "0.2.0",
         [GeneratorName.PYTHON_SDK]: "3.3.0-rc0",
@@ -40,7 +40,9 @@ export const V53_TO_V52_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_SDK]: "0.5.0",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_SDK]: "0.1.0"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V52.IntermediateRepresentation.jsonOrThrow(ir, {

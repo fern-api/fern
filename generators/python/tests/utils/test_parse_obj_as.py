@@ -28,7 +28,7 @@ def test_convert_and_respect_annotation_metadata_in_list() -> None:
         {"string": "string", "long": 12345, "bool": True, "literal": "lit_one", "any": "any"},
         {"string": "another string", "long": 67890, "list": [], "literal": "lit_one", "any": "any"}
     ]
-    
+
     converted = parse_obj_as(List[ObjectWithOptionalField], wire_data)
 
     assert converted == [ObjectWithOptionalField(

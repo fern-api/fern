@@ -2,15 +2,15 @@
 
 namespace Seed\Users;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class WithCursor extends SerializableType
+class WithCursor extends JsonSerializableType
 {
     /**
      * @var ?string $cursor
      */
-    #[JsonProperty("cursor")]
+    #[JsonProperty('cursor')]
     public ?string $cursor;
 
     /**
@@ -19,7 +19,7 @@ class WithCursor extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->cursor = $values['cursor'] ?? null;
     }

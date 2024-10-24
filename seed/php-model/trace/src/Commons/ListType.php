@@ -2,21 +2,21 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ListType extends SerializableType
+class ListType extends JsonSerializableType
 {
     /**
      * @var mixed $valueType
      */
-    #[JsonProperty("valueType")]
+    #[JsonProperty('valueType')]
     public mixed $valueType;
 
     /**
      * @var ?bool $isFixedLength Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
      */
-    #[JsonProperty("isFixedLength")]
+    #[JsonProperty('isFixedLength')]
     public ?bool $isFixedLength;
 
     /**

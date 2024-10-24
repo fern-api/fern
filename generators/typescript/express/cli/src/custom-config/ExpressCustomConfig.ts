@@ -16,4 +16,5 @@ export interface ExpressCustomConfig {
     retainOriginalCasing: boolean;
     allowExtraFields: boolean;
     useBigInt: boolean;
+    noOptionalProperties: boolean;
 }

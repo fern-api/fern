@@ -1,7 +1,7 @@
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { MockServer } from "@fern-api/mock";
 import { Project } from "@fern-api/project-loader";
-import { APIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { API_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
@@ -24,7 +24,7 @@ export async function mockServer({
         return cliContext.failAndThrow(`No API specified. Use the --${API_CLI_OPTION} option.`);
     }
 
-    const workspace: APIWorkspace = project.apiWorkspaces[0];
+    const workspace: AbstractAPIWorkspace<unknown> = project.apiWorkspaces[0];
 
     await cliContext.runTaskForWorkspace(workspace, async (context) => {
         const fernWorkspace: FernWorkspace = await workspace.toFernWorkspace({ context });

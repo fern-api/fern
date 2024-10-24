@@ -2,12 +2,13 @@
 
 namespace Seed\Dummy;
 
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Seed\Dummy\Requests\GenerateRequest;
-use Seed\Core\JsonApiRequest;
-use Seed\Core\HttpMethod;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
+use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Exception;
 
 class DummyClient
 {
@@ -27,15 +28,18 @@ class DummyClient
 
     /**
      * @param GenerateRequest $request
-     * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
-    public function generate(GenerateRequest $request, ?array $options = null): mixed
+    public function generate(GenerateRequest $request, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "generate",
                     method: HttpMethod::POST,
                     body: $request,
@@ -43,9 +47,12 @@ class DummyClient
             );
             $statusCode = $response->getStatusCode();
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

@@ -18,7 +18,7 @@ import { camelCase, upperFirst } from "lodash-es";
 import { RawClient } from "./core/RawClient";
 import { GuzzleClient } from "./external/GuzzleClient";
 import { ErrorId, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
-import { TYPES_DIRECTORY, ERRORS_DIRECTORY, REQUESTS_DIRECTORY } from "./constants";
+import { EXCEPTIONS_DIRECTORY, TYPES_DIRECTORY, REQUESTS_DIRECTORY } from "./constants";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
@@ -35,6 +35,19 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         this.endpointGenerator = new EndpointGenerator(this);
         this.guzzleClient = new GuzzleClient(this);
         this.rawClient = new RawClient(this);
+    }
+
+    public shouldGenerateSubpackageClient(subpackage: Subpackage): boolean {
+        if (subpackage.service != null) {
+            return true;
+        }
+        for (const subpackageId of subpackage.subpackages) {
+            const subpackage = this.getSubpackageOrThrow(subpackageId);
+            if (this.shouldGenerateSubpackageClient(subpackage)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
@@ -87,18 +100,16 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getBaseExceptionClassReference(): php.ClassReference {
-        // TODO: Update this to the generated base exception class.
         return php.classReference({
-            name: "Exception",
-            namespace: this.getGlobalNamespace()
+            name: this.getOrganizationPascalCase() + "Exception",
+            namespace: this.getLocationForBaseException().namespace
         });
     }
 
     public getBaseApiExceptionClassReference(): php.ClassReference {
-        // TODO: Update this to the generated base API exception class.
         return php.classReference({
-            name: "Exception",
-            namespace: this.getGlobalNamespace()
+            name: this.getOrganizationPascalCase() + "ApiException",
+            namespace: this.getLocationForBaseException().namespace
         });
     }
 
@@ -117,7 +128,15 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getJsonApiRequestClassReference(): php.ClassReference {
-        return this.getCoreClassReference("JsonApiRequest");
+        return this.getCoreJsonClassReference("JsonApiRequest");
+    }
+
+    public getJsonDecoderClassReference(): php.ClassReference {
+        return this.getCoreJsonClassReference("JsonDecoder");
+    }
+
+    public getJsonSerializerClassReference(): php.ClassReference {
+        return this.getCoreJsonClassReference("JsonSerializer");
     }
 
     public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): php.ClassReference {
@@ -128,7 +147,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getHttpMethodClassReference(): php.ClassReference {
-        return this.getCoreClassReference("HttpMethod");
+        return this.getCoreClientClassReference("HttpMethod");
     }
 
     public getHttpMethod(method: HttpMethod): php.CodeBlock {
@@ -177,33 +196,43 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getClientOptionsType(): php.Type {
-        return php.Type.typeDict([
+        return php.Type.typeDict(
+            [
+                {
+                    key: this.getBaseUrlOptionName(),
+                    valueType: php.Type.string(),
+                    optional: true
+                },
+                {
+                    key: this.getGuzzleClientOptionName(),
+                    valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
+                    optional: true
+                },
+                {
+                    key: this.getHeadersOptionName(),
+                    valueType: php.Type.map(php.Type.string(), php.Type.string()),
+                    optional: true
+                }
+            ],
             {
-                key: this.getBaseUrlOptionName(),
-                valueType: php.Type.string(),
-                optional: true
-            },
-            {
-                key: this.getGuzzleClientOptionName(),
-                valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
-                optional: true
-            },
-            {
-                key: this.getHeadersOptionName(),
-                valueType: php.Type.map(php.Type.string(), php.Type.string()),
-                optional: true
+                multiline: true
             }
-        ]);
+        );
     }
 
     public getRequestOptionsType(): php.Type {
-        return php.Type.typeDict([
+        return php.Type.typeDict(
+            [
+                {
+                    key: this.getBaseUrlOptionName(),
+                    valueType: php.Type.string(),
+                    optional: true
+                }
+            ],
             {
-                key: this.getBaseUrlOptionName(),
-                valueType: php.Type.string(),
-                optional: true
+                multiline: true
             }
-        ]);
+        );
     }
 
     public getEnvironmentAccess(name: Name): php.CodeBlock {
@@ -261,7 +290,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getLocationForErrorId(errorId: ErrorId): FileLocation {
         const errorDeclaration = this.getErrorDeclarationOrThrow(errorId);
-        return this.getFileLocation(errorDeclaration.name.fernFilepath, ERRORS_DIRECTORY);
+        return this.getFileLocation(errorDeclaration.name.fernFilepath, EXCEPTIONS_DIRECTORY);
+    }
+
+    public getLocationForBaseException(): FileLocation {
+        return this.getFileLocation({ allParts: [], packagePath: [], file: undefined }, EXCEPTIONS_DIRECTORY);
     }
 
     private getDefaultBaseUrl(): php.CodeBlock {
@@ -296,6 +329,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     private getComputedClientName(): string {
-        return `${upperFirst(camelCase(this.config.organization))}Client`;
+        return `${this.getOrganizationPascalCase()}Client`;
+    }
+
+    private getOrganizationPascalCase(): string {
+        return `${upperFirst(camelCase(this.config.organization))}`;
     }
 }

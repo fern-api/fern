@@ -2,21 +2,21 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseImplementation extends SerializableType
+class TestCaseImplementation extends JsonSerializableType
 {
     /**
      * @var TestCaseImplementationDescription $description
      */
-    #[JsonProperty("description")]
+    #[JsonProperty('description')]
     public TestCaseImplementationDescription $description;
 
     /**
      * @var mixed $function
      */
-    #[JsonProperty("function")]
+    #[JsonProperty('function')]
     public mixed $function;
 
     /**

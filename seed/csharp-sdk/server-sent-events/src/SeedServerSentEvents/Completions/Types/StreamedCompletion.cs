@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedServerSentEvents.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record StreamedCompletion
 
     [JsonPropertyName("tokens")]
     public int? Tokens { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

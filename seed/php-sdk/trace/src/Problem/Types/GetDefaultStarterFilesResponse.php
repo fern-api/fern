@@ -2,22 +2,22 @@
 
 namespace Seed\Problem\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\Types\Language;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class GetDefaultStarterFilesResponse extends SerializableType
+class GetDefaultStarterFilesResponse extends JsonSerializableType
 {
     /**
-     * @var array<Language, ProblemFiles> $files
+     * @var array<value-of<Language>, ProblemFiles> $files
      */
-    #[JsonProperty("files"), ArrayType([Language::class => ProblemFiles::class])]
+    #[JsonProperty('files'), ArrayType(['string' => ProblemFiles::class])]
     public array $files;
 
     /**
      * @param array{
-     *   files: array<Language, ProblemFiles>,
+     *   files: array<value-of<Language>, ProblemFiles>,
      * } $values
      */
     public function __construct(

@@ -20,12 +20,35 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     filesV2: {},
     config: {
         navigation: {
+            landingPage: undefined,
             items: []
-        }
+        },
+        title: undefined,
+        defaultLanguage: undefined,
+        announcement: undefined,
+        navbarLinks: undefined,
+        footerLinks: undefined,
+        logoHeight: undefined,
+        logoHref: undefined,
+        favicon: undefined,
+        metadata: undefined,
+        redirects: undefined,
+        colorsV3: undefined,
+        layout: undefined,
+        typographyV2: undefined,
+        analyticsConfig: undefined,
+        integrations: undefined,
+        css: undefined,
+        js: undefined,
+        playground: undefined
     },
     search: {
-        type: "legacyMultiAlgoliaIndex"
-    }
+        type: "legacyMultiAlgoliaIndex",
+        algoliaIndex: undefined
+    },
+    algoliaSearchIndex: undefined,
+    jsFiles: undefined,
+    id: undefined
 };
 
 export async function runPreviewServer({
@@ -117,6 +140,11 @@ export async function runPreviewServer({
             } else {
                 context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
             }
+            if (err instanceof Error) {
+                if (err instanceof Error && err.stack) {
+                    context.logger.debug(`${err.message}\n${err.stack}`);
+                }
+            }
             return docsDefinition;
         }
     };
@@ -124,7 +152,7 @@ export async function runPreviewServer({
     // initialize docs definition
     docsDefinition = await reloadDocsDefinition();
 
-    const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilepaths());
+    const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
     const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder();
 
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {

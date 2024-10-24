@@ -6,8 +6,8 @@ export class NodeIdGenerator {
     }
     private constructor(private id: string, private ids: Set<string>) {}
 
-    public get(): FernNavigation.NodeId {
-        return FernNavigation.NodeId(this.id);
+    public get(): FernNavigation.V1.NodeId {
+        return FernNavigation.V1.NodeId(this.id);
     }
 
     public append(part: string): NodeIdGenerator {

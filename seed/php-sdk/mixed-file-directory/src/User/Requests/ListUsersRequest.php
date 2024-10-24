@@ -2,7 +2,9 @@
 
 namespace Seed\User\Requests;
 
-class ListUsersRequest
+use Seed\Core\Json\JsonSerializableType;
+
+class ListUsersRequest extends JsonSerializableType
 {
     /**
      * @var ?int $limit The maximum number of results to return.
@@ -15,7 +17,7 @@ class ListUsersRequest
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->limit = $values['limit'] ?? null;
     }
