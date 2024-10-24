@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  title: Test extension `x-fern-ignore`
+  version: 1.0.0
+paths:
+  /list:
+    get:
+      operationId: list
+      summary: List
+      description: ""
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsersResponse"
+      parameters:
+        - in: query
+          name: pageNumber
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: ignoredParam1
+          schema:
+            type: string
+          x-fern-ignore: true
+        - in: query
+          name: ignoredParam2
+          schema:
+            type: string
+          x-fern-ignore: true
+components:
+  schemas:
+    Meta: 
+      properties: 
+        hasMore: 
+          type: boolean
+    UsersResponse:
+      type: object
+      properties:
+        meta:   
+          $ref: "#/components/schemas/Meta"
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+        age:
+          type: integer

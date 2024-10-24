@@ -16,6 +16,13 @@
         ```
       type: feat
   irVersion: 53
+  version: 0.45.0-rc20
+
+- changelogEntry:
+    - summary: |
+        - Respect `x-fern-ignore` extension in OpenAPI parameters.
+      type: fix
+  irVersion: 53
   version: 0.45.0-rc19
 
 - changelogEntry:
