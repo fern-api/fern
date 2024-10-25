@@ -135,7 +135,6 @@ export async function downloadBundle({
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     const nodeBuffer = Buffer.from(contents as any);
     await writeFile(outputZipPath, nodeBuffer);
-    // await writeStreamToFileWithPipe(Readable.from(contents as any), outputZipPath);
     logger.debug(`Wrote output.zip to ${outputZipPath}`);
 
     const absolutePathToPreviewFolder = getPathToPreviewFolder();
