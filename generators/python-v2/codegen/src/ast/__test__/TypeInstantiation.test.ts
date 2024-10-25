@@ -79,4 +79,9 @@ describe("TypeInstantiation", () => {
         TypeInstantiation.none().write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
+
+    it("uuid", async () => {
+        TypeInstantiation.uuid("123e4567-e89b-12d3-a456-426614174000").write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
 });
