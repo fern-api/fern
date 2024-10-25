@@ -37,20 +37,40 @@ export interface UploadedFile extends FilePathPair {
     fileId: string;
 }
 
+type AsyncOrSync<T> = T | Promise<T>;
+
+interface UploadFilesFn {
+    (files: FilePathPair[]): AsyncOrSync<UploadedFile[]>;
+}
+
+interface RegisterApiFn {
+    (opts: {
+        ir: IntermediateRepresentation;
+        snippetsConfig: APIV1Write.SnippetsConfig;
+        playgroundConfig?: DocsV1Write.PlaygroundConfig;
+        apiName?: string;
+    }): AsyncOrSync<string>;
+}
+
+const defaultUploadFiles: UploadFilesFn = (files) => {
+    return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
+};
+
+const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
+    return ir.apiName.snakeCase + "-" + crypto.randomUUID();
+};
+
 export class DocsDefinitionResolver {
     constructor(
         private domain: string,
         private docsWorkspace: DocsWorkspace,
         private fernWorkspaces: FernWorkspace[],
         private taskContext: TaskContext,
-        private editThisPage: docsYml.RawSchemas.EditThisPageConfig | undefined,
-        private uploadFiles: (files: FilePathPair[]) => Promise<UploadedFile[]>,
-        private registerApi: (opts: {
-            ir: IntermediateRepresentation;
-            snippetsConfig: APIV1Write.SnippetsConfig;
-            playgroundConfig?: DocsV1Write.PlaygroundConfig;
-            apiName?: string;
-        }) => Promise<string>
+
+        // optional
+        private editThisPage?: docsYml.RawSchemas.EditThisPageConfig | undefined,
+        private uploadFiles: UploadFilesFn = defaultUploadFiles,
+        private registerApi: RegisterApiFn = defaultRegisterApi
     ) {}
 
     #idgen = NodeIdGenerator.init();
