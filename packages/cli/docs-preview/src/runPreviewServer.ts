@@ -126,7 +126,7 @@ export async function runPreviewServer({
             context.logger.info("Validating docs...");
             await validateProject(project);
             const newDocsDefinition = await getPreviewDocsDefinition({
-                domain: instance.host,
+                domain: `${instance.host}${instance.pathname}`,
                 project,
                 context
             });
