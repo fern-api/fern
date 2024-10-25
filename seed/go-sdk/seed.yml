@@ -33,6 +33,9 @@ fixtures:
     - outputFolder: always-send-required-properties
       customConfig:
         alwaysSendRequiredProperties: true
+    - outputFolder: exported-client-name
+      customConfig:
+        exportedClientName: AcmeClient
   undiscriminated-unions:
     - outputFolder: .
       outputVersion: 0.0.1

@@ -19,6 +19,9 @@ import (
 const (
 	// packageDocsFilename represents the standard package documentation filename.
 	packageDocsFilename = "doc.go"
+
+	// defaultExportedClientName is the default name for the generated client.
+	defaultExportedClientName = "Client"
 )
 
 // Mode is an enum for different generator modes (i.e. types, client, etc).
@@ -189,6 +192,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			}
 		}
 	}
+	exportedClientName := getExportedClientName(ir, g.config.ExportedClientName)
 	rootPackageName := getRootPackageName(ir, g.config.PackageName)
 	cycleInfo, err := cycleInfoFromIR(ir, g.config.ImportPath)
 	if err != nil {
@@ -370,6 +374,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ImportPath,
 			generatedAuth,
 			generatedEnvironment,
+			exportedClientName,
 		)
 		if len(ir.IdempotencyHeaders) > 0 {
 			fileInfo = fileInfoForIdempotentRequestOptionsDefinition()
@@ -1489,6 +1494,15 @@ func getRootPackageName(ir *fernir.IntermediateRepresentation, packageNameOverri
 		return packageNameOverride
 	}
 	return strings.ToLower(ir.ApiName.CamelCase.SafeName)
+}
+
+// getExportedClientName returns the exported client name. This is configurable so that
+// users can customize how snippets are rendered, but it has no impact on the generated code.
+func getExportedClientName(ir *fernir.IntermediateRepresentation, exportedClientNameOverride string) string {
+	if exportedClientNameOverride != "" {
+		return exportedClientNameOverride
+	}
+	return defaultExportedClientName
 }
 
 // generatorexecEndpointSnippetToString returns the string representation of the given
