@@ -74,7 +74,6 @@ export async function downloadBundle({
         duplex: "half"
     });
     if (!response.ok) {
-        console.log(JSON.stringify(response));
         return {
             type: "failure"
         };
@@ -157,30 +156,4 @@ export async function downloadBundle({
     return {
         type: "success"
     };
-}
-
-// Example 2: Using pipe (traditional way)
-function writeStreamToFileWithPipe(readableStream: Readable, outputPath: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-        const writeStream = fs.createWriteStream(outputPath);
-
-        // Handle stream events
-        writeStream.on("finish", () => {
-            console.log("File written successfully using pipe");
-            resolve();
-        });
-
-        writeStream.on("error", (err) => {
-            console.error("Write stream error:", err);
-            reject(err);
-        });
-
-        readableStream.on("error", (err) => {
-            console.error("Read stream error:", err);
-            reject(err);
-        });
-
-        // Pipe the streams
-        readableStream.pipe(writeStream);
-    });
 }

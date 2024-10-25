@@ -74,7 +74,6 @@ async function runCli() {
         if (cwd != null) {
             process.chdir(cwd);
         }
-        console.log("abccccc");
         const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
         if (cliContext.environment.packageVersion === versionOfCliToRun) {
             await tryRunCli(cliContext);
