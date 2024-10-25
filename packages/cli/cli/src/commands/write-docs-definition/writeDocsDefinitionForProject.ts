@@ -28,7 +28,7 @@ export async function writeDocsDefinitionForProject({
                 );
             })
         );
-        // TODO: Implement the logic to generate the docs definition
+
         const docsResolver = new DocsDefinitionResolver(
             `https://${docsWorkspace.config.instances[0]?.url ?? "https://localhost:8080"}`,
             docsWorkspace,
