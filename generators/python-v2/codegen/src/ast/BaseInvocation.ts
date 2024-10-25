@@ -12,8 +12,6 @@ export declare namespace BaseInvocation {
         reference: Reference;
         /* The arguments to pass to the method */
         arguments_: MethodArgument[];
-        /* The parent object that the invoked method lives within, if any */
-        on?: AstNode;
     }
 }
 
@@ -21,7 +19,7 @@ export class BaseInvocation extends AstNode {
     protected reference: Reference;
     private arguments: MethodArgument[];
 
-    constructor({ reference, arguments_, on }: BaseInvocation.Args) {
+    constructor({ reference, arguments_ }: BaseInvocation.Args) {
         super();
 
         this.reference = reference;
