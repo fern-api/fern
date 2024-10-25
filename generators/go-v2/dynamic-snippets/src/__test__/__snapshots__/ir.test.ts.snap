@@ -210,6 +210,102 @@ func do() {
 "
 `;
 
+exports[`test definitions > basic-auth 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBasicAuth(
+			"<username>",
+			"<password>",
+		),
+	)
+	client.GetWithBasicAuth(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBasicAuth(
+			"<username>",
+			"<password>",
+		),
+	)
+	client.PostWithBasicAuth(
+		context.TODO(),
+		map[string]interface{}{
+			"key": "value",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > basic-auth-environment-variables 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBasicAuth(
+			"<username>",
+			"<password>",
+		),
+	)
+	client.GetWithBasicAuth(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBasicAuth(
+			"<username>",
+			"<password>",
+		),
+	)
+	client.PostWithBasicAuth(
+		context.TODO(),
+		map[string]interface{}{
+			"key": "value",
+		},
+	)
+}
+"
+`;
+
 exports[`test definitions > bearer-token-environment-variable 1`] = `
 "package example
 
@@ -306,6 +402,214 @@ func do() {
 "
 `;
 
+exports[`test definitions > custom-auth 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithCustomAuthScheme(
+			"<value>",
+		),
+	)
+	client.GetWithCustomAuth(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithCustomAuthScheme(
+			"<value>",
+		),
+	)
+	client.PostWithCustomAuth(
+		context.TODO(),
+		map[string]interface{}{
+			"key": "value",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > enum 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Send(
+		context.TODO(),
+		&sdk.SendEnumInlinedRequest{
+			Operand: sdk.OperandGreaterThan,
+			OperandOrColor: &sdk.ColorOrOperand{
+				Color: sdk.ColorRed,
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Send(
+		context.TODO(),
+		&sdk.SendEnumInlinedRequest{
+			Operand: sdk.OperandGreaterThan,
+			OperandOrColor: &sdk.ColorOrOperand{
+				Color: sdk.ColorRed,
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Send(
+		context.TODO(),
+		sdk.OperandGreaterThan,
+		sdk.OperandLessThan.Ptr(),
+		&sdk.ColorOrOperand{
+			Color: sdk.ColorRed,
+		},
+		&sdk.ColorOrOperand{
+			Color: sdk.ColorRed,
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Send(
+		context.TODO(),
+		sdk.OperandGreaterThan,
+		&sdk.ColorOrOperand{
+			Color: sdk.ColorRed,
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Send(
+		context.TODO(),
+		&sdk.SendEnumAsQueryParamRequest{
+			Operand: sdk.OperandGreaterThan,
+			OperandOrColor: &sdk.ColorOrOperand{
+				Color: sdk.ColorRed,
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Send(
+		context.TODO(),
+		&sdk.SendEnumAsQueryParamRequest{
+			Operand: sdk.OperandGreaterThan,
+			OperandOrColor: &sdk.ColorOrOperand{
+				Color: sdk.ColorRed,
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.SendList(
+		context.TODO(),
+		&sdk.SendEnumListAsQueryParamRequest{
+			Operand: sdk.OperandGreaterThan,
+			OperandOrColor: &sdk.ColorOrOperand{
+				Color: sdk.ColorRed,
+			},
+		},
+	)
+}
+"
+`;
+
 exports[`test definitions > error-property 1`] = `
 "package example
 
@@ -368,6 +672,106 @@ func do() {
 exports[`test definitions > file-download 1`] = `"<none>"`;
 
 exports[`test definitions > file-upload 1`] = `"<none>"`;
+
+exports[`test definitions > folders 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Foo(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Foo(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Foo(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Foo(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Folder.Endpoint(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Folder.UnknownRequest(
+		context.TODO(),
+		map[string]interface{}{
+			"key": "value",
+		},
+	)
+}
+"
+`;
 
 exports[`test definitions > go-content-type 1`] = `
 "package example
@@ -1853,6 +2257,101 @@ func do() {
 	client.GetMovie(
 		context.TODO(),
 		"movie_id",
+	)
+}
+"
+`;
+
+exports[`test definitions > undiscriminated-unions 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Get(
+		context.TODO(),
+		&sdk.MyUnion{
+			String: "string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetMetadata(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetMetadata(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`test definitions > unknown 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Post(
+		context.TODO(),
+		map[string]interface{}{
+			"key": "value",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.PostObject(
+		context.TODO(),
+		&sdk.MyObject{
+			Unknown: map[string]interface{}{
+				"key": "value",
+			},
+		},
 	)
 }
 "
