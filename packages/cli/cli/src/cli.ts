@@ -1010,7 +1010,7 @@ function addGenerateJsonschemaCommand(cli: Argv<GlobalCliOptions>, cliContext: C
 function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "write-docs-definition <output-path>",
-        "Write the docs definition to a file",
+        false, // hide from help message
         (yargs) =>
             yargs.positional("output-path", {
                 type: "string",
