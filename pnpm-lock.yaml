@@ -4038,9 +4038,6 @@ importers:
       express:
         specifier: ^4.20.0
         version: 4.21.1
-      readable-stream:
-        specifier: ^4.5.2
-        version: 4.5.2
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
