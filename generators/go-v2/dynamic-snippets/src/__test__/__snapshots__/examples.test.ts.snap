@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`examples > 'GET /metadata (simple)' 1`] = `
+exports[`examples > 'GET /metadata (allow-multiple)' 1`] = `
 "package example
 
 import (
@@ -22,9 +22,14 @@ func do() {
 			Shallow: sdk.Bool(
 				false,
 			),
-			Tag: sdk.String(
-				"development",
-			),
+			Tag: []*string{
+				sdk.String(
+					"development",
+				),
+				sdk.String(
+					"public",
+				),
+			},
 			XAPIVersion: "0.0.1",
 		},
 	)

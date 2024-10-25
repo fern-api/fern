@@ -5855,8 +5855,11 @@
                             "wireValue": "query"
                         },
                         "typeReference": {
-                            "_type": "primitive",
-                            "value": "STRING"
+                            "_type": "list",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     {
@@ -5883,8 +5886,11 @@
                             "wireValue": "numer"
                         },
                         "typeReference": {
-                            "_type": "primitive",
-                            "value": "INTEGER"
+                            "_type": "list",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "INTEGER"
+                            }
                         }
                     }
                 ],

@@ -37922,10 +37922,13 @@
                             "wireValue": "optionalMultipleField"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "_type": "list",
                             "value": {
-                                "_type": "primitive",
-                                "value": "STRING"
+                                "_type": "optional",
+                                "value": {
+                                    "_type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         }
                     },
@@ -37953,8 +37956,11 @@
                             "wireValue": "multipleField"
                         },
                         "typeReference": {
-                            "_type": "primitive",
-                            "value": "STRING"
+                            "_type": "list",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     }
                 ],

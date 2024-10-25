@@ -22,6 +22,7 @@ import {
     ObjectTypeDeclaration,
     PathParameter,
     PrimitiveType,
+    QueryParameter,
     SdkRequestBodyType,
     SdkRequestWrapper,
     SingleUnionTypeProperties,
@@ -109,7 +110,7 @@ export class DynamicSnippetsConverter {
                     fernFilepath: endpoint.fernFilepath,
                     wrapper: endpoint.sdkRequest.shape,
                     pathParameters,
-                    queryParameters: this.convertWireValueParameters({ wireValueParameters: endpoint.queryParameters }),
+                    queryParameters: this.convertQueryParameters({ queryParameters: endpoint.queryParameters }),
                     headers: this.convertWireValueParameters({
                         wireValueParameters: [...endpoint.serviceHeaders, ...endpoint.headers]
                     }),
@@ -265,6 +266,28 @@ export class DynamicSnippetsConverter {
             },
             typeReference: this.convertTypeReference(parameter.valueType)
         }));
+    }
+
+    private convertQueryParameters({
+        queryParameters
+    }: {
+        queryParameters: QueryParameter[];
+    }): DynamicSnippets.NamedParameter[] {
+        const parameters: DynamicSnippets.NamedParameter[] = [];
+        for (const queryParameter of queryParameters) {
+            let typeReference = this.convertTypeReference(queryParameter.valueType);
+            if (queryParameter.allowMultiple) {
+                typeReference = DynamicSnippets.TypeReference.list(typeReference);
+            }
+            parameters.push({
+                name: {
+                    name: queryParameter.name.name,
+                    wireValue: queryParameter.name.wireValue
+                },
+                typeReference
+            });
+        }
+        return parameters;
     }
 
     private convertTypeReference(typeReference: TypeReference): DynamicSnippets.TypeReference {

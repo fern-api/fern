@@ -28,27 +28,27 @@ describe("examples", () => {
                 requestBody: undefined
             }
         },
-        // {
-        //     description: "GET /metadata (allow-multiple)",
-        //     giveRequest: {
-        //         endpoint: {
-        //             method: "GET",
-        //             path: "/metadata"
-        //         },
-        //         auth: AuthValues.bearer({
-        //             token: "<YOUR_API_KEY>"
-        //         }),
-        //         pathParameters: undefined,
-        //         queryParameters: {
-        //             shallow: false,
-        //             tag: ["development", "public"]
-        //         },
-        //         headers: {
-        //             "X-API-Version": "0.0.1"
-        //         },
-        //         requestBody: undefined
-        //     }
-        // }
+        {
+            description: "GET /metadata (allow-multiple)",
+            giveRequest: {
+                endpoint: {
+                    method: "GET",
+                    path: "/metadata"
+                },
+                auth: AuthValues.bearer({
+                    token: "<YOUR_API_KEY>"
+                }),
+                pathParameters: undefined,
+                queryParameters: {
+                    shallow: false,
+                    tag: ["development", "public"]
+                },
+                headers: {
+                    "X-API-Version": "0.0.1"
+                },
+                requestBody: undefined
+            }
+        },
         {
             description: "POST /movie (simple)",
             giveRequest: {
