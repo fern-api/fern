@@ -121,7 +121,7 @@ export async function parseDocsConfiguration({
         title,
         // absoluteFilepath: absoluteFilepathToDocsConfig,
         instances,
-        audiences: rawDocsConfiguration.audiences,
+        roles: rawDocsConfiguration.roles,
 
         /* filepath of page to contents */
         pages,
@@ -391,7 +391,8 @@ async function getNavigationConfiguration({
                 navigation,
                 availability: version.availability,
                 slug: version.slug,
-                audiences: parseAudiences(version.audience)
+                viewers: parseRoles(version.viewers),
+                orphaned: version.orphaned
             });
         }
         return {
@@ -541,7 +542,8 @@ async function convertNavigationTabConfiguration({
                 type: "layout",
                 layout
             },
-            audiences: parseAudiences(tab.audience)
+            viewers: parseRoles(tab.viewers),
+            orphaned: tab.orphaned
         };
     }
 
@@ -556,7 +558,8 @@ async function convertNavigationTabConfiguration({
                 type: "link",
                 href: tab.href
             },
-            audiences: parseAudiences(tab.audience)
+            viewers: parseRoles(tab.viewers),
+            orphaned: tab.orphaned
         };
     }
 
@@ -571,7 +574,8 @@ async function convertNavigationTabConfiguration({
                 type: "changelog",
                 changelog: await listFiles(resolveFilepath(tab.changelog, absolutePathToConfig), "{md,mdx}")
             },
-            audiences: parseAudiences(tab.audience)
+            viewers: parseRoles(tab.viewers),
+            orphaned: tab.orphaned
         };
     }
 
@@ -650,7 +654,8 @@ async function convertNavigationItem({
             hidden: rawConfig.hidden ?? undefined,
             skipUrlSlug: rawConfig.skipSlug ?? false,
             overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
-            audiences: parseAudiences(rawConfig.audience)
+            viewers: parseRoles(rawConfig.viewers),
+            orphaned: rawConfig.orphaned
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
@@ -675,7 +680,9 @@ async function convertNavigationItem({
             flattened: rawConfig.flattened ?? false,
             alphabetized: rawConfig.alphabetized ?? false,
             paginated: rawConfig.paginated ?? false,
-            playground: rawConfig.playground
+            playground: rawConfig.playground,
+            viewers: parseRoles(rawConfig.viewers),
+            orphaned: rawConfig.orphaned
         };
     }
     if (isRawLinkConfig(rawConfig)) {
@@ -694,7 +701,8 @@ async function convertNavigationItem({
             icon: rawConfig.icon,
             title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
             slug: rawConfig.slug,
-            audiences: parseAudiences(rawConfig.audience)
+            viewers: parseRoles(rawConfig.viewers),
+            orphaned: rawConfig.orphaned
         };
     }
     assertNever(rawConfig);
@@ -724,7 +732,8 @@ function parsePageConfig(
         hidden: item.hidden,
         // TODO: implement noindex
         noindex: undefined,
-        audiences: parseAudiences(item.audience)
+        viewers: parseRoles(item.viewers),
+        orphaned: item.orphaned
     };
 }
 
@@ -762,7 +771,8 @@ function parseApiReferenceLayoutItem(
                 skipUrlSlug: item.skipSlug,
                 icon: item.icon,
                 playground: item.playground,
-                audiences: parseAudiences(item.audience)
+                viewers: parseRoles(item.viewers),
+                orphaned: item.orphaned
             }
         ];
     } else if (isRawApiRefEndpointConfiguration(item)) {
@@ -775,7 +785,8 @@ function parseApiReferenceLayoutItem(
                 slug: item.slug,
                 hidden: item.hidden,
                 playground: item.playground,
-                audiences: parseAudiences(item.audience)
+                viewers: parseRoles(item.viewers),
+                orphaned: item.orphaned
             }
         ];
     }
@@ -793,7 +804,8 @@ function parseApiReferenceLayoutItem(
                 skipUrlSlug: value.skipSlug,
                 icon: value.icon,
                 playground: value.playground,
-                audiences: parseAudiences(value.audience)
+                viewers: parseRoles(value.viewers),
+                orphaned: value.orphaned
             };
         }
         return {
@@ -807,7 +819,8 @@ function parseApiReferenceLayoutItem(
             skipUrlSlug: false,
             icon: undefined,
             playground: undefined,
-            audiences: { type: "all" }
+            viewers: undefined,
+            orphaned: undefined
         };
     });
 }
@@ -985,11 +998,18 @@ async function convertFilepathOrUrl(
     return { type: "url", value };
 }
 
-function parseAudiences(raw: string | string[] | undefined): Audiences {
+function parseRoles(raw: string | string[] | undefined): CjsFdrSdk.RoleId[] | undefined {
     if (raw == null) {
-        return { type: "all" };
-    } else if (typeof raw === "string") {
-        return { type: "select", audiences: [raw] };
+        return undefined;
     }
-    return { type: "select", audiences: raw };
+
+    if (typeof raw === "string") {
+        return [CjsFdrSdk.RoleId(raw)];
+    }
+
+    if (raw.length === 0) {
+        return undefined;
+    }
+
+    return raw.map(CjsFdrSdk.RoleId);
 }

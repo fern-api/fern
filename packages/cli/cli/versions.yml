@@ -1,5 +1,29 @@
 - changelogEntry:
     - summary: |
+        The Fern CLI now supports orphaned pages in your docs configuration.
+      type: feat
+    - summary: |
+        The RBAC config model is now renamed to `roles` and `viewers`:
+        
+        ```yml docs.yml
+        roles:
+          - internal
+          
+        navigation:
+          - section: Internal Section
+            viewers: 
+              - internal
+            contents:
+              - page: Internal Page
+                path: ./internal/page.mdx
+        ```
+
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc21
+
+- changelogEntry:
+    - summary: |
         The Fern CLI now supports audiences in your docs configuration:
 
         ```yml docs.yml

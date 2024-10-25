@@ -16,10 +16,10 @@ export const VersionConfig: core.serialization.ObjectSchema<
         slug: core.serialization.string().optional(),
         availability: core.serialization.lazy(async () => (await import("../../..")).VersionAvailability).optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAudience));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
 
 export declare namespace VersionConfig {
-    interface Raw extends serializers.WithAudience.Raw {
+    interface Raw extends serializers.WithPermissions.Raw {
         "display-name": string;
         path: string;
         slug?: string | null;

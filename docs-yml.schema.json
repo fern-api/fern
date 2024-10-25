@@ -37,12 +37,12 @@
         }
       ]
     },
-    "audiences": {
+    "roles": {
       "oneOf": [
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/docs.AudienceId"
+            "$ref": "#/definitions/docs.RoleId"
           }
         },
         {
@@ -491,18 +491,18 @@
       ],
       "additionalProperties": false
     },
-    "docs.AudienceId": {
+    "docs.RoleId": {
       "type": "string"
     },
-    "docs.Audience": {
+    "docs.Role": {
       "anyOf": [
         {
-          "$ref": "#/definitions/docs.AudienceId"
+          "$ref": "#/definitions/docs.RoleId"
         },
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/docs.AudienceId"
+            "$ref": "#/definitions/docs.RoleId"
           }
         }
       ]
@@ -513,10 +513,20 @@
     "docs.TabConfig": {
       "type": "object",
       "properties": {
-        "audience": {
+        "viewers": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Audience"
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -604,10 +614,20 @@
     "docs.VersionConfig": {
       "type": "object",
       "properties": {
-        "audience": {
+        "viewers": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Audience"
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -650,10 +670,20 @@
     "docs.PageConfiguration": {
       "type": "object",
       "properties": {
-        "audience": {
+        "viewers": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Audience"
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -706,10 +736,20 @@
     "docs.SectionConfiguration": {
       "type": "object",
       "properties": {
-        "audience": {
+        "viewers": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Audience"
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -791,6 +831,9 @@
         "contents"
       ],
       "additionalProperties": false
+    },
+    "docs.AudienceId": {
+      "type": "string"
     },
     "docs.VersionedSnippetLanguageConfiguration": {
       "type": "object",
@@ -932,10 +975,20 @@
     "docs.ApiReferencePackageConfigurationWithOptions": {
       "type": "object",
       "properties": {
-        "audience": {
+        "viewers": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Audience"
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1044,10 +1097,20 @@
     "docs.ApiReferenceSectionConfiguration": {
       "type": "object",
       "properties": {
-        "audience": {
+        "viewers": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Audience"
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1152,10 +1215,20 @@
     "docs.ApiReferenceEndpointConfiguration": {
       "type": "object",
       "properties": {
-        "audience": {
+        "viewers": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Audience"
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1277,10 +1350,20 @@
     "docs.ApiReferenceConfiguration": {
       "type": "object",
       "properties": {
-        "audience": {
+        "viewers": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Audience"
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1305,7 +1388,7 @@
             {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/docs.AudienceId"
               }
             },
             {
@@ -1445,10 +1528,20 @@
     "docs.ChangelogConfiguration": {
       "type": "object",
       "properties": {
-        "audience": {
+        "viewers": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Audience"
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
