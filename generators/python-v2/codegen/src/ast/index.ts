@@ -7,6 +7,7 @@ export { CodeBlock } from "./CodeBlock";
 export { AstNode } from "./core/AstNode";
 export { Method } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
+export { ClassInstantiation } from "./ClassInstantiation";
 export { Parameter } from "./Parameter";
 export { MethodArgument } from "./MethodArgument";
 export { PythonFile } from "./PythonFile";

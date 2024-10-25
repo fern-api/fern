@@ -2,6 +2,7 @@ import { AstNode } from "./core/AstNode";
 import { AttrPath, ModulePath } from "./core/types";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
+import { Class } from "./Class";
 
 export declare namespace Reference {
     interface Args {
@@ -23,11 +24,11 @@ export declare namespace Reference {
 }
 
 export class Reference extends AstNode {
-    private name: string;
-    private modulePath: ModulePath;
-    private genericTypes: Type[];
-    private alias: string | undefined;
-    private attribute: AttrPath;
+    public readonly name: string;
+    private readonly modulePath: ModulePath;
+    private readonly genericTypes: Type[];
+    private readonly alias: string | undefined;
+    private readonly attribute: AttrPath;
 
     constructor({ name, modulePath, genericTypes, alias, attribute }: Reference.Args) {
         super();
