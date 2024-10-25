@@ -93,48 +93,48 @@ export class Type extends AstNode {
     }
 
     public static int(): Type {
-        return new Type({ type: "int" });
+        return new this({ type: "int" });
     }
 
     public static float(): Type {
-        return new Type({ type: "float" });
+        return new this({ type: "float" });
     }
 
     public static bool(): Type {
-        return new Type({ type: "bool" });
+        return new this({ type: "bool" });
     }
 
     public static str(): Type {
-        return new Type({ type: "str" });
+        return new this({ type: "str" });
     }
 
     public static bytes(): Type {
-        return new Type({ type: "bytes" });
+        return new this({ type: "bytes" });
     }
 
     public static list(value: Type): Type {
-        const listType = new Type({ type: "list", value });
+        const listType = new this({ type: "list", value });
         listType.addReference(python.reference({ name: "List", modulePath: ["typing"] }));
         listType.inheritReferences(value);
         return listType;
     }
 
     public static set(value: Type): Type {
-        const setType = new Type({ type: "set", value });
+        const setType = new this({ type: "set", value });
         setType.addReference(python.reference({ name: "Set", modulePath: ["typing"] }));
         setType.inheritReferences(value);
         return setType;
     }
 
     public static tuple(values: Type[]): Type {
-        const tupleType = new Type({ type: "tuple", values });
+        const tupleType = new this({ type: "tuple", values });
         tupleType.addReference(python.reference({ name: "Tuple", modulePath: ["typing"] }));
         values.forEach((value) => tupleType.inheritReferences(value));
         return tupleType;
     }
 
     public static dict(keyType: Type, valueType: Type): Type {
-        const dictType = new Type({ type: "dict", keyType, valueType });
+        const dictType = new this({ type: "dict", keyType, valueType });
         dictType.addReference(python.reference({ name: "Dict", modulePath: ["typing"] }));
         dictType.inheritReferences(keyType);
         dictType.inheritReferences(valueType);
@@ -142,31 +142,31 @@ export class Type extends AstNode {
     }
 
     public static none(): Type {
-        return new Type({ type: "none" });
+        return new this({ type: "none" });
     }
 
     public static optional(value: Type): Type {
-        const optionalType = new Type({ type: "optional", value });
+        const optionalType = new this({ type: "optional", value });
         optionalType.addReference(python.reference({ name: "Optional", modulePath: ["typing"] }));
         optionalType.inheritReferences(value);
         return optionalType;
     }
 
     public static union(values: Type[]): Type {
-        const unionType = new Type({ type: "union", values });
+        const unionType = new this({ type: "union", values });
         unionType.addReference(python.reference({ name: "Union", modulePath: ["typing"] }));
         values.forEach((value) => unionType.inheritReferences(value));
         return unionType;
     }
 
     public static any(): Type {
-        const anyType = new Type({ type: "any" });
+        const anyType = new this({ type: "any" });
         anyType.addReference(python.reference({ name: "Any", modulePath: ["typing"] }));
         return anyType;
     }
 
     public static reference(value: Reference): Type {
-        const referenceType = new Type({ type: "reference", value });
+        const referenceType = new this({ type: "reference", value });
         referenceType.addReference(value);
         return referenceType;
     }

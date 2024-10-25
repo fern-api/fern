@@ -65,43 +65,43 @@ export class TypeInstantiation extends AstNode {
     }
 
     public static int(value: number): TypeInstantiation {
-        return new TypeInstantiation({ type: "int", value });
+        return new this({ type: "int", value });
     }
 
     public static float(value: number): TypeInstantiation {
-        return new TypeInstantiation({ type: "float", value });
+        return new this({ type: "float", value });
     }
 
     public static bool(value: boolean): TypeInstantiation {
-        return new TypeInstantiation({ type: "bool", value });
+        return new this({ type: "bool", value });
     }
 
     public static str(value: string): TypeInstantiation {
-        return new TypeInstantiation({ type: "str", value });
+        return new this({ type: "str", value });
     }
 
     public static bytes(value: string): TypeInstantiation {
-        return new TypeInstantiation({ type: "bytes", value });
+        return new this({ type: "bytes", value });
     }
 
     public static list(values: TypeInstantiation[]): TypeInstantiation {
-        return new TypeInstantiation({ type: "list", values });
+        return new this({ type: "list", values });
     }
 
     public static set(values: TypeInstantiation[]): TypeInstantiation {
-        return new TypeInstantiation({ type: "set", values });
+        return new this({ type: "set", values });
     }
 
     public static tuple(values: TypeInstantiation[]): TypeInstantiation {
-        return new TypeInstantiation({ type: "tuple", values });
+        return new this({ type: "tuple", values });
     }
 
     public static dict(entries: DictEntry[]): TypeInstantiation {
-        return new TypeInstantiation({ type: "dict", entries });
+        return new this({ type: "dict", entries });
     }
 
     public static none(): TypeInstantiation {
-        return new TypeInstantiation({ type: "none" });
+        return new this({ type: "none" });
     }
 
     public write(writer: Writer): void {
