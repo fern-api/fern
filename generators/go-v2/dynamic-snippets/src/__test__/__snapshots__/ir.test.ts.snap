@@ -173,8 +173,6 @@ func do() {
 		option.WithAPIKey(
 			"<value>",
 		),
-		option.WithXAnotherHeader(),
-		option.WithXAPIVersion(),
 	)
 	client.GetWithAPIKey(
 		context.TODO(),
@@ -197,8 +195,6 @@ func do() {
 		option.WithAPIKey(
 			"<value>",
 		),
-		option.WithXAnotherHeader(),
-		option.WithXAPIVersion(),
 	)
 	client.GetWithHeader(
 		context.TODO(),
@@ -1229,14 +1225,10 @@ import (
 	context "context"
 	sdk "sdk"
 	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
-	client := client.NewClient(
-		option.WithVersion(),
-		option.WithAuditLogging(),
-	)
+	client := client.NewClient()
 	client.Send(
 		context.TODO(),
 		&sdk.SendLiteralsInHeadersRequest{
@@ -1253,14 +1245,10 @@ import (
 	context "context"
 	sdk "sdk"
 	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
-	client := client.NewClient(
-		option.WithVersion(),
-		option.WithAuditLogging(),
-	)
+	client := client.NewClient()
 	client.Send(
 		context.TODO(),
 		&sdk.SendLiteralsInHeadersRequest{
@@ -1277,14 +1265,10 @@ import (
 	context "context"
 	sdk "sdk"
 	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
-	client := client.NewClient(
-		option.WithVersion(),
-		option.WithAuditLogging(),
-	)
+	client := client.NewClient()
 	client.Send(
 		context.TODO(),
 		&sdk.SendLiteralsInlinedRequest{
@@ -1307,14 +1291,10 @@ import (
 	context "context"
 	sdk "sdk"
 	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
-	client := client.NewClient(
-		option.WithVersion(),
-		option.WithAuditLogging(),
-	)
+	client := client.NewClient()
 	client.Send(
 		context.TODO(),
 		&sdk.SendLiteralsInlinedRequest{
@@ -1333,14 +1313,10 @@ package example
 import (
 	context "context"
 	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
-	client := client.NewClient(
-		option.WithVersion(),
-		option.WithAuditLogging(),
-	)
+	client := client.NewClient()
 	client.Send(
 		context.TODO(),
 	)
@@ -1353,14 +1329,10 @@ package example
 import (
 	context "context"
 	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
-	client := client.NewClient(
-		option.WithVersion(),
-		option.WithAuditLogging(),
-	)
+	client := client.NewClient()
 	client.Send(
 		context.TODO(),
 	)
@@ -1374,14 +1346,10 @@ import (
 	context "context"
 	sdk "sdk"
 	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
-	client := client.NewClient(
-		option.WithVersion(),
-		option.WithAuditLogging(),
-	)
+	client := client.NewClient()
 	client.Send(
 		context.TODO(),
 		&sdk.SendLiteralsInQueryRequest{
@@ -1398,14 +1366,10 @@ import (
 	context "context"
 	sdk "sdk"
 	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
-	client := client.NewClient(
-		option.WithVersion(),
-		option.WithAuditLogging(),
-	)
+	client := client.NewClient()
 	client.Send(
 		context.TODO(),
 		&sdk.SendLiteralsInQueryRequest{
@@ -1422,14 +1386,10 @@ import (
 	context "context"
 	sdk "sdk"
 	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
-	client := client.NewClient(
-		option.WithVersion(),
-		option.WithAuditLogging(),
-	)
+	client := client.NewClient()
 	client.Send(
 		context.TODO(),
 		&sdk.SendRequest{
@@ -1453,14 +1413,10 @@ import (
 	context "context"
 	sdk "sdk"
 	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
-	client := client.NewClient(
-		option.WithVersion(),
-		option.WithAuditLogging(),
-	)
+	client := client.NewClient()
 	client.Send(
 		context.TODO(),
 		&sdk.SendRequest{

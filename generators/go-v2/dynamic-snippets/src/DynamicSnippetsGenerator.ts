@@ -200,7 +200,10 @@ export class DynamicSnippetsGenerator {
     }): go.AstNode[] {
         const args: go.AstNode[] = [];
         for (const header of headers) {
-            args.push(this.getConstructorHeaderArg({ header, value: values.value }));
+            const arg = this.getConstructorHeaderArg({ header, value: values.value });
+            if (arg != null) {
+                args.push(arg);
+            }
         }
         return args;
     }
@@ -211,7 +214,16 @@ export class DynamicSnippetsGenerator {
     }: {
         header: DynamicSnippets.NamedParameter;
         value: unknown;
-    }): go.AstNode {
+    }): go.AstNode | undefined {
+        const typeInstantiation = this.context.dynamicTypeInstantiationMapper.convert({
+            typeReference: header.typeReference,
+            value
+        });
+        if (go.TypeInstantiation.isNop(typeInstantiation)) {
+            // Literal header values (e.g. "X-API-Version") should not be included in the
+            // client constructor.
+            return undefined;
+        }
         return go.codeblock((writer) => {
             writer.writeNode(
                 go.invokeFunc({
@@ -219,12 +231,7 @@ export class DynamicSnippetsGenerator {
                         name: `With${header.name.name.pascalCase.unsafeName}`,
                         importPath: this.context.getOptionImportPath()
                     }),
-                    arguments_: [
-                        this.context.dynamicTypeInstantiationMapper.convert({
-                            typeReference: header.typeReference,
-                            value
-                        })
-                    ]
+                    arguments_: [typeInstantiation]
                 })
             );
         });
