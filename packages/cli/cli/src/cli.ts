@@ -44,11 +44,8 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
-import { setGlobalDispatcher, Agent } from "undici";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 import { RUNTIME } from "@fern-typescript/fetcher";
-
-setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
 
 void runCli();
 
@@ -61,11 +58,9 @@ async function runCli() {
         await cliContext.exit();
     };
 
-    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion < 18) {
-        cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
-        cliContext.failWithoutThrowing();
-        await exit();
-        return;
+    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
+        const { setGlobalDispatcher, Agent } = await import("undici");
+        setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
     }
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -79,6 +74,7 @@ async function runCli() {
         if (cwd != null) {
             process.chdir(cwd);
         }
+        console.log("abccccc");
         const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
         if (cliContext.environment.packageVersion === versionOfCliToRun) {
             await tryRunCli(cliContext);

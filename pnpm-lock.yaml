@@ -3652,6 +3652,9 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
+      readable-stream:
+        specifier: ^4.5.2
+        version: 4.5.2
       tar:
         specifier: ^6.2.1
         version: 6.2.1
@@ -4020,6 +4023,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
+      '@fern-typescript/fetcher':
+        specifier: workspace:*
+        version: link:../../../generators/typescript/utils/core-utilities/fetcher
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -4032,6 +4038,9 @@ importers:
       express:
         specifier: ^4.20.0
         version: 4.21.1
+      readable-stream:
+        specifier: ^4.5.2
+        version: 4.5.2
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -4060,6 +4069,9 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
+      '@types/readable-stream':
+        specifier: ^4.0.15
+        version: 4.0.15
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
