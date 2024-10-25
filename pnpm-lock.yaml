@@ -7,6 +7,7 @@ settings:
 overrides:
   '@babel/traverse': 7.23.2
   json5: 2.2.2
+  micromatch: 4.0.8
   yaml: 2.3.3
 
 importers:
@@ -11263,8 +11264,8 @@ packages:
   micromark@4.0.0:
     resolution: {integrity: sha512-o/sd0nMof8kYff+TqcDx3VSrgBTcZpSvYcAHIfHhv5VAuNmisCxjhx6YmxS8PFEpb9z5WKWKPdzf0jM23ro3RQ==}
 
-  micromatch@4.0.5:
-    resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
+  micromatch@4.0.8:
+    resolution: {integrity: sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==}
     engines: {node: '>=8.6'}
 
   mime-db@1.52.0:
@@ -14916,7 +14917,7 @@ snapshots:
       jest-util: 29.7.0
       jest-validate: 29.7.0
       jest-watcher: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       pretty-format: 29.7.0
       slash: 3.0.0
       strip-ansi: 6.0.1
@@ -15027,7 +15028,7 @@ snapshots:
       jest-haste-map: 29.7.0
       jest-regex-util: 29.6.3
       jest-util: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       pirates: 4.0.5
       slash: 3.0.0
       write-file-atomic: 4.0.2
@@ -17534,7 +17535,7 @@ snapshots:
       '@nodelib/fs.walk': 1.2.8
       glob-parent: 5.1.2
       merge2: 1.4.1
-      micromatch: 4.0.5
+      micromatch: 4.0.8
 
   fast-json-parse@1.0.3: {}
 
@@ -17650,7 +17651,7 @@ snapshots:
     dependencies:
       detect-file: 1.0.0
       is-glob: 4.0.3
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       resolve-dir: 1.0.1
 
   flat-cache@3.0.4:
@@ -18410,7 +18411,7 @@ snapshots:
       jest-runner: 29.7.0
       jest-util: 29.7.0
       jest-validate: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       parse-json: 5.2.0
       pretty-format: 29.7.0
       slash: 3.0.0
@@ -18485,7 +18486,7 @@ snapshots:
       jest-regex-util: 29.6.3
       jest-util: 29.7.0
       jest-worker: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       walker: 1.0.8
     optionalDependencies:
       fsevents: 2.3.3
@@ -18509,7 +18510,7 @@ snapshots:
       '@types/stack-utils': 2.0.1
       chalk: 4.1.2
       graceful-fs: 4.2.11
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       pretty-format: 29.7.0
       slash: 3.0.0
       stack-utils: 2.0.5
@@ -18854,7 +18855,7 @@ snapshots:
       execa: 6.1.0
       lilconfig: 2.0.5
       listr2: 4.0.5
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       normalize-path: 3.0.0
       object-inspect: 1.13.1
       pidtree: 0.6.0
@@ -19494,7 +19495,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  micromatch@4.0.5:
+  micromatch@4.0.8:
     dependencies:
       braces: 3.0.3
       picomatch: 2.3.1
@@ -20900,7 +20901,7 @@ snapshots:
       known-css-properties: 0.25.0
       mathml-tag-names: 2.1.3
       meow: 9.0.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       normalize-path: 3.0.0
       picocolors: 1.0.1
       postcss: 8.4.38
@@ -20946,7 +20947,7 @@ snapshots:
       known-css-properties: 0.29.0
       mathml-tag-names: 2.1.3
       meow: 13.2.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       normalize-path: 3.0.0
       picocolors: 1.0.1
       postcss: 8.4.38
@@ -21043,7 +21044,7 @@ snapshots:
       is-glob: 4.0.3
       jiti: 1.18.2
       lilconfig: 2.1.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.1
@@ -21262,7 +21263,7 @@ snapshots:
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.15.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       semver: 7.6.2
       source-map: 0.7.4
       typescript: 4.6.4
@@ -21272,7 +21273,7 @@ snapshots:
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.15.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       semver: 7.6.2
       source-map: 0.7.4
       typescript: 4.6.4
