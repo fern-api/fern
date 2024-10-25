@@ -7,15 +7,15 @@ import { MethodArgument } from "./MethodArgument";
 import { Reference } from "./Reference";
 import { BaseInvocation } from "./BaseInvocation";
 
-export declare namespace MethodInvocation {
+export declare namespace ClassInstantiation {
     interface Args extends Omit<BaseInvocation.Args, "reference"> {
-        /* A reference to the method that you'd like to invoke */
-        methodReference: Reference;
+        /* A reference to the class that you'd like to instantiate */
+        classReference: Reference;
     }
 }
 
-export class MethodInvocation extends BaseInvocation {
-    constructor({ methodReference, ...args }: MethodInvocation.Args) {
-        super({ reference: methodReference, ...args });
+export class ClassInstantiation extends BaseInvocation {
+    constructor({ classReference, ...args }: ClassInstantiation.Args) {
+        super({ reference: classReference, ...args });
     }
 }

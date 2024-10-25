@@ -8,7 +8,8 @@ import {
     MethodArgument,
     PythonFile,
     Decorator,
-    MethodInvocation
+    MethodInvocation,
+    ClassInstantiation
 } from "./ast";
 
 export function file(args: PythonFile.Args): PythonFile {
@@ -17,6 +18,10 @@ export function file(args: PythonFile.Args): PythonFile {
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
+}
+
+export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiation {
+    return new ClassInstantiation(args);
 }
 
 export function decorator(args: Decorator.Args): Decorator {

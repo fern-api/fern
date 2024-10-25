@@ -2,16 +2,16 @@ import { MethodInvocation } from "../MethodInvocation";
 import { Writer } from "../core/Writer";
 import { python } from "../..";
 
-describe("MethodInvocation", () => {
+describe("ClassInstantiation", () => {
     let writer: Writer;
 
     beforeEach(() => {
         writer = new Writer();
     });
 
-    it("should write a method invocation with no args", async () => {
-        const invocation = python.invokeMethod({
-            methodReference: python.reference({ name: "test_method" }),
+    it("should write a class instantiation with no args", async () => {
+        const invocation = python.instantiateClass({
+            classReference: python.reference({ name: "TestClass" }),
             arguments_: []
         });
 
@@ -21,9 +21,9 @@ describe("MethodInvocation", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("should write a method invocation with one positional arg", async () => {
-        const invocation = python.invokeMethod({
-            methodReference: python.reference({ name: "test_method" }),
+    it("should write a class instantiation with one positional arg", async () => {
+        const invocation = python.instantiateClass({
+            classReference: python.reference({ name: "TestClass" }),
             arguments_: [python.methodArgument({ value: python.codeBlock("42") })]
         });
 
@@ -33,9 +33,9 @@ describe("MethodInvocation", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("should write a method invocation with one positional arg and one kwarg", async () => {
-        const invocation = python.invokeMethod({
-            methodReference: python.reference({ name: "test_method" }),
+    it("should write a class instantiation with one positional arg and one kwarg", async () => {
+        const invocation = python.instantiateClass({
+            classReference: python.reference({ name: "TestClass" }),
             arguments_: [
                 python.methodArgument({ value: python.codeBlock("42") }),
                 python.methodArgument({ name: "key", value: python.codeBlock("'value'") })
@@ -48,9 +48,9 @@ describe("MethodInvocation", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("should write a method invocation with multiple positional and kwarg args", async () => {
-        const invocation = python.invokeMethod({
-            methodReference: python.reference({ name: "test_method" }),
+    it("should write a class instantiation with multiple positional and kwarg args", async () => {
+        const invocation = python.instantiateClass({
+            classReference: python.reference({ name: "TestClass" }),
             arguments_: [
                 python.methodArgument({ value: python.codeBlock("42") }),
                 python.methodArgument({ value: python.codeBlock("'hello'") }),
@@ -65,9 +65,9 @@ describe("MethodInvocation", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("should write a method invocation with a parent", async () => {
-        const invocation = python.invokeMethod({
-            methodReference: python.reference({ name: "parent_object", attribute: ["test_method"] }),
+    it("should write a class instantiation with a parent", async () => {
+        const invocation = python.instantiateClass({
+            classReference: python.reference({ name: "ParentClass", attribute: ["ChildClass"] }),
             arguments_: [
                 python.methodArgument({ value: python.codeBlock("'arg1'") }),
                 python.methodArgument({ name: "kwarg", value: python.codeBlock("42") })
