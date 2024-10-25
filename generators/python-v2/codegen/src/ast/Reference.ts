@@ -25,9 +25,9 @@ export declare namespace Reference {
 
 export class Reference extends AstNode {
     public readonly name: string;
-    private readonly modulePath: ModulePath;
+    public readonly modulePath: ModulePath;
     private readonly genericTypes: Type[];
-    private readonly alias: string | undefined;
+    public readonly alias: string | undefined;
     private readonly attribute: AttrPath;
 
     constructor({ name, modulePath, genericTypes, alias, attribute }: Reference.Args) {
@@ -64,23 +64,7 @@ export class Reference extends AstNode {
         }
     }
 
-    public getName(): string {
-        return this.name;
-    }
-
-    public getModulePath(): ModulePath {
-        return this.modulePath;
-    }
-
     public getFullyQualifiedModulePath(): string {
         return this.modulePath.join(".");
-    }
-
-    public getFullyQualifiedName(): string {
-        return [this.getFullyQualifiedModulePath(), this.name].join(".");
-    }
-
-    public getAlias(): string | undefined {
-        return this.alias;
     }
 }
