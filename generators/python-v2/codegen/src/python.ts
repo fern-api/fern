@@ -9,7 +9,8 @@ import {
     PythonFile,
     Decorator,
     MethodInvocation,
-    ClassInstantiation
+    ClassInstantiation,
+    UUID
 } from "./ast";
 
 export function file(args: PythonFile.Args): PythonFile {
@@ -54,6 +55,10 @@ export function parameter(args: Parameter.Args): Parameter {
 
 export function methodArgument(args: MethodArgument.Args): MethodArgument {
     return new MethodArgument(args);
+}
+
+export function uuid(args: UUID.Args): UUID {
+    return new UUID(args);
 }
 
 export { AstNode, Class, Field, Type, Writer, Reference, CodeBlock, Method } from "./ast";

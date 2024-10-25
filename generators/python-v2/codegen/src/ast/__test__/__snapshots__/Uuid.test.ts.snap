@@ -1,0 +1,6 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`UUID > writes a UUID instance with the expected value 1`] = `
+"UUID("e5ff9360-a29c-437b-a9c1-05fc52df2834")
+"
+`;
