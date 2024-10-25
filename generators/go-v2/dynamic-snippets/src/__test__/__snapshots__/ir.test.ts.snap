@@ -1222,6 +1222,265 @@ func do() {
 "
 `;
 
+exports[`test definitions > literal 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithVersion(),
+		option.WithAuditLogging(),
+	)
+	client.Send(
+		context.TODO(),
+		&sdk.SendLiteralsInHeadersRequest{
+			Query: "What is the weather today",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithVersion(),
+		option.WithAuditLogging(),
+	)
+	client.Send(
+		context.TODO(),
+		&sdk.SendLiteralsInHeadersRequest{
+			Query: "query",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithVersion(),
+		option.WithAuditLogging(),
+	)
+	client.Send(
+		context.TODO(),
+		&sdk.SendLiteralsInlinedRequest{
+			Temperature: sdk.Float64(
+				10.1,
+			),
+			ObjectWithLiteral: &sdk.ATopLevelLiteral{
+				NestedLiteral: &sdk.ANestedLiteral{},
+			},
+			Query: "What is the weather today",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithVersion(),
+		option.WithAuditLogging(),
+	)
+	client.Send(
+		context.TODO(),
+		&sdk.SendLiteralsInlinedRequest{
+			Query: "query",
+			ObjectWithLiteral: &sdk.ATopLevelLiteral{
+				NestedLiteral: &sdk.ANestedLiteral{},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithVersion(),
+		option.WithAuditLogging(),
+	)
+	client.Send(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithVersion(),
+		option.WithAuditLogging(),
+	)
+	client.Send(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithVersion(),
+		option.WithAuditLogging(),
+	)
+	client.Send(
+		context.TODO(),
+		&sdk.SendLiteralsInQueryRequest{
+			Query: "What is the weather today",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithVersion(),
+		option.WithAuditLogging(),
+	)
+	client.Send(
+		context.TODO(),
+		&sdk.SendLiteralsInQueryRequest{
+			Query: "query",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithVersion(),
+		option.WithAuditLogging(),
+	)
+	client.Send(
+		context.TODO(),
+		&sdk.SendRequest{
+			Query: "What is the weather today",
+			ContainerObject: &sdk.ContainerObject{
+				NestedObjects: []*sdk.NestedObjectWithLiterals{
+					&sdk.NestedObjectWithLiterals{
+						StrProp: "strProp",
+					},
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithVersion(),
+		option.WithAuditLogging(),
+	)
+	client.Send(
+		context.TODO(),
+		&sdk.SendRequest{
+			Query: "query",
+			ContainerObject: &sdk.ContainerObject{
+				NestedObjects: []*sdk.NestedObjectWithLiterals{
+					&sdk.NestedObjectWithLiterals{
+						StrProp: "strProp",
+					},
+					&sdk.NestedObjectWithLiterals{
+						StrProp: "strProp",
+					},
+				},
+			},
+		},
+	)
+}
+"
+`;
+
 exports[`test definitions > mixed-case 1`] = `
 "package example
 

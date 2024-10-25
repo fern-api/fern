@@ -29,6 +29,6 @@ function writeArgument({ writer, argument }: { writer: Writer; argument: Argumen
 
 function filterNopArguments(arguments_: Argument[]): Argument[] {
     return arguments_.filter(
-        (argument) => !(argument instanceof TypeInstantiation && argument.internalType.type === "nop")
+        (argument) => !(argument instanceof TypeInstantiation && TypeInstantiation.isNop(argument))
     );
 }

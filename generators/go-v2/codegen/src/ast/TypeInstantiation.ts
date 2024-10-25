@@ -341,6 +341,13 @@ export class TypeInstantiation extends AstNode {
         });
     }
 
+    public static isNop(typeInstantiation: TypeInstantiation): boolean {
+        if (typeInstantiation.internalType.type === "optional") {
+            return this.isNop(typeInstantiation.internalType.value);
+        }
+        return typeInstantiation.internalType.type === "nop";
+    }
+
     private writeAny({ writer, value }: { writer: Writer; value: unknown }): void {
         switch (typeof value) {
             case "boolean":
@@ -554,13 +561,13 @@ function invokeMustParseUUID({ value }: { value: string }): FuncInvocation {
 }
 
 function filterNopMapEntries({ entries }: { entries: MapEntry[] }): MapEntry[] {
-    return entries.filter((entry) => entry.key.internalType.type !== "nop" && entry.value.internalType.type !== "nop");
+    return entries.filter((entry) => !TypeInstantiation.isNop(entry.key) && !TypeInstantiation.isNop(entry.value));
 }
 
 function filterNopStructFields({ fields }: { fields: StructField[] }): StructField[] {
-    return fields.filter((field) => field.value.internalType.type !== "nop");
+    return fields.filter((field) => !TypeInstantiation.isNop(field.value));
 }
 
 function filterNopValues({ values }: { values: TypeInstantiation[] }): TypeInstantiation[] {
-    return values.filter((value) => value.internalType.type !== "nop");
+    return values.filter((value) => !TypeInstantiation.isNop(value));
 }
