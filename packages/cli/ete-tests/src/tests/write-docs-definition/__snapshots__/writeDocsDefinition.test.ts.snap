@@ -16,10 +16,10 @@ exports[`write-docs-definition > petstore 1`] = `
           "id": "unversioned/root",
           "children": [
             {
-              "id": "[object Object]-49579201-2fba-403c-b9f3-f6d717163323",
+              "id": "function toLowerCase() { [native code] }-1",
               "type": "apiReference",
               "title": "API Reference",
-              "apiDefinitionId": "[object Object]-49579201-2fba-403c-b9f3-f6d717163323",
+              "apiDefinitionId": "function toLowerCase() { [native code] }-1",
               "paginated": false,
               "slug": "fern.docs.buildwithfern.com/api-reference",
               "hideTitle": false,
@@ -34,35 +34,35 @@ exports[`write-docs-definition > petstore 1`] = `
               },
               "children": [
                 {
-                  "id": "[object Object]-49579201-2fba-403c-b9f3-f6d717163323:subpackage_pets",
+                  "id": "function toLowerCase() { [native code] }-1:subpackage_pets",
                   "type": "apiPackage",
                   "children": [
                     {
-                      "id": "[object Object]-49579201-2fba-403c-b9f3-f6d717163323:endpoint_pets.listPets",
+                      "id": "function toLowerCase() { [native code] }-1:endpoint_pets.listPets",
                       "type": "endpoint",
                       "method": "GET",
                       "endpointId": "endpoint_pets.listPets",
-                      "apiDefinitionId": "[object Object]-49579201-2fba-403c-b9f3-f6d717163323",
+                      "apiDefinitionId": "function toLowerCase() { [native code] }-1",
                       "isResponseStream": false,
                       "title": "List all pets",
                       "slug": "fern.docs.buildwithfern.com/api-reference/pets/list-pets"
                     },
                     {
-                      "id": "[object Object]-49579201-2fba-403c-b9f3-f6d717163323:endpoint_pets.createPets",
+                      "id": "function toLowerCase() { [native code] }-1:endpoint_pets.createPets",
                       "type": "endpoint",
                       "method": "POST",
                       "endpointId": "endpoint_pets.createPets",
-                      "apiDefinitionId": "[object Object]-49579201-2fba-403c-b9f3-f6d717163323",
+                      "apiDefinitionId": "function toLowerCase() { [native code] }-1",
                       "isResponseStream": false,
                       "title": "Create a pet",
                       "slug": "fern.docs.buildwithfern.com/api-reference/pets/create-pets"
                     },
                     {
-                      "id": "[object Object]-49579201-2fba-403c-b9f3-f6d717163323:endpoint_pets.showPetById",
+                      "id": "function toLowerCase() { [native code] }-1:endpoint_pets.showPetById",
                       "type": "endpoint",
                       "method": "GET",
                       "endpointId": "endpoint_pets.showPetById",
-                      "apiDefinitionId": "[object Object]-49579201-2fba-403c-b9f3-f6d717163323",
+                      "apiDefinitionId": "function toLowerCase() { [native code] }-1",
                       "isResponseStream": false,
                       "title": "Info for a specific pet",
                       "slug": "fern.docs.buildwithfern.com/api-reference/pets/show-pet-by-id"
@@ -70,7 +70,7 @@ exports[`write-docs-definition > petstore 1`] = `
                   ],
                   "title": "Pets",
                   "slug": "fern.docs.buildwithfern.com/api-reference/pets",
-                  "apiDefinitionId": "[object Object]-49579201-2fba-403c-b9f3-f6d717163323",
+                  "apiDefinitionId": "function toLowerCase() { [native code] }-1",
                   "pointsTo": "fern.docs.buildwithfern.com/api-reference/pets/list-pets"
                 }
               ],

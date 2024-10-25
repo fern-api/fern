@@ -25,7 +25,6 @@ import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfi
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { wrapWithHttps } from "./wrapWithHttps";
-import crypto from "crypto";
 
 dayjs.extend(utc);
 
@@ -53,8 +52,10 @@ const defaultUploadFiles: UploadFilesFn = (files) => {
     return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
 };
 
+let apiCounter = 0;
 const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
-    return ir.apiName.snakeCase + "-" + crypto.randomUUID();
+    apiCounter++;
+    return `${ir.apiName.snakeCase.unsafeName.toLowerCase}-${apiCounter}`;
 };
 
 export class DocsDefinitionResolver {
