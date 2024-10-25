@@ -4563,6 +4563,478 @@
                     }
                 }
             ]
+        },
+        "type_types:BigEntity": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "BigEntity",
+                    "camelCase": {
+                        "unsafeName": "bigEntity",
+                        "safeName": "bigEntity"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "big_entity",
+                        "safeName": "big_entity"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BIG_ENTITY",
+                        "safeName": "BIG_ENTITY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BigEntity",
+                        "safeName": "BigEntity"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "types",
+                        "camelCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPES",
+                            "safeName": "TYPES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Types",
+                            "safeName": "Types"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "castMember",
+                            "camelCase": {
+                                "unsafeName": "castMember",
+                                "safeName": "castMember"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "cast_member",
+                                "safeName": "cast_member"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CAST_MEMBER",
+                                "safeName": "CAST_MEMBER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CastMember",
+                                "safeName": "CastMember"
+                            }
+                        },
+                        "wireValue": "castMember"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_types:CastMember"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "extendedMovie",
+                            "camelCase": {
+                                "unsafeName": "extendedMovie",
+                                "safeName": "extendedMovie"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "extended_movie",
+                                "safeName": "extended_movie"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EXTENDED_MOVIE",
+                                "safeName": "EXTENDED_MOVIE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ExtendedMovie",
+                                "safeName": "ExtendedMovie"
+                            }
+                        },
+                        "wireValue": "extendedMovie"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_types:ExtendedMovie"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "entity",
+                            "camelCase": {
+                                "unsafeName": "entity",
+                                "safeName": "entity"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "entity",
+                                "safeName": "entity"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENTITY",
+                                "safeName": "ENTITY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Entity",
+                                "safeName": "Entity"
+                            }
+                        },
+                        "wireValue": "entity"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_types:Entity"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "metadata",
+                            "camelCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "METADATA",
+                                "safeName": "METADATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Metadata",
+                                "safeName": "Metadata"
+                            }
+                        },
+                        "wireValue": "metadata"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_types:Metadata"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "commonMetadata",
+                            "camelCase": {
+                                "unsafeName": "commonMetadata",
+                                "safeName": "commonMetadata"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "common_metadata",
+                                "safeName": "common_metadata"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMON_METADATA",
+                                "safeName": "COMMON_METADATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CommonMetadata",
+                                "safeName": "CommonMetadata"
+                            }
+                        },
+                        "wireValue": "commonMetadata"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_commons/types:Metadata"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "eventInfo",
+                            "camelCase": {
+                                "unsafeName": "eventInfo",
+                                "safeName": "eventInfo"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "event_info",
+                                "safeName": "event_info"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EVENT_INFO",
+                                "safeName": "EVENT_INFO"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EventInfo",
+                                "safeName": "EventInfo"
+                            }
+                        },
+                        "wireValue": "eventInfo"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_commons/types:EventInfo"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "data",
+                            "camelCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATA",
+                                "safeName": "DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Data",
+                                "safeName": "Data"
+                            }
+                        },
+                        "wireValue": "data"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_commons/types:Data"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "migration",
+                            "camelCase": {
+                                "unsafeName": "migration",
+                                "safeName": "migration"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "migration",
+                                "safeName": "migration"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MIGRATION",
+                                "safeName": "MIGRATION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Migration",
+                                "safeName": "Migration"
+                            }
+                        },
+                        "wireValue": "migration"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_types:Migration"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "exception",
+                            "camelCase": {
+                                "unsafeName": "exception",
+                                "safeName": "exception"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "exception",
+                                "safeName": "exception"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EXCEPTION",
+                                "safeName": "EXCEPTION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Exception",
+                                "safeName": "Exception"
+                            }
+                        },
+                        "wireValue": "exception"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_types:Exception"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "test",
+                            "camelCase": {
+                                "unsafeName": "test",
+                                "safeName": "test"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "test",
+                                "safeName": "test"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TEST",
+                                "safeName": "TEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Test",
+                                "safeName": "Test"
+                            }
+                        },
+                        "wireValue": "test"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_types:Test"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "node",
+                            "camelCase": {
+                                "unsafeName": "node",
+                                "safeName": "node"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "node",
+                                "safeName": "node"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NODE",
+                                "safeName": "NODE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Node",
+                                "safeName": "Node"
+                            }
+                        },
+                        "wireValue": "node"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_types:Node"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "directory",
+                            "camelCase": {
+                                "unsafeName": "directory",
+                                "safeName": "directory"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "directory",
+                                "safeName": "directory"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DIRECTORY",
+                                "safeName": "DIRECTORY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Directory",
+                                "safeName": "Directory"
+                            }
+                        },
+                        "wireValue": "directory"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_types:Directory"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "moment",
+                            "camelCase": {
+                                "unsafeName": "moment",
+                                "safeName": "moment"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "moment",
+                                "safeName": "moment"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MOMENT",
+                                "safeName": "MOMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Moment",
+                                "safeName": "Moment"
+                            }
+                        },
+                        "wireValue": "moment"
+                    },
+                    "typeReference": {
+                        "_type": "optional",
+                        "value": {
+                            "_type": "named",
+                            "value": "type_types:Moment"
+                        }
+                    }
+                }
+            ]
         }
     },
     "headers": [],
@@ -4628,6 +5100,74 @@
                     "value": {
                         "_type": "primitive",
                         "value": "STRING"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            }
+        },
+        "endpoint_.createType": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "createType",
+                    "camelCase": {
+                        "unsafeName": "createType",
+                        "safeName": "createType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_type",
+                        "safeName": "create_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_TYPE",
+                        "safeName": "CREATE_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateType",
+                        "safeName": "CreateType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "_type": "named",
+                        "value": "type_:Type"
                     }
                 }
             },
@@ -5914,7 +6454,7 @@
                 "type": "json"
             }
         },
-        "endpoint_service.getResponse": {
+        "endpoint_service.createBigEntity": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -5939,22 +6479,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "getResponse",
+                    "originalName": "createBigEntity",
                     "camelCase": {
-                        "unsafeName": "getResponse",
-                        "safeName": "getResponse"
+                        "unsafeName": "createBigEntity",
+                        "safeName": "createBigEntity"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_response",
-                        "safeName": "get_response"
+                        "unsafeName": "create_big_entity",
+                        "safeName": "create_big_entity"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_RESPONSE",
-                        "safeName": "GET_RESPONSE"
+                        "unsafeName": "CREATE_BIG_ENTITY",
+                        "safeName": "CREATE_BIG_ENTITY"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetResponse",
-                        "safeName": "GetResponse"
+                        "unsafeName": "CreateBigEntity",
+                        "safeName": "CreateBigEntity"
                     }
                 },
                 "fernFilepath": {
@@ -6003,12 +6543,18 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/response"
+                "path": "/big-entity"
             },
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "_type": "named",
+                        "value": "type_types:BigEntity"
+                    }
+                }
             },
             "response": {
                 "type": "json"

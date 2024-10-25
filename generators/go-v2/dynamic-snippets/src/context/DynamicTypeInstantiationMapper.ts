@@ -221,28 +221,41 @@ export class DynamicTypeInstantiationMapper {
         undicriminatedUnion: DynamicSnippets.UndiscriminatedUnionType;
         value: unknown;
     }): go.TypeInstantiation {
-        const structTypeReference = this.context.getGoTypeReferenceFromDeclaration({
-            declaration: undicriminatedUnion.declaration
+        const { valueTypeReference, typeInstantiation } = this.findMatchingUndiscriminatedUnionType({
+            undicriminatedUnion,
+            value
         });
-        let valueTypeReference: DynamicSnippets.TypeReference | undefined;
+        return go.TypeInstantiation.structPointer({
+            typeReference: this.context.getGoTypeReferenceFromDeclaration({
+                declaration: undicriminatedUnion.declaration
+            }),
+            fields: [
+                {
+                    name: this.getUndiscriminatedUnionFieldName({ typeReference: valueTypeReference }),
+                    value: typeInstantiation
+                }
+            ]
+        });
+    }
+
+    private findMatchingUndiscriminatedUnionType({
+        undicriminatedUnion,
+        value
+    }: {
+        undicriminatedUnion: DynamicSnippets.UndiscriminatedUnionType;
+        value: unknown;
+    }): { valueTypeReference: DynamicSnippets.TypeReference; typeInstantiation: go.TypeInstantiation } {
         for (const typeReference of undicriminatedUnion.types) {
             try {
-                value = this.convert({ typeReference, value });
-                break;
+                const typeInstantiation = this.convert({ typeReference, value });
+                return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
                 continue;
             }
         }
-        if (valueTypeReference == null) {
-            throw new Error(
-                `None of the types in the undicriminated union matched the given value: ${JSON.stringify(value)}`
-            );
-        }
-        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: valueTypeReference });
-        return go.TypeInstantiation.structPointer({
-            typeReference: structTypeReference,
-            fields: [{ name: fieldName, value: this.convert({ typeReference: valueTypeReference, value }) }]
-        });
+        throw new Error(
+            `None of the types in the undicriminated union matched the given value: ${JSON.stringify(value)}`
+        );
     }
 
     private getUndiscriminatedUnionFieldName({
@@ -335,13 +348,7 @@ export class DynamicTypeInstantiationMapper {
     }
 
     private convertUnknown({ value }: { value: unknown }): go.TypeInstantiation {
-        return this.convertMap({
-            map: {
-                key: DynamicSnippets.TypeReference.primitive(PrimitiveTypeV1.String),
-                value: DynamicSnippets.TypeReference.unknown()
-            },
-            value
-        });
+        return go.TypeInstantiation.any(value);
     }
 
     private convertPrimitive({

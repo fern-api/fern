@@ -278,6 +278,10 @@ export class TypeInstantiation extends AstNode {
     }
 
     public static optional(value: TypeInstantiation): TypeInstantiation {
+        if (this.isAlreadyOptional(value)) {
+            // Avoids double optional.
+            return value;
+        }
         return new this({
             type: "optional",
             value
@@ -449,6 +453,10 @@ export class TypeInstantiation extends AstNode {
         }
         writer.write("&");
         type.write(writer);
+    }
+
+    private static isAlreadyOptional(value: TypeInstantiation) {
+        return value.internalType.type === "optional" || ADDRESSABLE_TYPES.has(value.internalType.type);
     }
 
     private writeSlice({ writer, slice }: { writer: Writer; slice: Slice }): void {

@@ -1,0 +1,110 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`examples > 'GET /metadata (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.GetMetadata(
+		context.TODO(),
+		&sdk.GetMetadataRequest{
+			Shallow: sdk.Bool(
+				false,
+			),
+			Tag: sdk.String(
+				"development",
+			),
+			XAPIVersion: "0.0.1",
+		},
+	)
+}
+"
+`;
+
+exports[`examples > 'POST /big-entity (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.CreateBigEntity(
+		context.TODO(),
+		&sdk.BigEntity{
+			CastMember: &sdk.CastMember{
+				Actor: &sdk.Actor{
+					ID:   "john.doe",
+					Name: "John Doe",
+				},
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`examples > 'POST /movie (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.CreateMovie(
+		context.TODO(),
+		&sdk.Movie{
+			ID: "movie-c06a4ad7",
+			Prequel: sdk.String(
+				"movie-cv9b914f",
+			),
+			Title:  "The Boy and the Heron",
+			From:   "Hayao Miyazaki",
+			Rating: 8,
+			Tag:    "development",
+			Metadata: map[string]interface{}{
+				"actors": []interface{}{
+					"Christian Bale",
+					"Florence Pugh",
+					"Willem Dafoe",
+				},
+				"releaseDate": "2023-12-08",
+				"ratings": map[string]interface{}{
+					"rottenTomatoes": 97,
+					"imdb":           7.6,
+				},
+			},
+			Revenue: 1000000,
+		},
+	)
+}
+"
+`;

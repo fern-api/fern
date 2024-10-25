@@ -114,9 +114,8 @@ export class Type extends AstNode {
             case "map": {
                 writer.write("map[");
                 this.internalType.keyType.write(writer);
-                writer.write("][");
-                this.internalType.valueType.write(writer);
                 writer.write("]");
+                this.internalType.valueType.write(writer);
                 break;
             }
             case "optional": {
