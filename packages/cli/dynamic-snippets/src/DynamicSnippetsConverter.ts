@@ -11,6 +11,7 @@ import {
     FileProperty,
     FileUploadRequestProperty,
     HttpEndpoint,
+    HttpHeader,
     HttpRequestBody,
     IntermediateRepresentation,
     Literal,
@@ -35,6 +36,7 @@ import urlJoin from "url-join";
 import { Version } from "./version";
 
 interface EndpointWithFilepath extends HttpEndpoint {
+    serviceHeaders: HttpHeader[];
     fernFilepath: FernFilepath;
 }
 
@@ -108,7 +110,9 @@ export class DynamicSnippetsConverter {
                     wrapper: endpoint.sdkRequest.shape,
                     pathParameters,
                     queryParameters: this.convertWireValueParameters({ wireValueParameters: endpoint.queryParameters }),
-                    headers: this.convertWireValueParameters({ wireValueParameters: endpoint.headers }),
+                    headers: this.convertWireValueParameters({
+                        wireValueParameters: [...endpoint.serviceHeaders, ...endpoint.headers]
+                    }),
                     body: endpoint.requestBody
                 });
             default:
@@ -561,6 +565,7 @@ export class DynamicSnippetsConverter {
         return Object.values(this.ir.services).flatMap((service) =>
             service.endpoints.map((endpoint) => ({
                 ...endpoint,
+                serviceHeaders: service.headers,
                 fernFilepath: service.name.fernFilepath
             }))
         );

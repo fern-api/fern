@@ -8543,6 +8543,34 @@
                     {
                         "name": {
                             "name": {
+                                "originalName": "X-TEST-SERVICE-HEADER",
+                                "camelCase": {
+                                    "unsafeName": "xTestServiceHeader",
+                                    "safeName": "xTestServiceHeader"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_test_service_header",
+                                    "safeName": "x_test_service_header"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_TEST_SERVICE_HEADER",
+                                    "safeName": "X_TEST_SERVICE_HEADER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XTestServiceHeader",
+                                    "safeName": "XTestServiceHeader"
+                                }
+                            },
+                            "wireValue": "X-TEST-SERVICE-HEADER"
+                        },
+                        "typeReference": {
+                            "_type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    {
+                        "name": {
+                            "name": {
                                 "originalName": "X-TEST-ENDPOINT-HEADER",
                                 "camelCase": {
                                     "unsafeName": "xTestEndpointHeader",

@@ -623,6 +623,480 @@ func do() {
 "
 `;
 
+exports[`test definitions > examples 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Echo(
+		context.TODO(),
+		"Hello world!\\n\\nwith\\n\\tnewlines",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Echo(
+		context.TODO(),
+		"string",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Echo(
+		context.TODO(),
+		"primitive",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.File.Notification.GetException(
+		context.TODO(),
+		"notification-hsy129x",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.File.Notification.GetException(
+		context.TODO(),
+		"notificationId",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	file "sdk/file"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.File.GetFile(
+		context.TODO(),
+		"file.txt",
+		&file.GetFileRequest{
+			XFileAPIVersion: "0.0.2",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	file "sdk/file"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.File.GetFile(
+		context.TODO(),
+		"filename",
+		&file.GetFileRequest{
+			XFileAPIVersion: "X-File-API-Version",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Health.Check(
+		context.TODO(),
+		"id-2sdx82h",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Health.Check(
+		context.TODO(),
+		"id-3tey93i",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Health.Check(
+		context.TODO(),
+		"id",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Health.Ping(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Health.Ping(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetMovie(
+		context.TODO(),
+		"movie-c06a4ad7",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetMovie(
+		context.TODO(),
+		"movieId",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.CreateMovie(
+		context.TODO(),
+		&sdk.Movie{
+			ID: "movie-c06a4ad7",
+			Prequel: sdk.String(
+				"movie-cv9b914f",
+			),
+			Title:  "The Boy and the Heron",
+			From:   "Hayao Miyazaki",
+			Rating: 8,
+			Tag:    "tag-wf9as23d",
+			Metadata: map[string]interface{}{
+				"actors": []interface{}{
+					"Christian Bale",
+					"Florence Pugh",
+					"Willem Dafoe",
+				},
+				"releaseDate": "2023-12-08",
+				"ratings": map[string]interface{}{
+					"rottenTomatoes": 97,
+					"imdb":           7.6,
+				},
+			},
+			Revenue: 1000000,
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.CreateMovie(
+		context.TODO(),
+		&sdk.Movie{
+			ID:     "id",
+			Title:  "title",
+			From:   "from",
+			Rating: 1.1,
+			Tag:    "tag",
+			Metadata: map[string]interface{}{
+				"metadata": map[string]interface{}{
+					"key": "value",
+				},
+			},
+			Revenue: 1000000,
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetMetadata(
+		context.TODO(),
+		&sdk.GetMetadataRequest{
+			Shallow: sdk.Bool(
+				false,
+			),
+			Tag: sdk.String(
+				"development",
+			),
+			XAPIVersion: "0.0.1",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetMetadata(
+		context.TODO(),
+		&sdk.GetMetadataRequest{
+			XAPIVersion: "X-API-Version",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.CreateBigEntity(
+		context.TODO(),
+		&sdk.BigEntity{},
+	)
+}
+"
+`;
+
 exports[`test definitions > extends 1`] = `
 "package example
 
