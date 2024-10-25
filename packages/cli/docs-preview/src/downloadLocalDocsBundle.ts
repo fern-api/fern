@@ -118,7 +118,7 @@ export async function downloadBundle({
     });
 
     if (!docsBundleZipResponse.ok) {
-        logger.error(`Failed to download docs preview bundle.`);
+        logger.error("Failed to download docs preview bundle.");
         return {
             type: "failure"
         };
