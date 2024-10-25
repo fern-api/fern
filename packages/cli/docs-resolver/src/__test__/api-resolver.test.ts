@@ -6,6 +6,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
 import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { ApiReferenceNodeConverter } from "../ApiReferenceNodeConverter";
+import { NodeIdGenerator } from "../NodeIdGenerator";
 import { convertIrToApiDefinition } from "../utils/convertIrToApiDefinition";
 
 const context = createMockTaskContext();
@@ -77,7 +78,8 @@ it.skip("converts to api reference node", async () => {
         apiWorkspace,
         docsWorkspace,
         context,
-        new Map()
+        new Map(),
+        NodeIdGenerator.init()
     ).get();
 
     expect(node).toMatchSnapshot();
