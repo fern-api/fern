@@ -1,4 +1,4 @@
-import { Audiences, docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
+import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
@@ -53,8 +53,8 @@ const defaultUploadFiles: UploadFilesFn = (files) => {
     return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
 };
 
-const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
-    return ir.apiName.snakeCase + "-" + crypto.randomUUID();
+const defaultRegisterApi: RegisterApiFn = async () => {
+    return crypto.randomUUID();
 };
 
 export class DocsDefinitionResolver {
@@ -483,7 +483,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.SidebarRootNode> {
         const id = this.#idgen.get(`${prefix}/root`);
 
-        const children = await Promise.all(items.map((item) => this.toNavigationChild(prefix, item, parentSlug)));
+        const children = await Promise.all(items.map((item) => this.toNavigationChild(id, item, parentSlug)));
 
         const sidebarRootChildren: FernNavigation.V1.SidebarRootChild[] = [];
         children.forEach((child) => {
@@ -498,7 +498,7 @@ export class DocsDefinitionResolver {
                     let last = sidebarRootChildren[sidebarRootChildren.length - 1];
                     if (last?.type !== "sidebarGroup") {
                         last = {
-                            id: this.#idgen.get(`${prefix}/root/group`),
+                            id: this.#idgen.get(`${id}/group`),
                             type: "sidebarGroup",
                             children: []
                         };
@@ -565,7 +565,8 @@ export class DocsDefinitionResolver {
             workspace,
             this.docsWorkspace,
             this.taskContext,
-            this.markdownFilesToFullSlugs
+            this.markdownFilesToFullSlugs,
+            this.#idgen
         );
         return node.get();
     }
@@ -652,7 +653,7 @@ export class DocsDefinitionResolver {
             hidden: item.hidden,
             viewers: item.viewers,
             orphaned: item.orphaned,
-            children: [],
+            children: await Promise.all(item.contents.map((child) => this.toNavigationChild(id, child, slug))),
             authed: undefined,
             pointsTo: undefined,
             noindex: undefined
