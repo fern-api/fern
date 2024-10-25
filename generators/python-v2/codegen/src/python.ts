@@ -56,4 +56,18 @@ export function methodArgument(args: MethodArgument.Args): MethodArgument {
     return new MethodArgument(args);
 }
 
-export { AstNode, Class, Field, Type, Writer, Reference, CodeBlock, Method } from "./ast";
+export {
+    AstNode,
+    Class,
+    Decorator,
+    Field,
+    Type,
+    Writer,
+    Reference,
+    CodeBlock,
+    Method,
+    TypeInstantiation,
+    PythonFile,
+    MethodInvocation,
+    ClassInstantiation
+} from "./ast";
