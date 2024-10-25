@@ -174,6 +174,7 @@ export class CliContext {
         return context;
     }
 
+    private readonly USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
     private async runTaskWithInit<T>(
         init: TaskContextImpl.Init,
         run: (context: TaskContext) => T | Promise<T>
@@ -183,7 +184,12 @@ export class CliContext {
         try {
             result = await run(context);
         } catch (error) {
-            context.failWithoutThrowing(undefined, error);
+            if ((error as Error).message.includes("globalThis")) {
+                context.logger.error(this.USE_NODE_18_OR_ABOVE_MESSAGE);
+                context.failWithoutThrowing();
+            } else {
+                context.failWithoutThrowing(undefined, error);
+            }
             throw new FernCliError();
         } finally {
             context.finish();
