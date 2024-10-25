@@ -36,6 +36,7 @@
     { "path": "../fern-definition/validator" },
     { "path": "../cli-migrations" },
     { "path": "../fern-definition/schema" },
-    { "path": "../fern-definition/ir-to-jsonschema" }
+    { "path": "../fern-definition/ir-to-jsonschema" },
+    { "path": "../docs-resolver" }
   ]
 }

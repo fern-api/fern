@@ -1,0 +1,106 @@
+{
+  "config": {
+    "title": "fern | Documentation",
+    "root": {
+      "type": "root",
+      "version": "v1",
+      "id": "root",
+      "child": {
+        "type": "unversioned",
+        "id": "unversioned",
+        "child": {
+          "type": "sidebarRoot",
+          "id": "unversioned/root",
+          "children": [
+            {
+              "id": "api-1",
+              "type": "apiReference",
+              "title": "API Reference",
+              "apiDefinitionId": "api-1",
+              "paginated": false,
+              "slug": "fern.docs.buildwithfern.com/api-reference",
+              "hideTitle": false,
+              "showErrors": false,
+              "changelog": {
+                "id": "changelog",
+                "type": "changelog",
+                "title": "Changelog",
+                "slug": "fern.docs.buildwithfern.com/api-reference/changelog",
+                "children": [],
+                "viewers": []
+              },
+              "children": [
+                {
+                  "id": "api-1:subpackage_pets",
+                  "type": "apiPackage",
+                  "children": [
+                    {
+                      "id": "api-1:endpoint_pets.listPets",
+                      "type": "endpoint",
+                      "method": "GET",
+                      "endpointId": "endpoint_pets.listPets",
+                      "apiDefinitionId": "api-1",
+                      "isResponseStream": false,
+                      "title": "List all pets",
+                      "slug": "fern.docs.buildwithfern.com/api-reference/pets/list-pets"
+                    },
+                    {
+                      "id": "api-1:endpoint_pets.createPets",
+                      "type": "endpoint",
+                      "method": "POST",
+                      "endpointId": "endpoint_pets.createPets",
+                      "apiDefinitionId": "api-1",
+                      "isResponseStream": false,
+                      "title": "Create a pet",
+                      "slug": "fern.docs.buildwithfern.com/api-reference/pets/create-pets"
+                    },
+                    {
+                      "id": "api-1:endpoint_pets.showPetById",
+                      "type": "endpoint",
+                      "method": "GET",
+                      "endpointId": "endpoint_pets.showPetById",
+                      "apiDefinitionId": "api-1",
+                      "isResponseStream": false,
+                      "title": "Info for a specific pet",
+                      "slug": "fern.docs.buildwithfern.com/api-reference/pets/show-pet-by-id"
+                    }
+                  ],
+                  "title": "Pets",
+                  "slug": "fern.docs.buildwithfern.com/api-reference/pets",
+                  "apiDefinitionId": "api-1",
+                  "pointsTo": "fern.docs.buildwithfern.com/api-reference/pets/list-pets"
+                }
+              ],
+              "pointsTo": "fern.docs.buildwithfern.com/api-reference/pets/list-pets"
+            }
+          ]
+        }
+      },
+      "slug": "fern.docs.buildwithfern.com",
+      "title": "fern | Documentation",
+      "hidden": false
+    },
+    "colorsV3": {
+      "type": "dark",
+      "accentPrimary": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "a": 1
+      },
+      "background": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 1
+      }
+    },
+    "js": {
+      "files": []
+    },
+    "integrations": {},
+    "analyticsConfig": {}
+  },
+  "pages": {},
+  "jsFiles": {}
+}
