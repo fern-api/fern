@@ -32,7 +32,7 @@
     "@fern-fern/generator-exec-sdk": "^0.0.898",
     "@fern-fern/ir-sdk": "53.8.0",
     "@fern-typescript/commons": "workspace:*",
-    "ts-morph": "^15.1.0"
+    "ts-morph": "^24.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
