@@ -26,10 +26,10 @@ export const ApiReferenceSectionConfiguration: core.serialization.ObjectSchema<
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
         playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAudience));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
 
 export declare namespace ApiReferenceSectionConfiguration {
-    interface Raw extends serializers.WithAudience.Raw {
+    interface Raw extends serializers.WithPermissions.Raw {
         section: string;
         "referenced-packages"?: string[] | null;
         summary?: string | null;

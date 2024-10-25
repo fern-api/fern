@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface PageConfiguration extends FernDocsConfig.WithAudience {
+export interface PageConfiguration extends FernDocsConfig.WithPermissions {
     page: string;
     path: string;
     slug?: string;

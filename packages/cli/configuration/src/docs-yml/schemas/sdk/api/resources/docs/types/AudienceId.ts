@@ -3,7 +3,6 @@
  */
 
 /**
- * ID of audience which is used to filter the content shown in Fern Docs.
- * This is ideally used in conjunction with private (authenticated) docs.
+ * ID of audience which is used to filter the API spec.
  */
 export type AudienceId = string;

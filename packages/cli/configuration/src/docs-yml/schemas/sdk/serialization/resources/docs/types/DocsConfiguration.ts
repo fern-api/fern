@@ -16,9 +16,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     title: core.serialization.string().optional(),
     analytics: core.serialization.lazyObject(async () => (await import("../../..")).AnalyticsConfig).optional(),
     announcement: core.serialization.lazyObject(async () => (await import("../../..")).AnnouncementConfig).optional(),
-    audiences: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).AudienceId))
-        .optional(),
+    roles: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).RoleId)).optional(),
     tabs: core.serialization
         .record(
             core.serialization.lazy(async () => (await import("../../..")).TabId),
@@ -70,7 +68,7 @@ export declare namespace DocsConfiguration {
         title?: string | null;
         analytics?: serializers.AnalyticsConfig.Raw | null;
         announcement?: serializers.AnnouncementConfig.Raw | null;
-        audiences?: serializers.AudienceId.Raw[] | null;
+        roles?: serializers.RoleId.Raw[] | null;
         tabs?: Record<serializers.TabId.Raw, serializers.TabConfig.Raw> | null;
         versions?: serializers.VersionConfig.Raw[] | null;
         "landing-page"?: serializers.PageConfiguration.Raw | null;

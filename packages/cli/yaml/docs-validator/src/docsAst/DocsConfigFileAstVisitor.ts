@@ -22,7 +22,7 @@ export interface DocsConfigFileAstNodeTypes {
         workspace: AbstractAPIWorkspace<unknown>;
         context: TaskContext;
     };
-    audience: docsYml.RawSchemas.Audience;
+    permissions: docsYml.RawSchemas.WithPermissions;
 }
 
 export type DocsConfigFileAstNodeVisitor<K extends keyof DocsConfigFileAstNodeTypes, R = void | Promise<void>> = (
