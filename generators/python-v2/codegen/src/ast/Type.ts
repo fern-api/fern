@@ -15,6 +15,7 @@ type InternalType =
     | Tuple
     | Dict
     | None
+    | Uuid
     | Optional
     | Union
     | Any
@@ -63,6 +64,10 @@ interface Dict {
 
 interface None {
     type: "none";
+}
+
+interface Uuid {
+    type: "uuid";
 }
 
 interface Optional {
@@ -145,6 +150,12 @@ export class Type extends AstNode {
         return new this({ type: "none" });
     }
 
+    public static uuid(): Type {
+        const uuidType = new this({ type: "uuid" });
+        uuidType.addReference(python.reference({ name: "UUID", modulePath: ["uuid"] }));
+        return uuidType;
+    }
+
     public static optional(value: Type): Type {
         const optionalType = new this({ type: "optional", value });
         optionalType.addReference(python.reference({ name: "Optional", modulePath: ["typing"] }));
@@ -217,6 +228,9 @@ export class Type extends AstNode {
                 break;
             case "none":
                 writer.write("None");
+                break;
+            case "uuid":
+                writer.write("UUID");
                 break;
             case "optional":
                 writer.write("Optional[");

@@ -3,7 +3,7 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 
-type InternalTypeInstantiation = Int | Float | Bool | Str | Bytes | List | Set | Tuple | Dict | None;
+type InternalTypeInstantiation = Int | Float | Bool | Str | Bytes | List | Set | Tuple | Dict | None | Uuid;
 
 interface Int {
     type: "int";
@@ -59,6 +59,11 @@ interface None {
     type: "none";
 }
 
+interface Uuid {
+    type: "uuid";
+    value: string;
+}
+
 export class TypeInstantiation extends AstNode {
     private constructor(private readonly internalType: InternalTypeInstantiation) {
         super();
@@ -102,6 +107,10 @@ export class TypeInstantiation extends AstNode {
 
     public static none(): TypeInstantiation {
         return new this({ type: "none" });
+    }
+
+    public static uuid(value: string): TypeInstantiation {
+        return new this({ type: "uuid", value });
     }
 
     public write(writer: Writer): void {
@@ -169,6 +178,9 @@ export class TypeInstantiation extends AstNode {
                 break;
             case "none":
                 writer.write("None");
+                break;
+            case "uuid":
+                writer.write(`UUID("${this.internalType.value}")`);
                 break;
             default:
                 assertNever(this.internalType);

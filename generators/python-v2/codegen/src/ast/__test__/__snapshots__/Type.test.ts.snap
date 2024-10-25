@@ -74,3 +74,8 @@ exports[`Type > writes union type 1`] = `
 "Union[int, str]
 "
 `;
+
+exports[`Type > writes uuid type 1`] = `
+"UUID
+"
+`;
