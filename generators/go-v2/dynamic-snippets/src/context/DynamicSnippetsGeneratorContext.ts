@@ -37,15 +37,20 @@ export class DynamicSnippetsGeneratorContext {
 
     public associateByWireValue({
         parameters,
-        values
+        values,
+        ignoreMissingParameters
     }: {
         parameters: DynamicSnippets.NamedParameter[];
         values: DynamicSnippets.Values;
+        ignoreMissingParameters?: boolean;
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
         for (const [key, value] of Object.entries(values)) {
             const parameter = parameters.find((param) => param.name.wireValue === key);
             if (parameter == null) {
+                if (ignoreMissingParameters) {
+                    continue;
+                }
                 throw new Error(`"${key}" is not a recognized parameter for this endpoint`);
             }
             instances.push({
@@ -84,25 +89,25 @@ export class DynamicSnippetsGeneratorContext {
     }): DiscriminatedUnionTypeInstance {
         const record = this.getRecordOrThrow(value);
 
-        const discriminant = record[discriminatedUnion.discriminant.wireValue];
-        if (discriminant == null) {
+        const discriminantFieldName = discriminatedUnion.discriminant.wireValue;
+        const discriminantValue = record[discriminantFieldName];
+        if (discriminantValue == null) {
             throw new Error(
-                `Missing required discriminant field "${
-                    discriminatedUnion.discriminant.wireValue
-                }" got ${JSON.stringify(value)}`
+                `Missing required discriminant field "${discriminantFieldName}" got ${JSON.stringify(value)}`
             );
         }
-        if (typeof discriminant !== "string") {
-            throw new Error(`Expected discriminant value to be a string but got: ${JSON.stringify(discriminant)}`);
+        if (typeof discriminantValue !== "string") {
+            throw new Error(`Expected discriminant value to be a string but got: ${JSON.stringify(discriminantValue)}`);
         }
 
-        const singleDiscriminatedUnionType = discriminatedUnion.types[discriminant];
+        const singleDiscriminatedUnionType = discriminatedUnion.types[discriminantValue];
         if (singleDiscriminatedUnionType == null) {
-            throw new Error(`No type found for discriminant value "${discriminant}"`);
+            throw new Error(`No type found for discriminant value "${discriminantValue}"`);
         }
 
         // Remove the discriminant from the record so that the value is valid for the type.
-        const { [discriminant]: _, ...filtered } = record;
+        const { [discriminantFieldName]: _, ...filtered } = record;
+
         return {
             singleDiscriminatedUnionType,
             discriminantValue: singleDiscriminatedUnionType.discriminantValue,

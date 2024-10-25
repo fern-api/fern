@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-codegen";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 import { dynamic as DynamicSnippets, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
+import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstance";
 
 export declare namespace DynamicTypeInstantiationMapper {
     interface Args {
@@ -111,30 +112,24 @@ export class DynamicTypeInstantiationMapper {
             discriminatedUnion,
             value
         });
-
-        const singleDiscriminatedUnionType = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
-        const properties = this.context.associateByWireValue({
-            parameters: singleDiscriminatedUnionType.properties ?? [],
-            values: this.context.getRecordOrThrow(discriminatedUnionTypeInstance.value)
+        const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
+        const baseFields = this.getBaseFields({
+            discriminatedUnionTypeInstance,
+            singleDiscriminatedUnionType: unionVariant
         });
-        const fields = properties.map((property) => ({
-            name: this.context.getTypeName(property.name),
-            value: this.convert(property)
-        }));
-
-        switch (singleDiscriminatedUnionType.type) {
+        switch (unionVariant.type) {
             case "samePropertiesAsObject": {
                 const named = this.context.resolveNamedTypeOrThrow({
-                    typeId: singleDiscriminatedUnionType.typeId
+                    typeId: unionVariant.typeId
                 });
                 return go.TypeInstantiation.structPointer({
                     typeReference: structTypeReference,
                     fields: [
                         {
-                            name: this.context.getTypeName(discriminatedUnionTypeInstance.discriminantValue.name),
+                            name: this.context.getTypeName(unionVariant.discriminantValue.name),
                             value: this.convertNamed({ named, value: discriminatedUnionTypeInstance.value })
                         },
-                        ...fields
+                        ...baseFields
                     ]
                 });
             }
@@ -144,13 +139,13 @@ export class DynamicTypeInstantiationMapper {
                     typeReference: structTypeReference,
                     fields: [
                         {
-                            name: this.context.getTypeName(discriminatedUnionTypeInstance.discriminantValue.name),
+                            name: this.context.getTypeName(unionVariant.discriminantValue.name),
                             value: this.convert({
-                                typeReference: singleDiscriminatedUnionType.typeReference,
-                                value: record[singleDiscriminatedUnionType.discriminantValue.wireValue]
+                                typeReference: unionVariant.typeReference,
+                                value: record[unionVariant.discriminantValue.wireValue]
                             })
                         },
-                        ...fields
+                        ...baseFields
                     ]
                 });
             }
@@ -161,14 +156,35 @@ export class DynamicTypeInstantiationMapper {
                         {
                             // Unions with no properties require the discriminant property to be set.
                             name: this.context.getTypeName(discriminatedUnionTypeInstance.discriminantValue.name),
-                            value: go.TypeInstantiation.string(singleDiscriminatedUnionType.discriminantValue.wireValue)
+                            value: go.TypeInstantiation.string(unionVariant.discriminantValue.wireValue)
                         },
-                        ...fields
+                        ...baseFields
                     ]
                 });
             default:
-                assertNever(singleDiscriminatedUnionType);
+                assertNever(unionVariant);
         }
+    }
+
+    private getBaseFields({
+        discriminatedUnionTypeInstance,
+        singleDiscriminatedUnionType
+    }: {
+        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
+        singleDiscriminatedUnionType: DynamicSnippets.SingleDiscriminatedUnionType;
+    }): go.StructField[] {
+        const properties = this.context.associateByWireValue({
+            parameters: singleDiscriminatedUnionType.properties ?? [],
+            values: this.context.getRecordOrThrow(discriminatedUnionTypeInstance.value),
+
+            // We're only selecting the base properties here. The rest of the properties
+            // are handled by the union variant.
+            ignoreMissingParameters: true
+        });
+        return properties.map((property) => ({
+            name: this.context.getTypeName(property.name),
+            value: this.convert(property)
+        }));
     }
 
     private convertObject({

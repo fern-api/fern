@@ -2901,6 +2901,1123 @@ func do() {
 "
 `;
 
+exports[`test definitions > trace 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.V2.Test(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	uuid "github.com/google/uuid"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.UpdateTestSubmissionStatus(
+		context.TODO(),
+		uuid.MustParse(
+			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+		),
+		&sdk.TestSubmissionStatus{
+			Stopped: "stopped",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	uuid "github.com/google/uuid"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.SendTestSubmissionUpdate(
+		context.TODO(),
+		uuid.MustParse(
+			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+		),
+		&sdk.TestSubmissionUpdate{
+			UpdateTime: sdk.MustParseDateTime(
+				"2024-01-15T09:30:00Z",
+			),
+			UpdateInfo: &sdk.TestSubmissionUpdateInfo{},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	uuid "github.com/google/uuid"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.UpdateWorkspaceSubmissionStatus(
+		context.TODO(),
+		uuid.MustParse(
+			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+		),
+		&sdk.WorkspaceSubmissionStatus{
+			Stopped: "stopped",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	uuid "github.com/google/uuid"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.SendWorkspaceSubmissionUpdate(
+		context.TODO(),
+		uuid.MustParse(
+			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+		),
+		&sdk.WorkspaceSubmissionUpdate{
+			UpdateTime: sdk.MustParseDateTime(
+				"2024-01-15T09:30:00Z",
+			),
+			UpdateInfo: &sdk.WorkspaceSubmissionUpdateInfo{},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	uuid "github.com/google/uuid"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.StoreTracedTestCase(
+		context.TODO(),
+		uuid.MustParse(
+			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+		),
+		"testCaseId",
+		&sdk.StoreTracedTestCaseRequest{
+			Result: &sdk.TestCaseResultWithStdout{
+				Result: &sdk.TestCaseResult{
+					ExpectedResult: &sdk.VariableValue{},
+					ActualResult: &sdk.ActualResult{
+						Value: &sdk.VariableValue{},
+					},
+					Passed: true,
+				},
+				Stdout: "stdout",
+			},
+			TraceResponses: []*sdk.TraceResponse{
+				&sdk.TraceResponse{
+					SubmissionID: uuid.MustParse(
+						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+					),
+					LineNumber: 1,
+					Stack: &sdk.StackInformation{
+						NumStackFrames: 1,
+					},
+				},
+				&sdk.TraceResponse{
+					SubmissionID: uuid.MustParse(
+						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+					),
+					LineNumber: 1,
+					Stack: &sdk.StackInformation{
+						NumStackFrames: 1,
+					},
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	uuid "github.com/google/uuid"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.StoreTracedTestCaseV2(
+		context.TODO(),
+		uuid.MustParse(
+			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+		),
+		"testCaseId",
+		[]*sdk.TraceResponseV2{
+			&sdk.TraceResponseV2{
+				SubmissionID: uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+				LineNumber: 1,
+				File: &sdk.TracedFile{
+					Filename:  "filename",
+					Directory: "directory",
+				},
+				Stack: &sdk.StackInformation{
+					NumStackFrames: 1,
+				},
+			},
+			&sdk.TraceResponseV2{
+				SubmissionID: uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+				LineNumber: 1,
+				File: &sdk.TracedFile{
+					Filename:  "filename",
+					Directory: "directory",
+				},
+				Stack: &sdk.StackInformation{
+					NumStackFrames: 1,
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	uuid "github.com/google/uuid"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.StoreTracedWorkspace(
+		context.TODO(),
+		uuid.MustParse(
+			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+		),
+		&sdk.StoreTracedWorkspaceRequest{
+			WorkspaceRunDetails: &sdk.WorkspaceRunDetails{
+				Stdout: "stdout",
+			},
+			TraceResponses: []*sdk.TraceResponse{
+				&sdk.TraceResponse{
+					SubmissionID: uuid.MustParse(
+						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+					),
+					LineNumber: 1,
+					Stack: &sdk.StackInformation{
+						NumStackFrames: 1,
+					},
+				},
+				&sdk.TraceResponse{
+					SubmissionID: uuid.MustParse(
+						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+					),
+					LineNumber: 1,
+					Stack: &sdk.StackInformation{
+						NumStackFrames: 1,
+					},
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	uuid "github.com/google/uuid"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.StoreTracedWorkspaceV2(
+		context.TODO(),
+		uuid.MustParse(
+			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+		),
+		[]*sdk.TraceResponseV2{
+			&sdk.TraceResponseV2{
+				SubmissionID: uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+				LineNumber: 1,
+				File: &sdk.TracedFile{
+					Filename:  "filename",
+					Directory: "directory",
+				},
+				Stack: &sdk.StackInformation{
+					NumStackFrames: 1,
+				},
+			},
+			&sdk.TraceResponseV2{
+				SubmissionID: uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+				LineNumber: 1,
+				File: &sdk.TracedFile{
+					Filename:  "filename",
+					Directory: "directory",
+				},
+				Stack: &sdk.StackInformation{
+					NumStackFrames: 1,
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetHomepageProblems(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.SetHomepageProblems(
+		context.TODO(),
+		[]sdk.ProblemID{
+			"string",
+			"string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetAttemptedMigrations(
+		context.TODO(),
+		&sdk.GetAttemptedMigrationsRequest{
+			AdminKeyHeader: "admin-key-header",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.CreatePlaylist(
+		context.TODO(),
+		1,
+		&sdk.CreatePlaylistRequest{
+			Datetime: sdk.MustParseDateTime(
+				"2024-01-15T09:30:00Z",
+			),
+			Body: &sdk.PlaylistCreateRequest{
+				Name: "name",
+				Problems: []sdk.ProblemID{
+					"problems",
+					"problems",
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetPlaylists(
+		context.TODO(),
+		1,
+		&sdk.GetPlaylistsRequest{
+			OtherField:    "otherField",
+			MultiLineDocs: "multiLineDocs",
+			MultipleField: "multipleField",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetPlaylist(
+		context.TODO(),
+		1,
+		"playlistId",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.UpdatePlaylist(
+		context.TODO(),
+		1,
+		"playlistId",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.DeletePlaylist(
+		context.TODO(),
+		1,
+		"playlist_id",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.CreateProblem(
+		context.TODO(),
+		&sdk.CreateProblemRequest{
+			ProblemName: "problemName",
+			ProblemDescription: &sdk.ProblemDescription{
+				Boards: []*sdk.ProblemDescriptionBoard{
+					&sdk.ProblemDescriptionBoard{},
+					&sdk.ProblemDescriptionBoard{},
+				},
+			},
+			Files: map[sdk.Language]*sdk.ProblemFiles{
+				sdk.LanguageJava: &sdk.ProblemFiles{
+					SolutionFile: &sdk.FileInfo{
+						Filename: "filename",
+						Contents: "contents",
+					},
+					ReadOnlyFiles: []*sdk.FileInfo{
+						&sdk.FileInfo{
+							Filename: "filename",
+							Contents: "contents",
+						},
+						&sdk.FileInfo{
+							Filename: "filename",
+							Contents: "contents",
+						},
+					},
+				},
+			},
+			InputParams: []*sdk.VariableTypeAndName{
+				&sdk.VariableTypeAndName{
+					VariableType: &sdk.VariableType{
+						IntegerType: "integerType",
+					},
+					Name: "name",
+				},
+				&sdk.VariableTypeAndName{
+					VariableType: &sdk.VariableType{
+						IntegerType: "integerType",
+					},
+					Name: "name",
+				},
+			},
+			OutputType: &sdk.VariableType{
+				IntegerType: "integerType",
+			},
+			Testcases: []*sdk.TestCaseWithExpectedResult{
+				&sdk.TestCaseWithExpectedResult{
+					TestCase: &sdk.TestCase{
+						ID: "id",
+						Params: []*sdk.VariableValue{
+							&sdk.VariableValue{},
+							&sdk.VariableValue{},
+						},
+					},
+					ExpectedResult: &sdk.VariableValue{},
+				},
+				&sdk.TestCaseWithExpectedResult{
+					TestCase: &sdk.TestCase{
+						ID: "id",
+						Params: []*sdk.VariableValue{
+							&sdk.VariableValue{},
+							&sdk.VariableValue{},
+						},
+					},
+					ExpectedResult: &sdk.VariableValue{},
+				},
+			},
+			MethodName: "methodName",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.UpdateProblem(
+		context.TODO(),
+		"problemId",
+		&sdk.CreateProblemRequest{
+			ProblemName: "problemName",
+			ProblemDescription: &sdk.ProblemDescription{
+				Boards: []*sdk.ProblemDescriptionBoard{
+					&sdk.ProblemDescriptionBoard{},
+					&sdk.ProblemDescriptionBoard{},
+				},
+			},
+			Files: map[sdk.Language]*sdk.ProblemFiles{
+				sdk.LanguageJava: &sdk.ProblemFiles{
+					SolutionFile: &sdk.FileInfo{
+						Filename: "filename",
+						Contents: "contents",
+					},
+					ReadOnlyFiles: []*sdk.FileInfo{
+						&sdk.FileInfo{
+							Filename: "filename",
+							Contents: "contents",
+						},
+						&sdk.FileInfo{
+							Filename: "filename",
+							Contents: "contents",
+						},
+					},
+				},
+			},
+			InputParams: []*sdk.VariableTypeAndName{
+				&sdk.VariableTypeAndName{
+					VariableType: &sdk.VariableType{
+						IntegerType: "integerType",
+					},
+					Name: "name",
+				},
+				&sdk.VariableTypeAndName{
+					VariableType: &sdk.VariableType{
+						IntegerType: "integerType",
+					},
+					Name: "name",
+				},
+			},
+			OutputType: &sdk.VariableType{
+				IntegerType: "integerType",
+			},
+			Testcases: []*sdk.TestCaseWithExpectedResult{
+				&sdk.TestCaseWithExpectedResult{
+					TestCase: &sdk.TestCase{
+						ID: "id",
+						Params: []*sdk.VariableValue{
+							&sdk.VariableValue{},
+							&sdk.VariableValue{},
+						},
+					},
+					ExpectedResult: &sdk.VariableValue{},
+				},
+				&sdk.TestCaseWithExpectedResult{
+					TestCase: &sdk.TestCase{
+						ID: "id",
+						Params: []*sdk.VariableValue{
+							&sdk.VariableValue{},
+							&sdk.VariableValue{},
+						},
+					},
+					ExpectedResult: &sdk.VariableValue{},
+				},
+			},
+			MethodName: "methodName",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.DeleteProblem(
+		context.TODO(),
+		"problemId",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetDefaultStarterFiles(
+		context.TODO(),
+		&sdk.GetDefaultStarterFilesRequest{
+			InputParams: []*sdk.VariableTypeAndName{
+				&sdk.VariableTypeAndName{
+					VariableType: &sdk.VariableType{
+						IntegerType: "integerType",
+					},
+					Name: "name",
+				},
+				&sdk.VariableTypeAndName{
+					VariableType: &sdk.VariableType{
+						IntegerType: "integerType",
+					},
+					Name: "name",
+				},
+			},
+			OutputType: &sdk.VariableType{
+				IntegerType: "integerType",
+			},
+			MethodName: "methodName",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.CreateExecutionSession(
+		context.TODO(),
+		sdk.LanguageJava,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetExecutionSession(
+		context.TODO(),
+		"sessionId",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.StopExecutionSession(
+		context.TODO(),
+		"sessionId",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetExecutionSessionsState(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.SetNumWarmInstances(
+		context.TODO(),
+		sdk.LanguageJava,
+		1,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetNumWarmInstances(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.V2.GetLightweightProblems(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.V2.GetProblems(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.V2.GetLatestProblem(
+		context.TODO(),
+		"problemId",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.V2.GetProblemVersion(
+		context.TODO(),
+		"problemId",
+		1,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.V2.GetLightweightProblems(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.V2.GetProblems(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.V2.GetLatestProblem(
+		context.TODO(),
+		"problemId",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.V2.GetProblemVersion(
+		context.TODO(),
+		"problemId",
+		1,
+	)
+}
+"
+`;
+
 exports[`test definitions > ts-express-casing 1`] = `
 "package example
 
@@ -2999,6 +4116,46 @@ func do() {
 	client := client.NewClient()
 	client.GetMetadata(
 		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`test definitions > unions 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Get(
+		context.TODO(),
+		"id",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Update(
+		context.TODO(),
+		&sdk.Shape{
+			Circle: &sdk.Circle{
+				Radius: 1.1,
+			},
+		},
 	)
 }
 "
