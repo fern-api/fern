@@ -25,6 +25,7 @@ import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfi
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { wrapWithHttps } from "./wrapWithHttps";
+import crypto from "crypto";
 
 dayjs.extend(utc);
 
@@ -37,20 +38,35 @@ export interface UploadedFile extends FilePathPair {
     fileId: string;
 }
 
+type AsyncOrSync<T> = T | Promise<T>;
+
+type UploadFilesFn = (files: FilePathPair[]) => AsyncOrSync<UploadedFile[]>;
+
+type RegisterApiFn = (opts: {
+    ir: IntermediateRepresentation;
+    snippetsConfig: APIV1Write.SnippetsConfig;
+    playgroundConfig?: DocsV1Write.PlaygroundConfig;
+    apiName?: string;
+}) => AsyncOrSync<string>;
+
+const defaultUploadFiles: UploadFilesFn = (files) => {
+    return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
+};
+
+const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
+    return ir.apiName.snakeCase + "-" + crypto.randomUUID();
+};
+
 export class DocsDefinitionResolver {
     constructor(
         private domain: string,
         private docsWorkspace: DocsWorkspace,
         private fernWorkspaces: FernWorkspace[],
         private taskContext: TaskContext,
-        private editThisPage: docsYml.RawSchemas.EditThisPageConfig | undefined,
-        private uploadFiles: (files: FilePathPair[]) => Promise<UploadedFile[]>,
-        private registerApi: (opts: {
-            ir: IntermediateRepresentation;
-            snippetsConfig: APIV1Write.SnippetsConfig;
-            playgroundConfig?: DocsV1Write.PlaygroundConfig;
-            apiName?: string;
-        }) => Promise<string>
+        // Optional
+        private editThisPage?: docsYml.RawSchemas.EditThisPageConfig,
+        private uploadFiles: UploadFilesFn = defaultUploadFiles,
+        private registerApi: RegisterApiFn = defaultRegisterApi
     ) {}
 
     #idgen = NodeIdGenerator.init();
