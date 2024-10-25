@@ -1,6 +1,6 @@
 import { Rule, RuleViolation } from "../../Rule";
 
-export const AllAudiencesMustBeDeclaredRule: Rule = {
+export const AllRolesMustBeDeclaredRule: Rule = {
     name: "all-roles-must-be-declared",
     create: (context) => {
         const declaredRoles = context.workspace.config.roles;

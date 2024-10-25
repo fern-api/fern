@@ -134,7 +134,8 @@ async function visitNavigationItem({
             if (viewers != null && viewers.length > 0) {
                 await visitor.permissions?.({ viewers }, [...nodePath, "viewers"]);
             }
-        }
+        },
+        orphaned: noop
     });
 
     if (navigationItemIsPage(navigationItem)) {
