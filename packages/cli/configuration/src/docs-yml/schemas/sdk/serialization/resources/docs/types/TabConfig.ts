@@ -7,20 +7,22 @@ import * as FernDocsConfig from "../../../../api";
 import * as core from "../../../../core";
 
 export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Raw, FernDocsConfig.TabConfig> =
-    core.serialization.object({
-        displayName: core.serialization.property("display-name", core.serialization.string()),
-        icon: core.serialization.string().optional(),
-        slug: core.serialization.string().optional(),
-        skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
-        hidden: core.serialization.boolean().optional(),
-        href: core.serialization.string().optional(),
-        changelog: core.serialization
-            .lazy(async () => (await import("../../..")).ChangelogFolderRelativePath)
-            .optional(),
-    });
+    core.serialization
+        .object({
+            displayName: core.serialization.property("display-name", core.serialization.string()),
+            icon: core.serialization.string().optional(),
+            slug: core.serialization.string().optional(),
+            skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+            hidden: core.serialization.boolean().optional(),
+            href: core.serialization.string().optional(),
+            changelog: core.serialization
+                .lazy(async () => (await import("../../..")).ChangelogFolderRelativePath)
+                .optional(),
+        })
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
 
 export declare namespace TabConfig {
-    interface Raw {
+    interface Raw extends serializers.WithPermissions.Raw {
         "display-name": string;
         icon?: string | null;
         slug?: string | null;

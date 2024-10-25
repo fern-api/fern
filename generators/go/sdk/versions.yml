@@ -1,3 +1,13 @@
+- version: 0.28.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for the exportedClientName configuration, which can be used to customize
+        the generated client name and constructor included in snippets.
+
+        Note that this configuration option assumes that the SDK includes a hand-written client
+        constructor defined in the client package.
+  irVersion: 40
 - version: 0.27.0
   changelogEntry:
     - type: feat

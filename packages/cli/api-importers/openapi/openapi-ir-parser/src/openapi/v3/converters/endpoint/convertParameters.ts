@@ -9,12 +9,14 @@ import {
     Source
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../../../getExtension";
 import { convertAvailability } from "../../../../schema/convertAvailability";
 import { convertSchema } from "../../../../schema/convertSchemas";
 import { getExamplesString } from "../../../../schema/examples/getExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getParameterName } from "../../extensions/getParameterName";
 import { getVariableReference } from "../../extensions/getVariableReference";
 
@@ -45,6 +47,14 @@ export function convertParameters({
         headers: []
     };
     for (const parameter of parameters) {
+        const shouldIgnore = getExtension<boolean>(parameter, FernOpenAPIExtension.IGNORE);
+        if (shouldIgnore != null && shouldIgnore) {
+            context.logger.debug(
+                `${httpMethod.toUpperCase()} ${path} has a parameter marked with x-fern-ignore. Skipping.`
+            );
+            continue;
+        }
+
         const resolvedParameter = isReferenceObject(parameter)
             ? context.resolveParameterReference(parameter)
             : parameter;

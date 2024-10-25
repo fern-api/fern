@@ -51,10 +51,6 @@ export class Method extends AstNode {
         this.decorators = decorators ?? [];
     }
 
-    public getName(): string {
-        return this.name;
-    }
-
     public addStatement(statement: AstNode): void {
         this.statements.push(statement);
         this.inheritReferences(statement);

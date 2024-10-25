@@ -14,6 +14,8 @@ export interface DocsConfiguration {
      */
     analytics?: FernDocsConfig.AnalyticsConfig;
     announcement?: FernDocsConfig.AnnouncementConfig;
+    /** Global list of roles that can be used to filter the navigation and content based on the user's session. */
+    roles?: FernDocsConfig.RoleId[];
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     versions?: FernDocsConfig.VersionConfig[];
     landingPage?: FernDocsConfig.PageConfiguration;

@@ -9,25 +9,27 @@ import * as core from "../../../../core";
 export const ApiReferenceSectionConfiguration: core.serialization.ObjectSchema<
     serializers.ApiReferenceSectionConfiguration.Raw,
     FernDocsConfig.ApiReferenceSectionConfiguration
-> = core.serialization.object({
-    section: core.serialization.string(),
-    referencedPackages: core.serialization.property(
-        "referenced-packages",
-        core.serialization.list(core.serialization.string()).optional()
-    ),
-    summary: core.serialization.string().optional(),
-    contents: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).ApiReferenceLayoutItem))
-        .optional(),
-    slug: core.serialization.string().optional(),
-    icon: core.serialization.string().optional(),
-    hidden: core.serialization.boolean().optional(),
-    skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
-    playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
-});
+> = core.serialization
+    .object({
+        section: core.serialization.string(),
+        referencedPackages: core.serialization.property(
+            "referenced-packages",
+            core.serialization.list(core.serialization.string()).optional()
+        ),
+        summary: core.serialization.string().optional(),
+        contents: core.serialization
+            .list(core.serialization.lazy(async () => (await import("../../..")).ApiReferenceLayoutItem))
+            .optional(),
+        slug: core.serialization.string().optional(),
+        icon: core.serialization.string().optional(),
+        hidden: core.serialization.boolean().optional(),
+        skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+        playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
+    })
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
 
 export declare namespace ApiReferenceSectionConfiguration {
-    interface Raw {
+    interface Raw extends serializers.WithPermissions.Raw {
         section: string;
         "referenced-packages"?: string[] | null;
         summary?: string | null;

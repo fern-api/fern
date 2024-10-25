@@ -45,6 +45,7 @@ import { isURL } from "./utils/isUrl";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
 import { setGlobalDispatcher, Agent } from "undici";
+import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 
 setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
 
@@ -163,6 +164,7 @@ async function tryRunCli(cliContext: CliContext) {
         }
     });
     addGenerateJsonschemaCommand(cli, cliContext);
+    addWriteDocsDefinitionCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -999,6 +1001,36 @@ function addGenerateJsonschemaCommand(cli: Argv<GlobalCliOptions>, cliContext: C
                     defaultToAllApiWorkspaces: false
                 }),
                 jsonschemaFilepath: resolve(cwd(), argv.pathToOutput),
+                cliContext
+            });
+        }
+    );
+}
+
+function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write-docs-definition <output-path>",
+        false, // hide from help message
+        (yargs) =>
+            yargs.positional("output-path", {
+                type: "string",
+                description: "Path to write the docs definition",
+                demandOption: true
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern write-docs-definition",
+                properties: {
+                    outputPath: argv.outputPath
+                }
+            });
+
+            await writeDocsDefinitionForProject({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    defaultToAllApiWorkspaces: true,
+                    commandLineApiWorkspace: undefined
+                }),
+                outputPath: resolve(cwd(), argv.outputPath),
                 cliContext
             });
         }

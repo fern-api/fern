@@ -11,6 +11,9 @@ export interface ParsedDocsConfiguration {
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
 
+    /* RBAC declaration */
+    roles: string[] | undefined;
+
     /* navigation */
     landingPage: DocsNavigationItem.Page | undefined;
     navigation: DocsNavigationConfiguration;
@@ -135,7 +138,7 @@ export interface VersionedDocsNavigation {
     versions: VersionInfo[];
 }
 
-export interface VersionInfo {
+export interface VersionInfo extends CjsFdrSdk.navigation.v1.WithPermissions {
     landingPage: DocsNavigationItem.Page | undefined;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
@@ -147,7 +150,7 @@ export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNav
 
 export type UnversionedNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation;
 
-export interface TabbedNavigation {
+export interface TabbedNavigation extends CjsFdrSdk.navigation.v1.WithPermissions {
     // tab: string;
     title: string;
     icon: string | undefined;
@@ -187,7 +190,7 @@ export type DocsNavigationItem =
     | DocsNavigationItem.Changelog;
 
 export declare namespace DocsNavigationItem {
-    export interface Page {
+    export interface Page extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "page";
         title: string;
         icon: string | undefined;
@@ -197,7 +200,7 @@ export declare namespace DocsNavigationItem {
         noindex: boolean | undefined;
     }
 
-    export interface Section {
+    export interface Section extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "section";
         title: string;
         icon: string | undefined;
@@ -209,7 +212,7 @@ export declare namespace DocsNavigationItem {
         overviewAbsolutePath: AbsoluteFilePath | undefined;
     }
 
-    export interface ApiSection {
+    export interface ApiSection extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "apiSection";
         title: string;
         icon: string | undefined;
@@ -235,7 +238,7 @@ export declare namespace DocsNavigationItem {
         icon: string | undefined;
     }
 
-    export interface Changelog {
+    export interface Changelog extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "changelog";
         changelog: AbsoluteFilePath[];
         title: string;
@@ -259,7 +262,7 @@ export declare namespace DocsNavigationItem {
 }
 
 export declare namespace ParsedApiReferenceLayoutItem {
-    export interface Section {
+    export interface Section extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "section";
         title: string; // title
         referencedSubpackages: string[]; // subpackage IDs
@@ -271,7 +274,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         skipUrlSlug: boolean | undefined;
         playground: PlaygroundSettings | undefined;
     }
-    export interface Package {
+    export interface Package extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "package";
         title: string | undefined; // defaults to subpackage title
         package: string; // subpackage ID
@@ -284,7 +287,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         playground: PlaygroundSettings | undefined;
     }
 
-    export interface Endpoint {
+    export interface Endpoint extends CjsFdrSdk.navigation.v1.WithPermissions {
         type: "endpoint";
         endpoint: string; // endpoint locator
         title: string | undefined;

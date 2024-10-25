@@ -19,10 +19,8 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     files: {},
     filesV2: {},
     config: {
-        navigation: {
-            landingPage: undefined,
-            items: []
-        },
+        navigation: undefined,
+        root: undefined,
         title: undefined,
         defaultLanguage: undefined,
         announcement: undefined,
@@ -128,7 +126,7 @@ export async function runPreviewServer({
             context.logger.info("Validating docs...");
             await validateProject(project);
             const newDocsDefinition = await getPreviewDocsDefinition({
-                domain: instance.host,
+                domain: `${instance.host}${instance.pathname}`,
                 project,
                 context
             });

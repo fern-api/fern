@@ -67,8 +67,8 @@ describe("Reference", () => {
                 genericTypes: [
                     python.Type.reference(
                         python.reference({
-                            name: otherClassReference.getName(),
-                            modulePath: otherClassReference.getModulePath()
+                            name: otherClassReference.name,
+                            modulePath: otherClassReference.modulePath
                         })
                     )
                 ]
