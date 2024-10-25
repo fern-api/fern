@@ -55,7 +55,7 @@ const defaultUploadFiles: UploadFilesFn = (files) => {
 let apiCounter = 0;
 const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     apiCounter++;
-    return `${ir.apiName.snakeCase.unsafeName.toLowerCase}-${apiCounter}`;
+    return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
 };
 
 export class DocsDefinitionResolver {

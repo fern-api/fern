@@ -13,10 +13,10 @@
           "id": "unversioned/root",
           "children": [
             {
-              "id": "function toLowerCase() { [native code] }-1",
+              "id": "api-1",
               "type": "apiReference",
               "title": "API Reference",
-              "apiDefinitionId": "function toLowerCase() { [native code] }-1",
+              "apiDefinitionId": "api-1",
               "paginated": false,
               "slug": "fern.docs.buildwithfern.com/api-reference",
               "hideTitle": false,
@@ -31,35 +31,35 @@
               },
               "children": [
                 {
-                  "id": "function toLowerCase() { [native code] }-1:subpackage_pets",
+                  "id": "api-1:subpackage_pets",
                   "type": "apiPackage",
                   "children": [
                     {
-                      "id": "function toLowerCase() { [native code] }-1:endpoint_pets.listPets",
+                      "id": "api-1:endpoint_pets.listPets",
                       "type": "endpoint",
                       "method": "GET",
                       "endpointId": "endpoint_pets.listPets",
-                      "apiDefinitionId": "function toLowerCase() { [native code] }-1",
+                      "apiDefinitionId": "api-1",
                       "isResponseStream": false,
                       "title": "List all pets",
                       "slug": "fern.docs.buildwithfern.com/api-reference/pets/list-pets"
                     },
                     {
-                      "id": "function toLowerCase() { [native code] }-1:endpoint_pets.createPets",
+                      "id": "api-1:endpoint_pets.createPets",
                       "type": "endpoint",
                       "method": "POST",
                       "endpointId": "endpoint_pets.createPets",
-                      "apiDefinitionId": "function toLowerCase() { [native code] }-1",
+                      "apiDefinitionId": "api-1",
                       "isResponseStream": false,
                       "title": "Create a pet",
                       "slug": "fern.docs.buildwithfern.com/api-reference/pets/create-pets"
                     },
                     {
-                      "id": "function toLowerCase() { [native code] }-1:endpoint_pets.showPetById",
+                      "id": "api-1:endpoint_pets.showPetById",
                       "type": "endpoint",
                       "method": "GET",
                       "endpointId": "endpoint_pets.showPetById",
-                      "apiDefinitionId": "function toLowerCase() { [native code] }-1",
+                      "apiDefinitionId": "api-1",
                       "isResponseStream": false,
                       "title": "Info for a specific pet",
                       "slug": "fern.docs.buildwithfern.com/api-reference/pets/show-pet-by-id"
@@ -67,7 +67,7 @@
                   ],
                   "title": "Pets",
                   "slug": "fern.docs.buildwithfern.com/api-reference/pets",
-                  "apiDefinitionId": "function toLowerCase() { [native code] }-1",
+                  "apiDefinitionId": "api-1",
                   "pointsTo": "fern.docs.buildwithfern.com/api-reference/pets/list-pets"
                 }
               ],
