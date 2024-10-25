@@ -1,6 +1,13 @@
 
 - changelogEntry:
     - summary: |
+        The docs dev server now correctly handles base paths.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc23
+
+- changelogEntry:
+    - summary: |
         Fixes bug introduced in 0.45.0-rc20 where section children were dropped from the docs definition.
       type: fix
   irVersion: 53
