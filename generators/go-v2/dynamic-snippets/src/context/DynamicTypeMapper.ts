@@ -6,12 +6,6 @@ import { dynamic as DynamicSnippets, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/a
 export declare namespace DynamicTypeMapper {
     interface Args {
         typeReference: DynamicSnippets.TypeReference;
-
-        // If specified, the type mapper will change its behavior to render
-        // the node.
-        //
-        // TODO: Do we actually need this?
-        nodeType?: unknown;
     }
 }
 

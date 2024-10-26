@@ -317,8 +317,7 @@ export class DynamicSnippetsGenerator {
         const fields: go.StructField[] = [];
 
         const parameters = [
-            // TODO: We need to take into account allow-multiple query parameters.
-            ...this.context.associateByWireValue({
+            ...this.context.associateQueryParametersByWireValue({
                 parameters: request.queryParameters ?? [],
                 values: snippet.queryParameters ?? {}
             }),

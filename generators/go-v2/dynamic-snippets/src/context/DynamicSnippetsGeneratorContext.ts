@@ -35,6 +35,32 @@ export class DynamicSnippetsGeneratorContext {
         this.httpEndpointReferenceParser = new HttpEndpointReferenceParser();
     }
 
+    public associateQueryParametersByWireValue({
+        parameters,
+        values
+    }: {
+        parameters: DynamicSnippets.NamedParameter[];
+        values: DynamicSnippets.Values;
+    }): TypeInstance[] {
+        const instances: TypeInstance[] = [];
+        for (const [key, value] of Object.entries(values)) {
+            const parameter = parameters.find((param) => param.name.wireValue === key);
+            if (parameter == null) {
+                throw this.newParameterNotRecognizedError(key);
+            }
+            // If this query parameter supports allow-multiple, the user-provided values
+            // must be wrapped in an array.
+            const typeInstanceValue =
+                this.isListTypeReference(parameter.typeReference) && !Array.isArray(value) ? [value] : value;
+            instances.push({
+                name: parameter.name.name,
+                typeReference: parameter.typeReference,
+                value: typeInstanceValue
+            });
+        }
+        return instances;
+    }
+
     public associateByWireValue({
         parameters,
         values,
@@ -49,9 +75,11 @@ export class DynamicSnippetsGeneratorContext {
             const parameter = parameters.find((param) => param.name.wireValue === key);
             if (parameter == null) {
                 if (ignoreMissingParameters) {
+                    // Required for request payloads that include more information than
+                    // just the target parameters (e.g. union base properties).
                     continue;
                 }
-                throw new Error(`"${key}" is not a recognized parameter for this endpoint`);
+                throw this.newParameterNotRecognizedError(key);
             }
             instances.push({
                 name: parameter.name.name,
@@ -181,6 +209,13 @@ export class DynamicSnippetsGeneratorContext {
         });
     }
 
+    private isListTypeReference(typeReference: DynamicSnippets.TypeReference): boolean {
+        if (typeReference.type === "optional") {
+            return this.isListTypeReference(typeReference.value);
+        }
+        return typeReference.type === "list" || typeReference.type === "set";
+    }
+
     private parsedEndpointMatches({
         endpoint,
         parsedEndpoint
@@ -189,5 +224,9 @@ export class DynamicSnippetsGeneratorContext {
         parsedEndpoint: HttpEndpointReferenceParser.Parsed;
     }): boolean {
         return endpoint.location.method === parsedEndpoint.method && endpoint.location.path === parsedEndpoint.path;
+    }
+
+    private newParameterNotRecognizedError(parameterName: string): Error {
+        return new Error(`"${parameterName}" is not a recognized parameter for this endpoint`);
     }
 }
