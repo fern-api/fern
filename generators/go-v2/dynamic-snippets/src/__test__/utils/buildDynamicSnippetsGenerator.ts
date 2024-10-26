@@ -10,7 +10,7 @@ export function buildDynamicSnippetsGenerator({
 }: {
     irFilepath: AbsoluteFilePath;
     config: FernGeneratorExec.GeneratorConfig;
-}) {
+}): DynamicSnippetsGenerator {
     const content = readFileSync(irFilepath, "utf-8");
     const ir = DynamicSnippets.DynamicIntermediateRepresentation.parseOrThrow(JSON.parse(content));
     return new DynamicSnippetsGenerator({ ir, config });

@@ -5,9 +5,9 @@ exports[`exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -39,8 +39,8 @@ exports[`exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {

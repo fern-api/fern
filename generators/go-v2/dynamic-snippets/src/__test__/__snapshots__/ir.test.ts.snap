@@ -5,7 +5,7 @@ exports[`test definitions > alias 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -23,15 +23,15 @@ exports[`test definitions > alias-extends 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.ExtendedInlineRequestBody(
 		context.TODO(),
-		&sdk.InlinedChildRequest{
+		&acme.InlinedChildRequest{
 			Child: "child",
 		},
 	)
@@ -44,9 +44,9 @@ exports[`test definitions > any-auth 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -57,7 +57,7 @@ func do() {
 	)
 	client.GetToken(
 		context.TODO(),
-		&sdk.GetTokenRequest{
+		&acme.GetTokenRequest{
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
 		},
@@ -70,8 +70,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -92,7 +92,7 @@ exports[`test definitions > api-wide-base-path 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -113,7 +113,7 @@ exports[`test definitions > audiences 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -129,7 +129,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -145,15 +145,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Find(
 		context.TODO(),
-		&sdk.FindRequest{},
+		&acme.FindRequest{},
 	)
 }
 "
@@ -164,8 +164,8 @@ exports[`test definitions > auth-environment-variables 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -185,9 +185,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -198,7 +198,7 @@ func do() {
 	)
 	client.GetWithHeader(
 		context.TODO(),
-		&sdk.HeaderAuthRequest{
+		&acme.HeaderAuthRequest{
 			XEndpointHeader: "X-Endpoint-Header",
 		},
 	)
@@ -211,8 +211,8 @@ exports[`test definitions > basic-auth 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -233,8 +233,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -259,8 +259,8 @@ exports[`test definitions > basic-auth-environment-variables 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -281,8 +281,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -307,8 +307,8 @@ exports[`test definitions > bearer-token-environment-variable 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -335,7 +335,7 @@ exports[`test definitions > cross-package-type-names 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -351,7 +351,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -367,15 +367,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Find(
 		context.TODO(),
-		&sdk.FindRequest{},
+		&acme.FindRequest{},
 	)
 }
 "
@@ -386,7 +386,7 @@ exports[`test definitions > csharp-namespace-conflict 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -403,8 +403,8 @@ exports[`test definitions > custom-auth 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -424,8 +424,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -449,18 +449,18 @@ exports[`test definitions > enum 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		&sdk.SendEnumInlinedRequest{
-			Operand: sdk.OperandGreaterThan,
-			OperandOrColor: &sdk.ColorOrOperand{
-				Color: sdk.ColorRed,
+		&acme.SendEnumInlinedRequest{
+			Operand: acme.OperandGreaterThan,
+			OperandOrColor: &acme.ColorOrOperand{
+				Color: acme.ColorRed,
 			},
 		},
 	)
@@ -472,18 +472,18 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		&sdk.SendEnumInlinedRequest{
-			Operand: sdk.OperandGreaterThan,
-			OperandOrColor: &sdk.ColorOrOperand{
-				Color: sdk.ColorRed,
+		&acme.SendEnumInlinedRequest{
+			Operand: acme.OperandGreaterThan,
+			OperandOrColor: &acme.ColorOrOperand{
+				Color: acme.ColorRed,
 			},
 		},
 	)
@@ -495,42 +495,21 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		sdk.OperandGreaterThan,
-		sdk.OperandLessThan.Ptr(),
-		&sdk.ColorOrOperand{
-			Color: sdk.ColorRed,
+		acme.OperandGreaterThan,
+		acme.OperandLessThan.Ptr(),
+		&acme.ColorOrOperand{
+			Color: acme.ColorRed,
 		},
-		&sdk.ColorOrOperand{
-			Color: sdk.ColorRed,
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	sdk "sdk"
-	client "sdk/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Send(
-		context.TODO(),
-		sdk.OperandGreaterThan,
-		&sdk.ColorOrOperand{
-			Color: sdk.ColorRed,
+		&acme.ColorOrOperand{
+			Color: acme.ColorRed,
 		},
 	)
 }
@@ -541,18 +520,39 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		&sdk.SendEnumAsQueryParamRequest{
-			Operand: sdk.OperandGreaterThan,
-			OperandOrColor: &sdk.ColorOrOperand{
-				Color: sdk.ColorRed,
+		acme.OperandGreaterThan,
+		&acme.ColorOrOperand{
+			Color: acme.ColorRed,
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Send(
+		context.TODO(),
+		&acme.SendEnumAsQueryParamRequest{
+			Operand: acme.OperandGreaterThan,
+			OperandOrColor: &acme.ColorOrOperand{
+				Color: acme.ColorRed,
 			},
 		},
 	)
@@ -564,18 +564,18 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		&sdk.SendEnumAsQueryParamRequest{
-			Operand: sdk.OperandGreaterThan,
-			OperandOrColor: &sdk.ColorOrOperand{
-				Color: sdk.ColorRed,
+		&acme.SendEnumAsQueryParamRequest{
+			Operand: acme.OperandGreaterThan,
+			OperandOrColor: &acme.ColorOrOperand{
+				Color: acme.ColorRed,
 			},
 		},
 	)
@@ -587,21 +587,21 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.SendList(
 		context.TODO(),
-		&sdk.SendEnumListAsQueryParamRequest{
-			Operand: []sdk.Operand{
-				sdk.OperandGreaterThan,
+		&acme.SendEnumListAsQueryParamRequest{
+			Operand: []acme.Operand{
+				acme.OperandGreaterThan,
 			},
-			OperandOrColor: []*sdk.ColorOrOperand{
-				&sdk.ColorOrOperand{
-					Color: sdk.ColorRed,
+			OperandOrColor: []*acme.ColorOrOperand{
+				&acme.ColorOrOperand{
+					Color: acme.ColorRed,
 				},
 			},
 		},
@@ -615,7 +615,7 @@ exports[`test definitions > error-property 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -632,8 +632,8 @@ exports[`test definitions > examples 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -654,8 +654,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -676,8 +676,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -698,8 +698,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -720,8 +720,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -742,9 +742,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	file "sdk/file"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	file "github.com/acme/acme-go/file"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -768,9 +768,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	file "sdk/file"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	file "github.com/acme/acme-go/file"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -794,8 +794,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -816,8 +816,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -838,8 +838,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -860,8 +860,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -881,8 +881,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -902,8 +902,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -924,8 +924,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -946,9 +946,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -959,9 +959,9 @@ func do() {
 	)
 	client.CreateMovie(
 		context.TODO(),
-		&sdk.Movie{
+		&acme.Movie{
 			ID: "movie-c06a4ad7",
-			Prequel: sdk.String(
+			Prequel: acme.String(
 				"movie-cv9b914f",
 			),
 			Title:  "The Boy and the Heron",
@@ -991,9 +991,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1004,7 +1004,7 @@ func do() {
 	)
 	client.CreateMovie(
 		context.TODO(),
-		&sdk.Movie{
+		&acme.Movie{
 			ID:     "id",
 			Title:  "title",
 			From:   "from",
@@ -1026,9 +1026,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1039,12 +1039,12 @@ func do() {
 	)
 	client.GetMetadata(
 		context.TODO(),
-		&sdk.GetMetadataRequest{
-			Shallow: sdk.Bool(
+		&acme.GetMetadataRequest{
+			Shallow: acme.Bool(
 				false,
 			),
 			Tag: []*string{
-				sdk.String(
+				acme.String(
 					"development",
 				),
 			},
@@ -1059,9 +1059,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1072,7 +1072,7 @@ func do() {
 	)
 	client.GetMetadata(
 		context.TODO(),
-		&sdk.GetMetadataRequest{
+		&acme.GetMetadataRequest{
 			XAPIVersion: "X-API-Version",
 		},
 	)
@@ -1084,9 +1084,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1097,7 +1097,7 @@ func do() {
 	)
 	client.CreateBigEntity(
 		context.TODO(),
-		&sdk.BigEntity{},
+		&acme.BigEntity{},
 	)
 }
 "
@@ -1108,8 +1108,8 @@ exports[`test definitions > exhaustive 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1133,9 +1133,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1163,8 +1163,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1187,9 +1187,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1214,8 +1214,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1238,9 +1238,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1265,8 +1265,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1286,9 +1286,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1309,8 +1309,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1331,9 +1331,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1356,9 +1356,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1382,9 +1382,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1406,8 +1406,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1428,9 +1428,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1451,9 +1451,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1476,9 +1476,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1505,9 +1505,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1528,9 +1528,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1555,9 +1555,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1587,8 +1587,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1609,9 +1609,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	endpoints "sdk/endpoints"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	endpoints "github.com/acme/acme-go/endpoints"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1635,9 +1635,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	endpoints "sdk/endpoints"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	endpoints "github.com/acme/acme-go/endpoints"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1665,9 +1665,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	endpoints "sdk/endpoints"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	endpoints "github.com/acme/acme-go/endpoints"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1691,8 +1691,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1714,8 +1714,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1736,8 +1736,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1758,8 +1758,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1780,8 +1780,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1802,8 +1802,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1824,9 +1824,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1837,7 +1837,7 @@ func do() {
 	)
 	client.Endpoints.GetAndReturnDatetime(
 		context.TODO(),
-		sdk.MustParseDateTime(
+		acme.MustParseDateTime(
 			"2024-01-15T09:30:00Z",
 		),
 	)
@@ -1849,9 +1849,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1862,7 +1862,7 @@ func do() {
 	)
 	client.Endpoints.GetAndReturnDate(
 		context.TODO(),
-		sdk.MustParseDateTime(
+		acme.MustParseDateTime(
 			"2023-01-15",
 		),
 	)
@@ -1874,9 +1874,9 @@ package example
 
 import (
 	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 	uuid "github.com/google/uuid"
-	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
@@ -1899,8 +1899,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -1921,9 +1921,9 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1949,10 +1949,10 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
-	types "sdk/types"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1963,7 +1963,7 @@ func do() {
 	)
 	client.PostWithObjectBodyandResponse(
 		context.TODO(),
-		&sdk.PostWithObjectBody{
+		&acme.PostWithObjectBody{
 			String:       "string",
 			Integer:      1,
 			NestedObject: &types.ObjectWithOptionalField{},
@@ -1977,8 +1977,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -2001,8 +2001,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -2022,8 +2022,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -2043,9 +2043,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -2056,7 +2056,7 @@ func do() {
 	)
 	client.GetWithCustomHeader(
 		context.TODO(),
-		&sdk.ReqWithHeaders{
+		&acme.ReqWithHeaders{
 			XTestServiceHeader:  "X-TEST-SERVICE-HEADER",
 			XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
 			Body:                "string",
@@ -2071,15 +2071,15 @@ exports[`test definitions > extends 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.ExtendedInlineRequestBody(
 		context.TODO(),
-		&sdk.Inlined{
+		&acme.Inlined{
 			Unique: "unique",
 		},
 	)
@@ -2092,15 +2092,15 @@ exports[`test definitions > extra-properties 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.CreateUser(
 		context.TODO(),
-		&sdk.CreateUserRequest{
+		&acme.CreateUserRequest{
 			Name: "name",
 		},
 	)
@@ -2117,7 +2117,7 @@ exports[`test definitions > folders 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -2133,7 +2133,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -2149,7 +2149,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -2165,7 +2165,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -2181,7 +2181,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -2197,7 +2197,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -2217,9 +2217,9 @@ exports[`test definitions > go-content-type 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -2230,7 +2230,7 @@ func do() {
 	)
 	client.CreateMovie(
 		context.TODO(),
-		&sdk.CreateMovieRequest{
+		&acme.CreateMovieRequest{
 			Title:  "title",
 			Rating: 1.1,
 		},
@@ -2244,15 +2244,15 @@ exports[`test definitions > grpc-proto 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Create(
 		context.TODO(),
-		&sdk.CreateRequest{},
+		&acme.CreateRequest{},
 	)
 }
 
@@ -2262,15 +2262,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Create(
 		context.TODO(),
-		&sdk.CreateRequest{},
+		&acme.CreateRequest{},
 	)
 }
 "
@@ -2281,17 +2281,17 @@ exports[`test definitions > grpc-proto-exhaustive 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Upload(
 		context.TODO(),
-		&sdk.UploadRequest{
-			Columns: []*sdk.Column{
-				&sdk.Column{
+		&acme.UploadRequest{
+			Columns: []*acme.Column{
+				&acme.Column{
 					ID: "id",
 					Values: []float64{
 						1.1,
@@ -2308,24 +2308,24 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Upload(
 		context.TODO(),
-		&sdk.UploadRequest{
-			Columns: []*sdk.Column{
-				&sdk.Column{
+		&acme.UploadRequest{
+			Columns: []*acme.Column{
+				&acme.Column{
 					ID: "id",
 					Values: []float64{
 						1.1,
 						1.1,
 					},
 				},
-				&sdk.Column{
+				&acme.Column{
 					ID: "id",
 					Values: []float64{
 						1.1,
@@ -2343,15 +2343,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Delete(
 		context.TODO(),
-		&sdk.DeleteRequest{},
+		&acme.DeleteRequest{},
 	)
 }
 
@@ -2361,15 +2361,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Delete(
 		context.TODO(),
-		&sdk.DeleteRequest{},
+		&acme.DeleteRequest{},
 	)
 }
 
@@ -2379,15 +2379,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Describe(
 		context.TODO(),
-		&sdk.DescribeRequest{},
+		&acme.DescribeRequest{},
 	)
 }
 
@@ -2397,15 +2397,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Describe(
 		context.TODO(),
-		&sdk.DescribeRequest{},
+		&acme.DescribeRequest{},
 	)
 }
 
@@ -2415,15 +2415,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Fetch(
 		context.TODO(),
-		&sdk.FetchRequest{},
+		&acme.FetchRequest{},
 	)
 }
 
@@ -2433,15 +2433,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Fetch(
 		context.TODO(),
-		&sdk.FetchRequest{},
+		&acme.FetchRequest{},
 	)
 }
 
@@ -2451,15 +2451,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.List(
 		context.TODO(),
-		&sdk.ListRequest{},
+		&acme.ListRequest{},
 	)
 }
 
@@ -2469,15 +2469,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.List(
 		context.TODO(),
-		&sdk.ListRequest{},
+		&acme.ListRequest{},
 	)
 }
 
@@ -2487,15 +2487,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Query(
 		context.TODO(),
-		&sdk.QueryRequest{
+		&acme.QueryRequest{
 			TopK: 1,
 		},
 	)
@@ -2507,15 +2507,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Query(
 		context.TODO(),
-		&sdk.QueryRequest{
+		&acme.QueryRequest{
 			TopK: 1,
 		},
 	)
@@ -2527,15 +2527,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Update(
 		context.TODO(),
-		&sdk.UpdateRequest{
+		&acme.UpdateRequest{
 			ID: "id",
 		},
 	)
@@ -2547,15 +2547,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Update(
 		context.TODO(),
-		&sdk.UpdateRequest{
+		&acme.UpdateRequest{
 			ID: "id",
 		},
 	)
@@ -2568,9 +2568,9 @@ exports[`test definitions > idempotency-headers 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -2581,9 +2581,9 @@ func do() {
 	)
 	client.Create(
 		context.TODO(),
-		&sdk.CreatePaymentRequest{
+		&acme.CreatePaymentRequest{
 			Amount:   1,
-			Currency: sdk.CurrencyUsd,
+			Currency: acme.CurrencyUsd,
 		},
 	)
 }
@@ -2594,8 +2594,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -2617,9 +2617,9 @@ exports[`test definitions > imdb 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -2630,7 +2630,7 @@ func do() {
 	)
 	client.CreateMovie(
 		context.TODO(),
-		&sdk.CreateMovieRequest{
+		&acme.CreateMovieRequest{
 			Title:  "title",
 			Rating: 1.1,
 		},
@@ -2643,8 +2643,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -2666,15 +2666,15 @@ exports[`test definitions > literal 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		&sdk.SendLiteralsInHeadersRequest{
+		&acme.SendLiteralsInHeadersRequest{
 			Query: "What is the weather today",
 		},
 	)
@@ -2686,15 +2686,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		&sdk.SendLiteralsInHeadersRequest{
+		&acme.SendLiteralsInHeadersRequest{
 			Query: "query",
 		},
 	)
@@ -2706,20 +2706,20 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		&sdk.SendLiteralsInlinedRequest{
-			Temperature: sdk.Float64(
+		&acme.SendLiteralsInlinedRequest{
+			Temperature: acme.Float64(
 				10.1,
 			),
-			ObjectWithLiteral: &sdk.ATopLevelLiteral{
-				NestedLiteral: &sdk.ANestedLiteral{},
+			ObjectWithLiteral: &acme.ATopLevelLiteral{
+				NestedLiteral: &acme.ANestedLiteral{},
 			},
 			Query: "What is the weather today",
 		},
@@ -2732,18 +2732,18 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		&sdk.SendLiteralsInlinedRequest{
+		&acme.SendLiteralsInlinedRequest{
 			Query: "query",
-			ObjectWithLiteral: &sdk.ATopLevelLiteral{
-				NestedLiteral: &sdk.ANestedLiteral{},
+			ObjectWithLiteral: &acme.ATopLevelLiteral{
+				NestedLiteral: &acme.ANestedLiteral{},
 			},
 		},
 	)
@@ -2755,7 +2755,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -2771,7 +2771,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -2787,15 +2787,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		&sdk.SendLiteralsInQueryRequest{
+		&acme.SendLiteralsInQueryRequest{
 			Query: "What is the weather today",
 		},
 	)
@@ -2807,15 +2807,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		&sdk.SendLiteralsInQueryRequest{
+		&acme.SendLiteralsInQueryRequest{
 			Query: "query",
 		},
 	)
@@ -2827,19 +2827,19 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		&sdk.SendRequest{
+		&acme.SendRequest{
 			Query: "What is the weather today",
-			ContainerObject: &sdk.ContainerObject{
-				NestedObjects: []*sdk.NestedObjectWithLiterals{
-					&sdk.NestedObjectWithLiterals{
+			ContainerObject: &acme.ContainerObject{
+				NestedObjects: []*acme.NestedObjectWithLiterals{
+					&acme.NestedObjectWithLiterals{
 						StrProp: "strProp",
 					},
 				},
@@ -2854,22 +2854,22 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Send(
 		context.TODO(),
-		&sdk.SendRequest{
+		&acme.SendRequest{
 			Query: "query",
-			ContainerObject: &sdk.ContainerObject{
-				NestedObjects: []*sdk.NestedObjectWithLiterals{
-					&sdk.NestedObjectWithLiterals{
+			ContainerObject: &acme.ContainerObject{
+				NestedObjects: []*acme.NestedObjectWithLiterals{
+					&acme.NestedObjectWithLiterals{
 						StrProp: "strProp",
 					},
-					&sdk.NestedObjectWithLiterals{
+					&acme.NestedObjectWithLiterals{
 						StrProp: "strProp",
 					},
 				},
@@ -2885,7 +2885,7 @@ exports[`test definitions > mixed-case 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -2902,7 +2902,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -2919,17 +2919,17 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.ListResources(
 		context.TODO(),
-		&sdk.ListResourcesRequest{
+		&acme.ListResourcesRequest{
 			PageLimit: 10,
-			BeforeDate: sdk.MustParseDateTime(
+			BeforeDate: acme.MustParseDateTime(
 				"2023-01-01",
 			),
 		},
@@ -2942,17 +2942,17 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.ListResources(
 		context.TODO(),
-		&sdk.ListResourcesRequest{
+		&acme.ListResourcesRequest{
 			PageLimit: 1,
-			BeforeDate: sdk.MustParseDateTime(
+			BeforeDate: acme.MustParseDateTime(
 				"2023-01-15",
 			),
 		},
@@ -2966,15 +2966,15 @@ exports[`test definitions > mixed-file-directory 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Create(
 		context.TODO(),
-		&sdk.CreateOrganizationRequest{
+		&acme.CreateOrganizationRequest{
 			Name: "name",
 		},
 	)
@@ -2986,15 +2986,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.List(
 		context.TODO(),
-		&sdk.ListUsersRequest{},
+		&acme.ListUsersRequest{},
 	)
 }
 
@@ -3004,8 +3004,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	user "sdk/user"
+	client "github.com/acme/acme-go/client"
+	user "github.com/acme/acme-go/user"
 )
 
 func do() {
@@ -3022,8 +3022,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	events "sdk/user/events"
+	client "github.com/acme/acme-go/client"
+	events "github.com/acme/acme-go/user/events"
 )
 
 func do() {
@@ -3043,7 +3043,7 @@ exports[`test definitions > multi-line-docs 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3060,15 +3060,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.CreateUser(
 		context.TODO(),
-		&sdk.CreateUserRequest{
+		&acme.CreateUserRequest{
 			Name: "name",
 		},
 	)
@@ -3081,9 +3081,9 @@ exports[`test definitions > multi-url-environment 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3094,7 +3094,7 @@ func do() {
 	)
 	client.BootInstance(
 		context.TODO(),
-		&sdk.BootInstanceRequest{
+		&acme.BootInstanceRequest{
 			Size: "size",
 		},
 	)
@@ -3106,9 +3106,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3119,7 +3119,7 @@ func do() {
 	)
 	client.GetPresignedURL(
 		context.TODO(),
-		&sdk.GetPresignedURLRequest{
+		&acme.GetPresignedURLRequest{
 			S3Key: "s3Key",
 		},
 	)
@@ -3132,9 +3132,9 @@ exports[`test definitions > multi-url-environment-no-default 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3145,7 +3145,7 @@ func do() {
 	)
 	client.BootInstance(
 		context.TODO(),
-		&sdk.BootInstanceRequest{
+		&acme.BootInstanceRequest{
 			Size: "size",
 		},
 	)
@@ -3157,9 +3157,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3170,7 +3170,7 @@ func do() {
 	)
 	client.GetPresignedURL(
 		context.TODO(),
-		&sdk.GetPresignedURLRequest{
+		&acme.GetPresignedURLRequest{
 			S3Key: "s3Key",
 		},
 	)
@@ -3183,8 +3183,8 @@ exports[`test definitions > no-environment 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3205,15 +3205,15 @@ exports[`test definitions > oauth-client-credentials 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.GetTokenWithClientCredentials(
 		context.TODO(),
-		&sdk.GetTokenRequest{
+		&acme.GetTokenRequest{
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
 		},
@@ -3226,15 +3226,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.RefreshToken(
 		context.TODO(),
-		&sdk.RefreshTokenRequest{
+		&acme.RefreshTokenRequest{
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
 			RefreshToken: "refresh_token",
@@ -3249,15 +3249,15 @@ exports[`test definitions > oauth-client-credentials-default 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.GetToken(
 		context.TODO(),
-		&sdk.GetTokenRequest{
+		&acme.GetTokenRequest{
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
 		},
@@ -3271,15 +3271,15 @@ exports[`test definitions > oauth-client-credentials-environment-variables 1`] =
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.GetTokenWithClientCredentials(
 		context.TODO(),
-		&sdk.GetTokenRequest{
+		&acme.GetTokenRequest{
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
 		},
@@ -3292,15 +3292,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.RefreshToken(
 		context.TODO(),
-		&sdk.RefreshTokenRequest{
+		&acme.RefreshTokenRequest{
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
 			RefreshToken: "refresh_token",
@@ -3315,8 +3315,8 @@ exports[`test definitions > oauth-client-credentials-nested-root 1`] = `
 
 import (
 	context "context"
-	auth "sdk/auth"
-	client "sdk/client"
+	auth "github.com/acme/acme-go/auth"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3341,7 +3341,7 @@ exports[`test definitions > optional 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3358,8 +3358,8 @@ exports[`test definitions > package-yml 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3367,7 +3367,7 @@ func do() {
 	client.Echo(
 		context.TODO(),
 		"id-ksfd9c1",
-		&sdk.EchoRequest{
+		&acme.EchoRequest{
 			Name: "Hello world!",
 			Size: 20,
 		},
@@ -3380,8 +3380,8 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3389,7 +3389,7 @@ func do() {
 	client.Echo(
 		context.TODO(),
 		"id",
-		&sdk.EchoRequest{
+		&acme.EchoRequest{
 			Name: "name",
 			Size: 1,
 		},
@@ -3402,7 +3402,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3420,7 +3420,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3439,9 +3439,9 @@ exports[`test definitions > pagination 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3452,7 +3452,7 @@ func do() {
 	)
 	client.ListWithCursorPagination(
 		context.TODO(),
-		&sdk.ListUsersCursorPaginationRequest{},
+		&acme.ListUsersCursorPaginationRequest{},
 	)
 }
 
@@ -3462,9 +3462,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3475,7 +3475,7 @@ func do() {
 	)
 	client.ListWithBodyCursorPagination(
 		context.TODO(),
-		&sdk.ListUsersBodyCursorPaginationRequest{},
+		&acme.ListUsersBodyCursorPaginationRequest{},
 	)
 }
 
@@ -3485,9 +3485,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3498,7 +3498,7 @@ func do() {
 	)
 	client.ListWithCursorPagination(
 		context.TODO(),
-		&sdk.ListUsersCursorPaginationRequest{},
+		&acme.ListUsersCursorPaginationRequest{},
 	)
 }
 
@@ -3508,9 +3508,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3521,7 +3521,7 @@ func do() {
 	)
 	client.ListWithBodyCursorPagination(
 		context.TODO(),
-		&sdk.ListUsersBodyCursorPaginationRequest{},
+		&acme.ListUsersBodyCursorPaginationRequest{},
 	)
 }
 
@@ -3531,9 +3531,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3544,7 +3544,7 @@ func do() {
 	)
 	client.ListWithCursorPagination(
 		context.TODO(),
-		&sdk.ListUsersCursorPaginationRequest{},
+		&acme.ListUsersCursorPaginationRequest{},
 	)
 }
 
@@ -3554,9 +3554,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3567,7 +3567,7 @@ func do() {
 	)
 	client.ListWithCursorPagination(
 		context.TODO(),
-		&sdk.ListUsersCursorPaginationRequest{},
+		&acme.ListUsersCursorPaginationRequest{},
 	)
 }
 
@@ -3577,9 +3577,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3590,7 +3590,7 @@ func do() {
 	)
 	client.ListWithCursorPagination(
 		context.TODO(),
-		&sdk.ListUsersCursorPaginationRequest{},
+		&acme.ListUsersCursorPaginationRequest{},
 	)
 }
 
@@ -3600,9 +3600,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3613,7 +3613,7 @@ func do() {
 	)
 	client.ListWithCursorPagination(
 		context.TODO(),
-		&sdk.ListUsersCursorPaginationRequest{},
+		&acme.ListUsersCursorPaginationRequest{},
 	)
 }
 
@@ -3623,9 +3623,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3636,7 +3636,7 @@ func do() {
 	)
 	client.ListWithCursorPagination(
 		context.TODO(),
-		&sdk.ListUsersCursorPaginationRequest{},
+		&acme.ListUsersCursorPaginationRequest{},
 	)
 }
 
@@ -3646,9 +3646,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3659,7 +3659,7 @@ func do() {
 	)
 	client.ListWithCursorPagination(
 		context.TODO(),
-		&sdk.ListUsersCursorPaginationRequest{},
+		&acme.ListUsersCursorPaginationRequest{},
 	)
 }
 "
@@ -3674,15 +3674,15 @@ exports[`test definitions > reserved-keywords 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Test(
 		context.TODO(),
-		&sdk.TestRequest{
+		&acme.TestRequest{
 			For: "for",
 		},
 	)
@@ -3695,7 +3695,7 @@ exports[`test definitions > response-property 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3712,7 +3712,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3729,7 +3729,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3746,7 +3746,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3763,7 +3763,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3780,7 +3780,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3797,7 +3797,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3815,15 +3815,15 @@ exports[`test definitions > server-sent-event-examples 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Stream(
 		context.TODO(),
-		&sdk.StreamCompletionRequest{
+		&acme.StreamCompletionRequest{
 			Query: "foo",
 		},
 	)
@@ -3838,7 +3838,7 @@ exports[`test definitions > simple-fhir 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -3856,8 +3856,8 @@ exports[`test definitions > single-url-environment-default 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3878,8 +3878,8 @@ exports[`test definitions > single-url-environment-no-default 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3900,15 +3900,15 @@ exports[`test definitions > streaming 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Generate(
 		context.TODO(),
-		&sdk.Generateequest{
+		&acme.Generateequest{
 			NumEvents: 5,
 		},
 	)
@@ -3920,15 +3920,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Generate(
 		context.TODO(),
-		&sdk.Generateequest{
+		&acme.Generateequest{
 			NumEvents: 1,
 		},
 	)
@@ -3941,15 +3941,15 @@ exports[`test definitions > streaming-parameter 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Generate(
 		context.TODO(),
-		&sdk.GenerateRequest{
+		&acme.GenerateRequest{
 			Stream:    false,
 			NumEvents: 5,
 		},
@@ -3963,8 +3963,8 @@ exports[`test definitions > trace 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -3984,10 +3984,10 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 	uuid "github.com/google/uuid"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
@@ -4001,7 +4001,7 @@ func do() {
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 		),
-		&sdk.TestSubmissionStatus{
+		&acme.TestSubmissionStatus{
 			Stopped: "stopped",
 		},
 	)
@@ -4013,10 +4013,10 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 	uuid "github.com/google/uuid"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
@@ -4030,11 +4030,11 @@ func do() {
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 		),
-		&sdk.TestSubmissionUpdate{
-			UpdateTime: sdk.MustParseDateTime(
+		&acme.TestSubmissionUpdate{
+			UpdateTime: acme.MustParseDateTime(
 				"2024-01-15T09:30:00Z",
 			),
-			UpdateInfo: &sdk.TestSubmissionUpdateInfo{},
+			UpdateInfo: &acme.TestSubmissionUpdateInfo{},
 		},
 	)
 }
@@ -4045,10 +4045,10 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 	uuid "github.com/google/uuid"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
@@ -4062,7 +4062,7 @@ func do() {
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 		),
-		&sdk.WorkspaceSubmissionStatus{
+		&acme.WorkspaceSubmissionStatus{
 			Stopped: "stopped",
 		},
 	)
@@ -4074,10 +4074,10 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 	uuid "github.com/google/uuid"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
@@ -4091,11 +4091,11 @@ func do() {
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 		),
-		&sdk.WorkspaceSubmissionUpdate{
-			UpdateTime: sdk.MustParseDateTime(
+		&acme.WorkspaceSubmissionUpdate{
+			UpdateTime: acme.MustParseDateTime(
 				"2024-01-15T09:30:00Z",
 			),
-			UpdateInfo: &sdk.WorkspaceSubmissionUpdateInfo{},
+			UpdateInfo: &acme.WorkspaceSubmissionUpdateInfo{},
 		},
 	)
 }
@@ -4106,10 +4106,10 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 	uuid "github.com/google/uuid"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
@@ -4124,33 +4124,33 @@ func do() {
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 		),
 		"testCaseId",
-		&sdk.StoreTracedTestCaseRequest{
-			Result: &sdk.TestCaseResultWithStdout{
-				Result: &sdk.TestCaseResult{
-					ExpectedResult: &sdk.VariableValue{},
-					ActualResult: &sdk.ActualResult{
-						Value: &sdk.VariableValue{},
+		&acme.StoreTracedTestCaseRequest{
+			Result: &acme.TestCaseResultWithStdout{
+				Result: &acme.TestCaseResult{
+					ExpectedResult: &acme.VariableValue{},
+					ActualResult: &acme.ActualResult{
+						Value: &acme.VariableValue{},
 					},
 					Passed: true,
 				},
 				Stdout: "stdout",
 			},
-			TraceResponses: []*sdk.TraceResponse{
-				&sdk.TraceResponse{
+			TraceResponses: []*acme.TraceResponse{
+				&acme.TraceResponse{
 					SubmissionID: uuid.MustParse(
 						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 					),
 					LineNumber: 1,
-					Stack: &sdk.StackInformation{
+					Stack: &acme.StackInformation{
 						NumStackFrames: 1,
 					},
 				},
-				&sdk.TraceResponse{
+				&acme.TraceResponse{
 					SubmissionID: uuid.MustParse(
 						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 					),
 					LineNumber: 1,
-					Stack: &sdk.StackInformation{
+					Stack: &acme.StackInformation{
 						NumStackFrames: 1,
 					},
 				},
@@ -4165,10 +4165,10 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 	uuid "github.com/google/uuid"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
@@ -4183,30 +4183,30 @@ func do() {
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 		),
 		"testCaseId",
-		[]*sdk.TraceResponseV2{
-			&sdk.TraceResponseV2{
+		[]*acme.TraceResponseV2{
+			&acme.TraceResponseV2{
 				SubmissionID: uuid.MustParse(
 					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				),
 				LineNumber: 1,
-				File: &sdk.TracedFile{
+				File: &acme.TracedFile{
 					Filename:  "filename",
 					Directory: "directory",
 				},
-				Stack: &sdk.StackInformation{
+				Stack: &acme.StackInformation{
 					NumStackFrames: 1,
 				},
 			},
-			&sdk.TraceResponseV2{
+			&acme.TraceResponseV2{
 				SubmissionID: uuid.MustParse(
 					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				),
 				LineNumber: 1,
-				File: &sdk.TracedFile{
+				File: &acme.TracedFile{
 					Filename:  "filename",
 					Directory: "directory",
 				},
-				Stack: &sdk.StackInformation{
+				Stack: &acme.StackInformation{
 					NumStackFrames: 1,
 				},
 			},
@@ -4220,10 +4220,10 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 	uuid "github.com/google/uuid"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
@@ -4237,26 +4237,26 @@ func do() {
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 		),
-		&sdk.StoreTracedWorkspaceRequest{
-			WorkspaceRunDetails: &sdk.WorkspaceRunDetails{
+		&acme.StoreTracedWorkspaceRequest{
+			WorkspaceRunDetails: &acme.WorkspaceRunDetails{
 				Stdout: "stdout",
 			},
-			TraceResponses: []*sdk.TraceResponse{
-				&sdk.TraceResponse{
+			TraceResponses: []*acme.TraceResponse{
+				&acme.TraceResponse{
 					SubmissionID: uuid.MustParse(
 						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 					),
 					LineNumber: 1,
-					Stack: &sdk.StackInformation{
+					Stack: &acme.StackInformation{
 						NumStackFrames: 1,
 					},
 				},
-				&sdk.TraceResponse{
+				&acme.TraceResponse{
 					SubmissionID: uuid.MustParse(
 						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 					),
 					LineNumber: 1,
-					Stack: &sdk.StackInformation{
+					Stack: &acme.StackInformation{
 						NumStackFrames: 1,
 					},
 				},
@@ -4271,10 +4271,10 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 	uuid "github.com/google/uuid"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
 )
 
 func do() {
@@ -4288,30 +4288,30 @@ func do() {
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 		),
-		[]*sdk.TraceResponseV2{
-			&sdk.TraceResponseV2{
+		[]*acme.TraceResponseV2{
+			&acme.TraceResponseV2{
 				SubmissionID: uuid.MustParse(
 					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				),
 				LineNumber: 1,
-				File: &sdk.TracedFile{
+				File: &acme.TracedFile{
 					Filename:  "filename",
 					Directory: "directory",
 				},
-				Stack: &sdk.StackInformation{
+				Stack: &acme.StackInformation{
 					NumStackFrames: 1,
 				},
 			},
-			&sdk.TraceResponseV2{
+			&acme.TraceResponseV2{
 				SubmissionID: uuid.MustParse(
 					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				),
 				LineNumber: 1,
-				File: &sdk.TracedFile{
+				File: &acme.TracedFile{
 					Filename:  "filename",
 					Directory: "directory",
 				},
-				Stack: &sdk.StackInformation{
+				Stack: &acme.StackInformation{
 					NumStackFrames: 1,
 				},
 			},
@@ -4325,8 +4325,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4346,9 +4346,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4359,7 +4359,7 @@ func do() {
 	)
 	client.SetHomepageProblems(
 		context.TODO(),
-		[]sdk.ProblemID{
+		[]acme.ProblemID{
 			"string",
 			"string",
 		},
@@ -4372,9 +4372,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4385,7 +4385,7 @@ func do() {
 	)
 	client.GetAttemptedMigrations(
 		context.TODO(),
-		&sdk.GetAttemptedMigrationsRequest{
+		&acme.GetAttemptedMigrationsRequest{
 			AdminKeyHeader: "admin-key-header",
 		},
 	)
@@ -4397,9 +4397,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4411,13 +4411,13 @@ func do() {
 	client.CreatePlaylist(
 		context.TODO(),
 		1,
-		&sdk.CreatePlaylistRequest{
-			Datetime: sdk.MustParseDateTime(
+		&acme.CreatePlaylistRequest{
+			Datetime: acme.MustParseDateTime(
 				"2024-01-15T09:30:00Z",
 			),
-			Body: &sdk.PlaylistCreateRequest{
+			Body: &acme.PlaylistCreateRequest{
 				Name: "name",
-				Problems: []sdk.ProblemID{
+				Problems: []acme.ProblemID{
 					"problems",
 					"problems",
 				},
@@ -4432,9 +4432,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4446,7 +4446,7 @@ func do() {
 	client.GetPlaylists(
 		context.TODO(),
 		1,
-		&sdk.GetPlaylistsRequest{
+		&acme.GetPlaylistsRequest{
 			OtherField:    "otherField",
 			MultiLineDocs: "multiLineDocs",
 			MultipleField: []string{
@@ -4462,8 +4462,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4485,8 +4485,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4508,8 +4508,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4531,9 +4531,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4544,69 +4544,69 @@ func do() {
 	)
 	client.CreateProblem(
 		context.TODO(),
-		&sdk.CreateProblemRequest{
+		&acme.CreateProblemRequest{
 			ProblemName: "problemName",
-			ProblemDescription: &sdk.ProblemDescription{
-				Boards: []*sdk.ProblemDescriptionBoard{
-					&sdk.ProblemDescriptionBoard{},
-					&sdk.ProblemDescriptionBoard{},
+			ProblemDescription: &acme.ProblemDescription{
+				Boards: []*acme.ProblemDescriptionBoard{
+					&acme.ProblemDescriptionBoard{},
+					&acme.ProblemDescriptionBoard{},
 				},
 			},
-			Files: map[sdk.Language]*sdk.ProblemFiles{
-				sdk.LanguageJava: &sdk.ProblemFiles{
-					SolutionFile: &sdk.FileInfo{
+			Files: map[acme.Language]*acme.ProblemFiles{
+				acme.LanguageJava: &acme.ProblemFiles{
+					SolutionFile: &acme.FileInfo{
 						Filename: "filename",
 						Contents: "contents",
 					},
-					ReadOnlyFiles: []*sdk.FileInfo{
-						&sdk.FileInfo{
+					ReadOnlyFiles: []*acme.FileInfo{
+						&acme.FileInfo{
 							Filename: "filename",
 							Contents: "contents",
 						},
-						&sdk.FileInfo{
+						&acme.FileInfo{
 							Filename: "filename",
 							Contents: "contents",
 						},
 					},
 				},
 			},
-			InputParams: []*sdk.VariableTypeAndName{
-				&sdk.VariableTypeAndName{
-					VariableType: &sdk.VariableType{
+			InputParams: []*acme.VariableTypeAndName{
+				&acme.VariableTypeAndName{
+					VariableType: &acme.VariableType{
 						IntegerType: "integerType",
 					},
 					Name: "name",
 				},
-				&sdk.VariableTypeAndName{
-					VariableType: &sdk.VariableType{
+				&acme.VariableTypeAndName{
+					VariableType: &acme.VariableType{
 						IntegerType: "integerType",
 					},
 					Name: "name",
 				},
 			},
-			OutputType: &sdk.VariableType{
+			OutputType: &acme.VariableType{
 				IntegerType: "integerType",
 			},
-			Testcases: []*sdk.TestCaseWithExpectedResult{
-				&sdk.TestCaseWithExpectedResult{
-					TestCase: &sdk.TestCase{
+			Testcases: []*acme.TestCaseWithExpectedResult{
+				&acme.TestCaseWithExpectedResult{
+					TestCase: &acme.TestCase{
 						ID: "id",
-						Params: []*sdk.VariableValue{
-							&sdk.VariableValue{},
-							&sdk.VariableValue{},
+						Params: []*acme.VariableValue{
+							&acme.VariableValue{},
+							&acme.VariableValue{},
 						},
 					},
-					ExpectedResult: &sdk.VariableValue{},
+					ExpectedResult: &acme.VariableValue{},
 				},
-				&sdk.TestCaseWithExpectedResult{
-					TestCase: &sdk.TestCase{
+				&acme.TestCaseWithExpectedResult{
+					TestCase: &acme.TestCase{
 						ID: "id",
-						Params: []*sdk.VariableValue{
-							&sdk.VariableValue{},
-							&sdk.VariableValue{},
+						Params: []*acme.VariableValue{
+							&acme.VariableValue{},
+							&acme.VariableValue{},
 						},
 					},
-					ExpectedResult: &sdk.VariableValue{},
+					ExpectedResult: &acme.VariableValue{},
 				},
 			},
 			MethodName: "methodName",
@@ -4620,9 +4620,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4634,69 +4634,69 @@ func do() {
 	client.UpdateProblem(
 		context.TODO(),
 		"problemId",
-		&sdk.CreateProblemRequest{
+		&acme.CreateProblemRequest{
 			ProblemName: "problemName",
-			ProblemDescription: &sdk.ProblemDescription{
-				Boards: []*sdk.ProblemDescriptionBoard{
-					&sdk.ProblemDescriptionBoard{},
-					&sdk.ProblemDescriptionBoard{},
+			ProblemDescription: &acme.ProblemDescription{
+				Boards: []*acme.ProblemDescriptionBoard{
+					&acme.ProblemDescriptionBoard{},
+					&acme.ProblemDescriptionBoard{},
 				},
 			},
-			Files: map[sdk.Language]*sdk.ProblemFiles{
-				sdk.LanguageJava: &sdk.ProblemFiles{
-					SolutionFile: &sdk.FileInfo{
+			Files: map[acme.Language]*acme.ProblemFiles{
+				acme.LanguageJava: &acme.ProblemFiles{
+					SolutionFile: &acme.FileInfo{
 						Filename: "filename",
 						Contents: "contents",
 					},
-					ReadOnlyFiles: []*sdk.FileInfo{
-						&sdk.FileInfo{
+					ReadOnlyFiles: []*acme.FileInfo{
+						&acme.FileInfo{
 							Filename: "filename",
 							Contents: "contents",
 						},
-						&sdk.FileInfo{
+						&acme.FileInfo{
 							Filename: "filename",
 							Contents: "contents",
 						},
 					},
 				},
 			},
-			InputParams: []*sdk.VariableTypeAndName{
-				&sdk.VariableTypeAndName{
-					VariableType: &sdk.VariableType{
+			InputParams: []*acme.VariableTypeAndName{
+				&acme.VariableTypeAndName{
+					VariableType: &acme.VariableType{
 						IntegerType: "integerType",
 					},
 					Name: "name",
 				},
-				&sdk.VariableTypeAndName{
-					VariableType: &sdk.VariableType{
+				&acme.VariableTypeAndName{
+					VariableType: &acme.VariableType{
 						IntegerType: "integerType",
 					},
 					Name: "name",
 				},
 			},
-			OutputType: &sdk.VariableType{
+			OutputType: &acme.VariableType{
 				IntegerType: "integerType",
 			},
-			Testcases: []*sdk.TestCaseWithExpectedResult{
-				&sdk.TestCaseWithExpectedResult{
-					TestCase: &sdk.TestCase{
+			Testcases: []*acme.TestCaseWithExpectedResult{
+				&acme.TestCaseWithExpectedResult{
+					TestCase: &acme.TestCase{
 						ID: "id",
-						Params: []*sdk.VariableValue{
-							&sdk.VariableValue{},
-							&sdk.VariableValue{},
+						Params: []*acme.VariableValue{
+							&acme.VariableValue{},
+							&acme.VariableValue{},
 						},
 					},
-					ExpectedResult: &sdk.VariableValue{},
+					ExpectedResult: &acme.VariableValue{},
 				},
-				&sdk.TestCaseWithExpectedResult{
-					TestCase: &sdk.TestCase{
+				&acme.TestCaseWithExpectedResult{
+					TestCase: &acme.TestCase{
 						ID: "id",
-						Params: []*sdk.VariableValue{
-							&sdk.VariableValue{},
-							&sdk.VariableValue{},
+						Params: []*acme.VariableValue{
+							&acme.VariableValue{},
+							&acme.VariableValue{},
 						},
 					},
-					ExpectedResult: &sdk.VariableValue{},
+					ExpectedResult: &acme.VariableValue{},
 				},
 			},
 			MethodName: "methodName",
@@ -4710,8 +4710,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4732,9 +4732,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4745,22 +4745,22 @@ func do() {
 	)
 	client.GetDefaultStarterFiles(
 		context.TODO(),
-		&sdk.GetDefaultStarterFilesRequest{
-			InputParams: []*sdk.VariableTypeAndName{
-				&sdk.VariableTypeAndName{
-					VariableType: &sdk.VariableType{
+		&acme.GetDefaultStarterFilesRequest{
+			InputParams: []*acme.VariableTypeAndName{
+				&acme.VariableTypeAndName{
+					VariableType: &acme.VariableType{
 						IntegerType: "integerType",
 					},
 					Name: "name",
 				},
-				&sdk.VariableTypeAndName{
-					VariableType: &sdk.VariableType{
+				&acme.VariableTypeAndName{
+					VariableType: &acme.VariableType{
 						IntegerType: "integerType",
 					},
 					Name: "name",
 				},
 			},
-			OutputType: &sdk.VariableType{
+			OutputType: &acme.VariableType{
 				IntegerType: "integerType",
 			},
 			MethodName: "methodName",
@@ -4774,9 +4774,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4787,7 +4787,7 @@ func do() {
 	)
 	client.CreateExecutionSession(
 		context.TODO(),
-		sdk.LanguageJava,
+		acme.LanguageJava,
 	)
 }
 
@@ -4797,8 +4797,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4819,8 +4819,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4841,8 +4841,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4862,9 +4862,9 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4875,7 +4875,7 @@ func do() {
 	)
 	client.SetNumWarmInstances(
 		context.TODO(),
-		sdk.LanguageJava,
+		acme.LanguageJava,
 		1,
 	)
 }
@@ -4886,8 +4886,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4907,8 +4907,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4928,8 +4928,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4949,8 +4949,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4971,8 +4971,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -4994,8 +4994,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -5015,8 +5015,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -5036,8 +5036,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -5058,8 +5058,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -5082,9 +5082,9 @@ exports[`test definitions > ts-express-casing 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -5095,7 +5095,7 @@ func do() {
 	)
 	client.CreateMovie(
 		context.TODO(),
-		&sdk.CreateMovieRequest{
+		&acme.CreateMovieRequest{
 			ID:          "id",
 			MovieTitle:  "movie_title",
 			MovieRating: 1.1,
@@ -5109,8 +5109,8 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -5132,15 +5132,15 @@ exports[`test definitions > undiscriminated-unions 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Get(
 		context.TODO(),
-		&sdk.MyUnion{
+		&acme.MyUnion{
 			String: "string",
 		},
 	)
@@ -5152,7 +5152,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -5168,7 +5168,7 @@ package example
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -5185,7 +5185,7 @@ exports[`test definitions > unions 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -5202,16 +5202,16 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Update(
 		context.TODO(),
-		&sdk.Shape{
-			Circle: &sdk.Circle{
+		&acme.Shape{
+			Circle: &acme.Circle{
 				Radius: 1.1,
 			},
 		},
@@ -5225,7 +5225,7 @@ exports[`test definitions > unknown 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -5244,15 +5244,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.PostObject(
 		context.TODO(),
-		&sdk.MyObject{
+		&acme.MyObject{
 			Unknown: map[string]interface{}{
 				"key": "value",
 			},
@@ -5267,19 +5267,19 @@ exports[`test definitions > validation 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Create(
 		context.TODO(),
-		&sdk.CreateRequest{
+		&acme.CreateRequest{
 			Decimal: 1.1,
 			Even:    1,
 			Name:    "name",
-			Shape:   sdk.ShapeSquare,
+			Shape:   acme.ShapeSquare,
 		},
 	)
 }
@@ -5290,15 +5290,15 @@ package example
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
 	client.Get(
 		context.TODO(),
-		&sdk.GetRequest{
+		&acme.GetRequest{
 			Decimal: 1.1,
 			Even:    1,
 			Name:    "name",
@@ -5313,7 +5313,7 @@ exports[`test definitions > variables 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -5331,7 +5331,7 @@ exports[`test definitions > version 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {
@@ -5349,7 +5349,7 @@ exports[`test definitions > version-no-default 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
+	client "github.com/acme/acme-go/client"
 )
 
 func do() {

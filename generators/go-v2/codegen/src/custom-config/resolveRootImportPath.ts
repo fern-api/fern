@@ -12,8 +12,24 @@ export function resolveRootImportPath({
     customConfig: BaseGoCustomConfigSchema;
 }): string {
     const suffix = getMajorVersionSuffix({ config });
-    const importPath = customConfig.importPath ?? customConfig.module?.path ?? DEFAULT_MODULE_PATH;
+    const importPath = getImportPath({ config, customConfig });
     return suffix != null ? maybeAppendMajorVersionSuffix({ importPath, majorVersion: suffix }) : importPath;
+}
+
+function getImportPath({
+    config,
+    customConfig
+}: {
+    config: FernGeneratorExec.config.GeneratorConfig;
+    customConfig: BaseGoCustomConfigSchema;
+}): string {
+    return (
+        customConfig.importPath ??
+        customConfig.module?.path ??
+        (config.output.mode.type === "github"
+            ? trimPrefix(config.output.mode.repoUrl, "https://")
+            : DEFAULT_MODULE_PATH)
+    );
 }
 
 function getMajorVersionSuffix({ config }: { config: FernGeneratorExec.config.GeneratorConfig }): string | undefined {
@@ -47,4 +63,11 @@ function maybeAppendMajorVersionSuffix({
         return importPath;
     }
     return `${importPath}/${majorVersion}`;
+}
+
+function trimPrefix(str: string, prefix: string): string {
+    if (str.startsWith(prefix)) {
+        return str.slice(prefix.length);
+    }
+    return str;
 }

@@ -5,9 +5,9 @@ exports[`examples > 'GET /metadata (allow-multiple)' 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -18,15 +18,15 @@ func do() {
 	)
 	client.GetMetadata(
 		context.TODO(),
-		&sdk.GetMetadataRequest{
-			Shallow: sdk.Bool(
+		&acme.GetMetadataRequest{
+			Shallow: acme.Bool(
 				false,
 			),
 			Tag: []*string{
-				sdk.String(
+				acme.String(
 					"development",
 				),
-				sdk.String(
+				acme.String(
 					"public",
 				),
 			},
@@ -42,9 +42,9 @@ exports[`examples > 'GET /metadata (simple)' 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -55,12 +55,12 @@ func do() {
 	)
 	client.GetMetadata(
 		context.TODO(),
-		&sdk.GetMetadataRequest{
-			Shallow: sdk.Bool(
+		&acme.GetMetadataRequest{
+			Shallow: acme.Bool(
 				false,
 			),
 			Tag: []*string{
-				sdk.String(
+				acme.String(
 					"development",
 				),
 			},
@@ -76,9 +76,9 @@ exports[`examples > 'POST /big-entity (simple)' 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -89,9 +89,9 @@ func do() {
 	)
 	client.CreateBigEntity(
 		context.TODO(),
-		&sdk.BigEntity{
-			CastMember: &sdk.CastMember{
-				Actor: &sdk.Actor{
+		&acme.BigEntity{
+			CastMember: &acme.CastMember{
+				Actor: &acme.Actor{
 					ID:   "john.doe",
 					Name: "John Doe",
 				},
@@ -107,9 +107,9 @@ exports[`examples > 'POST /movie (simple)' 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -120,9 +120,9 @@ func do() {
 	)
 	client.CreateMovie(
 		context.TODO(),
-		&sdk.Movie{
+		&acme.Movie{
 			ID: "movie-c06a4ad7",
-			Prequel: sdk.String(
+			Prequel: acme.String(
 				"movie-cv9b914f",
 			),
 			Title:  "The Boy and the Heron",

@@ -5,8 +5,8 @@ exports[`imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 
 import (
 	context "context"
-	client "sdk/client"
-	option "sdk/option"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -28,9 +28,9 @@ exports[`imdb > 'POST /movies/create-movie (simple)' 1`] = `
 
 import (
 	context "context"
-	sdk "sdk"
-	client "sdk/client"
-	option "sdk/option"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
@@ -41,7 +41,7 @@ func do() {
 	)
 	client.CreateMovie(
 		context.TODO(),
-		&sdk.CreateMovieRequest{
+		&acme.CreateMovieRequest{
 			Title:  "The Matrix",
 			Rating: 8.2,
 		},

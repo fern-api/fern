@@ -23,7 +23,9 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     } as BaseGoCustomConfigSchema
 };
 
-export function buildGeneratorConfig({ customConfig }: { customConfig?: Partial<BaseGoCustomConfigSchema> } = {}) {
+export function buildGeneratorConfig({
+    customConfig
+}: { customConfig?: Partial<BaseGoCustomConfigSchema> } = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
         customConfig: {
