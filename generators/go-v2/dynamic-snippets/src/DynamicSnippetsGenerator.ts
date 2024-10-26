@@ -24,19 +24,35 @@ export class DynamicSnippetsGenerator {
     public async generate(
         snippet: DynamicSnippets.EndpointSnippetRequest
     ): Promise<DynamicSnippets.EndpointSnippetResponse> {
-        const code = this.buildCodeBlock({ snippet });
-        return {
-            snippet: await code.toString({
-                packageName: SNIPPET_PACKAGE_NAME,
-                importPath: SNIPPET_IMPORT_PATH,
-                rootImportPath: this.context.rootImportPath,
-                customConfig: this.context.customConfig
-            })
-        };
+        let err: Error | undefined;
+        for (const endpoint of this.context.resolveEndpointLocationOrThrow(snippet.endpoint)) {
+            try {
+                const code = this.buildCodeBlock({ endpoint, snippet });
+                return {
+                    snippet: await code.toString({
+                        packageName: SNIPPET_PACKAGE_NAME,
+                        importPath: SNIPPET_IMPORT_PATH,
+                        rootImportPath: this.context.rootImportPath,
+                        customConfig: this.context.customConfig
+                    })
+                };
+            } catch (error) {
+                if (err == null) {
+                    // Report the first error that occurs.
+                    err = error as Error;
+                }
+            }
+        }
+        throw err;
     }
 
-    private buildCodeBlock({ snippet }: { snippet: DynamicSnippets.EndpointSnippetRequest }): go.AstNode {
-        const endpoint = this.context.resolveEndpointLocationOrThrow(snippet.endpoint);
+    private buildCodeBlock({
+        endpoint,
+        snippet
+    }: {
+        endpoint: DynamicSnippets.Endpoint;
+        snippet: DynamicSnippets.EndpointSnippetRequest;
+    }): go.AstNode {
         return go.func({
             name: SNIPPET_FUNC_NAME,
             parameters: [],

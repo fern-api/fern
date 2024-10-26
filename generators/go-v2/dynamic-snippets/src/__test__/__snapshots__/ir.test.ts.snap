@@ -1103,6 +1103,969 @@ func do() {
 "
 `;
 
+exports[`test definitions > exhaustive 1`] = `
+"package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnListOfPrimitives(
+		context.TODO(),
+		[]string{
+			"string",
+			"string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnListOfObjects(
+		context.TODO(),
+		[]*types.ObjectWithRequiredField{
+			&types.ObjectWithRequiredField{
+				String: "string",
+			},
+			&types.ObjectWithRequiredField{
+				String: "string",
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnSetOfPrimitives(
+		context.TODO(),
+		[]string{
+			"string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnSetOfObjects(
+		context.TODO(),
+		[]*types.ObjectWithRequiredField{
+			&types.ObjectWithRequiredField{
+				String: "string",
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnMapPrimToPrim(
+		context.TODO(),
+		map[string]string{
+			"string": "string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnMapOfPrimToObject(
+		context.TODO(),
+		map[string]*types.ObjectWithRequiredField{
+			"string": &types.ObjectWithRequiredField{
+				String: "string",
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnOptional(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnEnum(
+		context.TODO(),
+		types.WeatherReportSunny,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.TestGet(
+		context.TODO(),
+		"id",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.TestPost(
+		context.TODO(),
+		&types.ObjectWithRequiredField{
+			String: "string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.TestPut(
+		context.TODO(),
+		"id",
+		&types.ObjectWithRequiredField{
+			String: "string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.TestPatch(
+		context.TODO(),
+		"id",
+		&types.ObjectWithOptionalField{},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.TestDelete(
+		context.TODO(),
+		"id",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnWithOptionalField(
+		context.TODO(),
+		&types.ObjectWithOptionalField{},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnWithRequiredField(
+		context.TODO(),
+		&types.ObjectWithRequiredField{
+			String: "string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnWithMapOfMap(
+		context.TODO(),
+		&types.ObjectWithMapOfMap{
+			Map: map[string]map[string]string{
+				"map": map[string]string{
+					"map": "map",
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnNestedWithOptionalField(
+		context.TODO(),
+		&types.NestedObjectWithOptionalField{},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnNestedWithRequiredField(
+		context.TODO(),
+		"string",
+		&types.NestedObjectWithRequiredField{
+			String:       "string",
+			NestedObject: &types.ObjectWithOptionalField{},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnNestedWithRequiredFieldAsList(
+		context.TODO(),
+		[]*types.NestedObjectWithRequiredField{
+			&types.NestedObjectWithRequiredField{
+				String:       "string",
+				NestedObject: &types.ObjectWithOptionalField{},
+			},
+			&types.NestedObjectWithRequiredField{
+				String:       "string",
+				NestedObject: &types.ObjectWithOptionalField{},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetWithPath(
+		context.TODO(),
+		"param",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	endpoints "sdk/endpoints"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetWithQuery(
+		context.TODO(),
+		&endpoints.GetWithQuery{
+			Query:  "query",
+			Number: 1,
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	endpoints "sdk/endpoints"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetWithAllowMultipleQuery(
+		context.TODO(),
+		&endpoints.GetWithMultipleQuery{
+			Query: []string{
+				"query",
+			},
+			Numer: []int{
+				1,
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	endpoints "sdk/endpoints"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetWithPathAndQuery(
+		context.TODO(),
+		"param",
+		&endpoints.GetWithPathAndQuery{
+			Query: "query",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.ModifyWithPath(
+		context.TODO(),
+		"param",
+		"string",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnString(
+		context.TODO(),
+		"string",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnInt(
+		context.TODO(),
+		1,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnLong(
+		context.TODO(),
+		1000000,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnDouble(
+		context.TODO(),
+		1.1,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnBool(
+		context.TODO(),
+		true,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnDatetime(
+		context.TODO(),
+		sdk.MustParseDateTime(
+			"2024-01-15T09:30:00Z",
+		),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnDate(
+		context.TODO(),
+		sdk.MustParseDateTime(
+			"2023-01-15",
+		),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	uuid "github.com/google/uuid"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnUUID(
+		context.TODO(),
+		uuid.MustParse(
+			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+		),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnBase64(
+		context.TODO(),
+		[]byte("SGVsbG8gd29ybGQh"),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnUnion(
+		context.TODO(),
+		&types.Animal{
+			Dog: &types.Dog{
+				Name:        "name",
+				LikesToWoof: true,
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+	types "sdk/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.PostWithObjectBodyandResponse(
+		context.TODO(),
+		&sdk.PostWithObjectBody{
+			String:       "string",
+			Integer:      1,
+			NestedObject: &types.ObjectWithOptionalField{},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.PostWithNoAuth(
+		context.TODO(),
+		map[string]interface{}{
+			"key": "value",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetWithNoRequestBody(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.PostWithNoRequestBody(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+	option "sdk/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetWithCustomHeader(
+		context.TODO(),
+		&sdk.ReqWithHeaders{
+			XTestServiceHeader:  "X-TEST-SERVICE-HEADER",
+			XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+			Body:                "string",
+		},
+	)
+}
+"
+`;
+
 exports[`test definitions > extends 1`] = `
 "package example
 
@@ -2237,6 +3200,50 @@ func do() {
 "
 `;
 
+exports[`test definitions > oauth-client-credentials 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetTokenWithClientCredentials(
+		context.TODO(),
+		&sdk.GetTokenRequest{
+			ClientID:     "client_id",
+			ClientSecret: "client_secret",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.RefreshToken(
+		context.TODO(),
+		&sdk.RefreshTokenRequest{
+			ClientID:     "client_id",
+			ClientSecret: "client_secret",
+			RefreshToken: "refresh_token",
+		},
+	)
+}
+"
+`;
+
 exports[`test definitions > oauth-client-credentials-default 1`] = `
 "package example
 
@@ -2253,6 +3260,50 @@ func do() {
 		&sdk.GetTokenRequest{
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > oauth-client-credentials-environment-variables 1`] = `
+"package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetTokenWithClientCredentials(
+		context.TODO(),
+		&sdk.GetTokenRequest{
+			ClientID:     "client_id",
+			ClientSecret: "client_secret",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	sdk "sdk"
+	client "sdk/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.RefreshToken(
+		context.TODO(),
+		&sdk.RefreshTokenRequest{
+			ClientID:     "client_id",
+			ClientSecret: "client_secret",
+			RefreshToken: "refresh_token",
 		},
 	)
 }

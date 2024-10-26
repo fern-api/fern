@@ -181,7 +181,7 @@ export class DynamicSnippetsGeneratorContext {
         return path.join(this.rootImportPath, "option");
     }
 
-    public resolveEndpointOrThrow(rawEndpoint: string): DynamicSnippets.Endpoint {
+    public resolveEndpointOrThrow(rawEndpoint: string): DynamicSnippets.Endpoint[] {
         const parsedEndpoint = this.httpEndpointReferenceParser.tryParse(rawEndpoint);
         if (parsedEndpoint == null) {
             throw new Error(`Failed to parse endpoint reference "${rawEndpoint}"`);
@@ -189,13 +189,17 @@ export class DynamicSnippetsGeneratorContext {
         return this.resolveEndpointLocationOrThrow(parsedEndpoint);
     }
 
-    public resolveEndpointLocationOrThrow(location: DynamicSnippets.EndpointLocation): DynamicSnippets.Endpoint {
+    public resolveEndpointLocationOrThrow(location: DynamicSnippets.EndpointLocation): DynamicSnippets.Endpoint[] {
+        const endpoints: DynamicSnippets.Endpoint[] = [];
         for (const endpoint of Object.values(this.ir.endpoints)) {
             if (this.parsedEndpointMatches({ endpoint, parsedEndpoint: location })) {
-                return endpoint;
+                endpoints.push(endpoint);
             }
         }
-        throw new Error(`Failed to find endpoint identified by "${JSON.stringify(location)}"`);
+        if (endpoints.length === 0) {
+            throw new Error(`Failed to find endpoint identified by "${JSON.stringify(location)}"`);
+        }
+        return endpoints;
     }
 
     public getGoTypeReferenceFromDeclaration({
