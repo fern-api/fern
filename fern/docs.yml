@@ -316,10 +316,6 @@ navigation:
             slug: quickstart
             path: ./pages/docs/getting-started/quickstart.mdx
             icon: fa-regular fa-rocket
-          - page: Development
-            slug: development
-            path: ./pages/docs/getting-started/development.mdx
-            icon: fa-regular fa-terminal
           - page: Global Configuration
             slug: global-configuration
             path: ./pages/docs/getting-started/global-configuration.mdx
@@ -328,6 +324,13 @@ navigation:
             slug: project-structure
             path: ./pages/docs/getting-started/project-structure.mdx
             icon: fa-regular fa-map
+          - page: Preview your Docs
+            slug: development
+            path: ./pages/docs/getting-started/development.mdx
+            icon: fa-regular fa-terminal
+          - page: Publish your Docs
+            path: ./pages/docs/getting-started/publishing-your-docs.mdx
+            icon: fa-regular fa-upload
 
       - section: Building Your Docs
         contents:

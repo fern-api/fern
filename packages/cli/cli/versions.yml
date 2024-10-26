@@ -1,4 +1,91 @@
 - changelogEntry:
+  - summary: |
+      - fixes how `write-docs-definition` handles urls containing `https://` prefix
+      - fixes how the docs definition resolver handles changelogs under api reference nodes
+    type: fix
+  irVersion: 53
+  version: 0.45.0-rc25
+
+- changelogEntry:
+    - summary: |
+        `fern docs dev` now runs in Node 16 - Node 22 environments.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc24
+
+- changelogEntry:
+    - summary: |
+        The docs dev server now correctly handles base paths.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc23
+
+- changelogEntry:
+    - summary: |
+        Fixes bug introduced in 0.45.0-rc20 where section children were dropped from the docs definition.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc22
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now supports orphaned pages in your docs configuration.
+      type: feat
+    - summary: |
+        The RBAC config model is now renamed to `roles` and `viewers`:
+        
+        ```yml docs.yml
+        roles:
+          - internal
+          
+        navigation:
+          - section: Internal Section
+            viewers: 
+              - internal
+            contents:
+              - page: Internal Page
+                path: ./internal/page.mdx
+        ```
+
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc21
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now supports audiences in your docs configuration:
+
+        ```yml docs.yml
+        # all audiences must be declared at the top level
+        audiences:
+          - internal
+        
+        navigation:
+          - section: Internal Section
+            audience: internal # audience is optional
+            contents:
+              - page: Internal Page
+                path: ./internal/page.mdx
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc20
+
+- changelogEntry:
+    - summary: |
+        - Respect `x-fern-ignore` extension in OpenAPI parameters.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc19
+
+- changelogEntry:
+    - summary: |
+        - Add additional debug logging to the CLI when downloading docs preview bundle
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc18
+
+- changelogEntry:
     - summary: | 
         - Improved union example generation by increasing depth for better handling of recursive structures.
         - Updated Conjure importer to represent binary types as bytes for requests and file for responses in Fern.

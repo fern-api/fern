@@ -9,15 +9,17 @@ import * as core from "../../../../core";
 export const VersionConfig: core.serialization.ObjectSchema<
     serializers.VersionConfig.Raw,
     FernDocsConfig.VersionConfig
-> = core.serialization.object({
-    displayName: core.serialization.property("display-name", core.serialization.string()),
-    path: core.serialization.string(),
-    slug: core.serialization.string().optional(),
-    availability: core.serialization.lazy(async () => (await import("../../..")).VersionAvailability).optional(),
-});
+> = core.serialization
+    .object({
+        displayName: core.serialization.property("display-name", core.serialization.string()),
+        path: core.serialization.string(),
+        slug: core.serialization.string().optional(),
+        availability: core.serialization.lazy(async () => (await import("../../..")).VersionAvailability).optional(),
+    })
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
 
 export declare namespace VersionConfig {
-    interface Raw {
+    interface Raw extends serializers.WithPermissions.Raw {
         "display-name": string;
         path: string;
         slug?: string | null;

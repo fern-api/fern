@@ -35,6 +35,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.SnippetFilepath,
 		config.ImportPath,
 		config.PackageName,
+		config.ExportedClientName,
 		config.UnionVersion,
 		config.Module,
 	)

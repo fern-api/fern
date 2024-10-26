@@ -44,11 +44,12 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
-import { setGlobalDispatcher, Agent } from "undici";
-
-setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
+import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
+import { RUNTIME } from "@fern-typescript/fetcher";
 
 void runCli();
+
+const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 async function runCli() {
     const cliContext = new CliContext(process.stdout);
@@ -56,6 +57,12 @@ async function runCli() {
     const exit = async () => {
         await cliContext.exit();
     };
+
+    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
+        const { setGlobalDispatcher, Agent } = await import("undici");
+        setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     process.on("SIGINT", async () => {
         cliContext.suppressUpgradeMessage();
@@ -84,7 +91,10 @@ async function runCli() {
                 error
             }
         });
-        if (error instanceof FernCliError) {
+        if ((error as Error)?.message.includes("globalThis")) {
+            cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
+            cliContext.failWithoutThrowing();
+        } else if (error instanceof FernCliError) {
             // thrower is responsible for logging, so we generally don't need to log here.
             cliContext.failWithoutThrowing();
         } else if (error instanceof LoggableFernCliError) {
@@ -163,6 +173,7 @@ async function tryRunCli(cliContext: CliContext) {
         }
     });
     addGenerateJsonschemaCommand(cli, cliContext);
+    addWriteDocsDefinitionCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -999,6 +1010,36 @@ function addGenerateJsonschemaCommand(cli: Argv<GlobalCliOptions>, cliContext: C
                     defaultToAllApiWorkspaces: false
                 }),
                 jsonschemaFilepath: resolve(cwd(), argv.pathToOutput),
+                cliContext
+            });
+        }
+    );
+}
+
+function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write-docs-definition <output-path>",
+        false, // hide from help message
+        (yargs) =>
+            yargs.positional("output-path", {
+                type: "string",
+                description: "Path to write the docs definition",
+                demandOption: true
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern write-docs-definition",
+                properties: {
+                    outputPath: argv.outputPath
+                }
+            });
+
+            await writeDocsDefinitionForProject({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    defaultToAllApiWorkspaces: true,
+                    commandLineApiWorkspace: undefined
+                }),
+                outputPath: resolve(cwd(), argv.outputPath),
                 cliContext
             });
         }

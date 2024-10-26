@@ -4,11 +4,11 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface ApiReferenceConfiguration {
+export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermissions {
     api: string;
     /** Name of API that we are referencing */
     apiName?: string;
-    audiences?: string[];
+    audiences?: FernDocsConfig.AudienceId[];
     /** Defaults to false */
     displayErrors?: boolean;
     snippets?: FernDocsConfig.SnippetsConfiguration;
