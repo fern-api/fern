@@ -24,8 +24,13 @@ export class DynamicSnippetsGenerator {
     public async generate(
         snippet: DynamicSnippets.EndpointSnippetRequest
     ): Promise<DynamicSnippets.EndpointSnippetResponse> {
+        const endpoints = this.context.resolveEndpointLocationOrThrow(snippet.endpoint);
+        if (endpoints.length === 0) {
+            throw new Error(`No endpoints found for ${JSON.stringify(snippet.endpoint)}`);
+        }
+
         let err: Error | undefined;
-        for (const endpoint of this.context.resolveEndpointLocationOrThrow(snippet.endpoint)) {
+        for (const endpoint of endpoints) {
             try {
                 const code = this.buildCodeBlock({ endpoint, snippet });
                 return {
@@ -43,7 +48,7 @@ export class DynamicSnippetsGenerator {
                 }
             }
         }
-        throw err;
+        throw err ?? new Error(`Failed to generate snippet for ${JSON.stringify(snippet.endpoint)}`);
     }
 
     private buildCodeBlock({

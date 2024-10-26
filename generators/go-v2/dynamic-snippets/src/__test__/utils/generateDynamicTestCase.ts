@@ -8,11 +8,11 @@ import { DynamicSnippetsGenerator } from "../../DynamicSnippetsGenerator";
 import { buildGeneratorConfig } from "./buildGeneratorConfig";
 import { BaseGoCustomConfigSchema } from "@fern-api/go-codegen";
 
-export type DynamicTestCase = {
+export interface DynamicTestCase {
     ir: IntermediateRepresentation;
     generator: DynamicSnippetsGenerator;
     result: TestResult;
-};
+}
 
 export class TestResult {
     public snippets: string[] = [];
