@@ -7,6 +7,7 @@ settings:
 overrides:
   '@babel/traverse': 7.23.2
   json5: 2.2.2
+  micromatch: 4.0.8
   yaml: 2.3.3
 
 importers:
@@ -3471,6 +3472,9 @@ importers:
       '@fern-api/docs-preview':
         specifier: workspace:*
         version: link:../docs-preview
+      '@fern-api/docs-resolver':
+        specifier: workspace:*
+        version: link:../docs-resolver
       '@fern-api/docs-validator':
         specifier: workspace:*
         version: link:../yaml/docs-validator
@@ -3561,6 +3565,9 @@ importers:
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
+      '@fern-typescript/fetcher':
+        specifier: workspace:*
+        version: link:../../../generators/typescript/utils/core-utilities/fetcher
       '@types/axios':
         specifier: ^0.14.0
         version: 0.14.0
@@ -3767,8 +3774,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5833
-        version: 0.0.5833
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -3843,8 +3850,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.111.0-51d403bce
-        version: 0.111.0-51d403bce
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -3898,8 +3905,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.111.0-51d403bce
-        version: 0.111.0-51d403bce
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -3938,8 +3945,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5833
-        version: 0.0.5833
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -3993,8 +4000,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.115.0-3cf21db72
-        version: 0.115.0-3cf21db72(lodash-es@4.17.21)(typescript@4.6.4)
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4013,6 +4020,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
+      '@fern-typescript/fetcher':
+        specifier: workspace:*
+        version: link:../../../generators/typescript/utils/core-utilities/fetcher
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -4025,6 +4035,9 @@ importers:
       express:
         specifier: ^4.20.0
         version: 4.21.1
+      readable-stream:
+        specifier: ^4.5.2
+        version: 4.5.2
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -4053,6 +4066,9 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
+      '@types/readable-stream':
+        specifier: ^4.0.15
+        version: 4.0.15
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
@@ -4096,8 +4112,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-markdown-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.115.0-3cf21db72
-        version: 0.115.0-3cf21db72(lodash-es@4.17.21)(typescript@4.6.4)
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4114,8 +4130,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-api/ui-core-utils':
-        specifier: 0.115.0-3cf21db72
-        version: 0.115.0-3cf21db72
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       dayjs:
         specifier: ^1.11.11
         version: 1.11.11
@@ -4224,8 +4240,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/logging-execa
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5833
-        version: 0.0.5833
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       '@fern-typescript/fetcher':
         specifier: workspace:*
         version: link:../../../generators/typescript/utils/core-utilities/fetcher
@@ -4983,8 +4999,8 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace-loader
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5833
-        version: 0.0.5833
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -5549,8 +5565,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5833
-        version: 0.0.5833
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6054,8 +6070,8 @@ importers:
         specifier: 0.0.38
         version: 0.0.38
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5833
-        version: 0.0.5833
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       '@fern-fern/fdr-test-sdk':
         specifier: ^0.0.5297
         version: 0.0.5297
@@ -7462,10 +7478,8 @@ packages:
   '@exodus/schemasafe@1.0.0':
     resolution: {integrity: sha512-2cyupPIZI69HQxEAPllLXBjQp4njDKkOjYRCYxvMZe3/LY9pp9fBM3Tb1wiFAdP6Emo4v3OEbCLGj6u73Q5KLw==}
 
-  '@fern-api/fdr-sdk@0.115.0-3cf21db72':
-    resolution: {integrity: sha512-1E/gm2gVA+jS6XbqVvkz26WXP/T7FUDF+i2jLmGtURUOgSQhFaZF5M3OVUrpO9igzXF5LlZjPw4MOTixYvIUFA==}
-    peerDependencies:
-      lodash-es: '>=4'
+  '@fern-api/fdr-sdk@0.119.0-d531a5553':
+    resolution: {integrity: sha512-555o5/FE30qJ4xKk4KDPxQWBP2UE5YXKMfVQDD+YFl3e+grlxt1f0R/l6i+hlzPPu2aMPhl9tgzG+rdGFDUacw==}
 
   '@fern-api/sdk@0.12.3':
     resolution: {integrity: sha512-sexxpQEHBmsAXW3UHo5x7NW8Z9TrHWYLGo/J7eFqHYSH8Sq9LA3vRlR0ni9h4FNlKnPDu9Y55L0BhsQVXYqPKA==}
@@ -7473,8 +7487,8 @@ packages:
   '@fern-api/template-resolver@0.7.5':
     resolution: {integrity: sha512-hmvSxuhyWMjn1DxJJS/R+CIaZcF5c+UBEyFqFOw+laoBtdDvNgEyCu7XP5cILVMABPHmt7kkIO5KbrsCS5S2kw==}
 
-  '@fern-api/ui-core-utils@0.115.0-3cf21db72':
-    resolution: {integrity: sha512-H5NkeB/ZxTY6UD5xBpk68SYG1fPT48lhg6+lpO3n6txo5JlerSA2HZCbFGt8PdoDk5aT3GmtrBgIELIAXM9XbA==}
+  '@fern-api/ui-core-utils@0.119.0-d531a5553':
+    resolution: {integrity: sha512-HH5C99nsEzjmSIPvc0VcmIviG8ULTQE5AlOc2snLQIrLF/h2Blunfi2kWbj/ID/QhWjBJBIfwEw2tY2wOxVfFA==}
 
   '@fern-api/venus-api-sdk@0.0.38':
     resolution: {integrity: sha512-1JjuctZwyPu4jN51bBqjIy+uCBPGa/ROcDfqN0UnGeVEW7NyztkGh/qOFwnN6K07VMMql1AIF4Zov+MVqTPwmw==}
@@ -7482,11 +7496,8 @@ packages:
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
 
-  '@fern-fern/fdr-cjs-sdk@0.0.5833':
-    resolution: {integrity: sha512-D6L0CUJKAtJY4pO9qHpXMw4/k8AZSp1TBYNidkbj5s2N3VBK/fXMmyeOQG8HzPE8dpBL8ZI28kwUsfyRzamr0w==}
-
-  '@fern-fern/fdr-cjs-sdk@0.111.0-51d403bce':
-    resolution: {integrity: sha512-ia/kqEDaUPiyYtLjCpYNPSO4/tDJDESpdUwEJqbYJP2awdK699L0ptGzNjvzhH0gJxe7/xj7SzPjmh3zs/hI5g==}
+  '@fern-fern/fdr-cjs-sdk@0.119.0-d531a5553':
+    resolution: {integrity: sha512-F0eZLfGcznnos6wv7m3MszA7Lj9SgeC9VpJyRyH0MwouGXPDa8/sdkZq+uK4QzHv1jmHo4IErcpnGEzokWUPCA==}
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
@@ -9581,6 +9592,9 @@ packages:
     resolution: {integrity: sha512-QCOllgZJtaUo9miYBcLChTUaHNjJF3PYs1VidD7AwiEj1kYxKeQTctLAezAOH5ZKRH0g2IgPn6KwB4IT8iRpvA==}
     engines: {node: '>= 0.4'}
 
+  es-toolkit@1.26.0:
+    resolution: {integrity: sha512-gg6ZaI4eTwzkQGkdEG+t4b4VH2mTxodBQ2KvyTKAQFIag3Vvxoq3XZ1ie4ijIQmVxiipL2+dZLDMkh1VIvAFyg==}
+
   es6-promise@3.3.1:
     resolution: {integrity: sha512-SOp9Phqvqn7jtEUxPWdWfWoLmyt2VaJ6MpvP9Comy1MceMXqE6bxvaTu4iaxpYYPzhny28Lc+M87/c2cPK6lDg==}
 
@@ -11262,8 +11276,8 @@ packages:
   micromark@4.0.0:
     resolution: {integrity: sha512-o/sd0nMof8kYff+TqcDx3VSrgBTcZpSvYcAHIfHhv5VAuNmisCxjhx6YmxS8PFEpb9z5WKWKPdzf0jM23ro3RQ==}
 
-  micromatch@4.0.5:
-    resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
+  micromatch@4.0.8:
+    resolution: {integrity: sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==}
     engines: {node: '>=8.6'}
 
   mime-db@1.52.0:
@@ -14595,16 +14609,16 @@ snapshots:
 
   '@exodus/schemasafe@1.0.0': {}
 
-  '@fern-api/fdr-sdk@0.115.0-3cf21db72(lodash-es@4.17.21)(typescript@4.6.4)':
+  '@fern-api/fdr-sdk@0.119.0-d531a5553(typescript@4.6.4)':
     dependencies:
-      '@fern-api/ui-core-utils': 0.115.0-3cf21db72
+      '@fern-api/ui-core-utils': 0.119.0-d531a5553
       '@ungap/structured-clone': 1.2.0
       dayjs: 1.11.11
+      es-toolkit: 1.26.0
       fast-deep-equal: 3.1.3
       form-data: 4.0.0
       formdata-node: 6.0.3
       js-base64: 3.7.7
-      lodash-es: 4.17.21
       node-fetch: 2.7.0
       qs: 6.12.0
       tinycolor2: 1.6.0
@@ -14631,7 +14645,7 @@ snapshots:
     dependencies:
       prettier: 3.3.3
 
-  '@fern-api/ui-core-utils@0.115.0-3cf21db72':
+  '@fern-api/ui-core-utils@0.119.0-d531a5553':
     dependencies:
       strip-ansi: 7.1.0
       title: 3.5.3
@@ -14648,18 +14662,7 @@ snapshots:
 
   '@fern-fern/docs-config@0.0.80': {}
 
-  '@fern-fern/fdr-cjs-sdk@0.0.5833':
-    dependencies:
-      form-data: 4.0.0
-      formdata-node: 6.0.3
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.11.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/fdr-cjs-sdk@0.111.0-51d403bce':
+  '@fern-fern/fdr-cjs-sdk@0.119.0-d531a5553':
     dependencies:
       form-data: 4.0.0
       formdata-node: 6.0.3
@@ -14926,7 +14929,7 @@ snapshots:
       jest-util: 29.7.0
       jest-validate: 29.7.0
       jest-watcher: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       pretty-format: 29.7.0
       slash: 3.0.0
       strip-ansi: 6.0.1
@@ -15037,7 +15040,7 @@ snapshots:
       jest-haste-map: 29.7.0
       jest-regex-util: 29.6.3
       jest-util: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       pirates: 4.0.5
       slash: 3.0.0
       write-file-atomic: 4.0.2
@@ -17107,6 +17110,8 @@ snapshots:
       is-date-object: 1.0.5
       is-symbol: 1.0.4
 
+  es-toolkit@1.26.0: {}
+
   es6-promise@3.3.1: {}
 
   esbuild@0.19.12:
@@ -17542,7 +17547,7 @@ snapshots:
       '@nodelib/fs.walk': 1.2.8
       glob-parent: 5.1.2
       merge2: 1.4.1
-      micromatch: 4.0.5
+      micromatch: 4.0.8
 
   fast-json-parse@1.0.3: {}
 
@@ -17658,7 +17663,7 @@ snapshots:
     dependencies:
       detect-file: 1.0.0
       is-glob: 4.0.3
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       resolve-dir: 1.0.1
 
   flat-cache@3.0.4:
@@ -18418,7 +18423,7 @@ snapshots:
       jest-runner: 29.7.0
       jest-util: 29.7.0
       jest-validate: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       parse-json: 5.2.0
       pretty-format: 29.7.0
       slash: 3.0.0
@@ -18493,7 +18498,7 @@ snapshots:
       jest-regex-util: 29.6.3
       jest-util: 29.7.0
       jest-worker: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       walker: 1.0.8
     optionalDependencies:
       fsevents: 2.3.3
@@ -18517,7 +18522,7 @@ snapshots:
       '@types/stack-utils': 2.0.1
       chalk: 4.1.2
       graceful-fs: 4.2.11
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       pretty-format: 29.7.0
       slash: 3.0.0
       stack-utils: 2.0.5
@@ -18862,7 +18867,7 @@ snapshots:
       execa: 6.1.0
       lilconfig: 2.0.5
       listr2: 4.0.5
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       normalize-path: 3.0.0
       object-inspect: 1.13.1
       pidtree: 0.6.0
@@ -19502,7 +19507,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  micromatch@4.0.5:
+  micromatch@4.0.8:
     dependencies:
       braces: 3.0.3
       picomatch: 2.3.1
@@ -20908,7 +20913,7 @@ snapshots:
       known-css-properties: 0.25.0
       mathml-tag-names: 2.1.3
       meow: 9.0.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       normalize-path: 3.0.0
       picocolors: 1.0.1
       postcss: 8.4.38
@@ -20954,7 +20959,7 @@ snapshots:
       known-css-properties: 0.29.0
       mathml-tag-names: 2.1.3
       meow: 13.2.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       normalize-path: 3.0.0
       picocolors: 1.0.1
       postcss: 8.4.38
@@ -21051,7 +21056,7 @@ snapshots:
       is-glob: 4.0.3
       jiti: 1.18.2
       lilconfig: 2.1.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.1
@@ -21270,7 +21275,7 @@ snapshots:
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.15.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       semver: 7.6.2
       source-map: 0.7.4
       typescript: 4.6.4
@@ -21280,7 +21285,7 @@ snapshots:
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.15.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       semver: 7.6.2
       source-map: 0.7.4
       typescript: 4.6.4

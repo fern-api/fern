@@ -1,13 +1,14 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import decompress from "decompress";
-import { createWriteStream } from "fs";
+import { Readable } from "readable-stream";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
-import { pipeline } from "stream/promises";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
+import { fetcher } from "@fern-typescript/fetcher";
+import fs from "fs";
 
 const ETAG_FILENAME = "etag";
 const PREVIEW_FOLDER_NAME = "preview";
@@ -66,8 +67,18 @@ export async function downloadBundle({
     preferCached: boolean;
 }): Promise<DownloadLocalBundle.Result> {
     logger.debug("Setting up docs preview bundle...");
-    const response = await fetch(bucketUrl);
-    const body = await response.text();
+    const response = await fetcher<string>({
+        url: bucketUrl,
+        method: "GET",
+        responseType: "text",
+        duplex: "half"
+    });
+    if (!response.ok) {
+        return {
+            type: "failure"
+        };
+    }
+    const body = response.body;
     const parser = new xml2js.Parser();
     const parsedResponse = await parser.parseStringPromise(body);
     const eTag = parsedResponse?.ListBucketResult?.Contents?.[0]?.ETag?.[0];
@@ -99,10 +110,15 @@ export async function downloadBundle({
 
     logger.debug(`Downloading docs preview bundle from ${path.join(bucketUrl, key)}`);
     // download docs bundle
-    const docsBundleZipResponse = await fetch(`${path.join(bucketUrl, key)}`);
+    const docsBundleZipResponse = await fetcher<unknown>({
+        url: `${path.join(bucketUrl, key)}`,
+        method: "GET",
+        responseType: "arrayBuffer",
+        duplex: "half"
+    });
 
     if (!docsBundleZipResponse.ok) {
-        logger.error(`Failed to download docs preview bundle. ${docsBundleZipResponse.statusText}`);
+        logger.error("Failed to download docs preview bundle.");
         return {
             type: "failure"
         };
@@ -115,8 +131,10 @@ export async function downloadBundle({
             type: "failure"
         };
     }
+
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-    await pipeline(contents as any, createWriteStream(outputZipPath));
+    const nodeBuffer = Buffer.from(contents as any);
+    await writeFile(outputZipPath, nodeBuffer);
     logger.debug(`Wrote output.zip to ${outputZipPath}`);
 
     const absolutePathToPreviewFolder = getPathToPreviewFolder();

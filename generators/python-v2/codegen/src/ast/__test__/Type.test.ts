@@ -70,6 +70,12 @@ describe("Type", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
+    it("writes uuid type", async () => {
+        const uuidType = Type.uuid();
+        uuidType.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
     it("writes optional type", async () => {
         const optionalType = Type.optional(Type.str());
         optionalType.write(writer);

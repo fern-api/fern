@@ -11,7 +11,7 @@ describe("MethodInvocation", () => {
 
     it("should write a method invocation with no args", async () => {
         const invocation = python.invokeMethod({
-            method: "test_method",
+            methodReference: python.reference({ name: "test_method" }),
             arguments_: []
         });
 
@@ -23,7 +23,7 @@ describe("MethodInvocation", () => {
 
     it("should write a method invocation with one positional arg", async () => {
         const invocation = python.invokeMethod({
-            method: "test_method",
+            methodReference: python.reference({ name: "test_method" }),
             arguments_: [python.methodArgument({ value: python.codeBlock("42") })]
         });
 
@@ -35,7 +35,7 @@ describe("MethodInvocation", () => {
 
     it("should write a method invocation with one positional arg and one kwarg", async () => {
         const invocation = python.invokeMethod({
-            method: "test_method",
+            methodReference: python.reference({ name: "test_method" }),
             arguments_: [
                 python.methodArgument({ value: python.codeBlock("42") }),
                 python.methodArgument({ name: "key", value: python.codeBlock("'value'") })
@@ -50,7 +50,7 @@ describe("MethodInvocation", () => {
 
     it("should write a method invocation with multiple positional and kwarg args", async () => {
         const invocation = python.invokeMethod({
-            method: "test_method",
+            methodReference: python.reference({ name: "test_method" }),
             arguments_: [
                 python.methodArgument({ value: python.codeBlock("42") }),
                 python.methodArgument({ value: python.codeBlock("'hello'") }),
@@ -67,8 +67,7 @@ describe("MethodInvocation", () => {
 
     it("should write a method invocation with a parent", async () => {
         const invocation = python.invokeMethod({
-            method: "test_method",
-            on: python.reference({ name: "parent_object" }),
+            methodReference: python.reference({ name: "parent_object", attribute: ["test_method"] }),
             arguments_: [
                 python.methodArgument({ value: python.codeBlock("'arg1'") }),
                 python.methodArgument({ name: "kwarg", value: python.codeBlock("42") })

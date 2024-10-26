@@ -1974,6 +1974,7 @@ func generatedClientInstantiation(
 	baseImportPath string,
 	generatedAuth *GeneratedAuth,
 	generatedEnvironment *GeneratedEnvironment,
+	exportedClientName string,
 ) *ast.AssignStmt {
 	var parameters []ast.Expr
 	if generatedAuth != nil {
@@ -1989,7 +1990,7 @@ func generatedClientInstantiation(
 		Right: []ast.Expr{
 			ast.NewCallExpr(
 				ast.NewImportedReference(
-					"NewClient",
+					fmt.Sprintf("New%s", exportedClientName),
 					packagePathToImportPath(baseImportPath, packagePathForClient(new(ir.FernFilepath))),
 				),
 				parameters,

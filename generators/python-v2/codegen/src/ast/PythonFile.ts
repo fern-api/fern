@@ -51,8 +51,8 @@ export class PythonFile extends AstNode {
      *******************************/
 
     private getImportName(reference: Reference): string {
-        const name = reference.getName();
-        const alias = reference.getAlias();
+        const name = reference.name;
+        const alias = reference.alias;
         return `${name}${alias ? ` as ${alias}` : ""}`;
     }
 
@@ -65,7 +65,7 @@ export class PythonFile extends AstNode {
         for (const reference of this.references) {
             const fullyQualifiedPath = reference.getFullyQualifiedModulePath();
             const existingRefs = uniqueReferences.get(fullyQualifiedPath);
-            const referenceName = reference.getName();
+            const referenceName = reference.name;
             if (existingRefs) {
                 if (!existingRefs.referenceNames.has(referenceName)) {
                     existingRefs.references.push(reference);
@@ -73,7 +73,7 @@ export class PythonFile extends AstNode {
                 }
             } else {
                 uniqueReferences.set(fullyQualifiedPath, {
-                    modulePath: reference.getModulePath(),
+                    modulePath: reference.modulePath,
                     references: [reference],
                     referenceNames: new Set([referenceName])
                 });

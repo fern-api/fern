@@ -63,6 +63,7 @@ type Config struct {
 	IrFilepath                   string
 	SnippetFilepath              string
 	ImportPath                   string
+	ExportedClientName           string
 	PackageName                  string
 	UnionVersion                 string
 	Module                       *generator.ModuleConfig
@@ -211,6 +212,7 @@ func newConfig(configFilename string) (*Config, error) {
 		SnippetFilepath:              snippetFilepath,
 		ImportPath:                   customConfig.ImportPath,
 		PackageName:                  customConfig.PackageName,
+		ExportedClientName:           customConfig.ExportedClientName,
 		UnionVersion:                 customConfig.UnionVersion,
 		Module:                       moduleConfig,
 		Writer:                       writerConfig,
@@ -257,6 +259,7 @@ type customConfig struct {
 	AlwaysSendRequiredProperties bool          `json:"alwaysSendRequiredProperties,omitempty"`
 	ImportPath                   string        `json:"importPath,omitempty"`
 	PackageName                  string        `json:"packageName,omitempty"`
+	ExportedClientName           string        `json:"exportedClientName,omitempty"`
 	UnionVersion                 string        `json:"union,omitempty"`
 	Module                       *moduleConfig `json:"module,omitempty"`
 }

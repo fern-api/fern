@@ -25,8 +25,9 @@ type Config struct {
 	IRFilepath                   string
 	SnippetFilepath              string
 	ImportPath                   string
-	UnionVersion                 UnionVersion
 	PackageName                  string
+	ExportedClientName           string
+	UnionVersion                 UnionVersion
 
 	// If not specified, a go.mod and go.sum will not be generated.
 	ModuleConfig *ModuleConfig
@@ -62,6 +63,7 @@ func NewConfig(
 	snippetFilepath string,
 	importPath string,
 	packageName string,
+	exportedClientName string,
 	unionVersion string,
 	moduleConfig *ModuleConfig,
 ) (*Config, error) {
@@ -82,6 +84,7 @@ func NewConfig(
 		SnippetFilepath:              snippetFilepath,
 		ImportPath:                   importPath,
 		PackageName:                  packageName,
+		ExportedClientName:           exportedClientName,
 		UnionVersion:                 uv,
 		ModuleConfig:                 moduleConfig,
 	}, nil
