@@ -55,6 +55,7 @@ export async function generateDynamicTestCase({
         audiences,
         keywords: undefined,
         smartCasing: true,
+        includeOptionalRequestPropertyExamples: true,
         disableExamples: false,
         readme: undefined,
         version: undefined,

@@ -29,7 +29,6 @@ export declare namespace generateEndpointExample {
         endpoint: HttpEndpoint;
         typeDeclarations: Record<TypeId, TypeDeclaration>;
 
-        // TODO: Expose this via generateIntermediateRepresentation.
         skipOptionalRequestProperties: boolean;
 
         generationResponse: GenerationResponseType;

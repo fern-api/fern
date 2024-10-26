@@ -60,6 +60,9 @@ func do() {
 		&acme.GetTokenRequest{
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
+			Scope: acme.String(
+				"scope",
+			),
 		},
 	)
 }
@@ -153,7 +156,17 @@ func do() {
 	client := client.NewClient()
 	client.Find(
 		context.TODO(),
-		&acme.FindRequest{},
+		&acme.FindRequest{
+			OptionalString: acme.String(
+				"optionalString",
+			),
+			PublicProperty: acme.String(
+				"publicProperty",
+			),
+			PrivateProperty: acme.Int(
+				1,
+			),
+		},
 	)
 }
 "
@@ -375,7 +388,17 @@ func do() {
 	client := client.NewClient()
 	client.Find(
 		context.TODO(),
-		&acme.FindRequest{},
+		&acme.FindRequest{
+			OptionalString: acme.String(
+				"optionalString",
+			),
+			PublicProperty: acme.String(
+				"publicProperty",
+			),
+			PrivateProperty: acme.Int(
+				1,
+			),
+		},
 	)
 }
 "
@@ -481,8 +504,12 @@ func do() {
 	client.Send(
 		context.TODO(),
 		&acme.SendEnumInlinedRequest{
-			Operand: acme.OperandGreaterThan,
+			Operand:      acme.OperandGreaterThan,
+			MaybeOperand: acme.OperandGreaterThan.Ptr(),
 			OperandOrColor: &acme.ColorOrOperand{
+				Color: acme.ColorRed,
+			},
+			MaybeOperandOrColor: &acme.ColorOrOperand{
 				Color: acme.ColorRed,
 			},
 		},
@@ -529,6 +556,7 @@ func do() {
 	client.Send(
 		context.TODO(),
 		acme.OperandGreaterThan,
+		acme.OperandGreaterThan.Ptr(),
 		&acme.ColorOrOperand{
 			Color: acme.ColorRed,
 		},
@@ -573,7 +601,8 @@ func do() {
 	client.Send(
 		context.TODO(),
 		&acme.SendEnumAsQueryParamRequest{
-			Operand: acme.OperandGreaterThan,
+			Operand:      acme.OperandGreaterThan,
+			MaybeOperand: acme.OperandGreaterThan.Ptr(),
 			OperandOrColor: &acme.ColorOrOperand{
 				Color: acme.ColorRed,
 			},
@@ -599,11 +628,15 @@ func do() {
 			Operand: []acme.Operand{
 				acme.OperandGreaterThan,
 			},
+			MaybeOperand: []*acme.Operand{
+				acme.OperandGreaterThan.Ptr(),
+			},
 			OperandOrColor: []*acme.ColorOrOperand{
 				&acme.ColorOrOperand{
 					Color: acme.ColorRed,
 				},
 			},
+			MaybeOperandOrColor: []*acme.ColorOrOperand{},
 		},
 	)
 }
@@ -1005,11 +1038,17 @@ func do() {
 	client.CreateMovie(
 		context.TODO(),
 		&acme.Movie{
-			ID:     "id",
+			ID: "id",
+			Prequel: acme.String(
+				"prequel",
+			),
 			Title:  "title",
 			From:   "from",
 			Rating: 1.1,
 			Tag:    "tag",
+			Book: acme.String(
+				"book",
+			),
 			Metadata: map[string]interface{}{
 				"metadata": map[string]interface{}{
 					"key": "value",
@@ -1073,6 +1112,14 @@ func do() {
 	client.GetMetadata(
 		context.TODO(),
 		&acme.GetMetadataRequest{
+			Shallow: acme.Bool(
+				true,
+			),
+			Tag: []*string{
+				acme.String(
+					"tag",
+				),
+			},
 			XAPIVersion: "X-API-Version",
 		},
 	)
@@ -1086,795 +1133,7 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.CreateBigEntity(
-		context.TODO(),
-		&acme.BigEntity{},
-	)
-}
-"
-`;
-
-exports[`test definitions > exhaustive 1`] = `
-"package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnListOfPrimitives(
-		context.TODO(),
-		[]string{
-			"string",
-			"string",
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnListOfObjects(
-		context.TODO(),
-		[]*types.ObjectWithRequiredField{
-			&types.ObjectWithRequiredField{
-				String: "string",
-			},
-			&types.ObjectWithRequiredField{
-				String: "string",
-			},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnSetOfPrimitives(
-		context.TODO(),
-		[]string{
-			"string",
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnSetOfObjects(
-		context.TODO(),
-		[]*types.ObjectWithRequiredField{
-			&types.ObjectWithRequiredField{
-				String: "string",
-			},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnMapPrimToPrim(
-		context.TODO(),
-		map[string]string{
-			"string": "string",
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnMapOfPrimToObject(
-		context.TODO(),
-		map[string]*types.ObjectWithRequiredField{
-			"string": &types.ObjectWithRequiredField{
-				String: "string",
-			},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnOptional(
-		context.TODO(),
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnEnum(
-		context.TODO(),
-		types.WeatherReportSunny,
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.TestGet(
-		context.TODO(),
-		"id",
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.TestPost(
-		context.TODO(),
-		&types.ObjectWithRequiredField{
-			String: "string",
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.TestPut(
-		context.TODO(),
-		"id",
-		&types.ObjectWithRequiredField{
-			String: "string",
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.TestPatch(
-		context.TODO(),
-		"id",
-		&types.ObjectWithOptionalField{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.TestDelete(
-		context.TODO(),
-		"id",
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnWithOptionalField(
-		context.TODO(),
-		&types.ObjectWithOptionalField{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnWithRequiredField(
-		context.TODO(),
-		&types.ObjectWithRequiredField{
-			String: "string",
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnWithMapOfMap(
-		context.TODO(),
-		&types.ObjectWithMapOfMap{
-			Map: map[string]map[string]string{
-				"map": map[string]string{
-					"map": "map",
-				},
-			},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnNestedWithOptionalField(
-		context.TODO(),
-		&types.NestedObjectWithOptionalField{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnNestedWithRequiredField(
-		context.TODO(),
-		"string",
-		&types.NestedObjectWithRequiredField{
-			String:       "string",
-			NestedObject: &types.ObjectWithOptionalField{},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnNestedWithRequiredFieldAsList(
-		context.TODO(),
-		[]*types.NestedObjectWithRequiredField{
-			&types.NestedObjectWithRequiredField{
-				String:       "string",
-				NestedObject: &types.ObjectWithOptionalField{},
-			},
-			&types.NestedObjectWithRequiredField{
-				String:       "string",
-				NestedObject: &types.ObjectWithOptionalField{},
-			},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetWithPath(
-		context.TODO(),
-		"param",
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	endpoints "github.com/acme/acme-go/endpoints"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetWithQuery(
-		context.TODO(),
-		&endpoints.GetWithQuery{
-			Query:  "query",
-			Number: 1,
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	endpoints "github.com/acme/acme-go/endpoints"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetWithAllowMultipleQuery(
-		context.TODO(),
-		&endpoints.GetWithMultipleQuery{
-			Query: []string{
-				"query",
-			},
-			Numer: []int{
-				1,
-			},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	endpoints "github.com/acme/acme-go/endpoints"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetWithPathAndQuery(
-		context.TODO(),
-		"param",
-		&endpoints.GetWithPathAndQuery{
-			Query: "query",
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.ModifyWithPath(
-		context.TODO(),
-		"param",
-		"string",
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnString(
-		context.TODO(),
-		"string",
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnInt(
-		context.TODO(),
-		1,
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnLong(
-		context.TODO(),
-		1000000,
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnDouble(
-		context.TODO(),
-		1.1,
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnBool(
-		context.TODO(),
-		true,
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnDatetime(
-		context.TODO(),
-		acme.MustParseDateTime(
-			"2024-01-15T09:30:00Z",
-		),
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnDate(
-		context.TODO(),
-		acme.MustParseDateTime(
-			"2023-01-15",
-		),
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
+	commons "github.com/acme/acme-go/commons"
 	option "github.com/acme/acme-go/option"
 	uuid "github.com/google/uuid"
 )
@@ -1885,181 +1144,218 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnUUID(
+	client.CreateBigEntity(
 		context.TODO(),
-		uuid.MustParse(
-			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-		),
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnBase64(
-		context.TODO(),
-		[]byte("SGVsbG8gd29ybGQh"),
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.Endpoints.GetAndReturnUnion(
-		context.TODO(),
-		&types.Animal{
-			Dog: &types.Dog{
-				Name:        "name",
-				LikesToWoof: true,
+		&acme.BigEntity{
+			CastMember: &acme.CastMember{
+				Actor: &acme.Actor{
+					Name: "name",
+					ID:   "id",
+				},
 			},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-	types "github.com/acme/acme-go/types"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.PostWithObjectBodyandResponse(
-		context.TODO(),
-		&acme.PostWithObjectBody{
-			String:       "string",
-			Integer:      1,
-			NestedObject: &types.ObjectWithOptionalField{},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.PostWithNoAuth(
-		context.TODO(),
-		map[string]interface{}{
-			"key": "value",
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.GetWithNoRequestBody(
-		context.TODO(),
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.PostWithNoRequestBody(
-		context.TODO(),
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.GetWithCustomHeader(
-		context.TODO(),
-		&acme.ReqWithHeaders{
-			XTestServiceHeader:  "X-TEST-SERVICE-HEADER",
-			XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-			Body:                "string",
+			ExtendedMovie: &acme.ExtendedMovie{
+				Cast: []string{
+					"cast",
+					"cast",
+				},
+			},
+			Entity: &acme.Entity{
+				Type: &acme.Type{
+					BasicType: acme.BasicTypePrimitive,
+				},
+				Name: "name",
+			},
+			Metadata: &acme.Metadata{},
+			CommonMetadata: &commons.Metadata{
+				ID: "id",
+				Data: map[string]string{
+					"data": "data",
+				},
+				JSONString: acme.String(
+					"jsonString",
+				),
+			},
+			EventInfo: &commons.EventInfo{
+				Metadata: &commons.Metadata{
+					ID: "id",
+					Data: map[string]string{
+						"data": "data",
+					},
+					JSONString: acme.String(
+						"jsonString",
+					),
+				},
+			},
+			Data: &commons.Data{},
+			Migration: &acme.Migration{
+				Name:   "name",
+				Status: acme.MigrationStatusRunning,
+			},
+			Exception: &acme.Exception{
+				Generic: &acme.ExceptionInfo{
+					ExceptionType:       "exceptionType",
+					ExceptionMessage:    "exceptionMessage",
+					ExceptionStacktrace: "exceptionStacktrace",
+				},
+			},
+			Test: &acme.Test{},
+			Node: &acme.Node{
+				Name: "name",
+				Nodes: []*acme.Node{
+					&acme.Node{
+						Name: "name",
+						Nodes: []*acme.Node{
+							&acme.Node{
+								Name:  "name",
+								Nodes: []*acme.Node{},
+								Trees: []*acme.Tree{},
+							},
+							&acme.Node{
+								Name:  "name",
+								Nodes: []*acme.Node{},
+								Trees: []*acme.Tree{},
+							},
+						},
+						Trees: []*acme.Tree{
+							&acme.Tree{
+								Nodes: []*acme.Node{},
+							},
+							&acme.Tree{
+								Nodes: []*acme.Node{},
+							},
+						},
+					},
+					&acme.Node{
+						Name: "name",
+						Nodes: []*acme.Node{
+							&acme.Node{
+								Name:  "name",
+								Nodes: []*acme.Node{},
+								Trees: []*acme.Tree{},
+							},
+							&acme.Node{
+								Name:  "name",
+								Nodes: []*acme.Node{},
+								Trees: []*acme.Tree{},
+							},
+						},
+						Trees: []*acme.Tree{
+							&acme.Tree{
+								Nodes: []*acme.Node{},
+							},
+							&acme.Tree{
+								Nodes: []*acme.Node{},
+							},
+						},
+					},
+				},
+				Trees: []*acme.Tree{
+					&acme.Tree{
+						Nodes: []*acme.Node{
+							&acme.Node{
+								Name:  "name",
+								Nodes: []*acme.Node{},
+								Trees: []*acme.Tree{},
+							},
+							&acme.Node{
+								Name:  "name",
+								Nodes: []*acme.Node{},
+								Trees: []*acme.Tree{},
+							},
+						},
+					},
+					&acme.Tree{
+						Nodes: []*acme.Node{
+							&acme.Node{
+								Name:  "name",
+								Nodes: []*acme.Node{},
+								Trees: []*acme.Tree{},
+							},
+							&acme.Node{
+								Name:  "name",
+								Nodes: []*acme.Node{},
+								Trees: []*acme.Tree{},
+							},
+						},
+					},
+				},
+			},
+			Directory: &acme.Directory{
+				Name: "name",
+				Files: []*acme.File{
+					&acme.File{
+						Name:     "name",
+						Contents: "contents",
+					},
+					&acme.File{
+						Name:     "name",
+						Contents: "contents",
+					},
+				},
+				Directories: []*acme.Directory{
+					&acme.Directory{
+						Name: "name",
+						Files: []*acme.File{
+							&acme.File{
+								Name:     "name",
+								Contents: "contents",
+							},
+							&acme.File{
+								Name:     "name",
+								Contents: "contents",
+							},
+						},
+						Directories: []*acme.Directory{
+							&acme.Directory{
+								Name:        "name",
+								Files:       []*acme.File{},
+								Directories: []*acme.Directory{},
+							},
+							&acme.Directory{
+								Name:        "name",
+								Files:       []*acme.File{},
+								Directories: []*acme.Directory{},
+							},
+						},
+					},
+					&acme.Directory{
+						Name: "name",
+						Files: []*acme.File{
+							&acme.File{
+								Name:     "name",
+								Contents: "contents",
+							},
+							&acme.File{
+								Name:     "name",
+								Contents: "contents",
+							},
+						},
+						Directories: []*acme.Directory{
+							&acme.Directory{
+								Name:        "name",
+								Files:       []*acme.File{},
+								Directories: []*acme.Directory{},
+							},
+							&acme.Directory{
+								Name:        "name",
+								Files:       []*acme.File{},
+								Directories: []*acme.Directory{},
+							},
+						},
+					},
+				},
+			},
+			Moment: &acme.Moment{
+				ID: uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+				Date: acme.MustParseDateTime(
+					"2023-01-15",
+				),
+				Datetime: acme.MustParseDateTime(
+					"2024-01-15T09:30:00Z",
+				),
+			},
 		},
 	)
 }
@@ -2270,7 +1566,27 @@ func do() {
 	client := client.NewClient()
 	client.Create(
 		context.TODO(),
-		&acme.CreateRequest{},
+		&acme.CreateRequest{
+			Username: acme.String(
+				"username",
+			),
+			Email: acme.String(
+				"email",
+			),
+			Age: acme.Int(
+				1,
+			),
+			Weight: acme.Float64(
+				1.1,
+			),
+			Metadata: &acme.Metadata{
+				StringMetadataValueMap: map[string]*acme.MetadataValue{
+					"metadata": &acme.MetadataValue{
+						Double: 1.1,
+					},
+				},
+			},
+		},
 	)
 }
 "
@@ -2324,12 +1640,103 @@ func do() {
 						1.1,
 						1.1,
 					},
+					Metadata: &acme.Metadata{
+						StringMetadataValueMap: map[string]*acme.MetadataValue{
+							"metadata": &acme.MetadataValue{
+								Double: 1.1,
+							},
+						},
+					},
+					IndexedData: &acme.IndexedData{
+						Indices: []int{
+							1,
+							1,
+						},
+						Values: []float64{
+							1.1,
+							1.1,
+						},
+					},
 				},
 				&acme.Column{
 					ID: "id",
 					Values: []float64{
 						1.1,
 						1.1,
+					},
+					Metadata: &acme.Metadata{
+						StringMetadataValueMap: map[string]*acme.MetadataValue{
+							"metadata": &acme.MetadataValue{
+								Double: 1.1,
+							},
+						},
+					},
+					IndexedData: &acme.IndexedData{
+						Indices: []int{
+							1,
+							1,
+						},
+						Values: []float64{
+							1.1,
+							1.1,
+						},
+					},
+				},
+			},
+			Namespace: acme.String(
+				"namespace",
+			),
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Delete(
+		context.TODO(),
+		&acme.DeleteRequest{},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Delete(
+		context.TODO(),
+		&acme.DeleteRequest{
+			IDs: []string{
+				"ids",
+				"ids",
+			},
+			DeleteAll: acme.Bool(
+				true,
+			),
+			Namespace: acme.String(
+				"namespace",
+			),
+			Filter: &acme.Metadata{
+				StringMetadataValueMap: map[string]*acme.MetadataValue{
+					"filter": &acme.MetadataValue{
+						Double: 1.1,
 					},
 				},
 			},
@@ -2349,42 +1756,6 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Delete(
-		context.TODO(),
-		&acme.DeleteRequest{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Delete(
-		context.TODO(),
-		&acme.DeleteRequest{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
 	client.Describe(
 		context.TODO(),
 		&acme.DescribeRequest{},
@@ -2405,7 +1776,15 @@ func do() {
 	client := client.NewClient()
 	client.Describe(
 		context.TODO(),
-		&acme.DescribeRequest{},
+		&acme.DescribeRequest{
+			Filter: &acme.Metadata{
+				StringMetadataValueMap: map[string]*acme.MetadataValue{
+					"filter": &acme.MetadataValue{
+						Double: 1.1,
+					},
+				},
+			},
+		},
 	)
 }
 
@@ -2441,7 +1820,16 @@ func do() {
 	client := client.NewClient()
 	client.Fetch(
 		context.TODO(),
-		&acme.FetchRequest{},
+		&acme.FetchRequest{
+			IDs: []*string{
+				acme.String(
+					"ids",
+				),
+			},
+			Namespace: acme.String(
+				"namespace",
+			),
+		},
 	)
 }
 
@@ -2477,7 +1865,20 @@ func do() {
 	client := client.NewClient()
 	client.List(
 		context.TODO(),
-		&acme.ListRequest{},
+		&acme.ListRequest{
+			Prefix: acme.String(
+				"prefix",
+			),
+			Limit: acme.Int(
+				1,
+			),
+			PaginationToken: acme.String(
+				"paginationToken",
+			),
+			Namespace: acme.String(
+				"namespace",
+			),
+		},
 	)
 }
 
@@ -2516,7 +1917,100 @@ func do() {
 	client.Query(
 		context.TODO(),
 		&acme.QueryRequest{
+			Namespace: acme.String(
+				"namespace",
+			),
 			TopK: 1,
+			Filter: &acme.Metadata{
+				StringMetadataValueMap: map[string]*acme.MetadataValue{
+					"filter": &acme.MetadataValue{
+						Double: 1.1,
+					},
+				},
+			},
+			IncludeValues: acme.Bool(
+				true,
+			),
+			IncludeMetadata: acme.Bool(
+				true,
+			),
+			Queries: []*acme.QueryColumn{
+				&acme.QueryColumn{
+					Values: []float64{
+						1.1,
+						1.1,
+					},
+					TopK: acme.Int(
+						1,
+					),
+					Namespace: acme.String(
+						"namespace",
+					),
+					Filter: &acme.Metadata{
+						StringMetadataValueMap: map[string]*acme.MetadataValue{
+							"filter": &acme.MetadataValue{
+								Double: 1.1,
+							},
+						},
+					},
+					IndexedData: &acme.IndexedData{
+						Indices: []int{
+							1,
+							1,
+						},
+						Values: []float64{
+							1.1,
+							1.1,
+						},
+					},
+				},
+				&acme.QueryColumn{
+					Values: []float64{
+						1.1,
+						1.1,
+					},
+					TopK: acme.Int(
+						1,
+					),
+					Namespace: acme.String(
+						"namespace",
+					),
+					Filter: &acme.Metadata{
+						StringMetadataValueMap: map[string]*acme.MetadataValue{
+							"filter": &acme.MetadataValue{
+								Double: 1.1,
+							},
+						},
+					},
+					IndexedData: &acme.IndexedData{
+						Indices: []int{
+							1,
+							1,
+						},
+						Values: []float64{
+							1.1,
+							1.1,
+						},
+					},
+				},
+			},
+			Column: []float64{
+				1.1,
+				1.1,
+			},
+			ID: acme.String(
+				"id",
+			),
+			IndexedData: &acme.IndexedData{
+				Indices: []int{
+					1,
+					1,
+				},
+				Values: []float64{
+					1.1,
+					1.1,
+				},
+			},
 		},
 	)
 }
@@ -2557,6 +2051,30 @@ func do() {
 		context.TODO(),
 		&acme.UpdateRequest{
 			ID: "id",
+			Values: []float64{
+				1.1,
+				1.1,
+			},
+			SetMetadata: &acme.Metadata{
+				StringMetadataValueMap: map[string]*acme.MetadataValue{
+					"setMetadata": &acme.MetadataValue{
+						Double: 1.1,
+					},
+				},
+			},
+			Namespace: acme.String(
+				"namespace",
+			),
+			IndexedData: &acme.IndexedData{
+				Indices: []int{
+					1,
+					1,
+				},
+				Values: []float64{
+					1.1,
+					1.1,
+				},
+			},
 		},
 	)
 }
@@ -2742,6 +2260,9 @@ func do() {
 		context.TODO(),
 		&acme.SendLiteralsInlinedRequest{
 			Query: "query",
+			Temperature: acme.Float64(
+				1.1,
+			),
 			ObjectWithLiteral: &acme.ATopLevelLiteral{
 				NestedLiteral: &acme.ANestedLiteral{},
 			},
@@ -2994,7 +2515,11 @@ func do() {
 	client := client.NewClient()
 	client.List(
 		context.TODO(),
-		&acme.ListUsersRequest{},
+		&acme.ListUsersRequest{
+			Limit: acme.Int(
+				1,
+			),
+		},
 	)
 }
 
@@ -3004,6 +2529,7 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	user "github.com/acme/acme-go/user"
 )
@@ -3012,7 +2538,11 @@ func do() {
 	client := client.NewClient()
 	client.User.ListEvents(
 		context.TODO(),
-		&user.ListUserEventsRequest{},
+		&user.ListUserEventsRequest{
+			Limit: acme.Int(
+				1,
+			),
+		},
 	)
 }
 
@@ -3070,6 +2600,9 @@ func do() {
 		context.TODO(),
 		&acme.CreateUserRequest{
 			Name: "name",
+			Age: acme.Int(
+				1,
+			),
 		},
 	)
 }
@@ -3216,6 +2749,9 @@ func do() {
 		&acme.GetTokenRequest{
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
+			Scope: acme.String(
+				"scope",
+			),
 		},
 	)
 }
@@ -3238,6 +2774,9 @@ func do() {
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
 			RefreshToken: "refresh_token",
+			Scope: acme.String(
+				"scope",
+			),
 		},
 	)
 }
@@ -3282,6 +2821,9 @@ func do() {
 		&acme.GetTokenRequest{
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
+			Scope: acme.String(
+				"scope",
+			),
 		},
 	)
 }
@@ -3304,6 +2846,9 @@ func do() {
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
 			RefreshToken: "refresh_token",
+			Scope: acme.String(
+				"scope",
+			),
 		},
 	)
 }
@@ -3315,6 +2860,7 @@ exports[`test definitions > oauth-client-credentials-nested-root 1`] = `
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
 	auth "github.com/acme/acme-go/auth"
 	client "github.com/acme/acme-go/client"
 )
@@ -3326,6 +2872,9 @@ func do() {
 		&auth.GetTokenRequest{
 			ClientID:     "client_id",
 			ClientSecret: "client_secret",
+			Scope: acme.String(
+				"scope",
+			),
 		},
 	)
 }
@@ -3348,6 +2897,11 @@ func do() {
 	client := client.NewClient()
 	client.SendOptionalBody(
 		context.TODO(),
+		map[string]interface{}{
+			"string": map[string]interface{}{
+				"key": "value",
+			},
+		},
 	)
 }
 "
@@ -3452,7 +3006,18 @@ func do() {
 	)
 	client.ListWithCursorPagination(
 		context.TODO(),
-		&acme.ListUsersCursorPaginationRequest{},
+		&acme.ListUsersCursorPaginationRequest{
+			Page: acme.Int(
+				1,
+			),
+			PerPage: acme.Int(
+				1,
+			),
+			Order: acme.OrderAsc.Ptr(),
+			StartingAfter: acme.String(
+				"starting_after",
+			),
+		},
 	)
 }
 
@@ -3475,7 +3040,13 @@ func do() {
 	)
 	client.ListWithBodyCursorPagination(
 		context.TODO(),
-		&acme.ListUsersBodyCursorPaginationRequest{},
+		&acme.ListUsersBodyCursorPaginationRequest{
+			Pagination: &acme.WithCursor{
+				Cursor: acme.String(
+					"cursor",
+				),
+			},
+		},
 	)
 }
 
@@ -3498,7 +3069,18 @@ func do() {
 	)
 	client.ListWithCursorPagination(
 		context.TODO(),
-		&acme.ListUsersCursorPaginationRequest{},
+		&acme.ListUsersCursorPaginationRequest{
+			Page: acme.Int(
+				1,
+			),
+			PerPage: acme.Int(
+				1,
+			),
+			Order: acme.OrderAsc.Ptr(),
+			StartingAfter: acme.String(
+				"starting_after",
+			),
+		},
 	)
 }
 
@@ -3519,9 +3101,137 @@ func do() {
 			"<token>",
 		),
 	)
-	client.ListWithBodyCursorPagination(
+	client.ListWithBodyOffsetPagination(
 		context.TODO(),
-		&acme.ListUsersBodyCursorPaginationRequest{},
+		&acme.ListUsersBodyOffsetPaginationRequest{
+			Pagination: &acme.WithPage{
+				Page: acme.Int(
+					1,
+				),
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithOffsetStepPagination(
+		context.TODO(),
+		&acme.ListUsersOffsetStepPaginationRequest{
+			Page: acme.Int(
+				1,
+			),
+			Limit: acme.Int(
+				1,
+			),
+			Order: acme.OrderAsc.Ptr(),
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithOffsetStepPagination(
+		context.TODO(),
+		&acme.ListUsersOffsetStepPaginationRequest{
+			Page: acme.Int(
+				1,
+			),
+			Limit: acme.Int(
+				1,
+			),
+			Order: acme.OrderAsc.Ptr(),
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithExtendedResults(
+		context.TODO(),
+		&acme.ListUsersExtendedRequest{
+			Cursor: acme.UUID(
+				uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+			),
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.ListWithExtendedResults(
+		context.TODO(),
+		&acme.ListUsersExtendedRequest{
+			Cursor: acme.UUID(
+				uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+			),
+		},
 	)
 }
 
@@ -3544,7 +3254,11 @@ func do() {
 	)
 	client.ListWithCursorPagination(
 		context.TODO(),
-		&acme.ListUsersCursorPaginationRequest{},
+		&acme.ListUsersCursorPaginationRequest{
+			StartingAfter: acme.String(
+				"starting_after",
+			),
+		},
 	)
 }
 
@@ -3565,101 +3279,13 @@ func do() {
 			"<token>",
 		),
 	)
-	client.ListWithCursorPagination(
+	client.ListWithGlobalConfig(
 		context.TODO(),
-		&acme.ListUsersCursorPaginationRequest{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.ListWithCursorPagination(
-		context.TODO(),
-		&acme.ListUsersCursorPaginationRequest{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.ListWithCursorPagination(
-		context.TODO(),
-		&acme.ListUsersCursorPaginationRequest{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.ListWithCursorPagination(
-		context.TODO(),
-		&acme.ListUsersCursorPaginationRequest{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<token>",
-		),
-	)
-	client.ListWithCursorPagination(
-		context.TODO(),
-		&acme.ListUsersCursorPaginationRequest{},
+		&acme.ListWithGlobalConfigRequest{
+			Offset: acme.Int(
+				1,
+			),
+		},
 	)
 }
 "
@@ -4140,19 +3766,67 @@ func do() {
 					SubmissionID: uuid.MustParse(
 						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 					),
-					LineNumber: 1,
+					LineNumber:  1,
+					ReturnValue: &acme.DebugVariableValue{},
+					ExpressionLocation: &acme.ExpressionLocation{
+						Start:  1,
+						Offset: 1,
+					},
 					Stack: &acme.StackInformation{
 						NumStackFrames: 1,
+						TopStackFrame: &acme.StackFrame{
+							MethodName: "methodName",
+							LineNumber: 1,
+							Scopes: []*acme.Scope{
+								&acme.Scope{
+									Variables: map[string]*acme.DebugVariableValue{
+										"variables": &acme.DebugVariableValue{},
+									},
+								},
+								&acme.Scope{
+									Variables: map[string]*acme.DebugVariableValue{
+										"variables": &acme.DebugVariableValue{},
+									},
+								},
+							},
+						},
 					},
+					Stdout: acme.String(
+						"stdout",
+					),
 				},
 				&acme.TraceResponse{
 					SubmissionID: uuid.MustParse(
 						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 					),
-					LineNumber: 1,
+					LineNumber:  1,
+					ReturnValue: &acme.DebugVariableValue{},
+					ExpressionLocation: &acme.ExpressionLocation{
+						Start:  1,
+						Offset: 1,
+					},
 					Stack: &acme.StackInformation{
 						NumStackFrames: 1,
+						TopStackFrame: &acme.StackFrame{
+							MethodName: "methodName",
+							LineNumber: 1,
+							Scopes: []*acme.Scope{
+								&acme.Scope{
+									Variables: map[string]*acme.DebugVariableValue{
+										"variables": &acme.DebugVariableValue{},
+									},
+								},
+								&acme.Scope{
+									Variables: map[string]*acme.DebugVariableValue{
+										"variables": &acme.DebugVariableValue{},
+									},
+								},
+							},
+						},
 					},
+					Stdout: acme.String(
+						"stdout",
+					),
 				},
 			},
 		},
@@ -4193,9 +3867,33 @@ func do() {
 					Filename:  "filename",
 					Directory: "directory",
 				},
+				ReturnValue: &acme.DebugVariableValue{},
+				ExpressionLocation: &acme.ExpressionLocation{
+					Start:  1,
+					Offset: 1,
+				},
 				Stack: &acme.StackInformation{
 					NumStackFrames: 1,
+					TopStackFrame: &acme.StackFrame{
+						MethodName: "methodName",
+						LineNumber: 1,
+						Scopes: []*acme.Scope{
+							&acme.Scope{
+								Variables: map[string]*acme.DebugVariableValue{
+									"variables": &acme.DebugVariableValue{},
+								},
+							},
+							&acme.Scope{
+								Variables: map[string]*acme.DebugVariableValue{
+									"variables": &acme.DebugVariableValue{},
+								},
+							},
+						},
+					},
 				},
+				Stdout: acme.String(
+					"stdout",
+				),
 			},
 			&acme.TraceResponseV2{
 				SubmissionID: uuid.MustParse(
@@ -4206,9 +3904,33 @@ func do() {
 					Filename:  "filename",
 					Directory: "directory",
 				},
+				ReturnValue: &acme.DebugVariableValue{},
+				ExpressionLocation: &acme.ExpressionLocation{
+					Start:  1,
+					Offset: 1,
+				},
 				Stack: &acme.StackInformation{
 					NumStackFrames: 1,
+					TopStackFrame: &acme.StackFrame{
+						MethodName: "methodName",
+						LineNumber: 1,
+						Scopes: []*acme.Scope{
+							&acme.Scope{
+								Variables: map[string]*acme.DebugVariableValue{
+									"variables": &acme.DebugVariableValue{},
+								},
+							},
+							&acme.Scope{
+								Variables: map[string]*acme.DebugVariableValue{
+									"variables": &acme.DebugVariableValue{},
+								},
+							},
+						},
+					},
 				},
+				Stdout: acme.String(
+					"stdout",
+				),
 			},
 		},
 	)
@@ -4239,6 +3961,18 @@ func do() {
 		),
 		&acme.StoreTracedWorkspaceRequest{
 			WorkspaceRunDetails: &acme.WorkspaceRunDetails{
+				ExceptionV2: &acme.ExceptionV2{
+					Generic: &acme.ExceptionInfo{
+						ExceptionType:       "exceptionType",
+						ExceptionMessage:    "exceptionMessage",
+						ExceptionStacktrace: "exceptionStacktrace",
+					},
+				},
+				Exception: &acme.ExceptionInfo{
+					ExceptionType:       "exceptionType",
+					ExceptionMessage:    "exceptionMessage",
+					ExceptionStacktrace: "exceptionStacktrace",
+				},
 				Stdout: "stdout",
 			},
 			TraceResponses: []*acme.TraceResponse{
@@ -4246,19 +3980,67 @@ func do() {
 					SubmissionID: uuid.MustParse(
 						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 					),
-					LineNumber: 1,
+					LineNumber:  1,
+					ReturnValue: &acme.DebugVariableValue{},
+					ExpressionLocation: &acme.ExpressionLocation{
+						Start:  1,
+						Offset: 1,
+					},
 					Stack: &acme.StackInformation{
 						NumStackFrames: 1,
+						TopStackFrame: &acme.StackFrame{
+							MethodName: "methodName",
+							LineNumber: 1,
+							Scopes: []*acme.Scope{
+								&acme.Scope{
+									Variables: map[string]*acme.DebugVariableValue{
+										"variables": &acme.DebugVariableValue{},
+									},
+								},
+								&acme.Scope{
+									Variables: map[string]*acme.DebugVariableValue{
+										"variables": &acme.DebugVariableValue{},
+									},
+								},
+							},
+						},
 					},
+					Stdout: acme.String(
+						"stdout",
+					),
 				},
 				&acme.TraceResponse{
 					SubmissionID: uuid.MustParse(
 						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 					),
-					LineNumber: 1,
+					LineNumber:  1,
+					ReturnValue: &acme.DebugVariableValue{},
+					ExpressionLocation: &acme.ExpressionLocation{
+						Start:  1,
+						Offset: 1,
+					},
 					Stack: &acme.StackInformation{
 						NumStackFrames: 1,
+						TopStackFrame: &acme.StackFrame{
+							MethodName: "methodName",
+							LineNumber: 1,
+							Scopes: []*acme.Scope{
+								&acme.Scope{
+									Variables: map[string]*acme.DebugVariableValue{
+										"variables": &acme.DebugVariableValue{},
+									},
+								},
+								&acme.Scope{
+									Variables: map[string]*acme.DebugVariableValue{
+										"variables": &acme.DebugVariableValue{},
+									},
+								},
+							},
+						},
 					},
+					Stdout: acme.String(
+						"stdout",
+					),
 				},
 			},
 		},
@@ -4298,9 +4080,33 @@ func do() {
 					Filename:  "filename",
 					Directory: "directory",
 				},
+				ReturnValue: &acme.DebugVariableValue{},
+				ExpressionLocation: &acme.ExpressionLocation{
+					Start:  1,
+					Offset: 1,
+				},
 				Stack: &acme.StackInformation{
 					NumStackFrames: 1,
+					TopStackFrame: &acme.StackFrame{
+						MethodName: "methodName",
+						LineNumber: 1,
+						Scopes: []*acme.Scope{
+							&acme.Scope{
+								Variables: map[string]*acme.DebugVariableValue{
+									"variables": &acme.DebugVariableValue{},
+								},
+							},
+							&acme.Scope{
+								Variables: map[string]*acme.DebugVariableValue{
+									"variables": &acme.DebugVariableValue{},
+								},
+							},
+						},
+					},
 				},
+				Stdout: acme.String(
+					"stdout",
+				),
 			},
 			&acme.TraceResponseV2{
 				SubmissionID: uuid.MustParse(
@@ -4311,9 +4117,33 @@ func do() {
 					Filename:  "filename",
 					Directory: "directory",
 				},
+				ReturnValue: &acme.DebugVariableValue{},
+				ExpressionLocation: &acme.ExpressionLocation{
+					Start:  1,
+					Offset: 1,
+				},
 				Stack: &acme.StackInformation{
 					NumStackFrames: 1,
+					TopStackFrame: &acme.StackFrame{
+						MethodName: "methodName",
+						LineNumber: 1,
+						Scopes: []*acme.Scope{
+							&acme.Scope{
+								Variables: map[string]*acme.DebugVariableValue{
+									"variables": &acme.DebugVariableValue{},
+								},
+							},
+							&acme.Scope{
+								Variables: map[string]*acme.DebugVariableValue{
+									"variables": &acme.DebugVariableValue{},
+								},
+							},
+						},
+					},
 				},
+				Stdout: acme.String(
+					"stdout",
+				),
 			},
 		},
 	)
@@ -4415,6 +4245,11 @@ func do() {
 			Datetime: acme.MustParseDateTime(
 				"2024-01-15T09:30:00Z",
 			),
+			OptionalDatetime: acme.Time(
+				acme.MustParseDateTime(
+					"2024-01-15T09:30:00Z",
+				),
+			),
 			Body: &acme.PlaylistCreateRequest{
 				Name: "name",
 				Problems: []acme.ProblemID{
@@ -4447,8 +4282,16 @@ func do() {
 		context.TODO(),
 		1,
 		&acme.GetPlaylistsRequest{
+			Limit: acme.Int(
+				1,
+			),
 			OtherField:    "otherField",
 			MultiLineDocs: "multiLineDocs",
+			OptionalMultipleField: []*string{
+				acme.String(
+					"optionalMultipleField",
+				),
+			},
 			MultipleField: []string{
 				"multipleField",
 			},
@@ -4485,6 +4328,7 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
 )
@@ -4499,6 +4343,13 @@ func do() {
 		context.TODO(),
 		1,
 		"playlistId",
+		&acme.UpdatePlaylistRequest{
+			Name: "name",
+			Problems: []acme.ProblemID{
+				"problems",
+				"problems",
+			},
+		},
 	)
 }
 
