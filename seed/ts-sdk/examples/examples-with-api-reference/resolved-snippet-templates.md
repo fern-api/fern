@@ -31,6 +31,18 @@ const client = new SeedExamplesClient({
   environment: SeedExamplesEnvironment.Production,
   token: "YOUR_TOKEN",
 });
+undefined;
+ 
+```                        
+
+
+```typescript
+import { SeedExamplesClient } from "@fern/examples";
+
+const client = new SeedExamplesClient({
+  environment: SeedExamplesEnvironment.Production,
+  token: "YOUR_TOKEN",
+});
 await client.file.notification.service.getException("notification-hsy129x");
  
 ```                        
@@ -240,19 +252,7 @@ const client = new SeedExamplesClient({
   environment: SeedExamplesEnvironment.Production,
   token: "YOUR_TOKEN",
 });
-await client.service.getResponse();
- 
-```                        
-
-
-```typescript
-import { SeedExamplesClient } from "@fern/examples";
-
-const client = new SeedExamplesClient({
-  environment: SeedExamplesEnvironment.Production,
-  token: "YOUR_TOKEN",
-});
-await client.service.getResponse();
+undefined;
  
 ```                        
 

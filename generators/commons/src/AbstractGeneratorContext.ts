@@ -33,6 +33,11 @@ export abstract class AbstractGeneratorContext {
             }
         });
 
-        this.version = getSdkVersion(config);
+        this.version = config?.output?.mode?._visit({
+            downloadFiles: () => undefined,
+            github: (github) => github.version,
+            publish: (publish) => publish.version,
+            _other: () => undefined
+        });
     }
 }

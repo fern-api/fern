@@ -254,14 +254,32 @@ export class Service {
     }
 
     /**
+     * @param {SeedExamples.BigEntity} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getResponse()
+     *     await client.service.createBigEntity({
+     *         castMember: undefined,
+     *         extendedMovie: undefined,
+     *         entity: undefined,
+     *         metadata: undefined,
+     *         commonMetadata: undefined,
+     *         eventInfo: undefined,
+     *         data: undefined,
+     *         migration: undefined,
+     *         exception: undefined,
+     *         test: undefined,
+     *         node: undefined,
+     *         directory: undefined,
+     *         moment: undefined
+     *     })
      */
-    public async getResponse(requestOptions?: Service.RequestOptions): Promise<SeedExamples.Response> {
+    public async createBigEntity(
+        request: SeedExamples.BigEntity,
+        requestOptions?: Service.RequestOptions
+    ): Promise<SeedExamples.Response> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/response"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/big-entity"),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -274,6 +292,7 @@ export class Service {
             },
             contentType: "application/json",
             requestType: "json",
+            body: serializers.BigEntity.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

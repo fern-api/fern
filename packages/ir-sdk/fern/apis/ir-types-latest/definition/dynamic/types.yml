@@ -74,7 +74,7 @@ types:
       properties:
         docs: |
           Any properties included here are the base and/or extended properties from the union.
-        type: optional<list<NamedParameter>>
+        type: list<NamedParameter>
 
   SingleDiscriminatedUnionTypeSingleProperty:
     properties:

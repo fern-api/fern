@@ -237,6 +237,59 @@ func (a *Actress) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+type BigEntity struct {
+	CastMember     *CastMember        `json:"castMember,omitempty" url:"castMember,omitempty"`
+	ExtendedMovie  *ExtendedMovie     `json:"extendedMovie,omitempty" url:"extendedMovie,omitempty"`
+	Entity         *Entity            `json:"entity,omitempty" url:"entity,omitempty"`
+	Metadata       *Metadata          `json:"metadata,omitempty" url:"metadata,omitempty"`
+	CommonMetadata *commons.Metadata  `json:"commonMetadata,omitempty" url:"commonMetadata,omitempty"`
+	EventInfo      *commons.EventInfo `json:"eventInfo,omitempty" url:"eventInfo,omitempty"`
+	Data           *commons.Data      `json:"data,omitempty" url:"data,omitempty"`
+	Migration      *Migration         `json:"migration,omitempty" url:"migration,omitempty"`
+	Exception      *Exception         `json:"exception,omitempty" url:"exception,omitempty"`
+	Test           *Test              `json:"test,omitempty" url:"test,omitempty"`
+	Node           *Node              `json:"node,omitempty" url:"node,omitempty"`
+	Directory      *Directory         `json:"directory,omitempty" url:"directory,omitempty"`
+	Moment         *Moment            `json:"moment,omitempty" url:"moment,omitempty"`
+
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (b *BigEntity) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *BigEntity) UnmarshalJSON(data []byte) error {
+	type unmarshaler BigEntity
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BigEntity(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
+	b._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BigEntity) String() string {
+	if len(b._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(b._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
 type CastMember struct {
 	Actor       *Actor
 	Actress     *Actress

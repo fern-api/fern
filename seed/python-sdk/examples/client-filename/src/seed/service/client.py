@@ -10,8 +10,21 @@ from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..commons.types.types.tag import Tag
-from ..types.types.metadata import Metadata
+from ..types.types.metadata import Metadata as types_types_metadata_Metadata
+from ..types.types.cast_member import CastMember
+from ..types.types.extended_movie import ExtendedMovie
+from ..types.types.entity import Entity
+from ..commons.types.types.metadata import Metadata as commons_types_types_metadata_Metadata
+from ..commons.types.types.event_info import EventInfo
+from ..commons.types.types.data import Data
+from ..types.types.migration import Migration
+from ..types.types.exception import Exception
+from ..types.types.test import Test
+from ..types.types.node import Node
+from ..types.types.directory import Directory
+from ..types.types.moment import Moment
 from ..types.types.response import Response
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -173,7 +186,7 @@ class ServiceClient:
         shallow: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Metadata:
+    ) -> types_types_metadata_Metadata:
         """
         Parameters
         ----------
@@ -188,7 +201,7 @@ class ServiceClient:
 
         Returns
         -------
-        Metadata
+        types_types_metadata_Metadata
 
         Examples
         --------
@@ -220,9 +233,9 @@ class ServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Metadata,
+                    types_types_metadata_Metadata,
                     parse_obj_as(
-                        type_=Metadata,  # type: ignore
+                        type_=types_types_metadata_Metadata,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -231,10 +244,53 @@ class ServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_response(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
+    def create_big_entity(
+        self,
+        *,
+        cast_member: typing.Optional[CastMember] = OMIT,
+        extended_movie: typing.Optional[ExtendedMovie] = OMIT,
+        entity: typing.Optional[Entity] = OMIT,
+        metadata: typing.Optional[types_types_metadata_Metadata] = OMIT,
+        common_metadata: typing.Optional[commons_types_types_metadata_Metadata] = OMIT,
+        event_info: typing.Optional[EventInfo] = OMIT,
+        data: typing.Optional[Data] = OMIT,
+        migration: typing.Optional[Migration] = OMIT,
+        exception: typing.Optional[Exception] = OMIT,
+        test: typing.Optional[Test] = OMIT,
+        node: typing.Optional[Node] = OMIT,
+        directory: typing.Optional[Directory] = OMIT,
+        moment: typing.Optional[Moment] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Response:
         """
         Parameters
         ----------
+        cast_member : typing.Optional[CastMember]
+
+        extended_movie : typing.Optional[ExtendedMovie]
+
+        entity : typing.Optional[Entity]
+
+        metadata : typing.Optional[types_types_metadata_Metadata]
+
+        common_metadata : typing.Optional[commons_types_types_metadata_Metadata]
+
+        event_info : typing.Optional[EventInfo]
+
+        data : typing.Optional[Data]
+
+        migration : typing.Optional[Migration]
+
+        exception : typing.Optional[Exception]
+
+        test : typing.Optional[Test]
+
+        node : typing.Optional[Node]
+
+        directory : typing.Optional[Directory]
+
+        moment : typing.Optional[Moment]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -251,12 +307,44 @@ class ServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        client.service.get_response()
+        client.service.create_big_entity()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "response",
+            "big-entity",
             method="POST",
+            json={
+                "castMember": convert_and_respect_annotation_metadata(
+                    object_=cast_member, annotation=CastMember, direction="write"
+                ),
+                "extendedMovie": convert_and_respect_annotation_metadata(
+                    object_=extended_movie, annotation=ExtendedMovie, direction="write"
+                ),
+                "entity": convert_and_respect_annotation_metadata(object_=entity, annotation=Entity, direction="write"),
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=types_types_metadata_Metadata, direction="write"
+                ),
+                "commonMetadata": convert_and_respect_annotation_metadata(
+                    object_=common_metadata, annotation=commons_types_types_metadata_Metadata, direction="write"
+                ),
+                "eventInfo": convert_and_respect_annotation_metadata(
+                    object_=event_info, annotation=EventInfo, direction="write"
+                ),
+                "data": convert_and_respect_annotation_metadata(object_=data, annotation=Data, direction="write"),
+                "migration": convert_and_respect_annotation_metadata(
+                    object_=migration, annotation=Migration, direction="write"
+                ),
+                "exception": convert_and_respect_annotation_metadata(
+                    object_=exception, annotation=Exception, direction="write"
+                ),
+                "test": convert_and_respect_annotation_metadata(object_=test, annotation=Test, direction="write"),
+                "node": convert_and_respect_annotation_metadata(object_=node, annotation=Node, direction="write"),
+                "directory": convert_and_respect_annotation_metadata(
+                    object_=directory, annotation=Directory, direction="write"
+                ),
+                "moment": convert_and_respect_annotation_metadata(object_=moment, annotation=Moment, direction="write"),
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -444,7 +532,7 @@ class AsyncServiceClient:
         shallow: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Metadata:
+    ) -> types_types_metadata_Metadata:
         """
         Parameters
         ----------
@@ -459,7 +547,7 @@ class AsyncServiceClient:
 
         Returns
         -------
-        Metadata
+        types_types_metadata_Metadata
 
         Examples
         --------
@@ -499,9 +587,9 @@ class AsyncServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Metadata,
+                    types_types_metadata_Metadata,
                     parse_obj_as(
-                        type_=Metadata,  # type: ignore
+                        type_=types_types_metadata_Metadata,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -510,10 +598,53 @@ class AsyncServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_response(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
+    async def create_big_entity(
+        self,
+        *,
+        cast_member: typing.Optional[CastMember] = OMIT,
+        extended_movie: typing.Optional[ExtendedMovie] = OMIT,
+        entity: typing.Optional[Entity] = OMIT,
+        metadata: typing.Optional[types_types_metadata_Metadata] = OMIT,
+        common_metadata: typing.Optional[commons_types_types_metadata_Metadata] = OMIT,
+        event_info: typing.Optional[EventInfo] = OMIT,
+        data: typing.Optional[Data] = OMIT,
+        migration: typing.Optional[Migration] = OMIT,
+        exception: typing.Optional[Exception] = OMIT,
+        test: typing.Optional[Test] = OMIT,
+        node: typing.Optional[Node] = OMIT,
+        directory: typing.Optional[Directory] = OMIT,
+        moment: typing.Optional[Moment] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Response:
         """
         Parameters
         ----------
+        cast_member : typing.Optional[CastMember]
+
+        extended_movie : typing.Optional[ExtendedMovie]
+
+        entity : typing.Optional[Entity]
+
+        metadata : typing.Optional[types_types_metadata_Metadata]
+
+        common_metadata : typing.Optional[commons_types_types_metadata_Metadata]
+
+        event_info : typing.Optional[EventInfo]
+
+        data : typing.Optional[Data]
+
+        migration : typing.Optional[Migration]
+
+        exception : typing.Optional[Exception]
+
+        test : typing.Optional[Test]
+
+        node : typing.Optional[Node]
+
+        directory : typing.Optional[Directory]
+
+        moment : typing.Optional[Moment]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -535,15 +666,47 @@ class AsyncServiceClient:
 
 
         async def main() -> None:
-            await client.service.get_response()
+            await client.service.create_big_entity()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "response",
+            "big-entity",
             method="POST",
+            json={
+                "castMember": convert_and_respect_annotation_metadata(
+                    object_=cast_member, annotation=CastMember, direction="write"
+                ),
+                "extendedMovie": convert_and_respect_annotation_metadata(
+                    object_=extended_movie, annotation=ExtendedMovie, direction="write"
+                ),
+                "entity": convert_and_respect_annotation_metadata(object_=entity, annotation=Entity, direction="write"),
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=types_types_metadata_Metadata, direction="write"
+                ),
+                "commonMetadata": convert_and_respect_annotation_metadata(
+                    object_=common_metadata, annotation=commons_types_types_metadata_Metadata, direction="write"
+                ),
+                "eventInfo": convert_and_respect_annotation_metadata(
+                    object_=event_info, annotation=EventInfo, direction="write"
+                ),
+                "data": convert_and_respect_annotation_metadata(object_=data, annotation=Data, direction="write"),
+                "migration": convert_and_respect_annotation_metadata(
+                    object_=migration, annotation=Migration, direction="write"
+                ),
+                "exception": convert_and_respect_annotation_metadata(
+                    object_=exception, annotation=Exception, direction="write"
+                ),
+                "test": convert_and_respect_annotation_metadata(object_=test, annotation=Test, direction="write"),
+                "node": convert_and_respect_annotation_metadata(object_=node, annotation=Node, direction="write"),
+                "directory": convert_and_respect_annotation_metadata(
+                    object_=directory, annotation=Directory, direction="write"
+                ),
+                "moment": convert_and_respect_annotation_metadata(object_=moment, annotation=Moment, direction="write"),
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
