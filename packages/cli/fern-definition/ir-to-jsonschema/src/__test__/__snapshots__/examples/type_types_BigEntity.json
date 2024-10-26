@@ -1,0 +1,762 @@
+{
+  "type": "object",
+  "properties": {
+    "castMember": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.CastMember"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "extendedMovie": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.ExtendedMovie"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "entity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.Entity"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "metadata": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.Metadata"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "commonMetadata": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/commons.types.Metadata"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "eventInfo": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/commons.types.EventInfo"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "data": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/commons.types.Data"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "migration": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.Migration"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "exception": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.Exception"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "test": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.Test"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "node": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.Node"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "directory": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.Directory"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "moment": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.Moment"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "types.Actor": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "types.Actress": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "types.StuntDouble": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "actorOrActressId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "actorOrActressId"
+      ],
+      "additionalProperties": false
+    },
+    "types.CastMember": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/types.Actor"
+        },
+        {
+          "$ref": "#/definitions/types.Actress"
+        },
+        {
+          "$ref": "#/definitions/types.StuntDouble"
+        }
+      ]
+    },
+    "types.MovieId": {
+      "type": "string"
+    },
+    "commons.types.Tag": {
+      "type": "string"
+    },
+    "types.ExtendedMovie": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/types.MovieId"
+        },
+        "prequel": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.MovieId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "from": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "number"
+        },
+        "type": {
+          "const": "movie"
+        },
+        "tag": {
+          "$ref": "#/definitions/commons.types.Tag"
+        },
+        "book": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        "revenue": {
+          "type": "integer"
+        },
+        "cast": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "from",
+        "rating",
+        "type",
+        "tag",
+        "metadata",
+        "revenue",
+        "cast"
+      ],
+      "additionalProperties": false
+    },
+    "BasicType": {
+      "type": "string",
+      "enum": [
+        "primitive",
+        "literal"
+      ]
+    },
+    "ComplexType": {
+      "type": "string",
+      "enum": [
+        "object",
+        "union",
+        "unknown"
+      ]
+    },
+    "Type": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/BasicType"
+        },
+        {
+          "$ref": "#/definitions/ComplexType"
+        }
+      ]
+    },
+    "types.Entity": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/Type"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "types.Metadata": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "html",
+            "markdown"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "html"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "markdown"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "commons.types.Metadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jsonString": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "commons.types.EventInfo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "metadata",
+            "tag"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "metadata"
+            },
+            "id": {
+              "type": "string"
+            },
+            "data": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "jsonString": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "id"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "tag"
+            },
+            "value": {
+              "$ref": "#/definitions/commons.types.Tag"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "commons.types.Data": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "string",
+            "base64"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "base64"
+            },
+            "value": {
+              "type": "string",
+              "contentEncoding": "base64"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "types.MigrationStatus": {
+      "type": "string",
+      "enum": [
+        "RUNNING",
+        "FAILED",
+        "FINISHED"
+      ]
+    },
+    "types.Migration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/types.MigrationStatus"
+        }
+      },
+      "required": [
+        "name",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "types.Exception": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "generic",
+            "timeout"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "generic"
+            },
+            "exceptionType": {
+              "type": "string"
+            },
+            "exceptionMessage": {
+              "type": "string"
+            },
+            "exceptionStacktrace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionType",
+            "exceptionMessage",
+            "exceptionStacktrace"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "timeout"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "types.Test": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "and",
+            "or"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "and"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "or"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "types.Tree": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/types.Node"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "types.Node": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "nodes": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/types.Node"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "trees": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/types.Tree"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "types.File": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "contents"
+      ],
+      "additionalProperties": false
+    },
+    "types.Directory": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "files": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/types.File"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "directories": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/types.Directory"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "types.Moment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "datetime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "date",
+        "datetime"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
