@@ -11,6 +11,7 @@ import com.seed.examples.core.RequestOptions;
 import com.seed.examples.core.SeedExamplesApiException;
 import com.seed.examples.core.SeedExamplesException;
 import com.seed.examples.resources.service.requests.GetMetadataRequest;
+import com.seed.examples.resources.types.types.BigEntity;
 import com.seed.examples.resources.types.types.Metadata;
 import com.seed.examples.resources.types.types.Movie;
 import java.io.IOException;
@@ -145,18 +146,30 @@ public class ServiceClient {
         }
     }
 
-    public com.seed.examples.resources.types.types.Response getResponse() {
-        return getResponse(null);
+    public com.seed.examples.resources.types.types.Response createBigEntity() {
+        return createBigEntity(BigEntity.builder().build());
     }
 
-    public com.seed.examples.resources.types.types.Response getResponse(RequestOptions requestOptions) {
+    public com.seed.examples.resources.types.types.Response createBigEntity(BigEntity request) {
+        return createBigEntity(request, null);
+    }
+
+    public com.seed.examples.resources.types.types.Response createBigEntity(
+            BigEntity request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("response")
+                .addPathSegments("big-entity")
                 .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedExamplesException("Failed to serialize request", e);
+        }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", RequestBody.create("", null))
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();

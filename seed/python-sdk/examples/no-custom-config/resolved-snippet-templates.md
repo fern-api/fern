@@ -27,6 +27,16 @@ from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
+undefined
+ 
+```                        
+
+
+```python
+from seed import SeedExamples
+from seed.environment import SeedExamplesEnvironment
+
+client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.file.notification.service.get_exception(
 	
 )
@@ -228,21 +238,7 @@ from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
-client.service.get_response(
-	
-)
- 
-```                        
-
-
-```python
-from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
-
-client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
-client.service.get_response(
-	
-)
+undefined
  
 ```                        
 

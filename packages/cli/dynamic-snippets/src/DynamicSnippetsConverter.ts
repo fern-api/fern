@@ -11,6 +11,7 @@ import {
     FileProperty,
     FileUploadRequestProperty,
     HttpEndpoint,
+    HttpHeader,
     HttpRequestBody,
     IntermediateRepresentation,
     Literal,
@@ -21,6 +22,7 @@ import {
     ObjectTypeDeclaration,
     PathParameter,
     PrimitiveType,
+    QueryParameter,
     SdkRequestBodyType,
     SdkRequestWrapper,
     SingleUnionTypeProperties,
@@ -35,6 +37,7 @@ import urlJoin from "url-join";
 import { Version } from "./version";
 
 interface EndpointWithFilepath extends HttpEndpoint {
+    serviceHeaders: HttpHeader[];
     fernFilepath: FernFilepath;
 }
 
@@ -107,8 +110,10 @@ export class DynamicSnippetsConverter {
                     fernFilepath: endpoint.fernFilepath,
                     wrapper: endpoint.sdkRequest.shape,
                     pathParameters,
-                    queryParameters: this.convertWireValueParameters({ wireValueParameters: endpoint.queryParameters }),
-                    headers: this.convertWireValueParameters({ wireValueParameters: endpoint.headers }),
+                    queryParameters: this.convertQueryParameters({ queryParameters: endpoint.queryParameters }),
+                    headers: this.convertWireValueParameters({
+                        wireValueParameters: [...endpoint.serviceHeaders, ...endpoint.headers]
+                    }),
                     body: endpoint.requestBody
                 });
             default:
@@ -261,6 +266,28 @@ export class DynamicSnippetsConverter {
             },
             typeReference: this.convertTypeReference(parameter.valueType)
         }));
+    }
+
+    private convertQueryParameters({
+        queryParameters
+    }: {
+        queryParameters: QueryParameter[];
+    }): DynamicSnippets.NamedParameter[] {
+        const parameters: DynamicSnippets.NamedParameter[] = [];
+        for (const queryParameter of queryParameters) {
+            let typeReference = this.convertTypeReference(queryParameter.valueType);
+            if (queryParameter.allowMultiple) {
+                typeReference = DynamicSnippets.TypeReference.list(typeReference);
+            }
+            parameters.push({
+                name: {
+                    name: queryParameter.name.name,
+                    wireValue: queryParameter.name.wireValue
+                },
+                typeReference
+            });
+        }
+        return parameters;
     }
 
     private convertTypeReference(typeReference: TypeReference): DynamicSnippets.TypeReference {
@@ -438,11 +465,10 @@ export class DynamicSnippetsConverter {
         discriminantValue: NameAndWireValue;
         declaredTypeName: DeclaredTypeName;
     }): DynamicSnippets.SingleDiscriminatedUnionType {
-        const properties = [...inheritedProperties, ...this.resolveProperties([declaredTypeName])];
         return DynamicSnippets.SingleDiscriminatedUnionType.samePropertiesAsObject({
             typeId: declaredTypeName.typeId,
             discriminantValue,
-            properties: this.convertWireValueParameters({ wireValueParameters: properties })
+            properties: this.convertWireValueParameters({ wireValueParameters: inheritedProperties })
         });
     }
 
@@ -562,6 +588,7 @@ export class DynamicSnippetsConverter {
         return Object.values(this.ir.services).flatMap((service) =>
             service.endpoints.map((endpoint) => ({
                 ...endpoint,
+                serviceHeaders: service.headers,
                 fernFilepath: service.name.fernFilepath
             }))
         );

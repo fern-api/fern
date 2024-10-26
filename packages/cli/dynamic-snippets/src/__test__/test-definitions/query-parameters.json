@@ -774,8 +774,11 @@
                             "wireValue": "excludeUser"
                         },
                         "typeReference": {
-                            "_type": "named",
-                            "value": "type_user:User"
+                            "_type": "list",
+                            "value": {
+                                "_type": "named",
+                                "value": "type_user:User"
+                            }
                         }
                     },
                     {
@@ -802,8 +805,11 @@
                             "wireValue": "filter"
                         },
                         "typeReference": {
-                            "_type": "primitive",
-                            "value": "STRING"
+                            "_type": "list",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     }
                 ],

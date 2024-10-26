@@ -1106,8 +1106,11 @@
                             "wireValue": "operand"
                         },
                         "typeReference": {
-                            "_type": "named",
-                            "value": "type_:Operand"
+                            "_type": "list",
+                            "value": {
+                                "_type": "named",
+                                "value": "type_:Operand"
+                            }
                         }
                     },
                     {
@@ -1134,10 +1137,13 @@
                             "wireValue": "maybeOperand"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "_type": "list",
                             "value": {
-                                "_type": "named",
-                                "value": "type_:Operand"
+                                "_type": "optional",
+                                "value": {
+                                    "_type": "named",
+                                    "value": "type_:Operand"
+                                }
                             }
                         }
                     },
@@ -1165,8 +1171,11 @@
                             "wireValue": "operandOrColor"
                         },
                         "typeReference": {
-                            "_type": "named",
-                            "value": "type_:ColorOrOperand"
+                            "_type": "list",
+                            "value": {
+                                "_type": "named",
+                                "value": "type_:ColorOrOperand"
+                            }
                         }
                     },
                     {
@@ -1193,10 +1202,13 @@
                             "wireValue": "maybeOperandOrColor"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "_type": "list",
                             "value": {
-                                "_type": "named",
-                                "value": "type_:ColorOrOperand"
+                                "_type": "optional",
+                                "value": {
+                                    "_type": "named",
+                                    "value": "type_:ColorOrOperand"
+                                }
                             }
                         }
                     }

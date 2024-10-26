@@ -4,6 +4,7 @@ package client
 
 import (
 	context "context"
+	fern "github.com/examples/fern"
 	core "github.com/examples/fern/core"
 	fileclient "github.com/examples/fern/file/client"
 	healthclient "github.com/examples/fern/health/client"
@@ -73,6 +74,44 @@ func (c *Client) Echo(
 		},
 	); err != nil {
 		return "", err
+	}
+	return response, nil
+}
+
+func (c *Client) CreateType(
+	ctx context.Context,
+	request *fern.Type,
+	opts ...option.RequestOption,
+) (*fern.Identifier, error) {
+	options := core.NewRequestOptions(opts...)
+
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
+	endpointURL := baseURL
+
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+
+	var response *fern.Identifier
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	); err != nil {
+		return nil, err
 	}
 	return response, nil
 }

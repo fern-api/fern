@@ -4,6 +4,7 @@ from . import commons, file, types
 from .types import (
     Actor,
     Actress,
+    BigEntity,
     CastMember,
     Directory,
     Entity,
@@ -35,6 +36,7 @@ from .types import (
 __all__ = [
     "Actor",
     "Actress",
+    "BigEntity",
     "CastMember",
     "Directory",
     "Entity",

@@ -1,6 +1,6 @@
 # Reference
 
-<details><summary><code>client.<a href="/src/Client.ts">echo</a>({ ...params }) -> string</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">createType</a>({ ...params }) -> SeedExamples.Identifier</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
+await client.createType("primitive");
 ```
 
 </dd>
@@ -29,7 +29,7 @@ await client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
 <dl>
 <dd>
 
-**request:** `string`
+**request:** `SeedExamples.Type`
 
 </dd>
 </dl>
@@ -462,7 +462,7 @@ await client.service.getMetadata({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getResponse</a>() -> SeedExamples.Response</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">createBigEntity</a>({ ...params }) -> SeedExamples.Response</code></summary>
 <dl>
 <dd>
 
@@ -475,7 +475,21 @@ await client.service.getMetadata({
 <dd>
 
 ```typescript
-await client.service.getResponse();
+await client.service.createBigEntity({
+    castMember: undefined,
+    extendedMovie: undefined,
+    entity: undefined,
+    metadata: undefined,
+    commonMetadata: undefined,
+    eventInfo: undefined,
+    data: undefined,
+    migration: undefined,
+    exception: undefined,
+    test: undefined,
+    node: undefined,
+    directory: undefined,
+    moment: undefined,
+});
 ```
 
 </dd>
@@ -487,6 +501,14 @@ await client.service.getResponse();
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExamples.BigEntity`
+
+</dd>
+</dl>
 
 <dl>
 <dd>

@@ -21,7 +21,11 @@ ${this.buffer}`
                 : packageStatement + this.buffer;
 
         await init();
-        return format(content);
+        try {
+            return format(content);
+        } catch (error) {
+            throw new Error(`Failed to format Go file: ${error}\n${content}`);
+        }
     }
 
     private stringifyImports(): string {

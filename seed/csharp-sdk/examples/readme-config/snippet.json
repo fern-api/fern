@@ -16,6 +16,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.createType"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedExamples;\n\nvar client = new SeedExamplesClient(\"TOKEN\");\nawait client.CreateTypeAsync(BasicType.Primitive);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/file/notification/{notificationId}",
                 "method": "GET",
                 "identifier_override": "endpoint_file/notification/service.getException"
@@ -112,13 +124,13 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/response",
+                "path": "/big-entity",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getResponse"
+                "identifier_override": "endpoint_service.createBigEntity"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedExamples;\n\nvar client = new SeedExamplesClient(\"TOKEN\");\nawait client.Service.GetResponseAsync();\n"
+                "client": "using SeedExamples;\n\nvar client = new SeedExamplesClient(\"TOKEN\");\nawait client.Service.CreateBigEntityAsync(\n    new BigEntity\n    {\n        CastMember = null,\n        ExtendedMovie = null,\n        Entity = null,\n        Metadata = null,\n        CommonMetadata = null,\n        EventInfo = null,\n        Data = null,\n        Migration = null,\n        Exception = null,\n        Test = null,\n        Node = null,\n        Directory = null,\n        Moment = null,\n    }\n);\n"
             }
         }
     ]

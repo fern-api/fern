@@ -942,16 +942,16 @@
         },
         {
           "_type": "endpoint",
-          "name": "Get Response",
+          "name": "Create Big Entity",
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/response",
+              "raw": "{{baseUrl}}/big-entity",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "response"
+                "big-entity"
               ],
               "query": [],
               "variable": []
@@ -965,7 +965,15 @@
             ],
             "method": "POST",
             "auth": null,
-            "body": null
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           },
           "response": [
             {
@@ -975,12 +983,12 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/response",
+                  "raw": "{{baseUrl}}/big-entity",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "response"
+                    "big-entity"
                   ],
                   "query": [],
                   "variable": []
@@ -994,39 +1002,15 @@
                 ],
                 "method": "POST",
                 "auth": null,
-                "body": null
-              },
-              "description": null,
-              "body": "{\n    \"response\": \"Initializing...\",\n    \"identifiers\": [\n        {\n            \"type\": \"primitive\",\n            \"value\": \"example\",\n            \"label\": \"Primitive\"\n        },\n        {\n            \"type\": \"unknown\",\n            \"value\": \"{}\",\n            \"label\": \"Unknown\"\n        }\n    ]\n}",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "Success",
-              "status": "OK",
-              "code": 200,
-              "originalRequest": {
-                "description": null,
-                "url": {
-                  "raw": "{{baseUrl}}/response",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "response"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
                   }
-                ],
-                "method": "POST",
-                "auth": null,
-                "body": null
+                }
               },
               "description": null,
               "body": "{\n    \"response\": {\n        \"key\": \"value\"\n    },\n    \"identifiers\": [\n        {\n            \"type\": \"primitive\",\n            \"value\": \"value\",\n            \"label\": \"label\"\n        },\n        {\n            \"type\": \"primitive\",\n            \"value\": \"value\",\n            \"label\": \"label\"\n        }\n    ]\n}",
@@ -1144,6 +1128,80 @@
           },
           "description": null,
           "body": "\"string\"",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    },
+    {
+      "_type": "endpoint",
+      "name": "Create Type",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "\"primitive\"",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"primitive\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": null,
+          "body": "{\n    \"type\": \"primitive\",\n    \"value\": \"value\",\n    \"label\": \"label\"\n}",
           "_postman_previewlanguage": "json"
         }
       ]

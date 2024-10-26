@@ -13,6 +13,17 @@
         },
         {
             "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.createType"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesEnvironment, SeedExamplesClient, SeedExamples } from \"@fern/examples\";\n\nconst client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.createType(\"primitive\");\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/file/notification/{notificationId}",
                 "method": "GET",
                 "identifier_override": "endpoint_file/notification/service.getException"
@@ -104,13 +115,13 @@
         },
         {
             "id": {
-                "path": "/response",
+                "path": "/big-entity",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getResponse"
+                "identifier_override": "endpoint_service.createBigEntity"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExamplesEnvironment, SeedExamplesClient, SeedExamples } from \"@fern/examples\";\n\nconst client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.service.getResponse();\n"
+                "client": "import { SeedExamplesEnvironment, SeedExamplesClient, SeedExamples } from \"@fern/examples\";\n\nconst client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.service.createBigEntity({\n    castMember: undefined,\n    extendedMovie: undefined,\n    entity: undefined,\n    metadata: undefined,\n    commonMetadata: undefined,\n    eventInfo: undefined,\n    data: undefined,\n    migration: undefined,\n    exception: undefined,\n    test: undefined,\n    node: undefined,\n    directory: undefined,\n    moment: undefined\n});\n"
             }
         }
     ],

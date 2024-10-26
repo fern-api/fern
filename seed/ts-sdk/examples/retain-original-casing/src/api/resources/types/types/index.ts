@@ -20,3 +20,4 @@ export * from "./Response";
 export * from "./ResponseType";
 export * from "./Test";
 export * from "./Entity";
+export * from "./BigEntity";

@@ -2623,10 +2623,13 @@
                             "wireValue": "ids"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "_type": "list",
                             "value": {
-                                "_type": "primitive",
-                                "value": "STRING"
+                                "_type": "optional",
+                                "value": {
+                                    "_type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         }
                     },
