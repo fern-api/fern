@@ -113,7 +113,7 @@ export async function runPreviewServer({
     app.use(cors());
 
     const instance = new URL(
-        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `localhost:${port}`)
+        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `http://localhost:${port}`)
     );
 
     let project = initialProject;

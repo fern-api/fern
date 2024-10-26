@@ -118,6 +118,10 @@ export class ChangelogNodeConverter {
         };
     }
 
+    public orUndefined(): ChangelogNodeConverter | undefined {
+        return this.changelogFiles != null && this.changelogFiles.length > 0 ? this : undefined;
+    }
+
     private groupByYear(
         prefix: string,
         entries: FernNavigation.V1.ChangelogEntryNode[],
