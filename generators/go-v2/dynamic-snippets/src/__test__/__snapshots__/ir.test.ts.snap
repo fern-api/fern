@@ -1362,6 +1362,1304 @@ func do() {
 "
 `;
 
+exports[`test definitions > exhaustive 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnListOfPrimitives(
+		context.TODO(),
+		[]string{
+			"string",
+			"string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnListOfObjects(
+		context.TODO(),
+		[]*types.ObjectWithRequiredField{
+			&types.ObjectWithRequiredField{
+				String: "string",
+			},
+			&types.ObjectWithRequiredField{
+				String: "string",
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnSetOfPrimitives(
+		context.TODO(),
+		[]string{
+			"string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnSetOfObjects(
+		context.TODO(),
+		[]*types.ObjectWithRequiredField{
+			&types.ObjectWithRequiredField{
+				String: "string",
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnMapPrimToPrim(
+		context.TODO(),
+		map[string]string{
+			"string": "string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnMapOfPrimToObject(
+		context.TODO(),
+		map[string]*types.ObjectWithRequiredField{
+			"string": &types.ObjectWithRequiredField{
+				String: "string",
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnOptional(
+		context.TODO(),
+		&types.ObjectWithRequiredField{
+			String: "string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnEnum(
+		context.TODO(),
+		types.WeatherReportSunny,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.TestGet(
+		context.TODO(),
+		"id",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.TestPost(
+		context.TODO(),
+		&types.ObjectWithRequiredField{
+			String: "string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.TestPut(
+		context.TODO(),
+		"id",
+		&types.ObjectWithRequiredField{
+			String: "string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.TestPatch(
+		context.TODO(),
+		"id",
+		&types.ObjectWithOptionalField{
+			String: acme.String(
+				"string",
+			),
+			Integer: acme.Int(
+				1,
+			),
+			Long: acme.Int64(
+				1000000,
+			),
+			Double: acme.Float64(
+				1.1,
+			),
+			Bool: acme.Bool(
+				true,
+			),
+			Datetime: acme.Time(
+				acme.MustParseDateTime(
+					"2024-01-15T09:30:00Z",
+				),
+			),
+			Date: acme.Time(
+				acme.MustParseDateTime(
+					"2023-01-15",
+				),
+			),
+			UUID: acme.UUID(
+				uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+			),
+			Base64: []byte("SGVsbG8gd29ybGQh"),
+			List: []string{
+				"list",
+				"list",
+			},
+			Set: []string{
+				"set",
+			},
+			Map: map[int]string{
+				1: "map",
+			},
+			Bigint: acme.String(
+				"1000000",
+			),
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.TestDelete(
+		context.TODO(),
+		"id",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnWithOptionalField(
+		context.TODO(),
+		&types.ObjectWithOptionalField{
+			String: acme.String(
+				"string",
+			),
+			Integer: acme.Int(
+				1,
+			),
+			Long: acme.Int64(
+				1000000,
+			),
+			Double: acme.Float64(
+				1.1,
+			),
+			Bool: acme.Bool(
+				true,
+			),
+			Datetime: acme.Time(
+				acme.MustParseDateTime(
+					"2024-01-15T09:30:00Z",
+				),
+			),
+			Date: acme.Time(
+				acme.MustParseDateTime(
+					"2023-01-15",
+				),
+			),
+			UUID: acme.UUID(
+				uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+			),
+			Base64: []byte("SGVsbG8gd29ybGQh"),
+			List: []string{
+				"list",
+				"list",
+			},
+			Set: []string{
+				"set",
+			},
+			Map: map[int]string{
+				1: "map",
+			},
+			Bigint: acme.String(
+				"1000000",
+			),
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnWithRequiredField(
+		context.TODO(),
+		&types.ObjectWithRequiredField{
+			String: "string",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnWithMapOfMap(
+		context.TODO(),
+		&types.ObjectWithMapOfMap{
+			Map: map[string]map[string]string{
+				"map": map[string]string{
+					"map": "map",
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnNestedWithOptionalField(
+		context.TODO(),
+		&types.NestedObjectWithOptionalField{
+			String: acme.String(
+				"string",
+			),
+			NestedObject: &types.ObjectWithOptionalField{
+				String: acme.String(
+					"string",
+				),
+				Integer: acme.Int(
+					1,
+				),
+				Long: acme.Int64(
+					1000000,
+				),
+				Double: acme.Float64(
+					1.1,
+				),
+				Bool: acme.Bool(
+					true,
+				),
+				Datetime: acme.Time(
+					acme.MustParseDateTime(
+						"2024-01-15T09:30:00Z",
+					),
+				),
+				Date: acme.Time(
+					acme.MustParseDateTime(
+						"2023-01-15",
+					),
+				),
+				UUID: acme.UUID(
+					uuid.MustParse(
+						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+					),
+				),
+				Base64: []byte("SGVsbG8gd29ybGQh"),
+				List: []string{
+					"list",
+					"list",
+				},
+				Set: []string{
+					"set",
+				},
+				Map: map[int]string{
+					1: "map",
+				},
+				Bigint: acme.String(
+					"1000000",
+				),
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnNestedWithRequiredField(
+		context.TODO(),
+		"string",
+		&types.NestedObjectWithRequiredField{
+			String: "string",
+			NestedObject: &types.ObjectWithOptionalField{
+				String: acme.String(
+					"string",
+				),
+				Integer: acme.Int(
+					1,
+				),
+				Long: acme.Int64(
+					1000000,
+				),
+				Double: acme.Float64(
+					1.1,
+				),
+				Bool: acme.Bool(
+					true,
+				),
+				Datetime: acme.Time(
+					acme.MustParseDateTime(
+						"2024-01-15T09:30:00Z",
+					),
+				),
+				Date: acme.Time(
+					acme.MustParseDateTime(
+						"2023-01-15",
+					),
+				),
+				UUID: acme.UUID(
+					uuid.MustParse(
+						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+					),
+				),
+				Base64: []byte("SGVsbG8gd29ybGQh"),
+				List: []string{
+					"list",
+					"list",
+				},
+				Set: []string{
+					"set",
+				},
+				Map: map[int]string{
+					1: "map",
+				},
+				Bigint: acme.String(
+					"1000000",
+				),
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnNestedWithRequiredFieldAsList(
+		context.TODO(),
+		[]*types.NestedObjectWithRequiredField{
+			&types.NestedObjectWithRequiredField{
+				String: "string",
+				NestedObject: &types.ObjectWithOptionalField{
+					String: acme.String(
+						"string",
+					),
+					Integer: acme.Int(
+						1,
+					),
+					Long: acme.Int64(
+						1000000,
+					),
+					Double: acme.Float64(
+						1.1,
+					),
+					Bool: acme.Bool(
+						true,
+					),
+					Datetime: acme.Time(
+						acme.MustParseDateTime(
+							"2024-01-15T09:30:00Z",
+						),
+					),
+					Date: acme.Time(
+						acme.MustParseDateTime(
+							"2023-01-15",
+						),
+					),
+					UUID: acme.UUID(
+						uuid.MustParse(
+							"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+						),
+					),
+					Base64: []byte("SGVsbG8gd29ybGQh"),
+					List: []string{
+						"list",
+						"list",
+					},
+					Set: []string{
+						"set",
+					},
+					Map: map[int]string{
+						1: "map",
+					},
+					Bigint: acme.String(
+						"1000000",
+					),
+				},
+			},
+			&types.NestedObjectWithRequiredField{
+				String: "string",
+				NestedObject: &types.ObjectWithOptionalField{
+					String: acme.String(
+						"string",
+					),
+					Integer: acme.Int(
+						1,
+					),
+					Long: acme.Int64(
+						1000000,
+					),
+					Double: acme.Float64(
+						1.1,
+					),
+					Bool: acme.Bool(
+						true,
+					),
+					Datetime: acme.Time(
+						acme.MustParseDateTime(
+							"2024-01-15T09:30:00Z",
+						),
+					),
+					Date: acme.Time(
+						acme.MustParseDateTime(
+							"2023-01-15",
+						),
+					),
+					UUID: acme.UUID(
+						uuid.MustParse(
+							"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+						),
+					),
+					Base64: []byte("SGVsbG8gd29ybGQh"),
+					List: []string{
+						"list",
+						"list",
+					},
+					Set: []string{
+						"set",
+					},
+					Map: map[int]string{
+						1: "map",
+					},
+					Bigint: acme.String(
+						"1000000",
+					),
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetWithPath(
+		context.TODO(),
+		"param",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	endpoints "github.com/acme/acme-go/endpoints"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetWithQuery(
+		context.TODO(),
+		&endpoints.GetWithQuery{
+			Query:  "query",
+			Number: 1,
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	endpoints "github.com/acme/acme-go/endpoints"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetWithAllowMultipleQuery(
+		context.TODO(),
+		&endpoints.GetWithMultipleQuery{
+			Query: []string{
+				"query",
+			},
+			Numer: []int{
+				1,
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	endpoints "github.com/acme/acme-go/endpoints"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetWithPathAndQuery(
+		context.TODO(),
+		"param",
+		&endpoints.GetWithPathAndQuery{
+			Query: "query",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.ModifyWithPath(
+		context.TODO(),
+		"param",
+		"string",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnString(
+		context.TODO(),
+		"string",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnInt(
+		context.TODO(),
+		1,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnLong(
+		context.TODO(),
+		1000000,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnDouble(
+		context.TODO(),
+		1.1,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnBool(
+		context.TODO(),
+		true,
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnDatetime(
+		context.TODO(),
+		acme.MustParseDateTime(
+			"2024-01-15T09:30:00Z",
+		),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnDate(
+		context.TODO(),
+		acme.MustParseDateTime(
+			"2023-01-15",
+		),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnUUID(
+		context.TODO(),
+		uuid.MustParse(
+			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+		),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnBase64(
+		context.TODO(),
+		[]byte("SGVsbG8gd29ybGQh"),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.GetAndReturnUnion(
+		context.TODO(),
+		&types.Animal{
+			Dog: &types.Dog{
+				Name:        "name",
+				LikesToWoof: true,
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.PostWithObjectBodyandResponse(
+		context.TODO(),
+		&acme.PostWithObjectBody{
+			String:  "string",
+			Integer: 1,
+			NestedObject: &types.ObjectWithOptionalField{
+				String: acme.String(
+					"string",
+				),
+				Integer: acme.Int(
+					1,
+				),
+				Long: acme.Int64(
+					1000000,
+				),
+				Double: acme.Float64(
+					1.1,
+				),
+				Bool: acme.Bool(
+					true,
+				),
+				Datetime: acme.Time(
+					acme.MustParseDateTime(
+						"2024-01-15T09:30:00Z",
+					),
+				),
+				Date: acme.Time(
+					acme.MustParseDateTime(
+						"2023-01-15",
+					),
+				),
+				UUID: acme.UUID(
+					uuid.MustParse(
+						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+					),
+				),
+				Base64: []byte("SGVsbG8gd29ybGQh"),
+				List: []string{
+					"list",
+					"list",
+				},
+				Set: []string{
+					"set",
+				},
+				Map: map[int]string{
+					1: "map",
+				},
+				Bigint: acme.String(
+					"1000000",
+				),
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.PostWithNoAuth(
+		context.TODO(),
+		map[string]interface{}{
+			"key": "value",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetWithNoRequestBody(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.PostWithNoRequestBody(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.GetWithCustomHeader(
+		context.TODO(),
+		&acme.ReqWithHeaders{
+			XTestServiceHeader:  "X-TEST-SERVICE-HEADER",
+			XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+			Body:                "string",
+		},
+	)
+}
+"
+`;
+
 exports[`test definitions > extends 1`] = `
 "package example
 

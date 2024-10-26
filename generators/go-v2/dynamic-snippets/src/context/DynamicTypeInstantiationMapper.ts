@@ -8,7 +8,12 @@ export declare namespace DynamicTypeInstantiationMapper {
     interface Args {
         typeReference: DynamicSnippets.TypeReference;
         value: unknown;
+        as?: ConvertedAs;
     }
+
+    // Identifies what the type is being converted as, which sometimes influences how
+    // the type is instantiated.
+    type ConvertedAs = "key";
 }
 
 export class DynamicTypeInstantiationMapper {
@@ -31,14 +36,14 @@ export class DynamicTypeInstantiationMapper {
                 return this.convertMap({ map: args.typeReference, value: args.value });
             case "named": {
                 const named = this.context.resolveNamedTypeOrThrow({ typeId: args.typeReference.value });
-                return this.convertNamed({ named, value: args.value });
+                return this.convertNamed({ named, value: args.value, as: args.as });
             }
             case "optional":
                 return go.TypeInstantiation.optional(
-                    this.convert({ typeReference: args.typeReference.value, value: args.value })
+                    this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
                 );
             case "primitive":
-                return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value });
+                return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
                 return this.convertList({ list: args.typeReference.value, value: args.value });
             case "unknown":
@@ -72,16 +77,24 @@ export class DynamicTypeInstantiationMapper {
             keyType: this.context.dynamicTypeMapper.convert({ typeReference: map.key }),
             valueType: this.context.dynamicTypeMapper.convert({ typeReference: map.value }),
             entries: Object.entries(value).map(([key, value]) => ({
-                key: this.convert({ typeReference: map.key, value: key }),
+                key: this.convert({ typeReference: map.key, value: key, as: "key" }),
                 value: this.convert({ typeReference: map.value, value })
             }))
         });
     }
 
-    private convertNamed({ named, value }: { named: DynamicSnippets.NamedType; value: unknown }): go.TypeInstantiation {
+    private convertNamed({
+        named,
+        value,
+        as
+    }: {
+        named: DynamicSnippets.NamedType;
+        value: unknown;
+        as?: DynamicTypeInstantiationMapper.ConvertedAs;
+    }): go.TypeInstantiation {
         switch (named.type) {
             case "alias":
-                return this.convert({ typeReference: named.typeReference, value });
+                return this.convert({ typeReference: named.typeReference, value, as });
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
                     discriminatedUnion: named,
@@ -369,92 +382,83 @@ export class DynamicTypeInstantiationMapper {
 
     private convertPrimitive({
         primitive,
-        value
+        value,
+        as
     }: {
         primitive: PrimitiveTypeV1;
         value: unknown;
+        as?: DynamicTypeInstantiationMapper.ConvertedAs;
     }): go.TypeInstantiation {
         switch (primitive) {
             case "INTEGER":
-            case "UINT":
-                return this.convertPrimitiveAsType({
-                    type: "number",
-                    value,
-                    convert: (v) => go.TypeInstantiation.int(v)
-                });
+            case "UINT": {
+                return go.TypeInstantiation.int(this.getValueAsNumberOrThrow({ value, as }));
+            }
             case "LONG":
-            case "UINT_64":
-                return this.convertPrimitiveAsType({
-                    type: "number",
-                    value,
-                    convert: (v) => go.TypeInstantiation.int64(v)
-                });
+            case "UINT_64": {
+                return go.TypeInstantiation.int64(this.getValueAsNumberOrThrow({ value, as }));
+            }
             case "FLOAT":
-            case "DOUBLE":
-                return this.convertPrimitiveAsType({
-                    type: "number",
-                    value,
-                    convert: (v) => go.TypeInstantiation.float64(v)
-                });
-            case "BOOLEAN":
-                return this.convertPrimitiveAsType({
-                    type: "boolean",
-                    value,
-                    convert: (v) => go.TypeInstantiation.bool(v)
-                });
+            case "DOUBLE": {
+                return go.TypeInstantiation.float64(this.getValueAsNumberOrThrow({ value, as }));
+            }
+            case "BOOLEAN": {
+                return go.TypeInstantiation.bool(this.getValueAsBooleanOrThrow({ value, as }));
+            }
             case "STRING":
-                return this.convertPrimitiveAsType({
-                    type: "string",
-                    value,
-                    convert: (v) => go.TypeInstantiation.string(v)
-                });
+                return go.TypeInstantiation.string(this.getValueAsStringOrThrow({ value }));
             case "DATE":
-                return this.convertPrimitiveAsType({
-                    type: "string",
-                    value,
-                    convert: (v) => go.TypeInstantiation.date(v)
-                });
+                return go.TypeInstantiation.date(this.getValueAsStringOrThrow({ value }));
             case "DATE_TIME":
-                return this.convertPrimitiveAsType({
-                    type: "string",
-                    value,
-                    convert: (v) => go.TypeInstantiation.dateTime(v)
-                });
+                return go.TypeInstantiation.dateTime(this.getValueAsStringOrThrow({ value }));
             case "UUID":
-                return this.convertPrimitiveAsType({
-                    type: "string",
-                    value,
-                    convert: (v) => go.TypeInstantiation.uuid(v)
-                });
+                return go.TypeInstantiation.uuid(this.getValueAsStringOrThrow({ value }));
             case "BASE_64":
-                return this.convertPrimitiveAsType({
-                    type: "string",
-                    value,
-                    convert: (v) => go.TypeInstantiation.bytes(v)
-                });
+                return go.TypeInstantiation.bytes(this.getValueAsStringOrThrow({ value }));
             case "BIG_INTEGER":
-                return this.convertPrimitiveAsType({
-                    type: "string",
-                    value,
-                    convert: (v) => go.TypeInstantiation.string(v)
-                });
+                return go.TypeInstantiation.string(this.getValueAsStringOrThrow({ value }));
             default:
                 assertNever(primitive);
         }
     }
 
-    private convertPrimitiveAsType({
-        type,
+    private getValueAsNumberOrThrow({
         value,
-        convert
+        as
     }: {
-        type: "string" | "number" | "boolean";
         value: unknown;
-        convert: (value: any) => go.TypeInstantiation;
-    }): go.TypeInstantiation {
-        if (typeof value !== type) {
-            throw new Error(`Expected ${type} value, got: ${JSON.stringify(value)}`);
+        as?: DynamicTypeInstantiationMapper.ConvertedAs;
+    }): number {
+        const num = as === "key" ? (typeof value === "string" ? Number(value) : value) : value;
+        if (typeof num !== "number") {
+            throw this.newTypeMismatchError({ expected: "number", value });
         }
-        return convert(value);
+        return num;
+    }
+
+    private getValueAsBooleanOrThrow({
+        value,
+        as
+    }: {
+        value: unknown;
+        as?: DynamicTypeInstantiationMapper.ConvertedAs;
+    }): boolean {
+        const bool =
+            as === "key" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value;
+        if (typeof bool !== "boolean") {
+            throw this.newTypeMismatchError({ expected: "boolean", value });
+        }
+        return bool;
+    }
+
+    private getValueAsStringOrThrow({ value }: { value: unknown }): string {
+        if (typeof value !== "string") {
+            throw this.newTypeMismatchError({ expected: "string", value });
+        }
+        return value;
+    }
+
+    private newTypeMismatchError({ expected, value }: { expected: string; value: unknown }): Error {
+        return new Error(`Expected ${expected}, got: ${JSON.stringify(value)}`);
     }
 }
