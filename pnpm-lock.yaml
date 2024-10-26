@@ -458,9 +458,6 @@ importers:
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../../../packages/cli/generation/ir-generator
-      '@fern-api/ir-sdk':
-        specifier: workspace:*
-        version: link:../../../packages/ir-sdk
       '@fern-api/project-loader':
         specifier: workspace:*
         version: link:../../../packages/cli/project-loader
@@ -476,9 +473,6 @@ importers:
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
-      zod:
-        specifier: ^3.22.3
-        version: 3.23.8
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12
