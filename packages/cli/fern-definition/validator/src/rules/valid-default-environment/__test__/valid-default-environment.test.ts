@@ -22,25 +22,6 @@ describe("valid-default-environment", () => {
         ]);
     });
 
-    it("default-env-unspecified", async () => {
-        const violations = await getViolationsForRule({
-            rule: ValidDefaultEnvironmentRule,
-            absolutePathToWorkspace: join(
-                AbsoluteFilePath.of(__dirname),
-                RelativeFilePath.of("fixtures"),
-                RelativeFilePath.of("default-env-unspecified")
-            )
-        });
-        expect(violations).toEqual([
-            {
-                message: "Please specify a default-environment. If no default, use null",
-                nodePath: ["default-environment"],
-                relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error"
-            }
-        ]);
-    });
-
     it("default-env-valid", async () => {
         const violations = await getViolationsForRule({
             rule: ValidDefaultEnvironmentRule,

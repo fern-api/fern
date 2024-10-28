@@ -45,24 +45,6 @@ module SeedQueryParametersClient
     # @param filter [String]
     # @param request_options [SeedQueryParametersClient::RequestOptions]
     # @return [SeedQueryParametersClient::User::User]
-    # @example
-    #  query_parameters = SeedQueryParametersClient::Client.new(base_url: "https://api.example.com")
-    #  query_parameters.user.get_username(
-    #    limit: 1,
-    #    id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    #    date: Date.parse("2023-01-15"),
-    #    deadline: DateTime.parse("2024-01-15T09:30:00.000Z"),
-    #    bytes: "SGVsbG8gd29ybGQh",
-    #    user: { name: "string", tags: ["string"] },
-    #    user_list: [{ name: "string", tags: ["string"] }],
-    #    optional_deadline: DateTime.parse("2024-01-15T09:30:00.000Z"),
-    #    key_value: { "string": "string" },
-    #    optional_string: "string",
-    #    nested_user: { name: "string", user: { name: "string", tags: ["string"] } },
-    #    optional_user: { name: "string", tags: ["string"] },
-    #    exclude_user: { name: "string", tags: ["string"] },
-    #    filter: "string"
-    #  )
     def get_username(limit:, id:, date:, deadline:, bytes:, user:, user_list:, key_value:, nested_user:, exclude_user:, filter:, optional_deadline: nil,
                      optional_string: nil, optional_user: nil, request_options: nil)
       response = @request_client.conn.get do |req|
@@ -136,24 +118,6 @@ module SeedQueryParametersClient
     # @param filter [String]
     # @param request_options [SeedQueryParametersClient::RequestOptions]
     # @return [SeedQueryParametersClient::User::User]
-    # @example
-    #  query_parameters = SeedQueryParametersClient::Client.new(base_url: "https://api.example.com")
-    #  query_parameters.user.get_username(
-    #    limit: 1,
-    #    id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    #    date: Date.parse("2023-01-15"),
-    #    deadline: DateTime.parse("2024-01-15T09:30:00.000Z"),
-    #    bytes: "SGVsbG8gd29ybGQh",
-    #    user: { name: "string", tags: ["string"] },
-    #    user_list: [{ name: "string", tags: ["string"] }],
-    #    optional_deadline: DateTime.parse("2024-01-15T09:30:00.000Z"),
-    #    key_value: { "string": "string" },
-    #    optional_string: "string",
-    #    nested_user: { name: "string", user: { name: "string", tags: ["string"] } },
-    #    optional_user: { name: "string", tags: ["string"] },
-    #    exclude_user: { name: "string", tags: ["string"] },
-    #    filter: "string"
-    #  )
     def get_username(limit:, id:, date:, deadline:, bytes:, user:, user_list:, key_value:, nested_user:, exclude_user:, filter:, optional_deadline: nil,
                      optional_string: nil, optional_user: nil, request_options: nil)
       Async do

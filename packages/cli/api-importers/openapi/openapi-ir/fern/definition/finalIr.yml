@@ -37,12 +37,12 @@ types:
     properties:
       rootSchemas: map<commons.SchemaId, Schema>
       namespacedSchemas:
-          type: map<commons.NamespaceId, map<commons.SchemaId, Schema>>
-          docs: |
-            The schemas are organized by namespace and schema name.
-            The schema name is the key in the inner map.
-            Note that this also includes un-namespaced schemas with a static sentinel key of `__no_namespace__`,
-            as even when namespacing we allow for root, unnamespaced APIs, and this allows for the most flexibility.
+        type: map<commons.NamespaceId, map<commons.SchemaId, Schema>>
+        docs: |
+          The schemas are organized by namespace and schema name.
+          The schema name is the key in the inner map.
+          Note that this also includes un-namespaced schemas with a static sentinel key of `__no_namespace__`,
+          as even when namespacing we allow for root, unnamespaced APIs, and this allows for the most flexibility.
 
   SdkGroupInfo:
     properties:
@@ -56,7 +56,7 @@ types:
       optional: optional<boolean>
       env: optional<string>
       schema: optional<Schema>
-  
+
   IdempotencyHeader:
     properties:
       header: string
@@ -150,7 +150,7 @@ types:
       - Deprecated
 
   Endpoint:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
@@ -192,12 +192,12 @@ types:
       examples: list<EndpointExample>
       pagination: optional<Pagination>
 
-  HttpEndpointServer: 
-    properties: 
+  HttpEndpointServer:
+    properties:
       name:
         type: optional<string>
         docs: Populated by `X-Server-Name`
-      url: optional<string>       
+      url: optional<string>
       audiences: optional<list<string>>
 
   Pagination:
@@ -210,7 +210,7 @@ types:
       cursor: string
       next_cursor: string
       results: string
-  
+
   OffsetPagination:
     properties:
       offset: string
@@ -289,8 +289,14 @@ types:
       queryParameters: optional<list<QueryParameterExample>>
       headers: optional<list<HeaderExample>>
       request: optional<example.FullExample>
-      response: optional<example.FullExample>
+      response: optional<EndpointResponseExample>
       codeSamples: list<CustomCodeSample>
+
+  EndpointResponseExample:
+    docs: An example that has either a list of streaming examples or a single non-streaming example.
+    union:
+      withStreaming: list<example.FullExample>
+      withoutStreaming: example.FullExample
 
   PathParameterExample:
     properties:
@@ -335,7 +341,7 @@ types:
       - TRACE
 
   PathParameter:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
@@ -349,7 +355,7 @@ types:
           Populated by `x-fern-parameter-name` on a parameter object.
 
   QueryParameter:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
@@ -362,7 +368,7 @@ types:
           Populated by `x-fern-parameter-name` on a parameter object.
 
   Header:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
@@ -534,7 +540,7 @@ types:
   LongSchema:
     properties:
       default: optional<long>
-  
+
   StringSchema:
     properties:
       default: optional<string>
@@ -599,10 +605,10 @@ types:
         type: string
         docs: |
           A unique name for the property.
-      nameOverride: 
+      nameOverride:
         type: optional<string>
-        docs: | 
-          An optional name override populated via `x-fern-property-name`. 
+        docs: |
+          An optional name override populated via `x-fern-property-name`.
       audiences: list<string>
 
   ObjectPropertyConflictInfo:

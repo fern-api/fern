@@ -33,7 +33,7 @@ class PackageClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.package.test(
-            for_="string",
+            for_="for",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -82,7 +82,7 @@ class AsyncPackageClient:
 
         async def main() -> None:
             await client.package.test(
-                for_="string",
+                for_="for",
             )
 
 

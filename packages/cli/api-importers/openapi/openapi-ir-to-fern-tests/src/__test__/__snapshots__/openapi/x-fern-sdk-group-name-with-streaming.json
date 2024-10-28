@@ -119,6 +119,24 @@
             "get_stream": {
               "auth": false,
               "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "userId": "userId",
+                  },
+                  "request": {
+                    "stream": true,
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "id": "id",
+                        "streamed": true,
+                      },
+                    ],
+                  },
+                },
+              ],
               "method": "POST",
               "pagination": undefined,
               "path": "/user/{userId}",
@@ -170,6 +188,15 @@ service:
         docs: ''
         type: root.StreamUser
         format: json
+      examples:
+        - path-parameters:
+            userId: userId
+          request:
+            stream: true
+          response:
+            stream:
+              - id: id
+                streamed: true
     get:
       path: /user/{userId}
       method: POST

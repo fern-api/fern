@@ -4,9 +4,7 @@
 
 /**
  * @example
- *     {
- *         startingAfter: "string"
- *     }
+ *     {}
  */
 export interface ListUsernamesRequest {
     /**

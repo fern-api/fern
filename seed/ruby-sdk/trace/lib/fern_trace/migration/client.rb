@@ -25,7 +25,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.migration.get_attempted_migrations(admin_key_header: "string")
+    #  trace.migration.get_attempted_migrations(admin_key_header: "admin-key-header")
     def get_attempted_migrations(admin_key_header:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -72,7 +72,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.migration.get_attempted_migrations(admin_key_header: "string")
+    #  trace.migration.get_attempted_migrations(admin_key_header: "admin-key-header")
     def get_attempted_migrations(admin_key_header:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|

@@ -4,6 +4,7 @@ export * as commons from "./commons";
 export * from "./commons/types";
 export * as constants from "./constants";
 export * from "./constants/types";
+export * as dynamic from "./dynamic";
 export * as environment from "./environment";
 export * from "./environment/types";
 export * as errors from "./errors";

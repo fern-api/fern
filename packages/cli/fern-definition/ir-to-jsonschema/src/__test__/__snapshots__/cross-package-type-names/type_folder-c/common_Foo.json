@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "bar_property": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  "required": [
+    "bar_property"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

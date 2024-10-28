@@ -91,12 +91,12 @@ async def test_get_metadata(client: SeedExamples, async_client: AsyncSeedExample
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_get_response(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
+async def test_create_big_entity(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
     expected_response: typing.Any = {
-        "response": "Initializing...",
+        "response": {"key": "value"},
         "identifiers": [
-            {"type": "primitive", "value": "example", "label": "Primitive"},
-            {"type": "unknown", "value": "{}", "label": "Unknown"},
+            {"type": "primitive", "value": "value", "label": "label"},
+            {"type": "primitive", "value": "value", "label": "label"},
         ],
     }
     expected_types: typing.Any = {
@@ -106,8 +106,8 @@ async def test_get_response(client: SeedExamples, async_client: AsyncSeedExample
             {0: {"type": None, "value": None, "label": None}, 1: {"type": None, "value": None, "label": None}},
         ),
     }
-    response = client.service.get_response()
+    response = client.service.create_big_entity()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.service.get_response()
+    async_response = await async_client.service.create_big_entity()
     validate_response(async_response, expected_response, expected_types)

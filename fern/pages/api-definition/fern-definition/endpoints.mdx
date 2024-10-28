@@ -251,28 +251,6 @@ makes the generated SDKs a bit more idiomatic.
   ```
 </CodeBlock>
 
-## Multipart form uploads
-
-If the request involves uploading a file, use the `file` type
-in your request body.
-
-<CodeBlock title="document.yml">
-```yaml {12}
-service:
-  base-path: /documents
-  auth: false
-  endpoints:
-    uploadDocument:
-      path: /upload
-      method: POST
-      request:
-        name: UploadDocumentRequest
-        body:
-          properties:
-            file: file
-```
-</CodeBlock>
-
 ## Success response
 
 Endpoints can specify a `response`, which is the type of the body that will be

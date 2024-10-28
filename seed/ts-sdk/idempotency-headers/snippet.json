@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedIdempotencyHeadersClient } from \"@fern/idempotency-headers\";\n\nconst client = new SeedIdempotencyHeadersClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.payment.delete(\"string\");\n"
+                "client": "import { SeedIdempotencyHeadersClient } from \"@fern/idempotency-headers\";\n\nconst client = new SeedIdempotencyHeadersClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.payment.delete(\"paymentId\");\n"
             }
         }
     ],

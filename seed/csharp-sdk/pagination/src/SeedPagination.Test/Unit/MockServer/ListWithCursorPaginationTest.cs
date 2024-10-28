@@ -22,7 +22,7 @@ public class ListWithCursorPaginationTest : BaseMockServerTest
                 "page": 1,
                 "next": {
                   "page": 1,
-                  "starting_after": "string"
+                  "starting_after": "starting_after"
                 },
                 "per_page": 1,
                 "total_page": 1
@@ -30,7 +30,11 @@ public class ListWithCursorPaginationTest : BaseMockServerTest
               "total_count": 1,
               "data": [
                 {
-                  "name": "string",
+                  "name": "name",
+                  "id": 1
+                },
+                {
+                  "name": "name",
                   "id": 1
                 }
               ]
@@ -38,16 +42,7 @@ public class ListWithCursorPaginationTest : BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/users")
-                    .WithParam("page", "1")
-                    .WithParam("per_page", "1")
-                    .WithParam("order", "asc")
-                    .WithParam("starting_after", "string")
-                    .UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -56,13 +51,7 @@ public class ListWithCursorPaginationTest : BaseMockServerTest
             );
 
         var response = await Client.Users.ListWithCursorPaginationAsync(
-            new ListUsersCursorPaginationRequest
-            {
-                Page = 1,
-                PerPage = 1,
-                Order = Order.Asc,
-                StartingAfter = "string",
-            },
+            new ListUsersCursorPaginationRequest(),
             RequestOptions
         );
         JToken

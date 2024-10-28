@@ -1,0 +1,71 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Reference > toString > handles class with alias 1`] = `
+"Alias
+"
+`;
+
+exports[`Reference > toString > handles class with generic type referencing another class 1`] = `
+"ComplexGenericClass[OtherClass]
+"
+`;
+
+exports[`Reference > toString > handles class with one generic type 1`] = `
+"GenericClass[str]
+"
+`;
+
+exports[`Reference > toString > handles class with two generic types 1`] = `
+"DoubleGenericClass[str, int]
+"
+`;
+
+exports[`Reference > toString > handles class without module path 1`] = `
+"StandaloneClass
+"
+`;
+
+exports[`Reference > toString > handles deeply nested module path 1`] = `
+"DeepClass
+"
+`;
+
+exports[`Reference > toString > handles dict with reference as inner type 1`] = `
+"DictClass[Dict[str, InnerClass]]
+"
+`;
+
+exports[`Reference > toString > handles list with reference as inner type 1`] = `
+"List[InnerClass]
+"
+`;
+
+exports[`Reference > toString > handles reference with attr path 1`] = `
+"AttrPathClass.attr1.attr2
+"
+`;
+
+exports[`Reference > toString > handles set with reference as inner type 1`] = `
+"Set[InnerClass]
+"
+`;
+
+exports[`Reference > toString > handles single-level module path 1`] = `
+"SimpleClass
+"
+`;
+
+exports[`Reference > toString > handles tuple with reference as inner type 1`] = `
+"Tuple[InnerClass, str]
+"
+`;
+
+exports[`Reference > toString > handles union with reference as inner type 1`] = `
+"Union[InnerClass, str]
+"
+`;
+
+exports[`Reference > toString > returns the fully qualified name 1`] = `
+"MyClass
+"
+`;

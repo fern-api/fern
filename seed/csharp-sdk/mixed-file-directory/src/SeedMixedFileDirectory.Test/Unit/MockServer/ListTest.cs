@@ -18,21 +18,20 @@ public class ListTest : BaseMockServerTest
         const string mockResponse = """
             [
               {
-                "id": "string",
-                "name": "string",
+                "id": "id",
+                "name": "name",
+                "age": 1
+              },
+              {
+                "id": "id",
+                "name": "name",
                 "age": 1
               }
             ]
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/users/")
-                    .WithParam("limit", "1")
-                    .UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users/").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -40,10 +39,7 @@ public class ListTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.User.ListAsync(
-            new ListUsersRequest { Limit = 1 },
-            RequestOptions
-        );
+        var response = await Client.User.ListAsync(new ListUsersRequest(), RequestOptions);
         JToken
             .Parse(mockResponse)
             .Should()

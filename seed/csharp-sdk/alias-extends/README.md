@@ -19,9 +19,7 @@ Instantiate and use the client with the following:
 using SeedAliasExtends;
 
 var client = new SeedAliasExtendsClient();
-await client.ExtendedInlineRequestBodyAsync(
-    new InlinedChildRequest { Child = "string", Parent = "string" }
-);
+await client.ExtendedInlineRequestBodyAsync(new InlinedChildRequest { Child = "child" });
 ```
 
 ## Exception Handling

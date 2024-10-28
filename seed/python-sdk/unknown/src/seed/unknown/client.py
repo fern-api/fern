@@ -85,7 +85,7 @@ class UnknownClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.unknown.post_object(
-            unknown={"boolVal": True, "strVal": "string"},
+            unknown={"key": "value"},
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -198,7 +198,7 @@ class AsyncUnknownClient:
 
         async def main() -> None:
             await client.unknown.post_object(
-                unknown={"boolVal": True, "strVal": "string"},
+                unknown={"key": "value"},
             )
 
 

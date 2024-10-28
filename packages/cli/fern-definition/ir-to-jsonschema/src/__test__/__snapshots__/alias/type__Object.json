@@ -1,0 +1,24 @@
+{
+  "$ref": "#/definitions/Type",
+  "definitions": {
+    "TypeId": {
+      "type": "string"
+    },
+    "Type": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/TypeId"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

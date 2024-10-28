@@ -37,7 +37,7 @@ export class Ec2 {
      *
      * @example
      *     await client.ec2.bootInstance({
-     *         size: "string"
+     *         size: "size"
      *     })
      */
     public async bootInstance(

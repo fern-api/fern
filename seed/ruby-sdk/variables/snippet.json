@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_service.post"
             },
             "snippet": {
-                "client": "require \"fern_variables\"\n\nvariables = SeedVariablesClient::Client.new(base_url: \"https://api.example.com\")\nvariables.service.post(endpoint_param: \"string\")",
+                "client": "require \"fern_variables\"\n\nvariables = SeedVariablesClient::Client.new(base_url: \"https://api.example.com\")\nvariables.service.post(endpoint_param: \"endpointParam\")",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_service.post"
             },
             "snippet": {
-                "client": "require \"fern_variables\"\n\nvariables = SeedVariablesClient::Client.new(base_url: \"https://api.example.com\")\nvariables.service.post(endpoint_param: \"string\")",
+                "client": "require \"fern_variables\"\n\nvariables = SeedVariablesClient::Client.new(base_url: \"https://api.example.com\")\nvariables.service.post(endpoint_param: \"endpointParam\")",
                 "type": "ruby"
             }
         }

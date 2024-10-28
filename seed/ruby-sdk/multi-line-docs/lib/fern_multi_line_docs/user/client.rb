@@ -24,7 +24,7 @@ module SeedMultiLineDocsClient
     # @return [Void]
     # @example
     #  multi_line_docs = SeedMultiLineDocsClient::Client.new(base_url: "https://api.example.com")
-    #  multi_line_docs.user.get_user(user_id: "string")
+    #  multi_line_docs.user.get_user(user_id: "userId")
     def get_user(user_id:, request_options: nil)
       @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -54,7 +54,7 @@ module SeedMultiLineDocsClient
     # @return [SeedMultiLineDocsClient::User::User]
     # @example
     #  multi_line_docs = SeedMultiLineDocsClient::Client.new(base_url: "https://api.example.com")
-    #  multi_line_docs.user.create_user(name: "string", age: 1)
+    #  multi_line_docs.user.create_user(name: "name")
     def create_user(name:, age: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -92,7 +92,7 @@ module SeedMultiLineDocsClient
     # @return [Void]
     # @example
     #  multi_line_docs = SeedMultiLineDocsClient::Client.new(base_url: "https://api.example.com")
-    #  multi_line_docs.user.get_user(user_id: "string")
+    #  multi_line_docs.user.get_user(user_id: "userId")
     def get_user(user_id:, request_options: nil)
       Async do
         @request_client.conn.get do |req|
@@ -124,7 +124,7 @@ module SeedMultiLineDocsClient
     # @return [SeedMultiLineDocsClient::User::User]
     # @example
     #  multi_line_docs = SeedMultiLineDocsClient::Client.new(base_url: "https://api.example.com")
-    #  multi_line_docs.user.create_user(name: "string", age: 1)
+    #  multi_line_docs.user.create_user(name: "name")
     def create_user(name:, age: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

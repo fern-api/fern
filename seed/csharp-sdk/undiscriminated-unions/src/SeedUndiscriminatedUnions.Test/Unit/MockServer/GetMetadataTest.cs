@@ -16,9 +16,7 @@ public class GetMetadataTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "name": "exampleName",
-              "value": "exampleValue",
-              "default": "exampleDefault"
+              "name": "string"
             }
             """;
 

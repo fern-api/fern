@@ -2,13 +2,13 @@ from typing import Callable, Dict, List, Optional, Set
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
-from ...external_dependencies.pydantic import PydanticVersionCompatibility
 from ordered_set import OrderedSet
 
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
 
+from ...external_dependencies.pydantic import PydanticVersionCompatibility
 from .pydantic_generator_context import PydanticGeneratorContext
 from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConverter
 
@@ -40,7 +40,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             skip_formatting=skip_formatting,
             union_naming_version=union_naming_version,
             use_pydantic_field_aliases=use_pydantic_field_aliases,
-            pydantic_compatibility=pydantic_compatibility
+            pydantic_compatibility=pydantic_compatibility,
         )
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
             type_declaration_referencer=type_declaration_referencer, context=self

@@ -11,6 +11,9 @@ from .core.request_options import RequestOptions
 from .core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from .core.api_error import ApiError
+from .types.type import Type
+from .types.identifier import Identifier
+from .core.serialization import convert_and_respect_annotation_metadata
 from .core.client_wrapper import AsyncClientWrapper
 from .file.client import AsyncFileClient
 from .health.client import AsyncHealthClient
@@ -124,6 +127,52 @@ class BaseSeedExhaustive:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def create_type(self, *, request: Type, request_options: typing.Optional[RequestOptions] = None) -> Identifier:
+        """
+        Parameters
+        ----------
+        request : Type
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Identifier
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+        from seed.environment import SeedExhaustiveEnvironment
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+        client.create_type(
+            request="primitive",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            method="POST",
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=Type, direction="write"),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Identifier,
+                    parse_obj_as(
+                        type_=Identifier,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncBaseSeedExhaustive:
     """
@@ -229,6 +278,62 @@ class AsyncBaseSeedExhaustive:
                     str,
                     parse_obj_as(
                         type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def create_type(
+        self, *, request: Type, request_options: typing.Optional[RequestOptions] = None
+    ) -> Identifier:
+        """
+        Parameters
+        ----------
+        request : Type
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Identifier
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+        from seed.environment import SeedExhaustiveEnvironment
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+
+
+        async def main() -> None:
+            await client.create_type(
+                request="primitive",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            method="POST",
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=Type, direction="write"),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Identifier,
+                    parse_obj_as(
+                        type_=Identifier,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -27,7 +27,7 @@ client = SeedExhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 client.endpoints.container.get_and_return_list_of_primitives(
-    request=["string"],
+    request=["string", "string"],
 )
 ```
 
@@ -48,7 +48,7 @@ client = AsyncSeedExhaustive(
 
 async def main() -> None:
     await client.endpoints.container.get_and_return_list_of_primitives(
-        request=["string"],
+        request=["string", "string"],
     )
 
 

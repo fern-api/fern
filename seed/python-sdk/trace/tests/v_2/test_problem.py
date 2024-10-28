@@ -9,11 +9,17 @@ from ..utilities import validate_response
 async def test_get_lightweight_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = [
         {
-            "problemId": "string",
-            "problemName": "string",
+            "problemId": "problemId",
+            "problemName": "problemName",
             "problemVersion": 1,
             "variableTypes": [{"type": "integerType"}],
-        }
+        },
+        {
+            "problemId": "problemId",
+            "problemName": "problemName",
+            "problemVersion": 1,
+            "variableTypes": [{"type": "integerType"}],
+        },
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
@@ -23,7 +29,13 @@ async def test_get_lightweight_problems(client: SeedTrace, async_client: AsyncSe
                 "problemName": None,
                 "problemVersion": "integer",
                 "variableTypes": ("set", {0: "no_validate"}),
-            }
+            },
+            1: {
+                "problemId": None,
+                "problemName": None,
+                "problemVersion": "integer",
+                "variableTypes": ("set", {0: "no_validate"}),
+            },
         },
     )
     response = client.v_2.problem.get_lightweight_problems()
@@ -36,62 +48,472 @@ async def test_get_lightweight_problems(client: SeedTrace, async_client: AsyncSe
 async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = [
         {
-            "problemId": "string",
+            "problemId": "problemId",
             "problemDescription": {
-                "boards": [{"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "html"}]
+                "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
             },
-            "problemName": "string",
+            "problemName": "problemName",
             "problemVersion": 1,
             "supportedLanguages": ["JAVA"],
-            "customFiles": {"type": "basic"},
+            "customFiles": {
+                "type": "basic",
+                "methodName": "methodName",
+                "signature": {
+                    "parameters": [
+                        {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
+                        {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
+                    ],
+                    "returnType": {"type": "integerType"},
+                },
+                "additionalFiles": {
+                    "JAVA": {
+                        "files": [
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                        ]
+                    }
+                },
+                "basicTestCaseTemplate": {
+                    "templateId": "templateId",
+                    "name": "name",
+                    "description": {
+                        "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                    },
+                    "expectedValueParameterId": "expectedValueParameterId",
+                },
+            },
             "generatedFiles": {
-                "generatedTestCaseFiles": {"string": {"files": []}},
-                "generatedTemplateFiles": {"string": {"files": []}},
-                "other": {"string": {"files": []}},
+                "generatedTestCaseFiles": {
+                    "JAVA": {
+                        "files": [
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                        ]
+                    }
+                },
+                "generatedTemplateFiles": {
+                    "JAVA": {
+                        "files": [
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                        ]
+                    }
+                },
+                "other": {
+                    "JAVA": {
+                        "files": [
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                        ]
+                    }
+                },
             },
             "customTestCaseTemplates": [
                 {
-                    "templateId": "string",
-                    "name": "string",
+                    "templateId": "templateId",
+                    "name": "name",
                     "implementation": {
-                        "description": {"boards": [{"type": "html", "key": "value"}]},
-                        "function": {"type": "withActualResult"},
+                        "description": {
+                            "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                        },
+                        "function": {
+                            "type": "withActualResult",
+                            "getActualResult": {
+                                "signature": {
+                                    "parameters": [
+                                        {
+                                            "parameterId": "parameterId",
+                                            "name": "name",
+                                            "variableType": {"type": "integerType"},
+                                        },
+                                        {
+                                            "parameterId": "parameterId",
+                                            "name": "name",
+                                            "variableType": {"type": "integerType"},
+                                        },
+                                    ],
+                                    "returnType": {"type": "integerType"},
+                                },
+                                "code": {"codeByLanguage": {"JAVA": {"impl": "impl"}}},
+                            },
+                            "assertCorrectnessCheck": {
+                                "type": "deepEquality",
+                                "expectedValueParameterId": "expectedValueParameterId",
+                            },
+                        },
                     },
-                }
+                },
+                {
+                    "templateId": "templateId",
+                    "name": "name",
+                    "implementation": {
+                        "description": {
+                            "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                        },
+                        "function": {
+                            "type": "withActualResult",
+                            "getActualResult": {
+                                "signature": {
+                                    "parameters": [
+                                        {
+                                            "parameterId": "parameterId",
+                                            "name": "name",
+                                            "variableType": {"type": "integerType"},
+                                        },
+                                        {
+                                            "parameterId": "parameterId",
+                                            "name": "name",
+                                            "variableType": {"type": "integerType"},
+                                        },
+                                    ],
+                                    "returnType": {"type": "integerType"},
+                                },
+                                "code": {"codeByLanguage": {"JAVA": {"impl": "impl"}}},
+                            },
+                            "assertCorrectnessCheck": {
+                                "type": "deepEquality",
+                                "expectedValueParameterId": "expectedValueParameterId",
+                            },
+                        },
+                    },
+                },
             ],
             "testcases": [
                 {
-                    "metadata": {"id": "string", "name": "string", "hidden": True},
-                    "implementation": {
-                        "0": "s",
-                        "1": "t",
-                        "2": "r",
-                        "3": "i",
-                        "4": "n",
-                        "5": "g",
-                        "type": "templateId",
-                    },
-                    "arguments": {"string": {"type": "integerValue", "key": "value"}},
-                    "expects": {},
-                }
+                    "metadata": {"id": "id", "name": "name", "hidden": True},
+                    "implementation": {"type": "templateId", "value": "implementation"},
+                    "arguments": {"arguments": {"type": "integerValue", "value": 1}},
+                    "expects": {"expectedStdout": "expectedStdout"},
+                },
+                {
+                    "metadata": {"id": "id", "name": "name", "hidden": True},
+                    "implementation": {"type": "templateId", "value": "implementation"},
+                    "arguments": {"arguments": {"type": "integerValue", "value": 1}},
+                    "expects": {"expectedStdout": "expectedStdout"},
+                },
             ],
             "isPublic": True,
-        }
+        },
+        {
+            "problemId": "problemId",
+            "problemDescription": {
+                "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+            },
+            "problemName": "problemName",
+            "problemVersion": 1,
+            "supportedLanguages": ["JAVA"],
+            "customFiles": {
+                "type": "basic",
+                "methodName": "methodName",
+                "signature": {
+                    "parameters": [
+                        {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
+                        {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
+                    ],
+                    "returnType": {"type": "integerType"},
+                },
+                "additionalFiles": {
+                    "JAVA": {
+                        "files": [
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                        ]
+                    }
+                },
+                "basicTestCaseTemplate": {
+                    "templateId": "templateId",
+                    "name": "name",
+                    "description": {
+                        "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                    },
+                    "expectedValueParameterId": "expectedValueParameterId",
+                },
+            },
+            "generatedFiles": {
+                "generatedTestCaseFiles": {
+                    "JAVA": {
+                        "files": [
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                        ]
+                    }
+                },
+                "generatedTemplateFiles": {
+                    "JAVA": {
+                        "files": [
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                        ]
+                    }
+                },
+                "other": {
+                    "JAVA": {
+                        "files": [
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                            {
+                                "filename": "filename",
+                                "directory": "directory",
+                                "contents": "contents",
+                                "editable": True,
+                            },
+                        ]
+                    }
+                },
+            },
+            "customTestCaseTemplates": [
+                {
+                    "templateId": "templateId",
+                    "name": "name",
+                    "implementation": {
+                        "description": {
+                            "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                        },
+                        "function": {
+                            "type": "withActualResult",
+                            "getActualResult": {
+                                "signature": {
+                                    "parameters": [
+                                        {
+                                            "parameterId": "parameterId",
+                                            "name": "name",
+                                            "variableType": {"type": "integerType"},
+                                        },
+                                        {
+                                            "parameterId": "parameterId",
+                                            "name": "name",
+                                            "variableType": {"type": "integerType"},
+                                        },
+                                    ],
+                                    "returnType": {"type": "integerType"},
+                                },
+                                "code": {"codeByLanguage": {"JAVA": {"impl": "impl"}}},
+                            },
+                            "assertCorrectnessCheck": {
+                                "type": "deepEquality",
+                                "expectedValueParameterId": "expectedValueParameterId",
+                            },
+                        },
+                    },
+                },
+                {
+                    "templateId": "templateId",
+                    "name": "name",
+                    "implementation": {
+                        "description": {
+                            "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                        },
+                        "function": {
+                            "type": "withActualResult",
+                            "getActualResult": {
+                                "signature": {
+                                    "parameters": [
+                                        {
+                                            "parameterId": "parameterId",
+                                            "name": "name",
+                                            "variableType": {"type": "integerType"},
+                                        },
+                                        {
+                                            "parameterId": "parameterId",
+                                            "name": "name",
+                                            "variableType": {"type": "integerType"},
+                                        },
+                                    ],
+                                    "returnType": {"type": "integerType"},
+                                },
+                                "code": {"codeByLanguage": {"JAVA": {"impl": "impl"}}},
+                            },
+                            "assertCorrectnessCheck": {
+                                "type": "deepEquality",
+                                "expectedValueParameterId": "expectedValueParameterId",
+                            },
+                        },
+                    },
+                },
+            ],
+            "testcases": [
+                {
+                    "metadata": {"id": "id", "name": "name", "hidden": True},
+                    "implementation": {"type": "templateId", "value": "implementation"},
+                    "arguments": {"arguments": {"type": "integerValue", "value": 1}},
+                    "expects": {"expectedStdout": "expectedStdout"},
+                },
+                {
+                    "metadata": {"id": "id", "name": "name", "hidden": True},
+                    "implementation": {"type": "templateId", "value": "implementation"},
+                    "arguments": {"arguments": {"type": "integerValue", "value": 1}},
+                    "expects": {"expectedStdout": "expectedStdout"},
+                },
+            ],
+            "isPublic": True,
+        },
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
                 "problemId": None,
-                "problemDescription": {"boards": ("list", {0: "no_validate"})},
+                "problemDescription": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
                 "problemName": None,
                 "problemVersion": "integer",
                 "supportedLanguages": ("set", {0: None}),
                 "customFiles": "no_validate",
                 "generatedFiles": {
-                    "generatedTestCaseFiles": ("dict", {0: (None, {"files": ("list", {})})}),
-                    "generatedTemplateFiles": ("dict", {0: (None, {"files": ("list", {})})}),
-                    "other": ("dict", {0: (None, {"files": ("list", {})})}),
+                    "generatedTestCaseFiles": (
+                        "dict",
+                        {
+                            0: (
+                                None,
+                                {
+                                    "files": (
+                                        "list",
+                                        {
+                                            0: {
+                                                "filename": None,
+                                                "directory": None,
+                                                "contents": None,
+                                                "editable": None,
+                                            },
+                                            1: {
+                                                "filename": None,
+                                                "directory": None,
+                                                "contents": None,
+                                                "editable": None,
+                                            },
+                                        },
+                                    )
+                                },
+                            )
+                        },
+                    ),
+                    "generatedTemplateFiles": (
+                        "dict",
+                        {
+                            0: (
+                                None,
+                                {
+                                    "files": (
+                                        "list",
+                                        {
+                                            0: {
+                                                "filename": None,
+                                                "directory": None,
+                                                "contents": None,
+                                                "editable": None,
+                                            },
+                                            1: {
+                                                "filename": None,
+                                                "directory": None,
+                                                "contents": None,
+                                                "editable": None,
+                                            },
+                                        },
+                                    )
+                                },
+                            )
+                        },
+                    ),
+                    "other": (
+                        "dict",
+                        {
+                            0: (
+                                None,
+                                {
+                                    "files": (
+                                        "list",
+                                        {
+                                            0: {
+                                                "filename": None,
+                                                "directory": None,
+                                                "contents": None,
+                                                "editable": None,
+                                            },
+                                            1: {
+                                                "filename": None,
+                                                "directory": None,
+                                                "contents": None,
+                                                "editable": None,
+                                            },
+                                        },
+                                    )
+                                },
+                            )
+                        },
+                    ),
                 },
                 "customTestCaseTemplates": (
                     "list",
@@ -100,10 +522,18 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                             "templateId": None,
                             "name": None,
                             "implementation": {
-                                "description": {"boards": ("list", {0: "no_validate"})},
+                                "description": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
                                 "function": "no_validate",
                             },
-                        }
+                        },
+                        1: {
+                            "templateId": None,
+                            "name": None,
+                            "implementation": {
+                                "description": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
+                                "function": "no_validate",
+                            },
+                        },
                     },
                 ),
                 "testcases": (
@@ -114,11 +544,147 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                             "implementation": "no_validate",
                             "arguments": ("dict", {0: (None, "no_validate")}),
                             "expects": {"expectedStdout": None},
-                        }
+                        },
+                        1: {
+                            "metadata": {"id": None, "name": None, "hidden": None},
+                            "implementation": "no_validate",
+                            "arguments": ("dict", {0: (None, "no_validate")}),
+                            "expects": {"expectedStdout": None},
+                        },
                     },
                 ),
                 "isPublic": None,
-            }
+            },
+            1: {
+                "problemId": None,
+                "problemDescription": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
+                "problemName": None,
+                "problemVersion": "integer",
+                "supportedLanguages": ("set", {0: None}),
+                "customFiles": "no_validate",
+                "generatedFiles": {
+                    "generatedTestCaseFiles": (
+                        "dict",
+                        {
+                            0: (
+                                None,
+                                {
+                                    "files": (
+                                        "list",
+                                        {
+                                            0: {
+                                                "filename": None,
+                                                "directory": None,
+                                                "contents": None,
+                                                "editable": None,
+                                            },
+                                            1: {
+                                                "filename": None,
+                                                "directory": None,
+                                                "contents": None,
+                                                "editable": None,
+                                            },
+                                        },
+                                    )
+                                },
+                            )
+                        },
+                    ),
+                    "generatedTemplateFiles": (
+                        "dict",
+                        {
+                            0: (
+                                None,
+                                {
+                                    "files": (
+                                        "list",
+                                        {
+                                            0: {
+                                                "filename": None,
+                                                "directory": None,
+                                                "contents": None,
+                                                "editable": None,
+                                            },
+                                            1: {
+                                                "filename": None,
+                                                "directory": None,
+                                                "contents": None,
+                                                "editable": None,
+                                            },
+                                        },
+                                    )
+                                },
+                            )
+                        },
+                    ),
+                    "other": (
+                        "dict",
+                        {
+                            0: (
+                                None,
+                                {
+                                    "files": (
+                                        "list",
+                                        {
+                                            0: {
+                                                "filename": None,
+                                                "directory": None,
+                                                "contents": None,
+                                                "editable": None,
+                                            },
+                                            1: {
+                                                "filename": None,
+                                                "directory": None,
+                                                "contents": None,
+                                                "editable": None,
+                                            },
+                                        },
+                                    )
+                                },
+                            )
+                        },
+                    ),
+                },
+                "customTestCaseTemplates": (
+                    "list",
+                    {
+                        0: {
+                            "templateId": None,
+                            "name": None,
+                            "implementation": {
+                                "description": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
+                                "function": "no_validate",
+                            },
+                        },
+                        1: {
+                            "templateId": None,
+                            "name": None,
+                            "implementation": {
+                                "description": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
+                                "function": "no_validate",
+                            },
+                        },
+                    },
+                ),
+                "testcases": (
+                    "list",
+                    {
+                        0: {
+                            "metadata": {"id": None, "name": None, "hidden": None},
+                            "implementation": "no_validate",
+                            "arguments": ("dict", {0: (None, "no_validate")}),
+                            "expects": {"expectedStdout": None},
+                        },
+                        1: {
+                            "metadata": {"id": None, "name": None, "hidden": None},
+                            "implementation": "no_validate",
+                            "arguments": ("dict", {0: (None, "no_validate")}),
+                            "expects": {"expectedStdout": None},
+                        },
+                    },
+                ),
+                "isPublic": None,
+            },
         },
     )
     response = client.v_2.problem.get_problems()
@@ -130,50 +696,207 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
 
 async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = {
-        "problemId": "string",
-        "problemDescription": {
-            "boards": [{"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "html"}]
-        },
-        "problemName": "string",
+        "problemId": "problemId",
+        "problemDescription": {"boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]},
+        "problemName": "problemName",
         "problemVersion": 1,
         "supportedLanguages": ["JAVA"],
-        "customFiles": {"type": "basic"},
+        "customFiles": {
+            "type": "basic",
+            "methodName": "methodName",
+            "signature": {
+                "parameters": [
+                    {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
+                    {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
+                ],
+                "returnType": {"type": "integerType"},
+            },
+            "additionalFiles": {
+                "JAVA": {
+                    "files": [
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                    ]
+                }
+            },
+            "basicTestCaseTemplate": {
+                "templateId": "templateId",
+                "name": "name",
+                "description": {"boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]},
+                "expectedValueParameterId": "expectedValueParameterId",
+            },
+        },
         "generatedFiles": {
-            "generatedTestCaseFiles": {"string": {"files": []}},
-            "generatedTemplateFiles": {"string": {"files": []}},
-            "other": {"string": {"files": []}},
+            "generatedTestCaseFiles": {
+                "JAVA": {
+                    "files": [
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                    ]
+                }
+            },
+            "generatedTemplateFiles": {
+                "JAVA": {
+                    "files": [
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                    ]
+                }
+            },
+            "other": {
+                "JAVA": {
+                    "files": [
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                    ]
+                }
+            },
         },
         "customTestCaseTemplates": [
             {
-                "templateId": "string",
-                "name": "string",
+                "templateId": "templateId",
+                "name": "name",
                 "implementation": {
-                    "description": {"boards": [{"type": "html", "key": "value"}]},
-                    "function": {"type": "withActualResult"},
+                    "description": {
+                        "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                    },
+                    "function": {
+                        "type": "withActualResult",
+                        "getActualResult": {
+                            "signature": {
+                                "parameters": [
+                                    {
+                                        "parameterId": "parameterId",
+                                        "name": "name",
+                                        "variableType": {"type": "integerType"},
+                                    },
+                                    {
+                                        "parameterId": "parameterId",
+                                        "name": "name",
+                                        "variableType": {"type": "integerType"},
+                                    },
+                                ],
+                                "returnType": {"type": "integerType"},
+                            },
+                            "code": {"codeByLanguage": {"JAVA": {"impl": "impl", "imports": "imports"}}},
+                        },
+                        "assertCorrectnessCheck": {
+                            "type": "deepEquality",
+                            "expectedValueParameterId": "expectedValueParameterId",
+                        },
+                    },
                 },
-            }
+            },
+            {
+                "templateId": "templateId",
+                "name": "name",
+                "implementation": {
+                    "description": {
+                        "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                    },
+                    "function": {
+                        "type": "withActualResult",
+                        "getActualResult": {
+                            "signature": {
+                                "parameters": [
+                                    {
+                                        "parameterId": "parameterId",
+                                        "name": "name",
+                                        "variableType": {"type": "integerType"},
+                                    },
+                                    {
+                                        "parameterId": "parameterId",
+                                        "name": "name",
+                                        "variableType": {"type": "integerType"},
+                                    },
+                                ],
+                                "returnType": {"type": "integerType"},
+                            },
+                            "code": {"codeByLanguage": {"JAVA": {"impl": "impl", "imports": "imports"}}},
+                        },
+                        "assertCorrectnessCheck": {
+                            "type": "deepEquality",
+                            "expectedValueParameterId": "expectedValueParameterId",
+                        },
+                    },
+                },
+            },
         ],
         "testcases": [
             {
-                "metadata": {"id": "string", "name": "string", "hidden": True},
-                "implementation": {"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "templateId"},
-                "arguments": {"string": {"type": "integerValue", "key": "value"}},
-                "expects": {},
-            }
+                "metadata": {"id": "id", "name": "name", "hidden": True},
+                "implementation": {"type": "templateId", "value": "implementation"},
+                "arguments": {"arguments": {"type": "integerValue", "value": 1}},
+                "expects": {"expectedStdout": "expectedStdout"},
+            },
+            {
+                "metadata": {"id": "id", "name": "name", "hidden": True},
+                "implementation": {"type": "templateId", "value": "implementation"},
+                "arguments": {"arguments": {"type": "integerValue", "value": 1}},
+                "expects": {"expectedStdout": "expectedStdout"},
+            },
         ],
         "isPublic": True,
     }
     expected_types: typing.Any = {
         "problemId": None,
-        "problemDescription": {"boards": ("list", {0: "no_validate"})},
+        "problemDescription": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
         "problemName": None,
         "problemVersion": "integer",
         "supportedLanguages": ("set", {0: None}),
         "customFiles": "no_validate",
         "generatedFiles": {
-            "generatedTestCaseFiles": ("dict", {0: (None, {"files": ("list", {})})}),
-            "generatedTemplateFiles": ("dict", {0: (None, {"files": ("list", {})})}),
-            "other": ("dict", {0: (None, {"files": ("list", {})})}),
+            "generatedTestCaseFiles": (
+                "dict",
+                {
+                    0: (
+                        None,
+                        {
+                            "files": (
+                                "list",
+                                {
+                                    0: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                    1: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                },
+                            )
+                        },
+                    )
+                },
+            ),
+            "generatedTemplateFiles": (
+                "dict",
+                {
+                    0: (
+                        None,
+                        {
+                            "files": (
+                                "list",
+                                {
+                                    0: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                    1: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                },
+                            )
+                        },
+                    )
+                },
+            ),
+            "other": (
+                "dict",
+                {
+                    0: (
+                        None,
+                        {
+                            "files": (
+                                "list",
+                                {
+                                    0: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                    1: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                },
+                            )
+                        },
+                    )
+                },
+            ),
         },
         "customTestCaseTemplates": (
             "list",
@@ -182,10 +905,18 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
                     "templateId": None,
                     "name": None,
                     "implementation": {
-                        "description": {"boards": ("list", {0: "no_validate"})},
+                        "description": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
                         "function": "no_validate",
                     },
-                }
+                },
+                1: {
+                    "templateId": None,
+                    "name": None,
+                    "implementation": {
+                        "description": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
+                        "function": "no_validate",
+                    },
+                },
             },
         ),
         "testcases": (
@@ -196,64 +927,227 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
                     "implementation": "no_validate",
                     "arguments": ("dict", {0: (None, "no_validate")}),
                     "expects": {"expectedStdout": None},
-                }
+                },
+                1: {
+                    "metadata": {"id": None, "name": None, "hidden": None},
+                    "implementation": "no_validate",
+                    "arguments": ("dict", {0: (None, "no_validate")}),
+                    "expects": {"expectedStdout": None},
+                },
             },
         ),
         "isPublic": None,
     }
-    response = client.v_2.problem.get_latest_problem(problem_id="string")
+    response = client.v_2.problem.get_latest_problem(problem_id="problemId")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.v_2.problem.get_latest_problem(problem_id="string")
+    async_response = await async_client.v_2.problem.get_latest_problem(problem_id="problemId")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = {
-        "problemId": "string",
-        "problemDescription": {
-            "boards": [{"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "html"}]
-        },
-        "problemName": "string",
+        "problemId": "problemId",
+        "problemDescription": {"boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]},
+        "problemName": "problemName",
         "problemVersion": 1,
         "supportedLanguages": ["JAVA"],
-        "customFiles": {"type": "basic"},
+        "customFiles": {
+            "type": "basic",
+            "methodName": "methodName",
+            "signature": {
+                "parameters": [
+                    {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
+                    {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
+                ],
+                "returnType": {"type": "integerType"},
+            },
+            "additionalFiles": {
+                "JAVA": {
+                    "files": [
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                    ]
+                }
+            },
+            "basicTestCaseTemplate": {
+                "templateId": "templateId",
+                "name": "name",
+                "description": {"boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]},
+                "expectedValueParameterId": "expectedValueParameterId",
+            },
+        },
         "generatedFiles": {
-            "generatedTestCaseFiles": {"string": {"files": []}},
-            "generatedTemplateFiles": {"string": {"files": []}},
-            "other": {"string": {"files": []}},
+            "generatedTestCaseFiles": {
+                "JAVA": {
+                    "files": [
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                    ]
+                }
+            },
+            "generatedTemplateFiles": {
+                "JAVA": {
+                    "files": [
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                    ]
+                }
+            },
+            "other": {
+                "JAVA": {
+                    "files": [
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                    ]
+                }
+            },
         },
         "customTestCaseTemplates": [
             {
-                "templateId": "string",
-                "name": "string",
+                "templateId": "templateId",
+                "name": "name",
                 "implementation": {
-                    "description": {"boards": [{"type": "html", "key": "value"}]},
-                    "function": {"type": "withActualResult"},
+                    "description": {
+                        "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                    },
+                    "function": {
+                        "type": "withActualResult",
+                        "getActualResult": {
+                            "signature": {
+                                "parameters": [
+                                    {
+                                        "parameterId": "parameterId",
+                                        "name": "name",
+                                        "variableType": {"type": "integerType"},
+                                    },
+                                    {
+                                        "parameterId": "parameterId",
+                                        "name": "name",
+                                        "variableType": {"type": "integerType"},
+                                    },
+                                ],
+                                "returnType": {"type": "integerType"},
+                            },
+                            "code": {"codeByLanguage": {"JAVA": {"impl": "impl", "imports": "imports"}}},
+                        },
+                        "assertCorrectnessCheck": {
+                            "type": "deepEquality",
+                            "expectedValueParameterId": "expectedValueParameterId",
+                        },
+                    },
                 },
-            }
+            },
+            {
+                "templateId": "templateId",
+                "name": "name",
+                "implementation": {
+                    "description": {
+                        "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                    },
+                    "function": {
+                        "type": "withActualResult",
+                        "getActualResult": {
+                            "signature": {
+                                "parameters": [
+                                    {
+                                        "parameterId": "parameterId",
+                                        "name": "name",
+                                        "variableType": {"type": "integerType"},
+                                    },
+                                    {
+                                        "parameterId": "parameterId",
+                                        "name": "name",
+                                        "variableType": {"type": "integerType"},
+                                    },
+                                ],
+                                "returnType": {"type": "integerType"},
+                            },
+                            "code": {"codeByLanguage": {"JAVA": {"impl": "impl", "imports": "imports"}}},
+                        },
+                        "assertCorrectnessCheck": {
+                            "type": "deepEquality",
+                            "expectedValueParameterId": "expectedValueParameterId",
+                        },
+                    },
+                },
+            },
         ],
         "testcases": [
             {
-                "metadata": {"id": "string", "name": "string", "hidden": True},
-                "implementation": {"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "templateId"},
-                "arguments": {"string": {"type": "integerValue", "key": "value"}},
-                "expects": {},
-            }
+                "metadata": {"id": "id", "name": "name", "hidden": True},
+                "implementation": {"type": "templateId", "value": "implementation"},
+                "arguments": {"arguments": {"type": "integerValue", "value": 1}},
+                "expects": {"expectedStdout": "expectedStdout"},
+            },
+            {
+                "metadata": {"id": "id", "name": "name", "hidden": True},
+                "implementation": {"type": "templateId", "value": "implementation"},
+                "arguments": {"arguments": {"type": "integerValue", "value": 1}},
+                "expects": {"expectedStdout": "expectedStdout"},
+            },
         ],
         "isPublic": True,
     }
     expected_types: typing.Any = {
         "problemId": None,
-        "problemDescription": {"boards": ("list", {0: "no_validate"})},
+        "problemDescription": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
         "problemName": None,
         "problemVersion": "integer",
         "supportedLanguages": ("set", {0: None}),
         "customFiles": "no_validate",
         "generatedFiles": {
-            "generatedTestCaseFiles": ("dict", {0: (None, {"files": ("list", {})})}),
-            "generatedTemplateFiles": ("dict", {0: (None, {"files": ("list", {})})}),
-            "other": ("dict", {0: (None, {"files": ("list", {})})}),
+            "generatedTestCaseFiles": (
+                "dict",
+                {
+                    0: (
+                        None,
+                        {
+                            "files": (
+                                "list",
+                                {
+                                    0: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                    1: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                },
+                            )
+                        },
+                    )
+                },
+            ),
+            "generatedTemplateFiles": (
+                "dict",
+                {
+                    0: (
+                        None,
+                        {
+                            "files": (
+                                "list",
+                                {
+                                    0: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                    1: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                },
+                            )
+                        },
+                    )
+                },
+            ),
+            "other": (
+                "dict",
+                {
+                    0: (
+                        None,
+                        {
+                            "files": (
+                                "list",
+                                {
+                                    0: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                    1: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                },
+                            )
+                        },
+                    )
+                },
+            ),
         },
         "customTestCaseTemplates": (
             "list",
@@ -262,10 +1156,18 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
                     "templateId": None,
                     "name": None,
                     "implementation": {
-                        "description": {"boards": ("list", {0: "no_validate"})},
+                        "description": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
                         "function": "no_validate",
                     },
-                }
+                },
+                1: {
+                    "templateId": None,
+                    "name": None,
+                    "implementation": {
+                        "description": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
+                        "function": "no_validate",
+                    },
+                },
             },
         ),
         "testcases": (
@@ -276,13 +1178,19 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
                     "implementation": "no_validate",
                     "arguments": ("dict", {0: (None, "no_validate")}),
                     "expects": {"expectedStdout": None},
-                }
+                },
+                1: {
+                    "metadata": {"id": None, "name": None, "hidden": None},
+                    "implementation": "no_validate",
+                    "arguments": ("dict", {0: (None, "no_validate")}),
+                    "expects": {"expectedStdout": None},
+                },
             },
         ),
         "isPublic": None,
     }
-    response = client.v_2.problem.get_problem_version(problem_id="string", problem_version=1)
+    response = client.v_2.problem.get_problem_version(problem_id="problemId", problem_version=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.v_2.problem.get_problem_version(problem_id="string", problem_version=1)
+    async_response = await async_client.v_2.problem.get_problem_version(problem_id="problemId", problem_version=1)
     validate_response(async_response, expected_response, expected_types)

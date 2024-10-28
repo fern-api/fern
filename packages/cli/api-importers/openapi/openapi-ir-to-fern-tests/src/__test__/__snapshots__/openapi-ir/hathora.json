@@ -57,187 +57,190 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "deletedBy": {
-                    "value": {
-                      "value": "deletedBy",
-                      "type": "string"
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "deletedBy": {
+                      "value": {
+                        "value": "deletedBy",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "deletedAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "deletedAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "createdAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "createdAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "createdBy": {
-                    "value": {
-                      "value": "createdBy",
-                      "type": "string"
+                    "createdBy": {
+                      "value": {
+                        "value": "createdBy",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "orgId": {
-                    "value": {
-                      "value": "orgId",
-                      "type": "string"
+                    "orgId": {
+                      "value": {
+                        "value": "orgId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "authConfiguration": {
-                    "properties": {
-                      "google": {
-                        "properties": {
-                          "clientId": {
-                            "value": {
-                              "value": "clientId",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "appSecret": {
-                    "value": {
-                      "value": "appSecret",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "appId": {
-                    "value": {
-                      "value": "appId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "appName": {
-                    "value": {
-                      "value": "appName",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "deployment": {
-                    "properties": {
-                      "env": {
-                        "value": [
-                          {
-                            "properties": {
+                    "authConfiguration": {
+                      "properties": {
+                        "google": {
+                          "properties": {
+                            "clientId": {
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "value": "clientId",
+                                "type": "string"
                               },
-                              "name": {
-                                "value": {
-                                  "value": "name",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        ],
-                        "type": "array"
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
                       },
-                      "roomsPerProcess": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "planName": {
-                        "value": "tiny",
-                        "type": "enum"
-                      },
-                      "transportType": {
-                        "value": "tcp",
-                        "type": "enum"
-                      },
-                      "containerPort": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "createdAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "createdBy": {
-                        "value": {
-                          "value": "createdBy",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "requestedMemoryMB": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      },
-                      "requestedCPU": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      },
-                      "deploymentId": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      },
-                      "buildId": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      },
-                      "appId": {
-                        "value": {
-                          "value": "appId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "object"
                     },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                    "appSecret": {
+                      "value": {
+                        "value": "appSecret",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "appName": {
+                      "value": {
+                        "value": "appName",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "deployment": {
+                      "properties": {
+                        "env": {
+                          "value": [
+                            {
+                              "properties": {
+                                "value": {
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "name": {
+                                  "value": {
+                                    "value": "name",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "roomsPerProcess": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "planName": {
+                          "value": "tiny",
+                          "type": "enum"
+                        },
+                        "transportType": {
+                          "value": "tcp",
+                          "type": "enum"
+                        },
+                        "containerPort": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "createdAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "createdBy": {
+                          "value": {
+                            "value": "createdBy",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "requestedMemoryMB": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        },
+                        "requestedCPU": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        },
+                        "deploymentId": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        },
+                        "buildId": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        },
+                        "appId": {
+                          "value": {
+                            "value": "appId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -377,82 +380,85 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "deletedBy": {
-                "value": {
-                  "value": "deletedBy",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "deletedBy": {
+                  "value": {
+                    "value": "deletedBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "deletedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "orgId": {
+                  "value": {
+                    "value": "orgId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "authConfiguration": {
+                  "properties": {
+                    "google": {
+                      "properties": {
+                        "clientId": {
+                          "value": {
+                            "value": "clientId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                },
+                "appSecret": {
+                  "value": {
+                    "value": "appSecret",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appName": {
+                  "value": {
+                    "value": "appName",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
               },
-              "deletedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "orgId": {
-                "value": {
-                  "value": "orgId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "authConfiguration": {
-                "properties": {
-                  "google": {
-                    "properties": {
-                      "clientId": {
-                        "value": {
-                          "value": "clientId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              },
-              "appSecret": {
-                "value": {
-                  "value": "appSecret",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "appName": {
-                "value": {
-                  "value": "appName",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -620,82 +626,85 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "deletedBy": {
-                "value": {
-                  "value": "deletedBy",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "deletedBy": {
+                  "value": {
+                    "value": "deletedBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "deletedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "orgId": {
+                  "value": {
+                    "value": "orgId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "authConfiguration": {
+                  "properties": {
+                    "google": {
+                      "properties": {
+                        "clientId": {
+                          "value": {
+                            "value": "clientId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                },
+                "appSecret": {
+                  "value": {
+                    "value": "appSecret",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appName": {
+                  "value": {
+                    "value": "appName",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
               },
-              "deletedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "orgId": {
-                "value": {
-                  "value": "orgId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "authConfiguration": {
-                "properties": {
-                  "google": {
-                    "properties": {
-                      "clientId": {
-                        "value": {
-                          "value": "clientId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              },
-              "appSecret": {
-                "value": {
-                  "value": "appSecret",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "appName": {
-                "value": {
-                  "value": "appName",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -801,82 +810,85 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "deletedBy": {
-                "value": {
-                  "value": "deletedBy",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "deletedBy": {
+                  "value": {
+                    "value": "deletedBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "deletedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "orgId": {
+                  "value": {
+                    "value": "orgId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "authConfiguration": {
+                  "properties": {
+                    "google": {
+                      "properties": {
+                        "clientId": {
+                          "value": {
+                            "value": "clientId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                },
+                "appSecret": {
+                  "value": {
+                    "value": "appSecret",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appName": {
+                  "value": {
+                    "value": "appName",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
               },
-              "deletedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "orgId": {
-                "value": {
-                  "value": "orgId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "authConfiguration": {
-                "properties": {
-                  "google": {
-                    "properties": {
-                      "clientId": {
-                        "value": {
-                          "value": "clientId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              },
-              "appSecret": {
-                "value": {
-                  "value": "appSecret",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "appName": {
-                "value": {
-                  "value": "appName",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1113,16 +1125,19 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "token": {
-                "value": {
-                  "value": "token",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "token": {
+                  "value": {
+                    "value": "token",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1297,16 +1312,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "token": {
-                "value": {
-                  "value": "token",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "token": {
+                  "value": {
+                    "value": "token",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1508,16 +1526,19 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "token": {
-                "value": {
-                  "value": "token",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+            "value": {
+              "properties": {
+                "token": {
+                  "value": {
+                    "value": "token",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1628,95 +1649,98 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "regionalContainerTags": {
-                    "value": [
-                      {
-                        "properties": {
-                          "containerTag": {
-                            "value": {
-                              "value": "containerTag",
-                              "type": "string"
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "regionalContainerTags": {
+                      "value": [
+                        {
+                          "properties": {
+                            "containerTag": {
+                              "value": {
+                                "value": "containerTag",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
+                            "region": {
+                              "value": "Seattle",
+                              "type": "enum"
+                            }
                           },
-                          "region": {
-                            "value": "Seattle",
-                            "type": "enum"
-                          }
-                        },
-                        "type": "object"
-                      }
-                    ],
-                    "type": "array"
-                  },
-                  "imageSize": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
                     },
-                    "type": "primitive"
-                  },
-                  "status": {
-                    "value": "created",
-                    "type": "enum"
-                  },
-                  "deletedAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "imageSize": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "finishedAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "status": {
+                      "value": "created",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  },
-                  "startedAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "deletedAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "createdAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "finishedAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "createdBy": {
-                    "value": {
-                      "value": "createdBy",
-                      "type": "string"
+                    "startedAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "buildId": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "createdAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "appId": {
-                    "value": {
-                      "value": "appId",
-                      "type": "string"
+                    "createdBy": {
+                      "value": {
+                        "value": "createdBy",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                    "buildId": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
+                    },
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1848,90 +1872,93 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "regionalContainerTags": {
-                "value": [
-                  {
-                    "properties": {
-                      "containerTag": {
-                        "value": {
-                          "value": "containerTag",
-                          "type": "string"
+            "value": {
+              "properties": {
+                "regionalContainerTags": {
+                  "value": [
+                    {
+                      "properties": {
+                        "containerTag": {
+                          "value": {
+                            "value": "containerTag",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "region": {
+                          "value": "Seattle",
+                          "type": "enum"
+                        }
                       },
-                      "region": {
-                        "value": "Seattle",
-                        "type": "enum"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "imageSize": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "primitive"
-              },
-              "status": {
-                "value": "created",
-                "type": "enum"
-              },
-              "deletedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "imageSize": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "finishedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "status": {
+                  "value": "created",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              },
-              "startedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "deletedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "finishedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
+                "startedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "buildId": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "buildId": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2091,90 +2118,93 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "regionalContainerTags": {
-                "value": [
-                  {
-                    "properties": {
-                      "containerTag": {
-                        "value": {
-                          "value": "containerTag",
-                          "type": "string"
+            "value": {
+              "properties": {
+                "regionalContainerTags": {
+                  "value": [
+                    {
+                      "properties": {
+                        "containerTag": {
+                          "value": {
+                            "value": "containerTag",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "region": {
+                          "value": "Seattle",
+                          "type": "enum"
+                        }
                       },
-                      "region": {
-                        "value": "Seattle",
-                        "type": "enum"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "imageSize": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "primitive"
-              },
-              "status": {
-                "value": "created",
-                "type": "enum"
-              },
-              "deletedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "imageSize": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "finishedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "status": {
+                  "value": "created",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              },
-              "startedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "deletedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "finishedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
+                "startedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "buildId": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "buildId": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2584,109 +2614,112 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "env": {
-                    "value": [
-                      {
-                        "properties": {
-                          "value": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "env": {
+                      "value": [
+                        {
+                          "properties": {
                             "value": {
-                              "value": "value",
-                              "type": "string"
+                              "value": {
+                                "value": "value",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
+                            "name": {
+                              "value": {
+                                "value": "name",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
                           },
-                          "name": {
-                            "value": {
-                              "value": "name",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      }
-                    ],
-                    "type": "array"
-                  },
-                  "roomsPerProcess": {
-                    "value": {
-                      "value": 1,
-                      "type": "int"
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
                     },
-                    "type": "primitive"
-                  },
-                  "planName": {
-                    "value": "tiny",
-                    "type": "enum"
-                  },
-                  "transportType": {
-                    "value": "tcp",
-                    "type": "enum"
-                  },
-                  "containerPort": {
-                    "value": {
-                      "value": 1,
-                      "type": "int"
+                    "roomsPerProcess": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "createdAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "planName": {
+                      "value": "tiny",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  },
-                  "createdBy": {
-                    "value": {
-                      "value": "createdBy",
-                      "type": "string"
+                    "transportType": {
+                      "value": "tcp",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  },
-                  "requestedMemoryMB": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "containerPort": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "requestedCPU": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "createdAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "deploymentId": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "createdBy": {
+                      "value": {
+                        "value": "createdBy",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "buildId": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "requestedMemoryMB": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "appId": {
-                    "value": {
-                      "value": "appId",
-                      "type": "string"
+                    "requestedCPU": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                    "deploymentId": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
+                    },
+                    "buildId": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
+                    },
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2818,104 +2851,107 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "env": {
-                "value": [
-                  {
-                    "properties": {
-                      "value": {
+            "value": {
+              "properties": {
+                "env": {
+                  "value": [
+                    {
+                      "properties": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "roomsPerProcess": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "primitive"
-              },
-              "planName": {
-                "value": "tiny",
-                "type": "enum"
-              },
-              "transportType": {
-                "value": "tcp",
-                "type": "enum"
-              },
-              "containerPort": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+                "roomsPerProcess": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "planName": {
+                  "value": "tiny",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
+                "transportType": {
+                  "value": "tcp",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              },
-              "requestedMemoryMB": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "containerPort": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "requestedCPU": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "deploymentId": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "buildId": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "requestedMemoryMB": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
+                "requestedCPU": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "deploymentId": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                },
+                "buildId": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3171,104 +3207,107 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "env": {
-                "value": [
-                  {
-                    "properties": {
-                      "value": {
+            "value": {
+              "properties": {
+                "env": {
+                  "value": [
+                    {
+                      "properties": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "roomsPerProcess": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "primitive"
-              },
-              "planName": {
-                "value": "tiny",
-                "type": "enum"
-              },
-              "transportType": {
-                "value": "tcp",
-                "type": "enum"
-              },
-              "containerPort": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+                "roomsPerProcess": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "planName": {
+                  "value": "tiny",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
+                "transportType": {
+                  "value": "tcp",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              },
-              "requestedMemoryMB": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "containerPort": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "requestedCPU": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "deploymentId": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "buildId": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "requestedMemoryMB": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
+                "requestedCPU": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "deploymentId": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                },
+                "buildId": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3318,32 +3357,35 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "port": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "port": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "host": {
-                    "value": {
-                      "value": "host",
-                      "type": "string"
+                    "host": {
+                      "value": {
+                        "value": "host",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
+                    "region": {
+                      "value": "Seattle",
+                      "type": "enum"
+                    }
                   },
-                  "region": {
-                    "value": "Seattle",
-                    "type": "enum"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3628,10 +3670,13 @@
           ],
           "response": {
             "value": {
-              "value": "string",
-              "type": "string"
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
             },
-            "type": "primitive"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3916,10 +3961,13 @@
           ],
           "response": {
             "value": {
-              "value": "string",
-              "type": "string"
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
             },
-            "type": "primitive"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -4127,99 +4175,102 @@
             }
           ],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "state": {
-                    "value": [
-                      {
-                        "key": {
-                          "value": "key",
-                          "type": "string"
-                        },
-                        "value": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "state": {
+                      "value": [
+                        {
+                          "key": {
+                            "value": "key",
+                            "type": "string"
+                          },
                           "value": {
                             "value": {
-                              "value": "value",
-                              "type": "string"
+                              "value": {
+                                "value": "value",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
-                          },
-                          "type": "unknown"
+                            "type": "unknown"
+                          }
                         }
-                      }
-                    ],
-                    "type": "map"
-                  },
-                  "initialConfig": {
-                    "value": [
-                      {
-                        "key": {
-                          "value": "key",
-                          "type": "string"
-                        },
-                        "value": {
+                      ],
+                      "type": "map"
+                    },
+                    "initialConfig": {
+                      "value": [
+                        {
+                          "key": {
+                            "value": "key",
+                            "type": "string"
+                          },
                           "value": {
                             "value": {
-                              "value": "value",
-                              "type": "string"
+                              "value": {
+                                "value": "value",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
-                          },
-                          "type": "unknown"
+                            "type": "unknown"
+                          }
                         }
-                      }
-                    ],
-                    "type": "map"
-                  },
-                  "createdAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                      ],
+                      "type": "map"
                     },
-                    "type": "primitive"
-                  },
-                  "createdBy": {
-                    "value": {
-                      "value": "createdBy",
-                      "type": "string"
+                    "createdAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "local": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
+                    "createdBy": {
+                      "value": {
+                        "value": "createdBy",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "visibility": {
-                    "value": "private",
-                    "type": "enum"
-                  },
-                  "region": {
-                    "value": "Seattle",
-                    "type": "enum"
-                  },
-                  "roomId": {
-                    "value": {
-                      "value": "roomId",
-                      "type": "string"
+                    "local": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "appId": {
-                    "value": {
-                      "value": "appId",
-                      "type": "string"
+                    "visibility": {
+                      "value": "private",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                    "region": {
+                      "value": "Seattle",
+                      "type": "enum"
+                    },
+                    "roomId": {
+                      "value": {
+                        "value": "roomId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -4575,94 +4626,97 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "state": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+            "value": {
+              "properties": {
+                "state": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "initialConfig": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+                  ],
+                  "type": "map"
+                },
+                "initialConfig": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                  ],
+                  "type": "map"
                 },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "local": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "visibility": {
-                "value": "private",
-                "type": "enum"
-              },
-              "region": {
-                "value": "Seattle",
-                "type": "enum"
-              },
-              "roomId": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
+                "local": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
+                "visibility": {
+                  "value": "private",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              }
+                "region": {
+                  "value": "Seattle",
+                  "type": "enum"
+                },
+                "roomId": {
+                  "value": {
+                    "value": "roomId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -5018,94 +5072,97 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "state": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+            "value": {
+              "properties": {
+                "state": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "initialConfig": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+                  ],
+                  "type": "map"
+                },
+                "initialConfig": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                  ],
+                  "type": "map"
                 },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "local": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "visibility": {
-                "value": "private",
-                "type": "enum"
-              },
-              "region": {
-                "value": "Seattle",
-                "type": "enum"
-              },
-              "roomId": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
+                "local": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
+                "visibility": {
+                  "value": "private",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              }
+                "region": {
+                  "value": "Seattle",
+                  "type": "enum"
+                },
+                "roomId": {
+                  "value": {
+                    "value": "roomId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -5461,94 +5518,97 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "state": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+            "value": {
+              "properties": {
+                "state": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "initialConfig": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+                  ],
+                  "type": "map"
+                },
+                "initialConfig": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                  ],
+                  "type": "map"
                 },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "local": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "visibility": {
-                "value": "private",
-                "type": "enum"
-              },
-              "region": {
-                "value": "Seattle",
-                "type": "enum"
-              },
-              "roomId": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
+                "local": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
+                "visibility": {
+                  "value": "private",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              }
+                "region": {
+                  "value": "Seattle",
+                  "type": "enum"
+                },
+                "roomId": {
+                  "value": {
+                    "value": "roomId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -5939,94 +5999,97 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "state": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+            "value": {
+              "properties": {
+                "state": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "initialConfig": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+                  ],
+                  "type": "map"
+                },
+                "initialConfig": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                  ],
+                  "type": "map"
                 },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "local": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "visibility": {
-                "value": "private",
-                "type": "enum"
-              },
-              "region": {
-                "value": "Seattle",
-                "type": "enum"
-              },
-              "roomId": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
+                "local": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
+                "visibility": {
+                  "value": "private",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              }
+                "region": {
+                  "value": "Seattle",
+                  "type": "enum"
+                },
+                "roomId": {
+                  "value": {
+                    "value": "roomId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -6130,99 +6193,102 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "state": {
-                    "value": [
-                      {
-                        "key": {
-                          "value": "key",
-                          "type": "string"
-                        },
-                        "value": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "state": {
+                      "value": [
+                        {
+                          "key": {
+                            "value": "key",
+                            "type": "string"
+                          },
                           "value": {
                             "value": {
-                              "value": "value",
-                              "type": "string"
+                              "value": {
+                                "value": "value",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
-                          },
-                          "type": "unknown"
+                            "type": "unknown"
+                          }
                         }
-                      }
-                    ],
-                    "type": "map"
-                  },
-                  "initialConfig": {
-                    "value": [
-                      {
-                        "key": {
-                          "value": "key",
-                          "type": "string"
-                        },
-                        "value": {
+                      ],
+                      "type": "map"
+                    },
+                    "initialConfig": {
+                      "value": [
+                        {
+                          "key": {
+                            "value": "key",
+                            "type": "string"
+                          },
                           "value": {
                             "value": {
-                              "value": "value",
-                              "type": "string"
+                              "value": {
+                                "value": "value",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
-                          },
-                          "type": "unknown"
+                            "type": "unknown"
+                          }
                         }
-                      }
-                    ],
-                    "type": "map"
-                  },
-                  "createdAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                      ],
+                      "type": "map"
                     },
-                    "type": "primitive"
-                  },
-                  "createdBy": {
-                    "value": {
-                      "value": "createdBy",
-                      "type": "string"
+                    "createdAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "local": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
+                    "createdBy": {
+                      "value": {
+                        "value": "createdBy",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "visibility": {
-                    "value": "private",
-                    "type": "enum"
-                  },
-                  "region": {
-                    "value": "Seattle",
-                    "type": "enum"
-                  },
-                  "roomId": {
-                    "value": {
-                      "value": "roomId",
-                      "type": "string"
+                    "local": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "appId": {
-                    "value": {
-                      "value": "appId",
-                      "type": "string"
+                    "visibility": {
+                      "value": "private",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                    "region": {
+                      "value": "Seattle",
+                      "type": "enum"
+                    },
+                    "roomId": {
+                      "value": {
+                        "value": "roomId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -6354,94 +6420,97 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "state": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+            "value": {
+              "properties": {
+                "state": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "initialConfig": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+                  ],
+                  "type": "map"
+                },
+                "initialConfig": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                  ],
+                  "type": "map"
                 },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "local": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "visibility": {
-                "value": "private",
-                "type": "enum"
-              },
-              "region": {
-                "value": "Seattle",
-                "type": "enum"
-              },
-              "roomId": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
+                "local": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
+                "visibility": {
+                  "value": "private",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              }
+                "region": {
+                  "value": "Seattle",
+                  "type": "enum"
+                },
+                "roomId": {
+                  "value": {
+                    "value": "roomId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -6673,94 +6742,97 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "state": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+            "value": {
+              "properties": {
+                "state": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "initialConfig": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
+                  ],
+                  "type": "map"
+                },
+                "initialConfig": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
                       "value": {
                         "value": {
-                          "value": "value",
-                          "type": "string"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "unknown"
+                        "type": "unknown"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "createdAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                  ],
+                  "type": "map"
                 },
-                "type": "primitive"
-              },
-              "createdBy": {
-                "value": {
-                  "value": "createdBy",
-                  "type": "string"
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "local": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
+                "createdBy": {
+                  "value": {
+                    "value": "createdBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "visibility": {
-                "value": "private",
-                "type": "enum"
-              },
-              "region": {
-                "value": "Seattle",
-                "type": "enum"
-              },
-              "roomId": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
+                "local": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
+                "visibility": {
+                  "value": "private",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              }
+                "region": {
+                  "value": "Seattle",
+                  "type": "enum"
+                },
+                "roomId": {
+                  "value": {
+                    "value": "roomId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -7407,105 +7479,108 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "cpu": {
-                "value": [
-                  {
-                    "properties": {
-                      "value": {
+            "value": {
+              "properties": {
+                "cpu": {
+                  "value": [
+                    {
+                      "properties": {
                         "value": {
-                          "value": 1.1,
-                          "type": "double"
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "timestamp": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "timestamp": {
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "memory": {
+                  "value": [
+                    {
+                      "properties": {
                         "value": {
-                          "value": 1.1,
-                          "type": "double"
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
+                        "timestamp": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "rate_egress": {
+                  "value": [
+                    {
+                      "properties": {
+                        "value": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        },
+                        "timestamp": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "total_egress": {
+                  "value": [
+                    {
+                      "properties": {
+                        "value": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        },
+                        "timestamp": {
+                          "value": {
+                            "value": 1.1,
+                            "type": "double"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
               },
-              "memory": {
-                "value": [
-                  {
-                    "properties": {
-                      "value": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      },
-                      "timestamp": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "rate_egress": {
-                "value": [
-                  {
-                    "properties": {
-                      "value": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      },
-                      "timestamp": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "total_egress": {
-                "value": [
-                  {
-                    "properties": {
-                      "value": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      },
-                      "timestamp": {
-                        "value": {
-                          "value": 1.1,
-                          "type": "double"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -7637,158 +7712,161 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "egressedBytes": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "egressedBytes": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "idleSince": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "idleSince": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "activeConnections": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "activeConnections": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "roomSlotsAvailable": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "roomSlotsAvailable": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "draining": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
+                    "draining": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "terminatedAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "terminatedAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "stoppingAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "stoppingAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "startedAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "startedAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "startingAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "startingAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "roomsPerProcess": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "roomsPerProcess": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "port": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "port": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "host": {
-                    "value": {
-                      "value": "host",
-                      "type": "string"
+                    "host": {
+                      "value": {
+                        "value": "host",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "region": {
-                    "value": "Seattle",
-                    "type": "enum"
-                  },
-                  "processId": {
-                    "value": {
-                      "value": "processId",
-                      "type": "string"
+                    "region": {
+                      "value": "Seattle",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  },
-                  "deploymentId": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "processId": {
+                      "value": {
+                        "value": "processId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "appId": {
-                    "value": {
-                      "value": "appId",
-                      "type": "string"
+                    "deploymentId": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "rooms": {
-                    "value": [
-                      {
-                        "properties": {
-                          "appId": {
-                            "value": {
-                              "value": "appId",
-                              "type": "string"
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "rooms": {
+                      "value": [
+                        {
+                          "properties": {
+                            "appId": {
+                              "value": {
+                                "value": "appId",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
-                          },
-                          "roomId": {
-                            "value": {
-                              "value": "roomId",
-                              "type": "string"
+                            "roomId": {
+                              "value": {
+                                "value": "roomId",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
+                            "status": {
+                              "value": "scheduling",
+                              "type": "enum"
+                            }
                           },
-                          "status": {
-                            "value": "scheduling",
-                            "type": "enum"
-                          }
-                        },
-                        "type": "object"
-                      }
-                    ],
-                    "type": "array"
-                  },
-                  "totalRooms": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
                     },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                    "totalRooms": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -7920,123 +7998,126 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "egressedBytes": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "egressedBytes": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "idleSince": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "idleSince": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "activeConnections": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "activeConnections": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "roomSlotsAvailable": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "roomSlotsAvailable": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "draining": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
+                    "draining": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "terminatedAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "terminatedAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "stoppingAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "stoppingAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "startedAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "startedAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "startingAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
+                    "startingAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "roomsPerProcess": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "roomsPerProcess": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "port": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "port": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "host": {
-                    "value": {
-                      "value": "host",
-                      "type": "string"
+                    "host": {
+                      "value": {
+                        "value": "host",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "region": {
-                    "value": "Seattle",
-                    "type": "enum"
-                  },
-                  "processId": {
-                    "value": {
-                      "value": "processId",
-                      "type": "string"
+                    "region": {
+                      "value": "Seattle",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  },
-                  "deploymentId": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
+                    "processId": {
+                      "value": {
+                        "value": "processId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "appId": {
-                    "value": {
-                      "value": "appId",
-                      "type": "string"
+                    "deploymentId": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -8168,118 +8249,121 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "egressedBytes": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+            "value": {
+              "properties": {
+                "egressedBytes": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "idleSince": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "idleSince": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "activeConnections": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "activeConnections": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "roomSlotsAvailable": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "roomSlotsAvailable": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "draining": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
+                "draining": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "terminatedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "terminatedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "stoppingAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "stoppingAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "startedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "startedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "startingAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "startingAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "roomsPerProcess": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "roomsPerProcess": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "port": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "port": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "host": {
-                "value": {
-                  "value": "host",
-                  "type": "string"
+                "host": {
+                  "value": {
+                    "value": "host",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "region": {
-                "value": "Seattle",
-                "type": "enum"
-              },
-              "processId": {
-                "value": {
-                  "value": "processId",
-                  "type": "string"
+                "region": {
+                  "value": "Seattle",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              },
-              "deploymentId": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
+                "processId": {
+                  "value": {
+                    "value": "processId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
+                "deploymentId": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -8462,10 +8546,13 @@
           },
           "response": {
             "value": {
-              "value": "string",
-              "type": "string"
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
             },
-            "type": "primitive"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -8597,98 +8684,101 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "currentAllocation": {
-                "properties": {
-                  "unscheduledAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
-                    },
-                    "type": "primitive"
-                  },
-                  "scheduledAt": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
-                    },
-                    "type": "primitive"
-                  },
-                  "processId": {
-                    "value": {
-                      "value": "processId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "roomAllocationId": {
-                    "value": {
-                      "value": "roomAllocationId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              },
-              "status": {
-                "value": "scheduling",
-                "type": "enum"
-              },
-              "allocations": {
-                "value": [
-                  {
-                    "properties": {
-                      "unscheduledAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
+            "value": {
+              "properties": {
+                "currentAllocation": {
+                  "properties": {
+                    "unscheduledAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
                       },
-                      "scheduledAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "processId": {
-                        "value": {
-                          "value": "processId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "roomAllocationId": {
-                        "value": {
-                          "value": "roomAllocationId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "primitive"
                     },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "roomId": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
+                    "scheduledAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "processId": {
+                      "value": {
+                        "value": "processId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "roomAllocationId": {
+                      "value": {
+                        "value": "roomAllocationId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "primitive"
-              },
-              "appId": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
+                "status": {
+                  "value": "scheduling",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              }
+                "allocations": {
+                  "value": [
+                    {
+                      "properties": {
+                        "unscheduledAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "scheduledAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "processId": {
+                          "value": {
+                            "value": "processId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "roomAllocationId": {
+                          "value": {
+                            "value": "roomAllocationId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "roomId": {
+                  "value": {
+                    "value": "roomId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "appId": {
+                  "value": {
+                    "value": "appId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -8825,65 +8915,68 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "appId": {
-                    "value": {
-                      "value": "appId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "roomId": {
-                    "value": {
-                      "value": "roomId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "status": {
-                    "value": "scheduling",
-                    "type": "enum"
-                  },
-                  "currentAllocation": {
-                    "properties": {
-                      "unscheduledAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
                       },
-                      "scheduledAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "processId": {
-                        "value": {
-                          "value": "processId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "roomAllocationId": {
-                        "value": {
-                          "value": "roomAllocationId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "primitive"
                     },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                    "roomId": {
+                      "value": {
+                        "value": "roomId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "status": {
+                      "value": "scheduling",
+                      "type": "enum"
+                    },
+                    "currentAllocation": {
+                      "properties": {
+                        "unscheduledAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "scheduledAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "processId": {
+                          "value": {
+                            "value": "processId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "roomAllocationId": {
+                          "value": {
+                            "value": "roomAllocationId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -9020,65 +9113,68 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
-              {
-                "properties": {
-                  "appId": {
-                    "value": {
-                      "value": "appId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "roomId": {
-                    "value": {
-                      "value": "roomId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "status": {
-                    "value": "scheduling",
-                    "type": "enum"
-                  },
-                  "currentAllocation": {
-                    "properties": {
-                      "unscheduledAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
                       },
-                      "scheduledAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "processId": {
-                        "value": {
-                          "value": "processId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "roomAllocationId": {
-                        "value": {
-                          "value": "roomAllocationId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "primitive"
                     },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            ],
-            "type": "array"
+                    "roomId": {
+                      "value": {
+                        "value": "roomId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "status": {
+                      "value": "scheduling",
+                      "type": "enum"
+                    },
+                    "currentAllocation": {
+                      "properties": {
+                        "unscheduledAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "scheduledAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "processId": {
+                          "value": {
+                            "value": "processId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "roomAllocationId": {
+                          "value": {
+                            "value": "roomAllocationId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -9542,42 +9638,45 @@
           "response": {
             "value": {
               "value": {
-                "status": {
-                  "value": {
-                    "value": "active",
-                    "type": "string"
+                "value": {
+                  "status": {
+                    "value": {
+                      "value": "active",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   },
-                  "type": "primitive"
-                },
-                "transportType": {
-                  "value": "tcp",
-                  "type": "enum"
-                },
-                "port": {
-                  "value": {
-                    "value": 1.1,
-                    "type": "double"
+                  "transportType": {
+                    "value": "tcp",
+                    "type": "enum"
                   },
-                  "type": "primitive"
-                },
-                "host": {
-                  "value": {
-                    "value": "string",
-                    "type": "string"
+                  "port": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "double"
+                    },
+                    "type": "primitive"
                   },
-                  "type": "primitive"
-                },
-                "roomId": {
-                  "value": {
-                    "value": "string",
-                    "type": "string"
+                  "host": {
+                    "value": {
+                      "value": "string",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   },
-                  "type": "primitive"
-                }
+                  "roomId": {
+                    "value": {
+                      "value": "string",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "discriminated"
               },
-              "type": "discriminated"
+              "type": "oneOf"
             },
-            "type": "oneOf"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

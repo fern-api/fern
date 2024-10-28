@@ -12,6 +12,7 @@ use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Core\Json\JsonDecoder;
 use Seed\Service\Requests\GetMetadataRequest;
+use Seed\Types\Types\BigEntity;
 use Seed\Types\Types\Response;
 
 class ServiceClient
@@ -151,6 +152,7 @@ class ServiceClient
     }
 
     /**
+     * @param BigEntity $request
      * @param ?array{
      *   baseUrl?: string,
      * } $options
@@ -158,14 +160,15 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getResponse(?array $options = null): Response
+    public function createBigEntity(BigEntity $request, ?array $options = null): Response
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/response",
+                    path: "/big-entity",
                     method: HttpMethod::POST,
+                    body: $request,
                 ),
             );
             $statusCode = $response->getStatusCode();

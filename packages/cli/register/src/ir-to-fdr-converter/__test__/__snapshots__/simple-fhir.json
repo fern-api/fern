@@ -320,7 +320,65 @@
           }
         },
         "errorsV2": [],
-        "examples": []
+        "examples": [
+          {
+            "path": "/account/account_id",
+            "pathParameters": {
+              "account_id": "account_id"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "resource_type": "Account",
+              "name": "name",
+              "patient": {
+                "resource_type": "Patient",
+                "name": "name",
+                "scripts": [
+                  {
+                    "resource_type": "Script",
+                    "name": "name"
+                  },
+                  {
+                    "resource_type": "Script",
+                    "name": "name"
+                  }
+                ]
+              },
+              "practitioner": {
+                "resource_type": "Practitioner",
+                "name": "name"
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "resource_type": "Account",
+                "name": "name",
+                "patient": {
+                  "resource_type": "Patient",
+                  "name": "name",
+                  "scripts": [
+                    {
+                      "resource_type": "Script",
+                      "name": "name"
+                    },
+                    {
+                      "resource_type": "Script",
+                      "name": "name"
+                    }
+                  ]
+                },
+                "practitioner": {
+                  "resource_type": "Practitioner",
+                  "name": "name"
+                }
+              }
+            },
+            "codeSamples": []
+          }
+        ]
       }
     ],
     "webhooks": [],

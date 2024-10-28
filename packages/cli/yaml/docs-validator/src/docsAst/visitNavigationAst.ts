@@ -129,7 +129,13 @@ async function visitNavigationItem({
                     context
                 });
             });
-        }
+        },
+        viewers: async (viewers: docsYml.RawSchemas.WithPermissions["viewers"]): Promise<void> => {
+            if (viewers != null && viewers.length > 0) {
+                await visitor.permissions?.({ viewers }, [...nodePath, "viewers"]);
+            }
+        },
+        orphaned: noop
     });
 
     if (navigationItemIsPage(navigationItem)) {

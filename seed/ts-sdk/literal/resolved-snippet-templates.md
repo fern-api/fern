@@ -14,7 +14,7 @@ import { SeedLiteralClient } from "@fern/literal";
 
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.headers.send({
-  query: "What is the weather today",
+  query: "query",
 });
  
 ```                        
@@ -40,8 +40,7 @@ import { SeedLiteralClient } from "@fern/literal";
 
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.inlined.send({
-  query: "What is the weather today",
-  temperature: 10.1,
+  query: "query",
   objectWithLiteral: {
     nestedLiteral: {},
   },
@@ -84,7 +83,7 @@ import { SeedLiteralClient } from "@fern/literal";
 
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.query.send({
-  query: "string",
+  query: "query",
 });
  
 ```                        
@@ -113,9 +112,12 @@ import { SeedLiteralClient } from "@fern/literal";
 
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.reference.send({
-  query: "What is the weather today",
+  query: "query",
   containerObject: {
     nestedObjects: [
+      {
+        strProp: "strProp",
+      },
       {
         strProp: "strProp",
       },

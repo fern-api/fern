@@ -9,25 +9,13 @@ from .utilities import validate_response
 async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
     expected_response: typing.Any = {
         "resource_type": "Account",
-        "name": "string",
+        "name": "name",
         "patient": {
             "resource_type": "Patient",
-            "name": "string",
-            "scripts": [],
-            "id": "string",
-            "related_resources": [],
-            "memo": {"description": "string"},
+            "name": "name",
+            "scripts": [{"resource_type": "Script", "name": "name"}, {"resource_type": "Script", "name": "name"}],
         },
-        "practitioner": {
-            "resource_type": "Practitioner",
-            "name": "string",
-            "id": "string",
-            "related_resources": [],
-            "memo": {"description": "string"},
-        },
-        "id": "string",
-        "related_resources": [],
-        "memo": {"description": "string"},
+        "practitioner": {"resource_type": "Practitioner", "name": "name"},
     }
     expected_types: typing.Any = {
         "resource_type": None,
@@ -35,24 +23,12 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
         "patient": {
             "resource_type": None,
             "name": None,
-            "scripts": ("list", {}),
-            "id": None,
-            "related_resources": ("list", {}),
-            "memo": {"description": None, "account": None},
+            "scripts": ("list", {0: {"resource_type": None, "name": None}, 1: {"resource_type": None, "name": None}}),
         },
-        "practitioner": {
-            "resource_type": None,
-            "name": None,
-            "id": None,
-            "related_resources": ("list", {}),
-            "memo": {"description": None, "account": None},
-        },
-        "id": None,
-        "related_resources": ("list", {}),
-        "memo": {"description": None, "account": None},
+        "practitioner": {"resource_type": None, "name": None},
     }
-    response = client.get_account(account_id="string")
+    response = client.get_account(account_id="account_id")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.get_account(account_id="string")
+    async_response = await async_client.get_account(account_id="account_id")
     validate_response(async_response, expected_response, expected_types)

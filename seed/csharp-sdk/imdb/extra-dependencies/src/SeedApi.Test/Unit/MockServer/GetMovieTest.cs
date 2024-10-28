@@ -16,14 +16,14 @@ public class GetMovieTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "id": "string",
-              "title": "string",
+              "id": "id",
+              "title": "title",
               "rating": 1.1
             }
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/movies/string").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/movies/movieId").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -31,7 +31,7 @@ public class GetMovieTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Imdb.GetMovieAsync("string", RequestOptions);
+        var response = await Client.Imdb.GetMovieAsync("movieId", RequestOptions);
         JToken
             .Parse(mockResponse)
             .Should()

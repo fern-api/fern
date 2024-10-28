@@ -184,10 +184,28 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.GetResponseAsync();
+    /// await client.Service.CreateBigEntityAsync(
+    ///     new BigEntity
+    ///     {
+    ///         CastMember = null,
+    ///         ExtendedMovie = null,
+    ///         Entity = null,
+    ///         Metadata = null,
+    ///         CommonMetadata = null,
+    ///         EventInfo = null,
+    ///         Data = null,
+    ///         Migration = null,
+    ///         Exception = null,
+    ///         Test = null,
+    ///         Node = null,
+    ///         Directory = null,
+    ///         Moment = null,
+    ///     }
+    /// );
     /// </code>
     /// </example>
-    public async Task<Response> GetResponseAsync(
+    public async Task<Response> CreateBigEntityAsync(
+        BigEntity request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -197,7 +215,8 @@ public partial class ServiceClient
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/response",
+                Path = "/big-entity",
+                Body = request,
                 Options = options,
             },
             cancellationToken

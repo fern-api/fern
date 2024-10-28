@@ -34,7 +34,7 @@ export class Organization {
      *
      * @example
      *     await client.organization.create({
-     *         name: "string"
+     *         name: "name"
      *     })
      */
     public async create(

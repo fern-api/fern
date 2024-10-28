@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedMultiUrlEnvironment;
 
 var client = new SeedMultiUrlEnvironmentClient("TOKEN");
-await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "string" });
+await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
 ```
 
 ## Exception Handling

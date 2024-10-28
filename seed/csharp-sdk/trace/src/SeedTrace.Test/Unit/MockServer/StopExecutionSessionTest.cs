@@ -14,13 +14,14 @@ public class StopExecutionSessionTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/sessions/stop/string")
+                    .WithPath("/sessions/stop/sessionId")
                     .UsingDelete()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(
-            async () => await Client.Submission.StopExecutionSessionAsync("string", RequestOptions)
+            async () =>
+                await Client.Submission.StopExecutionSessionAsync("sessionId", RequestOptions)
         );
     }
 }

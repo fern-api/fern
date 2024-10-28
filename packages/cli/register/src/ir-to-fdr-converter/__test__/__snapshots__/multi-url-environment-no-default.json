@@ -58,7 +58,25 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/ec2/boot",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "size": "size"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "size": "size"
+                }
+              },
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -134,7 +152,30 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/s3/presigned-url",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "s3Key": "s3Key"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "s3Key": "s3Key"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

@@ -24,7 +24,7 @@ module SeedMixedFileDirectoryClient
     # @return [SeedMixedFileDirectoryClient::Organization::Organization]
     # @example
     #  mixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: "https://api.example.com")
-    #  mixed_file_directory.organization.create(request: { name: "string" })
+    #  mixed_file_directory.organization.create(request: { name: "name" })
     def create(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -61,7 +61,7 @@ module SeedMixedFileDirectoryClient
     # @return [SeedMixedFileDirectoryClient::Organization::Organization]
     # @example
     #  mixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: "https://api.example.com")
-    #  mixed_file_directory.organization.create(request: { name: "string" })
+    #  mixed_file_directory.organization.create(request: { name: "name" })
     def create(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

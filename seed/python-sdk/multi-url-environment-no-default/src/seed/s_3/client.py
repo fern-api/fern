@@ -39,7 +39,7 @@ class S3Client:
             environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
         )
         client.s_3.get_presigned_url(
-            s_3_key="string",
+            s_3_key="s3Key",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -99,7 +99,7 @@ class AsyncS3Client:
 
         async def main() -> None:
             await client.s_3.get_presigned_url(
-                s_3_key="string",
+                s_3_key="s3Key",
             )
 
 

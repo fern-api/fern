@@ -5,13 +5,6 @@
 import * as fs from "fs";
 import * as SeedFileUpload from "../../../../index";
 
-/**
- * @example
- *     {
- *         file: fs.createReadStream("/path/to/your/file"),
- *         fileList: [fs.createReadStream("/path/to/your/file")]
- *     }
- */
 export interface MyRequest {
     maybeString?: string;
     integer: number;

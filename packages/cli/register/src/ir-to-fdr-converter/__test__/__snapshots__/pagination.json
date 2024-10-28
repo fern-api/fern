@@ -550,7 +550,65 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -606,7 +664,70 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -689,7 +810,65 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -745,7 +924,70 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -815,7 +1057,65 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -885,7 +1185,65 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -931,7 +1289,25 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "total_count": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "total_count": 1
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -977,7 +1353,25 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "total_count": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "total_count": 1
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -1024,7 +1418,37 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "cursor": {
+                  "after": "after",
+                  "data": [
+                    "data",
+                    "data"
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "cursor": {
+                    "after": "after",
+                    "data": [
+                      "data",
+                      "data"
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -1070,7 +1494,31 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "results": [
+                  "results",
+                  "results"
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "results": [
+                    "results",
+                    "results"
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

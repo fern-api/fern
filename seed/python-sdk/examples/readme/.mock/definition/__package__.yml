@@ -40,3 +40,9 @@ service:
         - request: Hello world!\n\nwith\n\tnewlines
           response:
             body: Hello world!\n\nwith\n\tnewlines
+
+    createType:
+      method: POST
+      path: ""
+      request: Type
+      response: Identifier

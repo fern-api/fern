@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "metadata",
+        "tag"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "metadata"
+        },
+        "id": {
+          "type": "string"
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jsonString": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "tag"
+        },
+        "value": {
+          "$ref": "#/definitions/commons.types.Tag"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {
+    "commons.types.Tag": {
+      "type": "string"
+    }
+  }
+}

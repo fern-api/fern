@@ -53,7 +53,16 @@
           "queryParameters": [],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -87,7 +96,16 @@
           "queryParameters": [],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -121,7 +139,16 @@
           "queryParameters": [],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -179,7 +206,16 @@
           "queryParameters": [],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/service",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -230,7 +266,25 @@
               "examples": []
             }
           ],
-          "examples": []
+          "examples": [
+            {
+              "path": "/service",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "key": "value"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "key": "value"
+                }
+              },
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -263,7 +317,16 @@
         "queryParameters": [],
         "headers": [],
         "errorsV2": [],
-        "examples": []
+        "examples": [
+          {
+            "path": "",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 204,
+            "codeSamples": []
+          }
+        ]
       }
     ],
     "webhooks": [],

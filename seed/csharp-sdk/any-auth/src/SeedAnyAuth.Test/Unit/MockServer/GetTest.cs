@@ -17,8 +17,12 @@ public class GetTest : BaseMockServerTest
         const string mockResponse = """
             [
               {
-                "id": "string",
-                "name": "string"
+                "id": "id",
+                "name": "name"
+              },
+              {
+                "id": "id",
+                "name": "name"
               }
             ]
             """;

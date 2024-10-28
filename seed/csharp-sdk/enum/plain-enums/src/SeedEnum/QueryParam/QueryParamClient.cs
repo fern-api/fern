@@ -69,9 +69,7 @@ public partial class QueryParamClient
     ///     new SendEnumListAsQueryParamRequest
     ///     {
     ///         Operand = [Operand.GreaterThan],
-    ///         MaybeOperand = [Operand.GreaterThan],
     ///         OperandOrColor = [Color.Red],
-    ///         MaybeOperandOrColor = [Color.Red],
     ///     }
     /// );
     /// </code>

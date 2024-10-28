@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/v2.v3.problem.FileInfoV2"
+      }
+    }
+  },
+  "required": [
+    "files"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "v2.v3.problem.FileInfoV2": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "editable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "filename",
+        "directory",
+        "contents",
+        "editable"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

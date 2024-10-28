@@ -202,7 +202,26 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,

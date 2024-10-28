@@ -9,18 +9,18 @@ from .utilities import validate_response
 async def test_create_movie(client: SeedApi, async_client: AsyncSeedApi) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None
-    response = client.imdb.create_movie(title="string", rating=1.1)
+    response = client.imdb.create_movie(title="title", rating=1.1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.imdb.create_movie(title="string", rating=1.1)
+    async_response = await async_client.imdb.create_movie(title="title", rating=1.1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_movie(client: SeedApi, async_client: AsyncSeedApi) -> None:
-    expected_response: typing.Any = {"id": "string", "title": "string", "rating": 1.1}
+    expected_response: typing.Any = {"id": "id", "title": "title", "rating": 1.1}
     expected_types: typing.Any = {"id": None, "title": None, "rating": None}
-    response = client.imdb.get_movie(movie_id="string")
+    response = client.imdb.get_movie(movie_id="movieId")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.imdb.get_movie(movie_id="string")
+    async_response = await async_client.imdb.get_movie(movie_id="movieId")
     validate_response(async_response, expected_response, expected_types)

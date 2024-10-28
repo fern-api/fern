@@ -23,7 +23,7 @@ Instantiate and use the client with the following:
 import { SeedApiWideBasePathClient } from "@fern/api-wide-base-path";
 
 const client = new SeedApiWideBasePathClient({ environment: "YOUR_BASE_URL" });
-await client.service.post("string", "string", 1);
+await client.service.post("serviceParam", "resourceParam", 1);
 ```
 
 ## Exception Handling

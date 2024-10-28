@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface VersionConfig {
+export interface VersionConfig extends FernDocsConfig.WithPermissions {
     displayName: string;
     /** The relative path to the version's docs.yml file. */
     path: string;

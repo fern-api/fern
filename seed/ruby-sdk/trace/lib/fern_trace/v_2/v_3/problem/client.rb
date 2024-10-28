@@ -108,7 +108,7 @@ module SeedTraceClient
         #    environment: SeedTraceClient::Environment::PROD,
         #    token: "YOUR_AUTH_TOKEN"
         #  )
-        #  trace.v_2.v_3.problem.get_latest_problem(problem_id: "string")
+        #  trace.v_2.v_3.problem.get_latest_problem(problem_id: "problemId")
         def get_latest_problem(problem_id:, request_options: nil)
           response = @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -145,7 +145,7 @@ module SeedTraceClient
         #    environment: SeedTraceClient::Environment::PROD,
         #    token: "YOUR_AUTH_TOKEN"
         #  )
-        #  trace.v_2.v_3.problem.get_problem_version(problem_id: "string", problem_version: 1)
+        #  trace.v_2.v_3.problem.get_problem_version(problem_id: "problemId", problem_version: 1)
         def get_problem_version(problem_id:, problem_version:, request_options: nil)
           response = @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -274,7 +274,7 @@ module SeedTraceClient
         #    environment: SeedTraceClient::Environment::PROD,
         #    token: "YOUR_AUTH_TOKEN"
         #  )
-        #  trace.v_2.v_3.problem.get_latest_problem(problem_id: "string")
+        #  trace.v_2.v_3.problem.get_latest_problem(problem_id: "problemId")
         def get_latest_problem(problem_id:, request_options: nil)
           Async do
             response = @request_client.conn.get do |req|
@@ -313,7 +313,7 @@ module SeedTraceClient
         #    environment: SeedTraceClient::Environment::PROD,
         #    token: "YOUR_AUTH_TOKEN"
         #  )
-        #  trace.v_2.v_3.problem.get_problem_version(problem_id: "string", problem_version: 1)
+        #  trace.v_2.v_3.problem.get_problem_version(problem_id: "problemId", problem_version: 1)
         def get_problem_version(problem_id:, problem_version:, request_options: nil)
           Async do
             response = @request_client.conn.get do |req|

@@ -1,5 +1,5 @@
 import { GeneratorName } from "./GeneratorName";
-import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
+import { GeneratorInvocationSchema } from "./schemas";
 
 export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocationSchema, "name">> = {
     [GeneratorName.JAVA]: {

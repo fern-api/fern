@@ -18,7 +18,7 @@ public class GenerateTest : BaseMockServerTest
         const string requestJson = """
             {
               "stream": false,
-              "num_events": 5
+              "num_events": 1
             }
             """;
 
@@ -45,7 +45,7 @@ public class GenerateTest : BaseMockServerTest
             );
 
         var response = await Client.Dummy.GenerateAsync(
-            new Generateequest { Stream = false, NumEvents = 5 },
+            new Generateequest { Stream = false, NumEvents = 1 },
             RequestOptions
         );
         JToken

@@ -31,7 +31,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string"])
+     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
      */
     public async getAndReturnListOfPrimitives(
         request: string[],
@@ -85,6 +85,8 @@ export class Container {
      *
      * @example
      *     await client.endpoints.container.getAndReturnListOfObjects([{
+     *             string: "string"
+     *         }, {
      *             string: "string"
      *         }])
      */
@@ -365,9 +367,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnOptional({
-     *         string: "string"
-     *     })
+     *     await client.endpoints.container.getAndReturnOptional(undefined)
      */
     public async getAndReturnOptional(
         request?: Fiddle.types.ObjectWithRequiredField,

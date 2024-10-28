@@ -86,6 +86,59 @@
               "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Executes a deployed Workflow and streams back its results.",
+              "examples": [
+                {
+                  "request": {
+                    "inputs": [
+                      {
+                        "name": "inputs",
+                        "type": "CHAT_HISTORY",
+                        "value": [
+                          {
+                            "role": "SYSTEM",
+                            "text": "text",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "data": {
+                          "data": {
+                            "data": {
+                              "output": {
+                                "name": "output",
+                                "type": "CHAT_HISTORY",
+                                "value": [
+                                  {
+                                    "role": "SYSTEM",
+                                    "text": "text",
+                                  },
+                                ],
+                              },
+                            },
+                            "type": "TERMINAL",
+                          },
+                          "error": {
+                            "code": "WORKFLOW_INITIALIZATION",
+                            "message": "message",
+                          },
+                          "id": "id",
+                          "node_id": "node_id",
+                          "node_result_id": "node_result_id",
+                          "state": "INITIATED",
+                          "ts": "2024-01-15T09:30:00Z",
+                        },
+                        "external_id": "string",
+                        "run_id": "string",
+                        "type": "NODE",
+                      },
+                    ],
+                  },
+                },
+              ],
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/execute-workflow-stream",
@@ -252,6 +305,39 @@ Generate a stream of completions using a previously defined deployment.
                 "ForbiddenError",
                 "NotFoundError",
                 "InternalServerError",
+              ],
+              "examples": [
+                {
+                  "request": {
+                    "requests": [
+                      {
+                        "input_values": {
+                          "key": "value",
+                        },
+                      },
+                    ],
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "delta": {
+                          "data": {
+                            "completion": {
+                              "id": "id",
+                              "model_version_id": "model_version_id",
+                              "text": "text",
+                            },
+                            "completion_index": 1,
+                          },
+                          "error": {
+                            "message": "message",
+                          },
+                          "request_index": 1,
+                        },
+                      },
+                    ],
+                  },
+                },
               ],
               "method": "POST",
               "pagination": undefined,
@@ -2430,6 +2516,37 @@ Used to submit feedback regarding the quality of previously generated completion
         type: WorkflowStreamEvent
         format: json
       url: Predict
+      examples:
+        - request:
+            inputs:
+              - type: CHAT_HISTORY
+                name: inputs
+                value:
+                  - text: text
+                    role: SYSTEM
+          response:
+            stream:
+              - type: NODE
+                run_id: string
+                external_id: string
+                data:
+                  id: id
+                  node_id: node_id
+                  node_result_id: node_result_id
+                  state: INITIATED
+                  ts: '2024-01-15T09:30:00Z'
+                  data:
+                    type: TERMINAL
+                    data:
+                      output:
+                        type: CHAT_HISTORY
+                        name: output
+                        value:
+                          - text: text
+                            role: SYSTEM
+                  error:
+                    message: message
+                    code: WORKFLOW_INITIALIZATION
     generate:
       path: /v1/generate
       method: POST
@@ -2548,6 +2665,23 @@ Used to submit feedback regarding the quality of previously generated completion
         - ForbiddenError
         - NotFoundError
         - InternalServerError
+      examples:
+        - request:
+            requests:
+              - input_values:
+                  key: value
+          response:
+            stream:
+              - delta:
+                  request_index: 1
+                  data:
+                    completion_index: 1
+                    completion:
+                      id: id
+                      text: text
+                      model_version_id: model_version_id
+                  error:
+                    message: message
     search:
       path: /v1/search
       method: POST

@@ -61,7 +61,7 @@ module SeedAuthEnvironmentVariablesClient
     #    x_another_header: "XAnotherHeader",
     #    x_api_version: "XApiVersion"
     #  )
-    #  auth_environment_variables.service.get_with_header(x_endpoint_header: "string")
+    #  auth_environment_variables.service.get_with_header(x_endpoint_header: "X-Endpoint-Header")
     def get_with_header(x_endpoint_header:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -148,7 +148,7 @@ module SeedAuthEnvironmentVariablesClient
     #    x_another_header: "XAnotherHeader",
     #    x_api_version: "XApiVersion"
     #  )
-    #  auth_environment_variables.service.get_with_header(x_endpoint_header: "string")
+    #  auth_environment_variables.service.get_with_header(x_endpoint_header: "X-Endpoint-Header")
     def get_with_header(x_endpoint_header:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|

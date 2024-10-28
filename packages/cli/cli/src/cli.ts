@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import {
     fernConfigJson,
     generatorsYml,
@@ -40,8 +42,14 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
+import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
+import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
+import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
+import { RUNTIME } from "@fern-typescript/fetcher";
 
 void runCli();
+
+const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 async function runCli() {
     const cliContext = new CliContext(process.stdout);
@@ -49,6 +57,12 @@ async function runCli() {
     const exit = async () => {
         await cliContext.exit();
     };
+
+    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
+        const { setGlobalDispatcher, Agent } = await import("undici");
+        setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     process.on("SIGINT", async () => {
         cliContext.suppressUpgradeMessage();
@@ -77,7 +91,10 @@ async function runCli() {
                 error
             }
         });
-        if (error instanceof FernCliError) {
+        if ((error as Error)?.message.includes("globalThis")) {
+            cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
+            cliContext.failWithoutThrowing();
+        } else if (error instanceof FernCliError) {
             // thrower is responsible for logging, so we generally don't need to log here.
             cliContext.failWithoutThrowing();
         } else if (error instanceof LoggableFernCliError) {
@@ -136,6 +153,7 @@ async function tryRunCli(cliContext: CliContext) {
     addIrCommand(cli, cliContext);
     addFdrCommand(cli, cliContext);
     addOpenAPIIrCommand(cli, cliContext);
+    addDynamicIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
     addRegisterV2Command(cli, cliContext);
@@ -154,6 +172,8 @@ async function tryRunCli(cliContext: CliContext) {
             cliContext.suppressUpgradeMessage();
         }
     });
+    addGenerateJsonschemaCommand(cli, cliContext);
+    addWriteDocsDefinitionCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -502,6 +522,54 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
                 sdkLanguage: argv.language
+            });
+        }
+    );
+}
+
+function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "dynamic-ir <path-to-output>",
+        false,
+        (yargs) =>
+            yargs
+                .positional("path-to-output", {
+                    type: "string",
+                    description: "Path to write intermediate representation (IR)",
+                    demandOption: true
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                })
+                .option("version", {
+                    string: true,
+                    description: "The version of IR to produce"
+                })
+                .option("language", {
+                    choices: Object.values(generatorsYml.GenerationLanguage),
+                    description: "Generate IR for a particular language"
+                })
+                .option("audience", {
+                    type: "array",
+                    string: true,
+                    default: new Array<string>(),
+                    description: "Filter the IR for certain audiences"
+                }),
+        async (argv) => {
+            await generateDynamicIrForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false,
+                    sdkLanguage: argv.language
+                }),
+                irFilepath: resolve(cwd(), argv.pathToOutput),
+                cliContext,
+                generationLanguage: argv.language,
+                audiences: { type: "all" },
+                version: argv.version,
+                keywords: undefined,
+                smartCasing: false
             });
         }
     );
@@ -903,6 +971,76 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 cliContext,
                 port,
                 bundlePath
+            });
+        }
+    );
+}
+
+function addGenerateJsonschemaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "jsonschema <path-to-output>",
+        "Generate JSON Schema for a specific type",
+        (yargs) =>
+            yargs
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                })
+                .positional("path-to-output", {
+                    type: "string",
+                    description: "Path to write JSON Schema",
+                    demandOption: true
+                })
+                .option("type", {
+                    string: true,
+                    demandOption: true,
+                    description: "The type to generate JSON Schema for (e.g. 'MySchema' or 'mypackage.MySchema')"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern jsonschema",
+                properties: {
+                    output: argv.output
+                }
+            });
+            await generateJsonschemaForWorkspaces({
+                typeLocator: argv.type,
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                }),
+                jsonschemaFilepath: resolve(cwd(), argv.pathToOutput),
+                cliContext
+            });
+        }
+    );
+}
+
+function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write-docs-definition <output-path>",
+        false, // hide from help message
+        (yargs) =>
+            yargs.positional("output-path", {
+                type: "string",
+                description: "Path to write the docs definition",
+                demandOption: true
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern write-docs-definition",
+                properties: {
+                    outputPath: argv.outputPath
+                }
+            });
+
+            await writeDocsDefinitionForProject({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    defaultToAllApiWorkspaces: true,
+                    commandLineApiWorkspace: undefined
+                }),
+                outputPath: resolve(cwd(), argv.outputPath),
+                cliContext
             });
         }
     );

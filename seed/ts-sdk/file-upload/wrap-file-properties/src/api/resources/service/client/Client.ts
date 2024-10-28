@@ -4,7 +4,6 @@
 
 import * as core from "../../../../core";
 import * as SeedFileUpload from "../../../index";
-import * as fs from "fs";
 import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
@@ -29,12 +28,6 @@ export class Service {
     /**
      * @param {SeedFileUpload.MyRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.post({
-     *         file: fs.createReadStream("/path/to/your/file"),
-     *         fileList: [fs.createReadStream("/path/to/your/file")]
-     *     })
      */
     public async post(request: SeedFileUpload.MyRequest, requestOptions?: Service.RequestOptions): Promise<void> {
         const _request = await core.newFormData();
@@ -139,11 +132,6 @@ export class Service {
     /**
      * @param {SeedFileUpload.JustFileRequet} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.justFile({
-     *         file: fs.createReadStream("/path/to/your/file")
-     *     })
      */
     public async justFile(
         request: SeedFileUpload.JustFileRequet,
@@ -200,16 +188,6 @@ export class Service {
     /**
      * @param {SeedFileUpload.JustFileWithQueryParamsRequet} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.justFileWithQueryParams({
-     *         file: fs.createReadStream("/path/to/your/file"),
-     *         maybeString: "string",
-     *         integer: 1,
-     *         maybeInteger: 1,
-     *         listOfStrings: "string",
-     *         optionalListOfStrings: "string"
-     *     })
      */
     public async justFileWithQueryParams(
         request: SeedFileUpload.JustFileWithQueryParamsRequet,
@@ -291,11 +269,6 @@ export class Service {
     /**
      * @param {SeedFileUpload.WithContentTypeRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.withContentType({
-     *         file: fs.createReadStream("/path/to/your/file")
-     *     })
      */
     public async withContentType(
         request: SeedFileUpload.WithContentTypeRequest,

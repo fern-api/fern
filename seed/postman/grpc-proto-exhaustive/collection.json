@@ -122,7 +122,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"columns\": [\n        {\n            \"id\": \"id\",\n            \"values\": [\n                1.1\n            ]\n        }\n    ]\n}",
+                  "raw": "{\n    \"columns\": [\n        {\n            \"id\": \"id\",\n            \"values\": [\n                1.1,\n                1.1\n            ]\n        },\n        {\n            \"id\": \"id\",\n            \"values\": [\n                1.1,\n                1.1\n            ]\n        }\n    ]\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -373,7 +373,7 @@
                 }
               },
               "description": "OK",
-              "body": "{\n    \"namespaces\": {\n        \"key\": {\n            \"count\": 1\n        }\n    },\n    \"dimension\": 1,\n    \"fullness\": 1.1,\n    \"totalCount\": 1\n}",
+              "body": "{\n    \"namespaces\": {\n        \"namespaces\": {\n            \"count\": 1\n        }\n    },\n    \"dimension\": 1,\n    \"fullness\": 1.1,\n    \"totalCount\": 1\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -447,7 +447,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/data/fetch?ids=string&namespace=string",
+                  "raw": "{{baseUrl}}/data/fetch",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -455,18 +455,7 @@
                     "data",
                     "fetch"
                   ],
-                  "query": [
-                    {
-                      "key": "ids",
-                      "description": null,
-                      "value": "string"
-                    },
-                    {
-                      "key": "namespace",
-                      "description": null,
-                      "value": "string"
-                    }
-                  ],
+                  "query": [],
                   "variable": []
                 },
                 "header": [
@@ -481,7 +470,7 @@
                 "body": null
               },
               "description": "OK",
-              "body": "{\n    \"columns\": {\n        \"key\": {\n            \"id\": \"id\",\n            \"values\": [\n                1.1\n            ],\n            \"metadata\": {\n                \"key\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1\n                ],\n                \"values\": [\n                    1.1\n                ]\n            }\n        }\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
+              "body": "{\n    \"columns\": {\n        \"columns\": {\n            \"id\": \"id\",\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        }\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -555,7 +544,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/data/list?prefix=string&limit=1&paginationToken=string&namespace=string",
+                  "raw": "{{baseUrl}}/data/list",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -563,28 +552,7 @@
                     "data",
                     "list"
                   ],
-                  "query": [
-                    {
-                      "key": "prefix",
-                      "description": null,
-                      "value": "string"
-                    },
-                    {
-                      "key": "limit",
-                      "description": null,
-                      "value": "1"
-                    },
-                    {
-                      "key": "paginationToken",
-                      "description": null,
-                      "value": "string"
-                    },
-                    {
-                      "key": "namespace",
-                      "description": null,
-                      "value": "string"
-                    }
-                  ],
+                  "query": [],
                   "variable": []
                 },
                 "header": [
@@ -599,7 +567,7 @@
                 "body": null
               },
               "description": "OK",
-              "body": "{\n    \"columns\": [\n        {\n            \"id\": \"id\"\n        }\n    ],\n    \"pagination\": {\n        \"next\": \"next\"\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
+              "body": "{\n    \"columns\": [\n        {\n            \"id\": \"id\"\n        },\n        {\n            \"id\": \"id\"\n        }\n    ],\n    \"pagination\": {\n        \"next\": \"next\"\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -720,7 +688,7 @@
                 }
               },
               "description": "OK",
-              "body": "{\n    \"results\": [\n        {\n            \"matches\": [\n                {\n                    \"id\": \"id\"\n                }\n            ],\n            \"namespace\": \"namespace\"\n        }\n    ],\n    \"matches\": [\n        {\n            \"id\": \"id\",\n            \"score\": 1.1,\n            \"values\": [\n                1.1\n            ],\n            \"metadata\": {\n                \"key\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1\n                ],\n                \"values\": [\n                    1.1\n                ]\n            }\n        }\n    ],\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
+              "body": "{\n    \"results\": [\n        {\n            \"matches\": [\n                {\n                    \"id\": \"id\",\n                    \"score\": 1.1,\n                    \"values\": [\n                        1.1,\n                        1.1\n                    ],\n                    \"metadata\": {},\n                    \"indexedData\": {\n                        \"indices\": [\n                            1,\n                            1\n                        ],\n                        \"values\": [\n                            1.1,\n                            1.1\n                        ]\n                    }\n                },\n                {\n                    \"id\": \"id\",\n                    \"score\": 1.1,\n                    \"values\": [\n                        1.1,\n                        1.1\n                    ],\n                    \"metadata\": {},\n                    \"indexedData\": {\n                        \"indices\": [\n                            1,\n                            1\n                        ],\n                        \"values\": [\n                            1.1,\n                            1.1\n                        ]\n                    }\n                }\n            ],\n            \"namespace\": \"namespace\"\n        },\n        {\n            \"matches\": [\n                {\n                    \"id\": \"id\",\n                    \"score\": 1.1,\n                    \"values\": [\n                        1.1,\n                        1.1\n                    ],\n                    \"metadata\": {},\n                    \"indexedData\": {\n                        \"indices\": [\n                            1,\n                            1\n                        ],\n                        \"values\": [\n                            1.1,\n                            1.1\n                        ]\n                    }\n                },\n                {\n                    \"id\": \"id\",\n                    \"score\": 1.1,\n                    \"values\": [\n                        1.1,\n                        1.1\n                    ],\n                    \"metadata\": {},\n                    \"indexedData\": {\n                        \"indices\": [\n                            1,\n                            1\n                        ],\n                        \"values\": [\n                            1.1,\n                            1.1\n                        ]\n                    }\n                }\n            ],\n            \"namespace\": \"namespace\"\n        }\n    ],\n    \"matches\": [\n        {\n            \"id\": \"id\",\n            \"score\": 1.1,\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        },\n        {\n            \"id\": \"id\",\n            \"score\": 1.1,\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        }\n    ],\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]

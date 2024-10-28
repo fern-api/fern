@@ -74,7 +74,7 @@ async function getDefaultGeneratorsConfiguration({
 }: {
     cliVersion: string;
     context: TaskContext;
-    apiConfiguration?: generatorsYml.APIConfigurationSchema;
+    apiConfiguration?: generatorsYml.ApiConfigurationSchema;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     const defaultGeneratorName = "fernapi/fern-typescript-node-sdk";
     const fallbackInvocation = generatorsYml.GENERATOR_INVOCATIONS[defaultGeneratorName];
@@ -123,7 +123,7 @@ async function writeGeneratorsConfiguration({
     filepath: AbsoluteFilePath;
     cliVersion: string;
     context: TaskContext;
-    apiConfiguration?: generatorsYml.APIConfigurationSchema;
+    apiConfiguration?: generatorsYml.ApiConfigurationSchema;
 }): Promise<void> {
     await writeFile(
         filepath,

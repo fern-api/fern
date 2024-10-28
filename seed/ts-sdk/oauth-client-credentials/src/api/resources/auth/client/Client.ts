@@ -33,9 +33,9 @@ export class Auth {
      *
      * @example
      *     await client.auth.getTokenWithClientCredentials({
-     *         clientId: "string",
-     *         clientSecret: "string",
-     *         scope: "string"
+     *         clientId: "client_id",
+     *         clientSecret: "client_secret",
+     *         scope: undefined
      *     })
      */
     public async getTokenWithClientCredentials(
@@ -102,10 +102,10 @@ export class Auth {
      *
      * @example
      *     await client.auth.refreshToken({
-     *         clientId: "string",
-     *         clientSecret: "string",
-     *         refreshToken: "string",
-     *         scope: "string"
+     *         clientId: "client_id",
+     *         clientSecret: "client_secret",
+     *         refreshToken: "refresh_token",
+     *         scope: undefined
      *     })
      */
     public async refreshToken(

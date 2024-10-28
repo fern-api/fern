@@ -17,10 +17,10 @@ async def test_get_with_no_request_body(client: SeedExhaustive, async_client: As
         "date": "2023-01-15",
         "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         "base64": "SGVsbG8gd29ybGQh",
-        "list": ["string"],
-        "set": ["string"],
-        "map": {"1": "string"},
-        "bigint": "123456789123456789",
+        "list": ["list", "list"],
+        "set": ["set"],
+        "map": {"1": "map"},
+        "bigint": "1000000",
     }
     expected_types: typing.Any = {
         "string": None,
@@ -32,7 +32,7 @@ async def test_get_with_no_request_body(client: SeedExhaustive, async_client: As
         "date": "date",
         "uuid": "uuid",
         "base64": None,
-        "list": ("list", {0: None}),
+        "list": ("list", {0: None, 1: None}),
         "set": ("set", {0: None}),
         "map": ("dict", {0: ("integer", None)}),
         "bigint": None,

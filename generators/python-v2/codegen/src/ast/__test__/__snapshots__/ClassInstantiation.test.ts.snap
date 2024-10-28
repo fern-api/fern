@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ClassInstantiation > should write a class instantiation with a parent 1`] = `
+"ParentClass.ChildClass("arg1", kwarg=42)
+"
+`;
+
+exports[`ClassInstantiation > should write a class instantiation with multiple positional and kwarg args 1`] = `
+"TestClass(42, "hello", key1=True, key2=[1, 2, 3])
+"
+`;
+
+exports[`ClassInstantiation > should write a class instantiation with no args 1`] = `
+"TestClass()
+"
+`;
+
+exports[`ClassInstantiation > should write a class instantiation with one positional arg 1`] = `
+"TestClass(42)
+"
+`;
+
+exports[`ClassInstantiation > should write a class instantiation with one positional arg and one kwarg 1`] = `
+"TestClass(42, key="value")
+"
+`;
