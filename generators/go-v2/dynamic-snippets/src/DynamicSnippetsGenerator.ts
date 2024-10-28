@@ -2,15 +2,14 @@ import { FernGeneratorExec } from "@fern-api/generator-commons";
 import { go } from "@fern-api/go-codegen";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
+import { AbstractDynamicSnippetsGenerator } from "@fern-api/dynamic-snippets";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
 const SNIPPET_FUNC_NAME = "do";
 const CLIENT_VAR_NAME = "client";
 
-export class DynamicSnippetsGenerator {
-    private context: DynamicSnippetsGeneratorContext;
-
+export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<DynamicSnippetsGeneratorContext> {
     constructor({
         ir,
         config
@@ -18,7 +17,7 @@ export class DynamicSnippetsGenerator {
         ir: DynamicSnippets.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
     }) {
-        this.context = new DynamicSnippetsGeneratorContext({ ir, config });
+        super(new DynamicSnippetsGeneratorContext({ ir, config }));
     }
 
     public async generate(

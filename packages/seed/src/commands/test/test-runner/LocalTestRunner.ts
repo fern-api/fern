@@ -1,8 +1,7 @@
 import { SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
-import { getGeneratorConfig, getIntermediateRepresentation } from "@fern-api/local-workspace-runner";
-import { LocalTaskHandler } from "@fern-api/local-workspace-runner/src/LocalTaskHandler";
+import { getGeneratorConfig, getIntermediateRepresentation, LocalTaskHandler } from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import * as GeneratorExecSerialization from "@fern-fern/generator-exec-sdk/serialization";
@@ -14,6 +13,7 @@ import { runScript } from "../../../runScript";
 import { DUMMY_ORGANIZATION } from "../../../utils/constants";
 import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
 import { TestRunner } from "./TestRunner";
+import { generateDynamicSnippetTests } from "../dynamic-snippets/generateDynamicSnippetTests";
 
 export class LocalTestRunner extends TestRunner {
     async build(): Promise<void> {
@@ -152,6 +152,20 @@ export class LocalTestRunner extends TestRunner {
             });
             await localTaskHandler.copyGeneratedFiles();
             taskContext.logger.info(`Wrote generated files to ${outputDir}`);
+
+            if (language != null) {
+                taskContext.logger.info(`Writing dynamic snippet tests to ${outputDir}`);
+                await generateDynamicSnippetTests({
+                    context: taskContext,
+                    workspace: fernWorkspace,
+                    config: generatorConfig,
+                    audiences: {
+                        type: "all"
+                    },
+                    language,
+                    outputDir
+                });
+            }
         }
     }
 
