@@ -86,12 +86,9 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         const absolutePathToProjectDirectory = await this.createProject({ absolutePathToSrcDirectory });
         const absolutePathToTestProjectDirectory = await this.createTestProject({ absolutePathToSrcDirectory });
 
-        await loggingExeca(this.context.logger, "dotnet", ["new", "gitignore"], {
-            doNotPipeOutput: true,
-            cwd: this.absolutePathToOutputDirectory
-        });
-
-        await this.modifyGitIgnore();
+        this.rawFiles.push(
+            new File(".gitignore", RelativeFilePath.of("."), await readFile(getAsIsFilepath(AsIsFiles.GitIgnore)))
+        );
 
         await this.writeRawFiles();
 
@@ -168,21 +165,6 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 DOTNET_CLI_TELEMETRY_OPTOUT: "1"
             }
         });
-    }
-
-    private async modifyGitIgnore(): Promise<void> {
-        const gitIgnorePath = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(".gitignore"));
-        let gitIgnoreContent = await readFile(gitIgnorePath, {
-            encoding: "utf-8"
-        });
-        gitIgnoreContent += `
-# Fern custom rules
-![Rr]elease/**/*.cs
-![Rr]eleases/**/*.cs
-![Ll]og/**/*.cs
-![Ll]ogs/**/*.cs`;
-
-        await writeFile(gitIgnorePath, gitIgnoreContent);
     }
 
     private async createProject({

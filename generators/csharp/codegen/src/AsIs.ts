@@ -6,6 +6,7 @@ export const CONSTANTS_CLASS_NAME = "Constants";
 export const JSON_UTILS_CLASS_NAME = "JsonUtils";
 
 export enum AsIsFiles {
+    GitIgnore = "gitignore.txt",
     CiYaml = "github-ci.yml",
     CollectionItemSerializer = "CollectionItemSerializer.cs",
     Constants = "Constants.cs",
