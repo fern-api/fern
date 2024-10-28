@@ -396,7 +396,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
     const requestBodyShape = Ir.http.HttpRequestBody._visit<FdrCjsSdk.api.v1.register.HttpRequestBodyShape | undefined>(
         irRequest,
         {
-            inlinedRequestBody: (inlinedRequestBody): FdrCjsSdk.api.v1.register.HttpRequestBodyShape.Json => {
+            inlinedRequestBody: (inlinedRequestBody) => {
                 return {
                     type: "json",
                     contentType: inlinedRequestBody.contentType ?? MediaType.APPLICATION_JSON,
@@ -410,12 +410,9 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                 valueType: convertTypeReference(property.valueType),
                                 availability: convertIrAvailability(property.availability)
                             })
-                        ),
-                        extraProperties: inlinedRequestBody.extraProperties ? { type: "unknown" } : undefined
-                    }
-
-                    // TODO: add support for description in FDR SDK
-                    // description: inlinedRequestBody.docs ?? undefined,
+                        )
+                    },
+                    description: inlinedRequestBody.docs ?? undefined
                 };
             },
             reference: (reference) => {
@@ -624,8 +621,7 @@ function convertResponseErrorsV2(
                             : {
                                   type: "object",
                                   extends: [],
-                                  properties,
-                                  extraProperties: undefined
+                                  properties
                               },
                     statusCode: errorDeclaration.statusCode,
                     description: errorDeclaration.docs ?? undefined,
@@ -850,9 +846,7 @@ function convertWebhookPayload(irWebhookPayload: Ir.webhooks.WebhookPayload): Fd
                             valueType: convertTypeReference(property.valueType),
                             availability: convertIrAvailability(property.availability)
                         })
-                    ),
-                    // TODO: add support for extraProperties in IR
-                    extraProperties: undefined
+                    )
                 },
                 description: undefined
             };
@@ -884,9 +878,7 @@ function convertMessageBody(
                         valueType: convertTypeReference(property.valueType),
                         availability: convertIrAvailability(property.availability)
                     })
-                ),
-                // TODO: add support for extraProperties in IR
-                extraProperties: undefined
+                )
             };
         case "reference":
             return {

@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface ApiReferencePackageConfigurationWithOptions extends FernDocsConfig.WithPermissions {
+export interface ApiReferencePackageConfigurationWithOptions {
     title?: string;
     /** Relative path to the markdown file. This summary is displayed at the top of the API section. */
     summary?: string;
