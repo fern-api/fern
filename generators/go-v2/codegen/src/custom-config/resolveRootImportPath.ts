@@ -9,7 +9,7 @@ export function resolveRootImportPath({
     customConfig
 }: {
     config: FernGeneratorExec.config.GeneratorConfig;
-    customConfig: BaseGoCustomConfigSchema;
+    customConfig: BaseGoCustomConfigSchema | undefined;
 }): string {
     const suffix = getMajorVersionSuffix({ config });
     const importPath = getImportPath({ config, customConfig });
@@ -21,11 +21,11 @@ function getImportPath({
     customConfig
 }: {
     config: FernGeneratorExec.config.GeneratorConfig;
-    customConfig: BaseGoCustomConfigSchema;
+    customConfig: BaseGoCustomConfigSchema | undefined;
 }): string {
     return (
-        customConfig.importPath ??
-        customConfig.module?.path ??
+        customConfig?.importPath ??
+        customConfig?.module?.path ??
         (config.output.mode.type === "github"
             ? trimPrefix(config.output.mode.repoUrl, "https://")
             : DEFAULT_MODULE_PATH)

@@ -37,7 +37,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
                         packageName: SNIPPET_PACKAGE_NAME,
                         importPath: SNIPPET_IMPORT_PATH,
                         rootImportPath: this.context.rootImportPath,
-                        customConfig: this.context.customConfig
+                        customConfig: this.context.customConfig ?? {}
                     })
                 };
             } catch (error) {
