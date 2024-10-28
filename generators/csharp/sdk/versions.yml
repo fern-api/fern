@@ -1,9 +1,12 @@
 - version: 1.8.2
-  createdAt: '2024-10-09'
+  irVersion: 53
+  createdAt: "2024-10-28"
   changelogEntry:
     - type: fix
+      summary: |
+        Fixes a bug where the ClientOptions would not compile due to incorrect Clone method generation.
+    - type: fix
       summary: Make sure summary and code examples in XML code comments are XML encoded.
-  irVersion: 53
 - version: 1.8.1
   irVersion: 53
   createdAt: '2024-10-08'
