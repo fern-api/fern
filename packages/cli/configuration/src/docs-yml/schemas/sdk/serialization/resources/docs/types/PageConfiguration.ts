@@ -9,18 +9,16 @@ import * as core from "../../../../core";
 export const PageConfiguration: core.serialization.ObjectSchema<
     serializers.PageConfiguration.Raw,
     FernDocsConfig.PageConfiguration
-> = core.serialization
-    .object({
-        page: core.serialization.string(),
-        path: core.serialization.string(),
-        slug: core.serialization.string().optional(),
-        icon: core.serialization.string().optional(),
-        hidden: core.serialization.boolean().optional(),
-    })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
+> = core.serialization.object({
+    page: core.serialization.string(),
+    path: core.serialization.string(),
+    slug: core.serialization.string().optional(),
+    icon: core.serialization.string().optional(),
+    hidden: core.serialization.boolean().optional(),
+});
 
 export declare namespace PageConfiguration {
-    interface Raw extends serializers.WithPermissions.Raw {
+    interface Raw {
         page: string;
         path: string;
         slug?: string | null;
