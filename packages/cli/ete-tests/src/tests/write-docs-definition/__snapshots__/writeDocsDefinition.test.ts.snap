@@ -21,9 +21,17 @@ exports[`write-docs-definition > petstore 1`] = `
               "title": "API Reference",
               "apiDefinitionId": "api-1",
               "paginated": false,
-              "slug": "api-reference",
+              "slug": "fern.docs.buildwithfern.com/api-reference",
               "hideTitle": false,
               "showErrors": false,
+              "changelog": {
+                "id": "6665bc2f57c4a7045d347313a1566d91561ff2a3c9d17874a462ae73b7eb8593",
+                "type": "changelog",
+                "title": "Changelog",
+                "slug": "fern.docs.buildwithfern.com/api-reference/changelog",
+                "children": [],
+                "viewers": []
+              },
               "children": [
                 {
                   "id": "api-1:subpackage_pets",
@@ -37,7 +45,7 @@ exports[`write-docs-definition > petstore 1`] = `
                       "apiDefinitionId": "api-1",
                       "isResponseStream": false,
                       "title": "List all pets",
-                      "slug": "api-reference/pets/list-pets"
+                      "slug": "fern.docs.buildwithfern.com/api-reference/pets/list-pets"
                     },
                     {
                       "id": "api-1:endpoint_pets.createPets",
@@ -47,7 +55,7 @@ exports[`write-docs-definition > petstore 1`] = `
                       "apiDefinitionId": "api-1",
                       "isResponseStream": false,
                       "title": "Create a pet",
-                      "slug": "api-reference/pets/create-pets"
+                      "slug": "fern.docs.buildwithfern.com/api-reference/pets/create-pets"
                     },
                     {
                       "id": "api-1:endpoint_pets.showPetById",
@@ -57,20 +65,21 @@ exports[`write-docs-definition > petstore 1`] = `
                       "apiDefinitionId": "api-1",
                       "isResponseStream": false,
                       "title": "Info for a specific pet",
-                      "slug": "api-reference/pets/show-pet-by-id"
+                      "slug": "fern.docs.buildwithfern.com/api-reference/pets/show-pet-by-id"
                     }
                   ],
                   "title": "Pets",
-                  "slug": "api-reference/pets",
-                  "apiDefinitionId": "api-1"
+                  "slug": "fern.docs.buildwithfern.com/api-reference/pets",
+                  "apiDefinitionId": "api-1",
+                  "pointsTo": "fern.docs.buildwithfern.com/api-reference/pets/list-pets"
                 }
               ],
-              "pointsTo": "api-reference/pets/list-pets"
+              "pointsTo": "fern.docs.buildwithfern.com/api-reference/pets/list-pets"
             }
           ]
         }
       },
-      "slug": "",
+      "slug": "fern.docs.buildwithfern.com",
       "title": "fern | Documentation",
       "hidden": false
     },
