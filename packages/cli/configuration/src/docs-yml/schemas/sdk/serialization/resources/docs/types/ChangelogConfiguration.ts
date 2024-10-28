@@ -17,10 +17,10 @@ export const ChangelogConfiguration: core.serialization.ObjectSchema<
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAudience));
 
 export declare namespace ChangelogConfiguration {
-    interface Raw extends serializers.WithPermissions.Raw {
+    interface Raw extends serializers.WithAudience.Raw {
         changelog: serializers.ChangelogFolderRelativePath.Raw;
         title?: string | null;
         slug?: string | null;

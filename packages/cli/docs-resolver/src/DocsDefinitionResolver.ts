@@ -362,8 +362,7 @@ export class DocsDefinitionResolver {
             icon: undefined,
             pointsTo: undefined,
             authed: undefined,
-            viewers: undefined,
-            orphaned: undefined
+            audience: undefined
         };
     }
 
@@ -401,12 +400,30 @@ export class DocsDefinitionResolver {
             slug: slug.get(),
             icon: landingPageConfig.icon,
             hidden: landingPageConfig.hidden,
-            viewers: landingPageConfig.viewers,
-            orphaned: landingPageConfig.orphaned,
+            audience: this.withAudience(landingPageConfig.audiences),
             pageId,
             authed: undefined,
             noindex: undefined
         };
+    }
+
+    /**
+     * @param audiences - the audiences to convert
+     * @returns the audience IDs, or undefined if the audiences are empty
+     */
+    private withAudience(audiences: Audiences): APIV1Write.AudienceId[] | undefined {
+        if (audiences.type === "select") {
+            const audiencesNotInConfig = audiences.audiences.filter(
+                (audience) => !this._parsedDocsConfig?.audiences?.includes(audience)
+            );
+            // Note: this should never happen because `fern check` will fail if this is the case
+            if (audiencesNotInConfig.length > 0) {
+                throw new Error(`Audience ${audiencesNotInConfig.join(", ")} not found in audiences`);
+            }
+        }
+        return audiences.type === "select" && audiences.audiences.length > 0
+            ? audiences.audiences.map((audience) => FernNavigation.AudienceId(audience))
+            : undefined;
     }
 
     private async toUnversionedNode({
@@ -470,8 +487,7 @@ export class DocsDefinitionResolver {
             landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, parentSlug) : undefined,
             hidden: undefined,
             authed: undefined,
-            viewers: version.viewers,
-            orphaned: version.orphaned,
+            audience: this.withAudience(version.audiences),
             icon: undefined,
             pointsTo: undefined
         };
@@ -552,6 +568,7 @@ export class DocsDefinitionResolver {
             packageName: undefined,
             context: this.taskContext
         });
+        // console.log(JSON.stringify(ir, undefined, 2));
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
@@ -566,7 +583,8 @@ export class DocsDefinitionResolver {
             workspace,
             this.docsWorkspace,
             this.taskContext,
-            this.markdownFilesToFullSlugs
+            this.markdownFilesToFullSlugs,
+            this.withAudience.bind(this)
         );
         return node.get();
     }
@@ -579,14 +597,15 @@ export class DocsDefinitionResolver {
             this.markdownFilesToFullSlugs,
             item.changelog,
             this.docsWorkspace,
-            this.#idgen
+            this.#idgen,
+            this.withAudience.bind(this)
         );
 
         return changelogResolver.toChangelogNode({
             parentSlug,
             title: item.title,
             icon: item.icon,
-            viewers: item.viewers,
+            audiences: item.audiences,
             hidden: item.hidden,
             slug: item.slug
         });
@@ -619,8 +638,7 @@ export class DocsDefinitionResolver {
             title: item.title,
             icon: item.icon,
             hidden: item.hidden,
-            viewers: item.viewers,
-            orphaned: item.orphaned,
+            audience: this.withAudience(item.audiences),
             pageId,
             authed: undefined,
             noindex: undefined
@@ -651,8 +669,7 @@ export class DocsDefinitionResolver {
             icon: item.icon,
             collapsed: item.collapsed,
             hidden: item.hidden,
-            viewers: item.viewers,
-            orphaned: item.orphaned,
+            audience: this.withAudience(item.audiences),
             children: [],
             authed: undefined,
             pointsTo: undefined,
@@ -694,13 +711,14 @@ export class DocsDefinitionResolver {
             this.markdownFilesToFullSlugs,
             changelog,
             this.docsWorkspace,
-            this.#idgen
+            this.#idgen,
+            this.withAudience.bind(this)
         );
         return changelogResolver.toChangelogNode({
             parentSlug,
             title: item.title,
             icon: item.icon,
-            viewers: item.viewers,
+            audiences: item.audiences,
             hidden: item.hidden,
             slug: item.slug
         });
@@ -735,8 +753,7 @@ export class DocsDefinitionResolver {
             icon: item.icon,
             hidden: item.hidden,
             authed: undefined,
-            viewers: item.viewers,
-            orphaned: item.orphaned,
+            audience: this.withAudience(item.audiences),
             pointsTo: undefined,
             child: await this.toSidebarRootNode(id, layout, slug)
         };

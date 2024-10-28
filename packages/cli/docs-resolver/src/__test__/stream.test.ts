@@ -81,7 +81,9 @@ it.skip("converts to api reference node", async () => {
         apiWorkspace,
         docsWorkspace,
         context,
-        new Map()
+        new Map(),
+        // for testing purposes, we don't need to resolve audiences
+        () => undefined
     ).get();
 
     expect(node).toMatchSnapshot();

@@ -130,12 +130,11 @@ async function visitNavigationItem({
                 });
             });
         },
-        viewers: async (viewers: docsYml.RawSchemas.WithPermissions["viewers"]): Promise<void> => {
-            if (viewers != null && viewers.length > 0) {
-                await visitor.permissions?.({ viewers }, [...nodePath, "viewers"]);
+        audience: async (audience: docsYml.RawSchemas.Audience | undefined): Promise<void> => {
+            if (audience != null) {
+                await visitor.audience?.(audience, [...nodePath, "audience"]);
             }
-        },
-        orphaned: noop
+        }
     });
 
     if (navigationItemIsPage(navigationItem)) {

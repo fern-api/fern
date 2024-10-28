@@ -257,7 +257,7 @@ export async function visitDocsConfigFileYamlAst({
                 })
             );
         },
-        roles: noop
+        audiences: noop
     });
 }
 

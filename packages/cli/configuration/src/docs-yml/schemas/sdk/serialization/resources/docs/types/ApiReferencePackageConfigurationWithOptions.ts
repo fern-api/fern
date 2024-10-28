@@ -22,10 +22,10 @@ export const ApiReferencePackageConfigurationWithOptions: core.serialization.Obj
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
         playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAudience));
 
 export declare namespace ApiReferencePackageConfigurationWithOptions {
-    interface Raw extends serializers.WithPermissions.Raw {
+    interface Raw extends serializers.WithAudience.Raw {
         title?: string | null;
         summary?: string | null;
         contents?: serializers.ApiReferenceLayoutItem.Raw[] | null;

@@ -18,10 +18,10 @@ export const ApiReferenceEndpointConfiguration: core.serialization.ObjectSchema<
         hidden: core.serialization.boolean().optional(),
         playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAudience));
 
 export declare namespace ApiReferenceEndpointConfiguration {
-    interface Raw extends serializers.WithPermissions.Raw {
+    interface Raw extends serializers.WithAudience.Raw {
         endpoint: string;
         title?: string | null;
         slug?: string | null;

@@ -8,4 +8,4 @@ import * as FernDocsConfig from "../../..";
  * Audience can either be a string or list of strings
  * i.e. `audience: internal` or `audience: [internal, beta]`
  */
-export type Role = FernDocsConfig.RoleId | FernDocsConfig.RoleId[];
+export type Audience = FernDocsConfig.AudienceId | FernDocsConfig.AudienceId[];

@@ -37,12 +37,12 @@
         }
       ]
     },
-    "roles": {
+    "audiences": {
       "oneOf": [
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/docs.RoleId"
+            "$ref": "#/definitions/docs.AudienceId"
           }
         },
         {
@@ -491,18 +491,18 @@
       ],
       "additionalProperties": false
     },
-    "docs.RoleId": {
+    "docs.AudienceId": {
       "type": "string"
     },
-    "docs.Role": {
+    "docs.Audience": {
       "anyOf": [
         {
-          "$ref": "#/definitions/docs.RoleId"
+          "$ref": "#/definitions/docs.AudienceId"
         },
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/docs.RoleId"
+            "$ref": "#/definitions/docs.AudienceId"
           }
         }
       ]
@@ -513,20 +513,10 @@
     "docs.TabConfig": {
       "type": "object",
       "properties": {
-        "viewers": {
+        "audience": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -614,20 +604,10 @@
     "docs.VersionConfig": {
       "type": "object",
       "properties": {
-        "viewers": {
+        "audience": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -670,20 +650,10 @@
     "docs.PageConfiguration": {
       "type": "object",
       "properties": {
-        "viewers": {
+        "audience": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -736,20 +706,10 @@
     "docs.SectionConfiguration": {
       "type": "object",
       "properties": {
-        "viewers": {
+        "audience": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -831,9 +791,6 @@
         "contents"
       ],
       "additionalProperties": false
-    },
-    "docs.AudienceId": {
-      "type": "string"
     },
     "docs.VersionedSnippetLanguageConfiguration": {
       "type": "object",
@@ -975,20 +932,10 @@
     "docs.ApiReferencePackageConfigurationWithOptions": {
       "type": "object",
       "properties": {
-        "viewers": {
+        "audience": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -1097,20 +1044,10 @@
     "docs.ApiReferenceSectionConfiguration": {
       "type": "object",
       "properties": {
-        "viewers": {
+        "audience": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -1215,20 +1152,10 @@
     "docs.ApiReferenceEndpointConfiguration": {
       "type": "object",
       "properties": {
-        "viewers": {
+        "audience": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -1350,20 +1277,10 @@
     "docs.ApiReferenceConfiguration": {
       "type": "object",
       "properties": {
-        "viewers": {
+        "audience": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -1388,7 +1305,7 @@
             {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/docs.AudienceId"
+                "type": "string"
               }
             },
             {
@@ -1528,20 +1445,10 @@
     "docs.ChangelogConfiguration": {
       "type": "object",
       "properties": {
-        "viewers": {
+        "audience": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"

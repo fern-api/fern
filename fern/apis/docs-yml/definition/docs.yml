@@ -121,9 +121,9 @@ types:
 
       announcement: optional<AnnouncementConfig>
 
-      roles:
-        docs: Global list of roles that can be used to filter the navigation and content based on the user's session.
-        type: optional<list<RoleId>>
+      audiences:
+        docs: Global list of audiences that can be used to filter API endpoints and webhooks.
+        type: optional<list<AudienceId>>
 
       # navigation
       tabs: optional<map<TabId, TabConfig>>
@@ -161,7 +161,7 @@ types:
   TabId: string
 
   TabConfig:
-    extends: WithPermissions
+    extends: WithAudience
     properties:
       display-name: string
       icon: optional<string>
@@ -230,7 +230,7 @@ types:
 
 
   VersionConfig:
-    extends: WithPermissions
+    extends: WithAudience
     properties:
       display-name: string
       path:
@@ -429,27 +429,22 @@ types:
 
   AudienceId:
     type: string
-    docs: ID of audience which is used to filter the API spec.
+    docs: |
+      ID of audience which is used to filter the content shown in Fern Docs.
+      This is ideally used in conjunction with private (authenticated) docs.
 
-  RoleId:
-    type: string
-    docs: ID of role which is used to filter the content shown in Fern Docs.
-
-  Role:
+  Audience:
     docs: |
       Audience can either be a string or list of strings
       i.e. `audience: internal` or `audience: [internal, beta]`
     discriminated: false
     union:
-      - RoleId
-      - list<RoleId>
+      - AudienceId
+      - list<AudienceId>
 
-  WithPermissions:
+  WithAudience:
     properties:
-      viewers: optional<Role>
-      orphaned:
-        type: optional<boolean>
-        docs: When `orphaned` is set to `true`, the roles will not inherit from parents.
+      audience: optional<Audience>
 
   FontConfig:
     properties:
@@ -527,7 +522,7 @@ types:
           @default: `normal`.
 
   PageConfiguration:
-    extends: WithPermissions
+    extends: WithAudience
     properties:
       page: string
       path: string
@@ -536,7 +531,7 @@ types:
       hidden: optional<boolean>
 
   ChangelogConfiguration:
-    extends: WithPermissions
+    extends: WithAudience
     properties:
       changelog: ChangelogFolderRelativePath
       title: optional<string> # defaults to "Changelog"
@@ -546,7 +541,7 @@ types:
       # skip-slug: optional<boolean> # skip-slug is not needed for changelog
 
   SectionConfiguration:
-    extends: WithPermissions
+    extends: WithAudience
     properties:
       section: string
       path:
@@ -561,13 +556,13 @@ types:
       skip-slug: optional<boolean>
 
   ApiReferenceConfiguration:
-    extends: WithPermissions
+    extends: WithAudience
     properties:
       api: string
       "api-name":
         type: optional<string>
         docs: Name of API that we are referencing
-      audiences: optional<list<AudienceId>>
+      audiences: optional<list<string>>
       display-errors:
         type: optional<boolean>
         docs: Defaults to false
@@ -617,7 +612,7 @@ types:
       - LinkConfiguration
 
   ApiReferenceSectionConfiguration:
-    extends: WithPermissions
+    extends: WithAudience
     properties:
       section:
         type: string
@@ -645,7 +640,7 @@ types:
       - ApiReferencePackageConfigurationWithOptions
 
   ApiReferencePackageConfigurationWithOptions:
-    extends: WithPermissions
+    extends: WithAudience
     properties:
       title: optional<string>
       summary:
@@ -662,7 +657,7 @@ types:
         docs: Settings for the api playground that is applied only to descendants of this api package.
 
   ApiReferenceEndpointConfiguration:
-    extends: WithPermissions
+    extends: WithAudience
     properties:
       endpoint: string
       title: optional<string>

@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface ChangelogConfiguration extends FernDocsConfig.WithPermissions {
+export interface ChangelogConfiguration extends FernDocsConfig.WithAudience {
     changelog: FernDocsConfig.ChangelogFolderRelativePath;
     title?: string;
     slug?: string;

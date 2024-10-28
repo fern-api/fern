@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration";
+import { Audiences, docsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
 import { APIV1Read, APIV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
@@ -34,6 +34,7 @@ export class ApiReferenceNodeConverter {
         private docsWorkspace: DocsWorkspace,
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
+        private withAudience: (audiences: Audiences) => APIV1Write.AudienceId[] | undefined,
         idgen?: NodeIdGenerator
     ) {
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
@@ -94,10 +95,11 @@ export class ApiReferenceNodeConverter {
                 this.markdownFilesToFullSlugs,
                 this.workspace.changelog?.files.map((file) => file.absoluteFilepath),
                 this.docsWorkspace,
-                this.#idgen
+                this.#idgen,
+                this.withAudience
             ).toChangelogNode({
                 parentSlug: this.#slug,
-                viewers: []
+                audiences: { type: "all" }
             }),
             children: this.#children,
             availability: undefined,
@@ -105,8 +107,7 @@ export class ApiReferenceNodeConverter {
             noindex: undefined,
             playground: this.#convertPlaygroundSettings(this.apiSection.playground),
             authed: undefined,
-            viewers: this.apiSection.viewers,
-            orphaned: this.apiSection.orphaned
+            audience: this.withAudience(this.apiSection.audiences)
         };
     }
 
@@ -160,8 +161,7 @@ export class ApiReferenceNodeConverter {
             hidden: page.hidden,
             noindex: page.noindex,
             authed: undefined,
-            viewers: page.viewers,
-            orphaned: page.orphaned
+            audience: this.withAudience(page.audiences)
         };
     }
 
@@ -221,8 +221,7 @@ export class ApiReferenceNodeConverter {
                 noindex: undefined,
                 playground: this.#convertPlaygroundSettings(pkg.playground),
                 authed: undefined,
-                viewers: pkg.viewers,
-                orphaned: pkg.orphaned
+                audience: this.withAudience(pkg.audiences)
             };
         } else {
             this.taskContext.logger.warn(
@@ -250,8 +249,7 @@ export class ApiReferenceNodeConverter {
                 noindex: undefined,
                 playground: this.#convertPlaygroundSettings(pkg.playground),
                 authed: undefined,
-                viewers: pkg.viewers,
-                orphaned: pkg.orphaned
+                audience: this.withAudience(pkg.audiences)
             };
         }
     }
@@ -317,8 +315,7 @@ export class ApiReferenceNodeConverter {
             noindex: undefined,
             playground: this.#convertPlaygroundSettings(section.playground),
             authed: undefined,
-            viewers: section.viewers,
-            orphaned: section.orphaned
+            audience: this.withAudience(section.audiences)
         };
     }
 
@@ -362,8 +359,8 @@ export class ApiReferenceNodeConverter {
                 noindex: undefined,
                 playground: undefined,
                 authed: undefined,
-                viewers: undefined,
-                orphaned: undefined
+                // is this right?
+                audience: undefined
             };
         }
 
@@ -377,8 +374,7 @@ export class ApiReferenceNodeConverter {
                 slug: undefined,
                 hidden: undefined,
                 playground: undefined,
-                viewers: undefined,
-                orphaned: undefined
+                audiences: { type: "all" }
             },
             apiDefinitionPackageId,
             parentSlug
@@ -421,8 +417,7 @@ export class ApiReferenceNodeConverter {
                 hidden: endpointItem.hidden,
                 playground: this.#convertPlaygroundSettings(endpointItem.playground),
                 authed: undefined,
-                viewers: endpointItem.viewers,
-                orphaned: endpointItem.orphaned
+                audience: this.withAudience(endpointItem.audiences)
             };
         }
 
@@ -457,8 +452,7 @@ export class ApiReferenceNodeConverter {
                 availability: FernNavigation.V1.convertAvailability(webSocket.availability),
                 playground: this.#convertPlaygroundSettings(endpointItem.playground),
                 authed: undefined,
-                viewers: endpointItem.viewers,
-                orphaned: endpointItem.orphaned
+                audience: this.withAudience(endpointItem.audiences)
             };
         }
 
@@ -493,8 +487,7 @@ export class ApiReferenceNodeConverter {
                 apiDefinitionId: this.apiDefinitionId,
                 availability: undefined,
                 authed: undefined,
-                viewers: endpointItem.viewers,
-                orphaned: endpointItem.orphaned
+                audience: this.withAudience(endpointItem.audiences)
             };
         }
 
@@ -569,8 +562,7 @@ export class ApiReferenceNodeConverter {
                 hidden: undefined,
                 playground: undefined,
                 authed: undefined,
-                viewers: undefined,
-                orphaned: undefined
+                audience: undefined
             });
         });
 
@@ -594,8 +586,7 @@ export class ApiReferenceNodeConverter {
                 availability: FernNavigation.V1.convertAvailability(webSocket.availability),
                 playground: undefined,
                 authed: undefined,
-                viewers: undefined,
-                orphaned: undefined
+                audience: undefined
             });
         });
 
@@ -619,8 +610,7 @@ export class ApiReferenceNodeConverter {
                 apiDefinitionId: this.apiDefinitionId,
                 availability: undefined,
                 authed: undefined,
-                viewers: undefined,
-                orphaned: undefined
+                audience: undefined
             });
         });
 
@@ -655,8 +645,7 @@ export class ApiReferenceNodeConverter {
                     noindex: undefined,
                     playground: undefined,
                     authed: undefined,
-                    viewers: undefined,
-                    orphaned: undefined
+                    audience: undefined
                 });
             }
         });

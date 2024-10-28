@@ -19,10 +19,10 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
                 .lazy(async () => (await import("../../..")).ChangelogFolderRelativePath)
                 .optional(),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAudience));
 
 export declare namespace TabConfig {
-    interface Raw extends serializers.WithPermissions.Raw {
+    interface Raw extends serializers.WithAudience.Raw {
         "display-name": string;
         icon?: string | null;
         slug?: string | null;

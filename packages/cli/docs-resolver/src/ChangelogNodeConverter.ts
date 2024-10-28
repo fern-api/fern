@@ -1,3 +1,4 @@
+import { Audiences } from "@fern-api/configuration";
 import { APIV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
@@ -17,8 +18,7 @@ interface ConvertOptions {
     icon?: string;
     hidden?: boolean;
     slug?: string;
-    viewers?: APIV1Write.RoleId[];
-    orphaned?: boolean;
+    audiences: Audiences;
     // skipUrlSlug?: boolean;
 }
 
@@ -30,7 +30,8 @@ export class ChangelogNodeConverter {
         private markdownToFullSlug: Map<AbsoluteFilePath, string>,
         private changelogFiles: AbsoluteFilePath[] | undefined,
         private docsWorkspace: DocsWorkspace,
-        private idgen: NodeIdGenerator
+        private idgen: NodeIdGenerator,
+        private withAudience: (audiences: Audiences) => APIV1Write.AudienceId[] | undefined
     ) {}
 
     public toChangelogNode(opts: ConvertOptions): FernNavigation.V1.ChangelogNode {
@@ -91,8 +92,7 @@ export class ChangelogNodeConverter {
                 pageId: item.pageId,
                 noindex: undefined,
                 authed: undefined,
-                viewers: undefined,
-                orphaned: undefined
+                audience: undefined
             };
         });
 
@@ -113,8 +113,7 @@ export class ChangelogNodeConverter {
             overviewPageId,
             noindex: undefined,
             authed: undefined,
-            viewers: opts.viewers,
-            orphaned: opts.orphaned
+            audience: this.withAudience(opts.audiences)
         };
     }
 
@@ -144,8 +143,7 @@ export class ChangelogNodeConverter {
                     hidden: undefined,
                     children: this.groupByMonth(id, entries, parentSlug),
                     authed: undefined,
-                    viewers: undefined,
-                    orphaned: undefined
+                    audience: undefined
                 };
             }),
             "year",
@@ -178,8 +176,7 @@ export class ChangelogNodeConverter {
                     hidden: undefined,
                     children: entries,
                     authed: undefined,
-                    viewers: undefined,
-                    orphaned: undefined
+                    audience: undefined
                 };
             }),
             "month",
