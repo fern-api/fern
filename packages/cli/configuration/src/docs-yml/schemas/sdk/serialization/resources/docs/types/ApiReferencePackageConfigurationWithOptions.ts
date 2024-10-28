@@ -9,23 +9,21 @@ import * as core from "../../../../core";
 export const ApiReferencePackageConfigurationWithOptions: core.serialization.ObjectSchema<
     serializers.ApiReferencePackageConfigurationWithOptions.Raw,
     FernDocsConfig.ApiReferencePackageConfigurationWithOptions
-> = core.serialization
-    .object({
-        title: core.serialization.string().optional(),
-        summary: core.serialization.string().optional(),
-        contents: core.serialization
-            .list(core.serialization.lazy(async () => (await import("../../..")).ApiReferenceLayoutItem))
-            .optional(),
-        slug: core.serialization.string().optional(),
-        icon: core.serialization.string().optional(),
-        hidden: core.serialization.boolean().optional(),
-        skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
-        playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
-    })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAudience));
+> = core.serialization.object({
+    title: core.serialization.string().optional(),
+    summary: core.serialization.string().optional(),
+    contents: core.serialization
+        .list(core.serialization.lazy(async () => (await import("../../..")).ApiReferenceLayoutItem))
+        .optional(),
+    slug: core.serialization.string().optional(),
+    icon: core.serialization.string().optional(),
+    hidden: core.serialization.boolean().optional(),
+    skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+    playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
+});
 
 export declare namespace ApiReferencePackageConfigurationWithOptions {
-    interface Raw extends serializers.WithAudience.Raw {
+    interface Raw {
         title?: string | null;
         summary?: string | null;
         contents?: serializers.ApiReferenceLayoutItem.Raw[] | null;

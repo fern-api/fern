@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface ApiReferenceEndpointConfiguration extends FernDocsConfig.WithAudience {
+export interface ApiReferenceEndpointConfiguration {
     endpoint: string;
     title?: string;
     slug?: string;

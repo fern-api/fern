@@ -9,32 +9,28 @@ import * as core from "../../../../core";
 export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
     serializers.ApiReferenceConfiguration.Raw,
     FernDocsConfig.ApiReferenceConfiguration
-> = core.serialization
-    .object({
-        api: core.serialization.string(),
-        apiName: core.serialization.property("api-name", core.serialization.string().optional()),
-        audiences: core.serialization.list(core.serialization.string()).optional(),
-        displayErrors: core.serialization.property("display-errors", core.serialization.boolean().optional()),
-        snippets: core.serialization
-            .lazyObject(async () => (await import("../../..")).SnippetsConfiguration)
-            .optional(),
-        summary: core.serialization.string().optional(),
-        layout: core.serialization
-            .list(core.serialization.lazy(async () => (await import("../../..")).ApiReferenceLayoutItem))
-            .optional(),
-        icon: core.serialization.string().optional(),
-        slug: core.serialization.string().optional(),
-        hidden: core.serialization.boolean().optional(),
-        skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
-        alphabetized: core.serialization.boolean().optional(),
-        flattened: core.serialization.boolean().optional(),
-        paginated: core.serialization.boolean().optional(),
-        playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
-    })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAudience));
+> = core.serialization.object({
+    api: core.serialization.string(),
+    apiName: core.serialization.property("api-name", core.serialization.string().optional()),
+    audiences: core.serialization.list(core.serialization.string()).optional(),
+    displayErrors: core.serialization.property("display-errors", core.serialization.boolean().optional()),
+    snippets: core.serialization.lazyObject(async () => (await import("../../..")).SnippetsConfiguration).optional(),
+    summary: core.serialization.string().optional(),
+    layout: core.serialization
+        .list(core.serialization.lazy(async () => (await import("../../..")).ApiReferenceLayoutItem))
+        .optional(),
+    icon: core.serialization.string().optional(),
+    slug: core.serialization.string().optional(),
+    hidden: core.serialization.boolean().optional(),
+    skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+    alphabetized: core.serialization.boolean().optional(),
+    flattened: core.serialization.boolean().optional(),
+    paginated: core.serialization.boolean().optional(),
+    playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
+});
 
 export declare namespace ApiReferenceConfiguration {
-    interface Raw extends serializers.WithAudience.Raw {
+    interface Raw {
         api: string;
         "api-name"?: string | null;
         audiences?: string[] | null;

@@ -6,7 +6,7 @@ function getTypeAsString(value: unknown): string {
     if (Array.isArray(value)) {
         return "list";
     }
-    if (value == null) {
+    if (value === null) {
         return "null";
     }
     switch (typeof value) {

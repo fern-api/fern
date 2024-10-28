@@ -19,8 +19,10 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     files: {},
     filesV2: {},
     config: {
-        navigation: undefined,
-        root: undefined,
+        navigation: {
+            landingPage: undefined,
+            items: []
+        },
         title: undefined,
         defaultLanguage: undefined,
         announcement: undefined,

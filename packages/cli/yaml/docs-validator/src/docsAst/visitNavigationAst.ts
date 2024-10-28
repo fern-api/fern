@@ -129,11 +129,6 @@ async function visitNavigationItem({
                     context
                 });
             });
-        },
-        audience: async (audience: docsYml.RawSchemas.Audience | undefined): Promise<void> => {
-            if (audience != null) {
-                await visitor.audience?.(audience, [...nodePath, "audience"]);
-            }
         }
     });
 

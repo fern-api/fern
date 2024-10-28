@@ -37,19 +37,6 @@
         }
       ]
     },
-    "audiences": {
-      "oneOf": [
-        {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/docs.AudienceId"
-          }
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "tabs": {
       "oneOf": [
         {
@@ -271,6 +258,19 @@
         }
       ]
     },
+    "docs.AudiencesConfig": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
     "docs.GithubEditThisPageConfig": {
       "type": "object",
       "properties": {
@@ -333,6 +333,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.CustomDomain"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "audiences": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.AudiencesConfig"
             },
             {
               "type": "null"
@@ -491,38 +501,12 @@
       ],
       "additionalProperties": false
     },
-    "docs.AudienceId": {
-      "type": "string"
-    },
-    "docs.Audience": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/docs.AudienceId"
-        },
-        {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/docs.AudienceId"
-          }
-        }
-      ]
-    },
     "docs.ChangelogFolderRelativePath": {
       "type": "string"
     },
     "docs.TabConfig": {
       "type": "object",
       "properties": {
-        "audience": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Audience"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "display-name": {
           "type": "string"
         },
@@ -604,16 +588,6 @@
     "docs.VersionConfig": {
       "type": "object",
       "properties": {
-        "audience": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Audience"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "display-name": {
           "type": "string"
         },
@@ -650,16 +624,6 @@
     "docs.PageConfiguration": {
       "type": "object",
       "properties": {
-        "audience": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Audience"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "page": {
           "type": "string"
         },
@@ -706,16 +670,6 @@
     "docs.SectionConfiguration": {
       "type": "object",
       "properties": {
-        "audience": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Audience"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "section": {
           "type": "string"
         },
@@ -932,16 +886,6 @@
     "docs.ApiReferencePackageConfigurationWithOptions": {
       "type": "object",
       "properties": {
-        "audience": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Audience"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "title": {
           "oneOf": [
             {
@@ -1044,16 +988,6 @@
     "docs.ApiReferenceSectionConfiguration": {
       "type": "object",
       "properties": {
-        "audience": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Audience"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "section": {
           "type": "string"
         },
@@ -1152,16 +1086,6 @@
     "docs.ApiReferenceEndpointConfiguration": {
       "type": "object",
       "properties": {
-        "audience": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Audience"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "endpoint": {
           "type": "string"
         },
@@ -1277,16 +1201,6 @@
     "docs.ApiReferenceConfiguration": {
       "type": "object",
       "properties": {
-        "audience": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Audience"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "api": {
           "type": "string"
         },
@@ -1445,16 +1359,6 @@
     "docs.ChangelogConfiguration": {
       "type": "object",
       "properties": {
-        "audience": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Audience"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "changelog": {
           "$ref": "#/definitions/docs.ChangelogFolderRelativePath"
         },
