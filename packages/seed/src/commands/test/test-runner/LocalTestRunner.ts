@@ -153,6 +153,7 @@ export class LocalTestRunner extends TestRunner {
             await localTaskHandler.copyGeneratedFiles();
             taskContext.logger.info(`Wrote generated files to ${outputDir}`);
 
+            // TODO: Move this so that it can be applied everywhere.
             if (language != null) {
                 taskContext.logger.info(`Writing dynamic snippet tests to ${outputDir}`);
                 await generateDynamicSnippetTests({

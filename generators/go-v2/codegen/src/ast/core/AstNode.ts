@@ -10,12 +10,14 @@ export abstract class AstNode extends AbstractAstNode {
         packageName,
         rootImportPath,
         importPath,
-        customConfig
+        customConfig,
+        formatted
     }: {
         packageName: string;
         rootImportPath: string;
         importPath: string;
         customConfig: BaseGoCustomConfigSchema;
+        formatted?: boolean;
     }): Promise<string> {
         const file = new GoFile({
             packageName,
@@ -24,6 +26,6 @@ export abstract class AstNode extends AbstractAstNode {
             customConfig
         });
         this.write(file);
-        return file.toString();
+        return file.toString({ formatted });
     }
 }
