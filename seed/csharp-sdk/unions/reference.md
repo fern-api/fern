@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Union.GetAsync("string");
+await client.Union.GetAsync("id");
 ```
 </dd>
 </dl>
@@ -53,7 +53,7 @@ await client.Union.GetAsync("string");
 <dd>
 
 ```csharp
-await client.Union.UpdateAsync(new Circle { Id = "string", Radius = 1.1 });
+await client.Union.UpdateAsync(new Circle { Radius = 1.1 });
 ```
 </dd>
 </dl>

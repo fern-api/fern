@@ -84,8 +84,21 @@ $$
 $$
 ```
 
-$$
-\f\relax{x} = \int_{-\infty}^\infty
-    \f\hat\xi\,e^{2 \pi i \xi x}
-    \,d\xi
-$$
+## Diagrams
+Fern supports creating diagrams within your Markdown using [Mermaid](https://mermaid.js.org/). Mermaid offers a variety of diagrams, including flowcharts, entity-relationship models, and Gantt charts. To include a Mermaid diagram in your Markdown file, create a codeblock marked with `mermaid`. 
+
+````markdown
+```mermaid
+erDiagram
+    CUSTOMER ||--o{ PLANT-ORDER : places
+    PLANT-ORDER ||--|{ PLANT-ID : contains
+    CUSTOMER }|..|{ DELIVERY-ADDRESS : uses
+```
+````
+
+```mermaid
+erDiagram
+    CUSTOMER ||--o{ PLANT-ORDER : places
+    PLANT-ORDER ||--|{ PLANT-ID : contains
+    CUSTOMER }|..|{ DELIVERY-ADDRESS : uses
+```

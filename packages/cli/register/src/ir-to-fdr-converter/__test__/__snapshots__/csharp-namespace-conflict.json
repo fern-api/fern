@@ -5,7 +5,10 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": []
+        "properties": [],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_a/aa:B": {
@@ -13,7 +16,10 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": []
+        "properties": [],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_a/aa:SubTestType": {
@@ -36,7 +42,10 @@
               "value": "type_a/aa:B"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_b:TestType": {
@@ -59,7 +68,10 @@
               "value": "type_a/aa:B"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_tasktest:Task": {
@@ -77,7 +89,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -143,7 +158,16 @@
           "queryParameters": [],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/hello",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

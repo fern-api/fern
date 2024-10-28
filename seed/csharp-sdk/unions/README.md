@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedUnions;
 
 var client = new SeedUnionsClient();
-await client.Union.GetAsync("string");
+await client.Union.GetAsync("id");
 ```
 
 ## Exception Handling

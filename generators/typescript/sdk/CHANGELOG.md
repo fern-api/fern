@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.41.0] - 2024-10-08
+
+- Improvement: Add a variable jitter to the exponential backoff and retry. 
+
+## [0.41.0-rc2] - 2024-10-08
+
+- Improvement: Generated READMEs now include improved usage snippets for pagination and streaming endpoints.
+
 ## [0.41.0-rc1] - 2024-10-08
 
 - Fix: Fixes a broken unit test introduced in 0.41.0-rc0.

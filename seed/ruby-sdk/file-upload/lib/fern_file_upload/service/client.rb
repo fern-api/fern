@@ -32,14 +32,6 @@ module SeedFileUploadClient
     # @param optional_id [String]
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
-    # @example
-    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
-    #  file_upload.service.post(
-    #    file: my_file.txt,
-    #    file_list: my_file.txt,
-    #    maybe_file: my_file.txt,
-    #    maybe_file_list: my_file.txt
-    #  )
     def post(integer:, file:, file_list:, list_of_objects:, maybe_string: nil, maybe_file: nil, maybe_file_list: nil, maybe_integer: nil,
              optional_list_of_strings: nil, optional_metadata: nil, optional_object_type: nil, optional_id: nil, request_options: nil)
       @request_client.conn.post do |req|
@@ -78,9 +70,6 @@ module SeedFileUploadClient
     # @param file [String, IO]
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
-    # @example
-    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
-    #  file_upload.service.just_file(file: my_file.txt)
     def just_file(file:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -108,16 +97,6 @@ module SeedFileUploadClient
     # @param file [String, IO]
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
-    # @example
-    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
-    #  file_upload.service.just_file_with_query_params(
-    #    maybe_string: "string",
-    #    integer: 1,
-    #    maybe_integer: 1,
-    #    list_of_strings: "string",
-    #    optional_list_of_strings: "string",
-    #    file: my_file.txt
-    #  )
     def just_file_with_query_params(integer:, list_of_strings:, file:, maybe_string: nil, maybe_integer: nil,
                                     optional_list_of_strings: nil, request_options: nil)
       @request_client.conn.post do |req|
@@ -149,9 +128,6 @@ module SeedFileUploadClient
     #   * :foo (String)
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
-    # @example
-    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
-    #  file_upload.service.with_content_type(file: my_file.txt)
     def with_content_type(file:, foo:, bar:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -199,14 +175,6 @@ module SeedFileUploadClient
     # @param optional_id [String]
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
-    # @example
-    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
-    #  file_upload.service.post(
-    #    file: my_file.txt,
-    #    file_list: my_file.txt,
-    #    maybe_file: my_file.txt,
-    #    maybe_file_list: my_file.txt
-    #  )
     def post(integer:, file:, file_list:, list_of_objects:, maybe_string: nil, maybe_file: nil, maybe_file_list: nil, maybe_integer: nil,
              optional_list_of_strings: nil, optional_metadata: nil, optional_object_type: nil, optional_id: nil, request_options: nil)
       Async do
@@ -247,9 +215,6 @@ module SeedFileUploadClient
     # @param file [String, IO]
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
-    # @example
-    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
-    #  file_upload.service.just_file(file: my_file.txt)
     def just_file(file:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
@@ -279,16 +244,6 @@ module SeedFileUploadClient
     # @param file [String, IO]
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
-    # @example
-    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
-    #  file_upload.service.just_file_with_query_params(
-    #    maybe_string: "string",
-    #    integer: 1,
-    #    maybe_integer: 1,
-    #    list_of_strings: "string",
-    #    optional_list_of_strings: "string",
-    #    file: my_file.txt
-    #  )
     def just_file_with_query_params(integer:, list_of_strings:, file:, maybe_string: nil, maybe_integer: nil,
                                     optional_list_of_strings: nil, request_options: nil)
       Async do
@@ -322,9 +277,6 @@ module SeedFileUploadClient
     #   * :foo (String)
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
-    # @example
-    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
-    #  file_upload.service.with_content_type(file: my_file.txt)
     def with_content_type(file:, foo:, bar:, request_options: nil)
       Async do
         @request_client.conn.post do |req|

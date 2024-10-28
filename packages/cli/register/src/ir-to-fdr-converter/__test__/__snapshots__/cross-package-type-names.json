@@ -28,7 +28,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_folder-b/common:Foo": {
@@ -47,7 +50,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_folder-c/common:Foo": {
@@ -65,7 +71,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_folder-d/service:Response": {
@@ -84,7 +93,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_foo:ImportingType": {
@@ -100,7 +112,10 @@
               "value": "type_commons:Imported"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_foo:OptionalString": {
@@ -177,7 +192,33 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "foo": {
+                  "foo": {
+                    "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                  }
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "foo": {
+                    "foo": {
+                      "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                    }
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -277,7 +318,33 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "foo": {
+                  "foo": {
+                    "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                  }
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "foo": {
+                    "foo": {
+                      "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                    }
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -366,7 +433,30 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "imported": "imported"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "imported": "imported"
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

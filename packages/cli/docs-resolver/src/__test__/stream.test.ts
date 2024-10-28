@@ -1,11 +1,12 @@
 import { docsYml } from "@fern-api/configuration";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { generateIntermediateRepresentation, IdGenerator } from "@fern-api/ir-generator";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
 import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { ApiReferenceNodeConverter } from "../ApiReferenceNodeConverter";
+import { NodeIdGenerator } from "../NodeIdGenerator";
 import { convertIrToApiDefinition } from "../utils/convertIrToApiDefinition";
 
 const context = createMockTaskContext();
@@ -57,7 +58,7 @@ it.skip("converts to api reference node", async () => {
         throw new Error("Expected fern workspace");
     }
 
-    const slug = FernNavigation.SlugGenerator.init("/base/path");
+    const slug = FernNavigation.V1.SlugGenerator.init("/base/path");
 
     const ir = await generateIntermediateRepresentation({
         workspace: apiWorkspace,
@@ -81,7 +82,8 @@ it.skip("converts to api reference node", async () => {
         apiWorkspace,
         docsWorkspace,
         context,
-        new Map()
+        new Map(),
+        NodeIdGenerator.init()
     ).get();
 
     expect(node).toMatchSnapshot();

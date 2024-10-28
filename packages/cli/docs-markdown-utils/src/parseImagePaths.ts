@@ -382,8 +382,8 @@ function visitFrontmatterImages(
             if (typeof value === "object") {
                 if (value.type === "fileId") {
                     data[key] = {
-                        ...value,
-                        value: mapImage(value.value) ?? value.value
+                        type: "fileId",
+                        value: CjsFdrSdk.FileId(mapImage(value.value) ?? value.value)
                     };
                 }
             } else if (typeof value === "string") {
@@ -391,11 +391,11 @@ function visitFrontmatterImages(
                 data[key] = mappedImage
                     ? {
                           type: "fileId",
-                          value: mappedImage
+                          value: CjsFdrSdk.FileId(mappedImage)
                       }
                     : {
                           type: "url",
-                          value
+                          value: CjsFdrSdk.Url(value)
                       };
             }
             // else do nothing

@@ -95,7 +95,36 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/d/e/test",
+              "pathParameters": {
+                "a": "a",
+                "b": "b",
+                "c": "c",
+                "d": "d",
+                "e": "e"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "random": "random"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "random": "random"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

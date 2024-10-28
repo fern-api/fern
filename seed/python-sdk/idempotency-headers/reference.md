@@ -102,7 +102,7 @@ client = SeedIdempotencyHeaders(
     base_url="https://yourhost.com/path/to/api",
 )
 client.payment.delete(
-    payment_id="string",
+    payment_id="paymentId",
 )
 
 ```

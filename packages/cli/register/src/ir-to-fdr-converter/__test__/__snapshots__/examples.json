@@ -53,7 +53,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_:BasicType": {
@@ -147,7 +150,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_commons/types:EventInfo": {
@@ -216,7 +222,8 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "base64"
+                      "type": "base64",
+                      "default": "0"
                     }
                   }
                 }
@@ -350,11 +357,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "long"
+                "type": "long",
+                "default": 0
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:CastMember": {
@@ -410,7 +421,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:Actress": {
@@ -437,7 +451,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:StuntDouble": {
@@ -464,7 +481,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:ExtendedMovie": {
@@ -487,7 +507,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:Moment": {
@@ -510,7 +533,8 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "date"
+                "type": "date",
+                "default": "1970-01-01T00:00:00.000Z"
               }
             }
           },
@@ -519,11 +543,15 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "datetime"
+                "type": "datetime",
+                "default": "1970-01-01T00:00:00.000Z"
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:File": {
@@ -550,7 +578,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:Directory": {
@@ -594,7 +625,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:Node": {
@@ -638,7 +672,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:Tree": {
@@ -660,7 +697,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:Metadata": {
@@ -824,7 +864,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:MigrationStatus": {
@@ -868,7 +911,10 @@
               "value": "type_types:MigrationStatus"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:Request": {
@@ -883,7 +929,10 @@
               "type": "unknown"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:Response": {
@@ -908,7 +957,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:ResponseType": {
@@ -924,7 +976,10 @@
               "value": "type_:Type"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_types:Test": {
@@ -943,7 +998,8 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "default": false
                     }
                   }
                 }
@@ -960,7 +1016,8 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "default": false
                     }
                   }
                 }
@@ -992,7 +1049,152 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_types:BigEntity": {
+      "name": "BigEntity",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "castMember",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_types:CastMember"
+              }
+            }
+          },
+          {
+            "key": "extendedMovie",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_types:ExtendedMovie"
+              }
+            }
+          },
+          {
+            "key": "entity",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_types:Entity"
+              }
+            }
+          },
+          {
+            "key": "metadata",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_types:Metadata"
+              }
+            }
+          },
+          {
+            "key": "commonMetadata",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_commons/types:Metadata"
+              }
+            }
+          },
+          {
+            "key": "eventInfo",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_commons/types:EventInfo"
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_commons/types:Data"
+              }
+            }
+          },
+          {
+            "key": "migration",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_types:Migration"
+              }
+            }
+          },
+          {
+            "key": "exception",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_types:Exception"
+              }
+            }
+          },
+          {
+            "key": "test",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_types:Test"
+              }
+            }
+          },
+          {
+            "key": "node",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_types:Node"
+              }
+            }
+          },
+          {
+            "key": "directory",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_types:Directory"
+              }
+            }
+          },
+          {
+            "key": "moment",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_types:Moment"
+              }
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -1227,6 +1429,7 @@
                 }
               },
               "statusCode": 404,
+              "name": "NotFoundError",
               "examples": []
             }
           ],
@@ -1385,7 +1588,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
@@ -1686,7 +1890,8 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "default": false
                   }
                 }
               }
@@ -1780,9 +1985,9 @@
               "baseUrl": "https://staging.com/api"
             }
           ],
-          "id": "getResponse",
-          "originalEndpointId": "endpoint_service.getResponse",
-          "name": "Get Response",
+          "id": "createBigEntity",
+          "originalEndpointId": "endpoint_service.createBigEntity",
+          "name": "Create Big Entity",
           "path": {
             "pathParameters": [],
             "parts": [
@@ -1792,12 +1997,25 @@
               },
               {
                 "type": "literal",
-                "value": "/response"
+                "value": "/big-entity"
               }
             ]
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_types:BigEntity"
+                }
+              }
+            }
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1810,44 +2028,54 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/response",
+              "path": "/big-entity",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
               "responseStatusCode": 200,
               "responseBody": {
-                "response": "Initializing...",
+                "response": {
+                  "key": "value"
+                },
                 "identifiers": [
                   {
                     "type": "primitive",
-                    "value": "example",
-                    "label": "Primitive"
+                    "value": "value",
+                    "label": "label"
                   },
                   {
-                    "type": "unknown",
-                    "value": "{}",
-                    "label": "Unknown"
+                    "type": "primitive",
+                    "value": "value",
+                    "label": "label"
                   }
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "response": "Initializing...",
+                  "response": {
+                    "key": "value"
+                  },
                   "identifiers": [
                     {
                       "type": "primitive",
-                      "value": "example",
-                      "label": "Primitive"
+                      "value": "value",
+                      "label": "label"
                     },
                     {
-                      "type": "unknown",
-                      "value": "{}",
-                      "label": "Unknown"
+                      "type": "primitive",
+                      "value": "value",
+                      "label": "label"
                     }
                   ]
                 }
-              }
+              },
+              "codeSamples": []
             }
           ]
         }
@@ -1885,7 +2113,8 @@
         "type_types:Response",
         "type_types:ResponseType",
         "type_types:Test",
-        "type_types:Entity"
+        "type_types:Entity",
+        "type_types:BigEntity"
       ],
       "subpackages": []
     }
@@ -1967,6 +2196,89 @@
               "type": "json",
               "value": "Hello world!\\n\\nwith\\n\\tnewlines"
             }
+          }
+        ]
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "environments": [
+          {
+            "id": "Production",
+            "baseUrl": "https://production.com/api"
+          },
+          {
+            "id": "Staging",
+            "baseUrl": "https://staging.com/api"
+          }
+        ],
+        "id": "createType",
+        "originalEndpointId": "endpoint_.createType",
+        "name": "Create Type",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:Type"
+              }
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "type_:Identifier"
+            }
+          }
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": "primitive",
+            "requestBodyV3": {
+              "type": "json",
+              "value": "primitive"
+            },
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "primitive",
+              "value": "value",
+              "label": "label"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "type": "primitive",
+                "value": "value",
+                "label": "label"
+              }
+            },
+            "codeSamples": []
           }
         ]
       }

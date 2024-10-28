@@ -23,7 +23,7 @@ module SeedMultiUrlEnvironmentClient
     #    environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  multi_url_environment.ec_2.boot_instance(size: "string")
+    #  multi_url_environment.ec_2.boot_instance(size: "size")
     def boot_instance(size:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -61,7 +61,7 @@ module SeedMultiUrlEnvironmentClient
     #    environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  multi_url_environment.ec_2.boot_instance(size: "string")
+    #  multi_url_environment.ec_2.boot_instance(size: "size")
     def boot_instance(size:, request_options: nil)
       Async do
         @request_client.conn.post do |req|

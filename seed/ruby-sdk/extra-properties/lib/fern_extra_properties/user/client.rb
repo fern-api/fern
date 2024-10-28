@@ -20,7 +20,7 @@ module SeedExtraPropertiesClient
     # @return [SeedExtraPropertiesClient::User::User]
     # @example
     #  extra_properties = SeedExtraPropertiesClient::Client.new(base_url: "https://api.example.com")
-    #  extra_properties.user.create_user(name: "string")
+    #  extra_properties.user.create_user(name: "name")
     def create_user(name:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -59,7 +59,7 @@ module SeedExtraPropertiesClient
     # @return [SeedExtraPropertiesClient::User::User]
     # @example
     #  extra_properties = SeedExtraPropertiesClient::Client.new(base_url: "https://api.example.com")
-    #  extra_properties.user.create_user(name: "string")
+    #  extra_properties.user.create_user(name: "name")
     def create_user(name:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

@@ -220,17 +220,17 @@ export function isStreamingExample(
 ): boolean | undefined {
     return example._visit({
         unknown: (unknownExample) => {
-            const maybeFernExample = RawSchemas.ExampleEndpointCallSchema.safeParse(unknownExample);
-            if (!maybeFernExample.success) {
-                context.logger.error("Failed to parse example", maybeFernExample.error.toString());
+            const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(unknownExample);
+            if (!maybeFernExample.ok) {
+                context.logger.error("Failed to parse example", maybeFernExample.errors.toString());
                 return undefined;
             }
 
-            if (maybeFernExample.data.response == null) {
+            if (maybeFernExample.value.response == null) {
                 return undefined;
             }
 
-            return (maybeFernExample.data.response as { stream?: unknown }).stream != null;
+            return (maybeFernExample.value.response as { stream?: unknown }).stream != null;
         },
         full: () => undefined,
         _other: () => undefined

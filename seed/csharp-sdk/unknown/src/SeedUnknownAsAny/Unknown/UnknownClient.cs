@@ -61,10 +61,7 @@ public partial class UnknownClient
     /// <example>
     /// <code>
     /// await client.Unknown.PostObjectAsync(
-    ///     new MyObject
-    ///     {
-    ///         Unknown = new Dictionary&lt;object, object?&gt;() { { "boolVal", true }, { "strVal", "string" } },
-    ///     }
+    ///     new MyObject { Unknown = new Dictionary&lt;object, object?&gt;() { { "key", "value" } } }
     /// );
     /// </code>
     /// </example>

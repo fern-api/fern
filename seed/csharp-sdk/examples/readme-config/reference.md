@@ -39,6 +39,46 @@ await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
 </dl>
 </details>
 
+<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">CreateTypeAsync</a>(OneOf<BasicType, ComplexType> { ... }) -> Identifier</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.CreateTypeAsync(BasicType.Primitive);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `OneOf<BasicType, ComplexType>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## File Notification Service
 <details><summary><code>client.File.Notification.Service.<a href="/src/SeedExamples/File/Notification/Service/ServiceClient.cs">GetExceptionAsync</a>(notificationId) -> object</code></summary>
 <dl>
@@ -392,7 +432,7 @@ await client.Service.GetMetadataAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetResponseAsync</a>() -> Response</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">CreateBigEntityAsync</a>(BigEntity { ... }) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -405,8 +445,40 @@ await client.Service.GetMetadataAsync(
 <dd>
 
 ```csharp
-await client.Service.GetResponseAsync();
+await client.Service.CreateBigEntityAsync(
+    new BigEntity
+    {
+        CastMember = null,
+        ExtendedMovie = null,
+        Entity = null,
+        Metadata = null,
+        CommonMetadata = null,
+        EventInfo = null,
+        Data = null,
+        Migration = null,
+        Exception = null,
+        Test = null,
+        Node = null,
+        Directory = null,
+        Moment = null,
+    }
+);
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BigEntity` 
+    
 </dd>
 </dl>
 </dd>

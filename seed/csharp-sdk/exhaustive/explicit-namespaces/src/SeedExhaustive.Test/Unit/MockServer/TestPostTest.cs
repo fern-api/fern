@@ -33,15 +33,16 @@ public class TestPostTest : BaseMockServerTest
               "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "base64": "SGVsbG8gd29ybGQh",
               "list": [
-                "string"
+                "list",
+                "list"
               ],
               "set": [
-                "string"
+                "set"
               ],
               "map": {
-                "1": "string"
+                "1": "map"
               },
-              "bigint": "123456789123456789"
+              "bigint": "1000000"
             }
             """;
 

@@ -42,6 +42,19 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.createType"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.create_type(\n    request=\"primitive\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.create_type(\n        request=\"primitive\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/file/notification/{notificationId}",
                 "method": "GET",
                 "identifier_override": "endpoint_file/notification/service.getException"
@@ -146,13 +159,13 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/response",
+                "path": "/big-entity",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getResponse"
+                "identifier_override": "endpoint_service.createBigEntity"
             },
             "snippet": {
-                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.get_response()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.get_response()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.create_big_entity()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.create_big_entity()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

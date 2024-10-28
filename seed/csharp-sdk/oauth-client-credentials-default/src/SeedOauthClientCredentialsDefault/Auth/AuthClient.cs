@@ -21,8 +21,8 @@ public partial class AuthClient
     /// await client.Auth.GetTokenAsync(
     ///     new GetTokenRequest
     ///     {
-    ///         ClientId = "string",
-    ///         ClientSecret = "string",
+    ///         ClientId = "client_id",
+    ///         ClientSecret = "client_secret",
     ///         GrantType = "client_credentials",
     ///     }
     /// );

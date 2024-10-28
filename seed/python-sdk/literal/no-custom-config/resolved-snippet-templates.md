@@ -14,7 +14,7 @@ client.headers.send(
 
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
 client.headers.send(
-	query="What is the weather today"
+	query="query"
 )
  
 ```                        
@@ -42,8 +42,7 @@ from seed.inlined import ATopLevelLiteral
 
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
 client.inlined.send(
-	query="What is the weather today",
-	temperature=10.1,
+	query="query",
 	object_with_literal=ATopLevelLiteral(
 		nested_literal=ANestedLiteral(
 			
@@ -92,7 +91,7 @@ client.query.send(
 
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
 client.query.send(
-	query="string"
+	query="query"
 )
  
 ```                        
@@ -123,9 +122,12 @@ from seed.reference import NestedObjectWithLiterals
 
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
 client.reference.send(
-	query="What is the weather today",
+	query="query",
 	container_object=ContainerObject(
 		nested_objects=[
+			NestedObjectWithLiterals(
+				str_prop="strProp"
+			),
 			NestedObjectWithLiterals(
 				str_prop="strProp"
 			)

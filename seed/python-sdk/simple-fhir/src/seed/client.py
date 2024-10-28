@@ -79,7 +79,7 @@ class SeedApi:
             base_url="https://yourhost.com/path/to/api",
         )
         client.get_account(
-            account_id="string",
+            account_id="account_id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -174,7 +174,7 @@ class AsyncSeedApi:
 
         async def main() -> None:
             await client.get_account(
-                account_id="string",
+                account_id="account_id",
             )
 
 

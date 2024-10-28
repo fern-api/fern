@@ -19,7 +19,7 @@ public partial class HttpMethodsClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.HttpMethods.TestGetAsync("string");
+    /// await client.Endpoints.HttpMethods.TestGetAsync("id");
     /// </code>
     /// </example>
     public async Task<string> TestGetAsync(
@@ -103,7 +103,7 @@ public partial class HttpMethodsClient
     /// <example>
     /// <code>
     /// await client.Endpoints.HttpMethods.TestPutAsync(
-    ///     "string",
+    ///     "id",
     ///     new ObjectWithRequiredField { String = "string" }
     /// );
     /// </code>
@@ -149,22 +149,22 @@ public partial class HttpMethodsClient
     /// <example>
     /// <code>
     /// await client.Endpoints.HttpMethods.TestPatchAsync(
-    ///     "string",
+    ///     "id",
     ///     new ObjectWithOptionalField
     ///     {
-    ///         String = "string",
-    ///         Integer = 1,
-    ///         Long = 1000000,
-    ///         Double = 1.1,
-    ///         Bool = true,
-    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         Date = new DateOnly(2023, 1, 15),
-    ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///         Base64 = "SGVsbG8gd29ybGQh",
-    ///         List = new List&lt;string&gt;() { "string" },
-    ///         Set = new HashSet&lt;string&gt;() { "string" },
-    ///         Map = new Dictionary&lt;int, string&gt;() { { 1, "string" } },
-    ///         Bigint = "123456789123456789",
+    ///         String = null,
+    ///         Integer = null,
+    ///         Long = null,
+    ///         Double = null,
+    ///         Bool = null,
+    ///         Datetime = null,
+    ///         Date = null,
+    ///         Uuid = null,
+    ///         Base64 = null,
+    ///         List = null,
+    ///         Set = null,
+    ///         Map = null,
+    ///         Bigint = null,
     ///     }
     /// );
     /// </code>
@@ -209,7 +209,7 @@ public partial class HttpMethodsClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.HttpMethods.TestDeleteAsync("string");
+    /// await client.Endpoints.HttpMethods.TestDeleteAsync("id");
     /// </code>
     /// </example>
     public async Task<bool> TestDeleteAsync(

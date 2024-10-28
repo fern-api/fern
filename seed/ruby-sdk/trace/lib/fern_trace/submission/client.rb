@@ -62,7 +62,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.submission.get_execution_session(session_id: "string")
+    #  trace.submission.get_execution_session(session_id: "sessionId")
     def get_execution_session(session_id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -95,7 +95,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.submission.stop_execution_session(session_id: "string")
+    #  trace.submission.stop_execution_session(session_id: "sessionId")
     def stop_execution_session(session_id:, request_options: nil)
       @request_client.conn.delete do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -204,7 +204,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.submission.get_execution_session(session_id: "string")
+    #  trace.submission.get_execution_session(session_id: "sessionId")
     def get_execution_session(session_id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -239,7 +239,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.submission.stop_execution_session(session_id: "string")
+    #  trace.submission.stop_execution_session(session_id: "sessionId")
     def stop_execution_session(session_id:, request_options: nil)
       Async do
         @request_client.conn.delete do |req|

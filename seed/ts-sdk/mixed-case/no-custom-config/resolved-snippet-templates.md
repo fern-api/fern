@@ -11,7 +11,7 @@ await client.service.getResource("rsc-xyz");
 import { SeedMixedCaseClient } from "@fern/mixed-case";
 
 const client = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
-await client.service.getResource("string");
+await client.service.getResource("ResourceID");
  
 ```                        
 

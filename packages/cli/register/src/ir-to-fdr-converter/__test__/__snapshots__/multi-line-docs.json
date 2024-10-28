@@ -58,7 +58,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -109,7 +112,18 @@
           "queryParameters": [],
           "headers": [],
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users/userId",
+              "pathParameters": {
+                "userId": "userId"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
@@ -178,7 +192,38 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "name": "name"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "id": "id",
+                "name": "name",
+                "age": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "id",
+                  "name": "name",
+                  "age": 1
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

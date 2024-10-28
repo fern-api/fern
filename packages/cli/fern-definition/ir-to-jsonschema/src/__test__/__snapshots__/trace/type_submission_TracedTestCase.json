@@ -1,0 +1,501 @@
+{
+  "type": "object",
+  "properties": {
+    "result": {
+      "$ref": "#/definitions/submission.TestCaseResultWithStdout"
+    },
+    "traceResponsesSize": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "result",
+    "traceResponsesSize"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "commons.KeyValuePair": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "$ref": "#/definitions/commons.VariableValue"
+        },
+        "value": {
+          "$ref": "#/definitions/commons.VariableValue"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "commons.NodeId": {
+      "type": "string"
+    },
+    "commons.BinaryTreeNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "right": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "left": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ],
+      "additionalProperties": false
+    },
+    "commons.SinglyLinkedListNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "next": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ],
+      "additionalProperties": false
+    },
+    "commons.DoublyLinkedListNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/commons.NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "next": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prev": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/commons.NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ],
+      "additionalProperties": false
+    },
+    "commons.VariableValue": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "integerValue",
+            "booleanValue",
+            "doubleValue",
+            "stringValue",
+            "charValue",
+            "mapValue",
+            "listValue",
+            "binaryTreeValue",
+            "singlyLinkedListValue",
+            "doublyLinkedListValue",
+            "nullValue"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "integerValue"
+            },
+            "value": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "booleanValue"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "doubleValue"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "stringValue"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "charValue"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "mapValue"
+            },
+            "keyValuePairs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/commons.KeyValuePair"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "keyValuePairs"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "listValue"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/commons.VariableValue"
+              }
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "binaryTreeValue"
+            },
+            "root": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.NodeId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "nodes": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/commons.BinaryTreeNodeValue"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "nodes"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "singlyLinkedListValue"
+            },
+            "head": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.NodeId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "nodes": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/commons.SinglyLinkedListNodeValue"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "nodes"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "doublyLinkedListValue"
+            },
+            "head": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/commons.NodeId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "nodes": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/commons.DoublyLinkedListNodeValue"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "nodes"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "nullValue"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "submission.ExceptionV2": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "generic",
+            "timeout"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "generic"
+            },
+            "exceptionType": {
+              "type": "string"
+            },
+            "exceptionMessage": {
+              "type": "string"
+            },
+            "exceptionStacktrace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionType",
+            "exceptionMessage",
+            "exceptionStacktrace"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "timeout"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "submission.ActualResult": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "value",
+            "exception",
+            "exceptionV2"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "value"
+            },
+            "value": {
+              "$ref": "#/definitions/commons.VariableValue"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "exception"
+            },
+            "exceptionType": {
+              "type": "string"
+            },
+            "exceptionMessage": {
+              "type": "string"
+            },
+            "exceptionStacktrace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionType",
+            "exceptionMessage",
+            "exceptionStacktrace"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "exceptionV2"
+            },
+            "value": {
+              "$ref": "#/definitions/submission.ExceptionV2"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "submission.TestCaseResult": {
+      "type": "object",
+      "properties": {
+        "expectedResult": {
+          "$ref": "#/definitions/commons.VariableValue"
+        },
+        "actualResult": {
+          "$ref": "#/definitions/submission.ActualResult"
+        },
+        "passed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expectedResult",
+        "actualResult",
+        "passed"
+      ],
+      "additionalProperties": false
+    },
+    "submission.TestCaseResultWithStdout": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/submission.TestCaseResult"
+        },
+        "stdout": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "result",
+        "stdout"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

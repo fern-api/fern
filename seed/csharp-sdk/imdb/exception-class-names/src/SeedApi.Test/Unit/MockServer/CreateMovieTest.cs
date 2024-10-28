@@ -17,7 +17,7 @@ public class CreateMovieTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "title": "string",
+              "title": "title",
               "rating": 1.1
             }
             """;
@@ -42,7 +42,7 @@ public class CreateMovieTest : BaseMockServerTest
             );
 
         var response = await Client.Imdb.CreateMovieAsync(
-            new CreateMovieRequest { Title = "string", Rating = 1.1 },
+            new CreateMovieRequest { Title = "title", Rating = 1.1 },
             RequestOptions
         );
         JToken

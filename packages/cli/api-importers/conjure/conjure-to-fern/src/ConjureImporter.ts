@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, relativize, getFilename } from "@fern-api/fs-utils";
 import { DefinitionFile } from "@fern-api/conjure-sdk";
-import { APIDefinitionImporter, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
+import { APIDefinitionImporter, FernDefinitionBuilderImpl, HttpServiceInfo } from "@fern-api/importer-commons";
 import { visitConjureTypeDeclaration } from "./utils/visitConjureTypeDeclaration";
 import { parseEndpointLocator, removeSuffix } from "@fern-api/core-utils";
 import { listConjureFiles } from "./utils/listConjureFiles";
@@ -34,6 +34,23 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
             }
             if (authOverrides.auth != null) {
                 this.fernDefinitionBuilder.setAuth(authOverrides.auth);
+            }
+        }
+
+        if (environmentOverrides != null) {
+            for (const [environment, environmentDeclaration] of Object.entries(
+                environmentOverrides.environments ?? {}
+            )) {
+                this.fernDefinitionBuilder.addEnvironment({
+                    name: environment,
+                    schema: environmentDeclaration
+                });
+            }
+            if (environmentOverrides["default-environment"] != null) {
+                this.fernDefinitionBuilder.setDefaultEnvironment(environmentOverrides["default-environment"]);
+            }
+            if (environmentOverrides["default-url"] != null) {
+                this.fernDefinitionBuilder.setDefaultUrl(environmentOverrides["default-url"]);
             }
         }
 
@@ -83,6 +100,15 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                 const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: "Service" });
                 const fernFilePath = RelativeFilePath.of(`${unsuffixedServiceName}/__package__.yml`);
 
+                const httpServiceInfo: HttpServiceInfo = {};
+                if (serviceDeclaration.basePath != null) {
+                    httpServiceInfo["base-path"] = serviceDeclaration.basePath;
+                }
+                if (serviceDeclaration.docs != null) {
+                    httpServiceInfo.docs = serviceDeclaration.docs;
+                }
+                this.fernDefinitionBuilder.setServiceInfo(fernFilePath, httpServiceInfo);
+
                 this.importAllTypes({ conjureFile: definition, fernFilePath });
 
                 for (const [import_, importedFilepath] of Object.entries(definition.types?.conjureImports ?? {})) {
@@ -110,7 +136,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         auth: true,
                         path: endpointLocator.path,
                         method: endpointLocator.method,
-                        response: endpointDeclaration.returns
+                        response: endpointDeclaration.returns === "binary" ? "file" : endpointDeclaration.returns
                     };
 
                     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
@@ -132,6 +158,46 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
 
                     if (Object.entries(pathParameters).length > 0) {
                         endpoint["path-parameters"] = pathParameters;
+                    }
+
+                    for (const [arg, argDeclaration] of Object.entries(endpointDeclaration.args ?? {})) {
+                        if (pathParameters[arg] != null) {
+                            continue;
+                        }
+                        if (typeof argDeclaration === "string") {
+                            endpoint.request = { body: argDeclaration === "binary" ? "bytes" : argDeclaration };
+                        } else {
+                            switch (argDeclaration.paramType) {
+                                case "body":
+                                    endpoint.request = {
+                                        body: argDeclaration.type === "binary" ? "bytes" : argDeclaration.type
+                                    };
+                                    break;
+                                case "query": {
+                                    if (endpoint.request == null) {
+                                        endpoint.request = { "query-parameters": { [arg]: argDeclaration.type } };
+                                    } else if (
+                                        typeof endpoint.request !== "string" &&
+                                        endpoint.request?.["query-parameters"] == null
+                                    ) {
+                                        endpoint.request["query-parameters"] = { [arg]: argDeclaration.type };
+                                    } else if (
+                                        typeof endpoint.request !== "string" &&
+                                        endpoint.request?.["query-parameters"] != null
+                                    ) {
+                                        endpoint.request["query-parameters"][arg] = argDeclaration.type;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (
+                        endpoint.request != null &&
+                        typeof endpoint.request !== "string" &&
+                        endpoint.request?.["query-parameters"] != null
+                    ) {
+                        endpoint.request.name = `${endpointName}Request`;
                     }
 
                     this.fernDefinitionBuilder.addEndpoint(fernFilePath, {
@@ -183,12 +249,15 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                     this.fernDefinitionBuilder.addType(fernFilePath, {
                         name: typeName,
                         schema: {
-                            discriminant: "dummy",
                             union: Object.fromEntries(
-                                Object.entries(value.union).map(([key, reference]) => {
+                                Object.entries(value.union).map(([key, type]) => {
                                     return [
                                         key,
-                                        { type: typeof reference === "string" ? reference : reference.type, key }
+                                        {
+                                            type: typeof type === "string" ? type : type.type,
+                                            docs: typeof type === "string" ? undefined : type.docs,
+                                            key
+                                        }
                                     ];
                                 })
                             )

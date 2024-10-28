@@ -21,7 +21,7 @@ module SeedOauthClientCredentialsDefaultClient
     # @return [SeedOauthClientCredentialsDefaultClient::Auth::TokenResponse]
     # @example
     #  oauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: "https://api.example.com")
-    #  oauth_client_credentials_default.auth.get_token(client_id: "string", client_secret: "string")
+    #  oauth_client_credentials_default.auth.get_token(client_id: "client_id", client_secret: "client_secret")
     def get_token(client_id:, client_secret:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -62,7 +62,7 @@ module SeedOauthClientCredentialsDefaultClient
     # @return [SeedOauthClientCredentialsDefaultClient::Auth::TokenResponse]
     # @example
     #  oauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: "https://api.example.com")
-    #  oauth_client_credentials_default.auth.get_token(client_id: "string", client_secret: "string")
+    #  oauth_client_credentials_default.auth.get_token(client_id: "client_id", client_secret: "client_secret")
     def get_token(client_id:, client_secret:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

@@ -24,6 +24,9 @@ public class PostTest : BaseMockServerTest
             [
               {
                 "key": "value"
+              },
+              {
+                "key": "value"
               }
             ]
             """;

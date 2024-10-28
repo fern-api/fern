@@ -3,7 +3,6 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExhaustive.Core;
-using SeedExhaustive.Types.Object;
 
 #nullable enable
 
@@ -16,9 +15,7 @@ public class GetAndReturnOptionalTest : BaseMockServerTest
     public async Task MockServerTest()
     {
         const string requestJson = """
-            {
-              "string": "string"
-            }
+
             """;
 
         const string mockResponse = """
@@ -33,7 +30,7 @@ public class GetAndReturnOptionalTest : BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/container/opt-objects")
                     .UsingPost()
-                    .WithBodyAsJson(requestJson)
+                    .WithBody(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -43,7 +40,7 @@ public class GetAndReturnOptionalTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Container.GetAndReturnOptionalAsync(
-            new ObjectWithRequiredField { String = "string" },
+            null,
             RequestOptions
         );
         JToken

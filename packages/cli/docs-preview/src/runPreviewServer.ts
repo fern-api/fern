@@ -19,13 +19,34 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     files: {},
     filesV2: {},
     config: {
-        navigation: {
-            items: []
-        }
+        navigation: undefined,
+        root: undefined,
+        title: undefined,
+        defaultLanguage: undefined,
+        announcement: undefined,
+        navbarLinks: undefined,
+        footerLinks: undefined,
+        logoHeight: undefined,
+        logoHref: undefined,
+        favicon: undefined,
+        metadata: undefined,
+        redirects: undefined,
+        colorsV3: undefined,
+        layout: undefined,
+        typographyV2: undefined,
+        analyticsConfig: undefined,
+        integrations: undefined,
+        css: undefined,
+        js: undefined,
+        playground: undefined
     },
     search: {
-        type: "legacyMultiAlgoliaIndex"
-    }
+        type: "legacyMultiAlgoliaIndex",
+        algoliaIndex: undefined
+    },
+    algoliaSearchIndex: undefined,
+    jsFiles: undefined,
+    id: undefined
 };
 
 export async function runPreviewServer({
@@ -56,12 +77,13 @@ export async function runPreviewServer({
             await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
         } catch (err) {
             const pathToBundle = getPathToBundleFolder();
+            if (err instanceof Error) {
+                context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`);
+            }
             if (await doesPathExist(pathToBundle)) {
-                context.logger.warn("Failed to download latest docs application. Falling back to existing bundle.");
+                context.logger.warn("Falling back to cached bundle...");
             } else {
-                context.logger.warn(
-                    "Failed to download docs application. Please reach out to support@buildwithfern.com."
-                );
+                context.logger.warn("Please reach out to support@buildwithfern.com.");
                 return;
             }
         }
@@ -91,7 +113,7 @@ export async function runPreviewServer({
     app.use(cors());
 
     const instance = new URL(
-        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `localhost:${port}`)
+        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `http://localhost:${port}`)
     );
 
     let project = initialProject;
@@ -105,7 +127,7 @@ export async function runPreviewServer({
             context.logger.info("Validating docs...");
             await validateProject(project);
             const newDocsDefinition = await getPreviewDocsDefinition({
-                domain: instance.host,
+                domain: `${instance.host}${instance.pathname}`,
                 project,
                 context
             });
@@ -116,6 +138,11 @@ export async function runPreviewServer({
                 context.logger.error("Failed to read docs configuration. Rendering blank page.");
             } else {
                 context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
+            }
+            if (err instanceof Error) {
+                if (err instanceof Error && err.stack) {
+                    context.logger.debug(`${err.message}\n${err.stack}`);
+                }
             }
             return docsDefinition;
         }

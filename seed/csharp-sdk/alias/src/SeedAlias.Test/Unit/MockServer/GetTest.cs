@@ -11,11 +11,9 @@ public class GetTest : BaseMockServerTest
     public void MockServerTest()
     {
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/type-kaljhv87").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/typeId").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () => await Client.GetAsync("type-kaljhv87", RequestOptions)
-        );
+        Assert.DoesNotThrowAsync(async () => await Client.GetAsync("typeId", RequestOptions));
     }
 }

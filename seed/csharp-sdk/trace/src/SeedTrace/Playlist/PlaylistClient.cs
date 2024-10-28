@@ -27,11 +27,10 @@ public partial class PlaylistClient
     ///     new CreatePlaylistRequest
     ///     {
     ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         Body = new PlaylistCreateRequest
     ///         {
-    ///             Name = "string",
-    ///             Problems = new List&lt;string&gt;() { "string" },
+    ///             Name = "name",
+    ///             Problems = new List&lt;string&gt;() { "problems", "problems" },
     ///         },
     ///     }
     /// );
@@ -93,11 +92,9 @@ public partial class PlaylistClient
     ///     1,
     ///     new GetPlaylistsRequest
     ///     {
-    ///         Limit = 1,
-    ///         OtherField = "string",
-    ///         MultiLineDocs = "string",
-    ///         OptionalMultipleField = ["string"],
-    ///         MultipleField = ["string"],
+    ///         OtherField = "otherField",
+    ///         MultiLineDocs = "multiLineDocs",
+    ///         MultipleField = ["multipleField"],
     ///     }
     /// );
     /// </code>
@@ -154,7 +151,7 @@ public partial class PlaylistClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Playlist.GetPlaylistAsync(1, "string");
+    /// await client.Playlist.GetPlaylistAsync(1, "playlistId");
     /// </code>
     /// </example>
     public async Task<Playlist> GetPlaylistAsync(
@@ -199,15 +196,7 @@ public partial class PlaylistClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Playlist.UpdatePlaylistAsync(
-    ///     1,
-    ///     "string",
-    ///     new UpdatePlaylistRequest
-    ///     {
-    ///         Name = "string",
-    ///         Problems = new List&lt;string&gt;() { "string" },
-    ///     }
-    /// );
+    /// await client.Playlist.UpdatePlaylistAsync(1, "playlistId", null);
     /// </code>
     /// </example>
     public async Task<Playlist?> UpdatePlaylistAsync(
@@ -254,7 +243,7 @@ public partial class PlaylistClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Playlist.DeletePlaylistAsync(1, "string");
+    /// await client.Playlist.DeletePlaylistAsync(1, "playlist_id");
     /// </code>
     /// </example>
     public async Task DeletePlaylistAsync(

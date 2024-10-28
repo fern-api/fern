@@ -90,7 +90,6 @@ export async function visitTypeDeclaration({
                         await visitTypeReference(extendedType, nodePathForExtension);
                     }
                 },
-                extensions: noop,
                 properties: async (properties) => {
                     if (properties == null) {
                         return;

@@ -27,7 +27,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
     "type_dummy:StreamResponse": {
@@ -57,7 +60,10 @@
               }
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -100,7 +106,8 @@
                     "valueType": {
                       "type": "primitive",
                       "value": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": false
                       }
                     }
                   },
@@ -118,38 +125,7 @@
             }
           },
           "errorsV2": [],
-          "examples": [
-            {
-              "name": "Default",
-              "path": "/generate",
-              "pathParameters": {},
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "stream": false,
-                "num_events": 5
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "stream": false,
-                  "num_events": 5
-                }
-              },
-              "responseStatusCode": 200,
-              "responseBody": {
-                "id": "id",
-                "name": "name"
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "id": "id",
-                  "name": "name"
-                }
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "webhooks": [],

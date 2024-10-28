@@ -34,7 +34,7 @@ class ServiceClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.service.post(
-            endpoint_param="string",
+            endpoint_param="endpointParam",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -81,7 +81,7 @@ class AsyncServiceClient:
 
         async def main() -> None:
             await client.service.post(
-                endpoint_param="string",
+                endpoint_param="endpointParam",
             )
 
 

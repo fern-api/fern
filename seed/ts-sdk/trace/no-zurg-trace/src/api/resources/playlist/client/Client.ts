@@ -41,10 +41,9 @@ export class Playlist {
      * @example
      *     await client.playlist.createPlaylist(1, {
      *         datetime: "2024-01-15T09:30:00Z",
-     *         optionalDatetime: "2024-01-15T09:30:00Z",
      *         body: {
-     *             name: "string",
-     *             problems: ["string"]
+     *             name: "name",
+     *             problems: ["problems", "problems"]
      *         }
      *     })
      */
@@ -122,11 +121,9 @@ export class Playlist {
      *
      * @example
      *     await client.playlist.getPlaylists(1, {
-     *         limit: 1,
-     *         otherField: "string",
-     *         multiLineDocs: "string",
-     *         optionalMultipleField: "string",
-     *         multipleField: "string"
+     *         otherField: "otherField",
+     *         multiLineDocs: "multiLineDocs",
+     *         multipleField: "multipleField"
      *     })
      */
     public async getPlaylists(
@@ -219,7 +216,7 @@ export class Playlist {
      * @throws {@link SeedTrace.UnauthorizedError}
      *
      * @example
-     *     await client.playlist.getPlaylist(1, "string")
+     *     await client.playlist.getPlaylist(1, "playlistId")
      */
     public async getPlaylist(
         serviceParam: number,
@@ -297,10 +294,7 @@ export class Playlist {
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
      *
      * @example
-     *     await client.playlist.updatePlaylist(1, "string", {
-     *         name: "string",
-     *         problems: ["string"]
-     *     })
+     *     await client.playlist.updatePlaylist(1, "playlistId", undefined)
      */
     public async updatePlaylist(
         serviceParam: number,
@@ -375,7 +369,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.playlist.deletePlaylist(1, "string")
+     *     await client.playlist.deletePlaylist(1, "playlist_id")
      */
     public async deletePlaylist(
         serviceParam: number,

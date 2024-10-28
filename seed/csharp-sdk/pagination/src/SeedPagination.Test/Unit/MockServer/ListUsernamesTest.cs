@@ -18,22 +18,17 @@ public class ListUsernamesTest : BaseMockServerTest
         const string mockResponse = """
             {
               "cursor": {
-                "after": "string",
+                "after": "after",
                 "data": [
-                  "string"
+                  "data",
+                  "data"
                 ]
               }
             }
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/users")
-                    .WithParam("starting_after", "string")
-                    .UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -42,7 +37,7 @@ public class ListUsernamesTest : BaseMockServerTest
             );
 
         var response = await Client.Users.ListUsernamesAsync(
-            new ListUsernamesRequest { StartingAfter = "string" },
+            new ListUsernamesRequest(),
             RequestOptions
         );
         JToken

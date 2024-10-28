@@ -30,16 +30,20 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Build Seed
+        run: |
+          pnpm seed:build
+
       - name: Print version
         run: |
           git_version="$(./scripts/git-version.sh)"
           echo Publishing version: "${git_version}"
 
-      - name: Add version to dev package.json's
+      - name: Publish Dev CLI
         run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           git_version="$(./scripts/git-version.sh)"
-
-          pnpm seed:local publish cli --ver ${git_version} --dev --log-level debug
+          pnpm seed publish cli --ver ${git_version} --dev --log-level debug
 
   # Test prod and try to publish, the publish command will handle if there's no diff
   live-test:
@@ -62,7 +66,7 @@ jobs:
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
           pnpm --filter @fern-api/cli dist:cli:prod
-          cli_path="$(pwd)/packages/cli/cli/dist/prod/bundle.cjs"
+          cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs"
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN"
 
   publish:
@@ -84,6 +88,10 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Build Seed
+        run: |
+          pnpm seed:build
+
       - name: Publish + Register CLI
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
@@ -93,13 +101,14 @@ jobs:
           previous_commit="$(git rev-parse --short HEAD~1)"
           echo "Preview of the previous file ${previous_commit}"
           head tmp_cli_previous_versions.yml
-
+          
           current_commit="$(git rev-parse --short HEAD)"
           echo "Preview of the current file ${current_commit}"
           head packages/cli/cli/versions.yml
 
-          pnpm seed:local publish cli  --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug
-          pnpm seed:local register cli
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          pnpm seed publish cli  --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug
+          pnpm seed register cli
 
   publish-manually:
     runs-on: ubuntu-latest
@@ -118,9 +127,14 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Build Seed
+        run: |
+          pnpm seed:build
+
       - name: Publish + Register CLI
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
-          pnpm seed:local publish cli --ver ${{ inputs.version }} --log-level debug
-          pnpm seed:local register cli
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          pnpm seed publish cli --ver ${{ inputs.version }} --log-level debug
+          pnpm seed register cli

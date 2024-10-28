@@ -17,36 +17,32 @@ public class GetAccountTest : BaseMockServerTest
         const string mockResponse = """
             {
               "resource_type": "Account",
-              "name": "string",
+              "name": "name",
               "patient": {
                 "resource_type": "Patient",
-                "name": "string",
-                "scripts": [],
-                "id": "string",
-                "related_resources": [],
-                "memo": {
-                  "description": "string"
-                }
+                "name": "name",
+                "scripts": [
+                  {
+                    "resource_type": "Script",
+                    "name": "name"
+                  },
+                  {
+                    "resource_type": "Script",
+                    "name": "name"
+                  }
+                ]
               },
               "practitioner": {
                 "resource_type": "Practitioner",
-                "name": "string",
-                "id": "string",
-                "related_resources": [],
-                "memo": {
-                  "description": "string"
-                }
-              },
-              "id": "string",
-              "related_resources": [],
-              "memo": {
-                "description": "string"
+                "name": "name"
               }
             }
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/account/string").UsingGet())
+            .Given(
+                WireMock.RequestBuilders.Request.Create().WithPath("/account/account_id").UsingGet()
+            )
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -54,7 +50,7 @@ public class GetAccountTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.GetAccountAsync("string", RequestOptions);
+        var response = await Client.GetAccountAsync("account_id", RequestOptions);
         JToken
             .Parse(mockResponse)
             .Should()

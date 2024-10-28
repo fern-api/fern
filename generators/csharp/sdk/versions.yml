@@ -5,6 +5,7 @@
       summary: Make sure summary and code examples in XML code comments are XML encoded.
   irVersion: 53
 - version: 1.8.1
+  irVersion: 53
   createdAt: '2024-10-08'
   changelogEntry:
     - type: fix
@@ -13,7 +14,7 @@
         the endpoint method, causing code to fail to compile.
   irVersion: 53
 - version: 1.8.0
-  createdAt: '2024-08-29'
+  createdAt: "2024-08-29"
   changelogEntry:
     - type: feat
       summary: |
@@ -28,19 +29,19 @@
         ```
   irVersion: 53
 - version: 1.7.0
-  createdAt: '2024-08-29'
+  createdAt: "2024-08-29"
   changelogEntry:
     - type: feat
       summary: Add support for generated `reference.md` files.
   irVersion: 53
 - version: 1.6.0
-  createdAt: '2024-08-29'
+  createdAt: "2024-08-29"
   changelogEntry:
     - type: feat
       summary: Add support for generated `README.md` files.
   irVersion: 53
 - version: 1.5.0
-  createdAt: '2024-08-28'
+  createdAt: "2024-08-28"
   changelogEntry:
     - type: feat
       summary: Add support for service-level headers.
@@ -69,7 +70,7 @@
         serialization.
   irVersion: 53
 - version: 1.4.0
-  createdAt: '2024-08-26'
+  createdAt: "2024-08-26"
   changelogEntry:
     - type: internal
       summary: >-
@@ -77,13 +78,13 @@
         version.
   irVersion: 53
 - version: 1.3.0
-  createdAt: '2024-08-22'
+  createdAt: "2024-08-22"
   changelogEntry:
     - type: internal
       summary: No changes.
   irVersion: 53
 - version: 1.3.0-rc2
-  createdAt: '2024-08-22'
+  createdAt: "2024-08-22"
   changelogEntry:
     - type: internal
       summary: Fix warnings in generated `RawClient`.
@@ -91,7 +92,7 @@
       summary: Use a simpler primitive instantiation for the various number types.
   irVersion: 53
 - version: 1.3.0-rc1
-  createdAt: '2024-08-22'
+  createdAt: "2024-08-22"
   changelogEntry:
     - type: feat
       summary: Generate the `ToString` method to write the JSON format of an object.
@@ -99,7 +100,7 @@
       summary: Generate snippets as example documentation.
   irVersion: 53
 - version: 1.3.0-rc0
-  createdAt: '2024-08-22'
+  createdAt: "2024-08-22"
   changelogEntry:
     - type: feat
       summary: Add support for sending the `User-Agent` header.
@@ -135,7 +136,7 @@
       summary: Add support for gRPC/Protobuf endpoints.
   irVersion: 53
 - version: 1.2.1
-  createdAt: '2024-08-12'
+  createdAt: "2024-08-12"
   changelogEntry:
     - type: feat
       summary: >-
@@ -145,19 +146,19 @@
       summary: Fix potential namespace and type conflicts.
   irVersion: 53
 - version: 1.1.0
-  createdAt: '2024-08-11'
+  createdAt: "2024-08-11"
   changelogEntry:
     - type: fix
       summary: Error strings are correctly mapped to an appropriate exception.
   irVersion: 53
 - version: 1.0.0
-  createdAt: '2024-08-11'
+  createdAt: "2024-08-11"
   changelogEntry:
     - type: break
       summary: >-
         The C# SDK is now on major version 1.0.0. To preserve compatibility with
-        pre-1.0.0, set all of {root-namespace-for-core-classes,
-        pascal-case-environments, simplify-object-dictionaries} to `false`.
+        pre-1.0.0, set all of \{root-namespace-for-core-classes,
+        pascal-case-environments, simplify-object-dictionaries\} to `false`.
     - type: internal
       summary: Core classes that are exposed publicly are now in the root namespace.
     - type: internal
@@ -172,7 +173,7 @@
         `generate-error-types` configuration.
   irVersion: 53
 - version: 0.12.0
-  createdAt: '2024-08-10'
+  createdAt: "2024-08-10"
   changelogEntry:
     - type: feat
       summary: >-
@@ -180,7 +181,7 @@
         `FluentAssertions`.
   irVersion: 53
 - version: 0.11.0
-  createdAt: '2024-08-09'
+  createdAt: "2024-08-09"
   changelogEntry:
     - type: internal
       summary: Mark internal files `internal`.
@@ -190,7 +191,7 @@
       summary: Don't override `toString` on Exceptions.
   irVersion: 53
 - version: 0.10.0
-  createdAt: '2024-08-07'
+  createdAt: "2024-08-07"
   changelogEntry:
     - type: fix
       summary: >-
@@ -198,7 +199,7 @@
         fail.
   irVersion: 53
 - version: 0.9.0
-  createdAt: '2024-08-01'
+  createdAt: "2024-08-01"
   changelogEntry:
     - type: feat
       summary: >-
@@ -207,7 +208,7 @@
         `ApiException` and `Exception` class names.
   irVersion: 53
 - version: 0.8.0
-  createdAt: '2024-07-31'
+  createdAt: "2024-07-31"
   changelogEntry:
     - type: feat
       summary: Support text response types.
@@ -215,13 +216,13 @@
       summary: Support inheritance for inlined request bodies.
   irVersion: 53
 - version: 0.7.0
-  createdAt: '2024-07-31'
+  createdAt: "2024-07-31"
   changelogEntry:
     - type: feat
       summary: Generate Exception types for all errors defined in the IR.
   irVersion: 53
 - version: 0.6.0
-  createdAt: '2024-07-31'
+  createdAt: "2024-07-31"
   changelogEntry:
     - type: feat
       summary: >-
@@ -229,7 +230,7 @@
         overrides.
   irVersion: 53
 - version: 0.5.0
-  createdAt: '2024-07-30'
+  createdAt: "2024-07-30"
   changelogEntry:
     - type: feat
       summary: Add support for `uint`, `ulong`, and `float` types.
@@ -237,7 +238,7 @@
       summary: Bump to IRv53.
   irVersion: 53
 - version: 0.4.0
-  createdAt: '2024-07-30'
+  createdAt: "2024-07-30"
   changelogEntry:
     - type: feat
       summary: Add support for `allow-multiple` query parameters.
@@ -247,7 +248,7 @@
         to support explicit `null` values.
   irVersion: 51
 - version: 0.3.4
-  createdAt: '2024-07-30'
+  createdAt: "2024-07-30"
   changelogEntry:
     - type: internal
       summary: >-
@@ -255,7 +256,7 @@
         serialization.
   irVersion: 51
 - version: 0.3.3
-  createdAt: '2024-07-30'
+  createdAt: "2024-07-30"
   changelogEntry:
     - type: internal
       summary: >-
@@ -263,7 +264,7 @@
         construction flexibility.
   irVersion: 51
 - version: 0.3.2
-  createdAt: '2024-07-29'
+  createdAt: "2024-07-29"
   changelogEntry:
     - type: feat
       summary: >-
@@ -271,25 +272,25 @@
         paths.
   irVersion: 51
 - version: 0.3.1
-  createdAt: '2024-07-25'
+  createdAt: "2024-07-25"
   changelogEntry:
     - type: internal
       summary: Add header suppliers to `RawClient` constructor parameters.
   irVersion: 51
 - version: 0.3.0
-  createdAt: '2024-07-25'
+  createdAt: "2024-07-25"
   changelogEntry:
     - type: break
       summary: Convert all usages of `Guid` to `string` to avoid casing issues.
   irVersion: 51
 - version: 0.2.1
-  createdAt: '2024-07-25'
+  createdAt: "2024-07-25"
   changelogEntry:
     - type: fix
       summary: Fix MultURL environment classes compilation issue.
   irVersion: 51
 - version: 0.2.0
-  createdAt: '2024-07-25'
+  createdAt: "2024-07-25"
   changelogEntry:
     - type: break
       summary: Rename `Environments.cs` to `{OrgName}Environment`.
@@ -297,13 +298,13 @@
       summary: Generate classes for environments with different endpoint URLs.
   irVersion: 51
 - version: 0.1.4
-  createdAt: '2024-07-23'
+  createdAt: "2024-07-23"
   changelogEntry:
     - type: internal
       summary: More improvements to datetime serialization.
   irVersion: 51
 - version: 0.1.3
-  createdAt: '2024-07-22'
+  createdAt: "2024-07-22"
   changelogEntry:
     - type: fix
       summary: Fixed a bug with serializing datetimes.
@@ -313,7 +314,7 @@
         examples.
   irVersion: 51
 - version: 0.1.2
-  createdAt: '2024-07-17'
+  createdAt: "2024-07-17"
   changelogEntry:
     - type: chore
       summary: Bump IR to 51.
@@ -323,7 +324,7 @@
         run them.
   irVersion: 51
 - version: 0.1.1
-  createdAt: '2024-07-10'
+  createdAt: "2024-07-10"
   changelogEntry:
     - type: internal
       summary: >-
@@ -333,7 +334,7 @@
       summary: Handle double optional fields properly with a single `?`.
   irVersion: 33
 - version: 0.1.0
-  createdAt: '2024-07-09'
+  createdAt: "2024-07-09"
   changelogEntry:
     - type: feat
       summary: Add targets for .NET Standard 2.0 and .NET Framework 4.6.2.
@@ -347,19 +348,19 @@
       summary: Improve constructor parameters and other minor fixes.
   irVersion: 33
 - version: 0.0.35
-  createdAt: '2024-07-02'
+  createdAt: "2024-07-02"
   changelogEntry:
     - type: fix
       summary: Ensure base client requests are generated correctly.
   irVersion: 33
 - version: 0.0.34
-  createdAt: '2024-07-02'
+  createdAt: "2024-07-02"
   changelogEntry:
     - type: fix
       summary: Implement base client methods instead of leaving them empty.
   irVersion: 33
 - version: 0.0.33
-  createdAt: '2024-06-21'
+  createdAt: "2024-06-21"
   changelogEntry:
     - type: feat
       summary: >-
@@ -367,19 +368,19 @@
         configuration.
   irVersion: 33
 - version: 0.0.32
-  createdAt: '2024-06-21'
+  createdAt: "2024-06-21"
   changelogEntry:
     - type: fix
       summary: Ensure enum values are JSON serialized before being sent to the server.
   irVersion: 33
 - version: 0.0.31
-  createdAt: '2024-06-21'
+  createdAt: "2024-06-21"
   changelogEntry:
     - type: fix
       summary: Ensure the HTTP client joins endpoint path with the base URL safely.
   irVersion: 33
 - version: 0.0.30
-  createdAt: '2024-06-20'
+  createdAt: "2024-06-20"
   changelogEntry:
     - type: fix
       summary: >-
@@ -391,7 +392,7 @@
         proper joining in `RawClient.cs`.
   irVersion: 33
 - version: 0.0.29
-  createdAt: '2024-06-20'
+  createdAt: "2024-06-20"
   changelogEntry:
     - type: fix
       summary: >-
@@ -399,7 +400,7 @@
         previously omitted.
   irVersion: 33
 - version: 0.0.28
-  createdAt: '2024-06-19'
+  createdAt: "2024-06-19"
   changelogEntry:
     - type: fix
       summary: >-
@@ -407,7 +408,7 @@
         ISO 8601 format before making requests.
   irVersion: 33
 - version: 0.0.25
-  createdAt: '2024-06-20'
+  createdAt: "2024-06-20"
   changelogEntry:
     - type: feat
       summary: Discriminated unions are now generated as object.
@@ -417,7 +418,7 @@
         the need for users to provide redundant information.
   irVersion: 33
 - version: 0.0.24
-  createdAt: '2024-06-19'
+  createdAt: "2024-06-19"
   changelogEntry:
     - type: fix
       summary: >-
@@ -425,7 +426,7 @@
         requests.
   irVersion: 33
 - version: 0.0.23
-  createdAt: '2024-06-07'
+  createdAt: "2024-06-07"
   changelogEntry:
     - type: feat
       summary: >-
@@ -433,19 +434,19 @@
         significant code adjustments needed for .NET 4+ compatibility.
   irVersion: 33
 - version: 0.0.22
-  createdAt: '2024-06-07'
+  createdAt: "2024-06-07"
   changelogEntry:
     - type: feat
       summary: The SDK now includes support for .NET 4.
   irVersion: 33
 - version: 0.0.21
-  createdAt: '2024-05-31'
+  createdAt: "2024-05-31"
   changelogEntry:
     - type: fix
       summary: Array and list fields are now generated as `IEnumerable`.
   irVersion: 33
 - version: 0.0.20
-  createdAt: '2024-05-29'
+  createdAt: "2024-05-29"
   changelogEntry:
     - type: internal
       summary: Enum serializers are now added directly to enum declarations.
@@ -453,7 +454,7 @@
       summary: OneOf serializers are now added as a core class.
   irVersion: 33
 - version: 0.0.19
-  createdAt: '2024-05-29'
+  createdAt: "2024-05-29"
   changelogEntry:
     - type: fix
       summary: Enum serializers now handle reading and writing enum string values.
@@ -463,13 +464,13 @@
         response body.
   irVersion: 33
 - version: 0.0.18
-  createdAt: '2024-05-28'
+  createdAt: "2024-05-28"
   changelogEntry:
     - type: internal
       summary: Generated GitHub workflows now run on dotnet-version 8.x.
   irVersion: 33
 - version: 0.0.17
-  createdAt: '2024-05-28'
+  createdAt: "2024-05-28"
   changelogEntry:
     - type: feat
       summary: Enabled nullable on all C# files.
@@ -477,7 +478,7 @@
       summary: Made project compatible with .NET 6, .NET 7, and .NET 8.
   irVersion: 33
 - version: 0.0.16
-  createdAt: '2024-05-23'
+  createdAt: "2024-05-23"
   changelogEntry:
     - type: fix
       summary: Miscellaneous fixes.
@@ -487,19 +488,19 @@
         - Passing through serializer options when serializing JSON messages
   irVersion: 33
 - version: 0.0.15
-  createdAt: '2024-05-23'
+  createdAt: "2024-05-23"
   changelogEntry:
     - type: fix
       summary: Inlined requests that are strictly bodies are JSON serializable.
   irVersion: 33
 - version: 0.0.14
-  createdAt: '2024-05-23'
+  createdAt: "2024-05-23"
   changelogEntry:
     - type: feat
       summary: The SDK now includes a `JsonEnumMemberStringEnumConverter`.
   irVersion: 33
 - version: 0.0.13
-  createdAt: '2024-05-22'
+  createdAt: "2024-05-22"
   changelogEntry:
     - type: feat
       summary: >-
@@ -507,7 +508,7 @@
         .csproj file.
   irVersion: 33
 - version: 0.0.12
-  createdAt: '2024-05-22'
+  createdAt: "2024-05-22"
   changelogEntry:
     - type: feat
       summary: >-
@@ -515,7 +516,7 @@
         for different environments.
   irVersion: 33
 - version: 0.0.11
-  createdAt: '2024-05-20'
+  createdAt: "2024-05-20"
   changelogEntry:
     - type: feat
       summary: >-
@@ -523,7 +524,7 @@
         GitHub URL, and a reference to the SDK README.
   irVersion: 33
 - version: 0.0.10
-  createdAt: '2024-05-15'
+  createdAt: "2024-05-15"
   changelogEntry:
     - type: feat
       summary: >-
@@ -531,7 +532,7 @@
         generated package to NuGet.
   irVersion: 33
 - version: 0.0.9
-  createdAt: '2024-05-10'
+  createdAt: "2024-05-10"
   changelogEntry:
     - type: fix
       summary: >-
@@ -540,7 +541,7 @@
         body.
   irVersion: 33
 - version: 0.0.8
-  createdAt: '2024-05-10'
+  createdAt: "2024-05-10"
   changelogEntry:
     - type: fix
       summary: Several bug fixes.

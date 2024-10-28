@@ -7,7 +7,7 @@ import { validateSchema } from "../commons/validateSchema";
 import { GENERATORS_CONFIGURATION_FILENAME } from "../constants";
 import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration";
 import { GeneratorsConfiguration } from "./GeneratorsConfiguration";
-import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
+import { GeneratorsConfigurationSchema, serialization } from "./schemas";
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,
@@ -23,12 +23,19 @@ export async function loadRawGeneratorsConfiguration({
     const contentsStr = await readFile(filepath);
     try {
         const contentsParsed = yaml.load(contentsStr.toString());
-        return validateSchema({
-            schema: GeneratorsConfigurationSchema,
-            value: contentsParsed,
-            context,
-            filepathBeingParsed: filepath
+        const parsed = serialization.GeneratorsConfigurationSchema.parse(contentsParsed, {
+            allowUnrecognizedEnumValues: false,
+            unrecognizedObjectKeys: "fail",
+            allowUnrecognizedUnionMembers: false,
+            skipValidation: false,
+            breadcrumbsPrefix: undefined,
+            omitUndefined: false
         });
+        if (parsed.ok) {
+            return parsed.value;
+        }
+        // TODO: improve error message
+        throw new Error(parsed.errors.map((e) => e.message).join("\n"));
     } catch (e) {
         if (e instanceof yaml.YAMLException) {
             context.failAndThrow(`Failed to parse ${path.relative(process.cwd(), filepath)}: ${e.reason}`);

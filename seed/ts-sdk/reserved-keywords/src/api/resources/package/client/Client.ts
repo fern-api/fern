@@ -30,7 +30,7 @@ export class Package {
      *
      * @example
      *     await client.package.test({
-     *         for: "string"
+     *         for: "for"
      *     })
      */
     public async test(request: SeedNurseryApi.TestRequest, requestOptions?: Package.RequestOptions): Promise<void> {

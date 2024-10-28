@@ -4,10 +4,6 @@
 
 import * as SeedFileUpload from "../../../../index";
 
-/**
- * @example
- *     {}
- */
 export interface WithContentTypeRequest {
     foo: string;
     bar: SeedFileUpload.MyObject;

@@ -2,10 +2,6 @@ name: preview-docs
 
 on:
   pull_request:
-    paths:
-      - "fern/**"
-      - "fern/apis/public-api/**"
-      - "fern/docs.yml"
     branches:
       - main
   workflow_dispatch:
@@ -35,7 +31,7 @@ jobs:
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
           pnpm --filter @fern-api/cli dist:cli:prod
-          cli_path="$(pwd)/packages/cli/cli/dist/prod/bundle.cjs" 
+          cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs" 
           OUTPUT=$(node $cli_path generate --docs --preview --instance fern.docs.buildwithfern.com/learn 2>&1) || true
           echo "$OUTPUT"
           URL=$(echo "$OUTPUT" | grep -oP 'Published docs to \K.*(?= \()')

@@ -66,59 +66,62 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "meta": {
-                "properties": {
-                  "hasMore": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  }
+            "value": {
+              "properties": {
+                "meta": {
+                  "properties": {
+                    "hasMore": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
+                "users": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "email": {
+                          "value": {
+                            "value": "email",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "age": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
               },
-              "users": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "email": {
-                        "value": {
-                          "value": "email",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "age": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -214,59 +217,62 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "meta": {
-                "properties": {
-                  "hasMore": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  }
+            "value": {
+              "properties": {
+                "meta": {
+                  "properties": {
+                    "hasMore": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
+                "users": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "email": {
+                          "value": {
+                            "value": "email",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "age": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
               },
-              "users": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "email": {
-                        "value": {
-                          "value": "email",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "age": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

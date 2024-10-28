@@ -19,7 +19,7 @@ client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 client.union.get(
-    id="string",
+    id="id",
 )
 
 ```
@@ -77,7 +77,6 @@ client = SeedUnions(
 )
 client.union.update(
     request=Shape_Circle(
-        id="string",
         radius=1.1,
     ),
 )

@@ -169,149 +169,152 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "value": [
-                  {
-                    "properties": {
-                      "date_created": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "properties": {
+                        "date_created": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "id": {
+                          "value": {
+                            "value": "73df0106-1781-4b03-a288-e749e1a43481",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "Special Widget",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "upload_uri": {
+                          "value": {
+                            "value": "upload_uri",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "id": {
-                        "value": {
-                          "value": "73df0106-1781-4b03-a288-e749e1a43481",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "name": {
-                        "value": {
-                          "value": "Special Widget",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "upload_uri": {
-                        "value": {
-                          "value": "upload_uri",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
-                              "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
-                            }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "meta": {
-                "properties": {
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "meta": {
+                  "properties": {
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "type": "unknown"
+                              }
+                            }
+                          ],
+                          "type": "map"
+                        },
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -396,144 +399,147 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "date_created": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
-                    },
-                    "type": "primitive"
-                  },
-                  "id": {
-                    "value": {
-                      "value": "73df0106-1781-4b03-a288-e749e1a43481",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "name": {
-                    "value": {
-                      "value": "Special Widget",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "upload_uri": {
-                    "value": {
-                      "value": "upload_uri",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "date_created": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "primitive"
+                    },
+                    "id": {
+                      "value": {
+                        "value": "73df0106-1781-4b03-a288-e749e1a43481",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "Special Widget",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "upload_uri": {
+                      "value": {
+                        "value": "upload_uri",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "meta": {
-                "properties": {
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+                "meta": {
+                  "properties": {
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -743,144 +749,147 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "date_created": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
-                    },
-                    "type": "primitive"
-                  },
-                  "id": {
-                    "value": {
-                      "value": "73df0106-1781-4b03-a288-e749e1a43481",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "name": {
-                    "value": {
-                      "value": "Special Widget",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "upload_uri": {
-                    "value": {
-                      "value": "upload_uri",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "date_created": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "primitive"
+                    },
+                    "id": {
+                      "value": {
+                        "value": "73df0106-1781-4b03-a288-e749e1a43481",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "Special Widget",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "upload_uri": {
+                      "value": {
+                        "value": "upload_uri",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "meta": {
-                "properties": {
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+                "meta": {
+                  "properties": {
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -998,161 +1007,164 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "value": [
-                  {
-                    "properties": {
-                      "name": {
-                        "value": {
-                          "value": "Acme corp login",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "status": {
-                        "value": {
-                          "value": "status",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "tags": {
-                        "value": [
-                          {
-                            "value": {
-                              "value": "blue",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "properties": {
+                        "name": {
+                          "value": {
+                            "value": "Acme corp login",
+                            "type": "string"
                           },
-                          {
-                            "value": {
-                              "value": "red",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        ],
-                        "type": "array"
-                      },
-                      "upload_uri": {
-                        "value": {
-                          "value": "upload_uri",
-                          "type": "string"
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
+                        "status": {
+                          "value": {
+                            "value": "status",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                        "tags": {
+                          "value": [
+                            {
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "value": "blue",
+                                "type": "string"
                               },
-                              "type": "unknown"
+                              "type": "primitive"
+                            },
+                            {
+                              "value": {
+                                "value": "red",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "array"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "meta": {
-                "properties": {
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                        "upload_uri": {
+                          "value": {
+                            "value": "upload_uri",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "meta": {
+                  "properties": {
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "type": "unknown"
+                              }
+                            }
+                          ],
+                          "type": "map"
+                        },
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1238,156 +1250,159 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "name": {
-                    "value": {
-                      "value": "Acme corp login",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "status": {
-                    "value": {
-                      "value": "status",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "tags": {
-                    "value": [
-                      {
-                        "value": {
-                          "value": "blue",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "name": {
+                      "value": {
+                        "value": "Acme corp login",
+                        "type": "string"
                       },
-                      {
-                        "value": {
-                          "value": "red",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    ],
-                    "type": "array"
-                  },
-                  "upload_uri": {
-                    "value": {
-                      "value": "upload_uri",
-                      "type": "string"
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    "status": {
+                      "value": {
+                        "value": "status",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "tags": {
+                      "value": [
+                        {
+                          "value": {
+                            "value": "blue",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        {
+                          "value": {
+                            "value": "red",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "upload_uri": {
+                      "value": {
+                        "value": "upload_uri",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "meta": {
-                "properties": {
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+                "meta": {
+                  "properties": {
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1624,156 +1639,159 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "name": {
-                    "value": {
-                      "value": "Acme corp login",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "status": {
-                    "value": {
-                      "value": "status",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "tags": {
-                    "value": [
-                      {
-                        "value": {
-                          "value": "blue",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "name": {
+                      "value": {
+                        "value": "Acme corp login",
+                        "type": "string"
                       },
-                      {
-                        "value": {
-                          "value": "red",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    ],
-                    "type": "array"
-                  },
-                  "upload_uri": {
-                    "value": {
-                      "value": "upload_uri",
-                      "type": "string"
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    "status": {
+                      "value": {
+                        "value": "status",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "tags": {
+                      "value": [
+                        {
+                          "value": {
+                            "value": "blue",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        {
+                          "value": {
+                            "value": "red",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "upload_uri": {
+                      "value": {
+                        "value": "upload_uri",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "meta": {
-                "properties": {
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+                "meta": {
+                  "properties": {
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2029,234 +2047,237 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "pagination": {
-                    "properties": {
-                      "currentLimit": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
+            "value": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "pagination": {
+                      "properties": {
+                        "currentLimit": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "currentPage": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        },
+                        "finalCount": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        },
+                        "hasMore": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        },
+                        "initialCount": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        },
+                        "nextOffset": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        },
+                        "numberOfPages": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        },
+                        "totalItems": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "currentPage": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      },
-                      "finalCount": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      },
-                      "hasMore": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
-                      },
-                      "initialCount": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      },
-                      "nextOffset": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      },
-                      "numberOfPages": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      },
-                      "totalItems": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "object"
                     },
-                    "type": "object"
+                    "sessions": {
+                      "value": [
+                        {
+                          "properties": {
+                            "configuration": {
+                              "properties": {
+                                "persist_profile": {
+                                  "value": {
+                                    "value": true,
+                                    "type": "boolean"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "persist_profile_name": {
+                                  "value": {
+                                    "value": "default",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "profile_id": {
+                                  "value": {
+                                    "value": "linkedin",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "timeoutMinutes": {
+                                  "value": {
+                                    "value": 10,
+                                    "type": "int"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "id": {
+                              "value": {
+                                "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "status": {
+                              "value": {
+                                "value": "active",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    }
                   },
-                  "sessions": {
-                    "value": [
-                      {
-                        "properties": {
-                          "configuration": {
-                            "properties": {
-                              "persist_profile": {
-                                "value": {
-                                  "value": true,
-                                  "type": "boolean"
-                                },
-                                "type": "primitive"
+                  "type": "object"
+                },
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
                               },
-                              "persist_profile_name": {
+                              "value": {
                                 "value": {
-                                  "value": "default",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "profile_id": {
-                                "value": {
-                                  "value": "linkedin",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "timeoutMinutes": {
-                                "value": {
-                                  "value": 10,
-                                  "type": "int"
-                                },
-                                "type": "primitive"
+                                "type": "unknown"
                               }
-                            },
-                            "type": "object"
-                          },
-                          "id": {
-                            "value": {
-                              "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "status": {
-                            "value": {
-                              "value": "active",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
+                            }
+                          ],
+                          "type": "map"
                         },
-                        "type": "object"
-                      }
-                    ],
-                    "type": "array"
-                  }
-                },
-                "type": "object"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "meta": {
+                  "properties": {
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
               },
-              "meta": {
-                "properties": {
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
-                              "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
-                            }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2334,243 +2355,246 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "cdp_url": {
-                    "value": {
-                      "value": "cdp_url",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "cdp_ws_url": {
-                    "value": {
-                      "value": "cdp_ws_url",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "chromedriver_url": {
-                    "value": {
-                      "value": "chromedriver_url",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "configuration": {
-                    "properties": {
-                      "persist_profile": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "cdp_url": {
+                      "value": {
+                        "value": "cdp_url",
+                        "type": "string"
                       },
-                      "persist_profile_name": {
-                        "value": {
-                          "value": "default",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+                      "type": "primitive"
+                    },
+                    "cdp_ws_url": {
+                      "value": {
+                        "value": "cdp_ws_url",
+                        "type": "string"
                       },
-                      "persist_profile_tags": {
-                        "value": [
-                          {
-                            "value": {
-                              "value": "persist_profile_tags",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        ],
-                        "type": "array"
+                      "type": "primitive"
+                    },
+                    "chromedriver_url": {
+                      "value": {
+                        "value": "chromedriver_url",
+                        "type": "string"
                       },
-                      "profile_id": {
-                        "value": {
-                          "value": "linkedin",
-                          "type": "string"
+                      "type": "primitive"
+                    },
+                    "configuration": {
+                      "properties": {
+                        "persist_profile": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "persist_profile_name": {
+                          "value": {
+                            "value": "default",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "persist_profile_tags": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "persist_profile_tags",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "profile_id": {
+                          "value": {
+                            "value": "linkedin",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "timeoutMinutes": {
+                          "value": {
+                            "value": 10,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "timeoutMinutes": {
-                        "value": {
-                          "value": 10,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  "current_usage": {
-                    "value": {
-                      "value": 1000000,
-                      "type": "int64"
-                    },
-                    "type": "primitive"
-                  },
-                  "date_created": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
-                    },
-                    "type": "primitive"
-                  },
-                  "id": {
-                    "value": {
-                      "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "last_activity": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
-                    },
-                    "type": "primitive"
-                  },
-                  "live_view": {
-                    "properties": {
-                      "airtop_browser_url": {
-                        "value": {
-                          "value": "airtop_browser_url",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+                    "current_usage": {
+                      "value": {
+                        "value": 1000000,
+                        "type": "int64"
                       },
-                      "token": {
-                        "value": {
-                          "value": "token",
-                          "type": "string"
+                      "type": "primitive"
+                    },
+                    "date_created": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "id": {
+                      "value": {
+                        "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "last_activity": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "live_view": {
+                      "properties": {
+                        "airtop_browser_url": {
+                          "value": {
+                            "value": "airtop_browser_url",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "token": {
+                          "value": {
+                            "value": "token",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
+                    "status": {
+                      "value": {
+                        "value": "active",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "url": {
+                      "value": {
+                        "value": "url",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
                   },
-                  "status": {
-                    "value": {
-                      "value": "active",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "url": {
-                    "value": {
-                      "value": "url",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "meta": {
-                "properties": {
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+                "meta": {
+                  "properties": {
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2711,243 +2735,246 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "cdp_url": {
-                    "value": {
-                      "value": "cdp_url",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "cdp_ws_url": {
-                    "value": {
-                      "value": "cdp_ws_url",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "chromedriver_url": {
-                    "value": {
-                      "value": "chromedriver_url",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "configuration": {
-                    "properties": {
-                      "persist_profile": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "cdp_url": {
+                      "value": {
+                        "value": "cdp_url",
+                        "type": "string"
                       },
-                      "persist_profile_name": {
-                        "value": {
-                          "value": "default",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+                      "type": "primitive"
+                    },
+                    "cdp_ws_url": {
+                      "value": {
+                        "value": "cdp_ws_url",
+                        "type": "string"
                       },
-                      "persist_profile_tags": {
-                        "value": [
-                          {
-                            "value": {
-                              "value": "persist_profile_tags",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        ],
-                        "type": "array"
+                      "type": "primitive"
+                    },
+                    "chromedriver_url": {
+                      "value": {
+                        "value": "chromedriver_url",
+                        "type": "string"
                       },
-                      "profile_id": {
-                        "value": {
-                          "value": "linkedin",
-                          "type": "string"
+                      "type": "primitive"
+                    },
+                    "configuration": {
+                      "properties": {
+                        "persist_profile": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "persist_profile_name": {
+                          "value": {
+                            "value": "default",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "persist_profile_tags": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "persist_profile_tags",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "profile_id": {
+                          "value": {
+                            "value": "linkedin",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "timeoutMinutes": {
+                          "value": {
+                            "value": 10,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "timeoutMinutes": {
-                        "value": {
-                          "value": 10,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  "current_usage": {
-                    "value": {
-                      "value": 1000000,
-                      "type": "int64"
-                    },
-                    "type": "primitive"
-                  },
-                  "date_created": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
-                    },
-                    "type": "primitive"
-                  },
-                  "id": {
-                    "value": {
-                      "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "last_activity": {
-                    "value": {
-                      "value": "2024-01-15T09:30:00Z",
-                      "type": "datetime"
-                    },
-                    "type": "primitive"
-                  },
-                  "live_view": {
-                    "properties": {
-                      "airtop_browser_url": {
-                        "value": {
-                          "value": "airtop_browser_url",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+                    "current_usage": {
+                      "value": {
+                        "value": 1000000,
+                        "type": "int64"
                       },
-                      "token": {
-                        "value": {
-                          "value": "token",
-                          "type": "string"
+                      "type": "primitive"
+                    },
+                    "date_created": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "id": {
+                      "value": {
+                        "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "last_activity": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "live_view": {
+                      "properties": {
+                        "airtop_browser_url": {
+                          "value": {
+                            "value": "airtop_browser_url",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "token": {
+                          "value": {
+                            "value": "token",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
+                    "status": {
+                      "value": {
+                        "value": "active",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "url": {
+                      "value": {
+                        "value": "url",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
                   },
-                  "status": {
-                    "value": {
-                      "value": "active",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "url": {
-                    "value": {
-                      "value": "url",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "meta": {
-                "properties": {
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+                "meta": {
+                  "properties": {
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3476,137 +3503,140 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "liveViewUrl": {
-                    "value": {
-                      "value": "liveViewUrl",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "token": {
-                    "value": {
-                      "value": "token",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "windowId": {
-                    "value": {
-                      "value": "windowId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "liveViewUrl": {
+                      "value": {
+                        "value": "liveViewUrl",
+                        "type": "string"
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "primitive"
+                    },
+                    "token": {
+                      "value": {
+                        "value": "token",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "windowId": {
+                      "value": {
+                        "value": "windowId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "meta": {
-                "properties": {
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+                "meta": {
+                  "properties": {
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3750,165 +3780,168 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "modelResponse": {
-                    "value": {
-                      "value": "modelResponse",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "modelResponse": {
+                      "value": {
+                        "value": "modelResponse",
+                        "type": "string"
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
+                          ],
+                          "type": "map"
+                        },
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "meta": {
-                "properties": {
-                  "clientProvided": {
-                    "properties": {
-                      "clientRequestId": {
-                        "value": {
-                          "value": "clientRequestId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "timeThresholdMs": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "status": {
-                    "value": "success",
-                    "type": "enum"
-                  },
-                  "usage": {
-                    "properties": {
-                      "credits": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      },
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
+                "meta": {
+                  "properties": {
+                    "clientProvided": {
+                      "properties": {
+                        "clientRequestId": {
+                          "value": {
+                            "value": "clientRequestId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "timeThresholdMs": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "object"
+                    },
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "status": {
+                      "value": "success",
+                      "type": "enum"
+                    },
+                    "usage": {
+                      "properties": {
+                        "credits": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        },
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -4021,196 +4054,199 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "modelResponse": {
-                    "properties": {
-                      "scrapedContent": {
-                        "properties": {
-                          "contentType": {
-                            "value": {
-                              "value": "contentType",
-                              "type": "string"
+            "value": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "modelResponse": {
+                      "properties": {
+                        "scrapedContent": {
+                          "properties": {
+                            "contentType": {
+                              "value": {
+                                "value": "contentType",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
+                            "text": {
+                              "value": {
+                                "value": "text",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
                           },
-                          "text": {
-                            "value": {
-                              "value": "text",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
+                          "type": "object"
                         },
-                        "type": "object"
+                        "selectedText": {
+                          "value": {
+                            "value": "selectedText",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "title": {
+                          "value": {
+                            "value": "title",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "selectedText": {
-                        "value": {
-                          "value": "selectedText",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "title": {
-                        "value": {
-                          "value": "title",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
+                          ],
+                          "type": "map"
+                        },
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "meta": {
-                "properties": {
-                  "clientProvided": {
-                    "properties": {
-                      "clientRequestId": {
-                        "value": {
-                          "value": "clientRequestId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "timeThresholdMs": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "status": {
-                    "value": "success",
-                    "type": "enum"
-                  },
-                  "usage": {
-                    "properties": {
-                      "credits": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      },
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
+                "meta": {
+                  "properties": {
+                    "clientProvided": {
+                      "properties": {
+                        "clientRequestId": {
+                          "value": {
+                            "value": "clientRequestId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "timeThresholdMs": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "object"
+                    },
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "status": {
+                      "value": "success",
+                      "type": "enum"
+                    },
+                    "usage": {
+                      "properties": {
+                        "credits": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        },
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -4346,165 +4382,168 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "modelResponse": {
-                    "value": {
-                      "value": "modelResponse",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              },
-              "errors": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
-                        },
-                        "type": "primitive"
+            "value": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "modelResponse": {
+                      "value": {
+                        "value": "modelResponse",
+                        "type": "string"
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "errors": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
+                          ],
+                          "type": "map"
+                        },
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "meta": {
-                "properties": {
-                  "clientProvided": {
-                    "properties": {
-                      "clientRequestId": {
-                        "value": {
-                          "value": "clientRequestId",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "timeThresholdMs": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "requestId": {
-                    "value": {
-                      "value": "requestId",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "status": {
-                    "value": "success",
-                    "type": "enum"
-                  },
-                  "usage": {
-                    "properties": {
-                      "credits": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      },
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "object"
-              },
-              "warnings": {
-                "value": [
-                  {
-                    "properties": {
-                      "code": {
-                        "value": {
-                          "value": "code",
-                          "type": "string"
+                "meta": {
+                  "properties": {
+                    "clientProvided": {
+                      "properties": {
+                        "clientRequestId": {
+                          "value": {
+                            "value": "clientRequestId",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "timeThresholdMs": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "details": {
-                        "value": [
-                          {
-                            "key": {
-                              "value": "key",
-                              "type": "string"
-                            },
-                            "value": {
+                      "type": "object"
+                    },
+                    "requestId": {
+                      "value": {
+                        "value": "requestId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "status": {
+                      "value": "success",
+                      "type": "enum"
+                    },
+                    "usage": {
+                      "properties": {
+                        "credits": {
+                          "value": {
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        },
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                },
+                "warnings": {
+                  "value": [
+                    {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "details": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
                               "value": {
                                 "value": {
-                                  "value": "value",
-                                  "type": "string"
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
+                                "type": "unknown"
+                              }
                             }
-                          }
-                        ],
-                        "type": "map"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "message",
-                          "type": "string"
+                          ],
+                          "type": "map"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

@@ -13,7 +13,7 @@ import { isEqual } from "lodash-es";
 import { homedir } from "os";
 import path from "path";
 import { pipeline } from "stream/promises";
-import tar from "tar";
+import { extract as extractTar } from "tar";
 import tmp from "tmp-promise";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
 import { OSSWorkspace } from "../OSSWorkspace";
@@ -369,7 +369,7 @@ async function downloadDependency({
     await pipeline(request.data, createWriteStream(outputTarPath));
 
     // decompress to specified location
-    await tar.extract({ file: outputTarPath, cwd: absolutePathToLocalOutput });
+    await extractTar({ file: outputTarPath, cwd: absolutePathToLocalOutput });
 }
 
 function stringifyDependency(dependency: dependenciesYml.Dependency): string {

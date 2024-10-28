@@ -18,21 +18,18 @@ public class CreatePlaylistTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "name": "string",
+              "name": "name",
               "problems": [
-                "string"
+                "problems",
+                "problems"
               ]
             }
             """;
 
         const string mockResponse = """
             {
-              "playlist_id": "string",
-              "owner-id": "string",
-              "name": "string",
-              "problems": [
-                "string"
-              ]
+              "playlist_id": "playlist_id",
+              "owner-id": "owner-id"
             }
             """;
 
@@ -42,7 +39,6 @@ public class CreatePlaylistTest : BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/v2/playlist/1/create")
                     .WithParam("datetime", "2024-01-15T09:30:00.000Z")
-                    .WithParam("optionalDatetime", "2024-01-15T09:30:00.000Z")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -62,15 +58,10 @@ public class CreatePlaylistTest : BaseMockServerTest
                     null,
                     DateTimeStyles.AdjustToUniversal
                 ),
-                OptionalDatetime = DateTime.Parse(
-                    "2024-01-15T09:30:00.000Z",
-                    null,
-                    DateTimeStyles.AdjustToUniversal
-                ),
                 Body = new PlaylistCreateRequest
                 {
-                    Name = "string",
-                    Problems = new List<string>() { "string" },
+                    Name = "name",
+                    Problems = new List<string>() { "problems", "problems" },
                 },
             },
             RequestOptions

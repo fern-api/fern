@@ -31,6 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:ImportingA": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ImportingA",
@@ -181,6 +182,7 @@
             "docs": null
         },
         "type_:RootType": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "RootType",
@@ -265,6 +267,7 @@
             "docs": null
         },
         "type_a:A": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "A",
@@ -417,6 +420,7 @@
             "docs": null
         },
         "type_ast:ContainerValue": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ContainerValue",
@@ -780,6 +784,7 @@
             "docs": null
         },
         "type_ast:PrimitiveValue": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "PrimitiveValue",
@@ -915,6 +920,7 @@
             "docs": null
         },
         "type_ast:ObjectValue": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ObjectValue",
@@ -999,6 +1005,7 @@
             "docs": null
         },
         "type_ast:FieldName": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "FieldName",
@@ -1101,6 +1108,7 @@
             "docs": null
         },
         "type_ast:FieldValue": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "FieldValue",
@@ -1545,6 +1553,7 @@
             "docs": null
         },
         "type_ast:ObjectFieldValue": {
+            "inline": false,
             "name": {
                 "name": {
                     "originalName": "ObjectFieldValue",

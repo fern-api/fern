@@ -66,23 +66,26 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": 1.1,
-                  "type": "float"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "float"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "value": {
+                  "value": {
+                    "value": 1000000,
+                    "type": "uint64"
+                  },
+                  "type": "primitive"
+                }
               },
-              "value": {
-                "value": {
-                  "value": 1000000,
-                  "type": "uint64"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

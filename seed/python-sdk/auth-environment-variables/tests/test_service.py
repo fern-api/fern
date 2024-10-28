@@ -23,8 +23,8 @@ async def test_get_with_header(
 ) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None
-    response = client.service.get_with_header(x_endpoint_header="string")
+    response = client.service.get_with_header(x_endpoint_header="X-Endpoint-Header")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.service.get_with_header(x_endpoint_header="string")
+    async_response = await async_client.service.get_with_header(x_endpoint_header="X-Endpoint-Header")
     validate_response(async_response, expected_response, expected_types)

@@ -50,7 +50,7 @@ module SeedIdempotencyHeadersClient
     # @return [Void]
     # @example
     #  idempotency_headers = SeedIdempotencyHeadersClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  idempotency_headers.payment.delete(payment_id: "string")
+    #  idempotency_headers.payment.delete(payment_id: "paymentId")
     def delete(payment_id:, request_options: nil)
       @request_client.conn.delete do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -122,7 +122,7 @@ module SeedIdempotencyHeadersClient
     # @return [Void]
     # @example
     #  idempotency_headers = SeedIdempotencyHeadersClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  idempotency_headers.payment.delete(payment_id: "string")
+    #  idempotency_headers.payment.delete(payment_id: "paymentId")
     def delete(payment_id:, request_options: nil)
       Async do
         @request_client.conn.delete do |req|

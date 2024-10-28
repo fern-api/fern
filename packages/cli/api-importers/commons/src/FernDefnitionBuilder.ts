@@ -5,6 +5,10 @@ import { camelCase, isEqual } from "lodash-es";
 import path, { basename, extname } from "path";
 import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
+export type HttpServiceInfo = Partial<
+    Pick<RawSchemas.HttpServiceSchema, "auth" | "base-path" | "display-name"> & { docs?: string }
+>;
+
 export interface FernDefinitionBuilder {
     setDisplayName({ displayName }: { displayName: string }): void;
 
@@ -84,7 +88,10 @@ export interface FernDefinitionBuilder {
 
     addChannelExample(file: RelativeFilePath, { example }: { example: RawSchemas.ExampleWebSocketSession }): void;
 
-    setServiceInfo(file: RelativeFilePath, { displayName, docs }: { displayName?: string; docs?: string }): void;
+    setServiceInfo(
+        file: RelativeFilePath,
+        { auth, "base-path": basePath, "display-name": displayName, docs }: HttpServiceInfo
+    ): void;
 
     addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void;
 
@@ -125,15 +132,22 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public setServiceInfo(
         file: RelativeFilePath,
-        { displayName, docs }: { displayName?: string | undefined; docs?: string | undefined }
+        { auth, "base-path": basePath, "display-name": displayName, docs }: HttpServiceInfo
     ): void {
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.service == null) {
+            // Set to default values if service is null
             fernFile.service = {
                 auth: false,
                 "base-path": "",
                 endpoints: {}
             };
+        }
+        if (auth != null) {
+            fernFile.service.auth = auth;
+        }
+        if (basePath != null) {
+            fernFile.service["base-path"] = basePath;
         }
         if (displayName != null) {
             fernFile.service["display-name"] = displayName;

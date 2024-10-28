@@ -16,26 +16,8 @@ public class SendWorkspaceSubmissionUpdateTest : BaseMockServerTest
             {
               "updateTime": "2024-01-15T09:30:00.000Z",
               "updateInfo": {
-                "0": "Q",
-                "1": "U",
-                "2": "E",
-                "3": "U",
-                "4": "E",
-                "5": "I",
-                "6": "N",
-                "7": "G",
-                "8": "_",
-                "9": "S",
-                "10": "U",
-                "11": "B",
-                "12": "M",
-                "13": "I",
-                "14": "S",
-                "15": "S",
-                "16": "I",
-                "17": "O",
-                "18": "N",
-                "type": "running"
+                "type": "running",
+                "value": "QUEUEING_SUBMISSION"
               }
             }
             """;

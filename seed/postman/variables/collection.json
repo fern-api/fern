@@ -36,7 +36,7 @@
                 {
                   "key": "endpointParam",
                   "description": null,
-                  "value": "string"
+                  "value": "endpointParam"
                 }
               ]
             },
@@ -71,7 +71,7 @@
                     {
                       "key": "endpointParam",
                       "description": null,
-                      "value": "string"
+                      "value": "endpointParam"
                     }
                   ]
                 },

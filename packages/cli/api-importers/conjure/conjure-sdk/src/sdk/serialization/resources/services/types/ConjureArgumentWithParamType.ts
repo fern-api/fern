@@ -6,7 +6,6 @@ import * as serializers from "../../../index";
 import * as FernConjure from "../../../../api/index";
 import * as core from "../../../../core";
 import { ConjureParamType } from "./ConjureParamType";
-import { ConjureTypeReference } from "../../types/types/ConjureTypeReference";
 import { WithDocs } from "../../commons/types/WithDocs";
 
 export const ConjureArgumentWithParamType: core.serialization.ObjectSchema<
@@ -15,13 +14,13 @@ export const ConjureArgumentWithParamType: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         paramType: core.serialization.property("param-type", ConjureParamType),
-        type: ConjureTypeReference,
+        type: core.serialization.string(),
     })
     .extend(WithDocs);
 
 export declare namespace ConjureArgumentWithParamType {
     interface Raw extends WithDocs.Raw {
         "param-type": ConjureParamType.Raw;
-        type: ConjureTypeReference.Raw;
+        type: string;
     }
 }

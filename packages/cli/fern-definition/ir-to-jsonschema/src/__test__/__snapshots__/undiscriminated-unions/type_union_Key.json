@@ -1,0 +1,19 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/union.KeyType"
+    },
+    {
+      "const": "default"
+    }
+  ],
+  "definitions": {
+    "union.KeyType": {
+      "type": "string",
+      "enum": [
+        "name",
+        "value"
+      ]
+    }
+  }
+}

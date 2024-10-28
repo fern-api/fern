@@ -3,17 +3,19 @@ import { TaskContext } from "@fern-api/task-context";
 import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEntries";
 import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases";
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
-import { mkdir } from "fs/promises";
+import { mkdir, readdir, rm } from "fs/promises";
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
 
 export async function generateCliChangelog({
     context,
     outputPath,
-    fdrClient
+    fdrClient,
+    cleanOutputDirectory
 }: {
     context: TaskContext;
     outputPath: string | undefined;
     fdrClient: FernRegistryClient;
+    cleanOutputDirectory: boolean;
 }): Promise<void> {
     const resolvedOutputPath =
         outputPath == null
@@ -21,7 +23,21 @@ export async function generateCliChangelog({
             : outputPath.startsWith("/")
             ? AbsoluteFilePath.of(outputPath)
             : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(outputPath));
+
     await mkdir(resolvedOutputPath, { recursive: true });
+
+    if (cleanOutputDirectory) {
+        const files = await readdir(resolvedOutputPath, { withFileTypes: true });
+        for (const file of files) {
+            const filePath = join(resolvedOutputPath, RelativeFilePath.of(file.name));
+            if (file.isDirectory()) {
+                // This shouldn't happen, but let's skip if it does to be safe
+                continue;
+            } else {
+                await rm(filePath);
+            }
+        }
+    }
 
     const cliWorkspace = await loadCliWorkspace();
     if (cliWorkspace == null) {

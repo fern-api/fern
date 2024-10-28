@@ -22,7 +22,13 @@ export async function registerWorkspacesV2({
                     context,
                     token,
                     audiences: { type: "all" },
-                    snippetsConfig: {}
+                    snippetsConfig: {
+                        typescriptSdk: undefined,
+                        pythonSdk: undefined,
+                        javaSdk: undefined,
+                        rubySdk: undefined,
+                        goSdk: undefined
+                    }
                 });
                 context.logger.info(chalk.green("Registered API"));
             });

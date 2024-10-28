@@ -44,14 +44,14 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           echo "Generating changelogs for generators"
-          pnpm seed:local generate changelog generator -o ./fern/pages/changelogs/
+          pnpm seed:local generate changelog generator -o ./fern/pages/changelogs/ --clean-directory
 
       - name: Write CLI changelogs
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           echo "Generating changelogs for CLI"
-          pnpm seed:local generate changelog cli -o ./fern/pages/changelogs/cli/
+          pnpm seed:local generate changelog cli -o ./fern/pages/changelogs/cli/ --clean-directory
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:

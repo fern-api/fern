@@ -17,7 +17,7 @@ public class GetPresignedUrlTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "s3Key": "string"
+              "s3Key": "s3Key"
             }
             """;
 
@@ -41,7 +41,7 @@ public class GetPresignedUrlTest : BaseMockServerTest
             );
 
         var response = await Client.S3.GetPresignedUrlAsync(
-            new GetPresignedUrlRequest { S3Key = "string" },
+            new GetPresignedUrlRequest { S3Key = "s3Key" },
             RequestOptions
         );
         JToken

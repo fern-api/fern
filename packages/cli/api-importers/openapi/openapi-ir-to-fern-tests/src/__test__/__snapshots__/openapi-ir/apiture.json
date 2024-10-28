@@ -773,170 +773,173 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "limit": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "limit": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "nextPage_url": {
-                "value": {
-                  "value": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
-                  "type": "string"
+                "nextPage_url": {
+                  "value": {
+                    "value": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "start": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
+                "start": {
+                  "value": {
+                    "value": "start",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "items": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": "id",
-                          "type": "string"
+                "items": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "label": {
-                        "value": {
-                          "value": "Checking *1008",
-                          "type": "string"
+                        "label": {
+                          "value": {
+                            "value": "Checking *1008",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "nickname": {
-                        "value": {
-                          "value": "Payroll Checking",
-                          "type": "string"
+                        "nickname": {
+                          "value": {
+                            "value": "Payroll Checking",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "maskedNumber": {
-                        "value": {
-                          "value": "maskedNumber",
-                          "type": "string"
+                        "maskedNumber": {
+                          "value": {
+                            "value": "maskedNumber",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "product": {
-                        "properties": {
-                          "type": {
-                            "value": "cd",
-                            "type": "enum"
-                          },
-                          "code": {
-                            "value": {
-                              "value": "180D_CDA",
-                              "type": "string"
+                        "product": {
+                          "properties": {
+                            "type": {
+                              "value": "cd",
+                              "type": "enum"
                             },
-                            "type": "primitive"
-                          },
-                          "label": {
-                            "value": {
-                              "value": "180 Day CD",
-                              "type": "string"
+                            "code": {
+                              "value": {
+                                "value": "180D_CDA",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
-                          },
-                          "description": {
-                            "value": {
-                              "value": "Certificate of Deposit with a 180 day term",
-                              "type": "string"
+                            "label": {
+                              "value": {
+                                "value": "180 Day CD",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
-                            "type": "primitive"
-                          }
+                            "description": {
+                              "value": {
+                                "value": "Certificate of Deposit with a 180 day term",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
                         },
-                        "type": "object"
-                      },
-                      "location": {
-                        "value": "internal",
-                        "type": "enum"
-                      },
-                      "allows": {
-                        "properties": {
-                          "billPay": {
-                            "value": {
-                              "value": true,
-                              "type": "boolean"
-                            },
-                            "type": "primitive"
-                          },
-                          "mobileCheckDeposit": {
-                            "value": {
-                              "value": true,
-                              "type": "boolean"
-                            },
-                            "type": "primitive"
-                          },
-                          "transferFrom": {
-                            "value": {
-                              "value": true,
-                              "type": "boolean"
-                            },
-                            "type": "primitive"
-                          },
-                          "transferTo": {
-                            "value": {
-                              "value": true,
-                              "type": "boolean"
-                            },
-                            "type": "primitive"
-                          },
-                          "view": {
-                            "value": {
-                              "value": true,
-                              "type": "boolean"
-                            },
-                            "type": "primitive"
-                          },
-                          "viewCards": {
-                            "value": {
-                              "value": true,
-                              "type": "boolean"
-                            },
-                            "type": "primitive"
-                          },
-                          "manageCards": {
-                            "value": {
-                              "value": true,
-                              "type": "boolean"
-                            },
-                            "type": "primitive"
-                          }
+                        "location": {
+                          "value": "internal",
+                          "type": "enum"
                         },
-                        "type": "object"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "count": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+                        "allows": {
+                          "properties": {
+                            "billPay": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "mobileCheckDeposit": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "transferFrom": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "transferTo": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "view": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "viewCards": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "manageCards": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "primitive"
-              },
-              "primaryAccountId": {
-                "value": {
-                  "value": "primaryAccountId",
-                  "type": "string"
+                "count": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "primaryAccountId": {
+                  "value": {
+                    "value": "primaryAccountId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -1425,146 +1428,149 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "label": {
-                "value": {
-                  "value": "Checking *1008",
-                  "type": "string"
+                "label": {
+                  "value": {
+                    "value": "Checking *1008",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "nickname": {
-                "value": {
-                  "value": "Payroll Checking",
-                  "type": "string"
+                "nickname": {
+                  "value": {
+                    "value": "Payroll Checking",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "maskedNumber": {
-                "value": {
-                  "value": "maskedNumber",
-                  "type": "string"
+                "maskedNumber": {
+                  "value": {
+                    "value": "maskedNumber",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "product": {
-                "properties": {
-                  "type": {
-                    "value": "cd",
-                    "type": "enum"
-                  },
-                  "code": {
-                    "value": {
-                      "value": "180D_CDA",
-                      "type": "string"
+                "product": {
+                  "properties": {
+                    "type": {
+                      "value": "cd",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  },
-                  "label": {
-                    "value": {
-                      "value": "180 Day CD",
-                      "type": "string"
+                    "code": {
+                      "value": {
+                        "value": "180D_CDA",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "description": {
-                    "value": {
-                      "value": "Certificate of Deposit with a 180 day term",
-                      "type": "string"
+                    "label": {
+                      "value": {
+                        "value": "180 Day CD",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    "description": {
+                      "value": {
+                        "value": "Certificate of Deposit with a 180 day term",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "location": {
-                "value": "internal",
-                "type": "enum"
-              },
-              "allows": {
-                "properties": {
-                  "billPay": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "mobileCheckDeposit": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "transferFrom": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "transferTo": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "view": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "viewCards": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "manageCards": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "manageJointOwners": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "manageOverdraftAccounts": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  }
+                "location": {
+                  "value": "internal",
+                  "type": "enum"
                 },
-                "type": "object"
-              },
-              "electronicStatements": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
+                "allows": {
+                  "properties": {
+                    "billPay": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "mobileCheckDeposit": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "transferFrom": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "transferTo": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "view": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "viewCards": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "manageCards": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "manageJointOwners": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "manageOverdraftAccounts": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "primitive"
-              }
+                "electronicStatements": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -2320,108 +2326,111 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "items": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": "05d00d7d-d630",
-                          "type": "string"
+            "value": {
+              "properties": {
+                "items": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "05d00d7d-d630",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "available": {
+                          "value": {
+                            "value": "3208.20",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "current": {
+                          "value": {
+                            "value": "3448.72",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "updatedAt": {
+                          "value": {
+                            "value": "2022-05-02T06:51:19.375Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "currentWithPending": {
+                          "value": {
+                            "value": "3448.72",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "incomplete": {
+                          "value": {
+                            "value": false,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "available": {
-                        "value": {
-                          "value": "3208.20",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "current": {
-                        "value": {
-                          "value": "3448.72",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "updatedAt": {
-                        "value": {
-                          "value": "2022-05-02T06:51:19.375Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "currentWithPending": {
-                        "value": {
-                          "value": "3448.72",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "incomplete": {
-                        "value": {
-                          "value": false,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": "cb5d67ea-a5c3",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "cb5d67ea-a5c3",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "available": {
+                          "value": {
+                            "value": "1750.80",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "current": {
+                          "value": {
+                            "value": "1956.19",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "updatedAt": {
+                          "value": {
+                            "value": "2022-05-02T06:51:19.375Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "currentWithPending": {
+                          "value": {
+                            "value": "1956.19",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "incomplete": {
+                          "value": {
+                            "value": false,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "available": {
-                        "value": {
-                          "value": "1750.80",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "current": {
-                        "value": {
-                          "value": "1956.19",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "updatedAt": {
-                        "value": {
-                          "value": "2022-05-02T06:51:19.375Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "currentWithPending": {
-                        "value": {
-                          "value": "1956.19",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "incomplete": {
-                        "value": {
-                          "value": false,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -3044,33 +3053,36 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "items": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": "0399abed-fd3d",
-                          "type": "string"
+            "value": {
+              "properties": {
+                "items": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "0399abed-fd3d",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "name": {
+                          "value": {
+                            "value": "Max Pike",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "name": {
-                        "value": {
-                          "value": "Max Pike",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -4566,133 +4578,136 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "limit": {
-                "value": {
-                  "value": 100,
-                  "type": "int"
+            "value": {
+              "properties": {
+                "limit": {
+                  "value": {
+                    "value": 100,
+                    "type": "int"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "nextPage_url": {
+                  "value": {
+                    "value": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "start": {
+                  "value": {
+                    "value": "start",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "items": {
+                  "value": {
+                    "value": [
+                      {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "id",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": "da1331a9e9168ea91346",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          {
+                            "key": {
+                              "value": "label",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": "Checking *3456",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          {
+                            "key": {
+                              "value": "maskedNumber",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": "*3456",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "id",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": "5c9b4e50a0401ef4eb2e",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          {
+                            "key": {
+                              "value": "label",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": "Premiere Savings *1234",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          {
+                            "key": {
+                              "value": "maskedNumber",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": "*1234",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      }
+                    ],
+                    "type": "array"
+                  },
+                  "type": "unknown"
+                },
+                "maximumOverdraftAccounts": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
               },
-              "nextPage_url": {
-                "value": {
-                  "value": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "start": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "items": {
-                "value": {
-                  "value": [
-                    {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "id",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": "da1331a9e9168ea91346",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        {
-                          "key": {
-                            "value": "label",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": "Checking *3456",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        {
-                          "key": {
-                            "value": "maskedNumber",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": "*3456",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "id",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": "5c9b4e50a0401ef4eb2e",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        {
-                          "key": {
-                            "value": "label",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": "Premiere Savings *1234",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        {
-                          "key": {
-                            "value": "maskedNumber",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": "*1234",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "type": "unknown"
-              },
-              "maximumOverdraftAccounts": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -5181,34 +5196,37 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "accounts": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
-                      "value": {
-                        "value": "value",
+            "value": {
+              "properties": {
+                "accounts": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
                         "type": "string"
                       },
-                      "type": "primitive"
+                      "value": {
+                        "value": {
+                          "value": "value",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "maximumOverdraftAccounts": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+                  ],
+                  "type": "map"
                 },
-                "type": "primitive"
-              }
+                "maximumOverdraftAccounts": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -5988,34 +6006,37 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "accounts": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
-                      "value": {
-                        "value": "value",
+            "value": {
+              "properties": {
+                "accounts": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
                         "type": "string"
                       },
-                      "type": "primitive"
+                      "value": {
+                        "value": {
+                          "value": "value",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
                     }
-                  }
-                ],
-                "type": "map"
-              },
-              "maximumOverdraftAccounts": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+                  ],
+                  "type": "map"
                 },
-                "type": "primitive"
-              }
+                "maximumOverdraftAccounts": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -6831,58 +6852,61 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "firstName": {
-                "value": {
-                  "value": "Mary",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "firstName": {
+                  "value": {
+                    "value": "Mary",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "lastName": {
+                  "value": {
+                    "value": "Jones",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "taxId": {
+                  "value": {
+                    "value": "taxId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "sharedSecret": {
+                  "value": {
+                    "value": "obsolete obese octopus",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "emailAddress": {
+                  "value": {
+                    "value": "Mary.Jones@example.com",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "disallowDebitCardAccess": {
+                  "value": {
+                    "value": false,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "id": {
+                  "value": {
+                    "value": "db4f580290d3e07bf55d",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
               },
-              "lastName": {
-                "value": {
-                  "value": "Jones",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "taxId": {
-                "value": {
-                  "value": "taxId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "sharedSecret": {
-                "value": {
-                  "value": "obsolete obese octopus",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "emailAddress": {
-                "value": {
-                  "value": "Mary.Jones@example.com",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "disallowDebitCardAccess": {
-                "value": {
-                  "value": false,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              },
-              "id": {
-                "value": {
-                  "value": "db4f580290d3e07bf55d",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -7579,168 +7603,171 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "found": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
+            "value": {
+              "properties": {
+                "found": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "institution": {
-                "properties": {
-                  "name": {
-                    "value": {
-                      "value": "First Bank of Andalasia",
-                      "type": "string"
+                "institution": {
+                  "properties": {
+                    "name": {
+                      "value": {
+                        "value": "First Bank of Andalasia",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "address": {
-                    "properties": {
-                      "address1": {
-                        "value": {
-                          "value": "239 West Princess Ave.",
-                          "type": "string"
+                    "address": {
+                      "properties": {
+                        "address1": {
+                          "value": {
+                            "value": "239 West Princess Ave.",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "address2": {
+                          "value": {
+                            "value": "Building 14, Suite 1500",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "locality": {
+                          "value": {
+                            "value": "Andalasia",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "countryCode": {
+                          "value": {
+                            "value": "US",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "regionName": {
+                          "value": {
+                            "value": "regionName",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "regionCode": {
+                          "value": {
+                            "value": "NC",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "postalCode": {
+                          "value": {
+                            "value": "28407",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "address2": {
-                        "value": {
-                          "value": "Building 14, Suite 1500",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "locality": {
-                        "value": {
-                          "value": "Andalasia",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "countryCode": {
-                        "value": {
-                          "value": "US",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "regionName": {
-                        "value": {
-                          "value": "regionName",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "regionCode": {
-                        "value": {
-                          "value": "NC",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "postalCode": {
-                        "value": {
-                          "value": "28407",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  "locator": {
-                    "value": {
-                      "value": "503000196",
-                      "type": "string"
+                    "locator": {
+                      "value": {
+                        "value": "503000196",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
+                    "locatorType": {
+                      "value": "abaRoutingNumber",
+                      "type": "enum"
+                    }
                   },
-                  "locatorType": {
-                    "value": "abaRoutingNumber",
-                    "type": "enum"
-                  }
+                  "type": "object"
                 },
-                "type": "object"
+                "intermediaryInstitutions": {
+                  "value": [
+                    {
+                      "properties": {
+                        "name": {
+                          "value": {
+                            "value": "First Bank of Andalasia",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "address": {
+                          "properties": {
+                            "address1": {
+                              "value": {
+                                "value": "239 West Princess Ave.",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "address2": {
+                              "value": {
+                                "value": "Building 14, Suite 1500",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "locality": {
+                              "value": {
+                                "value": "Andalasia",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "countryCode": {
+                              "value": {
+                                "value": "US",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "regionCode": {
+                              "value": {
+                                "value": "NC",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "postalCode": {
+                              "value": {
+                                "value": "28407",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "locator": {
+                          "value": {
+                            "value": "503000196",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "locatorType": {
+                          "value": "abaRoutingNumber",
+                          "type": "enum"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
               },
-              "intermediaryInstitutions": {
-                "value": [
-                  {
-                    "properties": {
-                      "name": {
-                        "value": {
-                          "value": "First Bank of Andalasia",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "address": {
-                        "properties": {
-                          "address1": {
-                            "value": {
-                              "value": "239 West Princess Ave.",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "address2": {
-                            "value": {
-                              "value": "Building 14, Suite 1500",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "locality": {
-                            "value": {
-                              "value": "Andalasia",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "countryCode": {
-                            "value": {
-                              "value": "US",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "regionCode": {
-                            "value": {
-                              "value": "NC",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "postalCode": {
-                            "value": {
-                              "value": "28407",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "locator": {
-                        "value": {
-                          "value": "503000196",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "locatorType": {
-                        "value": "abaRoutingNumber",
-                        "type": "enum"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -8632,128 +8659,131 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "items": {
-                "value": [
-                  {
-                    "properties": {
-                      "scheduledOn": {
-                        "value": {
-                          "value": "2022-06-27",
-                          "type": "string"
+            "value": {
+              "properties": {
+                "items": {
+                  "value": [
+                    {
+                      "properties": {
+                        "scheduledOn": {
+                          "value": {
+                            "value": "2022-06-27",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "effectiveOn": {
+                          "value": {
+                            "value": "2022-06-27",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "effectiveOn": {
-                        "value": {
-                          "value": "2022-06-27",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "scheduledOn": {
-                        "value": {
-                          "value": "2022-07-04",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "scheduledOn": {
+                          "value": {
+                            "value": "2022-07-04",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "effectiveOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "effectiveOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "scheduledOn": {
-                        "value": {
-                          "value": "2022-07-11",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "scheduledOn": {
+                          "value": {
+                            "value": "2022-07-11",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "effectiveOn": {
+                          "value": {
+                            "value": "2022-07-11",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "effectiveOn": {
-                        "value": {
-                          "value": "2022-07-11",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "scheduledOn": {
-                        "value": {
-                          "value": "2022-07-18",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "scheduledOn": {
+                          "value": {
+                            "value": "2022-07-18",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "effectiveOn": {
+                          "value": {
+                            "value": "2022-07-18",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "effectiveOn": {
-                        "value": {
-                          "value": "2022-07-18",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "scheduledOn": {
-                        "value": {
-                          "value": "2022-07-25",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "scheduledOn": {
+                          "value": {
+                            "value": "2022-07-25",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "effectiveOn": {
+                          "value": {
+                            "value": "2022-07-25",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "effectiveOn": {
-                        "value": {
-                          "value": "2022-07-25",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "scheduledOn": {
-                        "value": {
-                          "value": "2022-08-01",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "scheduledOn": {
+                          "value": {
+                            "value": "2022-08-01",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "effectiveOn": {
+                          "value": {
+                            "value": "2022-07-01",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
                       },
-                      "effectiveOn": {
-                        "value": {
-                          "value": "2022-07-01",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -9689,85 +9719,88 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "timeZoneId": {
-                "value": {
-                  "value": "America/New_York",
-                  "type": "string"
+            "value": {
+              "properties": {
+                "timeZoneId": {
+                  "value": {
+                    "value": "America/New_York",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
+                "items": {
+                  "value": [
+                    {
+                      "properties": {
+                        "type": {
+                          "value": "ach",
+                          "type": "enum"
+                        },
+                        "time": {
+                          "value": {
+                            "value": "13:45",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "type": {
+                          "value": "ach",
+                          "type": "enum"
+                        },
+                        "time": {
+                          "value": {
+                            "value": "16:45",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "type": {
+                          "value": "sameDayAch",
+                          "type": "enum"
+                        },
+                        "time": {
+                          "value": {
+                            "value": "16:45",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "type": {
+                          "value": "domesticWireTransfer",
+                          "type": "enum"
+                        },
+                        "time": {
+                          "value": {
+                            "value": "16:45",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
               },
-              "items": {
-                "value": [
-                  {
-                    "properties": {
-                      "type": {
-                        "value": "ach",
-                        "type": "enum"
-                      },
-                      "time": {
-                        "value": {
-                          "value": "13:45",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "type": {
-                        "value": "ach",
-                        "type": "enum"
-                      },
-                      "time": {
-                        "value": {
-                          "value": "16:45",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "type": {
-                        "value": "sameDayAch",
-                        "type": "enum"
-                      },
-                      "time": {
-                        "value": {
-                          "value": "16:45",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "type": {
-                        "value": "domesticWireTransfer",
-                        "type": "enum"
-                      },
-                      "time": {
-                        "value": {
-                          "value": "16:45",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -10634,501 +10667,504 @@
           ],
           "headers": [],
           "response": {
-            "properties": {
-              "restrictedDates": {
-                "value": [
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-01",
-                          "type": "string"
+            "value": {
+              "properties": {
+                "restrictedDates": {
+                  "value": [
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-01",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "pastDate",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "pastDate",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-02",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-02",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "pastDate",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "pastDate",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-03",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-03",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "pastDate",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "pastDate",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-04",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-04",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "pastDate",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "pastDate",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-05",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "pastCutoffTime",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "pastCutoffTime",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-06",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-06",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "riskRestricted",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "riskRestricted",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-07",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-07",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "riskRestricted",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "riskRestricted",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-08",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-08",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "closure",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "closure",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-09",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-09",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "closure",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "closure",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-10",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-10",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "holiday",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "holiday",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-15",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-15",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "closure",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "closure",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-16",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-16",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "closure",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "closure",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-22",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-22",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "closure",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "closure",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-23",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-23",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "closure",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "closure",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-29",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-29",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "closure",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "closure",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
                     },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "occursOn": {
-                        "value": {
-                          "value": "2022-10-30",
-                          "type": "string"
+                    {
+                      "properties": {
+                        "occursOn": {
+                          "value": {
+                            "value": "2022-10-30",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "reason": {
-                        "value": "closure",
-                        "type": "enum"
-                      },
-                      "creditOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "reason": {
+                          "value": "closure",
+                          "type": "enum"
                         },
-                        "type": "primitive"
-                      },
-                      "debitOn": {
-                        "value": {
-                          "value": "2022-07-05",
-                          "type": "string"
+                        "creditOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "accuracyEndsOn": {
-                "value": {
-                  "value": "2026-12-31T00:00:00.000Z",
-                  "type": "string"
+                        "debitOn": {
+                          "value": {
+                            "value": "2022-07-05",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
                 },
-                "type": "primitive"
-              }
+                "accuracyEndsOn": {
+                  "value": {
+                    "value": "2026-12-31T00:00:00.000Z",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -12434,296 +12470,299 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "limit": {
-                "value": {
-                  "value": 10,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "nextPage_url": {
-                "value": {
-                  "value": "https://production.api.apiture.com/banking/accounts/c9fc25b47d52916fc9ad/transactions?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "start": {
-                "value": {
-                  "value": "d1b48af913464aa49fcb07065dcc0616",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "items": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": "d62c0701-0d74",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": {
-                        "value": "balance",
-                        "type": "enum"
-                      },
-                      "subtype": {
-                        "value": "check",
-                        "type": "enum"
-                      },
-                      "occurredOn": {
-                        "value": {
-                          "value": "2023-06-18",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "createdOn": {
-                        "value": {
-                          "value": "2023-05-18",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "postedOn": {
-                        "value": {
-                          "value": "2023-05-18",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "amount": {
-                        "value": {
-                          "value": "0.00",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "posted": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
-                      },
-                      "balance": {
-                        "value": {
-                          "value": "8509.38",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "memo": {
-                        "value": {
-                          "value": "memo",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "description": {
-                        "value": {
-                          "value": "description",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "category": {
-                        "properties": {
-                          "label": {
-                            "value": {
-                              "value": "label",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "id": {
-                            "value": {
-                              "value": "id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "check": {
-                        "properties": {
-                          "number": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      }
-                    },
-                    "type": "object"
+            "value": {
+              "properties": {
+                "limit": {
+                  "value": {
+                    "value": 10,
+                    "type": "int"
                   },
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": "88f5bf17-ecc4",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": {
-                        "value": "debit",
-                        "type": "enum"
-                      },
-                      "subtype": {
-                        "value": "check",
-                        "type": "enum"
-                      },
-                      "occurredOn": {
-                        "value": {
-                          "value": "2023-06-18",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "createdOn": {
-                        "value": {
-                          "value": "2023-05-18",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "postedOn": {
-                        "value": {
-                          "value": "2023-05-18",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "amount": {
-                        "value": {
-                          "value": "1276.21",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "posted": {
-                        "value": {
-                          "value": true,
-                          "type": "boolean"
-                        },
-                        "type": "primitive"
-                      },
-                      "balance": {
-                        "value": {
-                          "value": "8509.38",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "memo": {
-                        "value": {
-                          "value": "Paid electric bill",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "description": {
-                        "value": {
-                          "value": "description",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "category": {
-                        "properties": {
-                          "label": {
-                            "value": {
-                              "value": "Utilities",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "id": {
-                            "value": {
-                              "value": "127",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "merchant": {
-                        "properties": {
-                          "name": {
-                            "value": {
-                              "value": "B&T's Excellent Electric Co.",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "website_url": {
-                            "value": {
-                              "value": "https://BillTedsExcellentElectricCompany.example.com/",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "logo_url": {
-                            "value": {
-                              "value": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "check": {
-                        "properties": {
-                          "number": {
-                            "value": {
-                              "value": 8412,
-                              "type": "int"
-                            },
-                            "type": "primitive"
-                          },
-                          "imageFront_url": {
-                            "value": {
-                              "value": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "imageBack_url": {
-                            "value": {
-                              "value": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "count": {
-                "value": {
-                  "value": 2381,
-                  "type": "int"
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "nextPage_url": {
+                  "value": {
+                    "value": "https://production.api.apiture.com/banking/accounts/c9fc25b47d52916fc9ad/transactions?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "start": {
+                  "value": {
+                    "value": "d1b48af913464aa49fcb07065dcc0616",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "items": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "d62c0701-0d74",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "type": {
+                          "value": "balance",
+                          "type": "enum"
+                        },
+                        "subtype": {
+                          "value": "check",
+                          "type": "enum"
+                        },
+                        "occurredOn": {
+                          "value": {
+                            "value": "2023-06-18",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "createdOn": {
+                          "value": {
+                            "value": "2023-05-18",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "postedOn": {
+                          "value": {
+                            "value": "2023-05-18",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "amount": {
+                          "value": {
+                            "value": "0.00",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "posted": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        },
+                        "balance": {
+                          "value": {
+                            "value": "8509.38",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "memo": {
+                          "value": {
+                            "value": "memo",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "description": {
+                          "value": {
+                            "value": "description",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "category": {
+                          "properties": {
+                            "label": {
+                              "value": {
+                                "value": "label",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "id": {
+                              "value": {
+                                "value": "id",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "check": {
+                          "properties": {
+                            "number": {
+                              "value": {
+                                "value": 1,
+                                "type": "int"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "88f5bf17-ecc4",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "type": {
+                          "value": "debit",
+                          "type": "enum"
+                        },
+                        "subtype": {
+                          "value": "check",
+                          "type": "enum"
+                        },
+                        "occurredOn": {
+                          "value": {
+                            "value": "2023-06-18",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "createdOn": {
+                          "value": {
+                            "value": "2023-05-18",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "postedOn": {
+                          "value": {
+                            "value": "2023-05-18",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "amount": {
+                          "value": {
+                            "value": "1276.21",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "posted": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        },
+                        "balance": {
+                          "value": {
+                            "value": "8509.38",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "memo": {
+                          "value": {
+                            "value": "Paid electric bill",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "description": {
+                          "value": {
+                            "value": "description",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "category": {
+                          "properties": {
+                            "label": {
+                              "value": {
+                                "value": "Utilities",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "id": {
+                              "value": {
+                                "value": "127",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "merchant": {
+                          "properties": {
+                            "name": {
+                              "value": {
+                                "value": "B&T's Excellent Electric Co.",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "website_url": {
+                              "value": {
+                                "value": "https://BillTedsExcellentElectricCompany.example.com/",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "logo_url": {
+                              "value": {
+                                "value": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "check": {
+                          "properties": {
+                            "number": {
+                              "value": {
+                                "value": 8412,
+                                "type": "int"
+                              },
+                              "type": "primitive"
+                            },
+                            "imageFront_url": {
+                              "value": {
+                                "value": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "imageBack_url": {
+                              "value": {
+                                "value": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "count": {
+                  "value": {
+                    "value": 2381,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -13340,37 +13379,40 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "items": {
-                "value": [
-                  {
-                    "properties": {
-                      "label": {
-                        "value": {
-                          "value": "Dining",
-                          "type": "string"
+            "value": {
+              "properties": {
+                "items": {
+                  "value": [
+                    {
+                      "properties": {
+                        "label": {
+                          "value": {
+                            "value": "Dining",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
-                      },
-                      "id": {
-                        "value": {
-                          "value": "0399abed-fd3d",
-                          "type": "string"
+                        "id": {
+                          "value": {
+                            "value": "0399abed-fd3d",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         },
-                        "type": "primitive"
+                        "type": {
+                          "value": "debit",
+                          "type": "enum"
+                        }
                       },
-                      "type": {
-                        "value": "debit",
-                        "type": "enum"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              }
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -14096,347 +14138,350 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "limit": {
-                "value": {
-                  "value": 10,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "nextPage_url": {
-                "value": {
-                  "value": "https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "start": {
-                "value": {
-                  "value": "d1b48af913464aa49fcb07065dcc0616",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "items": {
-                "value": [
-                  {
-                    "properties": {
-                      "createdAt": {
-                        "value": {
-                          "value": "2022-04-18T07:21:35.375Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "updatedAt": {
-                        "value": {
-                          "value": "2022-04-18T07:21:35.375Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "amount": {
-                        "value": {
-                          "value": "275.00",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sourceAccount": {
-                        "properties": {
-                          "id": {
-                            "value": {
-                              "value": "bd9b7af2-6f9b",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "label": {
-                            "value": {
-                              "value": "Premiere Checking *6789",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "type": {
-                            "value": "checking",
-                            "type": "enum"
-                          },
-                          "location": {
-                            "value": "internal",
-                            "type": "enum"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "targetAccount": {
-                        "properties": {
-                          "id": {
-                            "value": {
-                              "value": "88b1ca3e-d0f3",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "label": {
-                            "value": {
-                              "value": "Personal Savings *4567",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "type": {
-                            "value": "savings",
-                            "type": "enum"
-                          },
-                          "location": {
-                            "value": "internal",
-                            "type": "enum"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "memo": {
-                        "value": {
-                          "value": "Cover check for car repair",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "id": {
-                        "value": {
-                          "value": "0399abed-fd3d",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "schedule": {
-                        "properties": {
-                          "scheduledOn": {
-                            "value": {
-                              "value": "2026-06-28",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "frequency": {
-                            "value": "once",
-                            "type": "enum"
-                          },
-                          "amountLimit": {
-                            "value": {
-                              "value": "3456.78",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "debitsOn": {
-                            "value": {
-                              "value": "2026-06-24",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "creditsOn": {
-                            "value": {
-                              "value": "2026-06-26",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "state": {
-                        "value": "processed",
-                        "type": "enum"
-                      },
-                      "processedAt": {
-                        "value": {
-                          "value": "2022-06-28T021:00:00.000Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "updatedBy": {
-                        "value": {
-                          "value": "updatedBy",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
+            "value": {
+              "properties": {
+                "limit": {
+                  "value": {
+                    "value": 10,
+                    "type": "int"
                   },
-                  {
-                    "properties": {
-                      "createdAt": {
-                        "value": {
-                          "value": "2022-04-18T07:21:35.375Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "updatedAt": {
-                        "value": {
-                          "value": "2022-04-18T07:21:35.375Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "amount": {
-                        "value": {
-                          "value": "100.00",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sourceAccount": {
-                        "properties": {
-                          "id": {
-                            "value": {
-                              "value": "bd9b7af2-6f9b",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "label": {
-                            "value": {
-                              "value": "Checking *6789",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "type": {
-                            "value": "checking",
-                            "type": "enum"
-                          },
-                          "location": {
-                            "value": "internal",
-                            "type": "enum"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "targetAccount": {
-                        "properties": {
-                          "id": {
-                            "value": {
-                              "value": "c8396f59-624b",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "label": {
-                            "value": {
-                              "value": "Checking *3456",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "type": {
-                            "value": "checking",
-                            "type": "enum"
-                          },
-                          "location": {
-                            "value": "internal",
-                            "type": "enum"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "memo": {
-                        "value": {
-                          "value": "school expenses",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "id": {
-                        "value": {
-                          "value": "d62c0701-0d74",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "schedule": {
-                        "properties": {
-                          "scheduledOn": {
-                            "value": {
-                              "value": "2023-08-01",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "frequency": {
-                            "value": "monthly",
-                            "type": "enum"
-                          },
-                          "count": {
-                            "value": {
-                              "value": 9,
-                              "type": "int"
-                            },
-                            "type": "primitive"
-                          },
-                          "amountLimit": {
-                            "value": {
-                              "value": "3456.78",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "debitsOn": {
-                            "value": {
-                              "value": "2026-08-01",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "creditsOn": {
-                            "value": {
-                              "value": "2023-08-01",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "state": {
-                        "value": "scheduled",
-                        "type": "enum"
-                      },
-                      "processedAt": {
-                        "value": {
-                          "value": "2024-01-15T09:30:00Z",
-                          "type": "datetime"
-                        },
-                        "type": "primitive"
-                      },
-                      "updatedBy": {
-                        "value": {
-                          "value": "updatedBy",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "count": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "nextPage_url": {
+                  "value": {
+                    "value": "https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "start": {
+                  "value": {
+                    "value": "d1b48af913464aa49fcb07065dcc0616",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "items": {
+                  "value": [
+                    {
+                      "properties": {
+                        "createdAt": {
+                          "value": {
+                            "value": "2022-04-18T07:21:35.375Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "updatedAt": {
+                          "value": {
+                            "value": "2022-04-18T07:21:35.375Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "amount": {
+                          "value": {
+                            "value": "275.00",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sourceAccount": {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "bd9b7af2-6f9b",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "label": {
+                              "value": {
+                                "value": "Premiere Checking *6789",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": {
+                              "value": "checking",
+                              "type": "enum"
+                            },
+                            "location": {
+                              "value": "internal",
+                              "type": "enum"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "targetAccount": {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "88b1ca3e-d0f3",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "label": {
+                              "value": {
+                                "value": "Personal Savings *4567",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": {
+                              "value": "savings",
+                              "type": "enum"
+                            },
+                            "location": {
+                              "value": "internal",
+                              "type": "enum"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "memo": {
+                          "value": {
+                            "value": "Cover check for car repair",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "id": {
+                          "value": {
+                            "value": "0399abed-fd3d",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "schedule": {
+                          "properties": {
+                            "scheduledOn": {
+                              "value": {
+                                "value": "2026-06-28",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "frequency": {
+                              "value": "once",
+                              "type": "enum"
+                            },
+                            "amountLimit": {
+                              "value": {
+                                "value": "3456.78",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "debitsOn": {
+                              "value": {
+                                "value": "2026-06-24",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "creditsOn": {
+                              "value": {
+                                "value": "2026-06-26",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "state": {
+                          "value": "processed",
+                          "type": "enum"
+                        },
+                        "processedAt": {
+                          "value": {
+                            "value": "2022-06-28T021:00:00.000Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "updatedBy": {
+                          "value": {
+                            "value": "updatedBy",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "createdAt": {
+                          "value": {
+                            "value": "2022-04-18T07:21:35.375Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "updatedAt": {
+                          "value": {
+                            "value": "2022-04-18T07:21:35.375Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "amount": {
+                          "value": {
+                            "value": "100.00",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sourceAccount": {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "bd9b7af2-6f9b",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "label": {
+                              "value": {
+                                "value": "Checking *6789",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": {
+                              "value": "checking",
+                              "type": "enum"
+                            },
+                            "location": {
+                              "value": "internal",
+                              "type": "enum"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "targetAccount": {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "c8396f59-624b",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "label": {
+                              "value": {
+                                "value": "Checking *3456",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": {
+                              "value": "checking",
+                              "type": "enum"
+                            },
+                            "location": {
+                              "value": "internal",
+                              "type": "enum"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "memo": {
+                          "value": {
+                            "value": "school expenses",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "id": {
+                          "value": {
+                            "value": "d62c0701-0d74",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "schedule": {
+                          "properties": {
+                            "scheduledOn": {
+                              "value": {
+                                "value": "2023-08-01",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "frequency": {
+                              "value": "monthly",
+                              "type": "enum"
+                            },
+                            "count": {
+                              "value": {
+                                "value": 9,
+                                "type": "int"
+                              },
+                              "type": "primitive"
+                            },
+                            "amountLimit": {
+                              "value": {
+                                "value": "3456.78",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "debitsOn": {
+                              "value": {
+                                "value": "2026-08-01",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "creditsOn": {
+                              "value": {
+                                "value": "2023-08-01",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "state": {
+                          "value": "scheduled",
+                          "type": "enum"
+                        },
+                        "processedAt": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "updatedBy": {
+                          "value": {
+                            "value": "updatedBy",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "count": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -15138,171 +15183,174 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "createdAt": {
-                "value": {
-                  "value": "2022-04-18T07:21:35.375Z",
-                  "type": "datetime"
+            "value": {
+              "properties": {
+                "createdAt": {
+                  "value": {
+                    "value": "2022-04-18T07:21:35.375Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "updatedAt": {
-                "value": {
-                  "value": "2022-04-18T07:21:35.375Z",
-                  "type": "datetime"
+                "updatedAt": {
+                  "value": {
+                    "value": "2022-04-18T07:21:35.375Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "amount": {
-                "value": {
-                  "value": "275.00",
-                  "type": "string"
+                "amount": {
+                  "value": {
+                    "value": "275.00",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "sourceAccount": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "bd9b7af2-6f9b",
-                      "type": "string"
+                "sourceAccount": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "bd9b7af2-6f9b",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "label": {
-                    "value": {
-                      "value": "Premiere Checking *6789",
-                      "type": "string"
+                    "label": {
+                      "value": {
+                        "value": "Premiere Checking *6789",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
+                    "type": {
+                      "value": "checking",
+                      "type": "enum"
+                    },
+                    "location": {
+                      "value": "internal",
+                      "type": "enum"
+                    }
                   },
-                  "type": {
-                    "value": "checking",
-                    "type": "enum"
-                  },
-                  "location": {
-                    "value": "internal",
-                    "type": "enum"
-                  }
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "targetAccount": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "88b1ca3e-d0f3",
-                      "type": "string"
+                "targetAccount": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "88b1ca3e-d0f3",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "label": {
-                    "value": {
-                      "value": "Personal Savings *4567",
-                      "type": "string"
+                    "label": {
+                      "value": {
+                        "value": "Personal Savings *4567",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
+                    "type": {
+                      "value": "savings",
+                      "type": "enum"
+                    },
+                    "location": {
+                      "value": "internal",
+                      "type": "enum"
+                    }
                   },
-                  "type": {
-                    "value": "savings",
-                    "type": "enum"
-                  },
-                  "location": {
-                    "value": "internal",
-                    "type": "enum"
-                  }
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "memo": {
-                "value": {
-                  "value": "Cover check for car repair",
-                  "type": "string"
+                "memo": {
+                  "value": {
+                    "value": "Cover check for car repair",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "id": {
-                "value": {
-                  "value": "0399abed-fd3d",
-                  "type": "string"
+                "id": {
+                  "value": {
+                    "value": "0399abed-fd3d",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "schedule": {
-                "properties": {
-                  "scheduledOn": {
-                    "value": {
-                      "value": "2026-06-28",
-                      "type": "string"
+                "schedule": {
+                  "properties": {
+                    "scheduledOn": {
+                      "value": {
+                        "value": "2026-06-28",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "recurrenceType": {
-                    "value": "fixed",
-                    "type": "enum"
-                  },
-                  "frequency": {
-                    "value": "once",
-                    "type": "enum"
-                  },
-                  "endsOn": {
-                    "value": {
-                      "value": "endsOn",
-                      "type": "string"
+                    "recurrenceType": {
+                      "value": "fixed",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  },
-                  "count": {
-                    "value": {
-                      "value": 1,
-                      "type": "int"
+                    "frequency": {
+                      "value": "once",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  },
-                  "amountLimit": {
-                    "value": {
-                      "value": "3456.78",
-                      "type": "string"
+                    "endsOn": {
+                      "value": {
+                        "value": "endsOn",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "debitsOn": {
-                    "value": {
-                      "value": "2026-06-24",
-                      "type": "string"
+                    "count": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "creditsOn": {
-                    "value": {
-                      "value": "2026-06-26",
-                      "type": "string"
+                    "amountLimit": {
+                      "value": {
+                        "value": "3456.78",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    "debitsOn": {
+                      "value": {
+                        "value": "2026-06-24",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "creditsOn": {
+                      "value": {
+                        "value": "2026-06-26",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "state": {
-                "value": "unscheduled",
-                "type": "enum"
-              },
-              "processedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "state": {
+                  "value": "unscheduled",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              },
-              "updatedBy": {
-                "value": {
-                  "value": "updatedBy",
-                  "type": "string"
+                "processedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "updatedBy": {
+                  "value": {
+                    "value": "updatedBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -15791,171 +15839,174 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "properties": {
-              "createdAt": {
-                "value": {
-                  "value": "2022-04-18T07:21:35.375Z",
-                  "type": "datetime"
+            "value": {
+              "properties": {
+                "createdAt": {
+                  "value": {
+                    "value": "2022-04-18T07:21:35.375Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "updatedAt": {
-                "value": {
-                  "value": "2022-04-18T07:21:35.375Z",
-                  "type": "datetime"
+                "updatedAt": {
+                  "value": {
+                    "value": "2022-04-18T07:21:35.375Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "amount": {
-                "value": {
-                  "value": "275.00",
-                  "type": "string"
+                "amount": {
+                  "value": {
+                    "value": "275.00",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "sourceAccount": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "bd9b7af2-6f9b",
-                      "type": "string"
+                "sourceAccount": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "bd9b7af2-6f9b",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "label": {
-                    "value": {
-                      "value": "Premiere Checking *6789",
-                      "type": "string"
+                    "label": {
+                      "value": {
+                        "value": "Premiere Checking *6789",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
+                    "type": {
+                      "value": "checking",
+                      "type": "enum"
+                    },
+                    "location": {
+                      "value": "internal",
+                      "type": "enum"
+                    }
                   },
-                  "type": {
-                    "value": "checking",
-                    "type": "enum"
-                  },
-                  "location": {
-                    "value": "internal",
-                    "type": "enum"
-                  }
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "targetAccount": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "88b1ca3e-d0f3",
-                      "type": "string"
+                "targetAccount": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "88b1ca3e-d0f3",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "label": {
-                    "value": {
-                      "value": "Personal Savings *4567",
-                      "type": "string"
+                    "label": {
+                      "value": {
+                        "value": "Personal Savings *4567",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
+                    "type": {
+                      "value": "savings",
+                      "type": "enum"
+                    },
+                    "location": {
+                      "value": "internal",
+                      "type": "enum"
+                    }
                   },
-                  "type": {
-                    "value": "savings",
-                    "type": "enum"
-                  },
-                  "location": {
-                    "value": "internal",
-                    "type": "enum"
-                  }
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "memo": {
-                "value": {
-                  "value": "Cover check for car repair",
-                  "type": "string"
+                "memo": {
+                  "value": {
+                    "value": "Cover check for car repair",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "id": {
-                "value": {
-                  "value": "0399abed-fd3d",
-                  "type": "string"
+                "id": {
+                  "value": {
+                    "value": "0399abed-fd3d",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "schedule": {
-                "properties": {
-                  "scheduledOn": {
-                    "value": {
-                      "value": "2026-06-28",
-                      "type": "string"
+                "schedule": {
+                  "properties": {
+                    "scheduledOn": {
+                      "value": {
+                        "value": "2026-06-28",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "recurrenceType": {
-                    "value": "fixed",
-                    "type": "enum"
-                  },
-                  "frequency": {
-                    "value": "once",
-                    "type": "enum"
-                  },
-                  "endsOn": {
-                    "value": {
-                      "value": "endsOn",
-                      "type": "string"
+                    "recurrenceType": {
+                      "value": "fixed",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  },
-                  "count": {
-                    "value": {
-                      "value": 1,
-                      "type": "int"
+                    "frequency": {
+                      "value": "once",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  },
-                  "amountLimit": {
-                    "value": {
-                      "value": "3456.78",
-                      "type": "string"
+                    "endsOn": {
+                      "value": {
+                        "value": "endsOn",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "debitsOn": {
-                    "value": {
-                      "value": "2026-06-24",
-                      "type": "string"
+                    "count": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "creditsOn": {
-                    "value": {
-                      "value": "2026-06-26",
-                      "type": "string"
+                    "amountLimit": {
+                      "value": {
+                        "value": "3456.78",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    "debitsOn": {
+                      "value": {
+                        "value": "2026-06-24",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "creditsOn": {
+                      "value": {
+                        "value": "2026-06-26",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "state": {
-                "value": "unscheduled",
-                "type": "enum"
-              },
-              "processedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "state": {
+                  "value": "unscheduled",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              },
-              "updatedBy": {
-                "value": {
-                  "value": "updatedBy",
-                  "type": "string"
+                "processedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "updatedBy": {
+                  "value": {
+                    "value": "updatedBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"
@@ -17395,171 +17446,174 @@
             "type": "object"
           },
           "response": {
-            "properties": {
-              "createdAt": {
-                "value": {
-                  "value": "2022-04-18T07:21:35.375Z",
-                  "type": "datetime"
+            "value": {
+              "properties": {
+                "createdAt": {
+                  "value": {
+                    "value": "2022-04-18T07:21:35.375Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "updatedAt": {
-                "value": {
-                  "value": "2022-04-18T07:21:35.375Z",
-                  "type": "datetime"
+                "updatedAt": {
+                  "value": {
+                    "value": "2022-04-18T07:21:35.375Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "amount": {
-                "value": {
-                  "value": "275.00",
-                  "type": "string"
+                "amount": {
+                  "value": {
+                    "value": "275.00",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "sourceAccount": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "bd9b7af2-6f9b",
-                      "type": "string"
+                "sourceAccount": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "bd9b7af2-6f9b",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "label": {
-                    "value": {
-                      "value": "Premiere Checking *6789",
-                      "type": "string"
+                    "label": {
+                      "value": {
+                        "value": "Premiere Checking *6789",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
+                    "type": {
+                      "value": "checking",
+                      "type": "enum"
+                    },
+                    "location": {
+                      "value": "internal",
+                      "type": "enum"
+                    }
                   },
-                  "type": {
-                    "value": "checking",
-                    "type": "enum"
-                  },
-                  "location": {
-                    "value": "internal",
-                    "type": "enum"
-                  }
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "targetAccount": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "88b1ca3e-d0f3",
-                      "type": "string"
+                "targetAccount": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "88b1ca3e-d0f3",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "label": {
-                    "value": {
-                      "value": "Personal Savings *4567",
-                      "type": "string"
+                    "label": {
+                      "value": {
+                        "value": "Personal Savings *4567",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
+                    "type": {
+                      "value": "savings",
+                      "type": "enum"
+                    },
+                    "location": {
+                      "value": "internal",
+                      "type": "enum"
+                    }
                   },
-                  "type": {
-                    "value": "savings",
-                    "type": "enum"
-                  },
-                  "location": {
-                    "value": "internal",
-                    "type": "enum"
-                  }
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "memo": {
-                "value": {
-                  "value": "Cover check for car repair",
-                  "type": "string"
+                "memo": {
+                  "value": {
+                    "value": "Cover check for car repair",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "id": {
-                "value": {
-                  "value": "0399abed-fd3d",
-                  "type": "string"
+                "id": {
+                  "value": {
+                    "value": "0399abed-fd3d",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              },
-              "schedule": {
-                "properties": {
-                  "scheduledOn": {
-                    "value": {
-                      "value": "2026-06-28",
-                      "type": "string"
+                "schedule": {
+                  "properties": {
+                    "scheduledOn": {
+                      "value": {
+                        "value": "2026-06-28",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "recurrenceType": {
-                    "value": "fixed",
-                    "type": "enum"
-                  },
-                  "frequency": {
-                    "value": "once",
-                    "type": "enum"
-                  },
-                  "endsOn": {
-                    "value": {
-                      "value": "endsOn",
-                      "type": "string"
+                    "recurrenceType": {
+                      "value": "fixed",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  },
-                  "count": {
-                    "value": {
-                      "value": 1,
-                      "type": "int"
+                    "frequency": {
+                      "value": "once",
+                      "type": "enum"
                     },
-                    "type": "primitive"
-                  },
-                  "amountLimit": {
-                    "value": {
-                      "value": "3456.78",
-                      "type": "string"
+                    "endsOn": {
+                      "value": {
+                        "value": "endsOn",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "debitsOn": {
-                    "value": {
-                      "value": "2026-06-24",
-                      "type": "string"
+                    "count": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  },
-                  "creditsOn": {
-                    "value": {
-                      "value": "2026-06-26",
-                      "type": "string"
+                    "amountLimit": {
+                      "value": {
+                        "value": "3456.78",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    "debitsOn": {
+                      "value": {
+                        "value": "2026-06-24",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "creditsOn": {
+                      "value": {
+                        "value": "2026-06-26",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
                 },
-                "type": "object"
-              },
-              "state": {
-                "value": "unscheduled",
-                "type": "enum"
-              },
-              "processedAt": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
+                "state": {
+                  "value": "unscheduled",
+                  "type": "enum"
                 },
-                "type": "primitive"
-              },
-              "updatedBy": {
-                "value": {
-                  "value": "updatedBy",
-                  "type": "string"
+                "processedAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
                 },
-                "type": "primitive"
-              }
+                "updatedBy": {
+                  "value": {
+                    "value": "updatedBy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
             },
-            "type": "object"
+            "type": "withoutStreaming"
           },
           "codeSamples": [],
           "type": "full"

@@ -3,6 +3,7 @@
 from .types import (
     Actor,
     Actress,
+    BigEntity,
     CastMember,
     Directory,
     Entity,
@@ -40,6 +41,7 @@ __all__ = [
     "Actor",
     "Actress",
     "BasicType",
+    "BigEntity",
     "CastMember",
     "ComplexType",
     "Directory",

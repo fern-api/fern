@@ -24,7 +24,7 @@ module SeedMultiUrlEnvironmentClient
     #    environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  multi_url_environment.s_3.get_presigned_url(s_3_key: "string")
+    #  multi_url_environment.s_3.get_presigned_url(s_3_key: "s3Key")
     def get_presigned_url(s_3_key:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -63,7 +63,7 @@ module SeedMultiUrlEnvironmentClient
     #    environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  multi_url_environment.s_3.get_presigned_url(s_3_key: "string")
+    #  multi_url_environment.s_3.get_presigned_url(s_3_key: "s3Key")
     def get_presigned_url(s_3_key:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
