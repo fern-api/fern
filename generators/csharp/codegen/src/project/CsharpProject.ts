@@ -86,12 +86,6 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         const absolutePathToProjectDirectory = await this.createProject({ absolutePathToSrcDirectory });
         const absolutePathToTestProjectDirectory = await this.createTestProject({ absolutePathToSrcDirectory });
 
-        this.rawFiles.push(
-            new File(".gitignore", RelativeFilePath.of("."), await readFile(getAsIsFilepath(AsIsFiles.GitIgnore)))
-        );
-
-        await this.writeRawFiles();
-
         for (const file of this.sourceFiles) {
             await file.write(absolutePathToProjectDirectory);
         }
@@ -99,6 +93,8 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         for (const file of this.testFiles) {
             await file.write(absolutePathToTestProjectDirectory);
         }
+
+        await this.createRawFiles();
 
         for (const filename of this.context.getCoreAsIsFiles()) {
             this.coreFiles.push(
@@ -380,6 +376,19 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 namespace: this.context.getTestUtilsNamespace()
             })
         );
+    }
+
+    private async createRawFiles(): Promise<void> {
+        for (const filename of this.context.getRawAsIsFiles()) {
+            this.addRawFiles(await this.createRawAsIsFile({ filename }));
+        }
+        await this.writeRawFiles();
+    }
+
+    private async createRawAsIsFile({ filename }: { filename: string }): Promise<File> {
+        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        filename = filename.replace(".Template", "");
+        return new File(filename, RelativeFilePath.of(""), contents);
     }
 }
 
