@@ -65,6 +65,13 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
             path: "../sdks/python"
         }
     },
+    [GeneratorName.PYTHON_V2_CODEGEN]: {
+        version: "0.0.1",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/python-v2"
+        }
+    },
     [GeneratorName.GO_FIBER]: {
         version: "0.23.0"
     },

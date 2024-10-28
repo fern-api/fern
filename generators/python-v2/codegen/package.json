@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/pythonv2-codegen",
+  "name": "@fern-api/python-v2-codegen",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "generators/pythonv2/codegen"
+    "directory": "generators/python-v2/codegen"
   },
   "files": [
     "lib"
@@ -24,7 +24,8 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "depcheck": "depcheck",
+    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-python-v2-codegen:latest ../../.."
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
