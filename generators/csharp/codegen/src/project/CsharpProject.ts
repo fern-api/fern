@@ -91,6 +91,8 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             cwd: this.absolutePathToOutputDirectory
         });
 
+        await this.modifyGitIgnore();
+
         await this.writeRawFiles();
 
         for (const file of this.sourceFiles) {
@@ -166,6 +168,21 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 DOTNET_CLI_TELEMETRY_OPTOUT: "1"
             }
         });
+    }
+
+    private async modifyGitIgnore(): Promise<void> {
+        const gitIgnorePath = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(".gitignore"));
+        let gitIgnoreContent = await readFile(gitIgnorePath, {
+            encoding: "utf-8"
+        });
+        gitIgnoreContent += `
+# Fern custom rules
+![Rr]elease/**/*.cs
+![Rr]eleases/**/*.cs
+![Ll]og/**/*.cs
+![Ll]ogs/**/*.cs`;
+
+        await writeFile(gitIgnorePath, gitIgnoreContent);
     }
 
     private async createProject({
@@ -465,7 +482,7 @@ class CsProj {
     public toString(): string {
         const projectGroup = this.getProjectGroup();
         const dependencies = this.getDependencies();
-        return ` 
+        return `
 <Project Sdk="Microsoft.NET.Sdk">
 
 ${projectGroup.join("\n")}
@@ -473,15 +490,15 @@ ${projectGroup.join("\n")}
     <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
         <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
     </PropertyGroup>
-    
+
     <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
         <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.1" />
     </ItemGroup>
-    
+
     <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
         <Reference Include="System.Net.Http" />
     </ItemGroup>
-    
+
     <ItemGroup Condition="'$(TargetFramework)' == 'net7.0' Or '$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
         <PackageReference Include="PolySharp" Version="1.14.1">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

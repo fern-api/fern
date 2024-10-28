@@ -482,3 +482,9 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Fern custom rules
+![Rr]elease/**/*.cs
+![Rr]eleases/**/*.cs
+![Ll]og/**/*.cs
+![Ll]ogs/**/*.cs
