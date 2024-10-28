@@ -32,17 +32,17 @@ interface Bytes {
 
 interface List {
     type: "list";
-    values: TypeInstantiation[];
+    values: AstNode[];
 }
 
 interface Set {
     type: "set";
-    values: TypeInstantiation[];
+    values: AstNode[];
 }
 
 interface Tuple {
     type: "tuple";
-    values: TypeInstantiation[];
+    values: AstNode[];
 }
 
 interface Dict {
@@ -51,8 +51,8 @@ interface Dict {
 }
 
 interface DictEntry {
-    key: TypeInstantiation;
-    value: TypeInstantiation;
+    key: AstNode;
+    value: AstNode;
 }
 
 interface None {
@@ -89,15 +89,15 @@ export class TypeInstantiation extends AstNode {
         return new this({ type: "bytes", value });
     }
 
-    public static list(values: TypeInstantiation[]): TypeInstantiation {
+    public static list(values: AstNode[]): TypeInstantiation {
         return new this({ type: "list", values });
     }
 
-    public static set(values: TypeInstantiation[]): TypeInstantiation {
+    public static set(values: AstNode[]): TypeInstantiation {
         return new this({ type: "set", values });
     }
 
-    public static tuple(values: TypeInstantiation[]): TypeInstantiation {
+    public static tuple(values: AstNode[]): TypeInstantiation {
         return new this({ type: "tuple", values });
     }
 
