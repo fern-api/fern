@@ -21,6 +21,12 @@ export enum AsIsFiles {
     JsonSerializableType = "Json/JsonSerializableType.Template.php",
     Utils = "Json/Utils.Template.php",
 
+    // Core/Multipart files.
+    MultipartApiRequest = "Multipart/MultipartApiRequest.Template.php",
+    MultipartFormData = "Multipart/MultipartFormData.Template.php",
+    MultipartFormDataPart = "Multipart/MultipartFormDataPart.Template.php",
+    File = "Multipart/Utils/File.Template.php",
+
     // Tests/Core/Json files.
     DateArrayTest = "Json/DateArrayTest.Template.php",
     EmptyArrayTest = "Json/EmptyArrayTest.Template.php",

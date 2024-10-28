@@ -12,6 +12,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use <%= coreNamespace%>\Json\JsonApiRequest;
+use <%= coreNamespace%>\Multipart\MultipartApiRequest;
 
 class RawClient
 {
