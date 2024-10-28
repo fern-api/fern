@@ -968,6 +968,16 @@
               "type": "null"
             }
           ]
+        },
+        "limit-websocket-messages-per-connection": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

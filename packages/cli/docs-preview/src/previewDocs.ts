@@ -106,7 +106,7 @@ class ReferencedAPICollector {
     }: {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
-        playgroundConfig?: Pick<docsYml.RawSchemas.PlaygroundSettings, "oauth">;
+        playgroundConfig?: { oauth?: boolean };
     }): APIDefinitionID {
         try {
             const id = uuidv4();
