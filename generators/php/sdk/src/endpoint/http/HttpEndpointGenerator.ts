@@ -68,7 +68,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         bodyReference: requestBodyCodeBlock?.requestBodyReference,
                         pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
                         headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-                        queryBagReference: queryParameterCodeBlock?.queryParameterBagReference
+                        queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+                        classReference: this.context.getJsonApiRequestClassReference()
                     })
                 );
                 writer.writeTextStatement(`${STATUS_CODE_VARIABLE_NAME} = ${RESPONSE_VARIABLE_NAME}->getStatusCode()`);
