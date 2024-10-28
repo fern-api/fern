@@ -1,5 +1,11 @@
+- version: 0.0.2
+  createdAt: "2024-10-28"
+  changelogEntry:
+    - type: fix
+      summary: Update generated .gitignore files to not ignore C# files inside of folders named Logs and Releases.
+  irVersion: 33
 - version: 0.0.1
-  createdAt: '2024-03-31'
+  createdAt: "2024-03-31"
   changelogEntry:
     - type: internal
       summary: Initial release.
