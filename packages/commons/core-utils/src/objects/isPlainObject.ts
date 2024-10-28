@@ -7,7 +7,7 @@ export function isPlainObject(value: unknown): value is Record<string, unknown> 
         return true;
     }
     let proto = value;
-    while (Object.getPrototypeOf(proto) != null) {
+    while (Object.getPrototypeOf(proto) !== null) {
         proto = Object.getPrototypeOf(proto);
     }
     return Object.getPrototypeOf(value) === proto;
