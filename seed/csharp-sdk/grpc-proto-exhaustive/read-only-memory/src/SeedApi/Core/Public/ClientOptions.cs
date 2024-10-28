@@ -46,7 +46,7 @@ public partial class ClientOptions
     {
         return new ClientOptions
         {
-            Environment = Environment,
+            BaseUrl = BaseUrl,
             HttpClient = HttpClient,
             MaxRetries = MaxRetries,
             Timeout = Timeout,
