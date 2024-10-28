@@ -349,7 +349,11 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.JsonEncoder,
             AsIsFiles.JsonDeserializer,
             AsIsFiles.JsonSerializer,
-            AsIsFiles.Utils
+            AsIsFiles.Utils,
+            AsIsFiles.MultipartApiRequest,
+            AsIsFiles.MultipartFormData,
+            AsIsFiles.MultipartFormDataPart,
+            AsIsFiles.File
         ];
     }
 
