@@ -34,14 +34,14 @@ export class ApiReferenceNodeConverter {
         private docsWorkspace: DocsWorkspace,
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
-        idgen: NodeIdGenerator
+        idgen?: NodeIdGenerator
     ) {
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api, taskContext);
 
         // we are assuming that the apiDefinitionId is unique.
-        this.#idgen = idgen;
+        this.#idgen = idgen ?? NodeIdGenerator.init();
 
         this.#overviewPageId =
             this.apiSection.overviewAbsolutePath != null

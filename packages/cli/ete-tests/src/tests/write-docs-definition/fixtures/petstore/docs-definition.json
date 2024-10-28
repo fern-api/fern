@@ -4,16 +4,16 @@
     "root": {
       "type": "root",
       "version": "v1",
-      "id": "4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2",
+      "id": "root",
       "child": {
         "type": "unversioned",
-        "id": "d01383c373ddae4ae891cc6b64fbc0e544fd79b499637874332fc539852c6628",
+        "id": "unversioned",
         "child": {
           "type": "sidebarRoot",
-          "id": "0a1e895b8a8b5113aaf6a69838e1e98632da7db03fed25a21b8afbb301b82b06",
+          "id": "unversioned/root",
           "children": [
             {
-              "id": "f9811b73ac5d1a8db842634fc0f871e03207ae44105fc9c2b7f1985e70f90d5a",
+              "id": "api-1",
               "type": "apiReference",
               "title": "API Reference",
               "apiDefinitionId": "api-1",
@@ -22,7 +22,7 @@
               "hideTitle": false,
               "showErrors": false,
               "changelog": {
-                "id": "6665bc2f57c4a7045d347313a1566d91561ff2a3c9d17874a462ae73b7eb8593",
+                "id": "changelog",
                 "type": "changelog",
                 "title": "Changelog",
                 "slug": "fern.docs.buildwithfern.com/api-reference/changelog",

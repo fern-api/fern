@@ -1,4 +1,4 @@
-import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
+import { Audiences, docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
@@ -484,7 +484,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.SidebarRootNode> {
         const id = this.#idgen.get(`${prefix}/root`);
 
-        const children = await Promise.all(items.map((item) => this.toNavigationChild(id, item, parentSlug)));
+        const children = await Promise.all(items.map((item) => this.toNavigationChild(prefix, item, parentSlug)));
 
         const sidebarRootChildren: FernNavigation.V1.SidebarRootChild[] = [];
         children.forEach((child) => {
@@ -499,7 +499,7 @@ export class DocsDefinitionResolver {
                     let last = sidebarRootChildren[sidebarRootChildren.length - 1];
                     if (last?.type !== "sidebarGroup") {
                         last = {
-                            id: this.#idgen.get(`${id}/group`),
+                            id: this.#idgen.get(`${prefix}/root/group`),
                             type: "sidebarGroup",
                             children: []
                         };
@@ -566,8 +566,7 @@ export class DocsDefinitionResolver {
             workspace,
             this.docsWorkspace,
             this.taskContext,
-            this.markdownFilesToFullSlugs,
-            this.#idgen
+            this.markdownFilesToFullSlugs
         );
         return node.get();
     }
@@ -654,7 +653,7 @@ export class DocsDefinitionResolver {
             hidden: item.hidden,
             viewers: item.viewers,
             orphaned: item.orphaned,
-            children: await Promise.all(item.contents.map((child) => this.toNavigationChild(id, child, slug))),
+            children: [],
             authed: undefined,
             pointsTo: undefined,
             noindex: undefined
