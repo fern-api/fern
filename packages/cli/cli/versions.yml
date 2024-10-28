@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The Fern CLI temporarily does not support RBAC/Audiences (they will be added in again shortly). 
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc25
+
+- changelogEntry:
+    - summary: |
         `fern docs dev` now runs in Node 16 - Node 22 environments.
       type: fix
   irVersion: 53
