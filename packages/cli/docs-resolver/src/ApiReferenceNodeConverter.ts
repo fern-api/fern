@@ -707,6 +707,10 @@ export class ApiReferenceNodeConverter {
                 button:
                     playgroundSettings.button != null && playgroundSettings.button.href
                         ? { href: FernNavigation.V1.Url(playgroundSettings.button.href) }
+                        : undefined,
+                "limit-websocket-messages-per-connection":
+                    playgroundSettings.limitWebsocketMessagesPerConnection != null
+                        ? playgroundSettings.limitWebsocketMessagesPerConnection
                         : undefined
             };
         }

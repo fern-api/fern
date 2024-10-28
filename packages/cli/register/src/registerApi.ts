@@ -6,8 +6,8 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
-import { PlaygroundConfig } from "@fern-fern/fdr-cjs-sdk/api/resources/docs/resources/v1/resources/commons";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
+import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth";
 
 export async function registerApi({
     organization,

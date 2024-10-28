@@ -983,6 +983,10 @@ types:
           If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.
       button: optional<PlaygroundButtonSettings>
       oauth: optional<boolean>
+      "limit-websocket-messages-per-connection":
+        type: optional<integer>
+        docs: |
+          The maximum number of websocket messages per connection in the playground.
 
   PlaygroundButtonSettings:
     properties:
