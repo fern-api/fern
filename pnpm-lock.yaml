@@ -3844,8 +3844,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5833
-        version: 0.0.5833
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -3920,8 +3920,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.111.0-51d403bce
-        version: 0.111.0-51d403bce
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -3975,8 +3975,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.111.0-51d403bce
-        version: 0.111.0-51d403bce
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -4015,8 +4015,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5833
-        version: 0.0.5833
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -4070,8 +4070,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.115.0-3cf21db72
-        version: 0.115.0-3cf21db72(lodash-es@4.17.21)(typescript@4.6.4)
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4182,8 +4182,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-markdown-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.115.0-3cf21db72
-        version: 0.115.0-3cf21db72(lodash-es@4.17.21)(typescript@4.6.4)
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4200,8 +4200,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-api/ui-core-utils':
-        specifier: 0.115.0-3cf21db72
-        version: 0.115.0-3cf21db72
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       dayjs:
         specifier: ^1.11.11
         version: 1.11.11
@@ -4310,8 +4310,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/logging-execa
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5833
-        version: 0.0.5833
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       '@fern-typescript/fetcher':
         specifier: workspace:*
         version: link:../../../generators/typescript/utils/core-utilities/fetcher
@@ -5069,8 +5069,8 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace-loader
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5833
-        version: 0.0.5833
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -5635,8 +5635,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5833
-        version: 0.0.5833
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6140,8 +6140,8 @@ importers:
         specifier: 0.0.38
         version: 0.0.38
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5833
-        version: 0.0.5833
+        specifier: 0.119.0-d531a5553
+        version: 0.119.0-d531a5553
       '@fern-fern/fdr-test-sdk':
         specifier: ^0.0.5297
         version: 0.0.5297
@@ -7548,10 +7548,8 @@ packages:
   '@exodus/schemasafe@1.0.0':
     resolution: {integrity: sha512-2cyupPIZI69HQxEAPllLXBjQp4njDKkOjYRCYxvMZe3/LY9pp9fBM3Tb1wiFAdP6Emo4v3OEbCLGj6u73Q5KLw==}
 
-  '@fern-api/fdr-sdk@0.115.0-3cf21db72':
-    resolution: {integrity: sha512-1E/gm2gVA+jS6XbqVvkz26WXP/T7FUDF+i2jLmGtURUOgSQhFaZF5M3OVUrpO9igzXF5LlZjPw4MOTixYvIUFA==}
-    peerDependencies:
-      lodash-es: '>=4'
+  '@fern-api/fdr-sdk@0.119.0-d531a5553':
+    resolution: {integrity: sha512-555o5/FE30qJ4xKk4KDPxQWBP2UE5YXKMfVQDD+YFl3e+grlxt1f0R/l6i+hlzPPu2aMPhl9tgzG+rdGFDUacw==}
 
   '@fern-api/sdk@0.12.3':
     resolution: {integrity: sha512-sexxpQEHBmsAXW3UHo5x7NW8Z9TrHWYLGo/J7eFqHYSH8Sq9LA3vRlR0ni9h4FNlKnPDu9Y55L0BhsQVXYqPKA==}
@@ -7559,8 +7557,8 @@ packages:
   '@fern-api/template-resolver@0.7.5':
     resolution: {integrity: sha512-hmvSxuhyWMjn1DxJJS/R+CIaZcF5c+UBEyFqFOw+laoBtdDvNgEyCu7XP5cILVMABPHmt7kkIO5KbrsCS5S2kw==}
 
-  '@fern-api/ui-core-utils@0.115.0-3cf21db72':
-    resolution: {integrity: sha512-H5NkeB/ZxTY6UD5xBpk68SYG1fPT48lhg6+lpO3n6txo5JlerSA2HZCbFGt8PdoDk5aT3GmtrBgIELIAXM9XbA==}
+  '@fern-api/ui-core-utils@0.119.0-d531a5553':
+    resolution: {integrity: sha512-HH5C99nsEzjmSIPvc0VcmIviG8ULTQE5AlOc2snLQIrLF/h2Blunfi2kWbj/ID/QhWjBJBIfwEw2tY2wOxVfFA==}
 
   '@fern-api/venus-api-sdk@0.0.38':
     resolution: {integrity: sha512-1JjuctZwyPu4jN51bBqjIy+uCBPGa/ROcDfqN0UnGeVEW7NyztkGh/qOFwnN6K07VMMql1AIF4Zov+MVqTPwmw==}
@@ -7568,11 +7566,8 @@ packages:
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
 
-  '@fern-fern/fdr-cjs-sdk@0.0.5833':
-    resolution: {integrity: sha512-D6L0CUJKAtJY4pO9qHpXMw4/k8AZSp1TBYNidkbj5s2N3VBK/fXMmyeOQG8HzPE8dpBL8ZI28kwUsfyRzamr0w==}
-
-  '@fern-fern/fdr-cjs-sdk@0.111.0-51d403bce':
-    resolution: {integrity: sha512-ia/kqEDaUPiyYtLjCpYNPSO4/tDJDESpdUwEJqbYJP2awdK699L0ptGzNjvzhH0gJxe7/xj7SzPjmh3zs/hI5g==}
+  '@fern-fern/fdr-cjs-sdk@0.119.0-d531a5553':
+    resolution: {integrity: sha512-F0eZLfGcznnos6wv7m3MszA7Lj9SgeC9VpJyRyH0MwouGXPDa8/sdkZq+uK4QzHv1jmHo4IErcpnGEzokWUPCA==}
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
@@ -9669,6 +9664,9 @@ packages:
   es-to-primitive@1.2.1:
     resolution: {integrity: sha512-QCOllgZJtaUo9miYBcLChTUaHNjJF3PYs1VidD7AwiEj1kYxKeQTctLAezAOH5ZKRH0g2IgPn6KwB4IT8iRpvA==}
     engines: {node: '>= 0.4'}
+
+  es-toolkit@1.26.0:
+    resolution: {integrity: sha512-gg6ZaI4eTwzkQGkdEG+t4b4VH2mTxodBQ2KvyTKAQFIag3Vvxoq3XZ1ie4ijIQmVxiipL2+dZLDMkh1VIvAFyg==}
 
   es6-promise@3.3.1:
     resolution: {integrity: sha512-SOp9Phqvqn7jtEUxPWdWfWoLmyt2VaJ6MpvP9Comy1MceMXqE6bxvaTu4iaxpYYPzhny28Lc+M87/c2cPK6lDg==}
@@ -14684,16 +14682,16 @@ snapshots:
 
   '@exodus/schemasafe@1.0.0': {}
 
-  '@fern-api/fdr-sdk@0.115.0-3cf21db72(lodash-es@4.17.21)(typescript@4.6.4)':
+  '@fern-api/fdr-sdk@0.119.0-d531a5553(typescript@4.6.4)':
     dependencies:
-      '@fern-api/ui-core-utils': 0.115.0-3cf21db72
+      '@fern-api/ui-core-utils': 0.119.0-d531a5553
       '@ungap/structured-clone': 1.2.0
       dayjs: 1.11.11
+      es-toolkit: 1.26.0
       fast-deep-equal: 3.1.3
       form-data: 4.0.0
       formdata-node: 6.0.3
       js-base64: 3.7.7
-      lodash-es: 4.17.21
       node-fetch: 2.7.0
       qs: 6.12.0
       tinycolor2: 1.6.0
@@ -14720,7 +14718,7 @@ snapshots:
     dependencies:
       prettier: 3.3.3
 
-  '@fern-api/ui-core-utils@0.115.0-3cf21db72':
+  '@fern-api/ui-core-utils@0.119.0-d531a5553':
     dependencies:
       strip-ansi: 7.1.0
       title: 3.5.3
@@ -14737,18 +14735,7 @@ snapshots:
 
   '@fern-fern/docs-config@0.0.80': {}
 
-  '@fern-fern/fdr-cjs-sdk@0.0.5833':
-    dependencies:
-      form-data: 4.0.0
-      formdata-node: 6.0.3
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.11.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/fdr-cjs-sdk@0.111.0-51d403bce':
+  '@fern-fern/fdr-cjs-sdk@0.119.0-d531a5553':
     dependencies:
       form-data: 4.0.0
       formdata-node: 6.0.3
@@ -17197,6 +17184,8 @@ snapshots:
       is-callable: 1.2.7
       is-date-object: 1.0.5
       is-symbol: 1.0.4
+
+  es-toolkit@1.26.0: {}
 
   es6-promise@3.3.1: {}
 

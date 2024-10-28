@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface SectionConfiguration {
+export interface SectionConfiguration extends FernDocsConfig.WithPermissions {
     section: string;
     /** The relative path to the markdown file that will be displayed when the section is clicked. */
     path?: string;

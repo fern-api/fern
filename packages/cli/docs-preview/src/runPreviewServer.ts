@@ -19,10 +19,8 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     files: {},
     filesV2: {},
     config: {
-        navigation: {
-            landingPage: undefined,
-            items: []
-        },
+        navigation: undefined,
+        root: undefined,
         title: undefined,
         defaultLanguage: undefined,
         announcement: undefined,
@@ -115,7 +113,7 @@ export async function runPreviewServer({
     app.use(cors());
 
     const instance = new URL(
-        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `localhost:${port}`)
+        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `http://localhost:${port}`)
     );
 
     let project = initialProject;

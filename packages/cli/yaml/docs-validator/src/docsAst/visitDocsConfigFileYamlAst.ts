@@ -256,7 +256,8 @@ export async function visitDocsConfigFileYamlAst({
                     }
                 })
             );
-        }
+        },
+        roles: noop
     });
 }
 
