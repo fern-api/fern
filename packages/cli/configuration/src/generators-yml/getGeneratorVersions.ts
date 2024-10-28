@@ -59,6 +59,8 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
         // Python
         case "fern-python-sdk":
             return "python-sdk";
+        case "fern-python-v2-codegen":
+            return "python-v2-codegen";
         case "fern-pydantic-model":
             return "pydantic";
         case "fern-fastapi-server":
