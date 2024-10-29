@@ -461,8 +461,8 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
     }
 
     private getMethod({ endpoint }: { endpoint: DynamicSnippets.Endpoint }): string {
-        if (endpoint.declaration.fernFilepath.packagePath.length > 0) {
-            return `${endpoint.declaration.fernFilepath.packagePath
+        if (endpoint.declaration.fernFilepath.allParts.length > 0) {
+            return `${endpoint.declaration.fernFilepath.allParts
                 .map((val) => this.context.getMethodName(val))
                 .join(".")}.${this.context.getMethodName(endpoint.declaration.name)}`;
         }
