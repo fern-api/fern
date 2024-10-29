@@ -125,11 +125,11 @@ public partial class ObjectClient
     /// await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
     ///     new ObjectWithMapOfMap
     ///     {
-    ///         Map = new Dictionary<string, Dictionary<string, string>>()
+    ///         Map = new Dictionary&lt;string, Dictionary&lt;string, string&gt;&gt;()
     ///         {
     ///             {
     ///                 "map",
-    ///                 new Dictionary<string, string>() { { "map", "map" } }
+    ///                 new Dictionary&lt;string, string&gt;() { { "map", "map" } }
     ///             },
     ///         },
     ///     }
@@ -285,7 +285,7 @@ public partial class ObjectClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
-    ///     new List<NestedObjectWithRequiredField>()
+    ///     new List&lt;NestedObjectWithRequiredField&gt;()
     ///     {
     ///         new NestedObjectWithRequiredField
     ///         {

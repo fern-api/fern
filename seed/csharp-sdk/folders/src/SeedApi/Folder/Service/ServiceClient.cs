@@ -53,7 +53,7 @@ public partial class ServiceClient
     /// <example>
     /// <code>
     /// await client.Folder.Service.UnknownRequestAsync(
-    ///     new Dictionary<object, object?>() { { "key", "value" } }
+    ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
     /// );
     /// </code>
     /// </example>

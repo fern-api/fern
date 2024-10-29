@@ -30,7 +30,7 @@ public partial class PlaylistClient
     ///         Body = new PlaylistCreateRequest
     ///         {
     ///             Name = "name",
-    ///             Problems = new List<string>() { "problems", "problems" },
+    ///             Problems = new List&lt;string&gt;() { "problems", "problems" },
     ///         },
     ///     }
     /// );

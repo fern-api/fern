@@ -69,16 +69,16 @@ public partial class ServiceClient
     ///         Rating = 8,
     ///         Type = "movie",
     ///         Tag = "tag-wf9as23d",
-    ///         Metadata = new Dictionary<string, object>()
+    ///         Metadata = new Dictionary&lt;string, object&gt;()
     ///         {
     ///             {
     ///                 "actors",
-    ///                 new List<object?>() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
+    ///                 new List&lt;object?&gt;() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
     ///             },
     ///             { "releaseDate", "2023-12-08" },
     ///             {
     ///                 "ratings",
-    ///                 new Dictionary<object, object?>() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
+    ///                 new Dictionary&lt;object, object?&gt;() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
     ///             },
     ///         },
     ///         Revenue = 1000000,
