@@ -172,7 +172,10 @@ export function convertParameters({
                 variableReference: getVariableReference(resolvedParameter)
             });
         } else if (resolvedParameter.in === "header") {
-            if (!HEADERS_TO_SKIP.has(resolvedParameter.name.toLowerCase()) && !context.authHeaders.has(resolvedParameter.name)) {
+            if (
+                !HEADERS_TO_SKIP.has(resolvedParameter.name.toLowerCase()) &&
+                !context.authHeaders.has(resolvedParameter.name)
+            ) {
                 convertedParameters.headers.push({ ...convertedParameter, env: undefined });
             } else {
                 context.logger.debug(
@@ -193,7 +196,7 @@ export function convertParameters({
 
 const HEADERS_TO_SKIP = new Set([
     "user-agent",
-    "content-length", 
+    "content-length",
     "content-type",
     "x-forwarded-for",
     "cookie",
