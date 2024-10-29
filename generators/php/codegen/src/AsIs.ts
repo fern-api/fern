@@ -47,5 +47,5 @@ export enum AsIsFiles {
     Union = "Types/Union.Template.php",
 
     // Utils files.
-    File = "File.Template.php"
+    File = "Utils/File.Template.php"
 }
