@@ -153,13 +153,6 @@ export class WrappedEndpointRequest extends EndpointRequest {
         );
     }
 
-    private writeBodyParameterArray(writer: php.Writer, propertyName: string): void {
-        const paramRef = `${this.getRequestParameterName()}->${propertyName}`;
-        writer.controlFlow("foreach", php.codeblock(`${paramRef} as $element`));
-        this.writeBodyParameter(writer, php.codeblock("$element"), propertyName);
-        writer.endControlFlow();
-    }
-
     private writeMultipartPart(writer: php.Writer, paramRef: string, propertyName: string): void {
         writer.writeNodeStatement(
             php.invokeMethod({
@@ -313,9 +306,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             _other: () => undefined
                         }),
                     bodyProperty: (bodyProperty) => {
-                        const ref = `${this.getRequestParameterName()}->${this.context.getPropertyName(
-                            bodyProperty.name.name
-                        )}`;
+                        const propertyName = this.context.getPropertyName(bodyProperty.name.name);
+                        let ref = `${this.getRequestParameterName()}->${propertyName}`;
                         let propType = bodyProperty.valueType;
                         const isOptional = this.context.isOptional(propType);
 
@@ -324,26 +316,25 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             propType = this.context.dereferenceOptional(propType);
                         }
 
-                        const isIterable = propType.type === "container" && propType.container.type === "list";
-                        const isEncodable =
-                            (propType.type === "container" && propType.container.type === "map") ||
-                            propType.type === "unknown";
-                        const isObject = propType.type === "named";
+                        const isCollection = this.context.isCollection(propType);
+                        if (isCollection) {
+                            writer.controlFlow("foreach", php.codeblock(`${ref} as $element`));
+                            ref = "$element";
+                            propType = this.context.dereferenceCollection(propType);
+                        }
 
-                        if (isIterable) {
-                            this.writeBodyParameterArray(writer, this.context.getPropertyName(bodyProperty.name.name));
-                        } else if (isEncodable) {
+                        if (this.context.isJsonEncodable(propType)) {
                             this.writeBodyParameter(
                                 writer,
                                 php.invokeMethod({
-                                    method: "json_encode",
+                                    method: "encode",
                                     arguments_: [php.codeblock(ref)],
                                     on: this.context.getJsonEncoderClassReference(),
                                     static_: true
                                 }),
                                 this.context.getPropertyName(bodyProperty.name.name)
                             );
-                        } else if (isObject) {
+                        } else if (this.context.hasToJsonMethod(propType)) {
                             this.writeBodyParameter(
                                 writer,
                                 php.invokeMethod({
@@ -359,6 +350,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                 php.codeblock(ref),
                                 this.context.getPropertyName(bodyProperty.name.name)
                             );
+                        }
+
+                        if (isCollection) {
+                            writer.endControlFlow();
                         }
 
                         if (isOptional) {

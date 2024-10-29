@@ -13,7 +13,8 @@ import {
     ObjectTypeDeclaration,
     ContainerType,
     NamedType,
-    PrimitiveType
+    PrimitiveType,
+    MapType
 } from "@fern-fern/ir-sdk/api";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { PhpProject } from "../project";
@@ -25,6 +26,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { php } from "..";
 import { GLOBAL_NAMESPACE } from "../ast/core/Constant";
 import { TRAITS_DIRECTORY } from "../constants";
+import { Type } from "../ast";
 
 export interface FileLocation {
     namespace: string;
@@ -253,13 +255,13 @@ export abstract class AbstractPhpGeneratorContext<
                     return this.dereferenceOptional(TypeReference.named(named));
                 },
                 primitive: (primitive) => {
-                    return TypeReference.primitive(primitive);
+                    return TypeReference.primitive(primitive) as TypeReference;
                 },
                 unknown: () => {
-                    return typeReference;
+                    return TypeReference.unknown() as TypeReference;
                 },
                 _other: () => {
-                    return typeReference;
+                    return TypeReference.unknown() as TypeReference;
                 }
             });
         }
@@ -273,6 +275,83 @@ export abstract class AbstractPhpGeneratorContext<
 
         // Original type was not optional
         return typeReference;
+    }
+
+    public dereferenceCollection(typeReference: TypeReference): TypeReference {
+        if (!this.isCollection(typeReference)) {
+            return typeReference;
+        }
+
+        typeReference = typeReference as TypeReference.Container;
+        switch (typeReference.container.type) {
+            case "list": {
+                return typeReference.container.list._visit({
+                    container: (container) => {
+                        if (this.isCollection(TypeReference.container(container))) {
+                            return this.dereferenceCollection(TypeReference.container(container));
+                        } else {
+                            return TypeReference.container(container) as TypeReference;
+                        }
+                    },
+                    named: (named) => {
+                        return TypeReference.named(named) as TypeReference;
+                    },
+                    primitive: (primitive) => {
+                        return TypeReference.primitive(primitive) as TypeReference;
+                    },
+                    unknown: () => {
+                        return TypeReference.unknown() as TypeReference;
+                    },
+                    _other: () => {
+                        return TypeReference.unknown() as TypeReference;
+                    }
+                });
+            }
+            case "set": {
+                return typeReference.container.set._visit({
+                    container: (container) => {
+                        if (this.isCollection(TypeReference.container(container))) {
+                            return this.dereferenceCollection(TypeReference.container(container));
+                        } else {
+                            return TypeReference.container(container) as TypeReference;
+                        }
+                    },
+                    named: (named) => {
+                        return TypeReference.named(named) as TypeReference;
+                    },
+                    primitive: (primitive) => {
+                        return TypeReference.primitive(primitive) as TypeReference;
+                    },
+                    unknown: () => {
+                        return TypeReference.unknown() as TypeReference;
+                    },
+                    _other: () => {
+                        return TypeReference.unknown() as TypeReference;
+                    }
+                });
+            }
+            default: {
+                return typeReference;
+            }
+        }
+    }
+
+    public isCollection(typeReference: TypeReference) {
+        return (
+            typeReference.type === "container" &&
+            (typeReference.container.type === "list" || typeReference.container.type === "set")
+        );
+    }
+
+    public isJsonEncodable(typeReference: TypeReference) {
+        return (
+            typeReference.type === "unknown" ||
+            (typeReference.type === "container" && typeReference.container.type === "map")
+        );
+    }
+
+    public hasToJsonMethod(typeReference: TypeReference) {
+        return typeReference.type === "named" && !this.isPrimitive(typeReference) && !this.isEnum(typeReference);
     }
 
     public isEnum(typeReference: TypeReference): boolean {
@@ -302,15 +381,33 @@ export abstract class AbstractPhpGeneratorContext<
         return declaration.shape.type === "enum";
     }
 
+    public isPrimitive(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "primitive": {
+                return true;
+            }
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "alias") {
+                    return this.isPrimitive(declaration.shape.aliasOf);
+                }
+                return false;
+            }
+            default: {
+                return false;
+            }
+        }
+    }
+
     public isDate(typeReference: TypeReference): boolean {
-        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.Date });
+        return this.isAliasOfPrimitive({ typeReference, primitive: PrimitiveTypeV1.Date });
     }
 
     public isDateTime(typeReference: TypeReference): boolean {
-        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.DateTime });
+        return this.isAliasOfPrimitive({ typeReference, primitive: PrimitiveTypeV1.DateTime });
     }
 
-    public isPrimitive({
+    public isAliasOfPrimitive({
         typeReference,
         primitive
     }: {

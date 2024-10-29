@@ -7,6 +7,7 @@ use Seed\Service\Requests\MyRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Multipart\MultipartFormData;
+use Seed\Core\Json\JsonEncoder;
 use Seed\Core\Multipart\MultipartApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -66,13 +67,13 @@ class ServiceClient
             }
         }
         foreach ($request->listOfObjects as $element) {
-            $body->add(name: 'listOfObjects', value: $element);
+            $body->add(name: 'listOfObjects', value: $element->toJson());
         }
         if ($request->optionalMetadata != null) {
-            $body->add(name: 'optionalMetadata', value: $request->optionalMetadata);
+            $body->add(name: 'optionalMetadata', value: JsonEncoder::encode($request->optionalMetadata));
         }
         if ($request->optionalObjectType != null) {
-            $body->add(name: 'optionalObjectType', value: $request->optionalObjectType->toJson());
+            $body->add(name: 'optionalObjectType', value: $request->optionalObjectType);
         }
         if ($request->optionalId != null) {
             $body->add(name: 'optionalId', value: $request->optionalId);
