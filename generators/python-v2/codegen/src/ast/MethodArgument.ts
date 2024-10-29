@@ -20,6 +20,8 @@ export class MethodArgument extends AstNode {
         super();
         this.name = name;
         this.value = value;
+
+        this.inheritReferences(this.value);
     }
 
     public write(writer: Writer): void {
