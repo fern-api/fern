@@ -20,7 +20,7 @@ using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
 await client.Users.ListWithBodyCursorPaginationAsync(
-    new ListUsersBodyCursorPaginationRequest { Pagination = null }
+    new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = "cursor" } }
 );
 ```
 

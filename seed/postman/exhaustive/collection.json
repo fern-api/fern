@@ -543,7 +543,15 @@
                 ],
                 "method": "POST",
                 "auth": null,
-                "body": null
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
               },
               "response": [
                 {
@@ -573,7 +581,15 @@
                     ],
                     "method": "POST",
                     "auth": null,
-                    "body": null
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
                   },
                   "description": null,
                   "body": "{\n    \"string\": \"string\"\n}",
@@ -953,7 +969,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -997,7 +1013,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "{}",
+                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -1122,7 +1138,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1160,7 +1176,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "{}",
+                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -1362,7 +1378,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1400,7 +1416,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "{}",
+                      "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -1449,7 +1465,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {}\n}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1494,7 +1510,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {}\n}",
+                      "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -1536,7 +1552,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {}\n    },\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {}\n    }\n]",
+                  "raw": "[\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {\n            \"string\": \"string\",\n            \"integer\": 1,\n            \"long\": 1000000,\n            \"double\": 1.1,\n            \"bool\": true,\n            \"datetime\": \"2024-01-15T09:30:00Z\",\n            \"date\": \"2023-01-15\",\n            \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            \"base64\": \"SGVsbG8gd29ybGQh\",\n            \"list\": [\n                \"list\",\n                \"list\"\n            ],\n            \"set\": [\n                \"set\"\n            ],\n            \"map\": {\n                \"1\": \"map\"\n            },\n            \"bigint\": \"1000000\"\n        }\n    },\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {\n            \"string\": \"string\",\n            \"integer\": 1,\n            \"long\": 1000000,\n            \"double\": 1.1,\n            \"bool\": true,\n            \"datetime\": \"2024-01-15T09:30:00Z\",\n            \"date\": \"2023-01-15\",\n            \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            \"base64\": \"SGVsbG8gd29ybGQh\",\n            \"list\": [\n                \"list\",\n                \"list\"\n            ],\n            \"set\": [\n                \"set\"\n            ],\n            \"map\": {\n                \"1\": \"map\"\n            },\n            \"bigint\": \"1000000\"\n        }\n    }\n]",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1574,7 +1590,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "[\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {}\n    },\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {}\n    }\n]",
+                      "raw": "[\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {\n            \"string\": \"string\",\n            \"integer\": 1,\n            \"long\": 1000000,\n            \"double\": 1.1,\n            \"bool\": true,\n            \"datetime\": \"2024-01-15T09:30:00Z\",\n            \"date\": \"2023-01-15\",\n            \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            \"base64\": \"SGVsbG8gd29ybGQh\",\n            \"list\": [\n                \"list\",\n                \"list\"\n            ],\n            \"set\": [\n                \"set\"\n            ],\n            \"map\": {\n                \"1\": \"map\"\n            },\n            \"bigint\": \"1000000\"\n        }\n    },\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {\n            \"string\": \"string\",\n            \"integer\": 1,\n            \"long\": 1000000,\n            \"double\": 1.1,\n            \"bool\": true,\n            \"datetime\": \"2024-01-15T09:30:00Z\",\n            \"date\": \"2023-01-15\",\n            \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            \"base64\": \"SGVsbG8gd29ybGQh\",\n            \"list\": [\n                \"list\",\n                \"list\"\n            ],\n            \"set\": [\n                \"set\"\n            ],\n            \"map\": {\n                \"1\": \"map\"\n            },\n            \"bigint\": \"1000000\"\n        }\n    }\n]",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -2874,7 +2890,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"NestedObject\": {}\n}",
+              "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2912,7 +2928,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"NestedObject\": {}\n}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"

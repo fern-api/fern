@@ -18,7 +18,7 @@
 await client.auth.getTokenWithClientCredentials({
     clientId: "client_id",
     clientSecret: "client_secret",
-    scope: undefined,
+    scope: "scope",
 });
 ```
 
@@ -71,7 +71,7 @@ await client.auth.refreshToken({
     clientId: "client_id",
     clientSecret: "client_secret",
     refreshToken: "refresh_token",
-    scope: undefined,
+    scope: "scope",
 });
 ```
 

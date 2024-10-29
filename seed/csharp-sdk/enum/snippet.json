@@ -16,13 +16,13 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
+                "path": "/path/{operand}/{operandOrColor}",
                 "method": "POST",
                 "identifier_override": "endpoint_path-param.send"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.PathParam.SendAsync(Operand.GreaterThan, Operand.LessThan, Color.Red, Color.Red);\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.QueryParam.SendListAsync(\n    new SendEnumListAsQueryParamRequest\n    {\n        Operand = [Operand.GreaterThan],\n        OperandOrColor = [Color.Red],\n    }\n);\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.QueryParam.SendListAsync(\n    new SendEnumListAsQueryParamRequest\n    {\n        Operand = [Operand.GreaterThan],\n        MaybeOperand = [Operand.GreaterThan],\n        OperandOrColor = [Color.Red],\n        MaybeOperandOrColor = [null],\n    }\n);\n"
             }
         }
     ]

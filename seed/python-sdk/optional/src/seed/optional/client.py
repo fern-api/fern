@@ -42,7 +42,9 @@ class OptionalClient:
         client = SeedObjectsWithImports(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.optional.send_optional_body()
+        client.optional.send_optional_body(
+            request={"string": {"key": "value"}},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "send-optional-body",
@@ -101,7 +103,9 @@ class AsyncOptionalClient:
 
 
         async def main() -> None:
-            await client.optional.send_optional_body()
+            await client.optional.send_optional_body(
+                request={"string": {"key": "value"}},
+            )
 
 
         asyncio.run(main())

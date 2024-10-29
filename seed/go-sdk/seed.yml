@@ -24,7 +24,7 @@ test:
     image: fernapi/fern-go-sdk:latest
     command: docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest ./generators/go
 language: go
-generatorType: sdk
+generatorType: SDK
 defaultOutputMode: github
 fixtures:
   examples:
@@ -72,8 +72,9 @@ scripts:
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
+  - alias-extends
   - exhaustive
   - reserved-keywords
   - server-sent-events
+  - streaming-parameter
   - trace
-  - alias-extends

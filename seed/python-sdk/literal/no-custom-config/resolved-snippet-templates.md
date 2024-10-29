@@ -43,6 +43,7 @@ from seed.inlined import ATopLevelLiteral
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
 client.inlined.send(
 	query="query",
+	temperature=1.1,
 	object_with_literal=ATopLevelLiteral(
 		nested_literal=ANestedLiteral(
 			

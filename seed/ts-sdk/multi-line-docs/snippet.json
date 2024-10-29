@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedMultiLineDocsClient, SeedMultiLineDocs } from \"@fern/multi-line-docs\";\n\nconst client = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUser({\n    name: \"name\",\n    age: undefined\n});\n"
+                "client": "import { SeedMultiLineDocsClient, SeedMultiLineDocs } from \"@fern/multi-line-docs\";\n\nconst client = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUser({\n    name: \"name\",\n    age: 1\n});\n"
             }
         }
     ],

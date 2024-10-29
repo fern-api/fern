@@ -259,19 +259,163 @@ export class Service {
      *
      * @example
      *     await client.service.createBigEntity({
-     *         castMember: undefined,
-     *         extendedMovie: undefined,
-     *         entity: undefined,
-     *         metadata: undefined,
-     *         commonMetadata: undefined,
-     *         eventInfo: undefined,
-     *         data: undefined,
-     *         migration: undefined,
-     *         exception: undefined,
-     *         test: undefined,
-     *         node: undefined,
-     *         directory: undefined,
-     *         moment: undefined
+     *         castMember: {
+     *             name: "name",
+     *             id: "id"
+     *         },
+     *         extendedMovie: {
+     *             cast: ["cast", "cast"]
+     *         },
+     *         entity: {
+     *             type: "primitive",
+     *             name: "name"
+     *         },
+     *         metadata: {
+     *             type: "html",
+     *             value: "metadata"
+     *         },
+     *         commonMetadata: {
+     *             id: "id",
+     *             data: {
+     *                 "data": "data"
+     *             },
+     *             jsonString: "jsonString"
+     *         },
+     *         eventInfo: {
+     *             type: "metadata",
+     *             id: "id",
+     *             data: {
+     *                 "data": "data"
+     *             },
+     *             jsonString: "jsonString"
+     *         },
+     *         data: {
+     *             type: "string",
+     *             value: "data"
+     *         },
+     *         migration: {
+     *             name: "name",
+     *             status: "RUNNING"
+     *         },
+     *         exception: {
+     *             type: "generic",
+     *             exceptionType: "exceptionType",
+     *             exceptionMessage: "exceptionMessage",
+     *             exceptionStacktrace: "exceptionStacktrace"
+     *         },
+     *         test: {
+     *             type: "and",
+     *             value: true
+     *         },
+     *         node: {
+     *             name: "name",
+     *             nodes: [{
+     *                     name: "name",
+     *                     nodes: [{
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }, {
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }],
+     *                     trees: [{
+     *                             nodes: []
+     *                         }, {
+     *                             nodes: []
+     *                         }]
+     *                 }, {
+     *                     name: "name",
+     *                     nodes: [{
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }, {
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }],
+     *                     trees: [{
+     *                             nodes: []
+     *                         }, {
+     *                             nodes: []
+     *                         }]
+     *                 }],
+     *             trees: [{
+     *                     nodes: [{
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }, {
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }]
+     *                 }, {
+     *                     nodes: [{
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }, {
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }]
+     *                 }]
+     *         },
+     *         directory: {
+     *             name: "name",
+     *             files: [{
+     *                     name: "name",
+     *                     contents: "contents"
+     *                 }, {
+     *                     name: "name",
+     *                     contents: "contents"
+     *                 }],
+     *             directories: [{
+     *                     name: "name",
+     *                     files: [{
+     *                             name: "name",
+     *                             contents: "contents"
+     *                         }, {
+     *                             name: "name",
+     *                             contents: "contents"
+     *                         }],
+     *                     directories: [{
+     *                             name: "name",
+     *                             files: [],
+     *                             directories: []
+     *                         }, {
+     *                             name: "name",
+     *                             files: [],
+     *                             directories: []
+     *                         }]
+     *                 }, {
+     *                     name: "name",
+     *                     files: [{
+     *                             name: "name",
+     *                             contents: "contents"
+     *                         }, {
+     *                             name: "name",
+     *                             contents: "contents"
+     *                         }],
+     *                     directories: [{
+     *                             name: "name",
+     *                             files: [],
+     *                             directories: []
+     *                         }, {
+     *                             name: "name",
+     *                             files: [],
+     *                             directories: []
+     *                         }]
+     *                 }]
+     *         },
+     *         moment: {
+     *             id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             date: "2023-01-15",
+     *             datetime: "2024-01-15T09:30:00Z"
+     *         }
      *     })
      */
     public async createBigEntity(

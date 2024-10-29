@@ -72,6 +72,7 @@ export class Method extends AstNode {
         writer.indent();
         this.body?.write(writer);
         writer.dedent();
+        writer.writeNewLineIfLastLineNot();
         writer.writeLine("}");
     }
 

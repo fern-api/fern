@@ -20,7 +20,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
         ClientSecret = "client_secret",
         Audience = "https://api.example.com",
         GrantType = "client_credentials",
-        Scope = null,
+        Scope = "scope",
     }
 );
 ```
@@ -70,7 +70,7 @@ await client.Auth.RefreshTokenAsync(
         RefreshToken = "refresh_token",
         Audience = "https://api.example.com",
         GrantType = "refresh_token",
-        Scope = null,
+        Scope = "scope",
     }
 );
 ```

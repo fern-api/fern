@@ -28,28 +28,22 @@ export class PathParam {
 
     /**
      * @param {SeedEnum.Operand} operand
-     * @param {SeedEnum.Operand | undefined} maybeOperand
      * @param {SeedEnum.ColorOrOperand} operandOrColor
-     * @param {SeedEnum.ColorOrOperand | undefined} maybeOperandOrColor
      * @param {PathParam.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.pathParam.send(">", "less_than", "red", "red")
+     *     await client.pathParam.send(">", "red")
      */
     public async send(
         operand: SeedEnum.Operand,
-        maybeOperand: SeedEnum.Operand | undefined,
         operandOrColor: SeedEnum.ColorOrOperand,
-        maybeOperandOrColor: SeedEnum.ColorOrOperand | undefined,
         requestOptions?: PathParam.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
                 `path/${encodeURIComponent(serializers.Operand.jsonOrThrow(operand))}/${encodeURIComponent(
-                    maybeOperand
-                )}/${encodeURIComponent(serializers.ColorOrOperand.jsonOrThrow(operandOrColor))}/${encodeURIComponent(
-                    maybeOperandOrColor
+                    serializers.ColorOrOperand.jsonOrThrow(operandOrColor)
                 )}`
             ),
             method: "POST",

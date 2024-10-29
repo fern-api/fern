@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedOauthClientCredentials.Auth;\nusing SeedOauthClientCredentials;\n\nvar client = new SeedOauthClientCredentialsClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = null,\n    }\n);\n"
+                "client": "using SeedOauthClientCredentials.Auth;\nusing SeedOauthClientCredentials;\n\nvar client = new SeedOauthClientCredentialsClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"scope\",\n    }\n);\n"
             }
         }
     ]

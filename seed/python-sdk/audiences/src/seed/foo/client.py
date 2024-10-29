@@ -50,7 +50,11 @@ class FooClient:
         client = SeedAudiences(
             environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
         )
-        client.foo.find()
+        client.foo.find(
+            optional_string="optionalString",
+            public_property="publicProperty",
+            private_property=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
@@ -120,7 +124,11 @@ class AsyncFooClient:
 
 
         async def main() -> None:
-            await client.foo.find()
+            await client.foo.find(
+                optional_string="optionalString",
+                public_property="publicProperty",
+                private_property=1,
+            )
 
 
         asyncio.run(main())

@@ -30,7 +30,9 @@
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
+    "@fern-api/dynamic-snippets": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/go-dynamic-snippets": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",

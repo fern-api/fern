@@ -108,6 +108,7 @@ class QueryParamClient:
         )
         client.query_param.send_list(
             operand=">",
+            maybe_operand=">",
             operand_or_color="red",
         )
         """
@@ -242,6 +243,7 @@ class AsyncQueryParamClient:
         async def main() -> None:
             await client.query_param.send_list(
                 operand=">",
+                maybe_operand=">",
                 operand_or_color="red",
             )
 

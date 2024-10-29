@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedMixedFileDirectoryClient, SeedMixedFileDirectory } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.list();\n"
+                "client": "import { SeedMixedFileDirectoryClient, SeedMixedFileDirectory } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.list({\n    limit: 1\n});\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedMixedFileDirectoryClient, SeedMixedFileDirectory } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.events.listEvents();\n"
+                "client": "import { SeedMixedFileDirectoryClient, SeedMixedFileDirectory } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.events.listEvents({\n    limit: 1\n});\n"
             }
         },
         {

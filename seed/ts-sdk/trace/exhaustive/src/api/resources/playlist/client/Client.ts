@@ -41,6 +41,7 @@ export class Playlist {
      * @example
      *     await client.playlist.createPlaylist(1, {
      *         datetime: "2024-01-15T09:30:00Z",
+     *         optionalDatetime: "2024-01-15T09:30:00Z",
      *         body: {
      *             name: "name",
      *             problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")]
@@ -114,8 +115,10 @@ export class Playlist {
      *
      * @example
      *     await client.playlist.getPlaylists(1, {
+     *         limit: 1,
      *         otherField: "otherField",
      *         multiLineDocs: "multiLineDocs",
+     *         optionalMultipleField: "optionalMultipleField",
      *         multipleField: "multipleField"
      *     })
      */
@@ -280,7 +283,10 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.playlist.updatePlaylist(1, SeedTrace.PlaylistId("playlistId"), undefined)
+     *     await client.playlist.updatePlaylist(1, SeedTrace.PlaylistId("playlistId"), {
+     *         name: "name",
+     *         problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")]
+     *     })
      */
     public async updatePlaylist(
         serviceParam: number,

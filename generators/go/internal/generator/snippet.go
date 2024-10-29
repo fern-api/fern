@@ -806,6 +806,9 @@ func (e *exampleContainerVisitor) VisitMap(pairs []*ir.ExampleKeyValuePair) erro
 }
 
 func (e *exampleContainerVisitor) VisitOptional(optional *ir.ExampleTypeReference) error {
+	if optional == nil {
+		return nil
+	}
 	e.value = &ast.Optional{
 		Expr: exampleTypeReferenceShapeToGoType(
 			optional.Shape,

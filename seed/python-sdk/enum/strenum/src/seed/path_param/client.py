@@ -2,8 +2,8 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 from ..types.operand import Operand
-import typing
 from ..types.color_or_operand import ColorOrOperand
+import typing
 from ..core.request_options import RequestOptions
 from ..core.jsonable_encoder import jsonable_encoder
 from json.decoder import JSONDecodeError
@@ -18,9 +18,7 @@ class PathParamClient:
     def send(
         self,
         operand: Operand,
-        maybe_operand: typing.Optional[Operand],
         operand_or_color: ColorOrOperand,
-        maybe_operand_or_color: typing.Optional[ColorOrOperand],
         *,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
@@ -29,11 +27,7 @@ class PathParamClient:
         ----------
         operand : Operand
 
-        maybe_operand : typing.Optional[Operand]
-
         operand_or_color : ColorOrOperand
-
-        maybe_operand_or_color : typing.Optional[ColorOrOperand]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -51,13 +45,11 @@ class PathParamClient:
         )
         client.path_param.send(
             operand=">",
-            maybe_operand="less_than",
             operand_or_color="red",
-            maybe_operand_or_color="red",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",
+            f"path/{jsonable_encoder(operand)}/{jsonable_encoder(operand_or_color)}",
             method="POST",
             request_options=request_options,
         )
@@ -77,9 +69,7 @@ class AsyncPathParamClient:
     async def send(
         self,
         operand: Operand,
-        maybe_operand: typing.Optional[Operand],
         operand_or_color: ColorOrOperand,
-        maybe_operand_or_color: typing.Optional[ColorOrOperand],
         *,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
@@ -88,11 +78,7 @@ class AsyncPathParamClient:
         ----------
         operand : Operand
 
-        maybe_operand : typing.Optional[Operand]
-
         operand_or_color : ColorOrOperand
-
-        maybe_operand_or_color : typing.Optional[ColorOrOperand]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -115,16 +101,14 @@ class AsyncPathParamClient:
         async def main() -> None:
             await client.path_param.send(
                 operand=">",
-                maybe_operand="less_than",
                 operand_or_color="red",
-                maybe_operand_or_color="red",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",
+            f"path/{jsonable_encoder(operand)}/{jsonable_encoder(operand_or_color)}",
             method="POST",
             request_options=request_options,
         )

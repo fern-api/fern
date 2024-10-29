@@ -9,7 +9,7 @@ export function resolveRootImportPath({
     customConfig
 }: {
     config: FernGeneratorExec.config.GeneratorConfig;
-    customConfig: BaseGoCustomConfigSchema;
+    customConfig: BaseGoCustomConfigSchema | undefined;
 }): string {
     const suffix = getMajorVersionSuffix({ config });
     const importPath = getImportPath({ config, customConfig });
@@ -21,11 +21,11 @@ function getImportPath({
     customConfig
 }: {
     config: FernGeneratorExec.config.GeneratorConfig;
-    customConfig: BaseGoCustomConfigSchema;
+    customConfig: BaseGoCustomConfigSchema | undefined;
 }): string {
     return (
-        customConfig.importPath ??
-        customConfig.module?.path ??
+        customConfig?.importPath ??
+        customConfig?.module?.path ??
         (config.output.mode.type === "github"
             ? trimPrefix(config.output.mode.repoUrl, "https://")
             : DEFAULT_MODULE_PATH)
@@ -40,6 +40,8 @@ function getMajorVersionSuffix({ config }: { config: FernGeneratorExec.config.Ge
     return `${majorVersion}`;
 }
 
+// parseMajorVersion returns the major version of the SDK, including Go's expected "v"
+// prefix, e.g. "v0", "v1", "v2", etc.
 function parseMajorVersion({ config }: { config: FernGeneratorExec.config.GeneratorConfig }): string | undefined {
     const version = getSdkVersion(config);
     if (version == null) {
@@ -49,7 +51,11 @@ function parseMajorVersion({ config }: { config: FernGeneratorExec.config.Genera
     if (split[0] == null) {
         return undefined;
     }
-    return split[0];
+    const majorVersion = split[0];
+    if (majorVersion.startsWith("v")) {
+        return majorVersion;
+    }
+    return `v${majorVersion}`;
 }
 
 function maybeAppendMajorVersionSuffix({

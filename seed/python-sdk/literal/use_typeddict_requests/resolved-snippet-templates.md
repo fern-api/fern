@@ -43,6 +43,7 @@ client.inlined.send(
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
 client.inlined.send(
 	query="query",
+	temperature=1.1,
 	object_with_literal={
 		"nested_literal": {
 			

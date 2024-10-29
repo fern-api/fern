@@ -18,7 +18,15 @@ public partial class UsersClient
 
     /// <example>
     /// <code>
-    /// await client.Users.ListWithCursorPaginationAsync(new ListUsersCursorPaginationRequest());
+    /// await client.Users.ListWithCursorPaginationAsync(
+    ///     new ListUsersCursorPaginationRequest
+    ///     {
+    ///         Page = 1,
+    ///         PerPage = 1,
+    ///         Order = Order.Asc,
+    ///         StartingAfter = "starting_after",
+    ///     }
+    /// );
     /// </code>
     /// </example>
     public async Task<ListUsersPaginationResponse> ListWithCursorPaginationAsync(
@@ -78,7 +86,7 @@ public partial class UsersClient
     /// <example>
     /// <code>
     /// await client.Users.ListWithBodyCursorPaginationAsync(
-    ///     new ListUsersBodyCursorPaginationRequest { Pagination = null }
+    ///     new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = "cursor" } }
     /// );
     /// </code>
     /// </example>
@@ -121,7 +129,15 @@ public partial class UsersClient
 
     /// <example>
     /// <code>
-    /// await client.Users.ListWithOffsetPaginationAsync(new ListUsersOffsetPaginationRequest());
+    /// await client.Users.ListWithOffsetPaginationAsync(
+    ///     new ListUsersOffsetPaginationRequest
+    ///     {
+    ///         Page = 1,
+    ///         PerPage = 1,
+    ///         Order = Order.Asc,
+    ///         StartingAfter = "starting_after",
+    ///     }
+    /// );
     /// </code>
     /// </example>
     public async Task<ListUsersPaginationResponse> ListWithOffsetPaginationAsync(
@@ -181,7 +197,7 @@ public partial class UsersClient
     /// <example>
     /// <code>
     /// await client.Users.ListWithBodyOffsetPaginationAsync(
-    ///     new ListUsersBodyOffsetPaginationRequest { Pagination = null }
+    ///     new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } }
     /// );
     /// </code>
     /// </example>
@@ -224,7 +240,14 @@ public partial class UsersClient
 
     /// <example>
     /// <code>
-    /// await client.Users.ListWithOffsetStepPaginationAsync(new ListUsersOffsetStepPaginationRequest());
+    /// await client.Users.ListWithOffsetStepPaginationAsync(
+    ///     new ListUsersOffsetStepPaginationRequest
+    ///     {
+    ///         Page = 1,
+    ///         Limit = 1,
+    ///         Order = Order.Asc,
+    ///     }
+    /// );
     /// </code>
     /// </example>
     public async Task<ListUsersPaginationResponse> ListWithOffsetStepPaginationAsync(
@@ -280,7 +303,12 @@ public partial class UsersClient
     /// <example>
     /// <code>
     /// await client.Users.ListWithOffsetPaginationHasNextPageAsync(
-    ///     new ListWithOffsetPaginationHasNextPageRequest()
+    ///     new ListWithOffsetPaginationHasNextPageRequest
+    ///     {
+    ///         Page = 1,
+    ///         Limit = 1,
+    ///         Order = Order.Asc,
+    ///     }
     /// );
     /// </code>
     /// </example>
@@ -336,7 +364,9 @@ public partial class UsersClient
 
     /// <example>
     /// <code>
-    /// await client.Users.ListWithExtendedResultsAsync(new ListUsersExtendedRequest());
+    /// await client.Users.ListWithExtendedResultsAsync(
+    ///     new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
+    /// );
     /// </code>
     /// </example>
     public async Task<ListUsersExtendedResponse> ListWithExtendedResultsAsync(
@@ -384,7 +414,7 @@ public partial class UsersClient
     /// <example>
     /// <code>
     /// await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
-    ///     new ListUsersExtendedRequestForOptionalData()
+    ///     new ListUsersExtendedRequestForOptionalData { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
     /// );
     /// </code>
     /// </example>
@@ -432,7 +462,9 @@ public partial class UsersClient
 
     /// <example>
     /// <code>
-    /// await client.Users.ListUsernamesAsync(new ListUsernamesRequest());
+    /// await client.Users.ListUsernamesAsync(
+    ///     new ListUsernamesRequest { StartingAfter = "starting_after" }
+    /// );
     /// </code>
     /// </example>
     public async Task<UsernameCursor> ListUsernamesAsync(
@@ -479,7 +511,7 @@ public partial class UsersClient
 
     /// <example>
     /// <code>
-    /// await client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest());
+    /// await client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 });
     /// </code>
     /// </example>
     public async Task<UsernameContainer> ListWithGlobalConfigAsync(

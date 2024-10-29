@@ -31,7 +31,12 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_cursor_pagination
+    #  pagination.users.list_with_cursor_pagination(
+    #    page: 1,
+    #    per_page: 1,
+    #    order: ASC,
+    #    starting_after: "starting_after"
+    #  )
     def list_with_cursor_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -63,7 +68,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_body_cursor_pagination
+    #  pagination.users.list_with_body_cursor_pagination(pagination: { cursor: "cursor" })
     def list_with_body_cursor_pagination(pagination: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -91,7 +96,12 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_offset_pagination
+    #  pagination.users.list_with_offset_pagination(
+    #    page: 1,
+    #    per_page: 1,
+    #    order: ASC,
+    #    starting_after: "starting_after"
+    #  )
     def list_with_offset_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -123,7 +133,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_body_offset_pagination
+    #  pagination.users.list_with_body_offset_pagination(pagination: { page: 1 })
     def list_with_body_offset_pagination(pagination: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -151,7 +161,11 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_offset_step_pagination
+    #  pagination.users.list_with_offset_step_pagination(
+    #    page: 1,
+    #    limit: 1,
+    #    order: ASC
+    #  )
     def list_with_offset_step_pagination(page: nil, limit: nil, order: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -184,7 +198,11 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_offset_pagination_has_next_page
+    #  pagination.users.list_with_offset_pagination_has_next_page(
+    #    page: 1,
+    #    limit: 1,
+    #    order: ASC
+    #  )
     def list_with_offset_pagination_has_next_page(page: nil, limit: nil, order: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -213,7 +231,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_extended_results
+    #  pagination.users.list_with_extended_results(cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
     def list_with_extended_results(cursor: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -237,7 +255,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersExtendedOptionalListResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_extended_results_and_optional_data
+    #  pagination.users.list_with_extended_results_and_optional_data(cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
     def list_with_extended_results_and_optional_data(cursor: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -262,7 +280,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::UsernameCursor]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_usernames
+    #  pagination.users.list_usernames(starting_after: "starting_after")
     def list_usernames(starting_after: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -289,7 +307,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::UsernameContainer]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_global_config
+    #  pagination.users.list_with_global_config(offset: 1)
     def list_with_global_config(offset: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -328,7 +346,12 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_cursor_pagination
+    #  pagination.users.list_with_cursor_pagination(
+    #    page: 1,
+    #    per_page: 1,
+    #    order: ASC,
+    #    starting_after: "starting_after"
+    #  )
     def list_with_cursor_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -362,7 +385,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_body_cursor_pagination
+    #  pagination.users.list_with_body_cursor_pagination(pagination: { cursor: "cursor" })
     def list_with_body_cursor_pagination(pagination: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
@@ -392,7 +415,12 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_offset_pagination
+    #  pagination.users.list_with_offset_pagination(
+    #    page: 1,
+    #    per_page: 1,
+    #    order: ASC,
+    #    starting_after: "starting_after"
+    #  )
     def list_with_offset_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -426,7 +454,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_body_offset_pagination
+    #  pagination.users.list_with_body_offset_pagination(pagination: { page: 1 })
     def list_with_body_offset_pagination(pagination: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
@@ -456,7 +484,11 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_offset_step_pagination
+    #  pagination.users.list_with_offset_step_pagination(
+    #    page: 1,
+    #    limit: 1,
+    #    order: ASC
+    #  )
     def list_with_offset_step_pagination(page: nil, limit: nil, order: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -491,7 +523,11 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_offset_pagination_has_next_page
+    #  pagination.users.list_with_offset_pagination_has_next_page(
+    #    page: 1,
+    #    limit: 1,
+    #    order: ASC
+    #  )
     def list_with_offset_pagination_has_next_page(page: nil, limit: nil, order: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -522,7 +558,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_extended_results
+    #  pagination.users.list_with_extended_results(cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
     def list_with_extended_results(cursor: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -548,7 +584,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersExtendedOptionalListResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_extended_results_and_optional_data
+    #  pagination.users.list_with_extended_results_and_optional_data(cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
     def list_with_extended_results_and_optional_data(cursor: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -575,7 +611,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::UsernameCursor]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_usernames
+    #  pagination.users.list_usernames(starting_after: "starting_after")
     def list_usernames(starting_after: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -604,7 +640,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::UsernameContainer]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.users.list_with_global_config
+    #  pagination.users.list_with_global_config(offset: 1)
     def list_with_global_config(offset: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
