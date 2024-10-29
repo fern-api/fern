@@ -8,6 +8,7 @@ export abstract class AstNode extends AbstractAstNode {
 
     public addReference(reference: Reference): void {
         this.references.push(reference);
+        this.inheritReferences(reference);
     }
 
     public inheritReferences(astNode: AstNode | undefined): void {

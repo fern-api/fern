@@ -90,19 +90,30 @@ export class TypeInstantiation extends AstNode {
     }
 
     public static list(values: AstNode[]): TypeInstantiation {
-        return new this({ type: "list", values });
+        const list = new this({ type: "list", values });
+        values.forEach((value) => list.inheritReferences(value));
+        return list;
     }
 
     public static set(values: AstNode[]): TypeInstantiation {
-        return new this({ type: "set", values });
+        const set = new this({ type: "set", values });
+        values.forEach((value) => set.inheritReferences(value));
+        return set;
     }
 
     public static tuple(values: AstNode[]): TypeInstantiation {
-        return new this({ type: "tuple", values });
+        const tuple = new this({ type: "tuple", values });
+        values.forEach((value) => tuple.inheritReferences(value));
+        return tuple;
     }
 
     public static dict(entries: DictEntry[]): TypeInstantiation {
-        return new this({ type: "dict", entries });
+        const dict = new this({ type: "dict", entries });
+        entries.forEach((entry) => {
+            dict.inheritReferences(entry.key);
+            dict.inheritReferences(entry.value);
+        });
+        return dict;
     }
 
     public static none(): TypeInstantiation {
