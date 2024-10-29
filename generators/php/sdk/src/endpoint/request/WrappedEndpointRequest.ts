@@ -1,8 +1,12 @@
 import { php } from "@fern-api/php-codegen";
 import {
+    BytesRequest,
+    FileUploadRequest,
     HttpEndpoint,
     HttpHeader,
+    HttpRequestBodyReference,
     HttpService,
+    InlinedRequestBody,
     Name,
     QueryParameter,
     SdkRequest,
@@ -154,13 +158,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
         const bodyArgument = this.getRequestBodyArgument();
-        return bodyArgument != null
-            ? {
-                  requestBodyReference: this.serializeJsonRequest({
-                      bodyArgument
-                  })
-              }
-            : undefined;
+        if (bodyArgument == null) {
+            return undefined;
+        }
+
+        return {
+            code: this.getRequestBodyCode(),
+            requestBodyReference: this.serializeJsonRequest({ bodyArgument })
+        };
     }
 
     private getRequestBodyArgument(): php.CodeBlock | undefined {
@@ -179,6 +184,16 @@ export class WrappedEndpointRequest extends EndpointRequest {
             fileUpload: () => {
                 return php.codeblock(`$${this.context.getPropertyName(this.wrapper.bodyKey)}`);
             },
+            bytes: () => undefined,
+            _other: () => undefined
+        });
+    }
+
+    private getRequestBodyCode(): php.CodeBlock | undefined {
+        return this.endpoint.requestBody?._visit({
+            inlinedRequestBody: () => undefined,
+            reference: () => undefined,
+            fileUpload: () => undefined,
             bytes: () => undefined,
             _other: () => undefined
         });
