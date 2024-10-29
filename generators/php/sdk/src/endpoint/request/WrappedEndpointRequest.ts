@@ -1,6 +1,7 @@
 import { php } from "@fern-api/php-codegen";
 import {
     BytesRequest,
+    ContainerType,
     FileProperty,
     FilePropertyArray,
     FilePropertySingle,
@@ -11,7 +12,11 @@ import {
     HttpService,
     InlinedRequestBody,
     InlinedRequestBodyProperty,
+    Literal,
+    MapType,
     Name,
+    NamedType,
+    PrimitiveType,
     QueryParameter,
     SdkRequest,
     SdkRequestWrapper,
@@ -25,6 +30,7 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest";
+import { CodeBlock } from "@fern-api/generator-commons";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -128,25 +134,30 @@ export class WrappedEndpointRequest extends EndpointRequest {
         writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
     }
 
-    private writeBodyParameter(writer: php.Writer, property: InlinedRequestBodyProperty): void {
+    private writeBodyParameter(writer: php.Writer, paramRef: string, propertyName: php.CodeBlock): void {
         writer.writeNodeStatement(
             php.invokeMethod({
                 method: "add",
                 arguments_: [
                     {
                         name: "name",
-                        assignment: php.codeblock(`'${this.context.getPropertyName(property.name.name)}'`)
+                        assignment: propertyName
                     },
                     {
                         name: "value",
-                        assignment: php.codeblock(
-                            `${this.getRequestParameterName()}->${this.context.getPropertyName(property.name.name)}`
-                        )
+                        assignment: php.codeblock(paramRef)
                     }
                 ],
                 on: this.getRequestBodyArgument()
             })
         );
+    }
+
+    private writeBodyParameterArray(writer: php.Writer, propertyName: string): void {
+        const paramRef = `${this.getRequestParameterName()}->${propertyName}`;
+        writer.controlFlow("foreach", php.codeblock(`${paramRef} as $element`));
+        this.writeBodyParameter(writer, "$element", php.codeblock(`'${propertyName}'`));
+        writer.endControlFlow();
     }
 
     private writeMultipartPart(writer: php.Writer, paramRef: string, propertyName: string): void {
@@ -302,15 +313,47 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             _other: () => undefined
                         }),
                     bodyProperty: (bodyProperty) => {
-                        if (this.context.isOptional(bodyProperty.valueType)) {
-                            const ref = `${this.getRequestParameterName()}->${this.context.getPropertyName(
-                                bodyProperty.name.name
-                            )}`;
+                        const ref = `${this.getRequestParameterName()}->${this.context.getPropertyName(
+                            bodyProperty.name.name
+                        )}`;
+                        let propType = bodyProperty.valueType;
+                        const isOptional = this.context.isOptional(propType);
+
+                        if (isOptional) {
                             writer.controlFlow("if", php.codeblock(`${ref} != null`));
-                            this.writeBodyParameter(writer, bodyProperty);
-                            writer.endControlFlow();
+                            propType = this.context.dereferenceOptional(propType);
+                        }
+
+                        const isIterable = propType.type === "container" && propType.container.type === "list";
+                        const isEncodable =
+                            (propType.type === "container" && propType.container.type === "map") ||
+                            propType.type === "unknown";
+                        const isObject = propType.type === "named";
+
+                        if (isIterable) {
+                            this.writeBodyParameterArray(writer, this.context.getPropertyName(bodyProperty.name.name));
+                        } else if (isEncodable) {
+                            this.writeBodyParameter(
+                                writer,
+                                ref,
+                                php.codeblock(`'${this.context.getPropertyName(bodyProperty.name.name)}'`)
+                            );
+                        } else if (isObject) {
+                            this.writeBodyParameter(
+                                writer,
+                                ref,
+                                php.codeblock(`'${this.context.getPropertyName(bodyProperty.name.name)}'`)
+                            );
                         } else {
-                            this.writeBodyParameter(writer, bodyProperty);
+                            this.writeBodyParameter(
+                                writer,
+                                ref,
+                                php.codeblock(`'${this.context.getPropertyName(bodyProperty.name.name)}'`)
+                            );
+                        }
+
+                        if (isOptional) {
+                            writer.endControlFlow();
                         }
                     },
                     _other: () => undefined

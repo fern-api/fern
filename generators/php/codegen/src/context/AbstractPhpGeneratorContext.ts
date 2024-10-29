@@ -10,7 +10,10 @@ import {
     SubpackageId,
     FernFilepath,
     PrimitiveTypeV1,
-    ObjectTypeDeclaration
+    ObjectTypeDeclaration,
+    ContainerType,
+    NamedType,
+    PrimitiveType
 } from "@fern-fern/ir-sdk/api";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { PhpProject } from "../project";
@@ -238,6 +241,38 @@ export abstract class AbstractPhpGeneratorContext<
             case "primitive":
                 return false;
         }
+    }
+
+    public dereferenceOptional(typeReference: TypeReference): TypeReference {
+        if (typeReference.type === "container" && typeReference.container.type === "optional") {
+            return typeReference.container.optional._visit({
+                container: (container) => {
+                    return this.dereferenceOptional(TypeReference.container(container));
+                },
+                named: (named) => {
+                    return this.dereferenceOptional(TypeReference.named(named));
+                },
+                primitive: (primitive) => {
+                    return TypeReference.primitive(primitive);
+                },
+                unknown: () => {
+                    return typeReference;
+                },
+                _other: () => {
+                    return typeReference;
+                }
+            });
+        }
+
+        if (typeReference.type === "named") {
+            const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+            if (typeDeclaration.shape.type === "alias") {
+                return typeDeclaration.shape.aliasOf;
+            }
+        }
+
+        // Original type was not optional
+        return typeReference;
     }
 
     public isEnum(typeReference: TypeReference): boolean {

@@ -61,9 +61,13 @@ class ServiceClient
             $body->add(name: 'maybeInteger', value: $request->maybeInteger);
         }
         if ($request->optionalListOfStrings != null) {
-            $body->add(name: 'optionalListOfStrings', value: $request->optionalListOfStrings);
+            foreach ($request->optionalListOfStrings as $element) {
+                $body->add(name: 'optionalListOfStrings', value: $element);
+            }
         }
-        $body->add(name: 'listOfObjects', value: $request->listOfObjects);
+        foreach ($request->listOfObjects as $element) {
+            $body->add(name: 'listOfObjects', value: $element);
+        }
         if ($request->optionalMetadata != null) {
             $body->add(name: 'optionalMetadata', value: $request->optionalMetadata);
         }
