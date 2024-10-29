@@ -17,8 +17,14 @@ export abstract class AstNode extends AbstractAstNode {
         }
 
         astNode.references.forEach((reference) => {
-            this.addReference(reference);
+            if (!this.references.includes(reference)) {
+                this.addReference(reference);
+            }
         });
+    }
+
+    public getReferences(): Reference[] {
+        return this.references;
     }
 
     /**

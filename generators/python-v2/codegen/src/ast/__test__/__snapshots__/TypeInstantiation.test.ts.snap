@@ -15,8 +15,13 @@ exports[`TypeInstantiation > bytes 1`] = `
 "
 `;
 
-exports[`TypeInstantiation > dict 1`] = `
+exports[`TypeInstantiation > dict > should correctly write a dict with primitives 1`] = `
 "{"one": 1, "two": True}
+"
+`;
+
+exports[`TypeInstantiation > dict > should correctly write a dict with references 1`] = `
+"{"one": MyClass, "two": UUID("abc")}
 "
 `;
 

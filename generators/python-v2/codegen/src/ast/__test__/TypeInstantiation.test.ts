@@ -1,5 +1,6 @@
 import { TypeInstantiation } from "../TypeInstantiation";
 import { Writer } from "../core/Writer";
+import { python } from "../..";
 
 describe("TypeInstantiation", () => {
     let writer: Writer;
@@ -67,12 +68,24 @@ describe("TypeInstantiation", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("dict", async () => {
-        TypeInstantiation.dict([
-            { key: TypeInstantiation.str("one"), value: TypeInstantiation.int(1) },
-            { key: TypeInstantiation.str("two"), value: TypeInstantiation.bool(true) }
-        ]).write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    describe("dict", () => {
+        it("should correctly write a dict with primitives", async () => {
+            TypeInstantiation.dict([
+                { key: TypeInstantiation.str("one"), value: TypeInstantiation.int(1) },
+                { key: TypeInstantiation.str("two"), value: TypeInstantiation.bool(true) }
+            ]).write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("should correctly write a dict with references", async () => {
+            const dict = TypeInstantiation.dict([
+                { key: TypeInstantiation.str("one"), value: python.reference({ name: "MyClass" }) },
+                { key: TypeInstantiation.str("two"), value: python.TypeInstantiation.uuid("abc") }
+            ]);
+            dict.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(dict.getReferences().length).toBe(2);
+        });
     });
 
     it("none", async () => {
