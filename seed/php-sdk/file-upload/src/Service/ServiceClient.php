@@ -6,7 +6,7 @@ use Seed\Core\Client\RawClient;
 use Seed\Service\Requests\MyRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Multipart\MultipartApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Service\Requests\JustFileRequet;
@@ -41,7 +41,7 @@ class ServiceClient
     {
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "",
                     method: HttpMethod::POST,
@@ -73,7 +73,7 @@ class ServiceClient
     {
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/just-file",
                     method: HttpMethod::POST,
@@ -117,7 +117,7 @@ class ServiceClient
         }
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/just-file-with-query-params",
                     method: HttpMethod::POST,
@@ -150,7 +150,7 @@ class ServiceClient
     {
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/with-content-type",
                     method: HttpMethod::POST,

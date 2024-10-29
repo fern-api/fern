@@ -102,6 +102,10 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.getCoreNamespace()}\\Json`;
     }
 
+    public getCoreMultipartNamespace(): string {
+        return `${this.getCoreNamespace()}\\Multipart`;
+    }
+
     public getCoreTypesNamespace(): string {
         return `${this.getCoreNamespace()}\\Types`;
     }
@@ -184,6 +188,13 @@ export abstract class AbstractPhpGeneratorContext<
         return php.classReference({
             name,
             namespace: this.getCoreJsonNamespace()
+        });
+    }
+
+    public getCoreMultipartClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getCoreMultipartNamespace()
         });
     }
 
