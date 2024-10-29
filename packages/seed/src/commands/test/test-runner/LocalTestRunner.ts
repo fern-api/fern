@@ -47,7 +47,8 @@ export class LocalTestRunner extends TestRunner {
         outputMode,
         irVersion,
         publishMetadata,
-        readme
+        readme,
+        shouldGenerateDynamicSnippetTests
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorConfigFile = await tmp.file();
         const absolutePathToGeneratorConfig = AbsoluteFilePath.of(generatorConfigFile.path);
@@ -157,7 +158,7 @@ export class LocalTestRunner extends TestRunner {
             await localTaskHandler.copyGeneratedFiles();
             taskContext.logger.info(`Wrote generated files to ${outputDir}`);
 
-            if (language != null) {
+            if (shouldGenerateDynamicSnippetTests && language != null) {
                 taskContext.logger.info(`Writing dynamic snippet tests to ${outputDir}`);
                 await generateDynamicSnippetTests({
                     context: taskContext,
@@ -167,7 +168,9 @@ export class LocalTestRunner extends TestRunner {
                     outputDir
                 });
             } else {
-                taskContext.logger.info("Skipping dynamic snippet tests; language is unset");
+                taskContext.logger.info(
+                    `Skipping dynamic snippet tests; shouldGenerateDynamicSnippetTests: ${shouldGenerateDynamicSnippetTests}, language: ${language}`
+                );
             }
         }
     }

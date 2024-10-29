@@ -26,7 +26,8 @@ export async function runLocalGenerationForSeed({
     keepDocker,
     context,
     irVersionOverride,
-    outputVersionOverride
+    outputVersionOverride,
+    shouldGenerateDynamicSnippetTests
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -36,6 +37,7 @@ export async function runLocalGenerationForSeed({
     context: TaskContext;
     irVersionOverride: string;
     outputVersionOverride: string | undefined;
+    shouldGenerateDynamicSnippetTests: boolean | undefined;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -104,7 +106,7 @@ export async function runLocalGenerationForSeed({
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
                     );
 
-                    if (generatorInvocation.language != null) {
+                    if (shouldGenerateDynamicSnippetTests && generatorInvocation.language != null) {
                         interactiveTaskContext.logger.info(
                             `Writing dynamic snippet tests to ${generatorInvocation.absolutePathToLocalOutput}`
                         );
@@ -116,7 +118,9 @@ export async function runLocalGenerationForSeed({
                             outputDir: generatorInvocation.absolutePathToLocalOutput
                         });
                     } else {
-                        interactiveTaskContext.logger.info("Skipping dynamic snippet tests; language is unset");
+                        interactiveTaskContext.logger.info(
+                            `Skipping dynamic snippet tests; shouldGenerateDynamicSnippetTests: ${shouldGenerateDynamicSnippetTests}, language: ${generatorInvocation.language}`
+                        );
                     }
                 }
             });
