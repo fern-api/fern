@@ -12,4 +12,5 @@ func do() () {
         map[string]interface{}{
             "key": "value",
         },
-    )}
+    )
+}

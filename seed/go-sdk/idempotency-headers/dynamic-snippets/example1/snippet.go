@@ -15,4 +15,5 @@ func do() () {
     client.Payment.Delete(
         context.TODO(),
         "paymentId",
-    )}
+    )
+}

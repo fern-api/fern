@@ -14,4 +14,5 @@ func do() () {
     )
     client.Service.GetWithApiKey(
         context.TODO(),
-    )}
+    )
+}

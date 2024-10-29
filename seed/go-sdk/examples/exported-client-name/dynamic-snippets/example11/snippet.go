@@ -14,4 +14,5 @@ func do() () {
     )
     client.Health.Service.Ping(
         context.TODO(),
-    )}
+    )
+}

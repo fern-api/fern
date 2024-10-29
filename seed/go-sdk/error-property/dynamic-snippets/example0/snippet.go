@@ -9,4 +9,5 @@ func do() () {
     client := client.NewClient()
     client.PropertyBasedError.ThrowError(
         context.TODO(),
-    )}
+    )
+}

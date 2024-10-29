@@ -13,4 +13,5 @@ func do() () {
         &v2.Generateequest{
             NumEvents: 1,
         },
-    )}
+    )
+}

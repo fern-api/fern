@@ -14,4 +14,5 @@ func do() () {
         &fern.ColorOrOperand{
             Color: fern.ColorRed,
         },
-    )}
+    )
+}

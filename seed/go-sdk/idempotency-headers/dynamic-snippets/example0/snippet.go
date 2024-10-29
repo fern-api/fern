@@ -19,4 +19,5 @@ func do() () {
             Amount: 1,
             Currency: fern.CurrencyUsd,
         },
-    )}
+    )
+}

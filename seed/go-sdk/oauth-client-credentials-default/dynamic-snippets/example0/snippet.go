@@ -14,4 +14,5 @@ func do() () {
             ClientId: "client_id",
             ClientSecret: "client_secret",
         },
-    )}
+    )
+}

@@ -15,4 +15,5 @@ func do() () {
             Even: 1,
             Name: "name",
         },
-    )}
+    )
+}

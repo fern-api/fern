@@ -11,4 +11,5 @@ func do() () {
     client.Dataservice.List(
         context.TODO(),
         &fern.ListRequest{},
-    )}
+    )
+}

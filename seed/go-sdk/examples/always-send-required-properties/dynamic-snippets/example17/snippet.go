@@ -26,4 +26,5 @@ func do() () {
             },
             XApiVersion: "X-API-Version",
         },
-    )}
+    )
+}

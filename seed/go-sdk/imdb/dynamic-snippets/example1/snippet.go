@@ -15,4 +15,5 @@ func do() () {
     client.Imdb.GetMovie(
         context.TODO(),
         "movieId",
-    )}
+    )
+}

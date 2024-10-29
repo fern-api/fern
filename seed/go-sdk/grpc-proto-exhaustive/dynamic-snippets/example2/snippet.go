@@ -11,4 +11,5 @@ func do() () {
     client.Dataservice.Delete(
         context.TODO(),
         &fern.DeleteRequest{},
-    )}
+    )
+}

@@ -18,4 +18,5 @@ func do() () {
         &fern.HeaderAuthRequest{
             XEndpointHeader: "X-Endpoint-Header",
         },
-    )}
+    )
+}

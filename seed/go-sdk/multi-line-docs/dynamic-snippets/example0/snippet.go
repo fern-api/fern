@@ -10,4 +10,5 @@ func do() () {
     client.User.GetUser(
         context.TODO(),
         "userId",
-    )}
+    )
+}

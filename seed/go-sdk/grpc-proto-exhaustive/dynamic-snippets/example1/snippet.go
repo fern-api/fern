@@ -65,4 +65,5 @@ func do() () {
                 "namespace",
             ),
         },
-    )}
+    )
+}

@@ -19,4 +19,5 @@ func do() () {
         &file.GetFileRequest{
             XFileApiVersion: "X-File-API-Version",
         },
-    )}
+    )
+}

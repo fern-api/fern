@@ -19,4 +19,5 @@ func do() () {
             Title: "title",
             Rating: 1.1,
         },
-    )}
+    )
+}

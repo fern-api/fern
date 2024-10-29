@@ -14,4 +14,5 @@ func do() () {
     )
     client.CustomAuth.GetWithCustomAuth(
         context.TODO(),
-    )}
+    )
+}

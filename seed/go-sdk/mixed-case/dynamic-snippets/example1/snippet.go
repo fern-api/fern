@@ -10,4 +10,5 @@ func do() () {
     client.Service.GetResource(
         context.TODO(),
         "ResourceID",
-    )}
+    )
+}

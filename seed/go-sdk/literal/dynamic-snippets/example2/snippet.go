@@ -19,4 +19,5 @@ func do() () {
             },
             Query: "What is the weather today",
         },
-    )}
+    )
+}

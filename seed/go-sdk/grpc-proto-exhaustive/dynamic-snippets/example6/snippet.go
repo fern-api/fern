@@ -11,4 +11,5 @@ func do() () {
     client.Dataservice.Fetch(
         context.TODO(),
         &fern.FetchRequest{},
-    )}
+    )
+}

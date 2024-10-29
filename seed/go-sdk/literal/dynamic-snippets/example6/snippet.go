@@ -13,4 +13,5 @@ func do() () {
         &fern.SendLiteralsInQueryRequest{
             Query: "What is the weather today",
         },
-    )}
+    )
+}

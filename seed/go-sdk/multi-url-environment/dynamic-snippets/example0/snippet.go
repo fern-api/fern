@@ -18,4 +18,5 @@ func do() () {
         &fern.BootInstanceRequest{
             Size: "size",
         },
-    )}
+    )
+}

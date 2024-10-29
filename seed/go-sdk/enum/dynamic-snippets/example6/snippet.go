@@ -24,4 +24,5 @@ func do() () {
             },
             MaybeOperandOrColor: []*fern.ColorOrOperand{},
         },
-    )}
+    )
+}

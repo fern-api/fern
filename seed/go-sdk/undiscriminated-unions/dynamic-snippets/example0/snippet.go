@@ -13,4 +13,5 @@ func do() () {
         &undiscriminated.MyUnion{
             String: "string",
         },
-    )}
+    )
+}

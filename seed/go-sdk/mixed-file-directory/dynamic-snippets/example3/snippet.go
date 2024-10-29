@@ -13,4 +13,5 @@ func do() () {
         &events.GetEventMetadataRequest{
             Id: "id",
         },
-    )}
+    )
+}

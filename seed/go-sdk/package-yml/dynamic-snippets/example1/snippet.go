@@ -15,4 +15,5 @@ func do() () {
             Name: "name",
             Size: 1,
         },
-    )}
+    )
+}

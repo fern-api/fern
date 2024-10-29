@@ -15,4 +15,5 @@ func do() () {
     client.Health.Service.Check(
         context.TODO(),
         "id-3tey93i",
-    )}
+    )
+}

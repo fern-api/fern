@@ -9,4 +9,5 @@ func do() () {
     client := client.NewClient()
     client.FolderA.Service.GetDirectThread(
         context.TODO(),
-    )}
+    )
+}

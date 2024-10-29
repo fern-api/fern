@@ -11,4 +11,5 @@ func do() () {
     client.Userservice.Create(
         context.TODO(),
         &fern.CreateRequest{},
-    )}
+    )
+}

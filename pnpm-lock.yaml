@@ -6255,6 +6255,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
+      '@fern-api/go-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../generators/go-v2/dynamic-snippets
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../ir-sdk

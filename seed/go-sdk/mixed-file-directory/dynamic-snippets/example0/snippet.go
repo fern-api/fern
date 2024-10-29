@@ -13,4 +13,5 @@ func do() () {
         &fern.CreateOrganizationRequest{
             Name: "name",
         },
-    )}
+    )
+}

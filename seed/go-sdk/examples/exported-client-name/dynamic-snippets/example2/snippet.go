@@ -15,4 +15,5 @@ func do() () {
     client.Echo(
         context.TODO(),
         "primitive",
-    )}
+    )
+}

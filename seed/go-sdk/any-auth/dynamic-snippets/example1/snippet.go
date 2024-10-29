@@ -14,4 +14,5 @@ func do() () {
     )
     client.User.Get(
         context.TODO(),
-    )}
+    )
+}

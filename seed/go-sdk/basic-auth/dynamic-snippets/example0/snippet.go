@@ -15,4 +15,5 @@ func do() () {
     )
     client.BasicAuth.GetWithBasicAuth(
         context.TODO(),
-    )}
+    )
+}

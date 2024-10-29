@@ -10,4 +10,5 @@ func do() () {
     client.Union.Get(
         context.TODO(),
         "id",
-    )}
+    )
+}

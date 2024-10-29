@@ -19,4 +19,5 @@ func do() () {
                 NestedLiteral: &fern.ANestedLiteral{},
             },
         },
-    )}
+    )
+}

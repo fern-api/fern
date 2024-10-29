@@ -13,4 +13,5 @@ func do() () {
         &fern.StreamCompletionRequest{
             Query: "foo",
         },
-    )}
+    )
+}

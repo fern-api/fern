@@ -10,4 +10,5 @@ func do() () {
     client.Service.GetMovie(
         context.TODO(),
         "string",
-    )}
+    )
+}

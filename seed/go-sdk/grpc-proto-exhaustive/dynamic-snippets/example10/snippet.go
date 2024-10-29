@@ -13,4 +13,5 @@ func do() () {
         &fern.QueryRequest{
             TopK: 1,
         },
-    )}
+    )
+}

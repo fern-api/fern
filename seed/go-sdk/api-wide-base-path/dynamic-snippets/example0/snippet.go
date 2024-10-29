@@ -13,4 +13,5 @@ func do() () {
         "serviceParam",
         "resourceParam",
         1,
-    )}
+    )
+}

@@ -10,4 +10,5 @@ func do() () {
     client.GetAccount(
         context.TODO(),
         "account_id",
-    )}
+    )
+}

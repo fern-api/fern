@@ -15,4 +15,5 @@ func do() () {
     client.Echo(
         context.TODO(),
         "Hello world!\n\nwith\n\tnewlines",
-    )}
+    )
+}

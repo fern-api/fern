@@ -18,4 +18,5 @@ func do() () {
         &fern.GetPresignedUrlRequest{
             S3Key: "s3Key",
         },
-    )}
+    )
+}

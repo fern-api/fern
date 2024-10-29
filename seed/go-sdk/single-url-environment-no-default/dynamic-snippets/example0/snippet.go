@@ -14,4 +14,5 @@ func do() () {
     )
     client.Dummy.GetDummy(
         context.TODO(),
-    )}
+    )
+}

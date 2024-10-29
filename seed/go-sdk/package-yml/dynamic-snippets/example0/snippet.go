@@ -15,4 +15,5 @@ func do() () {
             Name: "Hello world!",
             Size: 20,
         },
-    )}
+    )
+}

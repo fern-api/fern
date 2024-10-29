@@ -10,4 +10,5 @@ func do() () {
     client.Get(
         context.TODO(),
         "typeId",
-    )}
+    )
+}

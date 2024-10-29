@@ -14,4 +14,5 @@ func do() () {
     )
     client.Service.GetWithBearerToken(
         context.TODO(),
-    )}
+    )
+}

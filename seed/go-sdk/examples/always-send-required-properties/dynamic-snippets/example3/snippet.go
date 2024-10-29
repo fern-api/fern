@@ -15,4 +15,5 @@ func do() () {
     client.File.Notification.Service.GetException(
         context.TODO(),
         "notification-hsy129x",
-    )}
+    )
+}
