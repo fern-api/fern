@@ -135,6 +135,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.getCoreJsonClassReference("JsonDecoder");
     }
 
+    public getJsonEncoderClassReference(): php.ClassReference {
+        return this.getCoreJsonClassReference("JsonEncoder");
+    }
+
     public getJsonSerializerClassReference(): php.ClassReference {
         return this.getCoreJsonClassReference("JsonSerializer");
     }

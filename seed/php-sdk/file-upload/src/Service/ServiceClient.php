@@ -72,7 +72,7 @@ class ServiceClient
             $body->add(name: 'optionalMetadata', value: $request->optionalMetadata);
         }
         if ($request->optionalObjectType != null) {
-            $body->add(name: 'optionalObjectType', value: $request->optionalObjectType);
+            $body->add(name: 'optionalObjectType', value: $request->optionalObjectType->toJson());
         }
         if ($request->optionalId != null) {
             $body->add(name: 'optionalId', value: $request->optionalId);
@@ -196,7 +196,7 @@ class ServiceClient
         $body = new MultipartFormData();
         $body->addPart($request->file->toMultipartFormDataPart('file'));
         $body->add(name: 'foo', value: $request->foo);
-        $body->add(name: 'bar', value: $request->bar);
+        $body->add(name: 'bar', value: $request->bar->toJson());
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(

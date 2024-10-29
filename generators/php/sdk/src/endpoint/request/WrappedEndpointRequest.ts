@@ -335,13 +335,21 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         } else if (isEncodable) {
                             this.writeBodyParameter(
                                 writer,
-                                php.codeblock(ref),
+                                php.invokeMethod({
+                                    method: "json_encode",
+                                    arguments_: [php.codeblock(ref)],
+                                    on: this.context.getJsonEncoderClassReference()
+                                }),
                                 this.context.getPropertyName(bodyProperty.name.name)
                             );
                         } else if (isObject) {
                             this.writeBodyParameter(
                                 writer,
-                                php.codeblock(ref),
+                                php.invokeMethod({
+                                    method: "toJson",
+                                    arguments_: [],
+                                    on: php.codeblock(ref)
+                                }),
                                 this.context.getPropertyName(bodyProperty.name.name)
                             );
                         } else {
