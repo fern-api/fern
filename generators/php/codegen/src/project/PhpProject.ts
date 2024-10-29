@@ -164,7 +164,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }
 
     private async createUtilsDirectory(): Promise<AbsoluteFilePath> {
-        for (const filename of this.context.getUtilsAsIsFiles()) {
+        for (const filename of this.context.getUtilsAsIsFiless()) {
             this.utilsFiles.push(
                 await this.createAsIsFile({
                     filename,
