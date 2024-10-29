@@ -2,8 +2,9 @@ import { dynamic as DynamicSnippets, HttpEndpoint, IntermediateRepresentation } 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import { TaskContext } from "@fern-api/task-context";
+import path from "path";
 
 export class DynamicSnippetsGoTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
@@ -15,10 +16,7 @@ export class DynamicSnippetsGoTestGenerator {
     ) {
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: this.ir,
-            config: this.generatorConfig,
-
-            // TODO: Add support for wasm-fmt/gofmt.
-            format: false
+            config: this.generatorConfig
         });
     }
 
@@ -34,6 +32,7 @@ export class DynamicSnippetsGoTestGenerator {
             try {
                 const response = await this.dynamicSnippetsGenerator.generate(request);
                 const dynamicSnippetFilePath = this.getTestFilePath({ outputDir, idx });
+                await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
                 await writeFile(dynamicSnippetFilePath, response.snippet);
             } catch (error) {
                 this.context.logger.error(
@@ -45,6 +44,6 @@ export class DynamicSnippetsGoTestGenerator {
     }
 
     private getTestFilePath({ outputDir, idx }: { outputDir: AbsoluteFilePath; idx: number }): AbsoluteFilePath {
-        return join(outputDir, RelativeFilePath.of(`example${idx}/snippet.go`));
+        return join(outputDir, RelativeFilePath.of(`dynamic-snippets/example${idx}/snippet.go`));
     }
 }

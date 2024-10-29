@@ -9,6 +9,7 @@ import { DynamicSnippetsGenerator } from "..";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { GoFormatter } from "@fern-api/go-formatter";
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("test definitions", async () => {
@@ -29,7 +30,11 @@ describe("test definitions", async () => {
                     ir: await getIntermediateRepresentation({ workspace }),
                     config: buildGeneratorConfig()
                 });
-                const generator = new DynamicSnippetsGenerator({ ir: test.ir, config: test.config });
+                const generator = new DynamicSnippetsGenerator({
+                    ir: test.ir,
+                    config: test.config,
+                    formatter: new GoFormatter()
+                });
                 const result = new TestResult();
                 for (const request of test.requests) {
                     const response = await generator.generate(request);

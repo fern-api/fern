@@ -1,4 +1,4 @@
-import { FernGeneratorExec } from "@fern-api/generator-commons";
+import { AbstractFormatter, FernGeneratorExec } from "@fern-api/generator-commons";
 import { go } from "@fern-api/go-codegen";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
@@ -10,19 +10,19 @@ const SNIPPET_FUNC_NAME = "do";
 const CLIENT_VAR_NAME = "client";
 
 export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<DynamicSnippetsGeneratorContext> {
-    private format: boolean | undefined;
+    private formatter: AbstractFormatter | undefined;
 
     constructor({
         ir,
         config,
-        format
+        formatter
     }: {
         ir: DynamicSnippets.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
-        format?: boolean;
+        formatter?: AbstractFormatter;
     }) {
         super(new DynamicSnippetsGeneratorContext({ ir, config }));
-        this.format = format;
+        this.formatter = formatter;
     }
 
     public async generate(
@@ -43,7 +43,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
                         importPath: SNIPPET_IMPORT_PATH,
                         rootImportPath: this.context.rootImportPath,
                         customConfig: this.context.customConfig ?? {},
-                        format: this.format
+                        formatter: this.formatter
                     })
                 };
             } catch (error) {

@@ -15,7 +15,7 @@ async function main() {
             CLI_VERSION: process.argv[2] || packageJson.version,
         },
         external: [
-            '@fern-api/go-dynamic-snippets/formatter',
+            '@fern-api/go-formatter',
           ],
     });     
 }
