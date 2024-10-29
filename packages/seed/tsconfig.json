@@ -3,7 +3,6 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
   "references": [
-    { "path": "../../generators/go-v2/dynamic-snippets" },
     { "path": "../cli/configuration" },
     { "path": "../cli/dynamic-snippets" },
     { "path": "../cli/generation/local-generation/local-workspace-runner" },

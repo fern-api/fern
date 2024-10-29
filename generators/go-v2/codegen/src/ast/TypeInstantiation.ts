@@ -171,7 +171,11 @@ export class TypeInstantiation extends AstNode {
                 this.writeSlice({ writer, slice: this.internalType });
                 break;
             case "string":
-                writer.write(`"${this.internalType.value}"`);
+                writer.write(
+                    this.internalType.value.includes('"') || this.internalType.value.includes("\n")
+                        ? `\`${this.internalType.value}\``
+                        : `"${this.internalType.value}"`
+                );
                 break;
             case "struct":
                 this.writeStruct({ writer, struct: this.internalType });

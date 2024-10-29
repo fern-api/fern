@@ -32,7 +32,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@fern-api/go-dynamic-snippets": "workspace:*",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
