@@ -338,7 +338,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                 php.invokeMethod({
                                     method: "json_encode",
                                     arguments_: [php.codeblock(ref)],
-                                    on: this.context.getJsonEncoderClassReference()
+                                    on: this.context.getJsonEncoderClassReference(),
+                                    static_: true
                                 }),
                                 this.context.getPropertyName(bodyProperty.name.name)
                             );
