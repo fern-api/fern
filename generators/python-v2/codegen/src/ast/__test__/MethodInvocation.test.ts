@@ -79,4 +79,24 @@ describe("MethodInvocation", () => {
 
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
+
+    it("should write a method invocation with a reference argument", async () => {
+        const invocation = python.invokeMethod({
+            methodReference: python.reference({ name: "test_method" }),
+            arguments_: [
+                python.methodArgument({
+                    value: python.instantiateClass({
+                        classReference: python.reference({ name: "SomeClass" }),
+                        arguments_: []
+                    })
+                })
+            ]
+        });
+
+        const writer = new Writer();
+        invocation.write(writer);
+
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(invocation.getReferences()).toHaveLength(2);
+    });
 });

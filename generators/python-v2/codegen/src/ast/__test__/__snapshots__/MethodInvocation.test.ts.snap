@@ -5,6 +5,11 @@ exports[`MethodInvocation > should write a method invocation with a parent 1`] =
 "
 `;
 
+exports[`MethodInvocation > should write a method invocation with a reference argument 1`] = `
+"test_method(SomeClass())
+"
+`;
+
 exports[`MethodInvocation > should write a method invocation with multiple positional and kwarg args 1`] = `
 "test_method(42, "hello", key1=True, key2=[1, 2, 3])
 "
