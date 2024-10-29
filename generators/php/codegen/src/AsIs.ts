@@ -47,5 +47,6 @@ export enum AsIsFiles {
     Union = "Types/Union.Template.php",
 
     // Utils files.
+    // TODO: Should add explicit "core" and "utils" prefixes to organize better
     File = "File.Template.php"
 }
