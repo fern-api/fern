@@ -102,7 +102,7 @@ export class PythonFile extends AstNode {
                 if (levelsUp > 0) {
                     relativePath += ".";
                 }
-                relativePath += refModulePath.slice(commonPrefixLength).join(".");
+                relativePath += refModulePath.slice(commonPrefixLength + 1).join(".");
 
                 // Write the relative import statement
                 writer.write(

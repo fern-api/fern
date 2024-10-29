@@ -1,10 +1,7 @@
 import { python } from "../../../src";
 import { Writer } from "../core/Writer";
-import { Reference } from "../Reference";
-import { Class } from "../Class";
 import { Method } from "../Method";
 import { CodeBlock } from "../CodeBlock";
-import { Type } from "../Type";
 
 describe("PythonFile", () => {
     let writer: Writer;
