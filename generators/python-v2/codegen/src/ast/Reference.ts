@@ -37,6 +37,7 @@ export class Reference extends AstNode {
         this.genericTypes = genericTypes ?? [];
         this.alias = alias;
         this.attribute = attribute ?? [];
+        this.references.push(this);
     }
 
     public write(writer: Writer): void {

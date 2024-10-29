@@ -14,13 +14,25 @@
         Add forward compatible enums.
         Set `enable-forward-compatible-enums` to `true` in the configuration to generate forward compatible enums.
   irVersion: 53
-- version: 1.8.2
+- version: 1.8.4
   irVersion: 53
+  createdAt: "2024-10-28"
+  changelogEntry:
+    - type: fix
+      summary: Make sure summary and code examples in XML code comments are XML encoded.
+- version: 1.8.3
+  createdAt: "2024-10-28"
+  changelogEntry:
+    - type: fix
+      summary: Update generated .gitignore files to not ignore C# files inside of folders named Logs and Releases.
+  irVersion: 53
+- version: 1.8.2
   createdAt: "2024-10-28"
   changelogEntry:
     - type: fix
       summary: |
         Fixes a bug where the ClientOptions would not compile due to incorrect Clone method generation.
+  irVersion: 53
 - version: 1.8.1
   irVersion: 53
   createdAt: '2024-10-08'

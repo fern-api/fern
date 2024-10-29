@@ -26,6 +26,10 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
         ].join(".");
     }
 
+    public getRawAsIsFiles(): string[] {
+        return [AsIsFiles.GitIgnore];
+    }
+
     public getCoreAsIsFiles(): string[] {
         const files = [
             AsIsFiles.CollectionItemSerializer,

@@ -27,7 +27,7 @@ public partial class DataserviceClient
     /// await client.Dataservice.UploadAsync(
     ///     new UploadRequest
     ///     {
-    ///         Columns = new List<Column>()
+    ///         Columns = new List&lt;Column&gt;()
     ///         {
     ///             new Column { Id = "id", Values = new[] { 1.1f } },
     ///         },

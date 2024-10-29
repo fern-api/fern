@@ -193,7 +193,7 @@ public partial class AdminClient
     ///             },
     ///             Stdout = "stdout",
     ///         },
-    ///         TraceResponses = new List<TraceResponse>()
+    ///         TraceResponses = new List&lt;TraceResponse&gt;()
     ///         {
     ///             new TraceResponse
     ///             {
@@ -254,7 +254,7 @@ public partial class AdminClient
     /// await client.Admin.StoreTracedTestCaseV2Async(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///     "testCaseId",
-    ///     new List<TraceResponseV2>()
+    ///     new List&lt;TraceResponseV2&gt;()
     ///     {
     ///         new TraceResponseV2
     ///         {
@@ -324,7 +324,7 @@ public partial class AdminClient
     ///             Exception = null,
     ///             Stdout = "stdout",
     ///         },
-    ///         TraceResponses = new List<TraceResponse>()
+    ///         TraceResponses = new List&lt;TraceResponse&gt;()
     ///         {
     ///             new TraceResponse
     ///             {
@@ -383,7 +383,7 @@ public partial class AdminClient
     /// <code>
     /// await client.Admin.StoreTracedWorkspaceV2Async(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new List<TraceResponseV2>()
+    ///     new List&lt;TraceResponseV2&gt;()
     ///     {
     ///         new TraceResponseV2
     ///         {

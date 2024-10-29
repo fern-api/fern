@@ -438,6 +438,8 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public abstract getRawAsIsFiles(): string[];
+
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getCoreTestAsIsFiles(): string[];

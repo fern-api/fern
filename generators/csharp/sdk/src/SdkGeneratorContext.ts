@@ -119,6 +119,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return EndpointSnippetsGenerator.CLIENT_VARIABLE_NAME;
     }
 
+    public getRawAsIsFiles(): string[] {
+        return [AsIsFiles.GitIgnore];
+    }
+
     public getCoreAsIsFiles(): string[] {
         const files = [
             AsIsFiles.CollectionItemSerializer,

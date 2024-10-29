@@ -61,6 +61,30 @@ export function validateUnionExample({
         ];
     }
 
+    if (rawUnion["base-properties"] != null) {
+        const example = Object.fromEntries(
+            Object.entries(nonDiscriminantPropertyExamples).filter(
+                ([key]) => rawUnion["base-properties"]?.[key] != null
+            )
+        );
+        const basePropertyViolations = validateObjectExample({
+            typeName,
+            typeNameForBreadcrumb: typeName,
+            rawObject: {
+                properties: rawUnion["base-properties"]
+            },
+            file,
+            example,
+            typeResolver,
+            exampleResolver,
+            workspace,
+            breadcrumbs
+        });
+        if (basePropertyViolations.length > 0) {
+            return basePropertyViolations;
+        }
+    }
+
     const type =
         typeof singleUnionTypeDefinition === "string" ? singleUnionTypeDefinition : singleUnionTypeDefinition.type;
 
@@ -79,12 +103,17 @@ export function validateUnionExample({
     }
 
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
+        const example = Object.fromEntries(
+            Object.entries(nonDiscriminantPropertyExamples).filter(
+                ([key]) => rawUnion["base-properties"]?.[key] == null
+            )
+        );
         return validateObjectExample({
             typeName,
             typeNameForBreadcrumb: typeName,
             rawObject: resolvedType.declaration,
             file: resolvedType.file,
-            example: nonDiscriminantPropertyExamples,
+            example,
             typeResolver,
             exampleResolver,
             workspace,
