@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI importer now skips headers in a case-insensitive way (e.g. both "Content-Type" and "content-type" are skipped).
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc28
+
+- changelogEntry:
+    - summary: |
         The Conjure importer now brings in endpoint level descriptions. 
       type: feat
   irVersion: 53
