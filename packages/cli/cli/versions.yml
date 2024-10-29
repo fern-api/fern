@@ -1,5 +1,19 @@
 - changelogEntry:
     - summary: |
+        The Conjure importer now brings in endpoint level descriptions. 
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc27
+
+- changelogEntry:
+    - summary: |
+        `fern check` handles validating unions that contain base properties. 
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc26
+
+- changelogEntry:
+    - summary: |
         The Fern CLI temporarily does not support RBAC/Audiences (they will be added in again shortly). 
       type: internal
   irVersion: 53
