@@ -90,7 +90,7 @@ class MyRequest extends JsonSerializableType
      *   maybeInteger?: ?int,
      *   optionalListOfStrings?: ?array<string>,
      *   listOfObjects: array<MyObject>,
-     *   optionalMetadata: mixed,
+     *   optionalMetadata?: mixed,
      *   optionalObjectType?: ?value-of<ObjectType>,
      *   optionalId?: ?string,
      * } $values
@@ -107,7 +107,7 @@ class MyRequest extends JsonSerializableType
         $this->maybeInteger = $values['maybeInteger'] ?? null;
         $this->optionalListOfStrings = $values['optionalListOfStrings'] ?? null;
         $this->listOfObjects = $values['listOfObjects'];
-        $this->optionalMetadata = $values['optionalMetadata'];
+        $this->optionalMetadata = $values['optionalMetadata'] ?? null;
         $this->optionalObjectType = $values['optionalObjectType'] ?? null;
         $this->optionalId = $values['optionalId'] ?? null;
     }
