@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
+import { Reference } from "./Reference";
 
 type InternalTypeInstantiation = Int | Float | Bool | Str | Bytes | List | Set | Tuple | Dict | None | Uuid;
 
@@ -121,7 +122,9 @@ export class TypeInstantiation extends AstNode {
     }
 
     public static uuid(value: string): TypeInstantiation {
-        return new this({ type: "uuid", value });
+        const uuid = new this({ type: "uuid", value });
+        uuid.addReference(new Reference({ name: "UUID", modulePath: ["uuid"] }));
+        return uuid;
     }
 
     public write(writer: Writer): void {
