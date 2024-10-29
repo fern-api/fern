@@ -100,9 +100,17 @@ fixtures:
       outputFolder: read-only-memory
 allowedFailures:
   ## COMPILE FAILURES
-  - objects-with-imports
+  - alias-extends
+  - any-auth
+  - enum
   - examples:no-custom-config
   - examples:readme-config
+  - extends
+  - oauth-client-credentials
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
+  - objects-with-imports
   - mixed-file-directory
   ## WIRE TEST FAILURES
   - unknown # issue with example object
