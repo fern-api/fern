@@ -401,9 +401,6 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^53.15.0
         version: 53.15.0
-      '@wasm-fmt/gofmt':
-        specifier: ^0.4.9
-        version: 0.4.9
       zod:
         specifier: ^3.22.3
         version: 3.23.8
@@ -453,12 +450,21 @@ importers:
       '@fern-api/go-codegen':
         specifier: workspace:*
         version: link:../codegen
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../../packages/cli/generation/ir-generator
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../packages/ir-sdk
       '@fern-api/project-loader':
         specifier: workspace:*
         version: link:../../../packages/cli/project-loader
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../../packages/cli/task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../../packages/cli/workspace-loader
       '@fern-fern/ir-sdk':
         specifier: ^53.15.0
         version: 53.15.0
@@ -4941,9 +4947,15 @@ importers:
       '@fern-api/docker-utils':
         specifier: workspace:*
         version: link:../docker-utils
+      '@fern-api/dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../../dynamic-snippets
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../commons/fs-utils
+      '@fern-api/go-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../../../../generators/go-v2/dynamic-snippets
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../../ir-generator
@@ -6203,15 +6215,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../commons/core-utils
-      '@fern-api/dynamic-snippets':
-        specifier: workspace:*
-        version: link:../cli/dynamic-snippets
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
-      '@fern-api/go-dynamic-snippets':
-        specifier: workspace:*
-        version: link:../../generators/go-v2/dynamic-snippets
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../ir-sdk
@@ -8599,10 +8605,6 @@ packages:
 
   '@vue/shared@3.2.33':
     resolution: {integrity: sha512-UBc1Pg1T3yZ97vsA2ueER0F6GbJebLHYlEi4ou1H5YL4KWvMOOWwpYo9/QpWq93wxKG6Wo13IY74Hcn/f7c7Bg==}
-
-  '@wasm-fmt/gofmt@0.4.9':
-    resolution: {integrity: sha512-YiJKASbwWHD9Rt4MD1Xwb5DanB0MQLYXgxeNGocxE5nu7ZyzPgm1nTn0sFVCJoxYMsGn5ypyXakuHTQtiJu4Ag==}
-    engines: {node: '>=16.17.0'}
 
   '@wasm-fmt/ruff_fmt@0.6.1':
     resolution: {integrity: sha512-7O3kVJ3JLYbo2l6+2LQHtPfq+1/Bna7tg8TE9sUft0Wj70qizlu7QJY6hC7KpJwW8LQjvSlLRtGv5W5wu0Pa5w==}
@@ -15981,8 +15983,6 @@ snapshots:
       magic-string: 0.25.9
 
   '@vue/shared@3.2.33': {}
-
-  '@wasm-fmt/gofmt@0.4.9': {}
 
   '@wasm-fmt/ruff_fmt@0.6.1': {}
 

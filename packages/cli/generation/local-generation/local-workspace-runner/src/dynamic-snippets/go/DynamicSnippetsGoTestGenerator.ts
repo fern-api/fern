@@ -18,7 +18,7 @@ export class DynamicSnippetsGoTestGenerator {
             config: this.generatorConfig,
 
             // TODO: Add support for wasm-fmt/gofmt.
-            formatted: false
+            format: false
         });
     }
 

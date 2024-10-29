@@ -1,4 +1,4 @@
-import { AbstractAstNode } from "@fern-api/generator-commons";
+import { AbstractAstNode, AbstractFormatter } from "@fern-api/generator-commons";
 import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema";
 import { GoFile } from "./GoFile";
 
@@ -11,21 +11,22 @@ export abstract class AstNode extends AbstractAstNode {
         rootImportPath,
         importPath,
         customConfig,
-        formatted
+        formatter
     }: {
         packageName: string;
         rootImportPath: string;
         importPath: string;
         customConfig: BaseGoCustomConfigSchema;
-        formatted?: boolean;
+        formatter?: AbstractFormatter;
     }): Promise<string> {
         const file = new GoFile({
             packageName,
             rootImportPath,
             importPath,
-            customConfig
+            customConfig,
+            formatter
         });
         this.write(file);
-        return file.toString({ formatted });
+        return file.toString();
     }
 }

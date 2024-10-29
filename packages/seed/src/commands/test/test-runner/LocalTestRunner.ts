@@ -1,7 +1,12 @@
 import { SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
-import { getGeneratorConfig, getIntermediateRepresentation, LocalTaskHandler } from "@fern-api/local-workspace-runner";
+import {
+    generateDynamicSnippetTests,
+    getGeneratorConfig,
+    getIntermediateRepresentation,
+    LocalTaskHandler
+} from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import * as GeneratorExecSerialization from "@fern-fern/generator-exec-sdk/serialization";
@@ -13,7 +18,6 @@ import { runScript } from "../../../runScript";
 import { DUMMY_ORGANIZATION } from "../../../utils/constants";
 import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
 import { TestRunner } from "./TestRunner";
-import { generateDynamicSnippetTests } from "../dynamic-snippets/generateDynamicSnippetTests";
 
 export class LocalTestRunner extends TestRunner {
     async build(): Promise<void> {
@@ -153,19 +157,17 @@ export class LocalTestRunner extends TestRunner {
             await localTaskHandler.copyGeneratedFiles();
             taskContext.logger.info(`Wrote generated files to ${outputDir}`);
 
-            // TODO: Move this so that it can be applied everywhere.
             if (language != null) {
                 taskContext.logger.info(`Writing dynamic snippet tests to ${outputDir}`);
                 await generateDynamicSnippetTests({
                     context: taskContext,
-                    workspace: fernWorkspace,
+                    ir: ir.latest,
                     config: generatorConfig,
-                    audiences: {
-                        type: "all"
-                    },
                     language,
                     outputDir
                 });
+            } else {
+                taskContext.logger.info("Skipping dynamic snippet tests; language is unset");
             }
         }
     }

@@ -1,16 +1,15 @@
 import { Writer } from "./Writer";
-import init, { format } from "@wasm-fmt/gofmt";
 
 export declare namespace GoFile {
     interface Args extends Writer.Args {}
 }
 
 export class GoFile extends Writer {
-    constructor({ packageName, rootImportPath, importPath, customConfig }: GoFile.Args) {
-        super({ packageName, rootImportPath, importPath, customConfig });
+    constructor({ packageName, rootImportPath, importPath, customConfig, formatter }: GoFile.Args) {
+        super({ packageName, rootImportPath, importPath, customConfig, formatter });
     }
 
-    public async toString({ formatted }: { formatted?: boolean } = { formatted: true }): Promise<string> {
+    public async toString(): Promise<string> {
         const packageStatement = `package ${this.packageName}\n\n`;
         const imports = this.stringifyImports();
         const content =
@@ -20,15 +19,13 @@ export class GoFile extends Writer {
 ${this.buffer}`
                 : packageStatement + this.buffer;
 
-        if (formatted) {
-            await init();
+        if (this.formatter != null) {
             try {
-                return format(content);
+                return this.formatter.format(content);
             } catch (error) {
                 throw new Error(`Failed to format Go file: ${error}\n${content}`);
             }
         }
-
         return content;
     }
 

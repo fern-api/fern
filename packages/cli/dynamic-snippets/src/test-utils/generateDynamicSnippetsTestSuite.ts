@@ -1,49 +1,21 @@
-import { Audiences } from "@fern-api/configuration";
-import { createMockTaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { convertIrToDynamicSnippetsIr } from "../convertIrToDynamicSnippetsIr";
-import { dynamic as DynamicSnippets, IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { ApiAuth, HttpEndpoint } from "@fern-api/ir-sdk";
+import { ApiAuth, HttpEndpoint, dynamic as DynamicSnippets, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { assertNever } from "@fern-api/core-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import urlJoin from "url-join";
 import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
-import { generatorsYml } from "@fern-api/configuration";
 
 export async function generateDynamicSnippetsTestSuite({
-    workspace,
-    config,
-    audiences,
-    language
+    ir,
+    config
 }: {
-    workspace: AbstractAPIWorkspace<unknown>;
+    ir: IntermediateRepresentation;
     config: FernGeneratorExec.GeneratorConfig;
-    audiences: Audiences;
-    language: generatorsYml.GenerationLanguage;
 }): Promise<DynamicSnippetsTestSuite> {
-    const taskContext = createMockTaskContext();
-    const fernWorkspace = await workspace.toFernWorkspace({
-        context: taskContext
-    });
-    const intermediateRepresentation = await generateIntermediateRepresentation({
-        workspace: fernWorkspace,
-        generationLanguage: language,
-        audiences,
-        keywords: undefined,
-        smartCasing: true,
-        includeOptionalRequestPropertyExamples: true,
-        disableExamples: false,
-        readme: undefined,
-        version: undefined,
-        packageName: undefined,
-        context: taskContext
-    });
-    const dynamicIntermediateRepresentation = await convertIrToDynamicSnippetsIr(intermediateRepresentation);
     return {
-        ir: dynamicIntermediateRepresentation,
+        ir: await convertIrToDynamicSnippetsIr(ir),
         config,
-        requests: getEndpointSnippetRequests({ ir: intermediateRepresentation })
+        requests: getEndpointSnippetRequests({ ir })
     };
 }
 

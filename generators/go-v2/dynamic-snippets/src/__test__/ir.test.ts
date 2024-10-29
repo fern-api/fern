@@ -6,6 +6,9 @@ import { TestResult } from "./utils/TestResult";
 import { generateDynamicSnippetsTestSuite } from "@fern-api/dynamic-snippets";
 import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
 import { DynamicSnippetsGenerator } from "..";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("test definitions", async () => {
@@ -23,10 +26,8 @@ describe("test definitions", async () => {
         apiWorkspaces.map(async (workspace) => {
             it(`${workspace.workspaceName}`, async () => {
                 const test = await generateDynamicSnippetsTestSuite({
-                    workspace,
-                    config: buildGeneratorConfig(),
-                    language: "go",
-                    audiences: { type: "all" }
+                    ir: await getIntermediateRepresentation({ workspace }),
+                    config: buildGeneratorConfig()
                 });
                 const generator = new DynamicSnippetsGenerator({ ir: test.ir, config: test.config });
                 const result = new TestResult();
@@ -39,3 +40,27 @@ describe("test definitions", async () => {
         })
     );
 });
+
+async function getIntermediateRepresentation({
+    workspace
+}: {
+    workspace: AbstractAPIWorkspace<unknown>;
+}): Promise<IntermediateRepresentation> {
+    const context = createMockTaskContext();
+    const fernWorkspace = await workspace.toFernWorkspace({
+        context
+    });
+    return generateIntermediateRepresentation({
+        workspace: fernWorkspace,
+        generationLanguage: "go",
+        keywords: undefined,
+        smartCasing: true,
+        disableExamples: false,
+        includeOptionalRequestPropertyExamples: true,
+        readme: undefined,
+        packageName: undefined,
+        version: undefined,
+        audiences: { type: "all" },
+        context
+    });
+}

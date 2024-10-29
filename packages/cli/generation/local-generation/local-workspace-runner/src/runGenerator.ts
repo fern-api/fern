@@ -4,6 +4,7 @@ import { AbsoluteFilePath, streamObjectToFile, waitUntilPathExists } from "@fern
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import tmp, { DirectoryResult } from "tmp-promise";
@@ -19,6 +20,7 @@ import { LocalTaskHandler } from "./LocalTaskHandler";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
+    generatorConfig: FernGeneratorExec.GeneratorConfig;
     /* Path to the generated IR */
     absolutePathToIr: AbsoluteFilePath;
     /* Path to the generated config.json */
@@ -107,7 +109,7 @@ export async function writeFilesToDiskAndRunGenerator({
         context.logger.debug("Will write snippet-templates.json to: " + absolutePathToTmpSnippetTemplatesJSON);
     }
 
-    await runGenerator({
+    const { generatorConfig } = await runGenerator({
         absolutePathToOutput: absolutePathToTmpOutputDirectory,
         absolutePathToSnippet: absolutePathToTmpSnippetJSON,
         absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
@@ -139,7 +141,8 @@ export async function writeFilesToDiskAndRunGenerator({
     return {
         absolutePathToIr,
         absolutePathToConfigJson: absolutePathToWriteConfigJson,
-        ir: latest
+        ir: latest,
+        generatorConfig
     };
 }
 
@@ -181,6 +184,10 @@ export declare namespace runGenerator {
         generatePaginatedClients: boolean;
         sources: IdentifiableSource[];
     }
+
+    export interface Return {
+        generatorConfig: FernGeneratorExec.GeneratorConfig;
+    }
 }
 
 export async function runGenerator({
@@ -199,7 +206,7 @@ export async function runGenerator({
     generateOauthClients,
     generatePaginatedClients,
     sources
-}: runGenerator.Args): Promise<void> {
+}: runGenerator.Args): Promise<runGenerator.Return> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
 
@@ -245,6 +252,10 @@ export async function runGenerator({
         binds,
         removeAfterCompletion: !keepDocker
     });
+
+    return {
+        generatorConfig: config
+    };
 }
 
 function getSourceConfig(workspace: FernWorkspace): SourceConfig {

@@ -10,19 +10,19 @@ const SNIPPET_FUNC_NAME = "do";
 const CLIENT_VAR_NAME = "client";
 
 export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<DynamicSnippetsGeneratorContext> {
-    private formatted: boolean | undefined;
+    private format: boolean | undefined;
 
     constructor({
         ir,
         config,
-        formatted
+        format
     }: {
         ir: DynamicSnippets.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
-        formatted?: boolean;
+        format?: boolean;
     }) {
         super(new DynamicSnippetsGeneratorContext({ ir, config }));
-        this.formatted = formatted;
+        this.format = format;
     }
 
     public async generate(
@@ -43,7 +43,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
                         importPath: SNIPPET_IMPORT_PATH,
                         rootImportPath: this.context.rootImportPath,
                         customConfig: this.context.customConfig ?? {},
-                        formatted: this.formatted
+                        format: this.format
                     })
                 };
             } catch (error) {
