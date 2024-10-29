@@ -264,12 +264,19 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.HttpMethod,
             AsIsFiles.JsonApiRequest,
             AsIsFiles.RawClient,
+            AsIsFiles.MultipartApiRequest,
+            AsIsFiles.MultipartFormData,
+            AsIsFiles.MultipartFormDataPart,
             ...this.getCoreSerializationAsIsFiles()
         ];
     }
 
     public getCoreTestAsIsFiles(): string[] {
         return [AsIsFiles.RawClientTest, ...this.getCoreSerializationTestAsIsFiles()];
+    }
+
+    public getUtilsAsIsFiles(): string[] {
+        return [AsIsFiles.File];
     }
 
     public getLocationForTypeId(typeId: TypeId): FileLocation {

@@ -114,6 +114,10 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.rootNamespace}\\Tests\\Core`;
     }
 
+    public getUtilsTypesNamespace(): string {
+        return `${this.rootNamespace}\\Utils`;
+    }
+
     public getCoreClientTestsNamespace(): string {
         return `${this.getCoreTestsNamespace()}\\Client`;
     }
@@ -347,6 +351,7 @@ export abstract class AbstractPhpGeneratorContext<
     public abstract getRawAsIsFiles(): string[];
     public abstract getCoreAsIsFiles(): string[];
     public abstract getCoreTestAsIsFiles(): string[];
+    public abstract getUtilsAsIsFiles(): string[];
 
     public getCoreSerializationAsIsFiles(): string[] {
         return [
@@ -360,11 +365,7 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.JsonEncoder,
             AsIsFiles.JsonDeserializer,
             AsIsFiles.JsonSerializer,
-            AsIsFiles.Utils,
-            AsIsFiles.MultipartApiRequest,
-            AsIsFiles.MultipartFormData,
-            AsIsFiles.MultipartFormDataPart,
-            AsIsFiles.File
+            AsIsFiles.Utils
         ];
     }
 

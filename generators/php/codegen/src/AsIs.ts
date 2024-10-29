@@ -25,7 +25,6 @@ export enum AsIsFiles {
     MultipartApiRequest = "Multipart/MultipartApiRequest.Template.php",
     MultipartFormData = "Multipart/MultipartFormData.Template.php",
     MultipartFormDataPart = "Multipart/MultipartFormDataPart.Template.php",
-    File = "Multipart/Utils/File.Template.php",
 
     // Tests/Core/Json files.
     DateArrayTest = "Json/DateArrayTest.Template.php",
@@ -45,5 +44,8 @@ export enum AsIsFiles {
     ArrayType = "Types/ArrayType.Template.php",
     Constant = "Types/Constant.Template.php",
     Date = "Types/Date.Template.php",
-    Union = "Types/Union.Template.php"
+    Union = "Types/Union.Template.php",
+
+    // Utils files.
+    File = "File.Template.php"
 }
