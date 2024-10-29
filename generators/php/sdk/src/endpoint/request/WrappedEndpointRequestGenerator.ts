@@ -1,6 +1,9 @@
 import { php, PhpFile, FileGenerator, FileLocation } from "@fern-api/php-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
+    FileProperty,
+    FilePropertyArray,
+    FilePropertySingle,
     HttpEndpoint,
     InlinedRequestBodyProperty,
     ObjectProperty,
@@ -93,7 +96,47 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     clazz.addTrait(this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName));
                 }
             },
-            fileUpload: () => undefined,
+            fileUpload: (fileUpload) => {
+                for (const property of fileUpload.properties) {
+                    property._visit({
+                        file: (fileProperty) => {
+                            fileProperty._visit({
+                                file: (file) => {
+                                    let type = php.Type.reference(this.context.getFileClassReference());
+                                    if (file.isOptional) {
+                                        type = php.Type.optional(type);
+                                    }
+                                    clazz.addField(
+                                        php.field({
+                                            name: this.context.getPropertyName(file.key.name),
+                                            type,
+                                            access: "public"
+                                        })
+                                    );
+                                },
+                                fileArray: (fileArray) => {
+                                    let type = php.Type.array(php.Type.reference(this.context.getFileClassReference()));
+                                    if (fileArray.isOptional) {
+                                        type = php.Type.optional(type);
+                                    }
+                                    clazz.addField(
+                                        php.field({
+                                            name: this.context.getPropertyName(fileArray.key.name),
+                                            type,
+                                            access: "public"
+                                        })
+                                    );
+                                },
+                                _other: () => undefined
+                            });
+                        },
+                        bodyProperty: (bodyProperty) => {
+                            clazz.addField(this.toField({ property: bodyProperty }));
+                        },
+                        _other: () => undefined
+                    });
+                }
+            },
             bytes: () => undefined,
             _other: () => undefined
         });

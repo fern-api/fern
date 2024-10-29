@@ -202,6 +202,13 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
+    public getUtilsClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getUtilsTypesNamespace()
+        });
+    }
+
     public getCoreTypesClassReference(name: string): php.ClassReference {
         return php.classReference({
             name,

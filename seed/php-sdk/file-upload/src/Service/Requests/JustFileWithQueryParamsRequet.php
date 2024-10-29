@@ -3,6 +3,7 @@
 namespace Seed\Service\Requests;
 
 use Seed\Core\Json\JsonSerializableType;
+use Seed\Utils\File;
 
 class JustFileWithQueryParamsRequet extends JsonSerializableType
 {
@@ -32,12 +33,18 @@ class JustFileWithQueryParamsRequet extends JsonSerializableType
     public array $optionalListOfStrings;
 
     /**
+     * @var File $file
+     */
+    public File $file;
+
+    /**
      * @param array{
      *   maybeString?: ?string,
      *   integer: int,
      *   maybeInteger?: ?int,
      *   listOfStrings: array<string>,
      *   optionalListOfStrings: array<?string>,
+     *   file: File,
      * } $values
      */
     public function __construct(
@@ -48,5 +55,6 @@ class JustFileWithQueryParamsRequet extends JsonSerializableType
         $this->maybeInteger = $values['maybeInteger'] ?? null;
         $this->listOfStrings = $values['listOfStrings'];
         $this->optionalListOfStrings = $values['optionalListOfStrings'];
+        $this->file = $values['file'];
     }
 }
