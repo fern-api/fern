@@ -30,6 +30,7 @@ client = SeedOauthClientCredentialsEnvironmentVariables(
 client.auth.get_token_with_client_credentials(
     client_id="client_id",
     client_secret="client_secret",
+    scope="scope",
 )
 ```
 
@@ -53,6 +54,7 @@ async def main() -> None:
     await client.auth.get_token_with_client_credentials(
         client_id="client_id",
         client_secret="client_secret",
+        scope="scope",
     )
 
 

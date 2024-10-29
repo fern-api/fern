@@ -30,7 +30,7 @@ const client = new SeedOauthClientCredentialsClient({
 await client.auth.getTokenWithClientCredentials({
     clientId: "client_id",
     clientSecret: "client_secret",
-    scope: undefined,
+    scope: "scope",
 });
 ```
 

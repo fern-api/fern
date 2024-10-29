@@ -24,7 +24,11 @@ client.folder_d.service.get_direct_thread(
 
 
 client = SeedCrossPackageTypeNames(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.foo.find(
+	optional_string="optionalString",
+	public_property="publicProperty",
+	private_property=1
+)
  
 ```                        
 

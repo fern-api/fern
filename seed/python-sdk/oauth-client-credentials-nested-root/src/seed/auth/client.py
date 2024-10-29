@@ -53,6 +53,7 @@ class AuthClient:
         client.auth.get_token(
             client_id="client_id",
             client_secret="client_secret",
+            scope="scope",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -128,6 +129,7 @@ class AsyncAuthClient:
             await client.auth.get_token(
                 client_id="client_id",
                 client_secret="client_secret",
+                scope="scope",
             )
 
 

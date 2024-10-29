@@ -298,7 +298,9 @@ public partial class ContainerClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.Container.GetAndReturnOptionalAsync(null);
+    /// await client.Endpoints.Container.GetAndReturnOptionalAsync(
+    ///     new ObjectWithRequiredField { String = "string" }
+    /// );
     /// </code>
     /// </example>
     public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(

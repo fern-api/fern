@@ -5,6 +5,7 @@ from seed import AsyncSeedTrace
 import typing
 import datetime
 from .utilities import validate_response
+from seed.playlist import UpdatePlaylistRequest
 
 
 async def test_create_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
@@ -13,6 +14,7 @@ async def test_create_playlist(client: SeedTrace, async_client: AsyncSeedTrace) 
     response = client.playlist.create_playlist(
         service_param=1,
         datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+        optional_datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
         name="name",
         problems=["problems", "problems"],
     )
@@ -21,6 +23,7 @@ async def test_create_playlist(client: SeedTrace, async_client: AsyncSeedTrace) 
     async_response = await async_client.playlist.create_playlist(
         service_param=1,
         datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+        optional_datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
         name="name",
         problems=["problems", "problems"],
     )
@@ -37,12 +40,22 @@ async def test_get_playlists(client: SeedTrace, async_client: AsyncSeedTrace) ->
         {0: {"playlist_id": None, "owner-id": None}, 1: {"playlist_id": None, "owner-id": None}},
     )
     response = client.playlist.get_playlists(
-        service_param=1, other_field="otherField", multi_line_docs="multiLineDocs", multiple_field="multipleField"
+        service_param=1,
+        limit=1,
+        other_field="otherField",
+        multi_line_docs="multiLineDocs",
+        optional_multiple_field="optionalMultipleField",
+        multiple_field="multipleField",
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.playlist.get_playlists(
-        service_param=1, other_field="otherField", multi_line_docs="multiLineDocs", multiple_field="multipleField"
+        service_param=1,
+        limit=1,
+        other_field="otherField",
+        multi_line_docs="multiLineDocs",
+        optional_multiple_field="optionalMultipleField",
+        multiple_field="multipleField",
     )
     validate_response(async_response, expected_response, expected_types)
 
@@ -60,10 +73,18 @@ async def test_get_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> 
 async def test_update_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = {"playlist_id": "playlist_id", "owner-id": "owner-id"}
     expected_types: typing.Any = {"playlist_id": None, "owner-id": None}
-    response = client.playlist.update_playlist(service_param=1, playlist_id="playlistId")
+    response = client.playlist.update_playlist(
+        service_param=1,
+        playlist_id="playlistId",
+        request=UpdatePlaylistRequest(name="name", problems=["problems", "problems"]),
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.playlist.update_playlist(service_param=1, playlist_id="playlistId")
+    async_response = await async_client.playlist.update_playlist(
+        service_param=1,
+        playlist_id="playlistId",
+        request=UpdatePlaylistRequest(name="name", problems=["problems", "problems"]),
+    )
     validate_response(async_response, expected_response, expected_types)
 
 

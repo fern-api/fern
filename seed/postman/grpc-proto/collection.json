@@ -122,7 +122,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{}",
+                  "raw": "{\n    \"username\": \"username\",\n    \"email\": \"email\",\n    \"age\": 1,\n    \"weight\": 1.1,\n    \"metadata\": {\n        \"metadata\": 1.1\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"

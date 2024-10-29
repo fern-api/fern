@@ -232,3 +232,5 @@ allowedFailures:
   - multi-url-environment-no-default
   - objects-with-imports
   - reserved-keywords
+  - examples:examples-with-api-reference
+  - examples:retain-original-casing

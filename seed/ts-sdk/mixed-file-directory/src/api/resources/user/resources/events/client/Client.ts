@@ -34,7 +34,9 @@ export class Events {
      * @param {Events.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.events.listEvents()
+     *     await client.user.events.listEvents({
+     *         limit: 1
+     *     })
      */
     public async listEvents(
         request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},

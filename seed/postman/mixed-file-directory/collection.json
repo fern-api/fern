@@ -199,7 +199,7 @@
               "request": {
                 "description": "List all user events.",
                 "url": {
-                  "raw": "{{baseUrl}}/users/events",
+                  "raw": "{{baseUrl}}/users/events?limit=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -207,7 +207,13 @@
                     "users",
                     "events"
                   ],
-                  "query": [],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "description": "The maximum number of results to return.",
+                      "value": "1"
+                    }
+                  ],
                   "variable": []
                 },
                 "header": [
@@ -229,7 +235,7 @@
                   "originalRequest": {
                     "description": "List all user events.",
                     "url": {
-                      "raw": "{{baseUrl}}/users/events",
+                      "raw": "{{baseUrl}}/users/events?limit=1",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -237,7 +243,13 @@
                         "users",
                         "events"
                       ],
-                      "query": [],
+                      "query": [
+                        {
+                          "key": "limit",
+                          "description": "The maximum number of results to return.",
+                          "value": "1"
+                        }
+                      ],
                       "variable": []
                     },
                     "header": [
@@ -265,14 +277,20 @@
           "request": {
             "description": "List all users.",
             "url": {
-              "raw": "{{baseUrl}}/users",
+              "raw": "{{baseUrl}}/users?limit=1",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "users"
               ],
-              "query": [],
+              "query": [
+                {
+                  "key": "limit",
+                  "description": "The maximum number of results to return.",
+                  "value": "1"
+                }
+              ],
               "variable": []
             },
             "header": [
@@ -294,14 +312,20 @@
               "originalRequest": {
                 "description": "List all users.",
                 "url": {
-                  "raw": "{{baseUrl}}/users",
+                  "raw": "{{baseUrl}}/users?limit=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "users"
                   ],
-                  "query": [],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "description": "The maximum number of results to return.",
+                      "value": "1"
+                    }
+                  ],
                   "variable": []
                 },
                 "header": [

@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedMultiLineDocs;
 
 var client = new SeedMultiLineDocsClient();
-await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = null });
+await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = 1 });
 ```
 
 ## Exception Handling

@@ -360,12 +360,17 @@ class ContainerClient:
         Examples
         --------
         from seed import SeedExhaustive
+        from seed.types.object import ObjectWithRequiredField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.endpoints.container.get_and_return_optional()
+        client.endpoints.container.get_and_return_optional(
+            request=ObjectWithRequiredField(
+                string="string",
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "container/opt-objects",
@@ -787,6 +792,7 @@ class AsyncContainerClient:
         import asyncio
 
         from seed import AsyncSeedExhaustive
+        from seed.types.object import ObjectWithRequiredField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -795,7 +801,11 @@ class AsyncContainerClient:
 
 
         async def main() -> None:
-            await client.endpoints.container.get_and_return_optional()
+            await client.endpoints.container.get_and_return_optional(
+                request=ObjectWithRequiredField(
+                    string="string",
+                ),
+            )
 
 
         asyncio.run(main())

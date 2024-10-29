@@ -9,6 +9,7 @@ const client = new SeedOauthClientCredentialsEnvironmentVariablesClient({
 await client.auth.getTokenWithClientCredentials({
   clientId: "client_id",
   clientSecret: "client_secret",
+  scope: "scope",
 });
  
 ```                        
@@ -26,6 +27,7 @@ await client.auth.refreshToken({
   clientId: "client_id",
   clientSecret: "client_secret",
   refreshToken: "refresh_token",
+  scope: "scope",
 });
  
 ```                        

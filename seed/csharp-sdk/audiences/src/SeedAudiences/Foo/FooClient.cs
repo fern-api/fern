@@ -18,7 +18,14 @@ public partial class FooClient
 
     /// <example>
     /// <code>
-    /// await client.Foo.FindAsync(new FindRequest { PublicProperty = null, PrivateProperty = null });
+    /// await client.Foo.FindAsync(
+    ///     new FindRequest
+    ///     {
+    ///         OptionalString = "optionalString",
+    ///         PublicProperty = "publicProperty",
+    ///         PrivateProperty = 1,
+    ///     }
+    /// );
     /// </code>
     /// </example>
     public async Task<ImportingType> FindAsync(

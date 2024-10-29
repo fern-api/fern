@@ -23,7 +23,11 @@ Instantiate and use the client with the following:
 import { SeedObjectsWithImportsClient } from "@fern/optional";
 
 const client = new SeedObjectsWithImportsClient({ environment: "YOUR_BASE_URL" });
-await client.optional.sendOptionalBody(undefined);
+await client.optional.sendOptionalBody({
+    string: {
+        key: "value",
+    },
+});
 ```
 
 ## Exception Handling

@@ -95,6 +95,7 @@ class UserClient:
         )
         client.user.create_user(
             name="name",
+            age=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -216,6 +217,7 @@ class AsyncUserClient:
         async def main() -> None:
             await client.user.create_user(
                 name="name",
+                age=1,
             )
 
 

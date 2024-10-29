@@ -168,12 +168,18 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}",
+              "raw": "{{baseUrl}}?optionalString=optionalString",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [],
-              "query": [],
+              "query": [
+                {
+                  "key": "optionalString",
+                  "description": null,
+                  "value": "optionalString"
+                }
+              ],
               "variable": []
             },
             "header": [
@@ -187,7 +193,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{}",
+              "raw": "{\n    \"publicProperty\": \"publicProperty\",\n    \"privateProperty\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -203,12 +209,18 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}",
+                  "raw": "{{baseUrl}}?optionalString=optionalString",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [],
-                  "query": [],
+                  "query": [
+                    {
+                      "key": "optionalString",
+                      "description": null,
+                      "value": "optionalString"
+                    }
+                  ],
                   "variable": []
                 },
                 "header": [
@@ -222,7 +234,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{}",
+                  "raw": "{\n    \"publicProperty\": \"publicProperty\",\n    \"privateProperty\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"

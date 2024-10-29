@@ -33,8 +33,10 @@ public class GetPlaylistsTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/v2/playlist/1/all")
+                    .WithParam("limit", "1")
                     .WithParam("otherField", "otherField")
                     .WithParam("multiLineDocs", "multiLineDocs")
+                    .WithParam("optionalMultipleField", "optionalMultipleField")
                     .WithParam("multipleField", "multipleField")
                     .UsingGet()
             )
@@ -49,8 +51,10 @@ public class GetPlaylistsTest : BaseMockServerTest
             1,
             new GetPlaylistsRequest
             {
+                Limit = 1,
                 OtherField = "otherField",
                 MultiLineDocs = "multiLineDocs",
+                OptionalMultipleField = ["optionalMultipleField"],
                 MultipleField = ["multipleField"],
             },
             RequestOptions

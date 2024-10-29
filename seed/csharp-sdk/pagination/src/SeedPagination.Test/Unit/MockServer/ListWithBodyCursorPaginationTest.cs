@@ -16,7 +16,11 @@ public class ListWithBodyCursorPaginationTest : BaseMockServerTest
     public async Task MockServerTest()
     {
         const string requestJson = """
-            {}
+            {
+              "pagination": {
+                "cursor": "cursor"
+              }
+            }
             """;
 
         const string mockResponse = """
@@ -61,7 +65,10 @@ public class ListWithBodyCursorPaginationTest : BaseMockServerTest
             );
 
         var response = await Client.Users.ListWithBodyCursorPaginationAsync(
-            new ListUsersBodyCursorPaginationRequest { Pagination = null },
+            new ListUsersBodyCursorPaginationRequest
+            {
+                Pagination = new WithCursor { Cursor = "cursor" },
+            },
             RequestOptions
         );
         JToken

@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalBodyAsync(null);\n"
+                "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalBodyAsync(\n    new Dictionary<string, object>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
             }
         }
     ]

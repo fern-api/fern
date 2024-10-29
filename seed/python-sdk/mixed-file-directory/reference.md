@@ -103,7 +103,9 @@ from seed import SeedMixedFileDirectory
 client = SeedMixedFileDirectory(
     base_url="https://yourhost.com/path/to/api",
 )
-client.user.list()
+client.user.list(
+    limit=1,
+)
 
 ```
 </dd>
@@ -172,7 +174,9 @@ from seed import SeedMixedFileDirectory
 client = SeedMixedFileDirectory(
     base_url="https://yourhost.com/path/to/api",
 )
-client.user.events.list_events()
+client.user.events.list_events(
+    limit=1,
+)
 
 ```
 </dd>
