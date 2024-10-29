@@ -176,7 +176,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
             inlinedRequestBody: (_inlinedRequestBody) => {
                 return php.codeblock(`${this.getRequestParameterName()}`);
             },
-            fileUpload: () => undefined,
+            fileUpload: () => {
+                return php.codeblock(`$${this.context.getPropertyName(this.wrapper.bodyKey)}`);
+            },
             bytes: () => undefined,
             _other: () => undefined
         });

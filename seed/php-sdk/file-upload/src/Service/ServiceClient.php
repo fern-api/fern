@@ -45,6 +45,7 @@ class ServiceClient
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "",
                     method: HttpMethod::POST,
+                    body: $body,
                 ),
             );
             $statusCode = $response->getStatusCode();
@@ -77,6 +78,7 @@ class ServiceClient
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/just-file",
                     method: HttpMethod::POST,
+                    body: $body,
                 ),
             );
             $statusCode = $response->getStatusCode();
@@ -122,6 +124,7 @@ class ServiceClient
                     path: "/just-file-with-query-params",
                     method: HttpMethod::POST,
                     query: $query,
+                    body: $body,
                 ),
             );
             $statusCode = $response->getStatusCode();
@@ -154,6 +157,7 @@ class ServiceClient
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/with-content-type",
                     method: HttpMethod::POST,
+                    body: $body,
                 ),
             );
             $statusCode = $response->getStatusCode();
