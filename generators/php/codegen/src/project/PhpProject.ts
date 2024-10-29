@@ -181,7 +181,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     private getNestedNamespace({ namespace, filename }: { namespace: string; filename: string }): string {
         const parts = filename.split("/");
         if (parts.length <= 1) {
-            return filename;
+            return namespace;
         }
         return [namespace, ...parts.slice(0, -1)].join("\\");
     }

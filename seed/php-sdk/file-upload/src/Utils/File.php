@@ -1,6 +1,6 @@
 <?php
 
-namespace File.Template.php;
+namespace Seed\Utils;
 
 use Exception;
 use GuzzleHttp\Psr7\Utils;
