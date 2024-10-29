@@ -6,6 +6,7 @@ use Seed\Core\Client\RawClient;
 use Seed\Service\Requests\MyRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
+use Seed\Core\Multipart\MultipartFormData;
 use Seed\Core\Multipart\MultipartApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -39,6 +40,39 @@ class ServiceClient
      */
     public function post(MyRequest $request, ?array $options = null): void
     {
+        $body = new MultipartFormData();
+        if ($request->maybeString != null) {
+            $body->add(name: 'maybeString', value: $request->maybeString);
+        }
+        $body->add(name: 'integer', value: $request->integer);
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        foreach ($request->fileList as $file) {
+            $body->addPart($file->toMultipartFormDataPart('fileList'));
+        }
+        if ($request->maybeFile != null) {
+            $body->addPart($request->maybeFile->toMultipartFormDataPart('maybeFile'));
+        }
+        if ($request->maybeFileList != null) {
+            foreach ($request->maybeFileList as $file) {
+                $body->addPart($file->toMultipartFormDataPart('maybeFileList'));
+            }
+        }
+        if ($request->maybeInteger != null) {
+            $body->add(name: 'maybeInteger', value: $request->maybeInteger);
+        }
+        if ($request->optionalListOfStrings != null) {
+            $body->add(name: 'optionalListOfStrings', value: $request->optionalListOfStrings);
+        }
+        $body->add(name: 'listOfObjects', value: $request->listOfObjects);
+        if ($request->optionalMetadata != null) {
+            $body->add(name: 'optionalMetadata', value: $request->optionalMetadata);
+        }
+        if ($request->optionalObjectType != null) {
+            $body->add(name: 'optionalObjectType', value: $request->optionalObjectType);
+        }
+        if ($request->optionalId != null) {
+            $body->add(name: 'optionalId', value: $request->optionalId);
+        }
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
@@ -72,6 +106,8 @@ class ServiceClient
      */
     public function justFile(JustFileRequet $request, ?array $options = null): void
     {
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
@@ -117,6 +153,8 @@ class ServiceClient
         if ($request->optionalListOfStrings != null) {
             $query['optionalListOfStrings'] = $request->optionalListOfStrings;
         }
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
@@ -151,6 +189,10 @@ class ServiceClient
      */
     public function withContentType(WithContentTypeRequest $request, ?array $options = null): void
     {
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        $body->add(name: 'foo', value: $request->foo);
+        $body->add(name: 'bar', value: $request->bar);
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(

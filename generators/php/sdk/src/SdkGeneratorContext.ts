@@ -143,6 +143,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.getCoreMultipartClassReference("MultipartApiRequest");
     }
 
+    public getMultipartFormDataClassReference(): php.ClassReference {
+        return this.getCoreMultipartClassReference("MultipartFormData");
+    }
+
     public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): php.ClassReference {
         return php.classReference({
             name: requestName.pascalCase.safeName,

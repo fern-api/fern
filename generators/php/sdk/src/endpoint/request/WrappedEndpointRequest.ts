@@ -1,12 +1,16 @@
 import { php } from "@fern-api/php-codegen";
 import {
     BytesRequest,
+    FileProperty,
+    FilePropertyArray,
+    FilePropertySingle,
     FileUploadRequest,
     HttpEndpoint,
     HttpHeader,
     HttpRequestBodyReference,
     HttpService,
     InlinedRequestBody,
+    InlinedRequestBodyProperty,
     Name,
     QueryParameter,
     SdkRequest,
@@ -124,6 +128,50 @@ export class WrappedEndpointRequest extends EndpointRequest {
         writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
     }
 
+    private writeBodyParameter(writer: php.Writer, property: InlinedRequestBodyProperty): void {
+        writer.writeNodeStatement(
+            php.invokeMethod({
+                method: "add",
+                arguments_: [
+                    {
+                        name: "name",
+                        assignment: php.codeblock(`'${this.context.getPropertyName(property.name.name)}'`)
+                    },
+                    {
+                        name: "value",
+                        assignment: php.codeblock(
+                            `${this.getRequestParameterName()}->${this.context.getPropertyName(property.name.name)}`
+                        )
+                    }
+                ],
+                on: this.getRequestBodyArgument()
+            })
+        );
+    }
+
+    private writeMultipartPart(writer: php.Writer, paramRef: string, propertyName: string): void {
+        writer.writeNodeStatement(
+            php.invokeMethod({
+                method: "addPart",
+                arguments_: [
+                    php.invokeMethod({
+                        method: "toMultipartFormDataPart",
+                        arguments_: [php.codeblock(`'${propertyName}'`)],
+                        on: php.codeblock(paramRef)
+                    })
+                ],
+                on: this.getRequestBodyArgument()
+            })
+        );
+    }
+
+    private writeMultipartPartArray(writer: php.Writer, propertyName: string): void {
+        const paramRef = `${this.getRequestParameterName()}->${propertyName}`;
+        writer.controlFlow("foreach", php.codeblock(`${paramRef} as $file`));
+        this.writeMultipartPart(writer, "$file", propertyName);
+        writer.endControlFlow();
+    }
+
     private stringify({ reference, name }: { reference: TypeReference; name: Name }): php.CodeBlock {
         const parameter = `${this.getRequestParameterName()}->${this.context.getPropertyName(name)}`;
         if (this.context.isDateTime(reference)) {
@@ -193,9 +241,81 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return this.endpoint.requestBody?._visit({
             inlinedRequestBody: () => undefined,
             reference: () => undefined,
-            fileUpload: () => undefined,
+            fileUpload: (fileUpload) => this.getFileUploadRequestBodyCode(fileUpload),
             bytes: () => undefined,
             _other: () => undefined
+        });
+    }
+
+    private getFileUploadRequestBodyCode(fileUpload: FileUploadRequest): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.write(`$${this.context.getPropertyName(this.wrapper.bodyKey)} = `);
+            writer.writeNodeStatement(
+                php.instantiateClass({
+                    classReference: this.context.getMultipartFormDataClassReference(),
+                    arguments_: []
+                })
+            );
+
+            for (const property of fileUpload.properties) {
+                property._visit({
+                    file: (file) =>
+                        file._visit({
+                            file: (file) => {
+                                const ref = `${this.getRequestParameterName()}->${this.context.getPropertyName(
+                                    file.key.name
+                                )}`;
+                                if (file.isOptional) {
+                                    writer.controlFlow("if", php.codeblock(`${ref} != null`));
+                                    this.writeMultipartPart(
+                                        writer,
+                                        ref,
+                                        `${this.context.getPropertyName(file.key.name)}`
+                                    );
+                                    writer.endControlFlow();
+                                } else {
+                                    this.writeMultipartPart(
+                                        writer,
+                                        ref,
+                                        `${this.context.getPropertyName(file.key.name)}`
+                                    );
+                                }
+                            },
+                            fileArray: (fileArray) => {
+                                if (fileArray.isOptional) {
+                                    const ref = `${this.getRequestParameterName()}->${this.context.getPropertyName(
+                                        file.key.name
+                                    )}`;
+                                    writer.controlFlow("if", php.codeblock(`${ref} != null`));
+                                    this.writeMultipartPartArray(
+                                        writer,
+                                        `${this.context.getPropertyName(file.key.name)}`
+                                    );
+                                    writer.endControlFlow();
+                                } else {
+                                    this.writeMultipartPartArray(
+                                        writer,
+                                        `${this.context.getPropertyName(file.key.name)}`
+                                    );
+                                }
+                            },
+                            _other: () => undefined
+                        }),
+                    bodyProperty: (bodyProperty) => {
+                        if (this.context.isOptional(bodyProperty.valueType)) {
+                            const ref = `${this.getRequestParameterName()}->${this.context.getPropertyName(
+                                bodyProperty.name.name
+                            )}`;
+                            writer.controlFlow("if", php.codeblock(`${ref} != null`));
+                            this.writeBodyParameter(writer, bodyProperty);
+                            writer.endControlFlow();
+                        } else {
+                            this.writeBodyParameter(writer, bodyProperty);
+                        }
+                    },
+                    _other: () => undefined
+                });
+            }
         });
     }
 }
