@@ -134,18 +134,18 @@ export class WrappedEndpointRequest extends EndpointRequest {
         writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
     }
 
-    private writeBodyParameter(writer: php.Writer, paramRef: string, propertyName: php.CodeBlock): void {
+    private writeBodyParameter(writer: php.Writer, valueAssignment: php.AstNode, propertyName: string): void {
         writer.writeNodeStatement(
             php.invokeMethod({
                 method: "add",
                 arguments_: [
                     {
                         name: "name",
-                        assignment: propertyName
+                        assignment: php.codeblock(`'${propertyName}'`)
                     },
                     {
                         name: "value",
-                        assignment: php.codeblock(paramRef)
+                        assignment: valueAssignment
                     }
                 ],
                 on: this.getRequestBodyArgument()
@@ -156,7 +156,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     private writeBodyParameterArray(writer: php.Writer, propertyName: string): void {
         const paramRef = `${this.getRequestParameterName()}->${propertyName}`;
         writer.controlFlow("foreach", php.codeblock(`${paramRef} as $element`));
-        this.writeBodyParameter(writer, "$element", php.codeblock(`'${propertyName}'`));
+        this.writeBodyParameter(writer, php.codeblock("$element"), propertyName);
         writer.endControlFlow();
     }
 
@@ -335,20 +335,20 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         } else if (isEncodable) {
                             this.writeBodyParameter(
                                 writer,
-                                ref,
-                                php.codeblock(`'${this.context.getPropertyName(bodyProperty.name.name)}'`)
+                                php.codeblock(ref),
+                                this.context.getPropertyName(bodyProperty.name.name)
                             );
                         } else if (isObject) {
                             this.writeBodyParameter(
                                 writer,
-                                ref,
-                                php.codeblock(`'${this.context.getPropertyName(bodyProperty.name.name)}'`)
+                                php.codeblock(ref),
+                                this.context.getPropertyName(bodyProperty.name.name)
                             );
                         } else {
                             this.writeBodyParameter(
                                 writer,
-                                ref,
-                                php.codeblock(`'${this.context.getPropertyName(bodyProperty.name.name)}'`)
+                                php.codeblock(ref),
+                                this.context.getPropertyName(bodyProperty.name.name)
                             );
                         }
 
