@@ -43,7 +43,8 @@ export async function writeFilesToDiskAndRunGenerator({
     outputVersionOverride,
     writeUnitTests,
     generateOauthClients,
-    generatePaginatedClients
+    generatePaginatedClients,
+    includeOptionalRequestPropertyExamples
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -61,6 +62,7 @@ export async function writeFilesToDiskAndRunGenerator({
     writeUnitTests: boolean;
     generateOauthClients: boolean;
     generatePaginatedClients: boolean;
+    includeOptionalRequestPropertyExamples?: boolean;
 }): Promise<GeneratorRunResponse> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
@@ -70,7 +72,8 @@ export async function writeFilesToDiskAndRunGenerator({
         irVersionOverride,
         packageName: generatorsYml.getPackageName({ generatorInvocation }),
         version: outputVersionOverride,
-        sourceConfig: getSourceConfig(workspace)
+        sourceConfig: getSourceConfig(workspace),
+        includeOptionalRequestPropertyExamples
     });
     const absolutePathToIr = await writeIrToFile({
         workspaceTempDir,

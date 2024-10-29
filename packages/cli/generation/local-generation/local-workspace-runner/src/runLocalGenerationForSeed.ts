@@ -86,7 +86,8 @@ export async function runLocalGenerationForSeed({
                         outputVersionOverride,
                         writeUnitTests: true,
                         generateOauthClients: true,
-                        generatePaginatedClients: true
+                        generatePaginatedClients: true,
+                        includeOptionalRequestPropertyExamples: true
                     });
                     if (
                         absolutePathToLocalSnippetTemplateJSON != null &&
