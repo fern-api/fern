@@ -25,7 +25,7 @@ export class BaseInvocation extends AstNode {
         this.reference = reference;
         this.arguments = arguments_;
 
-        this.addReference(reference);
+        this.inheritReferences(reference);
         this.arguments.forEach((arg) => {
             this.inheritReferences(arg);
         });
